@@ -7,6 +7,8 @@
 //
 
 #import "SettingsWindowController.h"
+#import "BFNavigationController.h"
+#import "AccountsViewController.h"
 
 @interface SettingsWindowController ()
 
@@ -24,11 +26,22 @@
     self.isShow = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
+    
+    AccountsViewController *accountsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AccountsViewController"];
+    
+    // Init navigation controller and add to window
+    BFNavigationController *navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
+                                                      rootViewController:accountsViewController];
+    
+    [self.window.contentView addSubview:navigationController.view];
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification
 {
     self.isShow = NO;
+}
+
+- (IBAction)onToolbarItemAccount:(id)sender {
 }
 
 @end

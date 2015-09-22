@@ -10,6 +10,7 @@
 
 @interface ViewController : NSViewController
 
+- (void) showSettingsWindow;
 
 @end
 

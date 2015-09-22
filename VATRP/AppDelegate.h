@@ -8,13 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 #import "LoginWindowController.h"
+#import "VideoCallWindowController.h"
+#import "ViewController.h"
+
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (nonatomic, retain) LoginWindowController *loginWindowController;
+@property (nonatomic, retain) ViewController *viewController;
+@property (weak) IBOutlet NSMenuItem *menuItemPreferences;
 
 + (AppDelegate*)sharedInstance;
 - (void) showTabWindow;
+- (VideoCallWindowController*) getVideoCallWindow;
+- (IBAction)onMenuItemPreferences:(id)sender;
 
 @end
 

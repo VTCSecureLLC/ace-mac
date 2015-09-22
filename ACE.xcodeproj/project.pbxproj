@@ -1,0 +1,1064 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF51B984E49008E8333 /* ContactsWindowController.m */; };
+		2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF81B984E49008E8333 /* DialpadViewController.m */; };
+		2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EFA1B984E49008E8333 /* DialpadWindowController.m */; };
+		2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EFD1B984E49008E8333 /* RecentsViewController.m */; };
+		2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EFF1B984E49008E8333 /* RecentsWindowController.m */; };
+		2B463F0B1B984E49008E8333 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463F021B984E49008E8333 /* SettingsWindowController.m */; };
+		2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463F051B984E49008E8333 /* VideoMailWindowController.m */; };
+		2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DC51B98540C00145575 /* LoginWindowController.m */; };
+		2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DC91B985EE300145575 /* BFNavigationController.m */; };
+		2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DCC1B985EE300145575 /* NSView+BFUtilities.m */; };
+		2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DCE1B985EE300145575 /* NSViewController+BFNavigationController.m */; };
+		2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD31B98615500145575 /* ServiceSelectionViewController.m */; };
+		2BA68DD71B98617000145575 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD61B98617000145575 /* LoginViewController.m */; };
+		2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DDA1B98733E00145575 /* HomeWindowController.m */; };
+		4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9B91BB1BDC900FCD070 /* cameraview.png */; settings = {ASSET_TAGS = (); }; };
+		4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BA1BB1BDC900FCD070 /* contacts.png */; settings = {ASSET_TAGS = (); }; };
+		4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BB1BB1BDC900FCD070 /* dialpad.png */; settings = {ASSET_TAGS = (); }; };
+		4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BC1BB1BDC900FCD070 /* incoming.png */; settings = {ASSET_TAGS = (); }; };
+		4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BD1BB1BDC900FCD070 /* missed.png */; settings = {ASSET_TAGS = (); }; };
+		4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BE1BB1BDC900FCD070 /* recents.png */; settings = {ASSET_TAGS = (); }; };
+		4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BF1BB1BDC900FCD070 /* settings.png */; settings = {ASSET_TAGS = (); }; };
+		4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9C01BB1BDC900FCD070 /* vatrp.ico */; settings = {ASSET_TAGS = (); }; };
+		4A5170751BACC61500880FFD /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170741BACC61500880FFD /* libsqlite3.tbd */; };
+		4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170761BACC61F00880FFD /* SystemConfiguration.framework */; };
+		4A5170791BACD10D00880FFD /* linphonerc in Resources */ = {isa = PBXBuildFile; fileRef = 4A5170781BACD10D00880FFD /* linphonerc */; settings = {ASSET_TAGS = (); }; };
+		4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5C1BACD437007C1949 /* linphonerc-factory */; settings = {ASSET_TAGS = (); }; };
+		4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */; settings = {ASSET_TAGS = (); }; };
+		4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */; settings = {ASSET_TAGS = (); }; };
+		4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E651BAFECF2007C1949 /* Localizable.strings */; settings = {ASSET_TAGS = (); }; };
+		4AAF560D1BAFFC3B00241DC2 /* VideoCallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */; settings = {ASSET_TAGS = (); }; };
+		4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF56151BB157AC00241DC2 /* AccountsViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAF56191BB1615900241DC2 /* accounts_icon.png */; settings = {ASSET_TAGS = (); }; };
+		4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */; };
+		4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CB1B8E87530063298F /* AppDelegate.m */; };
+		4AC389CE1B8E87530063298F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CD1B8E87530063298F /* main.m */; };
+		4AC389D11B8E87530063298F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389D01B8E87530063298F /* ViewController.m */; };
+		4AC389D31B8E87530063298F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D21B8E87530063298F /* Images.xcassets */; };
+		4AC389D61B8E87530063298F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D41B8E87530063298F /* Main.storyboard */; };
+		4AC389E21B8E87530063298F /* VATRPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389E11B8E87530063298F /* VATRPTests.m */; };
+		CE3D25291BA7739400028600 /* libantlr3c.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FC1BA7739300028600 /* libantlr3c.dylib */; };
+		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
+		CE3D252B1BA7739400028600 /* libavcodec.56.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */; };
+		CE3D252C1BA7739400028600 /* libavutil.54.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FF1BA7739400028600 /* libavutil.54.dylib */; };
+		CE3D252D1BA7739400028600 /* libbellesip.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25001BA7739400028600 /* libbellesip.0.dylib */; };
+		CE3D252E1BA7739400028600 /* libbzrtp.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25011BA7739400028600 /* libbzrtp.0.dylib */; };
+		CE3D252F1BA7739400028600 /* libcairo.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25021BA7739400028600 /* libcairo.2.dylib */; };
+		CE3D25301BA7739400028600 /* libfontconfig.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25031BA7739400028600 /* libfontconfig.1.dylib */; };
+		CE3D25311BA7739400028600 /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25041BA7739400028600 /* libfreetype.6.dylib */; };
+		CE3D25321BA7739400028600 /* libgailutil.18.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25051BA7739400028600 /* libgailutil.18.dylib */; };
+		CE3D25331BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25061BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib */; };
+		CE3D25341BA7739400028600 /* libgdk-quartz-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25071BA7739400028600 /* libgdk-quartz-2.0.0.dylib */; };
+		CE3D25351BA7739400028600 /* libgio-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25081BA7739400028600 /* libgio-2.0.0.dylib */; };
+		CE3D25361BA7739400028600 /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25091BA7739400028600 /* libglib-2.0.0.dylib */; };
+		CE3D25371BA7739400028600 /* libgmodule-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D250A1BA7739400028600 /* libgmodule-2.0.0.dylib */; };
+		CE3D25381BA7739400028600 /* libgmp.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D250B1BA7739400028600 /* libgmp.10.dylib */; };
+		CE3D25391BA7739400028600 /* libgnutls.28.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D250C1BA7739400028600 /* libgnutls.28.dylib */; };
+		CE3D253A1BA7739400028600 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D250D1BA7739400028600 /* libgobject-2.0.0.dylib */; };
+		CE3D253B1BA7739400028600 /* libgthread-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D250E1BA7739400028600 /* libgthread-2.0.0.dylib */; };
+		CE3D253C1BA7739400028600 /* libgtk-quartz-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D250F1BA7739400028600 /* libgtk-quartz-2.0.0.dylib */; };
+		CE3D253D1BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25101BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib */; };
+		CE3D253E1BA7739400028600 /* libharfbuzz.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */; };
+		CE3D253F1BA7739400028600 /* libhogweed.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25121BA7739400028600 /* libhogweed.2.dylib */; };
+		CE3D25401BA7739400028600 /* libjpeg.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25131BA7739400028600 /* libjpeg.8.dylib */; };
+		CE3D25411BA7739400028600 /* liblinphone.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25141BA7739400028600 /* liblinphone.7.dylib */; };
+		CE3D25421BA7739400028600 /* libmediastreamer_base.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */; };
+		CE3D25431BA7739400028600 /* libmediastreamer_voip.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */; };
+		CE3D25441BA7739400028600 /* libmp3lame.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25171BA7739400028600 /* libmp3lame.0.dylib */; };
+		CE3D25451BA7739400028600 /* libnettle.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25181BA7739400028600 /* libnettle.4.dylib */; };
+		CE3D25461BA7739400028600 /* libopus.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25191BA7739400028600 /* libopus.0.dylib */; };
+		CE3D25471BA7739400028600 /* libortp.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251A1BA7739400028600 /* libortp.9.dylib */; };
+		CE3D25481BA7739400028600 /* libpango-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */; };
+		CE3D25491BA7739400028600 /* libpangocairo-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */; };
+		CE3D254A1BA7739400028600 /* libpangoft2-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */; };
+		CE3D254B1BA7739400028600 /* libpixman-1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251E1BA7739400028600 /* libpixman-1.0.dylib */; };
+		CE3D254C1BA7739400028600 /* libpng16.16.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251F1BA7739400028600 /* libpng16.16.dylib */; };
+		CE3D254D1BA7739400028600 /* libpolarssl.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25201BA7739400028600 /* libpolarssl.0.dylib */; };
+		CE3D254E1BA7739400028600 /* libspeex.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25211BA7739400028600 /* libspeex.1.dylib */; };
+		CE3D254F1BA7739400028600 /* libspeexdsp.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25221BA7739400028600 /* libspeexdsp.1.dylib */; };
+		CE3D25501BA7739400028600 /* libswresample.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25231BA7739400028600 /* libswresample.1.dylib */; };
+		CE3D25511BA7739400028600 /* libswscale.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25241BA7739400028600 /* libswscale.3.dylib */; };
+		CE3D25521BA7739400028600 /* libtasn1.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25251BA7739400028600 /* libtasn1.6.dylib */; };
+		CE3D25531BA7739400028600 /* libtiff.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25261BA7739400028600 /* libtiff.5.dylib */; };
+		CE3D25541BA7739400028600 /* libvo-aacenc.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25271BA7739400028600 /* libvo-aacenc.0.dylib */; };
+		CE3D25551BA7739400028600 /* libx264.146.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25281BA7739400028600 /* libx264.146.dylib */; };
+		CE67587B1BA88BAF005396EF /* libantlr3c.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D24FC1BA7739300028600 /* libantlr3c.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67587C1BA88BAF005396EF /* libatk-1.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67587D1BA88BAF005396EF /* libavcodec.56.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67587E1BA88BAF005396EF /* libavutil.54.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D24FF1BA7739400028600 /* libavutil.54.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67587F1BA88BAF005396EF /* libbellesip.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25001BA7739400028600 /* libbellesip.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758801BA88BAF005396EF /* libbzrtp.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25011BA7739400028600 /* libbzrtp.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758811BA88BAF005396EF /* libcairo.2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25021BA7739400028600 /* libcairo.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758821BA88BAF005396EF /* libfontconfig.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25031BA7739400028600 /* libfontconfig.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758831BA88BAF005396EF /* libfreetype.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25041BA7739400028600 /* libfreetype.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758841BA88BAF005396EF /* libgailutil.18.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25051BA7739400028600 /* libgailutil.18.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758851BA88BAF005396EF /* libgdk_pixbuf-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25061BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758861BA88BAF005396EF /* libgdk-quartz-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25071BA7739400028600 /* libgdk-quartz-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758871BA88BAF005396EF /* libgio-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25081BA7739400028600 /* libgio-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758881BA88BAF005396EF /* libglib-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25091BA7739400028600 /* libglib-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758891BA88BAF005396EF /* libgmodule-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D250A1BA7739400028600 /* libgmodule-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67588A1BA88BAF005396EF /* libgmp.10.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D250B1BA7739400028600 /* libgmp.10.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67588B1BA88BB0005396EF /* libgnutls.28.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D250C1BA7739400028600 /* libgnutls.28.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67588C1BA88BB0005396EF /* libgobject-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D250D1BA7739400028600 /* libgobject-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67588D1BA88BB0005396EF /* libgthread-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D250E1BA7739400028600 /* libgthread-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67588E1BA88BB0005396EF /* libgtk-quartz-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D250F1BA7739400028600 /* libgtk-quartz-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67588F1BA88BB0005396EF /* libgtkmacintegration-gtk2.2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25101BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758901BA88BB0005396EF /* libharfbuzz.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758911BA88BB0005396EF /* libhogweed.2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25121BA7739400028600 /* libhogweed.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758921BA88BB0005396EF /* libjpeg.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25131BA7739400028600 /* libjpeg.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758931BA88BB0005396EF /* liblinphone.7.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25141BA7739400028600 /* liblinphone.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758941BA88BB0005396EF /* libmediastreamer_base.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758951BA88BB0005396EF /* libmediastreamer_voip.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758961BA88BB0005396EF /* libmp3lame.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25171BA7739400028600 /* libmp3lame.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758971BA88BB0005396EF /* libnettle.4.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25181BA7739400028600 /* libnettle.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758981BA88BB0005396EF /* libopus.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25191BA7739400028600 /* libopus.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758991BA88BB0005396EF /* libortp.9.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251A1BA7739400028600 /* libortp.9.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67589A1BA88BB0005396EF /* libpango-1.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67589B1BA88BB0005396EF /* libpangocairo-1.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67589C1BA88BB0005396EF /* libpangoft2-1.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67589D1BA88BB0005396EF /* libpixman-1.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251E1BA7739400028600 /* libpixman-1.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67589E1BA88BB0005396EF /* libpng16.16.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251F1BA7739400028600 /* libpng16.16.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE67589F1BA88BB0005396EF /* libpolarssl.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25201BA7739400028600 /* libpolarssl.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A01BA88BB0005396EF /* libspeex.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25211BA7739400028600 /* libspeex.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A11BA88BB0005396EF /* libspeexdsp.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25221BA7739400028600 /* libspeexdsp.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A21BA88BB1005396EF /* libswresample.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25231BA7739400028600 /* libswresample.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A31BA88BB1005396EF /* libswscale.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25241BA7739400028600 /* libswscale.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A41BA88BB1005396EF /* libtasn1.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25251BA7739400028600 /* libtasn1.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A51BA88BB1005396EF /* libtiff.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25261BA7739400028600 /* libtiff.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A61BA88BB1005396EF /* libvo-aacenc.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25271BA7739400028600 /* libvo-aacenc.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758A71BA88BB1005396EF /* libx264.146.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25281BA7739400028600 /* libx264.146.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758AF1BA8C99D005396EF /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6758AB1BA8C99D005396EF /* libintl.8.dylib */; };
+		CE6758B01BA8C99D005396EF /* libffi.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6758AE1BA8C99D005396EF /* libffi.6.dylib */; };
+		CE6758B21BA8CA5D005396EF /* libintl.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE6758AB1BA8C99D005396EF /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE6758B31BA8CA63005396EF /* libffi.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE6758AE1BA8C99D005396EF /* libffi.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4AC389DC1B8E87530063298F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4AC389BD1B8E87520063298F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AC389C41B8E87530063298F;
+			remoteInfo = VATRP;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE67587A1BA88A5A005396EF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CE67587B1BA88BAF005396EF /* libantlr3c.dylib in CopyFiles */,
+				CE6758B21BA8CA5D005396EF /* libintl.8.dylib in CopyFiles */,
+				CE6758B31BA8CA63005396EF /* libffi.6.dylib in CopyFiles */,
+				CE67587C1BA88BAF005396EF /* libatk-1.0.0.dylib in CopyFiles */,
+				CE67587D1BA88BAF005396EF /* libavcodec.56.dylib in CopyFiles */,
+				CE67587E1BA88BAF005396EF /* libavutil.54.dylib in CopyFiles */,
+				CE67587F1BA88BAF005396EF /* libbellesip.0.dylib in CopyFiles */,
+				CE6758801BA88BAF005396EF /* libbzrtp.0.dylib in CopyFiles */,
+				CE6758811BA88BAF005396EF /* libcairo.2.dylib in CopyFiles */,
+				CE6758821BA88BAF005396EF /* libfontconfig.1.dylib in CopyFiles */,
+				CE6758831BA88BAF005396EF /* libfreetype.6.dylib in CopyFiles */,
+				CE6758841BA88BAF005396EF /* libgailutil.18.dylib in CopyFiles */,
+				CE6758851BA88BAF005396EF /* libgdk_pixbuf-2.0.0.dylib in CopyFiles */,
+				CE6758861BA88BAF005396EF /* libgdk-quartz-2.0.0.dylib in CopyFiles */,
+				CE6758871BA88BAF005396EF /* libgio-2.0.0.dylib in CopyFiles */,
+				CE6758881BA88BAF005396EF /* libglib-2.0.0.dylib in CopyFiles */,
+				CE6758891BA88BAF005396EF /* libgmodule-2.0.0.dylib in CopyFiles */,
+				CE67588A1BA88BAF005396EF /* libgmp.10.dylib in CopyFiles */,
+				CE67588B1BA88BB0005396EF /* libgnutls.28.dylib in CopyFiles */,
+				CE67588C1BA88BB0005396EF /* libgobject-2.0.0.dylib in CopyFiles */,
+				CE67588D1BA88BB0005396EF /* libgthread-2.0.0.dylib in CopyFiles */,
+				CE67588E1BA88BB0005396EF /* libgtk-quartz-2.0.0.dylib in CopyFiles */,
+				CE67588F1BA88BB0005396EF /* libgtkmacintegration-gtk2.2.dylib in CopyFiles */,
+				CE6758901BA88BB0005396EF /* libharfbuzz.0.dylib in CopyFiles */,
+				CE6758911BA88BB0005396EF /* libhogweed.2.dylib in CopyFiles */,
+				CE6758921BA88BB0005396EF /* libjpeg.8.dylib in CopyFiles */,
+				CE6758931BA88BB0005396EF /* liblinphone.7.dylib in CopyFiles */,
+				CE6758941BA88BB0005396EF /* libmediastreamer_base.5.dylib in CopyFiles */,
+				CE6758951BA88BB0005396EF /* libmediastreamer_voip.5.dylib in CopyFiles */,
+				CE6758961BA88BB0005396EF /* libmp3lame.0.dylib in CopyFiles */,
+				CE6758971BA88BB0005396EF /* libnettle.4.dylib in CopyFiles */,
+				CE6758981BA88BB0005396EF /* libopus.0.dylib in CopyFiles */,
+				CE6758991BA88BB0005396EF /* libortp.9.dylib in CopyFiles */,
+				CE67589A1BA88BB0005396EF /* libpango-1.0.0.dylib in CopyFiles */,
+				CE67589B1BA88BB0005396EF /* libpangocairo-1.0.0.dylib in CopyFiles */,
+				CE67589C1BA88BB0005396EF /* libpangoft2-1.0.0.dylib in CopyFiles */,
+				CE67589D1BA88BB0005396EF /* libpixman-1.0.dylib in CopyFiles */,
+				CE67589E1BA88BB0005396EF /* libpng16.16.dylib in CopyFiles */,
+				CE67589F1BA88BB0005396EF /* libpolarssl.0.dylib in CopyFiles */,
+				CE6758A01BA88BB0005396EF /* libspeex.1.dylib in CopyFiles */,
+				CE6758A11BA88BB0005396EF /* libspeexdsp.1.dylib in CopyFiles */,
+				CE6758A21BA88BB1005396EF /* libswresample.1.dylib in CopyFiles */,
+				CE6758A31BA88BB1005396EF /* libswscale.3.dylib in CopyFiles */,
+				CE6758A41BA88BB1005396EF /* libtasn1.6.dylib in CopyFiles */,
+				CE6758A51BA88BB1005396EF /* libtiff.5.dylib in CopyFiles */,
+				CE6758A61BA88BB1005396EF /* libvo-aacenc.0.dylib in CopyFiles */,
+				CE6758A71BA88BB1005396EF /* libx264.146.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2B463EF41B984E49008E8333 /* ContactsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsWindowController.h; sourceTree = "<group>"; };
+		2B463EF51B984E49008E8333 /* ContactsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsWindowController.m; sourceTree = "<group>"; };
+		2B463EF71B984E49008E8333 /* DialpadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialpadViewController.h; sourceTree = "<group>"; };
+		2B463EF81B984E49008E8333 /* DialpadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialpadViewController.m; sourceTree = "<group>"; };
+		2B463EF91B984E49008E8333 /* DialpadWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialpadWindowController.h; sourceTree = "<group>"; };
+		2B463EFA1B984E49008E8333 /* DialpadWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialpadWindowController.m; sourceTree = "<group>"; };
+		2B463EFC1B984E49008E8333 /* RecentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentsViewController.h; sourceTree = "<group>"; };
+		2B463EFD1B984E49008E8333 /* RecentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentsViewController.m; sourceTree = "<group>"; };
+		2B463EFE1B984E49008E8333 /* RecentsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentsWindowController.h; sourceTree = "<group>"; };
+		2B463EFF1B984E49008E8333 /* RecentsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentsWindowController.m; sourceTree = "<group>"; };
+		2B463F011B984E49008E8333 /* SettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
+		2B463F021B984E49008E8333 /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
+		2B463F041B984E49008E8333 /* VideoMailWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoMailWindowController.h; sourceTree = "<group>"; };
+		2B463F051B984E49008E8333 /* VideoMailWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoMailWindowController.m; sourceTree = "<group>"; };
+		2BA68DC41B98540C00145575 /* LoginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginWindowController.h; sourceTree = "<group>"; };
+		2BA68DC51B98540C00145575 /* LoginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginWindowController.m; sourceTree = "<group>"; };
+		2BA68DC81B985EE300145575 /* BFNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFNavigationController.h; sourceTree = "<group>"; };
+		2BA68DC91B985EE300145575 /* BFNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFNavigationController.m; sourceTree = "<group>"; };
+		2BA68DCA1B985EE300145575 /* BFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFViewController.h; sourceTree = "<group>"; };
+		2BA68DCB1B985EE300145575 /* NSView+BFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+BFUtilities.h"; sourceTree = "<group>"; };
+		2BA68DCC1B985EE300145575 /* NSView+BFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+BFUtilities.m"; sourceTree = "<group>"; };
+		2BA68DCD1B985EE300145575 /* NSViewController+BFNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+BFNavigationController.h"; sourceTree = "<group>"; };
+		2BA68DCE1B985EE300145575 /* NSViewController+BFNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+BFNavigationController.m"; sourceTree = "<group>"; };
+		2BA68DD21B98615500145575 /* ServiceSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceSelectionViewController.h; sourceTree = "<group>"; };
+		2BA68DD31B98615500145575 /* ServiceSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceSelectionViewController.m; sourceTree = "<group>"; };
+		2BA68DD51B98617000145575 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		2BA68DD61B98617000145575 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		2BA68DD91B98733E00145575 /* HomeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeWindowController.h; sourceTree = "<group>"; };
+		2BA68DDA1B98733E00145575 /* HomeWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeWindowController.m; sourceTree = "<group>"; };
+		4A50F9B91BB1BDC900FCD070 /* cameraview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraview.png; sourceTree = "<group>"; };
+		4A50F9BA1BB1BDC900FCD070 /* contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contacts.png; sourceTree = "<group>"; };
+		4A50F9BB1BB1BDC900FCD070 /* dialpad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dialpad.png; sourceTree = "<group>"; };
+		4A50F9BC1BB1BDC900FCD070 /* incoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = incoming.png; sourceTree = "<group>"; };
+		4A50F9BD1BB1BDC900FCD070 /* missed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missed.png; sourceTree = "<group>"; };
+		4A50F9BE1BB1BDC900FCD070 /* recents.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recents.png; sourceTree = "<group>"; };
+		4A50F9BF1BB1BDC900FCD070 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		4A50F9C01BB1BDC900FCD070 /* vatrp.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vatrp.ico; sourceTree = "<group>"; };
+		4A5170741BACC61500880FFD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4A5170761BACC61F00880FFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4A5170781BACD10D00880FFD /* linphonerc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = linphonerc; sourceTree = "<group>"; };
+		4AAD8E5C1BACD437007C1949 /* linphonerc-factory */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory"; sourceTree = "<group>"; };
+		4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory~ipad"; sourceTree = "<group>"; };
+		4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc~ipad"; sourceTree = "<group>"; };
+		4AAD8E651BAFECF2007C1949 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		4AAF560B1BAFFC3B00241DC2 /* VideoCallWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoCallWindowController.h; path = vatrp/VideoCall/VideoCallWindowController.h; sourceTree = SOURCE_ROOT; };
+		4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoCallWindowController.m; path = vatrp/VideoCall/VideoCallWindowController.m; sourceTree = SOURCE_ROOT; };
+		4AAF560E1BAFFC5700241DC2 /* VideoCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoCallViewController.h; path = vatrp/VideoCall/VideoCallViewController.h; sourceTree = SOURCE_ROOT; };
+		4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoCallViewController.m; path = vatrp/VideoCall/VideoCallViewController.m; sourceTree = SOURCE_ROOT; };
+		4AAF56141BB157AC00241DC2 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsViewController.h; path = vatrp/Settings/AccountsViewController.h; sourceTree = SOURCE_ROOT; };
+		4AAF56151BB157AC00241DC2 /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = vatrp/Settings/AccountsViewController.m; sourceTree = SOURCE_ROOT; };
+		4AAF56191BB1615900241DC2 /* accounts_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounts_icon.png; sourceTree = "<group>"; };
+		4AAFDC3C1BA9D78200C35A74 /* LinphoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinphoneManager.h; path = vatrp/LinphoneManager/LinphoneManager.h; sourceTree = SOURCE_ROOT; };
+		4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinphoneManager.m; path = vatrp/LinphoneManager/LinphoneManager.m; sourceTree = SOURCE_ROOT; };
+		4AC389C51B8E87530063298F /* ACE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ACE.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AC389C91B8E87530063298F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AC389CA1B8E87530063298F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4AC389CB1B8E87530063298F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4AC389CD1B8E87530063298F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4AC389CF1B8E87530063298F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		4AC389D01B8E87530063298F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		4AC389D21B8E87530063298F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4AC389D51B8E87530063298F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4AC389DB1B8E87530063298F /* VATRPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VATRPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AC389E01B8E87530063298F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AC389E11B8E87530063298F /* VATRPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VATRPTests.m; sourceTree = "<group>"; };
+		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = vatrp/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
+		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.56.dylib; path = vatrp/linphonesdk/libs/libavcodec.56.dylib; sourceTree = "<group>"; };
+		CE3D24FF1BA7739400028600 /* libavutil.54.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.54.dylib; path = vatrp/linphonesdk/libs/libavutil.54.dylib; sourceTree = "<group>"; };
+		CE3D25001BA7739400028600 /* libbellesip.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbellesip.0.dylib; path = vatrp/linphonesdk/libs/libbellesip.0.dylib; sourceTree = "<group>"; };
+		CE3D25011BA7739400028600 /* libbzrtp.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbzrtp.0.dylib; path = vatrp/linphonesdk/libs/libbzrtp.0.dylib; sourceTree = "<group>"; };
+		CE3D25021BA7739400028600 /* libcairo.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcairo.2.dylib; path = vatrp/linphonesdk/libs/libcairo.2.dylib; sourceTree = "<group>"; };
+		CE3D25031BA7739400028600 /* libfontconfig.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfontconfig.1.dylib; path = vatrp/linphonesdk/libs/libfontconfig.1.dylib; sourceTree = "<group>"; };
+		CE3D25041BA7739400028600 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = vatrp/linphonesdk/libs/libfreetype.6.dylib; sourceTree = "<group>"; };
+		CE3D25051BA7739400028600 /* libgailutil.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgailutil.18.dylib; path = vatrp/linphonesdk/libs/libgailutil.18.dylib; sourceTree = "<group>"; };
+		CE3D25061BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgdk_pixbuf-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgdk_pixbuf-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25071BA7739400028600 /* libgdk-quartz-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgdk-quartz-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgdk-quartz-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25081BA7739400028600 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25091BA7739400028600 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250A1BA7739400028600 /* libgmodule-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgmodule-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgmodule-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250B1BA7739400028600 /* libgmp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmp.10.dylib; path = vatrp/linphonesdk/libs/libgmp.10.dylib; sourceTree = "<group>"; };
+		CE3D250C1BA7739400028600 /* libgnutls.28.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgnutls.28.dylib; path = vatrp/linphonesdk/libs/libgnutls.28.dylib; sourceTree = "<group>"; };
+		CE3D250D1BA7739400028600 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250E1BA7739400028600 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgthread-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250F1BA7739400028600 /* libgtk-quartz-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgtk-quartz-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgtk-quartz-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25101BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgtkmacintegration-gtk2.2.dylib"; path = "vatrp/linphonesdk/libs/libgtkmacintegration-gtk2.2.dylib"; sourceTree = "<group>"; };
+		CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libharfbuzz.0.dylib; path = vatrp/linphonesdk/libs/libharfbuzz.0.dylib; sourceTree = "<group>"; };
+		CE3D25121BA7739400028600 /* libhogweed.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhogweed.2.dylib; path = vatrp/linphonesdk/libs/libhogweed.2.dylib; sourceTree = "<group>"; };
+		CE3D25131BA7739400028600 /* libjpeg.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libjpeg.8.dylib; path = vatrp/linphonesdk/libs/libjpeg.8.dylib; sourceTree = "<group>"; };
+		CE3D25141BA7739400028600 /* liblinphone.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.7.dylib; path = vatrp/linphonesdk/libs/liblinphone.7.dylib; sourceTree = "<group>"; };
+		CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.5.dylib; path = vatrp/linphonesdk/libs/libmediastreamer_base.5.dylib; sourceTree = "<group>"; };
+		CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.5.dylib; path = vatrp/linphonesdk/libs/libmediastreamer_voip.5.dylib; sourceTree = "<group>"; };
+		CE3D25171BA7739400028600 /* libmp3lame.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmp3lame.0.dylib; path = vatrp/linphonesdk/libs/libmp3lame.0.dylib; sourceTree = "<group>"; };
+		CE3D25181BA7739400028600 /* libnettle.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnettle.4.dylib; path = vatrp/linphonesdk/libs/libnettle.4.dylib; sourceTree = "<group>"; };
+		CE3D25191BA7739400028600 /* libopus.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopus.0.dylib; path = vatrp/linphonesdk/libs/libopus.0.dylib; sourceTree = "<group>"; };
+		CE3D251A1BA7739400028600 /* libortp.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.9.dylib; path = vatrp/linphonesdk/libs/libortp.9.dylib; sourceTree = "<group>"; };
+		CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpango-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libpango-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpangocairo-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libpangocairo-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpangoft2-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libpangoft2-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D251E1BA7739400028600 /* libpixman-1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpixman-1.0.dylib"; path = "vatrp/linphonesdk/libs/libpixman-1.0.dylib"; sourceTree = "<group>"; };
+		CE3D251F1BA7739400028600 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = vatrp/linphonesdk/libs/libpng16.16.dylib; sourceTree = "<group>"; };
+		CE3D25201BA7739400028600 /* libpolarssl.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpolarssl.0.dylib; path = vatrp/linphonesdk/libs/libpolarssl.0.dylib; sourceTree = "<group>"; };
+		CE3D25211BA7739400028600 /* libspeex.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeex.1.dylib; path = vatrp/linphonesdk/libs/libspeex.1.dylib; sourceTree = "<group>"; };
+		CE3D25221BA7739400028600 /* libspeexdsp.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeexdsp.1.dylib; path = vatrp/linphonesdk/libs/libspeexdsp.1.dylib; sourceTree = "<group>"; };
+		CE3D25231BA7739400028600 /* libswresample.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.1.dylib; path = vatrp/linphonesdk/libs/libswresample.1.dylib; sourceTree = "<group>"; };
+		CE3D25241BA7739400028600 /* libswscale.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.3.dylib; path = vatrp/linphonesdk/libs/libswscale.3.dylib; sourceTree = "<group>"; };
+		CE3D25251BA7739400028600 /* libtasn1.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtasn1.6.dylib; path = vatrp/linphonesdk/libs/libtasn1.6.dylib; sourceTree = "<group>"; };
+		CE3D25261BA7739400028600 /* libtiff.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtiff.5.dylib; path = vatrp/linphonesdk/libs/libtiff.5.dylib; sourceTree = "<group>"; };
+		CE3D25271BA7739400028600 /* libvo-aacenc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libvo-aacenc.0.dylib"; path = "vatrp/linphonesdk/libs/libvo-aacenc.0.dylib"; sourceTree = "<group>"; };
+		CE3D25281BA7739400028600 /* libx264.146.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libx264.146.dylib; path = vatrp/linphonesdk/libs/libx264.146.dylib; sourceTree = "<group>"; };
+		CE6758AB1BA8C99D005396EF /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libintl.8.dylib; sourceTree = "<group>"; };
+		CE6758AE1BA8C99D005396EF /* libffi.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libffi.6.dylib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4AC389C21B8E87530063298F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */,
+				4A5170751BACC61500880FFD /* libsqlite3.tbd in Frameworks */,
+				CE6758B01BA8C99D005396EF /* libffi.6.dylib in Frameworks */,
+				CE3D25291BA7739400028600 /* libantlr3c.dylib in Frameworks */,
+				CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */,
+				CE3D252B1BA7739400028600 /* libavcodec.56.dylib in Frameworks */,
+				CE3D252C1BA7739400028600 /* libavutil.54.dylib in Frameworks */,
+				CE3D252D1BA7739400028600 /* libbellesip.0.dylib in Frameworks */,
+				CE3D252E1BA7739400028600 /* libbzrtp.0.dylib in Frameworks */,
+				CE3D252F1BA7739400028600 /* libcairo.2.dylib in Frameworks */,
+				CE3D25301BA7739400028600 /* libfontconfig.1.dylib in Frameworks */,
+				CE3D25311BA7739400028600 /* libfreetype.6.dylib in Frameworks */,
+				CE3D25321BA7739400028600 /* libgailutil.18.dylib in Frameworks */,
+				CE3D25331BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib in Frameworks */,
+				CE3D25341BA7739400028600 /* libgdk-quartz-2.0.0.dylib in Frameworks */,
+				CE3D25351BA7739400028600 /* libgio-2.0.0.dylib in Frameworks */,
+				CE3D25361BA7739400028600 /* libglib-2.0.0.dylib in Frameworks */,
+				CE3D25371BA7739400028600 /* libgmodule-2.0.0.dylib in Frameworks */,
+				CE3D25381BA7739400028600 /* libgmp.10.dylib in Frameworks */,
+				CE3D25391BA7739400028600 /* libgnutls.28.dylib in Frameworks */,
+				CE3D253A1BA7739400028600 /* libgobject-2.0.0.dylib in Frameworks */,
+				CE3D253B1BA7739400028600 /* libgthread-2.0.0.dylib in Frameworks */,
+				CE6758AF1BA8C99D005396EF /* libintl.8.dylib in Frameworks */,
+				CE3D253C1BA7739400028600 /* libgtk-quartz-2.0.0.dylib in Frameworks */,
+				CE3D253D1BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib in Frameworks */,
+				CE3D253E1BA7739400028600 /* libharfbuzz.0.dylib in Frameworks */,
+				CE3D253F1BA7739400028600 /* libhogweed.2.dylib in Frameworks */,
+				CE3D25401BA7739400028600 /* libjpeg.8.dylib in Frameworks */,
+				CE3D25411BA7739400028600 /* liblinphone.7.dylib in Frameworks */,
+				CE3D25421BA7739400028600 /* libmediastreamer_base.5.dylib in Frameworks */,
+				CE3D25431BA7739400028600 /* libmediastreamer_voip.5.dylib in Frameworks */,
+				CE3D25441BA7739400028600 /* libmp3lame.0.dylib in Frameworks */,
+				CE3D25451BA7739400028600 /* libnettle.4.dylib in Frameworks */,
+				CE3D25461BA7739400028600 /* libopus.0.dylib in Frameworks */,
+				CE3D25471BA7739400028600 /* libortp.9.dylib in Frameworks */,
+				CE3D25481BA7739400028600 /* libpango-1.0.0.dylib in Frameworks */,
+				CE3D25491BA7739400028600 /* libpangocairo-1.0.0.dylib in Frameworks */,
+				CE3D254A1BA7739400028600 /* libpangoft2-1.0.0.dylib in Frameworks */,
+				CE3D254B1BA7739400028600 /* libpixman-1.0.dylib in Frameworks */,
+				CE3D254C1BA7739400028600 /* libpng16.16.dylib in Frameworks */,
+				CE3D254D1BA7739400028600 /* libpolarssl.0.dylib in Frameworks */,
+				CE3D254E1BA7739400028600 /* libspeex.1.dylib in Frameworks */,
+				CE3D254F1BA7739400028600 /* libspeexdsp.1.dylib in Frameworks */,
+				CE3D25501BA7739400028600 /* libswresample.1.dylib in Frameworks */,
+				CE3D25511BA7739400028600 /* libswscale.3.dylib in Frameworks */,
+				CE3D25521BA7739400028600 /* libtasn1.6.dylib in Frameworks */,
+				CE3D25531BA7739400028600 /* libtiff.5.dylib in Frameworks */,
+				CE3D25541BA7739400028600 /* libvo-aacenc.0.dylib in Frameworks */,
+				CE3D25551BA7739400028600 /* libx264.146.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AC389D81B8E87530063298F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2B463EF31B984E49008E8333 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				2B463EF41B984E49008E8333 /* ContactsWindowController.h */,
+				2B463EF51B984E49008E8333 /* ContactsWindowController.m */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		2B463EF61B984E49008E8333 /* Dialpad */ = {
+			isa = PBXGroup;
+			children = (
+				2B463EF71B984E49008E8333 /* DialpadViewController.h */,
+				2B463EF81B984E49008E8333 /* DialpadViewController.m */,
+				2B463EF91B984E49008E8333 /* DialpadWindowController.h */,
+				2B463EFA1B984E49008E8333 /* DialpadWindowController.m */,
+			);
+			path = Dialpad;
+			sourceTree = "<group>";
+		};
+		2B463EFB1B984E49008E8333 /* Recents */ = {
+			isa = PBXGroup;
+			children = (
+				2B463EFC1B984E49008E8333 /* RecentsViewController.h */,
+				2B463EFD1B984E49008E8333 /* RecentsViewController.m */,
+				2B463EFE1B984E49008E8333 /* RecentsWindowController.h */,
+				2B463EFF1B984E49008E8333 /* RecentsWindowController.m */,
+			);
+			path = Recents;
+			sourceTree = "<group>";
+		};
+		2B463F001B984E49008E8333 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2B463F011B984E49008E8333 /* SettingsWindowController.h */,
+				2B463F021B984E49008E8333 /* SettingsWindowController.m */,
+				4AAF56141BB157AC00241DC2 /* AccountsViewController.h */,
+				4AAF56151BB157AC00241DC2 /* AccountsViewController.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		2B463F031B984E49008E8333 /* VideoMail */ = {
+			isa = PBXGroup;
+			children = (
+				2B463F041B984E49008E8333 /* VideoMailWindowController.h */,
+				2B463F051B984E49008E8333 /* VideoMailWindowController.m */,
+			);
+			path = VideoMail;
+			sourceTree = "<group>";
+		};
+		2BA68DC31B9853A000145575 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2BA68DC41B98540C00145575 /* LoginWindowController.h */,
+				2BA68DC51B98540C00145575 /* LoginWindowController.m */,
+				2BA68DD21B98615500145575 /* ServiceSelectionViewController.h */,
+				2BA68DD31B98615500145575 /* ServiceSelectionViewController.m */,
+				2BA68DD51B98617000145575 /* LoginViewController.h */,
+				2BA68DD61B98617000145575 /* LoginViewController.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		2BA68DC71B985EE300145575 /* BFNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				2BA68DC81B985EE300145575 /* BFNavigationController.h */,
+				2BA68DC91B985EE300145575 /* BFNavigationController.m */,
+				2BA68DCA1B985EE300145575 /* BFViewController.h */,
+				2BA68DCB1B985EE300145575 /* NSView+BFUtilities.h */,
+				2BA68DCC1B985EE300145575 /* NSView+BFUtilities.m */,
+				2BA68DCD1B985EE300145575 /* NSViewController+BFNavigationController.h */,
+				2BA68DCE1B985EE300145575 /* NSViewController+BFNavigationController.m */,
+			);
+			path = BFNavigationController;
+			sourceTree = "<group>";
+		};
+		2BA68DD81B98732A00145575 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2BA68DD91B98733E00145575 /* HomeWindowController.h */,
+				2BA68DDA1B98733E00145575 /* HomeWindowController.m */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		4AAF560A1BAFFC0400241DC2 /* VideoCall */ = {
+			isa = PBXGroup;
+			children = (
+				4AAF560B1BAFFC3B00241DC2 /* VideoCallWindowController.h */,
+				4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */,
+				4AAF560E1BAFFC5700241DC2 /* VideoCallViewController.h */,
+				4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */,
+			);
+			path = VideoCall;
+			sourceTree = "<group>";
+		};
+		4AAF56171BB1615900241DC2 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				4AAF56181BB1615900241DC2 /* Images */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		4AAF56181BB1615900241DC2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				4AAF56191BB1615900241DC2 /* accounts_icon.png */,
+				4A50F9B91BB1BDC900FCD070 /* cameraview.png */,
+				4A50F9BA1BB1BDC900FCD070 /* contacts.png */,
+				4A50F9BB1BB1BDC900FCD070 /* dialpad.png */,
+				4A50F9BC1BB1BDC900FCD070 /* incoming.png */,
+				4A50F9BD1BB1BDC900FCD070 /* missed.png */,
+				4A50F9BE1BB1BDC900FCD070 /* recents.png */,
+				4A50F9BF1BB1BDC900FCD070 /* settings.png */,
+				4A50F9C01BB1BDC900FCD070 /* vatrp.ico */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		4AAFD9FC1BA610F100C35A74 /* LinphoneManager */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFDC3C1BA9D78200C35A74 /* LinphoneManager.h */,
+				4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */,
+			);
+			path = LinphoneManager;
+			sourceTree = "<group>";
+		};
+		4AC389BC1B8E87520063298F = {
+			isa = PBXGroup;
+			children = (
+				4A5170761BACC61F00880FFD /* SystemConfiguration.framework */,
+				4A5170741BACC61500880FFD /* libsqlite3.tbd */,
+				CE6758B11BA8C9BF005396EF /* linphonesdk */,
+				4AC389C71B8E87530063298F /* VATRP */,
+				4AC389DE1B8E87530063298F /* VATRPTests */,
+				4AC389C61B8E87530063298F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4AC389C61B8E87530063298F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4AC389C51B8E87530063298F /* ACE.app */,
+				4AC389DB1B8E87530063298F /* VATRPTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4AC389C71B8E87530063298F /* VATRP */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFD9FC1BA610F100C35A74 /* LinphoneManager */,
+				2BA68DC71B985EE300145575 /* BFNavigationController */,
+				2BA68DC31B9853A000145575 /* Login */,
+				2BA68DD81B98732A00145575 /* Home */,
+				2B463EF31B984E49008E8333 /* Contacts */,
+				2B463EF61B984E49008E8333 /* Dialpad */,
+				2B463EFB1B984E49008E8333 /* Recents */,
+				2B463F001B984E49008E8333 /* Settings */,
+				2B463F031B984E49008E8333 /* VideoMail */,
+				4AAF560A1BAFFC0400241DC2 /* VideoCall */,
+				4AC389CA1B8E87530063298F /* AppDelegate.h */,
+				4AC389CB1B8E87530063298F /* AppDelegate.m */,
+				4AC389CF1B8E87530063298F /* ViewController.h */,
+				4AC389D01B8E87530063298F /* ViewController.m */,
+				4AC389D21B8E87530063298F /* Images.xcassets */,
+				4AC389D41B8E87530063298F /* Main.storyboard */,
+				4AC389C81B8E87530063298F /* Supporting Files */,
+			);
+			path = VATRP;
+			sourceTree = "<group>";
+		};
+		4AC389C81B8E87530063298F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4AAF56171BB1615900241DC2 /* Resource */,
+				4AAD8E651BAFECF2007C1949 /* Localizable.strings */,
+				4A5170781BACD10D00880FFD /* linphonerc */,
+				4AAD8E5C1BACD437007C1949 /* linphonerc-factory */,
+				4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */,
+				4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */,
+				4AC389C91B8E87530063298F /* Info.plist */,
+				4AC389CD1B8E87530063298F /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4AC389DE1B8E87530063298F /* VATRPTests */ = {
+			isa = PBXGroup;
+			children = (
+				4AC389E11B8E87530063298F /* VATRPTests.m */,
+				4AC389DF1B8E87530063298F /* Supporting Files */,
+			);
+			path = VATRPTests;
+			sourceTree = "<group>";
+		};
+		4AC389DF1B8E87530063298F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4AC389E01B8E87530063298F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CE6758A81BA8C99D005396EF /* opt */ = {
+			isa = PBXGroup;
+			children = (
+				CE6758A91BA8C99D005396EF /* gettext */,
+				CE6758AC1BA8C99D005396EF /* libffi */,
+			);
+			name = opt;
+			path = vatrp/linphonesdk/libs/opt;
+			sourceTree = "<group>";
+		};
+		CE6758A91BA8C99D005396EF /* gettext */ = {
+			isa = PBXGroup;
+			children = (
+				CE6758AA1BA8C99D005396EF /* lib */,
+			);
+			path = gettext;
+			sourceTree = "<group>";
+		};
+		CE6758AA1BA8C99D005396EF /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				CE6758AB1BA8C99D005396EF /* libintl.8.dylib */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		CE6758AC1BA8C99D005396EF /* libffi */ = {
+			isa = PBXGroup;
+			children = (
+				CE6758AD1BA8C99D005396EF /* lib */,
+			);
+			path = libffi;
+			sourceTree = "<group>";
+		};
+		CE6758AD1BA8C99D005396EF /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				CE6758AE1BA8C99D005396EF /* libffi.6.dylib */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		CE6758B11BA8C9BF005396EF /* linphonesdk */ = {
+			isa = PBXGroup;
+			children = (
+				CE3D24FC1BA7739300028600 /* libantlr3c.dylib */,
+				CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */,
+				CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */,
+				CE3D24FF1BA7739400028600 /* libavutil.54.dylib */,
+				CE3D25001BA7739400028600 /* libbellesip.0.dylib */,
+				CE3D25011BA7739400028600 /* libbzrtp.0.dylib */,
+				CE3D25021BA7739400028600 /* libcairo.2.dylib */,
+				CE3D25031BA7739400028600 /* libfontconfig.1.dylib */,
+				CE3D25041BA7739400028600 /* libfreetype.6.dylib */,
+				CE3D25051BA7739400028600 /* libgailutil.18.dylib */,
+				CE3D25061BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib */,
+				CE3D25071BA7739400028600 /* libgdk-quartz-2.0.0.dylib */,
+				CE3D25081BA7739400028600 /* libgio-2.0.0.dylib */,
+				CE3D25091BA7739400028600 /* libglib-2.0.0.dylib */,
+				CE3D250A1BA7739400028600 /* libgmodule-2.0.0.dylib */,
+				CE3D250B1BA7739400028600 /* libgmp.10.dylib */,
+				CE3D250C1BA7739400028600 /* libgnutls.28.dylib */,
+				CE3D250D1BA7739400028600 /* libgobject-2.0.0.dylib */,
+				CE3D250E1BA7739400028600 /* libgthread-2.0.0.dylib */,
+				CE3D250F1BA7739400028600 /* libgtk-quartz-2.0.0.dylib */,
+				CE3D25101BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib */,
+				CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */,
+				CE3D25121BA7739400028600 /* libhogweed.2.dylib */,
+				CE3D25131BA7739400028600 /* libjpeg.8.dylib */,
+				CE3D25141BA7739400028600 /* liblinphone.7.dylib */,
+				CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */,
+				CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */,
+				CE3D25171BA7739400028600 /* libmp3lame.0.dylib */,
+				CE3D25181BA7739400028600 /* libnettle.4.dylib */,
+				CE3D25191BA7739400028600 /* libopus.0.dylib */,
+				CE3D251A1BA7739400028600 /* libortp.9.dylib */,
+				CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */,
+				CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */,
+				CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */,
+				CE3D251E1BA7739400028600 /* libpixman-1.0.dylib */,
+				CE3D251F1BA7739400028600 /* libpng16.16.dylib */,
+				CE3D25201BA7739400028600 /* libpolarssl.0.dylib */,
+				CE3D25211BA7739400028600 /* libspeex.1.dylib */,
+				CE3D25221BA7739400028600 /* libspeexdsp.1.dylib */,
+				CE3D25231BA7739400028600 /* libswresample.1.dylib */,
+				CE3D25241BA7739400028600 /* libswscale.3.dylib */,
+				CE3D25251BA7739400028600 /* libtasn1.6.dylib */,
+				CE3D25261BA7739400028600 /* libtiff.5.dylib */,
+				CE3D25271BA7739400028600 /* libvo-aacenc.0.dylib */,
+				CE3D25281BA7739400028600 /* libx264.146.dylib */,
+				CE6758A81BA8C99D005396EF /* opt */,
+			);
+			name = linphonesdk;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4AC389C41B8E87530063298F /* VATRP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4AC389E51B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRP" */;
+			buildPhases = (
+				4AC389C11B8E87530063298F /* Sources */,
+				4AC389C21B8E87530063298F /* Frameworks */,
+				4AC389C31B8E87530063298F /* Resources */,
+				CE67587A1BA88A5A005396EF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VATRP;
+			productName = VATRP;
+			productReference = 4AC389C51B8E87530063298F /* ACE.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4AC389DA1B8E87530063298F /* VATRPTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4AC389E81B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRPTests" */;
+			buildPhases = (
+				4AC389D71B8E87530063298F /* Sources */,
+				4AC389D81B8E87530063298F /* Frameworks */,
+				4AC389D91B8E87530063298F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4AC389DD1B8E87530063298F /* PBXTargetDependency */,
+			);
+			name = VATRPTests;
+			productName = VATRPTests;
+			productReference = 4AC389DB1B8E87530063298F /* VATRPTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4AC389BD1B8E87520063298F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = Home;
+				TargetAttributes = {
+					4AC389C41B8E87530063298F = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					4AC389DA1B8E87530063298F = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 4AC389C41B8E87530063298F;
+					};
+				};
+			};
+			buildConfigurationList = 4AC389C01B8E87530063298F /* Build configuration list for PBXProject "ACE" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4AC389BC1B8E87520063298F;
+			productRefGroup = 4AC389C61B8E87530063298F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4AC389C41B8E87530063298F /* VATRP */,
+				4AC389DA1B8E87530063298F /* VATRPTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4AC389C31B8E87530063298F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
+				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
+				4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */,
+				4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */,
+				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
+				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
+				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
+				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
+				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
+				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
+				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
+				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
+				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
+				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
+				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
+				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AC389D91B8E87530063298F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4AC389C11B8E87530063298F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
+				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
+				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
+				4AC389D11B8E87530063298F /* ViewController.m in Sources */,
+				4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */,
+				4AC389CE1B8E87530063298F /* main.m in Sources */,
+				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
+				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
+				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
+				2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */,
+				2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */,
+				2B463F0B1B984E49008E8333 /* SettingsWindowController.m in Sources */,
+				2BA68DD71B98617000145575 /* LoginViewController.m in Sources */,
+				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
+				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
+				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
+				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
+				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
+				4AAF560D1BAFFC3B00241DC2 /* VideoCallWindowController.m in Sources */,
+				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
+				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AC389D71B8E87530063298F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AC389E21B8E87530063298F /* VATRPTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4AC389DD1B8E87530063298F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AC389C41B8E87530063298F /* VATRP */;
+			targetProxy = 4AC389DC1B8E87530063298F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4AC389D41B8E87530063298F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4AC389D51B8E87530063298F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4AC389E31B8E87530063298F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4AC389E41B8E87530063298F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4AC389E61B8E87530063298F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/VATRP/LinPhoneSDK/include",
+				);
+				INFOPLIST_FILE = VATRP/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/VATRP/LinPhoneSDK/libs",
+					"$(PROJECT_DIR)/VATRP/LinPhoneSDK/libs",
+					"$(PROJECT_DIR)/vatrp/linphonesdk/libs",
+					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/gettext/lib",
+					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
+				);
+				PRODUCT_NAME = ACE;
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		4AC389E71B8E87530063298F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/VATRP/LinPhoneSDK/include",
+				);
+				INFOPLIST_FILE = VATRP/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/VATRP/LinPhoneSDK/libs",
+					"$(PROJECT_DIR)/VATRP/LinPhoneSDK/libs",
+					"$(PROJECT_DIR)/vatrp/linphonesdk/libs",
+					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/gettext/lib",
+					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
+				);
+				PRODUCT_NAME = ACE;
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+		4AC389E91B8E87530063298F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VATRPTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VATRP.app/Contents/MacOS/VATRP";
+			};
+			name = Debug;
+		};
+		4AC389EA1B8E87530063298F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VATRPTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VATRP.app/Contents/MacOS/VATRP";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4AC389C01B8E87530063298F /* Build configuration list for PBXProject "ACE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AC389E31B8E87530063298F /* Debug */,
+				4AC389E41B8E87530063298F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4AC389E51B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AC389E61B8E87530063298F /* Debug */,
+				4AC389E71B8E87530063298F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4AC389E81B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRPTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AC389E91B8E87530063298F /* Debug */,
+				4AC389EA1B8E87530063298F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4AC389BD1B8E87520063298F /* Project object */;
+}

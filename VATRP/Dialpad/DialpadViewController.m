@@ -32,10 +32,12 @@
     self.buttonVideoCall.wantsLayer = YES;
     [self.buttonVideoCall.layer setBackgroundColor:[NSColor greenColor].CGColor];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(callUpdateEvent:)
+//                                                 name:kLinphoneCallUpdate
+//                                               object:nil];
+    
+    
 }
 
 - (IBAction)onButtonNumber:(id)sender {
@@ -115,8 +117,12 @@
             break;
         }
         case LinphoneCallIncoming: {
-            LinphoneCall* call      = linphone_core_get_current_call(lc);
-            [[LinphoneManager instance] acceptCall:call];
+            NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
+
+            if (auto_answer) {
+                LinphoneCall* call = linphone_core_get_current_call(lc);
+                [[LinphoneManager instance] acceptCall:call];
+            }
         }
             
         default:
@@ -138,7 +144,7 @@
     NSString* message = [NSString stringWithFormat : NSLocalizedString(@"'%@' would like to enable video",nil), ([lDisplayName length] > 0)?lDisplayName:lUserName];
     
     
-    NSAlert *alert = [[NSAlert alloc]init];
+    NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Accept"];
     [alert addButtonWithTitle:@"Decline"];
     [alert setMessageText:message];
@@ -161,6 +167,15 @@
             
         default:
             break;
+    }
+}
+
+- (IBAction)onLongPressZeroButton:(id)sender {
+    NSPressGestureRecognizer *pressGestureRecognizer = (NSPressGestureRecognizer*)sender;
+    NSGestureRecognizerState state = pressGestureRecognizer.state;
+    
+    if (state == NSGestureRecognizerStateBegan) {
+        self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"+"];
     }
 }
 

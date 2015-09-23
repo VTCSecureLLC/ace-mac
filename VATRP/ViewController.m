@@ -11,7 +11,6 @@
 #import "RecentsWindowController.h"
 #import "DialpadWindowController.h"
 #import "VideoMailWindowController.h"
-#import "SettingsWindowController.h"
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
 
@@ -24,7 +23,6 @@
 @property (nonatomic, retain) RecentsWindowController *recentsWindowController;
 @property (nonatomic, retain) DialpadWindowController *dialpadWindowController;
 @property (nonatomic, retain) VideoMailWindowController *videoMailWindowController;
-@property (nonatomic, retain) SettingsWindowController *settingsWindowController;
 
 @property (weak) IBOutlet NSTextField *textFieldRegistrationStatus;
 @property (weak) IBOutlet NSTextField *textFieldAccount;
@@ -126,6 +124,7 @@
     } else {
         if (self.settingsWindowController.isShow) {
             [self.settingsWindowController close];
+            self.settingsWindowController = nil;
         } else {
             [self.settingsWindowController showWindow:self];
             self.settingsWindowController.isShow = YES;
@@ -149,7 +148,7 @@
     const char* user = linphone_address_get_username(addr);
     NSString *username = [NSString stringWithUTF8String:user];
     
-    self.textFieldAccount.stringValue = username;
+    self.textFieldAccount.stringValue = [NSString stringWithFormat:@"Account: %@", username];
 }
 
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message{

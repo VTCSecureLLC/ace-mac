@@ -7,8 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SettingsWindowController.h"
 
 @interface ViewController : NSViewController
+
+@property (nonatomic, retain) SettingsWindowController *settingsWindowController;
 
 - (void) showSettingsWindow;
 

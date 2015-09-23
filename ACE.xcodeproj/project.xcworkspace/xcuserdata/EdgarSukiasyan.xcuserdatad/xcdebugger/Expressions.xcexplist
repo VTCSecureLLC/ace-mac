@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[AccountsViewController viewDidLoad]:AccountsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.buttonAutoAnswer">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[LinphoneManager lpConfigIntForKey:forSection:withDefault:]:LinphoneManager.m">
          <PersistentStrings>
             <PersistentString

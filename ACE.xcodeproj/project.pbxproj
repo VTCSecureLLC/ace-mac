@@ -47,6 +47,8 @@
 		4AC389D31B8E87530063298F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D21B8E87530063298F /* Images.xcassets */; };
 		4AC389D61B8E87530063298F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D41B8E87530063298F /* Main.storyboard */; };
 		4AC389E21B8E87530063298F /* VATRPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389E11B8E87530063298F /* VATRPTests.m */; };
+		4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */; settings = {ASSET_TAGS = (); }; };
+		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; settings = {ASSET_TAGS = (); }; };
 		CE3D25291BA7739400028600 /* libantlr3c.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FC1BA7739300028600 /* libantlr3c.dylib */; };
 		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
 		CE3D252B1BA7739400028600 /* libavcodec.56.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */; };
@@ -278,6 +280,10 @@
 		4AC389DB1B8E87530063298F /* VATRPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VATRPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AC389E01B8E87530063298F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AC389E11B8E87530063298F /* VATRPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VATRPTests.m; sourceTree = "<group>"; };
+		4AE0C6761BB2E9D000B4E208 /* CallWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallWindowController.h; sourceTree = "<group>"; };
+		4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallWindowController.m; sourceTree = "<group>"; };
+		4AE0C6791BB2E9E900B4E208 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallViewController.h; sourceTree = "<group>"; };
+		4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallViewController.m; sourceTree = "<group>"; };
 		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = vatrp/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
 		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
 		CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.56.dylib; path = vatrp/linphonesdk/libs/libavcodec.56.dylib; sourceTree = "<group>"; };
@@ -559,6 +565,7 @@
 				2B463F001B984E49008E8333 /* Settings */,
 				2B463F031B984E49008E8333 /* VideoMail */,
 				4AAF560A1BAFFC0400241DC2 /* VideoCall */,
+				4AE0C6751BB2E72900B4E208 /* In Call */,
 				4AC389CA1B8E87530063298F /* AppDelegate.h */,
 				4AC389CB1B8E87530063298F /* AppDelegate.m */,
 				4AC389CF1B8E87530063298F /* ViewController.h */,
@@ -601,6 +608,18 @@
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
+		};
+		4AE0C6751BB2E72900B4E208 /* In Call */ = {
+			isa = PBXGroup;
+			children = (
+				4AE0C6761BB2E9D000B4E208 /* CallWindowController.h */,
+				4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */,
+				4AE0C6791BB2E9E900B4E208 /* CallViewController.h */,
+				4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */,
+			);
+			name = "In Call";
+			path = "vatrp/In Call";
+			sourceTree = SOURCE_ROOT;
 		};
 		CE6758A81BA8C99D005396EF /* opt */ = {
 			isa = PBXGroup;
@@ -814,6 +833,7 @@
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
 				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
 				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
+				4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */,
 				4AC389D11B8E87530063298F /* ViewController.m in Sources */,
 				4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */,
 				4AC389CE1B8E87530063298F /* main.m in Sources */,
@@ -830,6 +850,7 @@
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
 				4AAF560D1BAFFC3B00241DC2 /* VideoCallWindowController.m in Sources */,
+				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
 			);
@@ -963,6 +984,7 @@
 					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/gettext/lib",
 					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = ACE;
 				VALID_ARCHS = x86_64;
 			};
@@ -987,6 +1009,7 @@
 					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/gettext/lib",
 					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = ACE;
 				VALID_ARCHS = x86_64;
 			};
@@ -1008,7 +1031,7 @@
 				INFOPLIST_FILE = VATRPTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VATRP.app/Contents/MacOS/VATRP";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACE.app/Contents/MacOS/ACE";
 			};
 			name = Debug;
 		};
@@ -1024,7 +1047,7 @@
 				INFOPLIST_FILE = VATRPTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VATRP.app/Contents/MacOS/VATRP";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACE.app/Contents/MacOS/ACE";
 			};
 			name = Release;
 		};

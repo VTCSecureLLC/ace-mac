@@ -9,5 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 int main(int argc, const char * argv[]) {
-    return NSApplicationMain(argc, argv);
+    @try {
+        return NSApplicationMain(argc, argv);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"@catch exception: %@", exception);
+    }
+    @finally {
+        NSLog(@"@@finally exception");
+    }
 }

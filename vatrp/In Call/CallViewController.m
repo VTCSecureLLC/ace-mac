@@ -78,6 +78,8 @@
         [self performSelector:@selector(dismiss) withObject:nil afterDelay:1.0];
     }
     
+    LinphoneCore* lc = [LinphoneManager getLc];
+
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call...";
@@ -116,12 +118,23 @@
         }
         case LinphoneCallUpdatedByRemote:
         {
-            //            const LinphoneCallParams* current = linphone_call_get_current_params(call);
-            //            const LinphoneCallParams* remote = linphone_call_get_remote_params(call);
-            //
-            //            if (linphone_call_params_video_enabled(current) && !linphone_call_params_video_enabled(remote)) {
-            //                [self changeCurrentView:[InCallViewController compositeViewDescription]];
-            //            }
+            const LinphoneCallParams* current = linphone_call_get_current_params(call);
+            const LinphoneCallParams* remote = linphone_call_get_remote_params(call);
+            
+            /* remote wants to add video */
+            if (linphone_core_video_enabled(lc) && !linphone_call_params_video_enabled(current) &&
+                linphone_call_params_video_enabled(remote) &&
+                !linphone_core_get_video_policy(lc)->automatically_accept) {
+                linphone_core_defer_call_update(lc, call);
+                //                [self displayAskToEnableVideoCall:call];
+                LinphoneCallParams* paramsCopy = linphone_call_params_copy(linphone_call_get_current_params(call));
+                linphone_call_params_enable_video(paramsCopy, TRUE);
+                linphone_core_accept_call_update([LinphoneManager getLc], call, paramsCopy);
+                linphone_call_params_destroy(paramsCopy);
+                
+            } else if (linphone_call_params_video_enabled(current) && !linphone_call_params_video_enabled(remote)) {
+                //                [self displayTableCall:animated];
+            }
             break;
         }
         case LinphoneCallError:

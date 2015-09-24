@@ -3,18 +3,26 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[AccountsViewController viewDidLoad]:AccountsViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.buttonAutoAnswer">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[LinphoneManager lpConfigIntForKey:forSection:withDefault:]:LinphoneManager.m">
          <PersistentStrings>
             <PersistentString
                value = "configDb">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[LoginViewController loadView]:LoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "pref">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[AccountsViewController viewDidLoad]:AccountsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.buttonAutoAnswer">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

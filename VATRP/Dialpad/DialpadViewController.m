@@ -114,7 +114,6 @@
 //                [self displayTableCall:animated];
             }
             break;
-            break;
         }
         case LinphoneCallIncoming: {
             NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];

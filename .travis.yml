@@ -7,7 +7,7 @@ before_script:
 - bundle install
 script:
 - xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration Debug build
-- xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration Release build
+- xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration Release build || true
 after_success:
 - ./Tools/github_release.sh
 notifications:

@@ -21,25 +21,25 @@
 		2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD31B98615500145575 /* ServiceSelectionViewController.m */; };
 		2BA68DD71B98617000145575 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD61B98617000145575 /* LoginViewController.m */; };
 		2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DDA1B98733E00145575 /* HomeWindowController.m */; };
-		4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9B91BB1BDC900FCD070 /* cameraview.png */; settings = {ASSET_TAGS = (); }; };
-		4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BA1BB1BDC900FCD070 /* contacts.png */; settings = {ASSET_TAGS = (); }; };
-		4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BB1BB1BDC900FCD070 /* dialpad.png */; settings = {ASSET_TAGS = (); }; };
-		4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BC1BB1BDC900FCD070 /* incoming.png */; settings = {ASSET_TAGS = (); }; };
-		4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BD1BB1BDC900FCD070 /* missed.png */; settings = {ASSET_TAGS = (); }; };
-		4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BE1BB1BDC900FCD070 /* recents.png */; settings = {ASSET_TAGS = (); }; };
-		4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BF1BB1BDC900FCD070 /* settings.png */; settings = {ASSET_TAGS = (); }; };
-		4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9C01BB1BDC900FCD070 /* vatrp.ico */; settings = {ASSET_TAGS = (); }; };
-		4A5170751BACC61500880FFD /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170741BACC61500880FFD /* libsqlite3.tbd */; };
+		31F974781BB3962000E21D92 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F974771BB3962000E21D92 /* libsqlite3.0.dylib */; };
+		4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9B91BB1BDC900FCD070 /* cameraview.png */; };
+		4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BA1BB1BDC900FCD070 /* contacts.png */; };
+		4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BB1BB1BDC900FCD070 /* dialpad.png */; };
+		4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BC1BB1BDC900FCD070 /* incoming.png */; };
+		4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BD1BB1BDC900FCD070 /* missed.png */; };
+		4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BE1BB1BDC900FCD070 /* recents.png */; };
+		4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BF1BB1BDC900FCD070 /* settings.png */; };
+		4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9C01BB1BDC900FCD070 /* vatrp.ico */; };
 		4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170761BACC61F00880FFD /* SystemConfiguration.framework */; };
-		4A5170791BACD10D00880FFD /* linphonerc in Resources */ = {isa = PBXBuildFile; fileRef = 4A5170781BACD10D00880FFD /* linphonerc */; settings = {ASSET_TAGS = (); }; };
-		4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5C1BACD437007C1949 /* linphonerc-factory */; settings = {ASSET_TAGS = (); }; };
-		4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */; settings = {ASSET_TAGS = (); }; };
-		4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */; settings = {ASSET_TAGS = (); }; };
-		4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E651BAFECF2007C1949 /* Localizable.strings */; settings = {ASSET_TAGS = (); }; };
-		4AAF560D1BAFFC3B00241DC2 /* VideoCallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */; settings = {ASSET_TAGS = (); }; };
-		4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */; settings = {ASSET_TAGS = (); }; };
-		4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF56151BB157AC00241DC2 /* AccountsViewController.m */; settings = {ASSET_TAGS = (); }; };
-		4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAF56191BB1615900241DC2 /* accounts_icon.png */; settings = {ASSET_TAGS = (); }; };
+		4A5170791BACD10D00880FFD /* linphonerc in Resources */ = {isa = PBXBuildFile; fileRef = 4A5170781BACD10D00880FFD /* linphonerc */; };
+		4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5C1BACD437007C1949 /* linphonerc-factory */; };
+		4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */; };
+		4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */; };
+		4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E651BAFECF2007C1949 /* Localizable.strings */; };
+		4AAF560D1BAFFC3B00241DC2 /* VideoCallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */; };
+		4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */; };
+		4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF56151BB157AC00241DC2 /* AccountsViewController.m */; };
+		4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAF56191BB1615900241DC2 /* accounts_icon.png */; };
 		4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */; };
 		4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CB1B8E87530063298F /* AppDelegate.m */; };
 		4AC389CE1B8E87530063298F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CD1B8E87530063298F /* main.m */; };
@@ -47,8 +47,8 @@
 		4AC389D31B8E87530063298F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D21B8E87530063298F /* Images.xcassets */; };
 		4AC389D61B8E87530063298F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D41B8E87530063298F /* Main.storyboard */; };
 		4AC389E21B8E87530063298F /* VATRPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389E11B8E87530063298F /* VATRPTests.m */; };
-		4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */; settings = {ASSET_TAGS = (); }; };
-		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */; };
+		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
 		CE3D25291BA7739400028600 /* libantlr3c.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FC1BA7739300028600 /* libantlr3c.dylib */; };
 		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
 		CE3D252B1BA7739400028600 /* libavcodec.56.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */; };
@@ -244,6 +244,7 @@
 		2BA68DD61B98617000145575 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		2BA68DD91B98733E00145575 /* HomeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeWindowController.h; sourceTree = "<group>"; };
 		2BA68DDA1B98733E00145575 /* HomeWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeWindowController.m; sourceTree = "<group>"; };
+		31F974771BB3962000E21D92 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4A50F9B91BB1BDC900FCD070 /* cameraview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraview.png; sourceTree = "<group>"; };
 		4A50F9BA1BB1BDC900FCD070 /* contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contacts.png; sourceTree = "<group>"; };
 		4A50F9BB1BB1BDC900FCD070 /* dialpad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dialpad.png; sourceTree = "<group>"; };
@@ -338,8 +339,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31F974781BB3962000E21D92 /* libsqlite3.0.dylib in Frameworks */,
 				4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */,
-				4A5170751BACC61500880FFD /* libsqlite3.tbd in Frameworks */,
 				CE6758B01BA8C99D005396EF /* libffi.6.dylib in Frameworks */,
 				CE3D25291BA7739400028600 /* libantlr3c.dylib in Frameworks */,
 				CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */,
@@ -534,6 +535,7 @@
 		4AC389BC1B8E87520063298F = {
 			isa = PBXGroup;
 			children = (
+				31F974771BB3962000E21D92 /* libsqlite3.0.dylib */,
 				4A5170761BACC61F00880FFD /* SystemConfiguration.framework */,
 				4A5170741BACC61500880FFD /* libsqlite3.tbd */,
 				CE6758B11BA8C9BF005396EF /* linphonesdk */,

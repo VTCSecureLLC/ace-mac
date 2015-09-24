@@ -38,7 +38,7 @@ find . -name '*.app' -print | while read app; do
   set +x
 done
 
-find . -name '*.dmg' -print | while read app; do
+find . -name '*.dmg' -print | while read dmg; do
   echo "Uploading $dmg github release $tag : $(ls -la $dmg)"
   /tmp/github-release upload \
       --user VTCSecureLLC \

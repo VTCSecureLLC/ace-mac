@@ -17,7 +17,7 @@
 @property (weak) IBOutlet NSTextField *textFieldPort;
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
 @property (weak) IBOutlet NSButton *buttonAutoAnswer;
-
+@property (weak) IBOutlet NSTextField *settingsFeedbackText;
 
 @end
 
@@ -30,8 +30,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"%@ - viewWillAppear: %i", self.title, animated);
-    
-    
     
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg=NULL;
@@ -93,6 +91,7 @@
     [self.comboBoxTransport selectItemWithObjectValue:sip_transport];
     NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.buttonAutoAnswer.state = auto_answer;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -118,6 +117,9 @@
                                 password:self.secureTextFieldPassword.stringValue
                                   domain:@"bc1.vatrp.net"
                            withTransport:self.comboBoxTransport.stringValue];
+    
+    self.settingsFeedbackText.stringValue = @"Settings saved";
+    
 }
 
 - (void) verificationSignInWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {

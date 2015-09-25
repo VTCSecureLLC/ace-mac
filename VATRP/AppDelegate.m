@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HomeWindowController.h"
 #import "LinphoneManager.h"
+#import <HockeySDK/HockeySDK.h>
 
 @interface AppDelegate () {
     HomeWindowController *homeWindowController;
@@ -36,6 +37,9 @@
                                              selector:@selector(callUpdate:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+    
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b7b28171bab92ce345aac7d54f435020"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

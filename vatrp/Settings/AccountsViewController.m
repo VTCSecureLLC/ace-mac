@@ -60,16 +60,21 @@
     
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
     const char* _domain = linphone_proxy_config_get_server_addr(proxyCfg);
-
     // Get SIP Transport
     LinphoneTransportType transport = linphone_address_get_transport(addr);
+    
+    if(transport == LinphoneTransportUdp){
+        linphone_address_set_transport(addr, LinphoneTransportTcp);
+        transport = linphone_address_get_transport(addr);
+    }
+    
     NSString *sip_transport = @"";
     switch (transport) {
         case LinphoneTransportTcp:
-            sip_transport = @"TCP";
+            sip_transport = @"Unencrypted (TCP)";
             break;
         case LinphoneTransportTls:
-            sip_transport = @"TLS";
+            sip_transport = @"Encrypted (TLS)";
             break;
             
         default:

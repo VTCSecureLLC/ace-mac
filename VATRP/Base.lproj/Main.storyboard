@@ -1093,10 +1093,8 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <objectValues>
-                                        <string>UDP</string>
-                                        <string>TCP</string>
-                                        <string>TLS</string>
-                                        <string>DTLS</string>
+                                        <string>Unencrypted (TCP)</string>
+                                        <string>Encrypted (TLS)</string>
                                     </objectValues>
                                 </comboBoxCell>
                             </comboBox>

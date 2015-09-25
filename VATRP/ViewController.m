@@ -10,7 +10,6 @@
 #import "ContactsWindowController.h"
 #import "RecentsWindowController.h"
 #import "DialpadWindowController.h"
-#import "VideoMailWindowController.h"
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
 
@@ -22,7 +21,6 @@
 @property (nonatomic, retain) ContactsWindowController *contactsWindowController;
 @property (nonatomic, retain) RecentsWindowController *recentsWindowController;
 @property (nonatomic, retain) DialpadWindowController *dialpadWindowController;
-@property (nonatomic, retain) VideoMailWindowController *videoMailWindowController;
 
 @property (weak) IBOutlet NSTextField *textFieldRegistrationStatus;
 @property (weak) IBOutlet NSTextField *textFieldAccount;
@@ -114,7 +112,7 @@
             [self.videoMailWindowController showWindow:self];
             self.videoMailWindowController.isShow = YES;
         }
-    }
+    }    
 }
 
 - (IBAction)onButtonSettings:(id)sender {
@@ -134,6 +132,16 @@
 
 - (void) showSettingsWindow {
     [self onButtonSettings:nil];
+}
+
+- (void) showVideoMailWindow {
+    if (!self.videoMailWindowController) {
+        self.videoMailWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoMail"];
+        [self.videoMailWindowController showWindow:self];
+    }
+
+    [self.videoMailWindowController showWindow:self];
+    self.videoMailWindowController.isShow = YES;
 }
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {

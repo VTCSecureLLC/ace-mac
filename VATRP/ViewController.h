@@ -8,12 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SettingsWindowController.h"
+#import "VideoMailWindowController.h"
 
 @interface ViewController : NSViewController
 
 @property (nonatomic, retain) SettingsWindowController *settingsWindowController;
+@property (nonatomic, retain) VideoMailWindowController *videoMailWindowController;
 
 - (void) showSettingsWindow;
+- (void) showVideoMailWindow;
 
 @end
 

@@ -60,23 +60,21 @@
     
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
     const char* _domain = linphone_proxy_config_get_server_addr(proxyCfg);
-
-    
     // Get SIP Transport
     LinphoneTransportType transport = linphone_address_get_transport(addr);
+    
+    if(transport == LinphoneTransportUdp){
+        linphone_address_set_transport(addr, LinphoneTransportTcp);
+        transport = linphone_address_get_transport(addr);
+    }
+    
     NSString *sip_transport = @"";
     switch (transport) {
-        case LinphoneTransportUdp:
-            sip_transport = @"UDP";
-            break;
         case LinphoneTransportTcp:
-            sip_transport = @"TCP";
+            sip_transport = @"Unencrypted (TCP)";
             break;
         case LinphoneTransportTls:
-            sip_transport = @"TLS";
-            break;
-        case LinphoneTransportDtls:
-            sip_transport = @"DTLS";
+            sip_transport = @"Encrypted (TLS)";
             break;
             
         default:
@@ -123,6 +121,15 @@
 }
 
 - (void) verificationSignInWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
+    
+    if([transport isEqualToString:@"Unencrypted (TCP)"]){
+        transport = @"TCP";
+    }
+
+    else if([transport isEqualToString:@"Encrypted (TLS)"]){
+        transport = @"TLS";
+    }
+    
     if ([self verificationWithUsername:username password:password domain:domain withTransport:transport]) {
         if ([LinphoneManager instance].connectivity == none) {
             NSAlert *alert = [[NSAlert alloc]init];

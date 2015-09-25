@@ -7,6 +7,7 @@
 //
 
 #import "CallViewController.h"
+#import "VideoCallViewController.h"
 #import "AppDelegate.h"
 
 
@@ -89,6 +90,17 @@
             break;
         }
         case LinphoneCallConnected: {
+            VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+            [videoCallWindowController showWindow:self];
+            VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
+            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
+            
+
+            [[AppDelegate sharedInstance].viewController showVideoMailWindow];
+            linphone_core_use_preview_window([LinphoneManager getLc], YES);
+            linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
+
+
             self.labelCallState.stringValue = @"Connected";
 
             self.buttonAnswer.hidden = YES;
@@ -165,7 +177,9 @@
 
 - (void)dismiss {
     [[AppDelegate sharedInstance].callWindowController close];
-    
+    VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+    [videoCallWindowController close];
+
     if (timerCallDuration && [timerCallDuration isValid]) {
         [timerCallDuration invalidate];
         timerCallDuration = nil;

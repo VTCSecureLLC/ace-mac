@@ -55,25 +55,27 @@ else
              -exportFormat app \
              -archivePath $XCARCHIVE_FILE \
              -exportPath $PKG_FILE \
-             -exportProvisioningProfile 'com.vtcsecure.ace.mac development'
+             -exportProvisioningProfile 'com.vtcsecure.ace.mac development' || true
 
-  # Create a dSYM zip file from the archive build
+  if [ -f $PKG_FILE ]; then
+    # Create a dSYM zip file from the archive build
 
-  DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
-  DSYM_ZIP_FILE=${PKG_FILE}.dsym.zip
-  (cd $(dirname $DSYM_DIR) ; zip -r $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
+    DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
+    DSYM_ZIP_FILE=${PKG_FILE}.dsym.zip
+    (cd $(dirname $DSYM_DIR) ; zip -r $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
 
-  # Distribute via HockeyApp
+    # Distribute via HockeyApp
 
-  bundle exec ipa distribute:hockeyapp \
-             --token $HOCKEYAPP_TOKEN \
-             --file $PKG_FILE \
-             --dsym $DSYM_ZIP_FILE \
-             --notes LastCommit.txt \
-             --notify \
-             --commit-sha ${SHA1} \
-             --build-server-url "https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
-             --repository-url "https://github.com/${TRAVIS_REPO_SLUG}"
+    bundle exec ipa distribute:hockeyapp \
+               --token $HOCKEYAPP_TOKEN \
+               --file $PKG_FILE \
+               --dsym $DSYM_ZIP_FILE \
+               --notes LastCommit.txt \
+               --notify \
+               --commit-sha ${SHA1} \
+               --build-server-url "https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+               --repository-url "https://github.com/${TRAVIS_REPO_SLUG}"
+  fi
 fi
 
 # Create a GitHub release if credentials are available

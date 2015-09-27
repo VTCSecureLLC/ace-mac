@@ -783,6 +783,7 @@
 				TargetAttributes = {
 					4AC389C41B8E87530063298F = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = N35DF75MHS;
 					};
 					4AC389DA1B8E87530063298F = {
 						CreatedOnToolsVersion = 6.4;
@@ -938,7 +939,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -955,9 +956,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -992,7 +993,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -1002,6 +1003,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1023,6 +1025,7 @@
 					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
 				VALID_ARCHS = x86_64;
 			};
@@ -1032,6 +1035,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1053,6 +1057,7 @@
 					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
 				VALID_ARCHS = x86_64;
 			};
@@ -1104,7 +1109,7 @@
 				4AC389E41B8E87530063298F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		4AC389E51B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRP" */ = {
 			isa = XCConfigurationList;
@@ -1113,7 +1118,7 @@
 				4AC389E71B8E87530063298F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		4AC389E81B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRPTests" */ = {
 			isa = XCConfigurationList;
@@ -1122,7 +1127,7 @@
 				4AC389EA1B8E87530063298F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

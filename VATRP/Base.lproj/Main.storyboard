@@ -25,9 +25,9 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Vdn-KY-TV2"/>
-                                        <menuItem title="Provide VATRO Feedback" id="1gL-fB-Nk5">
+                                        <menuItem title="Provide VATRP Feedback" id="1gL-fB-Nk5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Provide VATRO Feedback" systemMenu="services" id="uHZ-8A-MP1"/>
+                                            <menu key="submenu" title="Provide VATRP Feedback" systemMenu="services" id="uHZ-8A-MP1"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="U6u-jY-bhT"/>
                                         <menuItem title="Check for Update" id="uqD-pG-08q">

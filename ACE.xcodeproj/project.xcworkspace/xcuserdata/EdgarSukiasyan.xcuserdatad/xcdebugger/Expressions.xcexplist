@@ -11,14 +11,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[LoginViewController loadView]:LoginViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "pref">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[AccountsViewController viewDidLoad]:AccountsViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -33,6 +25,39 @@
                value = "videoCallViewController.videoPreview">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CodecsViewController onButtonSave:]:CodecsViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MediaViewController onButtonSave:]:MediaViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.comboBoxVideoSize">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CodecsViewController viewDidLoad]:CodecsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "value">
+            </PersistentString>
+            <PersistentString
+               value = "pt-&gt;mime_type">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[LoginViewController loadView]:LoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "pref">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CodecsViewController onCheckboxStatus:]:CodecsViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

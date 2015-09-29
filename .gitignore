@@ -1,6 +1,5 @@
 build/
 ACE.xcodeproj/project.xcworkspace/
-ACE.xcodeproj/project.xcworkspace/xcuserdata/icblenke.xcuserdatad/
 ACE.xcodeproj/xcuserdata/
 *.dmg
 diskimage/

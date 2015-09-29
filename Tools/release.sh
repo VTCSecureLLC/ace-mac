@@ -12,7 +12,16 @@ if [ "$TRAVIS_BRANCH" != "master" ] ; then
   exit 0
 fi
 
-set -xe
+# Prepare codesigning keys
+
+if [ -n "${BUCKET}" ]; then
+  brew install awscli
+  aws s3 sync --quiet s3://${BUCKET}/ sync/
+  chmod 755 apply.sh
+  . ./sync/apply.sh mac
+fi
+
+set -ex
 
 # Generate an archive for this project
 
@@ -24,7 +33,9 @@ xctool -project ACE.xcodeproj \
        -configuration Debug \
        -derivedDataPath build/derived \
        archive \
-       -archivePath $XCARCHIVE_FILE
+       -archivePath $XCARCHIVE_FILE \
+       CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" \
+       PROVISIONING_PROFILE="$PROVISIONING_PROFILE"
 
 # Prepare semantic versioning tag
 

@@ -14,14 +14,14 @@ fi
 
 # Prepare codesigning keys
 
-set -e
-
 if [ -n "${BUCKET}" ]; then
   brew install awscli
   aws s3 sync --quiet s3://${BUCKET}/ sync/
   chmod 755 apply.sh
   . ./sync/apply.sh mac
 fi
+
+set -ex
 
 # Generate an archive for this project
 

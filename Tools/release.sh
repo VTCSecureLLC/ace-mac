@@ -54,11 +54,9 @@ PKG_FILE=/tmp/ace-mac.pkg
 
 # Release via HockeyApp if credentials are available
 
-set +x
 if [ -z "$HOCKEYAPP_TOKEN" ]; then
   echo HOCKEYAPP_TOKEN is not defined. Neither creating installer pkg, nor deploying it to HockeyApp.
 else
-  set -x
 
   # Generate an installer pkg from the archive
 
@@ -91,11 +89,9 @@ fi
 
 # Create a GitHub release if credentials are available
 
-set +x
 if [ -z "$GITHUB_TOKEN" ]; then
   echo GITHUB_TOKEN is not defined. Neither creating dmg packages, nor creating a GitHub release.
 else
-  set -x
   curl -sL https://github.com/aktau/github-release/releases/download/v0.6.2/darwin-amd64-github-release.tar.bz2 | bunzip2 -cd | tar xf - --strip=3 -C /tmp/
 
   chmod 755 /tmp/github-release
@@ -109,7 +105,6 @@ else
       --pre-release
 
   find . -name '*.app' -print | grep -v build/derived | while read app; do
-    set -x
     mkdir -p diskimage/
     cp -a "$app" diskimage/
     [ -d "$app".dSYM ] && cp -a "$app".dSYM diskimage/
@@ -117,7 +112,6 @@ else
     dmg=$(basename "$app" | sed -e 's/.app$//')
     hdiutil create $dmg-$config-$tag.dmg -srcfolder diskimage/ -ov
     rm -fr diskimage/
-    set +x
   done
 
   find . -name '*.dmg' -print | while read dmg; do

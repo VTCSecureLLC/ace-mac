@@ -7,12 +7,15 @@
 //
 
 #import "SettingsWindowController.h"
-#import "BFNavigationController.h"
 #import "AccountsViewController.h"
+#import "CodecsViewController.h"
+#import "MediaViewController.h"
 #import "AppDelegate.h"
 
 @interface SettingsWindowController () {
     AccountsViewController *accountsViewController;
+    CodecsViewController *codecsViewController;
+    MediaViewController *mediaViewController;
 }
 
 @end
@@ -31,12 +34,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
     
     accountsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AccountsViewController"];
+    codecsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CodecsViewController"];
+    mediaViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MediaViewController"];
     
-    // Init navigation controller and add to window
-    BFNavigationController *navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
-                                                      rootViewController:accountsViewController];
-    
-    [self.window.contentView addSubview:navigationController.view];
+    self.window.contentView = accountsViewController.view;
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification
@@ -46,6 +47,15 @@
 }
 
 - (IBAction)onToolbarItemAccount:(id)sender {
+    self.window.contentView = accountsViewController.view;
+}
+
+- (IBAction)onToolbarItemCodecs:(id)sender {
+    self.window.contentView = codecsViewController.view;
+}
+
+- (IBAction)onToolbarItemMedia:(id)sender {
+    self.window.contentView = mediaViewController.view;
 }
 
 @end

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[LinphoneManager lpConfigIntForKey:forSection:withDefault:]:LinphoneManager.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "configDb">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[AccountsViewController viewDidLoad]:AccountsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.buttonAutoAnswer">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[DialpadViewController callUpdate:state:]:DialpadViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "videoCallViewController.videoPreview">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CodecsViewController onButtonSave:]:CodecsViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MediaViewController onButtonSave:]:MediaViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.comboBoxVideoSize">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CodecsViewController viewDidLoad]:CodecsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "value">
+            </PersistentString>
+            <PersistentString
+               value = "pt-&gt;mime_type">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[LoginViewController loadView]:LoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "pref">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CodecsViewController onCheckboxStatus:]:CodecsViewController.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HomeWindowController.h"
 #import "LinphoneManager.h"
+#import "AccountsService.h"
 #import <HockeySDK/HockeySDK.h>
 
 @interface AppDelegate () {
@@ -22,12 +23,14 @@
 @implementation AppDelegate
 
 @synthesize loginWindowController;
+@synthesize loginViewController;
 @synthesize callWindowController;
 @synthesize viewController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     
+    [AccountsService sharedInstance];
     videoCallWindowController = nil;
 
     [self.menuItemPreferences setAction:nil];

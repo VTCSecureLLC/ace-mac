@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "LoginWindowController.h"
+#import "LoginViewController.h"
 #import "VideoCallWindowController.h"
 #import "CallWindowController.h"
 #import "ViewController.h"
@@ -16,6 +17,7 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (nonatomic, retain) LoginWindowController *loginWindowController;
+@property (nonatomic, retain) LoginViewController *loginViewController;
 @property (nonatomic, retain) CallWindowController *callWindowController;
 @property (nonatomic, retain) ViewController *viewController;
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;

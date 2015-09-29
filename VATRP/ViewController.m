@@ -163,6 +163,14 @@
     switch (state) {
         case LinphoneRegistrationOk: {
             self.textFieldRegistrationStatus.stringValue = @"Registered";
+
+            [[NSNotificationCenter defaultCenter] removeObserver:[AppDelegate sharedInstance].loginViewController
+                                                            name:kLinphoneConfiguringStateUpdate
+                                                          object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:[AppDelegate sharedInstance].loginViewController
+                                                            name:kLinphoneRegistrationUpdate
+                                                          object:nil];
+
             break;
         }
         case LinphoneRegistrationNone:

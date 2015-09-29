@@ -11,6 +11,7 @@
 #import "NSViewController+BFNavigationController.h"
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
+#import "AccountsService.h"
 
 
 @interface LoginViewController ()
@@ -25,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    
+    [AppDelegate sharedInstance].loginViewController = self;
 }
 
 - (void)loadView {
@@ -67,25 +70,16 @@
     linphone_core_enable_self_view(lc, YES); // [self boolForKey:@"self_video_preference"]
     BOOL preview_preference = YES;//[self boolForKey:@"preview_preference"];
     lp_config_set_int(config, [LINPHONERC_APPLICATION_KEY UTF8String], "preview_preference", preview_preference);
-    MSVideoSize vsize;
-    int bw;
-    switch (1) { // [self integerForKey:@"video_preferred_size_preference"]
-        case 0:
-            MS_VIDEO_SIZE_ASSIGN(vsize, 720P);
-            // 128 = margin for audio, the BW includes both video and audio
-            bw = 1024 + 128;
-            break;
-        case 1:
-            MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
-            // no margin for VGA or QVGA, because video encoders can encode the
-            // target resulution in less than the asked bandwidth
-            bw = 512;
-            break;
-        case 2:
-        default:
-            MS_VIDEO_SIZE_ASSIGN(vsize, QVGA);
-            bw = 380;
-            break;
+    
+    NSString *first = [[NSUserDefaults standardUserDefaults] objectForKey:@"ACE_FIRST_OPEN"];
+    
+    if (!first) {
+        MSVideoSize vsize;
+        MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
+        linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ACE_FIRST_OPEN"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
     [self startUp];
@@ -368,6 +362,13 @@
         case LinphoneRegistrationOk: {
 //            [[AppDelegate sharedInstance] showTabWindow];
 //            [[AppDelegate sharedInstance].loginWindowController close];
+            
+            [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
+                                                            Password:self.textFieldPassword.stringValue
+                                                              Domain:@"bc1.vatrp.net"
+                                                           Transport:@"TCP"
+                                                                Port:5060
+                                                           isDefault:YES];
             break;
         }
         case LinphoneRegistrationNone:

@@ -13,9 +13,9 @@ before_script:
 - bundle install
 script:
 - xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration
-  Debug build CODE_SIGNING_REQUIRED=NO
+  Debug build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
 - xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration
-  Release build CODE_SIGNING_REQUIRED=NO
+  Release build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
 after_success:
 - "./Tools/release.sh"
 notifications:

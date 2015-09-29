@@ -9,7 +9,7 @@
 #import "CallViewController.h"
 #import "VideoCallViewController.h"
 #import "AppDelegate.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @interface CallViewController () {
     NSTimer *timerCallDuration;
@@ -47,6 +47,8 @@
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+    
+    self.view.wantsLayer = true;
 }
 
 - (void) dealloc {
@@ -84,12 +86,28 @@
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call...";
+            
+            NSView *content = self.view;
+            CALayer *layer = [content layer];
+            
+            CABasicAnimation *anime = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+            anime.fromValue = (id)[layer backgroundColor];
+            anime.toValue = (id)CFBridgingRelease(CGColorCreateGenericRGB(0.8, 0.1, 0.1, 1.0));
+            anime.duration = 0.3f;
+            anime.autoreverses = YES;
+            anime.repeatCount = 100;
+            
+            [layer addAnimation:anime forKey:@"backgroundColor"];
         }
         case LinphoneCallIncomingEarlyMedia:
         {
             break;
         }
         case LinphoneCallConnected: {
+            NSView *content = self.view;
+            CALayer *layer = [content layer];
+            [layer removeAllAnimations];
+
             VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
             [videoCallWindowController showWindow:self];
             VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;

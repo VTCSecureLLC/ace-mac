@@ -58,8 +58,6 @@
     int port = linphone_address_get_port(addr);
     NSString *sip_port = [NSString stringWithFormat:@"%d", port];
     
-    LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
-    const char* _domain = linphone_proxy_config_get_server_addr(proxyCfg);
     // Get SIP Transport
     LinphoneTransportType transport = linphone_address_get_transport(addr);
     

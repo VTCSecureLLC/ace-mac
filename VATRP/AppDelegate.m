@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HomeWindowController.h"
 #import "LinphoneManager.h"
+#import "LinphoneCoreSettingsStore.h"
 #import <HockeySDK/HockeySDK.h>
 
 @interface AppDelegate () {
@@ -44,6 +45,12 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+    LinphoneCore *lc=[LinphoneManager getLc];
+    linphone_core_clear_proxy_config(lc);
+    linphone_core_clear_all_auth_info(lc);
+    
+    LinphoneCoreSettingsStore *settingsStore = [[LinphoneCoreSettingsStore alloc] init];
+    [settingsStore transformLinphoneCoreToKeys];
 }
 
 + (AppDelegate*)sharedInstance {

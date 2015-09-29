@@ -24,6 +24,9 @@
     self.isShow = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
+    
+    [self.window makeKeyAndOrderFront:nil];
+    [self.window setLevel:NSStatusWindowLevel];
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

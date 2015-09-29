@@ -30,6 +30,7 @@
 - (IBAction)onButtonDialpad:(id)sender;
 - (IBAction)onButtonVidelMail:(id)sender;
 - (IBAction)onButtonSettings:(id)sender;
+- (void) updateAccountInfo;
 
 
 @end
@@ -47,6 +48,12 @@
     [[AppDelegate sharedInstance].menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
 
 
+    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+    LinphoneRegistrationState linphoneRegistrationState = linphone_proxy_config_get_state (proxyCfg);
+    
+    [self registrationUpdate:linphoneRegistrationState message:nil];
+    [self updateAccountInfo];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(registrationUpdateEvent:)
                                                  name:kLinphoneRegistrationUpdate
@@ -147,16 +154,8 @@
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     NSString* message = [notif.userInfo objectForKey:@"message"];
     [self registrationUpdate:[[notif.userInfo objectForKey: @"state"] intValue] message:message];
-    
-    LinphoneCore *lc = [LinphoneManager getLc];
-    LinphoneProxyConfig *cfg=NULL;
-    linphone_core_get_default_proxy(lc,&cfg);
-    const char *identity=linphone_proxy_config_get_identity(cfg);
-    LinphoneAddress *addr=linphone_address_new(identity);
-    const char* user = linphone_address_get_username(addr);
-    NSString *username = [NSString stringWithUTF8String:user];
-    
-    self.textFieldAccount.stringValue = [NSString stringWithFormat:@"Account: %@", username];
+
+    [self updateAccountInfo];
 }
 
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message{
@@ -181,6 +180,18 @@
         default:
             break;
     }
+}
+
+- (void) updateAccountInfo {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    LinphoneProxyConfig *cfg=NULL;
+    linphone_core_get_default_proxy(lc,&cfg);
+    const char *identity=linphone_proxy_config_get_identity(cfg);
+    LinphoneAddress *addr=linphone_address_new(identity);
+    const char* user = linphone_address_get_username(addr);
+    NSString *username = [NSString stringWithUTF8String:user];
+    
+    self.textFieldAccount.stringValue = [NSString stringWithFormat:@"Account: %@", username];
 }
 
 @end

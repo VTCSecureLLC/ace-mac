@@ -16,8 +16,9 @@ fi
 
 if [ -n "${BUCKET}" ]; then
   brew install awscli
-  aws s3 sync --quiet s3://${BUCKET}/ sync/
+  aws s3 sync --quiet s3://${BUCKET}/apple/ sync/
   cd sync
+  pwd
   chmod 755 apply.sh
   . ./apply.sh mac
   cd ..

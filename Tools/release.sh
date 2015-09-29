@@ -20,10 +20,8 @@ if [ -n "${BUCKET}" ]; then
   which aws || pip install awscli
   aws s3 sync --quiet s3://${BUCKET}/ sync/
   chmod 755 apply.sh
-  ./sync/apply.sh
+  . ./sync/apply.sh mac
 fi
-
-set -xe
 
 # Generate an archive for this project
 
@@ -35,7 +33,9 @@ xctool -project ACE.xcodeproj \
        -configuration Debug \
        -derivedDataPath build/derived \
        archive \
-       -archivePath $XCARCHIVE_FILE
+       -archivePath $XCARCHIVE_FILE \
+       CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" \
+       PROVISIONING_PROFILE="$PROVISIONING_PROFILE"
 
 # Prepare semantic versioning tag
 

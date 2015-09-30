@@ -1116,7 +1116,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bfe222b1-c135-4ce5-b8b6-769013333d07";
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -1151,7 +1151,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bfe222b1-c135-4ce5-b8b6-769013333d07";
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;

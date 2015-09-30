@@ -10,4 +10,6 @@
 
 @interface MediaViewController : NSViewController
 
+- (void) save;
+
 @end

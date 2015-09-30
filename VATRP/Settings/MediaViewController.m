@@ -9,7 +9,11 @@
 #import "MediaViewController.h"
 #import "LinphoneManager.h"
 
-@interface MediaViewController ()
+#define kPREFERED_VIDEO_RESOLUTION @"kPREFERED_VIDEO_RESOLUTION"
+
+@interface MediaViewController () {
+    BOOL isChanged;
+}
 
 @property (weak) IBOutlet NSComboBox *comboBoxVideoSize;
 
@@ -17,33 +21,51 @@
 
 @implementation MediaViewController
 
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    
+    isChanged = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
     
+    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:kPREFERED_VIDEO_RESOLUTION];
     
-    MSVideoSize vsize = linphone_core_get_preferred_video_size([LinphoneManager getLc]);
-    
-    if ((vsize.width == MS_VIDEO_SIZE_1080P_W) && (vsize.height == MS_VIDEO_SIZE_1080P_H)) {
-        self.comboBoxVideoSize.stringValue = @"1080p (1920x1080)";
-    } else if ((vsize.width == MS_VIDEO_SIZE_720P_W) && (vsize.height == MS_VIDEO_SIZE_720P_H)) {
-        self.comboBoxVideoSize.stringValue = @"720p (1280x720)";
-    } else if ((vsize.width == MS_VIDEO_SIZE_SVGA_W) && (vsize.height == MS_VIDEO_SIZE_SVGA_H)) {
-        self.comboBoxVideoSize.stringValue = @"svga (800x600)";
-    } else if ((vsize.width == MS_VIDEO_SIZE_4CIF_W) && (vsize.height == MS_VIDEO_SIZE_4CIF_H)) {
-        self.comboBoxVideoSize.stringValue = @"4cif (704x576)";
-    } else if ((vsize.width == MS_VIDEO_SIZE_VGA_W) && (vsize.height == MS_VIDEO_SIZE_VGA_H)) {
-        self.comboBoxVideoSize.stringValue = @"vga (640x480)";
-    } else if ((vsize.width == MS_VIDEO_SIZE_CIF_W) && (vsize.height == MS_VIDEO_SIZE_CIF_H)) {
-        self.comboBoxVideoSize.stringValue = @"cif (352x288)";
-    } else if ((vsize.width == MS_VIDEO_SIZE_QCIF_W) && (vsize.height == MS_VIDEO_SIZE_QCIF_H)) {
-        self.comboBoxVideoSize.stringValue = @"qcif (176x144)";
-    }  else {
-        self.comboBoxVideoSize.stringValue = @"None";
+    if (video_resolution) {
+        self.comboBoxVideoSize.stringValue = video_resolution;
+    } else {
+        MSVideoSize vsize = linphone_core_get_preferred_video_size([LinphoneManager getLc]);
+        
+        if ((vsize.width == MS_VIDEO_SIZE_1080P_W) && (vsize.height == MS_VIDEO_SIZE_1080P_H)) {
+            self.comboBoxVideoSize.stringValue = @"1080p (1920x1080)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_720P_W) && (vsize.height == MS_VIDEO_SIZE_720P_H)) {
+            self.comboBoxVideoSize.stringValue = @"720p (1280x720)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_SVGA_W) && (vsize.height == MS_VIDEO_SIZE_SVGA_H)) {
+            self.comboBoxVideoSize.stringValue = @"svga (800x600)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_4CIF_W) && (vsize.height == MS_VIDEO_SIZE_4CIF_H)) {
+            self.comboBoxVideoSize.stringValue = @"4cif (704x576)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_VGA_W) && (vsize.height == MS_VIDEO_SIZE_VGA_H)) {
+            self.comboBoxVideoSize.stringValue = @"vga (640x480)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_CIF_W) && (vsize.height == MS_VIDEO_SIZE_CIF_H)) {
+            self.comboBoxVideoSize.stringValue = @"cif (352x288)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_QCIF_W) && (vsize.height == MS_VIDEO_SIZE_QCIF_H)) {
+            self.comboBoxVideoSize.stringValue = @"qcif (176x144)";
+        }  else {
+            self.comboBoxVideoSize.stringValue = @"None";
+        }
     }
 }
 
-- (IBAction)onButtonSave:(id)sender {
+- (IBAction)onComboboxPreferedVideoResolution:(id)sender {
+    isChanged = YES;
+}
+
+- (void) save {
+    if (!isChanged) {
+        return;
+    }
     
     MSVideoSize vsize;
 
@@ -64,9 +86,8 @@
     }
 
     linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
-    NSLog(@"ACE");
     
-//        linphone_core_set_preview_video_size_by_name([LinphoneManager getLc], "vga");
+    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxVideoSize.stringValue forKey:kPREFERED_VIDEO_RESOLUTION];
 }
 
 @end

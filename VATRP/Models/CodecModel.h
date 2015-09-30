@@ -15,4 +15,7 @@
 @property (nonatomic, assign) int channels;
 @property (nonatomic, assign) BOOL status;
 
+- (id) initWithDictionary:(NSDictionary*)dictionary;
+- (NSDictionary*) serializedDictionary;
+
 @end

@@ -52,6 +52,8 @@
 		4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF56151BB157AC00241DC2 /* AccountsViewController.m */; };
 		4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAF56191BB1615900241DC2 /* accounts_icon.png */; };
 		4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */; };
+		4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC13F941BBBFD21008305CD /* CallLogService.m */; settings = {ASSET_TAGS = (); }; };
+		4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC13F9D1BBC0769008305CD /* SettingsViewController.m */; settings = {ASSET_TAGS = (); }; };
 		4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC344841BB9A777000C4909 /* MediaViewController.m */; settings = {ASSET_TAGS = (); }; };
 		4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CB1B8E87530063298F /* AppDelegate.m */; };
 		4AC389CE1B8E87530063298F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CD1B8E87530063298F /* main.m */; };
@@ -297,6 +299,10 @@
 		4AAF56191BB1615900241DC2 /* accounts_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounts_icon.png; sourceTree = "<group>"; };
 		4AAFDC3C1BA9D78200C35A74 /* LinphoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinphoneManager.h; path = VATRP/LinphoneManager/LinphoneManager.h; sourceTree = SOURCE_ROOT; };
 		4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinphoneManager.m; path = VATRP/LinphoneManager/LinphoneManager.m; sourceTree = SOURCE_ROOT; };
+		4AC13F931BBBFD21008305CD /* CallLogService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallLogService.h; sourceTree = "<group>"; };
+		4AC13F941BBBFD21008305CD /* CallLogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallLogService.m; sourceTree = "<group>"; };
+		4AC13F9C1BBC0769008305CD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		4AC13F9D1BBC0769008305CD /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4AC344831BB9A777000C4909 /* MediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaViewController.h; sourceTree = "<group>"; };
 		4AC344841BB9A777000C4909 /* MediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaViewController.m; sourceTree = "<group>"; };
 		4AC389C51B8E87530063298F /* ACE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ACE.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -476,6 +482,8 @@
 			children = (
 				2B463F011B984E49008E8333 /* SettingsWindowController.h */,
 				2B463F021B984E49008E8333 /* SettingsWindowController.m */,
+				4AC13F9C1BBC0769008305CD /* SettingsViewController.h */,
+				4AC13F9D1BBC0769008305CD /* SettingsViewController.m */,
 				4AAF56141BB157AC00241DC2 /* AccountsViewController.h */,
 				4AAF56151BB157AC00241DC2 /* AccountsViewController.m */,
 				4A902DF61BB9746600ECFD86 /* CodecsViewController.h */,
@@ -538,6 +546,8 @@
 				4A902DE81BB95A7000ECFD86 /* Utils.m */,
 				4A902DDB1BB9489B00ECFD86 /* AccountsService.h */,
 				4A902DDC1BB9489B00ECFD86 /* AccountsService.m */,
+				4AC13F931BBBFD21008305CD /* CallLogService.h */,
+				4AC13F941BBBFD21008305CD /* CallLogService.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -935,6 +945,7 @@
 			files = (
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
+				4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */,
 				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
 				4A902DFB1BB9823200ECFD86 /* CodecModel.m in Sources */,
 				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
@@ -957,6 +968,7 @@
 				4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */,
 				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
+				4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */,
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,

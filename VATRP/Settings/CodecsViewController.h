@@ -10,4 +10,6 @@
 
 @interface CodecsViewController : NSViewController
 
+- (void) save;
+
 @end

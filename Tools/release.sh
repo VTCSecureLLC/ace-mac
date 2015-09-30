@@ -70,7 +70,8 @@ else
              -exportPath $PKG_FILE \
              -exportProvisioningProfile 'com.vtcsecure.ace.mac development' || true
 
-  ls -la "$PKG_FILE"
+  ls -la "$XCARCHIVE_FILE" || true
+  ls -la "$PKG_FILE" || true
 
   if [ -f $PKG_FILE ]; then
     # Create a dSYM zip file from the archive build

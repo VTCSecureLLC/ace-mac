@@ -65,9 +65,12 @@ else
 
   xcodebuild -exportArchive \
              -exportFormat app \
+             -configuration Debug \
              -archivePath $XCARCHIVE_FILE \
              -exportPath $PKG_FILE \
              -exportProvisioningProfile 'com.vtcsecure.ace.mac development' || true
+
+  ls -la "$PKG_FILE"
 
   if [ -f $PKG_FILE ]; then
     # Create a dSYM zip file from the archive build

@@ -22,6 +22,8 @@
 		2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD31B98615500145575 /* ServiceSelectionViewController.m */; };
 		2BA68DD71B98617000145575 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD61B98617000145575 /* LoginViewController.m */; };
 		2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DDA1B98733E00145575 /* HomeWindowController.m */; };
+		313411881BBC533D0056B1C0 /* libopenh264-1.4.0-osx64.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 313411871BBC533D0056B1C0 /* libopenh264-1.4.0-osx64.dylib */; };
+		3134118A1BBC53530056B1C0 /* libmsopenh264.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 313411891BBC53530056B1C0 /* libmsopenh264.0.dylib */; };
 		314CF99E1BB74F1E0015C7FF /* HockeySDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		31F974781BB3962000E21D92 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F974771BB3962000E21D92 /* libsqlite3.0.dylib */; };
 		4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9B91BB1BDC900FCD070 /* cameraview.png */; };
@@ -258,6 +260,10 @@
 		2BA68DD61B98617000145575 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		2BA68DD91B98733E00145575 /* HomeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeWindowController.h; sourceTree = "<group>"; };
 		2BA68DDA1B98733E00145575 /* HomeWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeWindowController.m; sourceTree = "<group>"; };
+		313411831BBC3F1A0056B1C0 /* libopenh264-1.4.0-osx64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libopenh264-1.4.0-osx64.dylib"; path = "VATRP/linphonesdk/lib/libopenh264-1.4.0-osx64.dylib"; sourceTree = "<group>"; };
+		313411851BBC4FAB0056B1C0 /* libmsopenh264.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmsopenh264.0.dylib; path = VATRP/linphonesdk/lib/mediastreamer/plugins/libmsopenh264.0.dylib; sourceTree = "<group>"; };
+		313411871BBC533D0056B1C0 /* libopenh264-1.4.0-osx64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libopenh264-1.4.0-osx64.dylib"; path = "VATRP/linphonesdk/libs/libopenh264-1.4.0-osx64.dylib"; sourceTree = "<group>"; };
+		313411891BBC53530056B1C0 /* libmsopenh264.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmsopenh264.0.dylib; path = VATRP/linphonesdk/libs/mediastreamer/plugins/libmsopenh264.0.dylib; sourceTree = "<group>"; };
 		31F974771BB3962000E21D92 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4A50F9B91BB1BDC900FCD070 /* cameraview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraview.png; sourceTree = "<group>"; };
 		4A50F9BA1BB1BDC900FCD070 /* contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contacts.png; sourceTree = "<group>"; };
@@ -369,6 +375,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3134118A1BBC53530056B1C0 /* libmsopenh264.0.dylib in Frameworks */,
+				313411881BBC533D0056B1C0 /* libopenh264-1.4.0-osx64.dylib in Frameworks */,
 				31F974781BB3962000E21D92 /* libsqlite3.0.dylib in Frameworks */,
 				4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */,
 				CE6758B01BA8C99D005396EF /* libffi.6.dylib in Frameworks */,
@@ -435,6 +443,10 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				313411891BBC53530056B1C0 /* libmsopenh264.0.dylib */,
+				313411871BBC533D0056B1C0 /* libopenh264-1.4.0-osx64.dylib */,
+				313411851BBC4FAB0056B1C0 /* libmsopenh264.0.dylib */,
+				313411831BBC3F1A0056B1C0 /* libopenh264-1.4.0-osx64.dylib */,
 				20A993391BB5B9F6008612F9 /* HockeySDK.framework */,
 			);
 			name = Frameworks;
@@ -1098,6 +1110,8 @@
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs",
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/gettext/lib",
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/libffi/lib",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/libiconv/lib",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/mediastreamer/plugins",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
@@ -1131,6 +1145,8 @@
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs",
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/gettext/lib",
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/libffi/lib",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/libiconv/lib",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/mediastreamer/plugins",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;

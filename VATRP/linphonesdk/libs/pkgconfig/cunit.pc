@@ -1,0 +1,10 @@
+prefix=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT
+exec_prefix=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/bin
+libdir=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/lib
+includedir=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/include
+
+Name: CUnit
+Description: C Unit Testing Framework
+Version: 2.1-2-
+Libs: -L/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/lib -lcunit
+Cflags: -I/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/include

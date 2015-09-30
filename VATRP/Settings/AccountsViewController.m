@@ -35,7 +35,7 @@
     linphone_core_get_default_proxy(lc,&cfg);
     const char *identity=linphone_proxy_config_get_identity(cfg);
     LinphoneAddress *addr=linphone_address_new(identity);
-    
+
     //Get Username
     const char* user = linphone_address_get_username(addr);
     NSString *username = [NSString stringWithUTF8String:user];
@@ -46,50 +46,60 @@
     const MSList *elem=linphone_core_get_auth_info_list(lc);
     if (elem && (ai=(LinphoneAuthInfo*)elem->data)){
         const char* pass = linphone_auth_info_get_passwd(ai);
-        password = [NSString stringWithUTF8String:pass];
+        if(pass != NULL) {
+          password = [NSString stringWithUTF8String:pass];
+        }
     }
     
-    // Get Domian name
+    // Get Domain name
     const char* domain = linphone_address_get_domain(addr);
-    NSString *domainname = [NSString stringWithUTF8String:domain];
+    NSString *domainname;
+    if( domain != NULL) {
+      domainname = [NSString stringWithUTF8String:domain];
+    } else {
+      domainname = @"";
+    }
     
     // Get Port
     int port = linphone_address_get_port(addr);
     NSString *sip_port = [NSString stringWithFormat:@"%d", port];
     
+    NSString *sip_transport = @"";
+    
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
     const char* _domain = linphone_proxy_config_get_server_addr(proxyCfg);
+    
     // Get SIP Transport
     LinphoneTransportType transport = linphone_address_get_transport(addr);
+    if( transport != NULL ) {
     
-    if(transport == LinphoneTransportUdp){
-        linphone_address_set_transport(addr, LinphoneTransportTcp);
-        transport = linphone_address_get_transport(addr);
+        if(transport == LinphoneTransportUdp){
+            linphone_address_set_transport(addr, LinphoneTransportTcp);
+            transport = linphone_address_get_transport(addr);
+        }
+        
+        switch (transport) {
+            case LinphoneTransportTcp:
+                sip_transport = @"Unencrypted (TCP)";
+                break;
+            case LinphoneTransportTls:
+                sip_transport = @"Encrypted (TLS)";
+                break;
+                
+            default:
+                break;
+        }
     }
     
-    NSString *sip_transport = @"";
-    switch (transport) {
-        case LinphoneTransportTcp:
-            sip_transport = @"Unencrypted (TCP)";
-            break;
-        case LinphoneTransportTls:
-            sip_transport = @"Encrypted (TLS)";
-            break;
-            
-        default:
-            break;
-    }
+//    accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
-    accountModel = [[AccountsService sharedInstance] getDefaultAccount];
-    
-    self.textFieldUsername.stringValue = accountModel.username;
-    self.secureTextFieldPassword.stringValue = accountModel.password;
-    self.textFieldDomain.stringValue = accountModel.domain;
+    if(accountModel.username != NULL) { self.textFieldUsername.stringValue = accountModel.username; }
+    if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
+    if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
     self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
-    [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport];
+    if(accountModel.transport != NULL) { [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport]; }
     NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.buttonAutoAnswer.state = auto_answer;
-
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {

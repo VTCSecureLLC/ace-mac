@@ -137,3 +137,7 @@ else
         --file "$PKG_FILE"
   fi
 fi
+
+if [ -f "sync/cleanup.sh" ]; then
+  . ./sync/cleanup.sh
+fi

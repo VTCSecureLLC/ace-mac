@@ -7,6 +7,7 @@
 //
 
 #import "CodecModel.h"
+#import "Utils.h"
 
 @implementation CodecModel
 
@@ -14,6 +15,19 @@
 @synthesize rate;
 @synthesize channels;
 @synthesize status;
+
+- (id) initWithDictionary:(NSDictionary*)dictionary {
+    self = [super init];
+    
+    if (self) {
+        self.name = [Utils stringValueDict:dictionary Key:@"name"];
+        self.rate = [Utils intValueDict:dictionary Key:@"rate"];
+        self.channels = [Utils intValueDict:dictionary Key:@"channels"];
+        self.status = [Utils intValueDict:dictionary Key:@"status"];
+    }
+    
+    return self;
+}
 
 - (id) init {
     self = [super init];
@@ -26,6 +40,17 @@
     }
     
     return self;
+}
+
+- (NSDictionary*) serializedDictionary {
+    NSMutableDictionary *mDict = [[NSMutableDictionary alloc] init];
+    
+    [mDict setObject:self.name forKeyedSubscript:@"name"];
+    [mDict setObject:[NSNumber numberWithInt:self.rate] forKeyedSubscript:@"rate"];
+    [mDict setObject:[NSNumber numberWithInt:self.channels] forKeyedSubscript:@"channels"];
+    [mDict setObject:[NSNumber numberWithBool:self.status] forKeyedSubscript:@"status"];
+    
+    return (NSDictionary*)mDict;
 }
 
 @end

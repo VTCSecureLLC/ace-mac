@@ -12,6 +12,7 @@
 
 @interface AccountsViewController () {
     AccountModel *accountModel;
+    BOOL isChanged;
 }
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
@@ -26,6 +27,12 @@
 
 @implementation AccountsViewController
 
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    
+    isChanged = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
@@ -33,12 +40,33 @@
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg=NULL;
     linphone_core_get_default_proxy(lc,&cfg);
-    const char *identity=linphone_proxy_config_get_identity(cfg);
-    LinphoneAddress *addr=linphone_address_new(identity);
     
-    //Get Username
-    const char* user = linphone_address_get_username(addr);
-    NSString *username = [NSString stringWithUTF8String:user];
+    if (cfg) {
+        const char *identity=linphone_proxy_config_get_identity(cfg);
+        LinphoneAddress *addr=linphone_address_new(identity);
+        
+        // Get SIP Transport
+        LinphoneTransportType transport = linphone_address_get_transport(addr);
+        
+        if(transport == LinphoneTransportUdp){
+            linphone_address_set_transport(addr, LinphoneTransportTcp);
+            transport = linphone_address_get_transport(addr);
+        }
+
+        NSString *sip_transport = @"";
+        switch (transport) {
+            case LinphoneTransportTcp:
+                sip_transport = @"Unencrypted (TCP)";
+                break;
+            case LinphoneTransportTls:
+                sip_transport = @"Encrypted (TLS)";
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
     
     //Get Password
     LinphoneAuthInfo *ai;
@@ -47,37 +75,7 @@
     if (elem && (ai=(LinphoneAuthInfo*)elem->data)){
         const char* pass = linphone_auth_info_get_passwd(ai);
         password = [NSString stringWithUTF8String:pass];
-    }
-    
-    // Get Domian name
-    const char* domain = linphone_address_get_domain(addr);
-    NSString *domainname = [NSString stringWithUTF8String:domain];
-    
-    // Get Port
-    int port = linphone_address_get_port(addr);
-    NSString *sip_port = [NSString stringWithFormat:@"%d", port];
-    
-    LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
-    const char* _domain = linphone_proxy_config_get_server_addr(proxyCfg);
-    // Get SIP Transport
-    LinphoneTransportType transport = linphone_address_get_transport(addr);
-    
-    if(transport == LinphoneTransportUdp){
-        linphone_address_set_transport(addr, LinphoneTransportTcp);
-        transport = linphone_address_get_transport(addr);
-    }
-    
-    NSString *sip_transport = @"";
-    switch (transport) {
-        case LinphoneTransportTcp:
-            sip_transport = @"Unencrypted (TCP)";
-            break;
-        case LinphoneTransportTls:
-            sip_transport = @"Encrypted (TLS)";
-            break;
-            
-        default:
-            break;
+
     }
     
     accountModel = [[AccountsService sharedInstance] getDefaultAccount];
@@ -95,7 +93,11 @@
 - (IBAction)onButtonAutoAnswer:(id)sender {
 }
 
-- (IBAction)onButtonSave:(id)sender {
+- (void) save {
+    if (!isChanged) {
+        return;
+    }
+    
     [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -252,6 +254,18 @@
 - (void)clearProxyConfig {
     linphone_core_clear_proxy_config([LinphoneManager getLc]);
     linphone_core_clear_all_auth_info([LinphoneManager getLc]);
+}
+
+- (void)controlTextDidChange:(NSNotification *)notification {
+    isChanged = YES;
+}
+
+- (IBAction)onComboboxTransport:(id)sender {
+    isChanged = YES;
+}
+
+- (IBAction)onCheckBoxAutoAnswerCall:(id)sender {
+    isChanged = YES;
 }
 
 @end

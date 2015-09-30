@@ -7,15 +7,18 @@
 //
 
 #import "SettingsWindowController.h"
+#import "SettingsViewController.h"
 #import "AccountsViewController.h"
 #import "CodecsViewController.h"
 #import "MediaViewController.h"
 #import "AppDelegate.h"
 
-@interface SettingsWindowController () {
+@interface SettingsWindowController () <SettingsViewControllerDelegate> {
     AccountsViewController *accountsViewController;
     CodecsViewController *codecsViewController;
     MediaViewController *mediaViewController;
+    
+    NSView *prevView;
 }
 
 @end
@@ -37,7 +40,10 @@
     codecsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CodecsViewController"];
     mediaViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MediaViewController"];
     
-    self.window.contentView = accountsViewController.view;
+    [self changeViewTo:accountsViewController.view];
+    
+    SettingsViewController *settingsViewController = (SettingsViewController*)self.contentViewController;
+    settingsViewController.delegate = self;
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification
@@ -47,15 +53,31 @@
 }
 
 - (IBAction)onToolbarItemAccount:(id)sender {
-    self.window.contentView = accountsViewController.view;
+    [self changeViewTo:accountsViewController.view];
 }
 
 - (IBAction)onToolbarItemCodecs:(id)sender {
-    self.window.contentView = codecsViewController.view;
+    [self changeViewTo:codecsViewController.view];
 }
 
 - (IBAction)onToolbarItemMedia:(id)sender {
-    self.window.contentView = mediaViewController.view;
+    [self changeViewTo:mediaViewController.view];
+}
+
+- (void) changeViewTo:(NSView*)view {
+    [prevView removeFromSuperview];
+    prevView = view;
+    prevView.frame = CGRectMake(0, self.window.contentView.frame.size.height - prevView.frame.size.height, prevView.frame.size.width, prevView.frame.size.height);
+    [self.window.contentView addSubview:prevView];
+}
+
+- (void) didClickSettingsViewControllerSeve:(SettingsViewController*)settingsViewController {
+    [accountsViewController save];
+    [codecsViewController save];
+    [mediaViewController save];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [self close];
 }
 
 @end

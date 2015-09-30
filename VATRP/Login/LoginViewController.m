@@ -82,6 +82,13 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    
+    if (accountModel) {
+        self.textFieldUsername.stringValue = accountModel.username;
+        self.textFieldPassword.stringValue = accountModel.password;
+    }
+    
     [self startUp];
 }
 

@@ -10,6 +10,7 @@
 #import "HomeWindowController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
+#import "CallLogService.h"
 #import <HockeySDK/HockeySDK.h>
 
 @interface AppDelegate () {
@@ -31,6 +32,8 @@
     // Insert code here to initialize your application
     
     [AccountsService sharedInstance];
+    [CallLogService sharedInstance];
+
     videoCallWindowController = nil;
 
     [self.menuItemPreferences setAction:nil];

@@ -1114,10 +1114,10 @@
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/mediastreamer/plugins",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				"OTHER_CODE_SIGN_FLAGS[sdk=macosx*]" = "--deep";
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
-				PROVISIONING_PROFILE = "bfe222b1-c135-4ce5-b8b6-769013333d07";
+				PROVISIONING_PROFILE = "0a891052-bec3-4a64-a954-a61fae430c6d";
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -1150,10 +1150,10 @@
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/mediastreamer/plugins",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				"OTHER_CODE_SIGN_FLAGS[sdk=macosx*]" = "--deep";
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
-				PROVISIONING_PROFILE = "bfe222b1-c135-4ce5-b8b6-769013333d07";
+				PROVISIONING_PROFILE = "0a891052-bec3-4a64-a954-a61fae430c6d";
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;

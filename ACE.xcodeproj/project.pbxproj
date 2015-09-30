@@ -35,15 +35,25 @@
 		4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170761BACC61F00880FFD /* SystemConfiguration.framework */; };
 		4A5170791BACD10D00880FFD /* linphonerc in Resources */ = {isa = PBXBuildFile; fileRef = 4A5170781BACD10D00880FFD /* linphonerc */; };
 		4A5E19E01BBAD1480019E80F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5E19DF1BBAD1480019E80F /* QuartzCore.framework */; };
+		4A902DDD1BB9489B00ECFD86 /* AccountsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DDC1BB9489B00ECFD86 /* AccountsService.m */; settings = {ASSET_TAGS = (); }; };
+		4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DE51BB949E700ECFD86 /* AccountModel.m */; settings = {ASSET_TAGS = (); }; };
+		4A902DE91BB95A7000ECFD86 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DE81BB95A7000ECFD86 /* Utils.m */; settings = {ASSET_TAGS = (); }; };
+		4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A902DEE1BB96C6D00ECFD86 /* hold.wav */; settings = {ASSET_TAGS = (); }; };
+		4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A902DEF1BB96C6D00ECFD86 /* msg.wav */; settings = {ASSET_TAGS = (); }; };
+		4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A902DF01BB96C6D00ECFD86 /* ring.wav */; settings = {ASSET_TAGS = (); }; };
+		4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A902DF11BB96C6D00ECFD86 /* ringback.wav */; settings = {ASSET_TAGS = (); }; };
+		4A902DF81BB9746600ECFD86 /* CodecsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DF71BB9746600ECFD86 /* CodecsViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4A902DFB1BB9823200ECFD86 /* CodecModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DFA1BB9823200ECFD86 /* CodecModel.m */; settings = {ASSET_TAGS = (); }; };
 		4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5C1BACD437007C1949 /* linphonerc-factory */; };
 		4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */; };
 		4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */; };
 		4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E651BAFECF2007C1949 /* Localizable.strings */; };
-		4AAF560D1BAFFC3B00241DC2 /* VideoCallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */; };
+		4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560C1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m */; };
 		4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */; };
 		4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF56151BB157AC00241DC2 /* AccountsViewController.m */; };
 		4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAF56191BB1615900241DC2 /* accounts_icon.png */; };
 		4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */; };
+		4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC344841BB9A777000C4909 /* MediaViewController.m */; settings = {ASSET_TAGS = (); }; };
 		4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CB1B8E87530063298F /* AppDelegate.m */; };
 		4AC389CE1B8E87530063298F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CD1B8E87530063298F /* main.m */; };
 		4AC389D11B8E87530063298F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389D01B8E87530063298F /* ViewController.m */; };
@@ -264,19 +274,35 @@
 		4A5170761BACC61F00880FFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4A5170781BACD10D00880FFD /* linphonerc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = linphonerc; sourceTree = "<group>"; };
 		4A5E19DF1BBAD1480019E80F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4A902DDB1BB9489B00ECFD86 /* AccountsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsService.h; sourceTree = "<group>"; };
+		4A902DDC1BB9489B00ECFD86 /* AccountsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountsService.m; sourceTree = "<group>"; };
+		4A902DE41BB949E700ECFD86 /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountModel.h; sourceTree = "<group>"; };
+		4A902DE51BB949E700ECFD86 /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
+		4A902DE71BB95A7000ECFD86 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		4A902DE81BB95A7000ECFD86 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		4A902DEE1BB96C6D00ECFD86 /* hold.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hold.wav; sourceTree = "<group>"; };
+		4A902DEF1BB96C6D00ECFD86 /* msg.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = msg.wav; sourceTree = "<group>"; };
+		4A902DF01BB96C6D00ECFD86 /* ring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ring.wav; sourceTree = "<group>"; };
+		4A902DF11BB96C6D00ECFD86 /* ringback.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringback.wav; sourceTree = "<group>"; };
+		4A902DF61BB9746600ECFD86 /* CodecsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodecsViewController.h; sourceTree = "<group>"; };
+		4A902DF71BB9746600ECFD86 /* CodecsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodecsViewController.m; sourceTree = "<group>"; };
+		4A902DF91BB9823200ECFD86 /* CodecModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodecModel.h; sourceTree = "<group>"; };
+		4A902DFA1BB9823200ECFD86 /* CodecModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodecModel.m; sourceTree = "<group>"; };
 		4AAD8E5C1BACD437007C1949 /* linphonerc-factory */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory"; sourceTree = "<group>"; };
 		4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory~ipad"; sourceTree = "<group>"; };
 		4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc~ipad"; sourceTree = "<group>"; };
 		4AAD8E651BAFECF2007C1949 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		4AAF560B1BAFFC3B00241DC2 /* VideoCallWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoCallWindowController.h; path = vatrp/VideoCall/VideoCallWindowController.h; sourceTree = SOURCE_ROOT; };
-		4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoCallWindowController.m; path = vatrp/VideoCall/VideoCallWindowController.m; sourceTree = SOURCE_ROOT; };
-		4AAF560E1BAFFC5700241DC2 /* VideoCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoCallViewController.h; path = vatrp/VideoCall/VideoCallViewController.h; sourceTree = SOURCE_ROOT; };
-		4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoCallViewController.m; path = vatrp/VideoCall/VideoCallViewController.m; sourceTree = SOURCE_ROOT; };
-		4AAF56141BB157AC00241DC2 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsViewController.h; path = vatrp/Settings/AccountsViewController.h; sourceTree = SOURCE_ROOT; };
-		4AAF56151BB157AC00241DC2 /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = vatrp/Settings/AccountsViewController.m; sourceTree = SOURCE_ROOT; };
+		4AAF560B1BAFFC3B00241DC2 /* VideoCallWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoCallWindowController.h; path = VATRP/VideoCall/VideoCallWindowController.h; sourceTree = SOURCE_ROOT; };
+		4AAF560C1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VATRP/VideoCall/VideoCallWindowController.m; sourceTree = SOURCE_ROOT; };
+		4AAF560E1BAFFC5700241DC2 /* VideoCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoCallViewController.h; path = VATRP/VideoCall/VideoCallViewController.h; sourceTree = SOURCE_ROOT; };
+		4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoCallViewController.m; path = VATRP/VideoCall/VideoCallViewController.m; sourceTree = SOURCE_ROOT; };
+		4AAF56141BB157AC00241DC2 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsViewController.h; path = VATRP/Settings/AccountsViewController.h; sourceTree = SOURCE_ROOT; };
+		4AAF56151BB157AC00241DC2 /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = VATRP/Settings/AccountsViewController.m; sourceTree = SOURCE_ROOT; };
 		4AAF56191BB1615900241DC2 /* accounts_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounts_icon.png; sourceTree = "<group>"; };
-		4AAFDC3C1BA9D78200C35A74 /* LinphoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinphoneManager.h; path = vatrp/LinphoneManager/LinphoneManager.h; sourceTree = SOURCE_ROOT; };
-		4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinphoneManager.m; path = vatrp/LinphoneManager/LinphoneManager.m; sourceTree = SOURCE_ROOT; };
+		4AAFDC3C1BA9D78200C35A74 /* LinphoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinphoneManager.h; path = VATRP/LinphoneManager/LinphoneManager.h; sourceTree = SOURCE_ROOT; };
+		4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinphoneManager.m; path = VATRP/LinphoneManager/LinphoneManager.m; sourceTree = SOURCE_ROOT; };
+		4AC344831BB9A777000C4909 /* MediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaViewController.h; sourceTree = "<group>"; };
+		4AC344841BB9A777000C4909 /* MediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaViewController.m; sourceTree = "<group>"; };
 		4AC389C51B8E87530063298F /* ACE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ACE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AC389C91B8E87530063298F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AC389CA1B8E87530063298F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -297,51 +323,51 @@
 		4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallWindowController.m; sourceTree = "<group>"; };
 		4AE0C6791BB2E9E900B4E208 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallViewController.h; sourceTree = "<group>"; };
 		4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallViewController.m; sourceTree = "<group>"; };
-		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = vatrp/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
-		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.56.dylib; path = vatrp/linphonesdk/libs/libavcodec.56.dylib; sourceTree = "<group>"; };
-		CE3D24FF1BA7739400028600 /* libavutil.54.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.54.dylib; path = vatrp/linphonesdk/libs/libavutil.54.dylib; sourceTree = "<group>"; };
-		CE3D25001BA7739400028600 /* libbellesip.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbellesip.0.dylib; path = vatrp/linphonesdk/libs/libbellesip.0.dylib; sourceTree = "<group>"; };
-		CE3D25011BA7739400028600 /* libbzrtp.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbzrtp.0.dylib; path = vatrp/linphonesdk/libs/libbzrtp.0.dylib; sourceTree = "<group>"; };
-		CE3D25021BA7739400028600 /* libcairo.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcairo.2.dylib; path = vatrp/linphonesdk/libs/libcairo.2.dylib; sourceTree = "<group>"; };
-		CE3D25031BA7739400028600 /* libfontconfig.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfontconfig.1.dylib; path = vatrp/linphonesdk/libs/libfontconfig.1.dylib; sourceTree = "<group>"; };
-		CE3D25041BA7739400028600 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = vatrp/linphonesdk/libs/libfreetype.6.dylib; sourceTree = "<group>"; };
-		CE3D25051BA7739400028600 /* libgailutil.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgailutil.18.dylib; path = vatrp/linphonesdk/libs/libgailutil.18.dylib; sourceTree = "<group>"; };
-		CE3D25061BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgdk_pixbuf-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgdk_pixbuf-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D25071BA7739400028600 /* libgdk-quartz-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgdk-quartz-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgdk-quartz-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D25081BA7739400028600 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D25091BA7739400028600 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D250A1BA7739400028600 /* libgmodule-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgmodule-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgmodule-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D250B1BA7739400028600 /* libgmp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmp.10.dylib; path = vatrp/linphonesdk/libs/libgmp.10.dylib; sourceTree = "<group>"; };
-		CE3D250C1BA7739400028600 /* libgnutls.28.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgnutls.28.dylib; path = vatrp/linphonesdk/libs/libgnutls.28.dylib; sourceTree = "<group>"; };
-		CE3D250D1BA7739400028600 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D250E1BA7739400028600 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgthread-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D250F1BA7739400028600 /* libgtk-quartz-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgtk-quartz-2.0.0.dylib"; path = "vatrp/linphonesdk/libs/libgtk-quartz-2.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D25101BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgtkmacintegration-gtk2.2.dylib"; path = "vatrp/linphonesdk/libs/libgtkmacintegration-gtk2.2.dylib"; sourceTree = "<group>"; };
-		CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libharfbuzz.0.dylib; path = vatrp/linphonesdk/libs/libharfbuzz.0.dylib; sourceTree = "<group>"; };
-		CE3D25121BA7739400028600 /* libhogweed.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhogweed.2.dylib; path = vatrp/linphonesdk/libs/libhogweed.2.dylib; sourceTree = "<group>"; };
-		CE3D25131BA7739400028600 /* libjpeg.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libjpeg.8.dylib; path = vatrp/linphonesdk/libs/libjpeg.8.dylib; sourceTree = "<group>"; };
-		CE3D25141BA7739400028600 /* liblinphone.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.7.dylib; path = vatrp/linphonesdk/libs/liblinphone.7.dylib; sourceTree = "<group>"; };
-		CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.5.dylib; path = vatrp/linphonesdk/libs/libmediastreamer_base.5.dylib; sourceTree = "<group>"; };
-		CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.5.dylib; path = vatrp/linphonesdk/libs/libmediastreamer_voip.5.dylib; sourceTree = "<group>"; };
-		CE3D25171BA7739400028600 /* libmp3lame.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmp3lame.0.dylib; path = vatrp/linphonesdk/libs/libmp3lame.0.dylib; sourceTree = "<group>"; };
-		CE3D25181BA7739400028600 /* libnettle.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnettle.4.dylib; path = vatrp/linphonesdk/libs/libnettle.4.dylib; sourceTree = "<group>"; };
-		CE3D25191BA7739400028600 /* libopus.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopus.0.dylib; path = vatrp/linphonesdk/libs/libopus.0.dylib; sourceTree = "<group>"; };
-		CE3D251A1BA7739400028600 /* libortp.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.9.dylib; path = vatrp/linphonesdk/libs/libortp.9.dylib; sourceTree = "<group>"; };
-		CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpango-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libpango-1.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpangocairo-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libpangocairo-1.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpangoft2-1.0.0.dylib"; path = "vatrp/linphonesdk/libs/libpangoft2-1.0.0.dylib"; sourceTree = "<group>"; };
-		CE3D251E1BA7739400028600 /* libpixman-1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpixman-1.0.dylib"; path = "vatrp/linphonesdk/libs/libpixman-1.0.dylib"; sourceTree = "<group>"; };
-		CE3D251F1BA7739400028600 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = vatrp/linphonesdk/libs/libpng16.16.dylib; sourceTree = "<group>"; };
-		CE3D25201BA7739400028600 /* libpolarssl.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpolarssl.0.dylib; path = vatrp/linphonesdk/libs/libpolarssl.0.dylib; sourceTree = "<group>"; };
-		CE3D25211BA7739400028600 /* libspeex.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeex.1.dylib; path = vatrp/linphonesdk/libs/libspeex.1.dylib; sourceTree = "<group>"; };
-		CE3D25221BA7739400028600 /* libspeexdsp.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeexdsp.1.dylib; path = vatrp/linphonesdk/libs/libspeexdsp.1.dylib; sourceTree = "<group>"; };
-		CE3D25231BA7739400028600 /* libswresample.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.1.dylib; path = vatrp/linphonesdk/libs/libswresample.1.dylib; sourceTree = "<group>"; };
-		CE3D25241BA7739400028600 /* libswscale.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.3.dylib; path = vatrp/linphonesdk/libs/libswscale.3.dylib; sourceTree = "<group>"; };
-		CE3D25251BA7739400028600 /* libtasn1.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtasn1.6.dylib; path = vatrp/linphonesdk/libs/libtasn1.6.dylib; sourceTree = "<group>"; };
-		CE3D25261BA7739400028600 /* libtiff.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtiff.5.dylib; path = vatrp/linphonesdk/libs/libtiff.5.dylib; sourceTree = "<group>"; };
-		CE3D25271BA7739400028600 /* libvo-aacenc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libvo-aacenc.0.dylib"; path = "vatrp/linphonesdk/libs/libvo-aacenc.0.dylib"; sourceTree = "<group>"; };
-		CE3D25281BA7739400028600 /* libx264.146.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libx264.146.dylib; path = vatrp/linphonesdk/libs/libx264.146.dylib; sourceTree = "<group>"; };
+		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = VATRP/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
+		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.56.dylib; path = VATRP/linphonesdk/libs/libavcodec.56.dylib; sourceTree = "<group>"; };
+		CE3D24FF1BA7739400028600 /* libavutil.54.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.54.dylib; path = VATRP/linphonesdk/libs/libavutil.54.dylib; sourceTree = "<group>"; };
+		CE3D25001BA7739400028600 /* libbellesip.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbellesip.0.dylib; path = VATRP/linphonesdk/libs/libbellesip.0.dylib; sourceTree = "<group>"; };
+		CE3D25011BA7739400028600 /* libbzrtp.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbzrtp.0.dylib; path = VATRP/linphonesdk/libs/libbzrtp.0.dylib; sourceTree = "<group>"; };
+		CE3D25021BA7739400028600 /* libcairo.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcairo.2.dylib; path = VATRP/linphonesdk/libs/libcairo.2.dylib; sourceTree = "<group>"; };
+		CE3D25031BA7739400028600 /* libfontconfig.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfontconfig.1.dylib; path = VATRP/linphonesdk/libs/libfontconfig.1.dylib; sourceTree = "<group>"; };
+		CE3D25041BA7739400028600 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = VATRP/linphonesdk/libs/libfreetype.6.dylib; sourceTree = "<group>"; };
+		CE3D25051BA7739400028600 /* libgailutil.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgailutil.18.dylib; path = VATRP/linphonesdk/libs/libgailutil.18.dylib; sourceTree = "<group>"; };
+		CE3D25061BA7739400028600 /* libgdk_pixbuf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgdk_pixbuf-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libgdk_pixbuf-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25071BA7739400028600 /* libgdk-quartz-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgdk-quartz-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libgdk-quartz-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25081BA7739400028600 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25091BA7739400028600 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250A1BA7739400028600 /* libgmodule-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgmodule-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libgmodule-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250B1BA7739400028600 /* libgmp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmp.10.dylib; path = VATRP/linphonesdk/libs/libgmp.10.dylib; sourceTree = "<group>"; };
+		CE3D250C1BA7739400028600 /* libgnutls.28.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgnutls.28.dylib; path = VATRP/linphonesdk/libs/libgnutls.28.dylib; sourceTree = "<group>"; };
+		CE3D250D1BA7739400028600 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250E1BA7739400028600 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libgthread-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D250F1BA7739400028600 /* libgtk-quartz-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgtk-quartz-2.0.0.dylib"; path = "VATRP/linphonesdk/libs/libgtk-quartz-2.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D25101BA7739400028600 /* libgtkmacintegration-gtk2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgtkmacintegration-gtk2.2.dylib"; path = "VATRP/linphonesdk/libs/libgtkmacintegration-gtk2.2.dylib"; sourceTree = "<group>"; };
+		CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libharfbuzz.0.dylib; path = VATRP/linphonesdk/libs/libharfbuzz.0.dylib; sourceTree = "<group>"; };
+		CE3D25121BA7739400028600 /* libhogweed.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhogweed.2.dylib; path = VATRP/linphonesdk/libs/libhogweed.2.dylib; sourceTree = "<group>"; };
+		CE3D25131BA7739400028600 /* libjpeg.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libjpeg.8.dylib; path = VATRP/linphonesdk/libs/libjpeg.8.dylib; sourceTree = "<group>"; };
+		CE3D25141BA7739400028600 /* liblinphone.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.7.dylib; path = VATRP/linphonesdk/libs/liblinphone.7.dylib; sourceTree = "<group>"; };
+		CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.5.dylib; path = VATRP/linphonesdk/libs/libmediastreamer_base.5.dylib; sourceTree = "<group>"; };
+		CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.5.dylib; path = VATRP/linphonesdk/libs/libmediastreamer_voip.5.dylib; sourceTree = "<group>"; };
+		CE3D25171BA7739400028600 /* libmp3lame.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmp3lame.0.dylib; path = VATRP/linphonesdk/libs/libmp3lame.0.dylib; sourceTree = "<group>"; };
+		CE3D25181BA7739400028600 /* libnettle.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnettle.4.dylib; path = VATRP/linphonesdk/libs/libnettle.4.dylib; sourceTree = "<group>"; };
+		CE3D25191BA7739400028600 /* libopus.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopus.0.dylib; path = VATRP/linphonesdk/libs/libopus.0.dylib; sourceTree = "<group>"; };
+		CE3D251A1BA7739400028600 /* libortp.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.9.dylib; path = VATRP/linphonesdk/libs/libortp.9.dylib; sourceTree = "<group>"; };
+		CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpango-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libpango-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpangocairo-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libpangocairo-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpangoft2-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libpangoft2-1.0.0.dylib"; sourceTree = "<group>"; };
+		CE3D251E1BA7739400028600 /* libpixman-1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libpixman-1.0.dylib"; path = "VATRP/linphonesdk/libs/libpixman-1.0.dylib"; sourceTree = "<group>"; };
+		CE3D251F1BA7739400028600 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = VATRP/linphonesdk/libs/libpng16.16.dylib; sourceTree = "<group>"; };
+		CE3D25201BA7739400028600 /* libpolarssl.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpolarssl.0.dylib; path = VATRP/linphonesdk/libs/libpolarssl.0.dylib; sourceTree = "<group>"; };
+		CE3D25211BA7739400028600 /* libspeex.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeex.1.dylib; path = VATRP/linphonesdk/libs/libspeex.1.dylib; sourceTree = "<group>"; };
+		CE3D25221BA7739400028600 /* libspeexdsp.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeexdsp.1.dylib; path = VATRP/linphonesdk/libs/libspeexdsp.1.dylib; sourceTree = "<group>"; };
+		CE3D25231BA7739400028600 /* libswresample.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.1.dylib; path = VATRP/linphonesdk/libs/libswresample.1.dylib; sourceTree = "<group>"; };
+		CE3D25241BA7739400028600 /* libswscale.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.3.dylib; path = VATRP/linphonesdk/libs/libswscale.3.dylib; sourceTree = "<group>"; };
+		CE3D25251BA7739400028600 /* libtasn1.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtasn1.6.dylib; path = VATRP/linphonesdk/libs/libtasn1.6.dylib; sourceTree = "<group>"; };
+		CE3D25261BA7739400028600 /* libtiff.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtiff.5.dylib; path = VATRP/linphonesdk/libs/libtiff.5.dylib; sourceTree = "<group>"; };
+		CE3D25271BA7739400028600 /* libvo-aacenc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libvo-aacenc.0.dylib"; path = "VATRP/linphonesdk/libs/libvo-aacenc.0.dylib"; sourceTree = "<group>"; };
+		CE3D25281BA7739400028600 /* libx264.146.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libx264.146.dylib; path = VATRP/linphonesdk/libs/libx264.146.dylib; sourceTree = "<group>"; };
 		CE6758AB1BA8C99D005396EF /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libintl.8.dylib; sourceTree = "<group>"; };
 		CE6758AE1BA8C99D005396EF /* libffi.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libffi.6.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -462,6 +488,10 @@
 				2B463F021B984E49008E8333 /* SettingsWindowController.m */,
 				4AAF56141BB157AC00241DC2 /* AccountsViewController.h */,
 				4AAF56151BB157AC00241DC2 /* AccountsViewController.m */,
+				4A902DF61BB9746600ECFD86 /* CodecsViewController.h */,
+				4A902DF71BB9746600ECFD86 /* CodecsViewController.m */,
+				4AC344831BB9A777000C4909 /* MediaViewController.h */,
+				4AC344841BB9A777000C4909 /* MediaViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -511,11 +541,44 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		4A902DDA1BB9486800ECFD86 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4A902DE71BB95A7000ECFD86 /* Utils.h */,
+				4A902DE81BB95A7000ECFD86 /* Utils.m */,
+				4A902DDB1BB9489B00ECFD86 /* AccountsService.h */,
+				4A902DDC1BB9489B00ECFD86 /* AccountsService.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4A902DE31BB949C900ECFD86 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4A902DE41BB949E700ECFD86 /* AccountModel.h */,
+				4A902DE51BB949E700ECFD86 /* AccountModel.m */,
+				4A902DF91BB9823200ECFD86 /* CodecModel.h */,
+				4A902DFA1BB9823200ECFD86 /* CodecModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4A902DED1BB96C6D00ECFD86 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				4A902DEE1BB96C6D00ECFD86 /* hold.wav */,
+				4A902DEF1BB96C6D00ECFD86 /* msg.wav */,
+				4A902DF01BB96C6D00ECFD86 /* ring.wav */,
+				4A902DF11BB96C6D00ECFD86 /* ringback.wav */,
+			);
+			path = sounds;
+			sourceTree = "<group>";
+		};
 		4AAF560A1BAFFC0400241DC2 /* VideoCall */ = {
 			isa = PBXGroup;
 			children = (
 				4AAF560B1BAFFC3B00241DC2 /* VideoCallWindowController.h */,
-				4AAF560C1BAFFC3B00241DC2 /* VideoCallWindowController.m */,
+				4AAF560C1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m */,
 				4AAF560E1BAFFC5700241DC2 /* VideoCallViewController.h */,
 				4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */,
 			);
@@ -526,6 +589,7 @@
 			isa = PBXGroup;
 			children = (
 				4AAF56181BB1615900241DC2 /* Images */,
+				4A902DED1BB96C6D00ECFD86 /* sounds */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -586,6 +650,8 @@
 			isa = PBXGroup;
 			children = (
 				4AAFD9FC1BA610F100C35A74 /* LinphoneManager */,
+				4A902DDA1BB9486800ECFD86 /* Services */,
+				4A902DE31BB949C900ECFD86 /* Models */,
 				2BA68DC71B985EE300145575 /* BFNavigationController */,
 				2BA68DC31B9853A000145575 /* Login */,
 				2BA68DD81B98732A00145575 /* Home */,
@@ -648,7 +714,7 @@
 				4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */,
 			);
 			name = "In Call";
-			path = "vatrp/In Call";
+			path = "VATRP/In Call";
 			sourceTree = SOURCE_ROOT;
 		};
 		CE6758A81BA8C99D005396EF /* opt */ = {
@@ -658,7 +724,7 @@
 				CE6758AC1BA8C99D005396EF /* libffi */,
 			);
 			name = opt;
-			path = vatrp/linphonesdk/libs/opt;
+			path = VATRP/linphonesdk/libs/opt;
 			sourceTree = "<group>";
 		};
 		CE6758A91BA8C99D005396EF /* gettext */ = {
@@ -797,7 +863,6 @@
 				TargetAttributes = {
 					4AC389C41B8E87530063298F = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = N35DF75MHS;
 					};
 					4AC389DA1B8E87530063298F = {
 						CreatedOnToolsVersion = 6.4;
@@ -830,19 +895,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
+				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
 				4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */,
 				4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */,
 				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
+				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
+				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
+				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
 			);
@@ -878,11 +947,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
 				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
+				4A902DFB1BB9823200ECFD86 /* CodecModel.m in Sources */,
 				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
+				4A902DE91BB95A7000ECFD86 /* Utils.m in Sources */,
 				4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */,
 				4AC389D11B8E87530063298F /* ViewController.m in Sources */,
+				4A902DDD1BB9489B00ECFD86 /* AccountsService.m in Sources */,
 				4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */,
 				4AC389CE1B8E87530063298F /* main.m in Sources */,
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
@@ -891,10 +964,12 @@
 				4AD2FDBE1BBA8E70006C838E /* LinphoneCoreSettingsStore.m in Sources */,
 				2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */,
 				2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */,
+				4A902DF81BB9746600ECFD86 /* CodecsViewController.m in Sources */,
 				2B463F0B1B984E49008E8333 /* SettingsWindowController.m in Sources */,
 				2BA68DD71B98617000145575 /* LoginViewController.m in Sources */,
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
+				4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */,
 				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
@@ -1030,16 +1105,15 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/VATRP/LinPhoneSDK/include",
+					"$(SRCROOT)/VATRP/linphonesdk/include",
 				);
 				INFOPLIST_FILE = VATRP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)/VATRP/LinPhoneSDK/libs",
-					"$(PROJECT_DIR)/VATRP/LinPhoneSDK/libs",
-					"$(PROJECT_DIR)/vatrp/linphonesdk/libs",
-					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/gettext/lib",
-					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
+					"$(SRCROOT)/VATRP/linphonesdk/libs",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/gettext/lib",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/libffi/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
@@ -1064,16 +1138,15 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/VATRP/LinPhoneSDK/include",
+					"$(SRCROOT)/VATRP/linphonesdk/include",
 				);
 				INFOPLIST_FILE = VATRP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)/VATRP/LinPhoneSDK/libs",
-					"$(PROJECT_DIR)/VATRP/LinPhoneSDK/libs",
-					"$(PROJECT_DIR)/vatrp/linphonesdk/libs",
-					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/gettext/lib",
-					"$(PROJECT_DIR)/vatrp/linphonesdk/libs/opt/libffi/lib",
+					"$(SRCROOT)/VATRP/linphonesdk/libs",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/gettext/lib",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs/opt/libffi/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;

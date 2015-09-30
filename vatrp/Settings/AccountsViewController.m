@@ -8,8 +8,11 @@
 
 #import "AccountsViewController.h"
 #import "LinphoneManager.h"
+#import "AccountsService.h"
 
-@interface AccountsViewController ()
+@interface AccountsViewController () {
+    AccountModel *accountModel;
+}
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
 @property (weak) IBOutlet NSSecureTextField *secureTextFieldPassword;
@@ -26,10 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"%@ - viewWillAppear: %i", self.title, animated);
     
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg=NULL;
@@ -79,27 +78,16 @@
             break;
     }
     
+    accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
-    self.textFieldUsername.stringValue = username;
-    self.secureTextFieldPassword.stringValue = password;
-    self.textFieldDomain.stringValue = domainname;
-    self.textFieldPort.stringValue = sip_port;
-    [self.comboBoxTransport selectItemWithObjectValue:sip_transport];
+    self.textFieldUsername.stringValue = accountModel.username;
+    self.secureTextFieldPassword.stringValue = accountModel.password;
+    self.textFieldDomain.stringValue = accountModel.domain;
+    self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+    [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport];
     NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.buttonAutoAnswer.state = auto_answer;
 
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"%@ - viewDidAppear: %i", self.title, animated);
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"%@ - viewWillDisappear: %i", self.title, animated);
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"%@ - viewDidDisappear: %i", self.title, animated);
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {
@@ -108,6 +96,14 @@
 - (IBAction)onButtonSave:(id)sender {
     [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+    [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
+                                                    Password:self.secureTextFieldPassword.stringValue
+                                                      Domain:self.textFieldDomain.stringValue
+                                                   Transport:self.comboBoxTransport.stringValue
+                                                        Port:self.textFieldPort.intValue
+                                                   isDefault:YES];
     
     [self verificationSignInWithUsername:self.textFieldUsername.stringValue
                                 password:self.secureTextFieldPassword.stringValue

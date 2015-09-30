@@ -26,9 +26,17 @@ fi
 
 set -ex
 
+for file in *.dmg; do
+  rm -f "$file"
+done
+
 # Generate an archive for this project
 
 XCARCHIVE_FILE=/tmp/ace-mac.xcarchive
+
+if [ -e "${XCARCHIVE_FILE}" ]; then
+  rm -fr "${XCARCHIVE_FILE}"
+fi
 
 xctool -project ACE.xcodeproj \
        -scheme VATRP \
@@ -54,6 +62,10 @@ tag="$(bundle exec semver)-${TRAVIS_BUILD_NUMBER:-1}"-${SHA1}
 IFS=/ GITHUB_REPO=($TRAVIS_REPO_SLUG); IFS=""
 
 PKG_FILE=/tmp/ace-mac.pkg
+
+if [ -e "${PKG_FILE}" ]; then
+  rm -fr "${PKG_FILE}"
+fi
 
 # Release via HockeyApp if credentials are available
 

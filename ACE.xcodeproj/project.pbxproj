@@ -936,7 +936,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FILE=\"${SRCROOT}/HockeySDK-Mac/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi";
+			shellScript = "FILE=\"${SRCROOT}/HockeySDK-Mac/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi\n# Populate relocatable runtime libraries.\nrsync -aq VATRP/linphonesdk/libs/ $TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\nrsync -aq VATRP/linphonesdk/libs/opt/libiconv/lib/libiconv.2.dylib $TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -85,7 +85,7 @@ else
   ls -la "$XCARCHIVE_FILE" || true
   ls -la "$PKG_FILE".app || true
 
-  if [ -d "$PKG_FILE".app ]; then
+  if [ -d "$XCARCHIVE_FILE" ]; then
     # Create a dSYM zip file from the archive build
 
     DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
@@ -111,7 +111,6 @@ else
         -upload=all \
         -release_type=alpha \
         $XCARCHIVE_FILE
-
     fi
 
     #bundle exec ipa distribute:hockeyapp \

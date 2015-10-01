@@ -52,7 +52,7 @@
             linphone_address_set_transport(addr, LinphoneTransportTcp);
             transport = linphone_address_get_transport(addr);
         }
-
+        
         NSString *sip_transport = @"";
         switch (transport) {
             case LinphoneTransportTcp:
@@ -67,17 +67,6 @@
         }
     }
     
-    
-    //Get Password
-    LinphoneAuthInfo *ai;
-    NSString *password = @"";
-    const MSList *elem=linphone_core_get_auth_info_list(lc);
-    if (elem && (ai=(LinphoneAuthInfo*)elem->data)){
-        const char* pass = linphone_auth_info_get_passwd(ai);
-        password = [NSString stringWithUTF8String:pass];
-
-    }
-    
     accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
     self.textFieldUsername.stringValue = accountModel.username;
@@ -87,7 +76,7 @@
     [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport];
     NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.buttonAutoAnswer.state = auto_answer;
-
+    
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {

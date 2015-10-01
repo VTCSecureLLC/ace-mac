@@ -1,0 +1,12 @@
+# This is a comment
+prefix=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT
+exec_prefix=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/bin
+includedir=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/include
+
+Name: belle-sip 
+Description: A c based implementation of the SIP (RFC 3261)  telephony protocol 
+Requires.private:  cunit 
+Version: 1.4.1
+Libs: -L/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/lib -lbellesip
+Libs.private: -L/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/lib -lantlr3c -L/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/lib -lpolarssl -ldl
+Cflags: -I/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/include 

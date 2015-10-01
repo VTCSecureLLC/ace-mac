@@ -1,0 +1,3 @@
+[submodule "VATRP/submodules/cmake-builder"]
+	path = VATRP/submodules/cmake-builder
+	url = git://git.linphone.org/linphone-cmake-builder.git

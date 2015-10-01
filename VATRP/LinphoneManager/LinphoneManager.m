@@ -1710,7 +1710,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 		src = srcIpad;
 	}
 	NSString *dst = [LinphoneManager documentFile:@"linphonerc"];
-	[LinphoneManager copyFile:src destination:dst override:FALSE];
+	[LinphoneManager copyFile:src destination:dst override:YES];
 }
 
 - (void)overrideDefaultSettings {

@@ -2,8 +2,8 @@
 //  CodecModel.h
 //  ACE
 //
-//  Created by Edgar Sukiasyan on 9/28/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Created by Ruben Semerjyan on 9/28/15.
+//  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,5 +14,8 @@
 @property (nonatomic, assign) int rate;
 @property (nonatomic, assign) int channels;
 @property (nonatomic, assign) BOOL status;
+
+- (id) initWithDictionary:(NSDictionary*)dictionary;
+- (NSDictionary*) serializedDictionary;
 
 @end

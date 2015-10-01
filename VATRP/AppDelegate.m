@@ -2,14 +2,15 @@
 //  AppDelegate.m
 //  VATRP
 //
-//  Created by Edgar Sukiasyan on 8/27/15.
-//  Copyright (c) 2015 Home. All rights reserved.
+//  Created by Ruben Semerjyan on 8/27/15.
+//  Copyright (c) 2015 VTCSecure. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "HomeWindowController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
+#import "CallLogService.h"
 #import <HockeySDK/HockeySDK.h>
 
 @interface AppDelegate () {
@@ -31,6 +32,8 @@
     // Insert code here to initialize your application
     
     [AccountsService sharedInstance];
+    [CallLogService sharedInstance];
+
     videoCallWindowController = nil;
 
     [self.menuItemPreferences setAction:nil];

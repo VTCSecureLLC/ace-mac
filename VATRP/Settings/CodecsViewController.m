@@ -2,13 +2,16 @@
 //  CodecsViewController.m
 //  ACE
 //
-//  Created by Edgar Sukiasyan on 9/28/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Created by Ruben Semerjyan on 9/28/15.
+//  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
 #import "CodecsViewController.h"
 #import "LinphoneManager.h"
 #import "CodecModel.h"
+
+#define kUSER_DEFAULTS_AUDIO_CODECS @"kUSER_DEFAULTS_AUDIO_CODECS"
+#define kUSER_DEFAULTS_VIDEO_CODECS @"kUSER_DEFAULTS_VIDEO_CODECS"
 
 @interface CodecsViewController () <NSTableViewDataSource> {
     IBOutlet NSTableView *tableViewAudioCodecs;
@@ -16,74 +19,92 @@
     
     NSMutableArray *audioCodecList;
     NSMutableArray *videoCodecList;
+
+    BOOL isChanged;
 }
 
-- (CodecModel*) getCodecWithName:(NSString*)name;
+- (void) saveAudioCodecs;
+- (void) saveVideoCodecs;
+- (CodecModel*) getAudioCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels;
+- (CodecModel*) getVideoCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels;
 
 @end
 
 @implementation CodecsViewController
 
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    
+    isChanged = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
     
-//    codecList = [[NSMutableArray alloc] init];
-//    codecModel = [[CodecModel alloc] init];
-//    [codecList addObject:codecModel];
-//    codecModel = [[CodecModel alloc] init];
-//    codecModel.status = NO;
-//    [codecList addObject:codecModel];
-//    codecModel = [[CodecModel alloc] init];
-//    [codecList addObject:codecModel];
-//    codecModel = [[CodecModel alloc] init];
-//    codecModel.status = NO;
-//    [codecList addObject:codecModel];
-    
-    audioCodecList = [[NSMutableArray alloc] init];
-    videoCodecList = [[NSMutableArray alloc] init];
-    
     LinphoneCore *lc = [LinphoneManager getLc];
-    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
-    
     PayloadType *pt;
     const MSList *elem;
     
-    for (elem = audioCodecs; elem != NULL; elem = elem->next) {
-        pt = (PayloadType *)elem->data;
-        NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
-        
-        if (pref) {
-            bool_t value = linphone_core_payload_type_enabled(lc, pt);
+    audioCodecList = [[NSMutableArray alloc] init];
+    videoCodecList = [[NSMutableArray alloc] init];
 
-            CodecModel *codecModel = [[CodecModel alloc] init];
-            
-            codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
-            codecModel.rate = pt->clock_rate;
-            codecModel.channels = pt->channels;
-            codecModel.status = value;
+    NSArray *arrayAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_AUDIO_CODECS];
+    NSArray *arrayVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_VIDEO_CODECS];
+    
+    if (arrayAudioCodec && arrayAudioCodec.count) {
+        for (NSDictionary *dict in arrayAudioCodec) {
+            CodecModel *codecModel = [[CodecModel alloc] initWithDictionary:dict];
 
             [audioCodecList addObject:codecModel];
         }
-    }
-
-    const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
-    
-    for (elem = videoCodecs; elem != NULL; elem = elem->next) {
-        pt = (PayloadType *)elem->data;
-        NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+    } else {
+        const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
         
-        if (pref) {
-            bool_t value = linphone_core_payload_type_enabled(lc, pt);
+        for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
             
-            CodecModel *codecModel = [[CodecModel alloc] init];
-            
-            codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
-            codecModel.rate = pt->clock_rate;
-            codecModel.channels = pt->channels;
-            codecModel.status = value;
+            if (pref) {
+                bool_t value = linphone_core_payload_type_enabled(lc, pt);
+                
+                CodecModel *codecModel = [[CodecModel alloc] init];
+                
+                codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
+                codecModel.rate = pt->clock_rate;
+                codecModel.channels = pt->channels;
+                codecModel.status = value;
+                
+                [audioCodecList addObject:codecModel];
+            }
+        }
+    }
+        
+    if (arrayVideoCodec && arrayVideoCodec.count) {
+        for (NSDictionary *dict in arrayVideoCodec) {
+            CodecModel *codecModel = [[CodecModel alloc] initWithDictionary:dict];
             
             [videoCodecList addObject:codecModel];
+        }
+    } else {
+        const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
+        
+        for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+            
+            if (pref) {
+                bool_t value = linphone_core_payload_type_enabled(lc, pt);
+                
+                CodecModel *codecModel = [[CodecModel alloc] init];
+                
+                codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
+                codecModel.rate = pt->clock_rate;
+                codecModel.channels = pt->channels;
+                codecModel.status = value;
+                
+                [videoCodecList addObject:codecModel];
+            }
         }
     }
 }
@@ -122,6 +143,8 @@
     NSInteger row = [tableViewAudioCodecs rowForView:button];
     CodecModel *codecModel = [audioCodecList objectAtIndex:row];
     codecModel.status = button.state;
+    
+    isChanged = YES;
 }
 
 - (IBAction)onCheckboxVideoStatus:(id)sender {
@@ -130,53 +153,101 @@
     NSInteger row = [tableViewVideoCodecs rowForView:button];
     CodecModel *codecModel = [videoCodecList objectAtIndex:row];
     codecModel.status = button.state;
+
+    
+    isChanged = YES;
 }
 
-- (IBAction)onButtonSave:(id)sender {
+- (void) save {
+    if (!isChanged) {
+        return;
+    }
+
+    [self saveAudioCodecs];
+    [self saveVideoCodecs];
+}
+
+- (void) saveAudioCodecs {
     LinphoneCore *lc = [LinphoneManager getLc];
-    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
-    
     PayloadType *pt;
     const MSList *elem;
+    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
     
     for (elem = audioCodecs; elem != NULL; elem = elem->next) {
         pt = (PayloadType *)elem->data;
         NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
         if (pref) {
-            CodecModel *codecModel = [self getCodecWithName:[NSString stringWithUTF8String:pt->mime_type]];
+            CodecModel *codecModel = [self getAudioCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                            Rate:pt->clock_rate
+                                                        Channels:pt->channels];
             
             if (codecModel) {
                 linphone_core_enable_payload_type(lc, pt, codecModel.status);
             }
         }
     }
+    
+    NSMutableArray *arrayForSave = [[NSMutableArray alloc] init];
+    
+    for (CodecModel *codecModel in audioCodecList) {
+        NSDictionary *dict = [codecModel serializedDictionary];
+        
+        [arrayForSave addObject:dict];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:arrayForSave forKey:kUSER_DEFAULTS_AUDIO_CODECS];
+}
 
+- (void) saveVideoCodecs {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    PayloadType *pt;
+    const MSList *elem;
     const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
-
+    
     for (elem = videoCodecs; elem != NULL; elem = elem->next) {
         pt = (PayloadType *)elem->data;
         NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
         if (pref) {
-            CodecModel *codecModel = [self getCodecWithName:[NSString stringWithUTF8String:pt->mime_type]];
+            CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                            Rate:pt->clock_rate
+                                                        Channels:pt->channels];
             
             if (codecModel) {
                 linphone_core_enable_payload_type(lc, pt, codecModel.status);
             }
         }
     }
+
+    NSMutableArray *arrayForSave = [[NSMutableArray alloc] init];
+    
+    for (CodecModel *codecModel in videoCodecList) {
+        NSDictionary *dict = [codecModel serializedDictionary];
+        
+        [arrayForSave addObject:dict];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:arrayForSave forKey:kUSER_DEFAULTS_VIDEO_CODECS];
 }
 
-- (CodecModel*) getCodecWithName:(NSString*)name {
+- (CodecModel*) getAudioCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {
     for (CodecModel *codecModel in audioCodecList) {
-        if ([codecModel.name isEqualToString:name]) {
+        if ([codecModel.name isEqualToString:name] &&
+            codecModel.rate == rate &&
+            codecModel.channels == channels) {
             return codecModel;
         }
     }
+    
+    return nil;
+}
 
+- (CodecModel*) getVideoCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {
     for (CodecModel *codecModel in videoCodecList) {
-        if ([codecModel.name isEqualToString:name]) {
+        if ([codecModel.name isEqualToString:name] &&
+            codecModel.rate == rate &&
+            codecModel.channels == channels) {
             return codecModel;
         }
     }

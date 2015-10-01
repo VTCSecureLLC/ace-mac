@@ -151,12 +151,15 @@
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg=NULL;
     linphone_core_get_default_proxy(lc,&cfg);
-    const char *identity=linphone_proxy_config_get_identity(cfg);
-    LinphoneAddress *addr=linphone_address_new(identity);
-    const char* user = linphone_address_get_username(addr);
-    NSString *username = [NSString stringWithUTF8String:user];
     
-    self.textFieldAccount.stringValue = [NSString stringWithFormat:@"Account: %@", username];
+    if (cfg) {
+        const char *identity=linphone_proxy_config_get_identity(cfg);
+        LinphoneAddress *addr=linphone_address_new(identity);
+        const char* user = linphone_address_get_username(addr);
+        NSString *username = [NSString stringWithUTF8String:user];
+        
+        self.textFieldAccount.stringValue = [NSString stringWithFormat:@"Account: %@", username];
+    }
 }
 
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message{

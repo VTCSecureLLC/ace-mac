@@ -23,6 +23,8 @@ if [ -n "${BUCKET}" ]; then
   . ./apply.sh mac
   cd ..
 fi
+echo CODE_SIGN_APPLICATION="$CODE_SIGN_APPLICATION"
+echo CODE_SIGN_INSTALLER="$CODE_SIGN_INSTALLER"
 
 set -e
 
@@ -80,7 +82,7 @@ else
              -configuration Debug \
              -archivePath $XCARCHIVE \
              -exportPath $PKG_FILE \
-             -exportProvisioningProfile "$CODE_SIGN_INSTALLER"
+             -exportProvisioningProfile "$PROVISIONING_PROFILE"
 
   ls -la "$XCARCHIVE" || true
   ls -la "$PKG_FILE".app || true

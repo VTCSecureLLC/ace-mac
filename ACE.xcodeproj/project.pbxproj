@@ -24,11 +24,6 @@
 		2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DDA1B98733E00145575 /* HomeWindowController.m */; };
 		3134118A1BBC53530056B1C0 /* libmsopenh264.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 313411891BBC53530056B1C0 /* libmsopenh264.0.dylib */; };
 		313CAA601BBCC14E00B807CD /* libantlr3c.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 313CAA5F1BBCC14E00B807CD /* libantlr3c.1.dylib */; };
-		313CAA611BBCC3D500B807CD /* libopus.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A7FB281BBCBB3700809370 /* libopus.5.dylib */; };
-		313CAA621BBCC45300B807CD /* libspeexdsp.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A7FB2C1BBCBB8300809370 /* libspeexdsp.6.dylib */; };
-		313CAA631BBCC49E00B807CD /* libspeex.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A7FB2A1BBCBB5D00809370 /* libspeex.6.dylib */; };
-		313CAA641BBCC4FA00B807CD /* libswscale.2.1.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB321BBCBBFD00809370 /* libswscale.2.1.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		313CAA651BBCC52F00B807CD /* libswscale.2.1.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A7FB321BBCBBFD00809370 /* libswscale.2.1.100.dylib */; };
 		313CAA671BBCC5B900B807CD /* libopenh264.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 313CAA661BBCC5B900B807CD /* libopenh264.0.dylib */; };
 		313CAA681BBCC5CA00B807CD /* libopenh264.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 313CAA661BBCC5B900B807CD /* libopenh264.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		313CAA6A1BBCC60A00B807CD /* libgsm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 313CAA691BBCC60A00B807CD /* libgsm.dylib */; };
@@ -40,17 +35,20 @@
 		31A7FB151BBCB7BC00809370 /* libsrtp.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB141BBCB7BC00809370 /* libsrtp.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31A7FB251BBCBA8800809370 /* libpolarssl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A7FB241BBCBA8800809370 /* libpolarssl.8.dylib */; };
 		31A7FB271BBCBB0000809370 /* libpolarssl.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB261BBCBB0000809370 /* libpolarssl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		31A7FB291BBCBB3700809370 /* libopus.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB281BBCBB3700809370 /* libopus.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		31A7FB2B1BBCBB5D00809370 /* libspeex.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB2A1BBCBB5D00809370 /* libspeex.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		31A7FB2D1BBCBB8300809370 /* libspeexdsp.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB2C1BBCBB8300809370 /* libspeexdsp.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		31A7FB2F1BBCBBA500809370 /* libavcodec.53.61.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB2E1BBCBBA500809370 /* libavcodec.53.61.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		31A7FB311BBCBBCD00809370 /* libavutil.51.35.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB301BBCBBCD00809370 /* libavutil.51.35.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31E698CF1BBCCCC000D7160B /* libavcodec.53.61.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31E698CE1BBCCCC000D7160B /* libavcodec.53.61.100.dylib */; };
 		31E698D11BBCCCD200D7160B /* libavutil.51.35.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31E698D01BBCCCD200D7160B /* libavutil.51.35.100.dylib */; };
 		31E698D21BBCCCE700D7160B /* libavutil.51.35.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31E698D01BBCCCD200D7160B /* libavutil.51.35.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31E698D31BBCCCE700D7160B /* libavcodec.53.61.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31E698CE1BBCCCC000D7160B /* libavcodec.53.61.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31E698D51BBCCD4D00D7160B /* libswresample.0.6.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31E698D41BBCCD4D00D7160B /* libswresample.0.6.100.dylib */; };
 		31E698D61BBCCD6D00D7160B /* libswresample.0.6.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31E698D41BBCCD4D00D7160B /* libswresample.0.6.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		31ED2B571BBCD2B80060319E /* libopus.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31ED2B561BBCD2B80060319E /* libopus.5.dylib */; };
+		31ED2B581BBCD2CF0060319E /* libopus.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31ED2B561BBCD2B80060319E /* libopus.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		31ED2B5A1BBCD30B0060319E /* libspeex.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31ED2B591BBCD30B0060319E /* libspeex.6.dylib */; };
+		31ED2B5C1BBCD31C0060319E /* libspeexdsp.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31ED2B5B1BBCD31C0060319E /* libspeexdsp.6.dylib */; };
+		31ED2B5E1BBCD3400060319E /* libspeex.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31ED2B5D1BBCD3400060319E /* libspeex.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		31ED2B601BBCD3660060319E /* libspeexdsp.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31ED2B5F1BBCD3660060319E /* libspeexdsp.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		31ED2B621BBCD3CD0060319E /* libswscale.2.1.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31ED2B611BBCD3CD0060319E /* libswscale.2.1.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		31ED2B631BBCD3E80060319E /* libswscale.2.1.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31ED2B611BBCD3CD0060319E /* libswscale.2.1.100.dylib */; };
 		31F974781BB3962000E21D92 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F974771BB3962000E21D92 /* libsqlite3.0.dylib */; };
 		4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9B91BB1BDC900FCD070 /* cameraview.png */; };
 		4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BA1BB1BDC900FCD070 /* contacts.png */; };
@@ -194,17 +192,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				31ED2B621BBCD3CD0060319E /* libswscale.2.1.100.dylib in CopyFiles */,
+				31ED2B601BBCD3660060319E /* libspeexdsp.6.dylib in CopyFiles */,
+				31ED2B5E1BBCD3400060319E /* libspeex.6.dylib in CopyFiles */,
+				31ED2B581BBCD2CF0060319E /* libopus.5.dylib in CopyFiles */,
 				31E698D61BBCCD6D00D7160B /* libswresample.0.6.100.dylib in CopyFiles */,
 				31E698D21BBCCCE700D7160B /* libavutil.51.35.100.dylib in CopyFiles */,
 				31E698D31BBCCCE700D7160B /* libavcodec.53.61.100.dylib in CopyFiles */,
 				313CAA6B1BBCC63800B807CD /* libgsm.dylib in CopyFiles */,
 				313CAA681BBCC5CA00B807CD /* libopenh264.0.dylib in CopyFiles */,
-				313CAA641BBCC4FA00B807CD /* libswscale.2.1.100.dylib in CopyFiles */,
-				31A7FB311BBCBBCD00809370 /* libavutil.51.35.100.dylib in CopyFiles */,
-				31A7FB2F1BBCBBA500809370 /* libavcodec.53.61.100.dylib in CopyFiles */,
-				31A7FB2D1BBCBB8300809370 /* libspeexdsp.6.dylib in CopyFiles */,
-				31A7FB2B1BBCBB5D00809370 /* libspeex.6.dylib in CopyFiles */,
-				31A7FB291BBCBB3700809370 /* libopus.5.dylib in CopyFiles */,
 				31A7FB271BBCBB0000809370 /* libpolarssl.8.dylib in CopyFiles */,
 				31A7FB151BBCB7BC00809370 /* libsrtp.1.dylib in CopyFiles */,
 				31A7FB131BBCB78A00809370 /* libcunit.1.0.1.dylib in CopyFiles */,
@@ -296,15 +292,15 @@
 		31A7FB141BBCB7BC00809370 /* libsrtp.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsrtp.1.dylib; path = VATRP/linphonesdk/libs/libsrtp.1.dylib; sourceTree = "<group>"; };
 		31A7FB241BBCBA8800809370 /* libpolarssl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpolarssl.8.dylib; path = VATRP/linphonesdk/libs/libpolarssl.8.dylib; sourceTree = "<group>"; };
 		31A7FB261BBCBB0000809370 /* libpolarssl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpolarssl.8.dylib; path = VATRP/linphonesdk/libs/libpolarssl.8.dylib; sourceTree = "<group>"; };
-		31A7FB281BBCBB3700809370 /* libopus.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopus.5.dylib; path = VATRP/linphonesdk/one/libopus.5.dylib; sourceTree = "<group>"; };
-		31A7FB2A1BBCBB5D00809370 /* libspeex.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeex.6.dylib; path = VATRP/linphonesdk/one/libspeex.6.dylib; sourceTree = "<group>"; };
-		31A7FB2C1BBCBB8300809370 /* libspeexdsp.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeexdsp.6.dylib; path = VATRP/linphonesdk/one/libspeexdsp.6.dylib; sourceTree = "<group>"; };
-		31A7FB2E1BBCBBA500809370 /* libavcodec.53.61.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.53.61.100.dylib; path = VATRP/linphonesdk/one/libavcodec.53.61.100.dylib; sourceTree = "<group>"; };
-		31A7FB301BBCBBCD00809370 /* libavutil.51.35.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.51.35.100.dylib; path = VATRP/linphonesdk/one/libavutil.51.35.100.dylib; sourceTree = "<group>"; };
-		31A7FB321BBCBBFD00809370 /* libswscale.2.1.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.2.1.100.dylib; path = VATRP/linphonesdk/one/libswscale.2.1.100.dylib; sourceTree = "<group>"; };
 		31E698CE1BBCCCC000D7160B /* libavcodec.53.61.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.53.61.100.dylib; path = VATRP/linphonesdk/libs/libavcodec.53.61.100.dylib; sourceTree = "<group>"; };
 		31E698D01BBCCCD200D7160B /* libavutil.51.35.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.51.35.100.dylib; path = VATRP/linphonesdk/libs/libavutil.51.35.100.dylib; sourceTree = "<group>"; };
 		31E698D41BBCCD4D00D7160B /* libswresample.0.6.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.0.6.100.dylib; path = VATRP/linphonesdk/libs/libswresample.0.6.100.dylib; sourceTree = "<group>"; };
+		31ED2B561BBCD2B80060319E /* libopus.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopus.5.dylib; path = VATRP/linphonesdk/libs/libopus.5.dylib; sourceTree = "<group>"; };
+		31ED2B591BBCD30B0060319E /* libspeex.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeex.6.dylib; path = VATRP/linphonesdk/libs/libspeex.6.dylib; sourceTree = "<group>"; };
+		31ED2B5B1BBCD31C0060319E /* libspeexdsp.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeexdsp.6.dylib; path = VATRP/linphonesdk/libs/libspeexdsp.6.dylib; sourceTree = "<group>"; };
+		31ED2B5D1BBCD3400060319E /* libspeex.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeex.6.dylib; path = VATRP/linphonesdk/libs/libspeex.6.dylib; sourceTree = "<group>"; };
+		31ED2B5F1BBCD3660060319E /* libspeexdsp.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeexdsp.6.dylib; path = VATRP/linphonesdk/libs/libspeexdsp.6.dylib; sourceTree = "<group>"; };
+		31ED2B611BBCD3CD0060319E /* libswscale.2.1.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.2.1.100.dylib; path = VATRP/linphonesdk/libs/libswscale.2.1.100.dylib; sourceTree = "<group>"; };
 		31F974771BB3962000E21D92 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4A50F9B91BB1BDC900FCD070 /* cameraview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraview.png; sourceTree = "<group>"; };
 		4A50F9BA1BB1BDC900FCD070 /* contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contacts.png; sourceTree = "<group>"; };
@@ -416,15 +412,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31ED2B631BBCD3E80060319E /* libswscale.2.1.100.dylib in Frameworks */,
+				31ED2B5C1BBCD31C0060319E /* libspeexdsp.6.dylib in Frameworks */,
+				31ED2B5A1BBCD30B0060319E /* libspeex.6.dylib in Frameworks */,
+				31ED2B571BBCD2B80060319E /* libopus.5.dylib in Frameworks */,
 				31E698D51BBCCD4D00D7160B /* libswresample.0.6.100.dylib in Frameworks */,
 				31E698D11BBCCCD200D7160B /* libavutil.51.35.100.dylib in Frameworks */,
 				31E698CF1BBCCCC000D7160B /* libavcodec.53.61.100.dylib in Frameworks */,
 				313CAA6A1BBCC60A00B807CD /* libgsm.dylib in Frameworks */,
 				313CAA671BBCC5B900B807CD /* libopenh264.0.dylib in Frameworks */,
-				313CAA651BBCC52F00B807CD /* libswscale.2.1.100.dylib in Frameworks */,
-				313CAA631BBCC49E00B807CD /* libspeex.6.dylib in Frameworks */,
-				313CAA621BBCC45300B807CD /* libspeexdsp.6.dylib in Frameworks */,
-				313CAA611BBCC3D500B807CD /* libopus.5.dylib in Frameworks */,
 				313CAA601BBCC14E00B807CD /* libantlr3c.1.dylib in Frameworks */,
 				31A7FB251BBCBA8800809370 /* libpolarssl.8.dylib in Frameworks */,
 				3134118A1BBC53530056B1C0 /* libmsopenh264.0.dylib in Frameworks */,
@@ -485,6 +481,9 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				31ED2B5B1BBCD31C0060319E /* libspeexdsp.6.dylib */,
+				31ED2B591BBCD30B0060319E /* libspeex.6.dylib */,
+				31ED2B561BBCD2B80060319E /* libopus.5.dylib */,
 				31E698D41BBCCD4D00D7160B /* libswresample.0.6.100.dylib */,
 				31E698D01BBCCCD200D7160B /* libavutil.51.35.100.dylib */,
 				31E698CE1BBCCCC000D7160B /* libavcodec.53.61.100.dylib */,
@@ -673,12 +672,9 @@
 		4AC389BC1B8E87520063298F = {
 			isa = PBXGroup;
 			children = (
-				31A7FB321BBCBBFD00809370 /* libswscale.2.1.100.dylib */,
-				31A7FB301BBCBBCD00809370 /* libavutil.51.35.100.dylib */,
-				31A7FB2E1BBCBBA500809370 /* libavcodec.53.61.100.dylib */,
-				31A7FB2C1BBCBB8300809370 /* libspeexdsp.6.dylib */,
-				31A7FB2A1BBCBB5D00809370 /* libspeex.6.dylib */,
-				31A7FB281BBCBB3700809370 /* libopus.5.dylib */,
+				31ED2B611BBCD3CD0060319E /* libswscale.2.1.100.dylib */,
+				31ED2B5F1BBCD3660060319E /* libspeexdsp.6.dylib */,
+				31ED2B5D1BBCD3400060319E /* libspeex.6.dylib */,
 				31A7FB261BBCBB0000809370 /* libpolarssl.8.dylib */,
 				31A7FB141BBCB7BC00809370 /* libsrtp.1.dylib */,
 				31A7FB121BBCB78A00809370 /* libcunit.1.0.1.dylib */,

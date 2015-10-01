@@ -12,6 +12,8 @@ if [ "$TRAVIS_BRANCH" != "master" ] ; then
   exit 0
 fi
 
+set -e
+
 # Prepare codesigning keys
 
 if [ -n "${BUCKET}" ]; then
@@ -23,8 +25,6 @@ if [ -n "${BUCKET}" ]; then
   . ./apply.sh mac
   cd ..
 fi
-
-set -e
 
 for file in *.dmg; do
   rm -f "$file"

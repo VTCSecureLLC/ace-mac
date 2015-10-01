@@ -32,10 +32,10 @@ done
 
 # Generate an archive for this project
 
-XCARCHIVE_FILE=/tmp/ace-mac.xcarchive
+XCARCHIVE=/tmp/ace-mac.xcarchive
 
-if [ -e "${XCARCHIVE_FILE}" ]; then
-  rm -fr "${XCARCHIVE_FILE}"
+if [ -e "${XCARCHIVE}" ]; then
+  rm -fr "${XCARCHIVE}"
 fi
 
 xctool -project ACE.xcodeproj \
@@ -44,8 +44,8 @@ xctool -project ACE.xcodeproj \
        -configuration Debug \
        -derivedDataPath build/derived \
        archive \
-       -archivePath $XCARCHIVE_FILE \
-       CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" \
+       -archivePath $XCARCHIVE \
+       CODE_SIGN_IDENTITY="$CODE_SIGN_APPLICATION" \
        PROVISIONING_PROFILE="$PROVISIONING_PROFILE"
 
 # Prepare semantic versioning tag
@@ -63,8 +63,8 @@ IFS=/ GITHUB_REPO=($TRAVIS_REPO_SLUG); IFS=""
 
 PKG_FILE=/tmp/ace-mac.pkg
 
-if [ -e "${PKG_FILE}" ]; then
-  rm -fr "${PKG_FILE}"
+if [ -e "${PKG_FILE}".app ]; then
+  rm -fr "${PKG_FILE}".app
 fi
 
 # Release via HockeyApp if credentials are available
@@ -78,18 +78,21 @@ else
   xcodebuild -exportArchive \
              -exportFormat app \
              -configuration Debug \
-             -archivePath $XCARCHIVE_FILE \
+             -archivePath $XCARCHIVE \
              -exportPath $PKG_FILE \
-             -exportProvisioningProfile 'com.vtcsecure.ace.mac development' || true
+             -exportProvisioningProfile "$CODE_SIGN_INSTALLER"
 
-  ls -la "$XCARCHIVE_FILE" || true
+  ls -la "$XCARCHIVE" || true
   ls -la "$PKG_FILE".app || true
 
-  if [ -d "$XCARCHIVE_FILE" ]; then
+  if [ -d "$XCARCHIVE" ]; then
     # Create a dSYM zip file from the archive build
 
     DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
     DSYM_ZIP_FILE=${PKG_FILE}.dsym.zip
+    if [ -f $DSYM_ZIP_FILE ]; then
+      rm -f $DSYM_ZIP_FILE
+    fi
     (cd $(dirname $DSYM_DIR) ; zip -r $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
 
     # Distribute via HockeyApp
@@ -110,7 +113,7 @@ else
         -notify=true \
         -upload=all \
         -release_type=alpha \
-        $XCARCHIVE_FILE
+        $XCARCHIVE
     fi
 
     #bundle exec ipa distribute:hockeyapp \

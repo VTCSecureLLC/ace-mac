@@ -24,7 +24,7 @@ if [ -n "${BUCKET}" ]; then
   cd ..
 fi
 
-set -ex
+set -e
 
 for file in *.dmg; do
   rm -f "$file"
@@ -85,7 +85,7 @@ else
   ls -la "$XCARCHIVE_FILE" || true
   ls -la "$PKG_FILE".app || true
 
-  if [ -f "$PKG_FILE".app ]; then
+  if [ -d "$PKG_FILE".app ]; then
     # Create a dSYM zip file from the archive build
 
     DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)

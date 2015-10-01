@@ -23,8 +23,6 @@ if [ -n "${BUCKET}" ]; then
   . ./apply.sh mac
   cd ..
 fi
-echo CODE_SIGN_APPLICATION="$CODE_SIGN_APPLICATION"
-echo CODE_SIGN_INSTALLER="$CODE_SIGN_INSTALLER"
 
 set -e
 

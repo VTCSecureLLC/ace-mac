@@ -45,8 +45,8 @@ xctool -project ACE.xcodeproj \
        -derivedDataPath build/derived \
        archive \
        -archivePath $XCARCHIVE \
-       CODE_SIGN_IDENTITY="$CODE_SIGN_APPLICATION" \
-       PROVISIONING_PROFILE="$PROVISIONING_PROFILE"
+       CODE_SIGN_IDENTITY="$CODE_SIGN_APPLICATION"
+       #PROVISIONING_PROFILE="$PROVISIONING_PROFILE"
 
 # Prepare semantic versioning tag
 

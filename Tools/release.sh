@@ -94,15 +94,33 @@ else
 
     # Distribute via HockeyApp
 
-    bundle exec ipa distribute:hockeyapp \
-               --token $HOCKEYAPP_TOKEN \
-               --file $PKG_FILE \
-               --dsym $DSYM_ZIP_FILE \
-               --notes LastCommit.txt \
-               --notify \
-               --commit-sha ${SHA1} \
-               --build-server-url "https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
-               --repository-url "https://github.com/${TRAVIS_REPO_SLUG}"
+    if [ -x /usr/local/bin/puck ]; then
+
+      /usr/local/bin/puck \
+        -dsym_path=$DSYM_ZIP_FILE \
+        -submit=auto \
+        -download=true \
+        -notes="$(git log -1 --pretty=format:%B)" \
+        -commit_sha=${SHA1} \
+        -build_server_url="https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+        -repository_url="http://github.com/${TRAVIS_REPO_SLUG}" \
+        -source_path=$PWD \
+        -api_token=$HOCKEYAPP_TOKEN \
+        -app_id=b7b28171bab92ce345aac7d54f435020 \
+        -notify=true \
+        -upload=all \
+        -release_type=alpha \
+        $XCARCHIVE_FILE
+
+    fi
+
+    #bundle exec ipa distribute:hockeyapp \
+    #           --token $HOCKEYAPP_TOKEN \
+    #           --file $PKG_FILE \
+    #           --dsym $DSYM_ZIP_FILE \
+    #           --notes LastCommit.txt \
+    #           --notify \
+    #           --repository-url "https://github.com/${TRAVIS_REPO_SLUG}"
   fi
 fi
 

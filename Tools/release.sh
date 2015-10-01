@@ -83,9 +83,9 @@ else
              -exportProvisioningProfile 'com.vtcsecure.ace.mac development' || true
 
   ls -la "$XCARCHIVE_FILE" || true
-  ls -la "$PKG_FILE" || true
+  ls -la "$PKG_FILE".app || true
 
-  if [ -f $PKG_FILE ]; then
+  if [ -f "$PKG_FILE".app ]; then
     # Create a dSYM zip file from the archive build
 
     DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)

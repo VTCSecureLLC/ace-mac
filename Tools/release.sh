@@ -26,9 +26,17 @@ fi
 
 set -ex
 
+for file in *.dmg; do
+  rm -f "$file"
+done
+
 # Generate an archive for this project
 
 XCARCHIVE_FILE=/tmp/ace-mac.xcarchive
+
+if [ -e "${XCARCHIVE_FILE}" ]; then
+  rm -fr "${XCARCHIVE_FILE}"
+fi
 
 xctool -project ACE.xcodeproj \
        -scheme VATRP \
@@ -55,6 +63,10 @@ IFS=/ GITHUB_REPO=($TRAVIS_REPO_SLUG); IFS=""
 
 PKG_FILE=/tmp/ace-mac.pkg
 
+if [ -e "${PKG_FILE}" ]; then
+  rm -fr "${PKG_FILE}"
+fi
+
 # Release via HockeyApp if credentials are available
 
 if [ -z "$HOCKEYAPP_TOKEN" ]; then
@@ -65,11 +77,15 @@ else
 
   xcodebuild -exportArchive \
              -exportFormat app \
+             -configuration Debug \
              -archivePath $XCARCHIVE_FILE \
              -exportPath $PKG_FILE \
              -exportProvisioningProfile 'com.vtcsecure.ace.mac development' || true
 
-  if [ -f $PKG_FILE ]; then
+  ls -la "$XCARCHIVE_FILE" || true
+  ls -la "$PKG_FILE".app || true
+
+  if [ -f "$PKG_FILE".app ]; then
     # Create a dSYM zip file from the archive build
 
     DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
@@ -78,15 +94,33 @@ else
 
     # Distribute via HockeyApp
 
-    bundle exec ipa distribute:hockeyapp \
-               --token $HOCKEYAPP_TOKEN \
-               --file $PKG_FILE \
-               --dsym $DSYM_ZIP_FILE \
-               --notes LastCommit.txt \
-               --notify \
-               --commit-sha ${SHA1} \
-               --build-server-url "https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
-               --repository-url "https://github.com/${TRAVIS_REPO_SLUG}"
+    if [ -x /usr/local/bin/puck ]; then
+
+      /usr/local/bin/puck \
+        -dsym_path=$DSYM_ZIP_FILE \
+        -submit=auto \
+        -download=true \
+        -notes="$(git log -1 --pretty=format:%B)" \
+        -commit_sha=${SHA1} \
+        -build_server_url="https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+        -repository_url="http://github.com/${TRAVIS_REPO_SLUG}" \
+        -source_path=$PWD \
+        -api_token=$HOCKEYAPP_TOKEN \
+        -app_id=b7b28171bab92ce345aac7d54f435020 \
+        -notify=true \
+        -upload=all \
+        -release_type=alpha \
+        $XCARCHIVE_FILE
+
+    fi
+
+    #bundle exec ipa distribute:hockeyapp \
+    #           --token $HOCKEYAPP_TOKEN \
+    #           --file $PKG_FILE \
+    #           --dsym $DSYM_ZIP_FILE \
+    #           --notes LastCommit.txt \
+    #           --notify \
+    #           --repository-url "https://github.com/${TRAVIS_REPO_SLUG}"
   fi
 fi
 
@@ -136,4 +170,8 @@ else
         --name $(basename "$PKG_FILE") \
         --file "$PKG_FILE"
   fi
+fi
+
+if [ -f "sync/cleanup.sh" ]; then
+  . ./sync/cleanup.sh
 fi

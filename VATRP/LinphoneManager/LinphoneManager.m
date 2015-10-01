@@ -1406,11 +1406,9 @@ static BOOL libStarted = FALSE;
 #endif
 #ifdef HAVE_X264
 	libmsx264_init(); //load x264 plugin if present from the liblinphone sdk
+#else
+    libmsopenh264_init(); //load openh264 plugin if present from the liblinphone sdk
 #endif
-#ifdef HAVE_OPENH264
-	libmsopenh264_init(); //load openh264 plugin if present from the liblinphone sdk
-#endif
-
 #if HAVE_G729
 	libmsbcg729_init(); // load g729 plugin
 #endif

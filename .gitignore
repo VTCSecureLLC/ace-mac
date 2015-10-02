@@ -3,5 +3,6 @@ ACE.xcodeproj/project.xcworkspace/
 ACE.xcodeproj/xcuserdata/
 *.dmg
 diskimage/
+ACE/ACE.app
 LastCommit.txt
 sync/

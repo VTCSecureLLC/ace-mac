@@ -33,7 +33,7 @@
 
 #import "LinphoneManager.h"
 //#import "LinphoneCoreSettingsStore.h"
-
+#import "AppDelegate.h"
 #include "linphone/linphonecore_utils.h"
 #include "linphone/lpconfig.h"
 #include "mediastreamer2/mscommon.h"
@@ -1417,12 +1417,14 @@ static BOOL libStarted = FALSE;
 	linphone_core_set_log_collection_path([[LinphoneManager cacheDirectory] UTF8String]);
 	[self setLogsEnabled:[self lpConfigBoolForKey:@"debugenable_preference"]];
 
-
+[[AppDelegate sharedInstance].viewController showVideoMailWindow];
+    
 	theLinphoneCore = linphone_core_new_with_config (&linphonec_vtable
 										 ,configDb
 										 ,(__bridge void *)(self) /* user_data */);
 
-
+    linphone_core_enable_video_preview(theLinphoneCore, FALSE);
+    linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
 
 	/* set the CA file no matter what, since the remote provisioning could be hitting an HTTPS server */
 	const char* lRootCa = [[LinphoneManager bundleFile:@"rootca.pem"] cStringUsingEncoding:[NSString defaultCStringEncoding]];

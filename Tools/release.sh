@@ -67,23 +67,22 @@ if [ -e "${PKG_FILE}".app ]; then
   rm -fr "${PKG_FILE}".app
 fi
 
-# Release via HockeyApp if credentials are available
+# Generate an installer pkg from the archive
 
-if [ -z "$HOCKEYAPP_TOKEN" ]; then
-  echo HOCKEYAPP_TOKEN is not defined. Neither creating installer pkg, nor deploying it to HockeyApp.
-else
-
-  # Generate an installer pkg from the archive
-
+if [ -d "$XCARCHIVE" ]; then
   xcodebuild -exportArchive \
              -exportFormat app \
              -configuration Debug \
              -archivePath $XCARCHIVE \
              -exportPath $PKG_FILE \
              -exportProvisioningProfile "$PROVISIONING_PROFILE"
+fi
 
-  ls -la "$XCARCHIVE" || true
-  ls -la "$PKG_FILE".app || true
+# Release via HockeyApp if credentials are available
+
+if [ -z "$HOCKEYAPP_TOKEN" ]; then
+  echo HOCKEYAPP_TOKEN is not defined. Neither creating installer pkg, nor deploying it to HockeyApp.
+else
 
   if [ -d "$XCARCHIVE" ]; then
     # Create a dSYM zip file from the archive build

@@ -1160,7 +1160,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1185,7 +1185,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
-				PROVISIONING_PROFILE = "0a891052-bec3-4a64-a954-a61fae430c6d";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -1220,7 +1220,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
 				PRODUCT_NAME = ACE;
-				PROVISIONING_PROFILE = "0a891052-bec3-4a64-a954-a61fae430c6d";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;

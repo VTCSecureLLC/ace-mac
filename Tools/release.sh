@@ -143,9 +143,9 @@ else
       --pre-release
 
   find . -name '*.app' -print | grep -v build/derived | while read app; do
-    mkdir -p diskimage/
-    cp -a "$app" diskimage/
-    [ -d "$app".dSYM ] && cp -a "$app".dSYM diskimage/
+    mkdir -p ACE/
+    cp -a "$app" ACE/
+    #[ -d "$app".dSYM ] && cp -a "$app".dSYM diskimage/
     config=$(basename $(dirname "$app"))
     dmg=$(basename "$app" | sed -e 's/.app$//')
     hdiutil create $dmg-$config-$tag.dmg -srcfolder diskimage/ -ov

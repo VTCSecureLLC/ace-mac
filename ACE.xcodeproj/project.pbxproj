@@ -105,6 +105,8 @@
 		4AC389E21B8E87530063298F /* VATRPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389E11B8E87530063298F /* VATRPTests.m */; };
 		4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */; };
 		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
+		5E02C8DE1BBED147003EA32B /* alert_inverted.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */; settings = {ASSET_TAGS = (); }; };
+		5E02C8DF1BBED147003EA32B /* alert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E02C8DD1BBED147003EA32B /* alert.jpg */; settings = {ASSET_TAGS = (); }; };
 		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
 		CE3D252D1BA7739400028600 /* libbellesip.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25001BA7739400028600 /* libbellesip.0.dylib */; };
 		CE3D252E1BA7739400028600 /* libbzrtp.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25011BA7739400028600 /* libbzrtp.0.dylib */; };
@@ -391,6 +393,8 @@
 		4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4AE0C6791BB2E9E900B4E208 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CallViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alert_inverted.jpg; sourceTree = "<group>"; };
+		5E02C8DD1BBED147003EA32B /* alert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alert.jpg; sourceTree = "<group>"; };
 		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = VATRP/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
 		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
 		CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.56.dylib; path = VATRP/linphonesdk/libs/libavcodec.56.dylib; sourceTree = "<group>"; };
@@ -698,6 +702,8 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */,
+				5E02C8DD1BBED147003EA32B /* alert.jpg */,
 				4AAF56191BB1615900241DC2 /* accounts_icon.png */,
 				4A50F9B91BB1BDC900FCD070 /* cameraview.png */,
 				4A50F9BA1BB1BDC900FCD070 /* contacts.png */,
@@ -1003,6 +1009,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E02C8DF1BBED147003EA32B /* alert.jpg in Resources */,
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
 				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
@@ -1018,6 +1025,7 @@
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
+				5E02C8DE1BBED147003EA32B /* alert_inverted.jpg in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,

@@ -12,6 +12,7 @@
 @implementation CodecModel
 
 @synthesize name;
+@synthesize preference;
 @synthesize rate;
 @synthesize channels;
 @synthesize status;

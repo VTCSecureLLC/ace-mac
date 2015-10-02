@@ -2,8 +2,8 @@
 //  AccountsViewController.m
 //  vatrp
 //
-//  Created by Edgar Sukiasyan on 9/22/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Created by Ruben Semerjyan on 9/22/15.
+//  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
 #import "AccountsViewController.h"
@@ -69,11 +69,11 @@
     
     accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
-    self.textFieldUsername.stringValue = accountModel.username;
-    self.secureTextFieldPassword.stringValue = accountModel.password;
-    self.textFieldDomain.stringValue = accountModel.domain;
+    if(accountModel.username != NULL) { self.textFieldUsername.stringValue = accountModel.username; }
+    if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
+    if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
     self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
-    [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport];
+    if(accountModel.transport != NULL) { [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport]; }
     NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.buttonAutoAnswer.state = auto_answer;
     

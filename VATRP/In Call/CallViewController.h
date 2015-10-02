@@ -2,8 +2,8 @@
 //  CallViewController.h
 //  ACE
 //
-//  Created by Edgar Sukiasyan on 9/23/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Created by Ruben Semerjyan on 9/23/15.
+//  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

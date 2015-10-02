@@ -2,8 +2,8 @@
 //  CallViewController.m
 //  ACE
 //
-//  Created by Edgar Sukiasyan on 9/23/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Created by Ruben Semerjyan on 9/23/15.
+//  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
 #import "CallViewController.h"
@@ -22,6 +22,11 @@
 @property (weak) IBOutlet NSButton *buttonAnswer;
 @property (weak) IBOutlet NSButton *buttonDecline;
 
+@property (weak) IBOutlet NSImageView *callAlertImageView;
+@property (weak) NSImage *alert;
+@property (weak) NSImage *alertInverted;
+
+@property (weak) NSTimer *callAlertTimer;
 
 - (IBAction)onButtonAnswer:(id)sender;
 - (IBAction)onButtonDecline:(id)sender;
@@ -33,6 +38,8 @@
 
 @synthesize call;
 
+dispatch_queue_t callAlertAnimationQueue;
+static const float callAlertStepInterval = 0.5;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
@@ -47,6 +54,9 @@
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+    
+    _alert = [NSImage imageNamed:@"alert"];
+    _alertInverted = [NSImage imageNamed:@"alert_inverted"];
 }
 
 - (void) dealloc {
@@ -57,6 +67,11 @@
 
 - (IBAction)onButtonAnswer:(id)sender {
     [[LinphoneManager instance] acceptCall:call];
+  
+    if(_callAlertTimer != nil){
+        [_callAlertTimer invalidate];
+        _callAlertTimer = nil;
+    }
 }
 
 - (IBAction)onButtonDecline:(id)sender {
@@ -84,6 +99,11 @@
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call...";
+            
+            callAlertAnimationQueue = dispatch_queue_create("alert queue",DISPATCH_QUEUE_PRIORITY_DEFAULT);
+            _callAlertTimer = [NSTimer scheduledTimerWithTimeInterval:callAlertStepInterval target:self selector:@selector(callFlashAlert) userInfo:nil repeats:true];
+            [_callAlertTimer fire];
+
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -268,5 +288,28 @@
     dcFormatter.unitsStyle = NSDateComponentsFormatterUnitsStylePositional;
     return [dcFormatter stringFromTimeInterval:seconds];
 }
+
+BOOL inverted = false;
+
+-(void) callFlashAlert{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if(inverted){
+                [_callAlertImageView setImage: _alertInverted];
+                inverted = false;
+            }
+            
+            else{
+                [_callAlertImageView setImage: _alert];
+                inverted = true;
+            }
+            
+        });
+        
+    });
+    
+}
+
 
 @end

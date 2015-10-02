@@ -11,6 +11,7 @@
 @interface CodecModel : NSObject
 
 @property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *preference;
 @property (nonatomic, assign) int rate;
 @property (nonatomic, assign) int channels;
 @property (nonatomic, assign) BOOL status;

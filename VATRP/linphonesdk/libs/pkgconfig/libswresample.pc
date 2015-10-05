@@ -1,4 +1,4 @@
-prefix=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT
+prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT
 exec_prefix=${prefix}
 libdir=${prefix}/lib
 includedir=${prefix}/include

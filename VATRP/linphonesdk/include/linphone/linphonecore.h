@@ -46,6 +46,8 @@ extern "C" {
 #endif
 
 struct _LinphoneCore;
+struct _LinphoneChatRoom;
+
 /**
  * Linphone core main object created by function linphone_core_new() .
  * @ingroup initializing
@@ -561,6 +563,7 @@ struct _LinphoneCallStats {
 
 LINPHONE_PUBLIC const LinphoneCallStats *linphone_call_get_audio_stats(LinphoneCall *call);
 LINPHONE_PUBLIC const LinphoneCallStats *linphone_call_get_video_stats(LinphoneCall *call);
+LINPHONE_PUBLIC const LinphoneCallStats *linphone_call_get_text_stats(LinphoneCall *call);
 LINPHONE_PUBLIC float linphone_call_stats_get_sender_loss_rate(const LinphoneCallStats *stats);
 LINPHONE_PUBLIC float linphone_call_stats_get_receiver_loss_rate(const LinphoneCallStats *stats);
 LINPHONE_PUBLIC float linphone_call_stats_get_sender_interarrival_jitter(const LinphoneCallStats *stats, LinphoneCall *call);
@@ -738,13 +741,14 @@ LINPHONE_PUBLIC	float linphone_call_get_play_volume(LinphoneCall *call);
  */
 LINPHONE_PUBLIC	float linphone_call_get_record_volume(LinphoneCall *call);
 
-struct _LinphoneChatRoom;
 /**
- * Create a new chat room for messaging from a call if not already existing, else return existing one
+ * Create a new chat room for messaging from a call if not already existing, else return existing one.
+ * No reference is given to the caller: the chat room will be deleted when the call is ended.
  * @param call #LinphoneCall object
  * @return #LinphoneChatRoom where messaging can take place.
  */
 LINPHONE_PUBLIC	struct _LinphoneChatRoom * linphone_call_get_chat_room(LinphoneCall *call);
+
 
 
 /**
@@ -1163,7 +1167,6 @@ LINPHONE_PUBLIC LinphoneAuthInfo * linphone_auth_info_new_from_config_file(LpCon
 #endif
 
 
-struct _LinphoneChatRoom;
 /**
  * @addtogroup chatroom
  * @{
@@ -2987,6 +2990,7 @@ LINPHONE_PUBLIC	int linphone_core_get_sip_transports(LinphoneCore *lc, LCSipTran
 LINPHONE_PUBLIC void linphone_core_get_sip_transports_used(LinphoneCore *lc, LCSipTransports *tr);
 
 LINPHONE_PUBLIC	bool_t linphone_core_sip_transport_supported(const LinphoneCore *lc, LinphoneTransportType tp);
+
 /**
  *
  * Give access to the UDP sip socket. Can be useful to configure this socket as persistent I.E kCFStreamNetworkServiceType set to kCFStreamNetworkServiceTypeVoIP)
@@ -4121,7 +4125,7 @@ LINPHONE_PUBLIC const char * linphone_core_get_video_preset(const LinphoneCore *
  * Gets if realtime text is enabled or not
  * @param[in] lc LinphoneCore object
  * @return true if realtime text is enabled, false otherwise
- */ 
+ */
 LINPHONE_PUBLIC bool_t linphone_core_realtime_text_enabled(LinphoneCore *lc);
 
 /**
@@ -4130,28 +4134,41 @@ LINPHONE_PUBLIC bool_t linphone_core_realtime_text_enabled(LinphoneCore *lc);
  * @param[in] hostname of IP adress of the http proxy (can be NULL to disable).
  */
 LINPHONE_PUBLIC	void linphone_core_set_http_proxy_host(LinphoneCore *lc, const char *host) ;
-	
+
 /**
  * Set http proxy port to be used for signaling.
  * @param[in] lc LinphoneCore object
  * @param[in] port of the http proxy.
  */
 LINPHONE_PUBLIC void linphone_core_set_http_proxy_port(LinphoneCore *lc, int port) ;
-	
+
 /**
  * Get http proxy address to be used for signaling.
  * @param[in] lc LinphoneCore object
  * @return hostname of IP adress of the http proxy (can be NULL to disable).
  */
 LINPHONE_PUBLIC	const char *linphone_core_get_http_proxy_host(const LinphoneCore *lc);
-	
+
 /**
  * Get http proxy port to be used for signaling.
  * @param[in] lc LinphoneCore object
  * @return port of the http proxy.
  */
 LINPHONE_PUBLIC	int linphone_core_get_http_proxy_port(const LinphoneCore *lc);
-	
+
+/**
+ * Converts a LinphoneTransportType enum to a lowercase string.
+ * @ingroup misc
+**/
+LINPHONE_PUBLIC const char* linphone_transport_to_string(LinphoneTransportType transport);
+
+/**
+ * Converts a lowercase string to a LinphoneTransportType enum.
+ * @ingroup misc
+ * @return Transport matching input, or LinphoneTransportUdp if nothing is found
+**/
+LINPHONE_PUBLIC LinphoneTransportType linphone_transport_parse(const char* transport);
+
 #ifdef __cplusplus
 }
 #endif

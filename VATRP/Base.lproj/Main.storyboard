@@ -532,10 +532,10 @@
             </objects>
             <point key="canvasLocation" x="3906" y="570"/>
         </scene>
-        <!--View Controller-->
+        <!--Self Video View Controller-->
         <scene sceneID="j3l-aS-t0H">
             <objects>
-                <viewController id="eXi-bK-IY8" sceneMemberID="viewController">
+                <viewController id="eXi-bK-IY8" customClass="SelfVideoViewController" sceneMemberID="viewController">
                     <view key="view" id="B0v-RJ-Y1W">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -543,7 +543,7 @@
                 </viewController>
                 <customObject id="yxP-nk-AtU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2732" y="590"/>
+            <point key="canvasLocation" x="2725" y="577"/>
         </scene>
         <!--Dialpad View Controller-->
         <scene sceneID="oyM-Vb-IzW">

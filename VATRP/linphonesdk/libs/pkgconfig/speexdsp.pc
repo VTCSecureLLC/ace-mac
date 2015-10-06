@@ -1,15 +1,15 @@
 # libspeexdsp pkg-config source file
 
-prefix=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT
-exec_prefix=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/bin
-libdir=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/lib
-includedir=/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/include
+prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT
+exec_prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT/bin
+libdir=/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib
+includedir=/Users/francois/projects/linphone-cmake-builder/OUTPUT/include
 
 Name: speexdsp
 Description: Speexdsp is a speech processing library that goes along with the Speex codec
 Version: 1.2rc1
 Requires: 
 Conflicts:
-Libs: -L/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/lib -lspeexdsp
+Libs: -L/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib -lspeexdsp
 Libs.private: -lm
-Cflags: -I/Volumes/SSD/workspace_mac/linphone-cmake-builder-desktop-mac/OUTPUT/include
+Cflags: -I/Users/francois/projects/linphone-cmake-builder/OUTPUT/include

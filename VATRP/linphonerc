@@ -35,7 +35,7 @@ rtcp_xr_voip_metrics_enabled=1
 [video]
 display=1
 capture=1
-show_local=0
+show_local=1
 enabled=1
 size=vga
 automatically_initiate=0

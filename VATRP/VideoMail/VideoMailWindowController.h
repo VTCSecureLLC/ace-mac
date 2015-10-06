@@ -12,4 +12,6 @@
 
 @property (nonatomic, assign) BOOL isShow;
 
+- (void) enableSelfVideo;
+
 @end

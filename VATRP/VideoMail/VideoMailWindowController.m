@@ -7,6 +7,7 @@
 //
 
 #import "VideoMailWindowController.h"
+#import "LinphoneManager.h"
 
 @interface VideoMailWindowController ()
 
@@ -29,6 +30,17 @@
 - (void)myWindowWillClose:(NSNotification *)notification
 {
     self.isShow = NO;
+    
+    linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
+    linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
+    linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
+}
+
+- (void) enableSelfVideo {
+    linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
+    linphone_core_use_preview_window([LinphoneManager getLc], YES);
+    linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.contentViewController.view));
+    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
 }
 
 @end

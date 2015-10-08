@@ -17,6 +17,7 @@
 
 - (void) showSettingsWindow;
 - (void) showVideoMailWindow;
+- (void) closeAllWindows;
 
 @end
 

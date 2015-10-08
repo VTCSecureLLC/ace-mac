@@ -204,4 +204,31 @@
     }
 }
 
+- (void) closeAllWindows {
+    if (self.recentsWindowController.isShow) {
+        [self.recentsWindowController close];
+        self.recentsWindowController = nil;
+    }
+
+    if (self.contactsWindowController.isShow) {
+        [self.contactsWindowController close];
+        self.contactsWindowController = nil;
+    }
+
+    if (self.dialpadWindowController.isShow) {
+        [self.dialpadWindowController close];
+        self.dialpadWindowController = nil;
+    }
+
+    if (self.videoMailWindowController.isShow) {
+        [self.videoMailWindowController close];
+        self.videoMailWindowController = nil;
+    }
+
+    if (self.settingsWindowController.isShow) {
+        [self.settingsWindowController close];
+        self.settingsWindowController = nil;
+    }
+}
+
 @end

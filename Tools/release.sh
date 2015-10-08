@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Globals
+HOCKEYAPP_APPID=${HOCKEYAPP_ID:-b7b28171bab92ce345aac7d54f435020}
+
 # Only deploy master branch builds
 
 if [ -z "$TRAVIS_BRANCH" ] ; then
@@ -12,10 +15,16 @@ if [ "$TRAVIS_BRANCH" != "master" ] ; then
   exit 0
 fi
 
-set -e
-
 # Prepare codesigning keys
 
+if [ -z "${AWS_ACCESS_KEY_ID}" ]; then
+  echo "Missing AWS_ACCESS_KEY_ID"
+  unset BUCKET
+fi
+if [ -z "${AWS_SECRET_ACCESS_KEY}" ]; then
+  echo "Missing AWS_SECRET_ACCESS_KEY"
+  unset BUCKET
+fi
 if [ -n "${BUCKET}" ]; then
   brew install awscli
   aws s3 sync --quiet s3://${BUCKET}/apple/ sync/
@@ -26,8 +35,12 @@ if [ -n "${BUCKET}" ]; then
   cd ..
 fi
 
-for file in *.dmg; do
-  rm -f "$file"
+set -e
+
+for file in *.dmg *.zip; do
+  if [ -f "$file" ]; then
+    rm -f "$file"
+  fi
 done
 
 # Generate an archive for this project
@@ -85,6 +98,15 @@ if [ -z "$HOCKEYAPP_TOKEN" ]; then
 else
 
   if [ -d "$XCARCHIVE" ]; then
+    # Create an application zip file from the archive build
+
+    APP_DIR=$(find build/derived -name '*.dSYM' | head -1)
+    APP_ZIP_FILE=/tmp/ace-app.zip
+    if [ -f $APP_ZIP_FILE ]; then
+      rm -f $APP_ZIP_FILE
+    fi
+    (cd $(dirname $APP_DIR) ; zip -r $APP_ZIP_FILE $(basename $APP_DIR))
+
     # Create a dSYM zip file from the archive build
 
     DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
@@ -96,24 +118,41 @@ else
 
     # Distribute via HockeyApp
 
-    if [ -x /usr/local/bin/puck ]; then
+    echo "Uploading to HockeyApp"
+    curl \
+      -F "status=2" \
+      -F "notify=1" \
+      -F "commit_sha=${SHA1}" \
+      -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+      -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
+      -F "release_type=2" \
+      -F "notes=$(git log -1 --pretty=format:%B)" \
+      -F "notes_type=1" \
+      -F "mandatory=0" \
+      -F "ipa=@$APP_ZIP_FILE" \
+      -F "dsym=@$DSYM_ZIP_FILE" \
+      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
+      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APPID}/app_versions/upload \
+    | python -m json.tool
 
-      /usr/local/bin/puck \
-        -dsym_path=$DSYM_ZIP_FILE \
-        -submit=auto \
-        -download=true \
-        -notes="$(git log -1 --pretty=format:%B)" \
-        -commit_sha=${SHA1} \
-        -build_server_url="https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
-        -repository_url="http://github.com/${TRAVIS_REPO_SLUG}" \
-        -source_path=$PWD \
-        -api_token=$HOCKEYAPP_TOKEN \
-        -app_id=b7b28171bab92ce345aac7d54f435020 \
-        -notify=true \
-        -upload=all \
-        -release_type=alpha \
-        $XCARCHIVE
-    fi
+    #if [ -x /usr/local/bin/puck ]; then
+    #
+    #  /usr/local/bin/puck \
+    #    -dsym_path=$DSYM_ZIP_FILE \
+    #    -submit=auto \
+    #    -download=true \
+    #    -notes="$(git log -1 --pretty=format:%B)" \
+    #    -commit_sha=${SHA1} \
+    #    -build_server_url="https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+    #    -repository_url="http://github.com/${TRAVIS_REPO_SLUG}" \
+    #    -source_path=$PWD \
+    #    -api_token=$HOCKEYAPP_TOKEN \
+    #    -app_id=${HOCKEYAPP_APPID} \
+    #    -notify=true \
+    #    -upload=all \
+    #    -release_type=alpha \
+    #    $XCARCHIVE
+    #fi
 
     #bundle exec ipa distribute:hockeyapp \
     #           --token $HOCKEYAPP_TOKEN \
@@ -176,3 +215,4 @@ fi
 if [ -f "sync/cleanup.sh" ]; then
   . ./sync/cleanup.sh
 fi
+

@@ -10,6 +10,7 @@
 #import "HomeWindowController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
+#import "RegistrationService.h"
 #import "CallLogService.h"
 #import <HockeySDK/HockeySDK.h>
 
@@ -33,16 +34,20 @@
     
     [AccountsService sharedInstance];
     [CallLogService sharedInstance];
+    [RegistrationService sharedInstance];
 
     videoCallWindowController = nil;
-
-    [self.menuItemPreferences setAction:nil];
     
     // Set observers
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdate:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(registrationUpdateEvent:)
+                                                 name:kLinphoneRegistrationUpdate
+                                               object:nil];
+    
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b7b28171bab92ce345aac7d54f435020"];
     [[BITHockeyManager sharedHockeyManager].crashManager setAutoSubmitCrashReport: YES];
@@ -60,6 +65,14 @@
 - (void) showTabWindow {
     homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
     [homeWindowController showWindow:self];
+
+    [[AppDelegate sharedInstance].loginWindowController close];
+    [AppDelegate sharedInstance].loginWindowController = nil;
+}
+
+- (void) closeTabWindow {
+    [homeWindowController close];
+    homeWindowController = nil;
 }
 
 - (VideoCallWindowController*) getVideoCallWindow {
@@ -71,8 +84,37 @@
     return videoCallWindowController;
 }
 
-- (IBAction)onMenuItemPreferences:(id)sender {
+- (void)onMenuItemPreferences:(id)sender {
     [viewController showSettingsWindow];
+}
+
+- (void)onMenuItemPreferencesSignOut:(id)sender {
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    
+    if (accountModel) {
+        [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+                                                        Password:@""
+                                                          Domain:@""
+                                                       Transport:@""
+                                                            Port:0
+                                                       isDefault:YES];
+    }
+    
+    [self closeTabWindow];
+    [viewController closeAllWindows];
+    
+    // Get the default proxyCfg in Linphone
+    LinphoneProxyConfig* proxyCfg = NULL;
+    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    
+    // To unregister from SIP
+    linphone_proxy_config_edit(proxyCfg);
+    linphone_proxy_config_enable_register(proxyCfg, false);
+    linphone_proxy_config_done(proxyCfg);
+    
+    self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
+    [self.loginWindowController showWindow:self];
 }
 
 - (void)callUpdate:(NSNotification*)notif {
@@ -177,6 +219,16 @@
     if(self.callWindowController != nil) {
         CallViewController *callViewController = [self.callWindowController getCallViewController];
         [callViewController setOutgoingCall:call];
+    }
+}
+
+- (void)registrationUpdateEvent:(NSNotification*)notif {
+    LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
+    
+    if (state == LinphoneRegistrationOk) {
+        [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+    } else {
+        [self.menuItemSignOut setAction:nil];
     }
 }
 

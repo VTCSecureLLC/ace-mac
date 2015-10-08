@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Globals
-HOCKEYAPP_APPID=${HOCKEYAPP_ID:-b7b28171bab92ce345aac7d54f435020}
+HOCKEYAPP_TEAM_IDS=${HOCKEYAPP_TEAM_IDS:-47813}
+HOCKEYAPP_APP_ID=${HOCKEYAPP_APP_ID:-b7b28171bab92ce345aac7d54f435020}
 
 # Only deploy master branch builds
 
@@ -26,13 +27,19 @@ if [ -z "${AWS_SECRET_ACCESS_KEY}" ]; then
   unset BUCKET
 fi
 if [ -n "${BUCKET}" ]; then
-  brew install awscli
+  which aws || brew install awscli
   aws s3 sync --quiet s3://${BUCKET}/apple/ sync/
   cd sync
   pwd
   chmod 755 apply.sh
   . ./apply.sh mac
   cd ..
+fi
+if [ -z "${CODE_SIGN_APPLICATION}" ]; then
+  echo "Missing CODE_SIGN_APPLICATION"
+fi
+if [ -z "${PROVISIONING_PROFILE}" ]; then
+  echo "Missing PROVISIONING_PROFILE"
 fi
 
 set -e
@@ -132,7 +139,7 @@ else
       -F "ipa=@$APP_ZIP_FILE" \
       -F "dsym=@$DSYM_ZIP_FILE" \
       -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
-      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APPID}/app_versions/upload \
+      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/upload \
     | python -m json.tool
 
     #if [ -x /usr/local/bin/puck ]; then
@@ -147,7 +154,7 @@ else
     #    -repository_url="http://github.com/${TRAVIS_REPO_SLUG}" \
     #    -source_path=$PWD \
     #    -api_token=$HOCKEYAPP_TOKEN \
-    #    -app_id=${HOCKEYAPP_APPID} \
+    #    -app_id=${HOCKEYAPP_APP_ID} \
     #    -notify=true \
     #    -upload=all \
     #    -release_type=alpha \

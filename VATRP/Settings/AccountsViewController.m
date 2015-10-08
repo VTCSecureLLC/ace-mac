@@ -20,7 +20,6 @@
 @property (weak) IBOutlet NSTextField *textFieldDomain;
 @property (weak) IBOutlet NSTextField *textFieldPort;
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
-@property (weak) IBOutlet NSButton *buttonAutoAnswer;
 @property (weak) IBOutlet NSTextField *settingsFeedbackText;
 
 @end
@@ -74,21 +73,12 @@
     if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
     self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
     if(accountModel.transport != NULL) { [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport]; }
-    NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
-    self.buttonAutoAnswer.state = auto_answer;
-    
-}
-
-- (IBAction)onButtonAutoAnswer:(id)sender {
 }
 
 - (void) save {
     if (!isChanged) {
         return;
     }
-    
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
     [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue

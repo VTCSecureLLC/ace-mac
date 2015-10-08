@@ -11,12 +11,14 @@
 #import "AccountsViewController.h"
 #import "CodecsViewController.h"
 #import "MediaViewController.h"
+#import "TestingViewController.h"
 #import "AppDelegate.h"
 
 @interface SettingsWindowController () <SettingsViewControllerDelegate> {
     AccountsViewController *accountsViewController;
     CodecsViewController *codecsViewController;
     MediaViewController *mediaViewController;
+    TestingViewController *testingViewController;
     
     NSView *prevView;
 }
@@ -39,6 +41,7 @@
     accountsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AccountsViewController"];
     codecsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CodecsViewController"];
     mediaViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MediaViewController"];
+    testingViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TestingViewController"];
     
     [self changeViewTo:accountsViewController.view];
     
@@ -64,6 +67,10 @@
     [self changeViewTo:mediaViewController.view];
 }
 
+- (IBAction)onToolbarItemTesting:(id)sender {
+    [self changeViewTo:testingViewController.view];
+}
+
 - (void) changeViewTo:(NSView*)view {
     [prevView removeFromSuperview];
     prevView = view;
@@ -75,6 +82,7 @@
     [accountsViewController save];
     [codecsViewController save];
     [mediaViewController save];
+    [testingViewController save];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self close];

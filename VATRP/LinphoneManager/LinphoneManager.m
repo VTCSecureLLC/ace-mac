@@ -1417,7 +1417,7 @@ static BOOL libStarted = FALSE;
 	linphone_core_set_log_collection_path([[LinphoneManager cacheDirectory] UTF8String]);
 	[self setLogsEnabled:[self lpConfigBoolForKey:@"debugenable_preference"]];
 
-//[[AppDelegate sharedInstance].viewController showVideoMailWindow];
+    [[AppDelegate sharedInstance].viewController showVideoMailWindow];
     
 	theLinphoneCore = linphone_core_new_with_config (&linphonec_vtable
 										 ,configDb

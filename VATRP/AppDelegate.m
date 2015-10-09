@@ -52,6 +52,9 @@
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b7b28171bab92ce345aac7d54f435020"];
     [[BITHockeyManager sharedHockeyManager].crashManager setAutoSubmitCrashReport: YES];
     [[BITHockeyManager sharedHockeyManager] startManager];
+    
+    linphone_core_set_log_level(ORTP_DEBUG);
+    linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -230,6 +233,34 @@
     } else {
         [self.menuItemSignOut setAction:nil];
     }
+}
+
+void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {
+    NSString *format = [[NSString alloc] initWithUTF8String:fmt];
+    NSString *formatedString = [[NSString alloc] initWithFormat:format arguments:args];
+    char levelC = 'I';
+    switch ((OrtpLogLevel)lev) {
+        case ORTP_FATAL:
+            levelC = 'F';
+            break;
+        case ORTP_ERROR:
+            levelC = 'E';
+            break;
+        case ORTP_WARNING:
+            levelC = 'W';
+            break;
+        case ORTP_MESSAGE:
+            levelC = 'I';
+            break;
+        case ORTP_TRACE:
+        case ORTP_DEBUG:
+            levelC = 'D';
+            break;
+        case ORTP_LOGLEV_END:
+            return;
+    }
+    // since \r are interpreted like \n, avoid double new lines when logging packets
+    NSLog(@"%c %@", levelC, [formatedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"]);
 }
 
 @end

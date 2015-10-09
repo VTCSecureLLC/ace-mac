@@ -30,7 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    
     [AppDelegate sharedInstance].loginViewController = self;
 }
 
@@ -86,20 +85,27 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
-    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    _loginAccount = [[AccountsService sharedInstance] getDefaultAccount];
     
-    if (accountModel) {
-        self.textFieldUsername.stringValue = accountModel.username;
-        self.textFieldPassword.stringValue = accountModel.password;
+    if (_loginAccount) {
+        self.textFieldUsername.stringValue = _loginAccount.username;
+        self.textFieldPassword.stringValue = _loginAccount.password;
     }
 }
 
 - (IBAction)onButtonLogin:(id)sender {
-    [[RegistrationService sharedInstance] registerWithUsername:self.textFieldUsername.stringValue
-                                                      password:self.textFieldPassword.stringValue
-                                                        domain:self.textFieldDomain.stringValue
-                                                     transport:@"TCP"
-                                                          port:self.textFieldPort.intValue];
+    _loginAccount = [[AccountModel alloc] init];
+    _loginAccount.username = self.textFieldUsername.stringValue;
+    _loginAccount.password = self.textFieldPassword.stringValue;
+    _loginAccount.domain = @"bc1.vatrp.net";
+    _loginAccount.transport = @"TCP";
+    _loginAccount.port = 5060;
+    
+    [[RegistrationService sharedInstance] registerWithUsername:_loginAccount.username
+                                                      password:_loginAccount.password
+                                                        domain:_loginAccount.domain
+                                                     transport:_loginAccount.transport
+                                                          port:_loginAccount.port];
 
     [[AppDelegate sharedInstance] showTabWindow];
     [[AppDelegate sharedInstance].loginWindowController close];
@@ -196,12 +202,12 @@
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message{
     switch (state) {
         case LinphoneRegistrationOk: {
-            [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
-                                                            Password:self.textFieldPassword.stringValue
-                                                              Domain:@"bc1.vatrp.net"
-                                                           Transport:@"TCP"
-                                                                Port:5060
-                                                           isDefault:YES];
+            [[AccountsService sharedInstance] addAccountWithUsername:_loginAccount.username
+                                                        Password:_loginAccount.password
+                                                        Domain:_loginAccount.domain
+                                                        Transport:_loginAccount.transport
+                                                        Port:_loginAccount.port
+                                                        isDefault:YES];
             break;
         }
         case LinphoneRegistrationNone:

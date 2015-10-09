@@ -5,7 +5,7 @@
 //  Created by Ruben Semerjyan on 9/22/15.
 //  Copyright © 2015 VTCSecure. All rights reserved.
 //
-
+#import "AppDelegate.h"
 #import "AccountsViewController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
@@ -71,11 +71,19 @@
     
     accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
-    if(accountModel.username != NULL) { self.textFieldUsername.stringValue = accountModel.username; }
-    if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
-    if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
-    self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
-    if(accountModel.transport != NULL) { [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport]; }
+    if(accountModel){
+        if(accountModel.username != NULL) { self.textFieldUsername.stringValue = accountModel.username; }
+        if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
+        if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
+        self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+        if(accountModel.transport != NULL) { [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport]; }
+    }
+    
+    else{
+        self.textFieldDomain.stringValue = @"bc1.vatrp.net";
+        self.textFieldPort.stringValue = @"5060";
+        [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
+    }
     NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.buttonAutoAnswer.state = auto_answer;
     
@@ -90,23 +98,38 @@
     }
     
     [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+   
+    @try{
+        [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+    }
+    @catch(NSException *e){
+        NSLog(@"Tried to remove account that does not exist");
+    }
     
-    [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
                                                     Password:self.secureTextFieldPassword.stringValue
                                                       Domain:self.textFieldDomain.stringValue
                                                    Transport:self.comboBoxTransport.stringValue
                                                         Port:self.textFieldPort.intValue
                                                    isDefault:YES];
-    
+
     AccountModel *accountModel_ = [[AccountsService sharedInstance] getDefaultAccount];
     
+    LoginWindowController *loginWindowController = [AppDelegate sharedInstance].loginWindowController;
+    LoginViewController *loginViewController = [AppDelegate sharedInstance].loginViewController;
+
     if (accountModel_) {
+        loginViewController.loginAccount = accountModel_;
         [[RegistrationService sharedInstance] registerWithAccountModel:accountModel_];
     }
 
     self.settingsFeedbackText.stringValue = @"Settings saved";
+    
+   
+    if(loginWindowController){
+        [[AppDelegate sharedInstance] showTabWindow];
+    }
     
 }
 

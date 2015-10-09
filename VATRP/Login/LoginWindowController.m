@@ -25,10 +25,8 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-
     [AppDelegate sharedInstance].loginWindowController = self;
-    
-    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    AccountModel *accountModel = NULL;//[[AccountsService sharedInstance] getDefaultAccount];
 
     if (accountModel &&
         accountModel.username &&

@@ -20,6 +20,8 @@
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
 @property (weak) IBOutlet NSTextField *textFieldPassword;
+@property (weak) IBOutlet NSTextField *textFieldDomain;
+@property (weak) IBOutlet NSTextField *textFieldPort;
 
 @end
 
@@ -95,8 +97,9 @@
 - (IBAction)onButtonLogin:(id)sender {
     [[RegistrationService sharedInstance] registerWithUsername:self.textFieldUsername.stringValue
                                                       password:self.textFieldPassword.stringValue
-                                                        domain:@"bc1.vatrp.net"
-                                                 withTransport:@"TLS"];
+                                                        domain:self.textFieldDomain.stringValue
+                                                     transport:@"TCP"
+                                                          port:self.textFieldPort.intValue];
 
     [[AppDelegate sharedInstance] showTabWindow];
     [[AppDelegate sharedInstance].loginWindowController close];

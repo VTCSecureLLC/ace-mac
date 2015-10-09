@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
+        linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
         linphone_core_use_preview_window([LinphoneManager getLc], YES);
         linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
         linphone_core_enable_self_view([LinphoneManager getLc], TRUE);

@@ -102,7 +102,7 @@ static const float callAlertStepInterval = 0.5;
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call...";
             
-            [self startRingCountTimer];
+           // [self startRingCountTimer];
             
             callAlertAnimationQueue = dispatch_queue_create("alert queue",DISPATCH_QUEUE_PRIORITY_DEFAULT);
             _callAlertTimer = [NSTimer scheduledTimerWithTimeInterval:callAlertStepInterval target:self selector:@selector(callFlashAlert) userInfo:nil repeats:true];
@@ -114,7 +114,6 @@ static const float callAlertStepInterval = 0.5;
         }
         case LinphoneCallConnected: {
             [self stopRingCountTimer];
-
             VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
             [videoCallWindowController showWindow:self];
             VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;

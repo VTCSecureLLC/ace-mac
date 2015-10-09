@@ -53,11 +53,11 @@
                                                object:nil];
     
     
-//    linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
+    linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
     
-//    linphone_core_use_preview_window([LinphoneManager getLc], YES);
-//    linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
-//    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
+    linphone_core_use_preview_window([LinphoneManager getLc], YES);
+    linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
+    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
 
 }
 

@@ -38,17 +38,20 @@
     [self verificationSignInWithUsername:accountModel.username
                                 password:accountModel.password
                                   domain:accountModel.domain
-                           withTransport:accountModel.transport];
+                           withTransport:accountModel.transport
+                                    port:accountModel.port];
 }
 
 - (void) registerWithUsername:(NSString*)username
                      password:(NSString*)password
                        domain:(NSString*)domain
-                withTransport:(NSString*)transport {
+                    transport:(NSString*)transport
+                         port:(int)port {
     [self verificationSignInWithUsername:username
                                 password:password
                                   domain:domain
-                           withTransport:transport];
+                           withTransport:transport
+                                    port:port];
 }
 
 - (void) asyncRegisterWithAccountModel:(AccountModel*)accountModel {
@@ -66,7 +69,7 @@
     }
 }
 
-- (void) verificationSignInWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
+- (void) verificationSignInWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport port:(int)port {
     
     if([transport isEqualToString:@"Unencrypted (TCP)"]){
         transport = @"TCP";
@@ -91,7 +94,7 @@
             //            }];
             //            [alert show];
         } else {
-            BOOL success = [self addProxyConfig:username password:password domain:domain withTransport:transport];
+            BOOL success = [self addProxyConfig:username password:password domain:domain withTransport:transport port:port];
             //            if( !success ){
             //                waitView.hidden = true;
             //            }
@@ -127,7 +130,8 @@
     return TRUE;
 }
 
-- (BOOL)addProxyConfig:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
+- (BOOL)addProxyConfig:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport port:(int)port {
+    transport = [transport lowercaseString];
     LinphoneCore* lc = [LinphoneManager getLc];
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
     NSString* server_address = domain;
@@ -136,6 +140,7 @@
     linphone_proxy_config_normalize_number(proxyCfg, [username cStringUsingEncoding:[NSString defaultCStringEncoding]], normalizedUserName, sizeof(normalizedUserName));
     
     const char* identity = linphone_proxy_config_get_identity(proxyCfg);
+    
     if( !identity || !*identity ) identity = "sip:user@example.com";
     
     LinphoneAddress* linphoneAddress = linphone_address_new(identity);
@@ -192,12 +197,13 @@
     
     [self clearProxyConfig];
     
-    //    NSString *serverAddress = [NSString stringWithFormat:@"sip:%@:%@", domain, self.textFieldPort.stringValue];
+    NSString *serverAddress = [NSString stringWithFormat:@"sip:%@:%d;transport=%@", domain, port, transport];
     linphone_proxy_config_enable_register(proxyCfg, true);
-    //    linphone_proxy_config_set_server_addr(proxyCfg, [serverAddress UTF8String]);
+    linphone_proxy_config_set_server_addr(proxyCfg, [serverAddress UTF8String]);
     linphone_core_add_auth_info(lc, info);
     linphone_core_add_proxy_config(lc, proxyCfg);
     linphone_core_set_default_proxy_config(lc, proxyCfg);
+    
     return TRUE;
 }
 

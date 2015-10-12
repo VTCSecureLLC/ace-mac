@@ -22,7 +22,6 @@
 @property (weak) IBOutlet NSTextField *textFieldDomain;
 @property (weak) IBOutlet NSTextField *textFieldPort;
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
-@property (weak) IBOutlet NSButton *buttonAutoAnswer;
 @property (weak) IBOutlet NSTextField *settingsFeedbackText;
 
 @end
@@ -84,9 +83,6 @@
         self.textFieldPort.stringValue = @"5060";
         [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
     }
-    NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
-    self.buttonAutoAnswer.state = auto_answer;
-    
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {
@@ -96,9 +92,7 @@
     if (!isChanged) {
         return;
     }
-    
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
-   
+
     @try{
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
     }
@@ -107,6 +101,7 @@
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+
     [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
                                                     Password:self.secureTextFieldPassword.stringValue
                                                       Domain:self.textFieldDomain.stringValue

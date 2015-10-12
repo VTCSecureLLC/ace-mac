@@ -508,6 +508,15 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A5y-js-CKy">
+                                <rect key="frame" x="114" y="87" width="253" height="66"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="fZN-0f-BU9">
+                                    <font key="font" size="50" name=".HelveticaNeueDeskInterface-Bold"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <animations/>
                     </view>
@@ -518,6 +527,7 @@
                         <outlet property="labelCallDuration" destination="Clc-u1-SgN" id="Nf7-Mx-1su"/>
                         <outlet property="labelCallState" destination="pGQ-jA-e6Y" id="jLA-eo-439"/>
                         <outlet property="labelDisplayName" destination="L5V-lg-qaA" id="rn5-w1-D0u"/>
+                        <outlet property="ringCountLabel" destination="A5y-js-CKy" id="ZXN-YF-U3p"/>
                     </connections>
                 </viewController>
                 <customObject id="BXc-f2-tUi" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1400,7 +1410,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <button id="dgO-yL-186">
-                                                            <rect key="frame" x="320" y="1" width="116" height="18"/>
+                                                            <rect key="frame" x="322" y="1" width="116" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <animations/>
                                                             <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NF5-bT-69h">
@@ -1542,7 +1552,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <button id="yv1-Fd-KVG">
-                                                            <rect key="frame" x="320" y="1" width="116" height="18"/>
+                                                            <rect key="frame" x="322" y="1" width="116" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <animations/>
                                                             <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FZR-h9-VSi">
@@ -1786,6 +1796,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kze-7h-dxO">
+                                <rect key="frame" x="12" y="331" width="38" height="35"/>
+                                <animations/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="settings" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="6xb-9E-aOD">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="11" name=".HelveticaNeueDeskInterface-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <segue destination="San-o0-UCl" kind="show" id="mRP-Ek-VOO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                     </view>

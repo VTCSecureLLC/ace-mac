@@ -39,4 +39,11 @@
     return @"";
 }
 
++ (NSString*) resourcePathForFile:(NSString*)fileName Type:(NSString*)type {
+    NSBundle* myBundle = [NSBundle mainBundle];
+    NSString* myFile = [myBundle pathForResource:fileName ofType:type];
+    
+    return myFile;
+}
+
 @end

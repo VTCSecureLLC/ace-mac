@@ -12,5 +12,6 @@
 
 + (int) intValueDict:(NSDictionary*)dict Key:(NSString*)key;
 + (NSString*) stringValueDict:(NSDictionary*)dict Key:(NSString*)key;
++ (NSString*) resourcePathForFile:(NSString*)fileName Type:(NSString*)type;
 
 @end

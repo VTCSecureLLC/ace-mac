@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "BFViewController.h"
-
+#import "AccountModel.h"
 @interface LoginViewController : NSViewController <BFViewController>
+
+@property AccountModel *loginAccount;
 
 @end

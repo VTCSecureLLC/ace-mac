@@ -21,11 +21,12 @@
 @property (nonatomic, retain) CallWindowController *callWindowController;
 @property (nonatomic, retain) ViewController *viewController;
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;
+@property (weak) IBOutlet NSMenuItem *menuItemSignOut;
 
 + (AppDelegate*)sharedInstance;
 - (void) showTabWindow;
+- (void) closeTabWindow;
 - (VideoCallWindowController*) getVideoCallWindow;
-- (IBAction)onMenuItemPreferences:(id)sender;
 
 @end
 

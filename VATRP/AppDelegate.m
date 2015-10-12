@@ -10,6 +10,7 @@
 #import "HomeWindowController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
+#import "RegistrationService.h"
 #import "CallLogService.h"
 #import <HockeySDK/HockeySDK.h>
 
@@ -33,20 +34,27 @@
     
     [AccountsService sharedInstance];
     [CallLogService sharedInstance];
+    [RegistrationService sharedInstance];
 
     videoCallWindowController = nil;
-
-    [self.menuItemPreferences setAction:nil];
     
     // Set observers
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdate:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(registrationUpdateEvent:)
+                                                 name:kLinphoneRegistrationUpdate
+                                               object:nil];
+    
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b7b28171bab92ce345aac7d54f435020"];
     [[BITHockeyManager sharedHockeyManager].crashManager setAutoSubmitCrashReport: YES];
     [[BITHockeyManager sharedHockeyManager] startManager];
+    
+    linphone_core_set_log_level(ORTP_DEBUG);
+    linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -60,6 +68,14 @@
 - (void) showTabWindow {
     homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
     [homeWindowController showWindow:self];
+
+    [[AppDelegate sharedInstance].loginWindowController close];
+    [AppDelegate sharedInstance].loginWindowController = nil;
+}
+
+- (void) closeTabWindow {
+    [homeWindowController close];
+    homeWindowController = nil;
 }
 
 - (VideoCallWindowController*) getVideoCallWindow {
@@ -71,8 +87,37 @@
     return videoCallWindowController;
 }
 
-- (IBAction)onMenuItemPreferences:(id)sender {
+- (void)onMenuItemPreferences:(id)sender {
     [viewController showSettingsWindow];
+}
+
+- (void)onMenuItemPreferencesSignOut:(id)sender {
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    
+    if (accountModel) {
+        [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+                                                        Password:@""
+                                                          Domain:@""
+                                                       Transport:@""
+                                                            Port:0
+                                                       isDefault:YES];
+    }
+    
+    [self closeTabWindow];
+    [viewController closeAllWindows];
+    
+    // Get the default proxyCfg in Linphone
+    LinphoneProxyConfig* proxyCfg = NULL;
+    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    
+    // To unregister from SIP
+    linphone_proxy_config_edit(proxyCfg);
+    linphone_proxy_config_enable_register(proxyCfg, false);
+    linphone_proxy_config_done(proxyCfg);
+    
+    self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
+    [self.loginWindowController showWindow:self];
 }
 
 - (void)callUpdate:(NSNotification*)notif {
@@ -178,6 +223,44 @@
         CallViewController *callViewController = [self.callWindowController getCallViewController];
         [callViewController setOutgoingCall:call];
     }
+}
+
+- (void)registrationUpdateEvent:(NSNotification*)notif {
+    LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
+    
+    if (state == LinphoneRegistrationOk) {
+        [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+    } else {
+        [self.menuItemSignOut setAction:nil];
+    }
+}
+
+void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {
+    NSString *format = [[NSString alloc] initWithUTF8String:fmt];
+    NSString *formatedString = [[NSString alloc] initWithFormat:format arguments:args];
+    char levelC = 'I';
+    switch ((OrtpLogLevel)lev) {
+        case ORTP_FATAL:
+            levelC = 'F';
+            break;
+        case ORTP_ERROR:
+            levelC = 'E';
+            break;
+        case ORTP_WARNING:
+            levelC = 'W';
+            break;
+        case ORTP_MESSAGE:
+            levelC = 'I';
+            break;
+        case ORTP_TRACE:
+        case ORTP_DEBUG:
+            levelC = 'D';
+            break;
+        case ORTP_LOGLEV_END:
+            return;
+    }
+    // since \r are interpreted like \n, avoid double new lines when logging packets
+    NSLog(@"%c %@", levelC, [formatedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"]);
 }
 
 @end

@@ -53,11 +53,11 @@
                                                object:nil];
     
     
-//    linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
+    linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
     
-//    linphone_core_use_preview_window([LinphoneManager getLc], YES);
-//    linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
-//    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
+    linphone_core_use_preview_window([LinphoneManager getLc], YES);
+    linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
+    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
 
 }
 
@@ -201,6 +201,33 @@
         }
         default:
             break;
+    }
+}
+
+- (void) closeAllWindows {
+    if (self.recentsWindowController.isShow) {
+        [self.recentsWindowController close];
+        self.recentsWindowController = nil;
+    }
+
+    if (self.contactsWindowController.isShow) {
+        [self.contactsWindowController close];
+        self.contactsWindowController = nil;
+    }
+
+    if (self.dialpadWindowController.isShow) {
+        [self.dialpadWindowController close];
+        self.dialpadWindowController = nil;
+    }
+
+    if (self.videoMailWindowController.isShow) {
+        [self.videoMailWindowController close];
+        self.videoMailWindowController = nil;
+    }
+
+    if (self.settingsWindowController.isShow) {
+        [self.settingsWindowController close];
+        self.settingsWindowController = nil;
     }
 }
 

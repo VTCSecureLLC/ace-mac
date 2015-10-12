@@ -77,6 +77,8 @@
 		31ED2B571BBCD2B80060319E /* libopus.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31ED2B561BBCD2B80060319E /* libopus.5.dylib */; };
 		31ED2B581BBCD2CF0060319E /* libopus.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31ED2B561BBCD2B80060319E /* libopus.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4A13AA171BC6A5B9000C9358 /* TestingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A13AA161BC6A5B9000C9358 /* TestingViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BAB961BC4FAE200640476 /* cafile.pem */; settings = {ASSET_TAGS = (); }; };
+		4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BABAD1BC5236400640476 /* RegistrationService.m */; settings = {ASSET_TAGS = (); }; };
 		4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9B91BB1BDC900FCD070 /* cameraview.png */; };
 		4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BA1BB1BDC900FCD070 /* contacts.png */; };
 		4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BB1BB1BDC900FCD070 /* dialpad.png */; };
@@ -372,6 +374,9 @@
 		31F974771BB3962000E21D92 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4A13AA151BC6A5B9000C9358 /* TestingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestingViewController.h; sourceTree = "<group>"; };
 		4A13AA161BC6A5B9000C9358 /* TestingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestingViewController.m; sourceTree = "<group>"; };
+		4A2BAB961BC4FAE200640476 /* cafile.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cafile.pem; sourceTree = "<group>"; };
+		4A2BABAC1BC5236400640476 /* RegistrationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationService.h; sourceTree = "<group>"; };
+		4A2BABAD1BC5236400640476 /* RegistrationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationService.m; sourceTree = "<group>"; };
 		4A50F9B91BB1BDC900FCD070 /* cameraview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraview.png; sourceTree = "<group>"; };
 		4A50F9BA1BB1BDC900FCD070 /* contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contacts.png; sourceTree = "<group>"; };
 		4A50F9BB1BB1BDC900FCD070 /* dialpad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dialpad.png; sourceTree = "<group>"; };
@@ -701,6 +706,8 @@
 				4A902DDC1BB9489B00ECFD86 /* AccountsService.m */,
 				4AC13F931BBBFD21008305CD /* CallLogService.h */,
 				4AC13F941BBBFD21008305CD /* CallLogService.m */,
+				4A2BABAC1BC5236400640476 /* RegistrationService.h */,
+				4A2BABAD1BC5236400640476 /* RegistrationService.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -741,6 +748,7 @@
 		4AAF56171BB1615900241DC2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4A2BAB961BC4FAE200640476 /* cafile.pem */,
 				4AAF56181BB1615900241DC2 /* Images */,
 				4A902DED1BB96C6D00ECFD86 /* sounds */,
 			);
@@ -1086,6 +1094,7 @@
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
+				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				5E02C8DE1BBED147003EA32B /* alert_inverted.jpg in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
@@ -1157,6 +1166,7 @@
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
+				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

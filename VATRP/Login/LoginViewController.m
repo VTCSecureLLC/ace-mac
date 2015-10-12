@@ -12,12 +12,16 @@
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
+#import "RegistrationService.h"
+#import "Utils.h"
 
 
 @interface LoginViewController ()
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
 @property (weak) IBOutlet NSTextField *textFieldPassword;
+@property (weak) IBOutlet NSTextField *textFieldDomain;
+@property (weak) IBOutlet NSTextField *textFieldPort;
 
 @end
 
@@ -26,7 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    
     [AppDelegate sharedInstance].loginViewController = self;
 }
 
@@ -82,70 +85,31 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
-    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    _loginAccount = [[AccountsService sharedInstance] getDefaultAccount];
     
-    if (accountModel) {
-        self.textFieldUsername.stringValue = accountModel.username;
-        self.textFieldPassword.stringValue = accountModel.password;
+    if (_loginAccount) {
+        self.textFieldUsername.stringValue = _loginAccount.username;
+        self.textFieldPassword.stringValue = _loginAccount.password;
     }
-    
-    [self startUp];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"%@ - viewWillAppear: %i", self.title, animated);
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"%@ - viewDidAppear: %i", self.title, animated);
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"%@ - viewWillDisappear: %i", self.title, animated);
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"%@ - viewDidDisappear: %i", self.title, animated);
 }
 
 - (IBAction)onButtonLogin:(id)sender {
-    [self verificationSignInWithUsername:self.textFieldUsername.stringValue
-                                password:self.textFieldPassword.stringValue
-                                  domain:@"bc1.vatrp.net"
-                           withTransport:@"TCP"];
+    _loginAccount = [[AccountModel alloc] init];
+    _loginAccount.username = self.textFieldUsername.stringValue;
+    _loginAccount.password = self.textFieldPassword.stringValue;
+    _loginAccount.domain = @"bc1.vatrp.net";
+    _loginAccount.transport = @"TCP";
+    _loginAccount.port = 5060;
+    
+    [[RegistrationService sharedInstance] registerWithUsername:_loginAccount.username
+                                                      password:_loginAccount.password
+                                                        domain:_loginAccount.domain
+                                                     transport:_loginAccount.transport
+                                                          port:_loginAccount.port];
 
     [[AppDelegate sharedInstance] showTabWindow];
     [[AppDelegate sharedInstance].loginWindowController close];
-}
-
-- (void)startUp {
-    LinphoneCore* core = nil;
-    @try {
-        core = [LinphoneManager getLc];
-        LinphoneManager* lm = [LinphoneManager instance];
-        if( linphone_core_get_global_state(core) != LinphoneGlobalOn ){
-            //            [self changeCurrentView: [DialerViewController compositeViewDescription]];
-        } else if ([[LinphoneManager instance] lpConfigBoolForKey:@"enable_first_login_view_preference"]  == true) {
-            // Change to fist login view
-            //            [self changeCurrentView: [FirstLoginViewController compositeViewDescription]];
-        } else {
-            // always start to dialer when testing
-            // Change to default view
-            const MSList *list = linphone_core_get_proxy_config_list(core);
-            if(list != NULL || ([lm lpConfigBoolForKey:@"hide_wizard_preference"]  == true) || lm.isTesting) {
-                //                [self changeCurrentView: [DialerViewController compositeViewDescription]];
-            } else {
-                //                WizardViewController *controller = DYNAMIC_CAST([[PhoneMainView instance] changeCurrentView:[WizardViewController compositeViewDescription]], WizardViewController);
-                //                if(controller != nil) {
-                //                    [controller reset];
-                //                }
-            }
-        }
-        //        [self updateApplicationBadgeNumber]; // Update Badge at startup
-    }
-    @catch (NSException *exception) {
-        // we'll wait until the app transitions correctly
-    }
+    [AppDelegate sharedInstance].loginWindowController = nil;
 }
 
 - (void)configuringUpdate:(NSNotification *)notif {
@@ -233,158 +197,24 @@
     linphone_proxy_config_destroy(default_conf);
 }
 
-- (void) verificationSignInWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
-    if ([self verificationWithUsername:username password:password domain:domain withTransport:transport]) {
-        if ([LinphoneManager instance].connectivity == none) {
-            NSAlert *alert = [[NSAlert alloc]init];
-            [alert addButtonWithTitle:NSLocalizedString(@"Stay here", nil)];
-            [alert addButtonWithTitle:NSLocalizedString(@"Continue", nil)];
-            [alert setMessageText:NSLocalizedString(@"You can either skip verification or connect to the Internet first.", nil)];
-            [alert runModal];
-            
-            //            [alert addButtonWithTitle:NSLocalizedString(@"Continue", nil) block:^{
-            //                [waitView setHidden:true];
-            //                [self addProxyConfig:username password:password domain:domain withTransport:transport];
-            //                [[PhoneMainView instance] changeCurrentView:[DialerViewController compositeViewDescription]];
-            //            }];
-            //            [alert show];
-        } else {
-            BOOL success = [self addProxyConfig:username password:password domain:domain withTransport:transport];
-            //            if( !success ){
-            //                waitView.hidden = true;
-            //            }
-        }
-    }
-}
-
-- (BOOL) verificationWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
-    NSMutableString *errors = [NSMutableString string];
-    if ([username length] == 0) {
-        [errors appendString:[NSString stringWithFormat:NSLocalizedString(@"Please enter a valid username.\n", nil)]];
-    }
-    
-    if (domain != nil && [domain length] == 0) {
-        [errors appendString:[NSString stringWithFormat:NSLocalizedString(@"Please enter a valid domain.\n", nil)]];
-    }
-    
-    if([errors length]) {
-        // run a modal alert
-        NSAlert *alert = [[NSAlert alloc]init];
-        [alert addButtonWithTitle:NSLocalizedString(@"Continue",nil)];
-        [alert setMessageText:[errors substringWithRange:NSMakeRange(0, [errors length] - 1)]];
-        [alert runModal];
-        
-        //        UIAlertView* errorView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Check error(s)",nil)
-        //                                                            message:[errors substringWithRange:NSMakeRange(0, [errors length] - 1)]
-        //                                                           delegate:nil
-        //                                                  cancelButtonTitle:NSLocalizedString(@"Continue",nil)
-        //                                                  otherButtonTitles:nil,nil];
-        //        [errorView show];
-        return FALSE;
-    }
-    return TRUE;
-}
-
-- (BOOL)addProxyConfig:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
-    LinphoneCore* lc = [LinphoneManager getLc];
-    LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
-    NSString* server_address = domain;
-    
-    char normalizedUserName[256];
-    linphone_proxy_config_normalize_number(proxyCfg, [username cStringUsingEncoding:[NSString defaultCStringEncoding]], normalizedUserName, sizeof(normalizedUserName));
-    
-    const char* identity = linphone_proxy_config_get_identity(proxyCfg);
-    if( !identity || !*identity ) identity = "sip:user@example.com";
-    
-    LinphoneAddress* linphoneAddress = linphone_address_new(identity);
-    linphone_address_set_username(linphoneAddress, normalizedUserName);
-    
-    if( domain && [domain length] != 0) {
-        if( transport != nil ){
-            server_address = [NSString stringWithFormat:@"%@;transport=%@", server_address, [transport lowercaseString]];
-        }
-        // when the domain is specified (for external login), take it as the server address
-        linphone_proxy_config_set_server_addr(proxyCfg, [server_address UTF8String]);
-        linphone_address_set_domain(linphoneAddress, [domain UTF8String]);
-    }
-    
-    char* extractedAddres = linphone_address_as_string_uri_only(linphoneAddress);
-    
-    LinphoneAddress* parsedAddress = linphone_address_new(extractedAddres);
-    ms_free(extractedAddres);
-    
-    if( parsedAddress == NULL || !linphone_address_is_sip(parsedAddress) ){
-        if( parsedAddress ) linphone_address_destroy(parsedAddress);
-        
-        NSAlert *alert = [[NSAlert alloc]init];
-        [alert addButtonWithTitle:NSLocalizedString(@"Continue",nil)];
-        [alert setMessageText:NSLocalizedString(@"Please enter a valid username", nil)];
-        [alert runModal];
-        
-        return FALSE;
-    }
-    
-    char *c_parsedAddress = linphone_address_as_string_uri_only(parsedAddress);
-    
-    linphone_proxy_config_set_identity(proxyCfg, c_parsedAddress);
-    
-    linphone_address_destroy(parsedAddress);
-    ms_free(c_parsedAddress);
-    
-    LinphoneAuthInfo* info = linphone_auth_info_new([username UTF8String]
-                                                    , NULL, [password UTF8String]
-                                                    , NULL
-                                                    , NULL
-                                                    ,linphone_proxy_config_get_domain(proxyCfg));
-    
-    [self setDefaultSettings:proxyCfg];
-    
-    [self clearProxyConfig];
-    
-    //    NSString *serverAddress = [NSString stringWithFormat:@"sip:%@:%@", self.textFieldDomain.text, self.textFieldPort.text];
-    linphone_proxy_config_enable_register(proxyCfg, true);
-    //    linphone_proxy_config_set_server_addr(proxyCfg, [serverAddress UTF8String]);
-    linphone_core_add_auth_info(lc, info);
-    linphone_core_add_proxy_config(lc, proxyCfg);
-    linphone_core_set_default_proxy_config(lc, proxyCfg);
-    return TRUE;
-}
-
-- (void)setDefaultSettings:(LinphoneProxyConfig*)proxyCfg {
-    LinphoneManager* lm = [LinphoneManager instance];
-    
-    [lm configurePushTokenForProxyConfig:proxyCfg];
-    
-}
-
-- (void)clearProxyConfig {
-    linphone_core_clear_proxy_config([LinphoneManager getLc]);
-    linphone_core_clear_all_auth_info([LinphoneManager getLc]);
-}
-
 #pragma mark -
 
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message{
     switch (state) {
         case LinphoneRegistrationOk: {
-//            [[AppDelegate sharedInstance] showTabWindow];
-//            [[AppDelegate sharedInstance].loginWindowController close];
-            
-            [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
-                                                            Password:self.textFieldPassword.stringValue
-                                                              Domain:@"bc1.vatrp.net"
-                                                           Transport:@"TCP"
-                                                                Port:5060
-                                                           isDefault:YES];
+            [[AccountsService sharedInstance] addAccountWithUsername:_loginAccount.username
+                                                        Password:_loginAccount.password
+                                                        Domain:_loginAccount.domain
+                                                        Transport:_loginAccount.transport
+                                                        Port:_loginAccount.port
+                                                        isDefault:YES];
             break;
         }
         case LinphoneRegistrationNone:
         case LinphoneRegistrationCleared:  {
-//            [waitView setHidden:true];
             break;
         }
         case LinphoneRegistrationFailed: {
-//            [waitView setHidden:true];
             NSAlert *alert = [[NSAlert alloc]init];
             [alert addButtonWithTitle:@"OK"];
             [alert setMessageText:message];
@@ -393,7 +223,6 @@
             break;
         }
         case LinphoneRegistrationProgress: {
-//            [waitView setHidden:false];
             break;
         }
         default:

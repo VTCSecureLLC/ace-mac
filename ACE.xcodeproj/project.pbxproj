@@ -76,6 +76,7 @@
 		31A7FB271BBCBB0000809370 /* libpolarssl.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31A7FB261BBCBB0000809370 /* libpolarssl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31ED2B571BBCD2B80060319E /* libopus.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31ED2B561BBCD2B80060319E /* libopus.5.dylib */; };
 		31ED2B581BBCD2CF0060319E /* libopus.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31ED2B561BBCD2B80060319E /* libopus.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4A13AA171BC6A5B9000C9358 /* TestingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A13AA161BC6A5B9000C9358 /* TestingViewController.m */; settings = {ASSET_TAGS = (); }; };
 		4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BAB961BC4FAE200640476 /* cafile.pem */; settings = {ASSET_TAGS = (); }; };
 		4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BABAD1BC5236400640476 /* RegistrationService.m */; settings = {ASSET_TAGS = (); }; };
 		4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9B91BB1BDC900FCD070 /* cameraview.png */; };
@@ -373,6 +374,8 @@
 		31ED2B5B1BBCD31C0060319E /* libspeexdsp.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libspeexdsp.6.dylib; path = VATRP/linphonesdk/libs/libspeexdsp.6.dylib; sourceTree = "<group>"; };
 		31ED2B611BBCD3CD0060319E /* libswscale.2.1.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.2.1.100.dylib; path = VATRP/linphonesdk/libs/libswscale.2.1.100.dylib; sourceTree = "<group>"; };
 		31F974771BB3962000E21D92 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		4A13AA151BC6A5B9000C9358 /* TestingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestingViewController.h; sourceTree = "<group>"; };
+		4A13AA161BC6A5B9000C9358 /* TestingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestingViewController.m; sourceTree = "<group>"; };
 		4A2BAB961BC4FAE200640476 /* cafile.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cafile.pem; sourceTree = "<group>"; };
 		4A2BABAC1BC5236400640476 /* RegistrationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationService.h; sourceTree = "<group>"; };
 		4A2BABAD1BC5236400640476 /* RegistrationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationService.m; sourceTree = "<group>"; };
@@ -647,6 +650,8 @@
 				4A902DF71BB9746600ECFD86 /* CodecsViewController.m */,
 				4AC344831BB9A777000C4909 /* MediaViewController.h */,
 				4AC344841BB9A777000C4909 /* MediaViewController.m */,
+				4A13AA151BC6A5B9000C9358 /* TestingViewController.h */,
+				4A13AA161BC6A5B9000C9358 /* TestingViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1162,6 +1167,7 @@
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
+				4A13AA171BC6A5B9000C9358 /* TestingViewController.m in Sources */,
 				2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */,
 				2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */,
 				4A902DF81BB9746600ECFD86 /* CodecsViewController.m in Sources */,

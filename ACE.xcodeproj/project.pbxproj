@@ -101,6 +101,8 @@
 		4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */; };
 		4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */; };
 		4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E651BAFECF2007C1949 /* Localizable.strings */; };
+		4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */; settings = {ASSET_TAGS = (); }; };
 		4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560C1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m */; };
 		4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */; };
 		4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF56151BB157AC00241DC2 /* AccountsViewController.m */; };
@@ -403,6 +405,10 @@
 		4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory~ipad"; sourceTree = "<group>"; };
 		4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc~ipad"; sourceTree = "<group>"; };
 		4AAD8E651BAFECF2007C1949 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		4AADCFB41BCB99C600BF8ABA /* CallInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallInfoViewController.h; sourceTree = "<group>"; };
+		4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallInfoViewController.m; sourceTree = "<group>"; };
+		4AADCFB71BCB99E600BF8ABA /* CallInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallInfoWindowController.h; sourceTree = "<group>"; };
+		4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallInfoWindowController.m; sourceTree = "<group>"; };
 		4AAF560B1BAFFC3B00241DC2 /* VideoCallWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VideoCallWindowController.h; path = VATRP/VideoCall/VideoCallWindowController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4AAF560C1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VATRP/VideoCall/VideoCallWindowController.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4AAF560E1BAFFC5700241DC2 /* VideoCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VideoCallViewController.h; path = VATRP/VideoCall/VideoCallViewController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -609,10 +615,10 @@
 		2B463EF61B984E49008E8333 /* Dialpad */ = {
 			isa = PBXGroup;
 			children = (
-				2B463EF71B984E49008E8333 /* DialpadViewController.h */,
-				2B463EF81B984E49008E8333 /* DialpadViewController.m */,
 				2B463EF91B984E49008E8333 /* DialpadWindowController.h */,
 				2B463EFA1B984E49008E8333 /* DialpadWindowController.m */,
+				2B463EF71B984E49008E8333 /* DialpadViewController.h */,
+				2B463EF81B984E49008E8333 /* DialpadViewController.m */,
 			);
 			path = Dialpad;
 			sourceTree = "<group>";
@@ -727,6 +733,17 @@
 				4A902DF11BB96C6D00ECFD86 /* ringback.wav */,
 			);
 			path = sounds;
+			sourceTree = "<group>";
+		};
+		4AADCFB31BCB99C600BF8ABA /* Call Info */ = {
+			isa = PBXGroup;
+			children = (
+				4AADCFB71BCB99E600BF8ABA /* CallInfoWindowController.h */,
+				4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */,
+				4AADCFB41BCB99C600BF8ABA /* CallInfoViewController.h */,
+				4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */,
+			);
+			path = "Call Info";
 			sourceTree = "<group>";
 		};
 		4AAF560A1BAFFC0400241DC2 /* VideoCall */ = {
@@ -886,6 +903,7 @@
 		4AE0C6751BB2E72900B4E208 /* In Call */ = {
 			isa = PBXGroup;
 			children = (
+				4AADCFB31BCB99C600BF8ABA /* Call Info */,
 				4AE0C6761BB2E9D000B4E208 /* CallWindowController.h */,
 				4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */,
 				4AE0C6791BB2E9E900B4E208 /* CallViewController.h */,
@@ -1153,6 +1171,7 @@
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
 				4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */,
+				4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */,
 				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */,
@@ -1162,6 +1181,7 @@
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
+				4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

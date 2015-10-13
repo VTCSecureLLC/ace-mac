@@ -8,6 +8,8 @@
 
 #import "CallViewController.h"
 #import "VideoCallViewController.h"
+#import "CallInfoWindowController.h"
+#import "SettingsWindowController.h"
 #import "AppDelegate.h"
 
 
@@ -15,6 +17,8 @@
     NSTimer *timerCallDuration;
     NSTimer *timerRingCount;
     NSTimeInterval startCallTime;
+    
+    CallInfoWindowController *callInfoWindowController;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -32,6 +36,7 @@
 
 - (IBAction)onButtonAnswer:(id)sender;
 - (IBAction)onButtonDecline:(id)sender;
+- (IBAction)onButtonCallInfo:(id)sender;
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -78,6 +83,11 @@ static const float callAlertStepInterval = 0.5;
 
 - (IBAction)onButtonDecline:(id)sender {
     linphone_core_terminate_call([LinphoneManager getLc], call);
+}
+
+- (IBAction)onButtonCallInfo:(id)sender {
+    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+    [callInfoWindowController showWindow:self];
 }
 
 #pragma mark - Event Functions
@@ -211,6 +221,9 @@ static const float callAlertStepInterval = 0.5;
 
 
 - (void)dismiss {
+    [callInfoWindowController close];
+    callInfoWindowController = nil;
+    
     [[AppDelegate sharedInstance].callWindowController close];
     VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
     [videoCallWindowController close];

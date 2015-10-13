@@ -1711,6 +1711,9 @@ DQ
                                         <string>Provider 5</string>
                                     </objectValues>
                                 </comboBoxCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="yt7-aL-AyJ" id="TCn-F9-mxb"/>
+                                </connections>
                             </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFY-7p-Xe9">
                                 <rect key="frame" x="18" y="227" width="126" height="20"/>
@@ -1739,15 +1742,6 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yt7-aL-AyJ">
-                                <rect key="frame" x="157" y="197" width="167" height="22"/>
-                                <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="ruben_1" drawsBackground="YES" id="6W3-vd-8Sz">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXB-JB-2wd">
                                 <rect key="frame" x="157" y="165" width="167" height="22"/>
                                 <animations/>
@@ -1766,6 +1760,9 @@ DQ
                                 <buttonCell key="cell" type="smallSquare" title="Login" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="npb-ie-HiX">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onButtonLogin:" target="taJ-cA-vAy" id="uVM-bY-rE7"/>
@@ -1816,6 +1813,18 @@ DQ
                                     <segue destination="San-o0-UCl" kind="show" id="mRP-Ek-VOO"/>
                                 </connections>
                             </button>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yt7-aL-AyJ">
+                                <rect key="frame" x="157" y="197" width="167" height="22"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="ruben_1" drawsBackground="YES" id="6W3-vd-8Sz">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="YXB-JB-2wd" id="PrH-Yj-xX0"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <animations/>
                     </view>

@@ -46,14 +46,20 @@
     switch (button.tag) {
         case 10: {
             self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"*"];
+            linphone_core_play_dtmf([LinphoneManager getLc], '*', 100);
         }
             break;
         case 11: {
             self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"#"];
+            linphone_core_play_dtmf([LinphoneManager getLc], '#', 100);
         }
             break;
         default: {
-            self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:[NSString stringWithFormat:@"%ld", (long)button.tag]];
+            NSString *number = [NSString stringWithFormat:@"%ld", (long)button.tag];
+            const char *charArray = [number UTF8String];
+            char charNumber = charArray[0];
+            linphone_core_play_dtmf([LinphoneManager getLc], charNumber, 100);
+            self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:number];
         }
             break;
     }

@@ -20,6 +20,9 @@
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
 @property (weak) IBOutlet NSTextField *textFieldPassword;
+@property (weak) IBOutlet NSTextField *textFieldDomain;
+@property (weak) IBOutlet NSTextField *textFieldPort;
+
 @end
 
 @implementation LoginViewController
@@ -91,7 +94,6 @@
 }
 
 - (IBAction)onButtonLogin:(id)sender {
-
     _loginAccount = [[AccountModel alloc] init];
     _loginAccount.username = self.textFieldUsername.stringValue;
     _loginAccount.password = self.textFieldPassword.stringValue;
@@ -102,7 +104,8 @@
     [[RegistrationService sharedInstance] registerWithUsername:_loginAccount.username
                                                       password:_loginAccount.password
                                                         domain:_loginAccount.domain
-                                                 withTransport:_loginAccount.transport];
+                                                     transport:_loginAccount.transport
+                                                          port:_loginAccount.port];
 
     [[AppDelegate sharedInstance] showTabWindow];
     [[AppDelegate sharedInstance].loginWindowController close];

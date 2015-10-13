@@ -14,7 +14,7 @@
 
 + (RegistrationService *)sharedInstance;
 - (void) registerWithAccountModel:(AccountModel*)accountModel;
-- (void) registerWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport;
+- (void) registerWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain transport:(NSString*)transport port:(int)port;
 - (void) asyncRegisterWithAccountModel:(AccountModel*)accountModel;
 
 @end

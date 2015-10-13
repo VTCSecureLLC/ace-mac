@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
@@ -224,7 +224,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
                     <connections>
                         <outlet property="menuItemPreferences" destination="iMU-0u-Qmn" id="RXa-JS-TZA"/>
-                        <outlet property="menuItemSignOut" destination="CDK-gl-PAo" id="xnM-5Q-VCv"/>
+                        <outlet property="menuItemSignOut" destination="CDK-gl-PAo" id="Ysv-9d-rDh"/>
                     </connections>
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -347,11 +347,17 @@
                                         <action selector="onToolbarItemMedia:" target="San-o0-UCl" id="fX1-5n-fjy"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="A0797B28-B465-4A1A-A779-69A7B112BD06" label="Testing" paletteLabel="Testing" tag="-1" id="55f-vN-x5K">
+                                    <connections>
+                                        <action selector="onToolbarItemTesting:" target="San-o0-UCl" id="WGy-CN-Tcd"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nVf-KC-pl6"/>
                                 <toolbarItem reference="ve4-Sd-mxC"/>
                                 <toolbarItem reference="Rrn-YL-CAr"/>
+                                <toolbarItem reference="55f-vN-x5K"/>
                             </defaultToolbarItems>
                         </toolbar>
                     </window>
@@ -426,6 +432,20 @@
             </objects>
             <point key="canvasLocation" x="4450" y="134"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="TZD-yl-lp1">
+            <objects>
+                <viewController id="aqb-zY-jqc" sceneMemberID="viewController">
+                    <view key="view" id="N3l-xy-NHk">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </view>
+                </viewController>
+                <customObject id="7ob-9s-1YR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5704" y="102"/>
+        </scene>
         <!--Call View Controller-->
         <scene sceneID="idn-sr-iES">
             <objects>
@@ -462,7 +482,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L5V-lg-qaA">
-                                <rect key="frame" x="18" y="225" width="444" height="34"/>
+                                <rect key="frame" x="18" y="216" width="444" height="34"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Jon Doe" id="rdA-xM-WgC">
                                     <font key="font" size="21" name=".HelveticaNeueDeskInterface-Regular"/>
@@ -471,7 +491,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pGQ-jA-e6Y">
-                                <rect key="frame" x="18" y="190" width="444" height="34"/>
+                                <rect key="frame" x="18" y="184" width="444" height="34"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Calling..." id="THd-BG-gxV">
                                     <font key="font" size="19" name=".HelveticaNeueDeskInterface-Regular"/>
@@ -479,8 +499,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Clc-u1-SgN">
-                                <rect key="frame" x="18" y="161" width="444" height="27"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Clc-u1-SgN">
+                                <rect key="frame" x="18" y="151" width="444" height="27"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="00:00" id="bxP-ob-yV6">
                                     <font key="font" size="18" name=".HelveticaNeueDeskInterface-Regular"/>
@@ -831,7 +851,7 @@
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdw-8W-cT5">
                                 <rect key="frame" x="20" y="37" width="435" height="200"/>
                                 <clipView key="contentView" ambiguous="YES" id="7dR-NM-TRr">
-                                    <rect key="frame" x="1" y="23" width="433" height="176"/>
+                                    <rect key="frame" x="1" y="0.0" width="433" height="199"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="PSO-G8-TfI" viewBased="YES" id="yQb-Gj-CTy">
@@ -921,7 +941,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <animations/>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ZGT-XZ-fwQ">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="ZGT-XZ-fwQ">
                                     <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
@@ -1052,11 +1072,53 @@
             </objects>
             <point key="canvasLocation" x="643" y="501"/>
         </scene>
+        <!--Testing View Controller-->
+        <scene sceneID="TcD-5y-zTX">
+            <objects>
+                <viewController storyboardIdentifier="TestingViewController" id="wId-2F-cAs" customClass="TestingViewController" sceneMemberID="viewController">
+                    <view key="view" id="CEU-J3-zPc">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="350"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UN6-zf-zZj">
+                                <rect key="frame" x="130" y="156" width="187" height="28"/>
+                                <animations/>
+                                <buttonCell key="cell" type="check" title="Auto answer call" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="swd-M0-LBG">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxAutoAnswerCall:" target="wId-2F-cAs" id="UjK-By-Sx1"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LEd-Vj-4hY">
+                                <rect key="frame" x="130" y="126" width="187" height="28"/>
+                                <animations/>
+                                <buttonCell key="cell" type="check" title="Enable AVPF" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GwE-OG-t0D">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxEnableAVPF:" target="wId-2F-cAs" id="Xjx-cG-TiN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                    </view>
+                    <connections>
+                        <outlet property="buttonAutoAnswer" destination="UN6-zf-zZj" id="UPy-Qf-ISX"/>
+                        <outlet property="buttonEnableAVPF" destination="LEd-Vj-4hY" id="cMi-uD-fTZ"/>
+                    </connections>
+                </viewController>
+                <customObject id="hoe-fM-kjo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="636" y="1024"/>
+        </scene>
         <!--Window Controller-->
         <scene sceneID="aiA-JG-AW8">
             <objects>
                 <windowController storyboardIdentifier="LoginWindowController" id="9rh-hr-rNV" customClass="LoginWindowController" sceneMemberID="viewController">
-                    <window key="window" title="Login" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="ogO-AX-hsJ">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="ogO-AX-hsJ">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="776" y="519" width="450" height="386"/>
@@ -1179,7 +1241,7 @@
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3Q-9s-Rkw">
                                 <rect key="frame" x="245" y="225" width="184" height="22"/>
                                 <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="gCT-CX-Owt">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="gCT-CX-Owt">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1204,22 +1266,10 @@
                                     <action selector="onComboboxTransport:" target="kdm-MC-IU1" id="IFW-tE-H8U"/>
                                 </connections>
                             </comboBox>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RK4-j5-OJp">
-                                <rect key="frame" x="244" y="163" width="187" height="28"/>
-                                <animations/>
-                                <buttonCell key="cell" type="check" title="Auto answer call" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rus-ms-TTf">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onCheckBoxAutoAnswerCall:" target="kdm-MC-IU1" id="k2y-Tj-XAj"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <animations/>
                     </view>
                     <connections>
-                        <outlet property="buttonAutoAnswer" destination="RK4-j5-OJp" id="qBf-u9-bk0"/>
                         <outlet property="comboBoxTransport" destination="sL8-fC-hfK" id="i2O-hg-x5l"/>
                         <outlet property="secureTextFieldPassword" destination="2Xu-1K-KKV" id="AbG-4j-TrG"/>
                         <outlet property="textFieldDomain" destination="k0N-cs-rYc" id="eia-xB-7rZ"/>
@@ -1260,7 +1310,7 @@
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWl-cT-n0O">
                                 <rect key="frame" x="20" y="189" width="440" height="135"/>
                                 <clipView key="contentView" ambiguous="YES" id="kcY-Pw-tBg">
-                                    <rect key="frame" x="1" y="23" width="438" height="111"/>
+                                    <rect key="frame" x="1" y="0.0" width="438" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="7sW-dQ-8Bu" viewBased="YES" id="dVh-VC-nau">
@@ -1402,7 +1452,7 @@
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDq-Po-t6g">
                                 <rect key="frame" x="20" y="20" width="440" height="135"/>
                                 <clipView key="contentView" ambiguous="YES" id="Swo-KF-8hM">
-                                    <rect key="frame" x="1" y="23" width="438" height="111"/>
+                                    <rect key="frame" x="1" y="0.0" width="438" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="zB8-sw-BQz" viewBased="YES" id="lsC-EJ-Gf6">
@@ -1689,15 +1739,18 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZXw-C5-Gl1">
+                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXB-JB-2wd">
                                 <rect key="frame" x="157" y="165" width="167" height="22"/>
                                 <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="topsecret" drawsBackground="YES" id="Tya-dw-VUj">
+                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Lqy-tQ-zSP">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                                    <allowedInputSourceLocales>
+                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                    </allowedInputSourceLocales>
+                                </secureTextFieldCell>
+                            </secureTextField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVi-K9-fBt">
                                 <rect key="frame" x="157" y="107" width="167" height="36"/>
                                 <animations/>
@@ -1720,7 +1773,7 @@
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iXO-La-iVb">
                                 <rect key="frame" x="155" y="36" width="171" height="18"/>
                                 <animations/>
-                                <buttonCell key="cell" type="check" title="Auto-Login" bezelStyle="regularSquare" imagePosition="left" inset="2" id="GDq-LI-37t">
+                                <buttonCell key="cell" type="check" title="Auto-Login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GDq-LI-37t">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -1745,6 +1798,7 @@
                             </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kze-7h-dxO">
                                 <rect key="frame" x="12" y="331" width="38" height="35"/>
+                                <animations/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="settings" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="6xb-9E-aOD">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="11" name=".HelveticaNeueDeskInterface-Regular"/>
@@ -1757,7 +1811,7 @@
                         <animations/>
                     </view>
                     <connections>
-                        <outlet property="textFieldPassword" destination="ZXw-C5-Gl1" id="tMZ-Ua-89h"/>
+                        <outlet property="textFieldPassword" destination="YXB-JB-2wd" id="OhC-gx-MzO"/>
                         <outlet property="textFieldUsername" destination="yt7-aL-AyJ" id="WEU-lu-Wxt"/>
                     </connections>
                 </viewController>

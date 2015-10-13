@@ -7,7 +7,10 @@
 //
 
 #import "VideoCallViewController.h"
-
+#import "AppDelegate.h"
+#import "CallWindowController.h"
+#import "CallViewController.h"
+#import "SelfVideoViewController.h"
 @interface VideoCallViewController ()
 
 @end
@@ -18,5 +21,4 @@
     [super viewDidLoad];
     // Do view setup here.
 }
-
 @end

@@ -6,9 +6,11 @@
 //  Copyright (c) 2015 Cinehost. All rights reserved.
 //
 
+#import "VideoCallWindowController.h"
+#import "VideoCallViewController.h"
 #import "VideoMailWindowController.h"
 #import "LinphoneManager.h"
-
+#import "AppDelegate.h"
 @interface VideoMailWindowController ()
 
 @end
@@ -37,6 +39,15 @@
 }
 
 - (void) enableSelfVideo {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    
+    if(linphone_core_get_current_call(lc) != NULL){
+        VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+        [videoCallWindowController showWindow:self];
+        VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
+        linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
+    }
+    
     linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
     linphone_core_use_preview_window([LinphoneManager getLc], YES);
     linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.contentViewController.view));

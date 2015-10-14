@@ -7,7 +7,7 @@
 //
 
 #import "DialpadWindowController.h"
-
+#import "AppDelegate.h"
 @interface DialpadWindowController ()
 
 @end
@@ -24,6 +24,17 @@
     self.isShow = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
+    
+    NSPoint barOrigin = [[AppDelegate sharedInstance] getTabWindowOrigin];
+    
+    NSPoint currentWindowSize = {self.window.frame.size.width, self.window.frame.size.height};
+    NSPoint barWindowSize = [[AppDelegate sharedInstance] getTabWindowSize];
+    
+    NSPoint pos;
+    pos.x = barOrigin.x + barWindowSize.x / 2 - currentWindowSize.x / 2 ;
+    pos.y = barOrigin.y - currentWindowSize.y - barWindowSize.y;
+    [self.window setFrameOrigin : pos];
+    
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

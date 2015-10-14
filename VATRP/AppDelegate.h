@@ -28,5 +28,9 @@
 - (void) closeTabWindow;
 - (VideoCallWindowController*) getVideoCallWindow;
 
+-(NSPoint) getTabWindowSize;
+-(NSPoint) getTabWindowOrigin;
+-(void) setTabWindowPos:(NSPoint) pos;
+
 @end
 

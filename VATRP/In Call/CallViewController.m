@@ -8,6 +8,7 @@
 
 #import "CallViewController.h"
 #import "VideoCallViewController.h"
+#import "KeypadWindowController.h"
 #import "AppDelegate.h"
 
 
@@ -15,6 +16,8 @@
     NSTimer *timerCallDuration;
     NSTimer *timerRingCount;
     NSTimeInterval startCallTime;
+    
+    KeypadWindowController *keypadWindowController;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -32,6 +35,7 @@
 
 - (IBAction)onButtonAnswer:(id)sender;
 - (IBAction)onButtonDecline:(id)sender;
+- (IBAction)onButtonKeypad:(id)sender;
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -78,6 +82,11 @@ static const float callAlertStepInterval = 0.5;
 
 - (IBAction)onButtonDecline:(id)sender {
     linphone_core_terminate_call([LinphoneManager getLc], call);
+}
+
+- (IBAction)onButtonKeypad:(id)sender {
+    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+    [keypadWindowController showWindow:self];
 }
 
 #pragma mark - Event Functions

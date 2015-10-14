@@ -15,6 +15,7 @@
 
 @property (weak) IBOutlet NSButton *buttonAutoAnswer;
 @property (weak) IBOutlet NSButton *buttonEnableAVPF;
+@property (weak) IBOutlet NSButton *buttonSendDTMF;
 
 @end
 
@@ -49,6 +50,8 @@
     if (proxyCfg) {
         linphone_proxy_config_enable_avpf(proxyCfg, self.buttonEnableAVPF.state);
     }
+    
+    linphone_core_set_use_info_for_dtmf([LinphoneManager getLc], self.buttonSendDTMF.state);
 }
 
 - (IBAction)onCheckBoxAutoAnswerCall:(id)sender {

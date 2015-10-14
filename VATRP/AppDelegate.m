@@ -73,6 +73,21 @@
     [AppDelegate sharedInstance].loginWindowController = nil;
 }
 
+-(NSPoint) getTabWindowOrigin{
+    NSPoint origin = [homeWindowController getWindowOrigin];
+    return origin;
+}
+
+-(NSPoint) getTabWindowSize{
+    CGSize cgSize = [homeWindowController getWindowSize];
+    NSPoint size = {cgSize.width, cgSize.height};
+    return size;
+}
+
+-(void) setTabWindowPos:(NSPoint)pos{
+    [homeWindowController setWindowPos:pos];
+}
+
 - (void) closeTabWindow {
     [homeWindowController close];
     homeWindowController = nil;

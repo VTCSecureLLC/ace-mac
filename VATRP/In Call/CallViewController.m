@@ -20,6 +20,8 @@
     NSImage *alert;
     NSImage *alertInverted;
     KeypadWindowController *keypadWindowController;
+    
+    NSString *windowTitle, *address;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -30,8 +32,6 @@
 @property (weak) IBOutlet NSTextField *ringCountLabel;
 
 @property (weak) IBOutlet NSImageView *callAlertImageView;
-
-
 
 
 - (IBAction)onButtonAnswer:(id)sender;
@@ -52,6 +52,9 @@ static const float callAlertStepInterval = 0.5;
     [super viewDidLoad];
     // Do view setup here.
     
+    windowTitle  = @"Call with %@ duration: %@";
+    address = @"";
+    
     timerCallDuration = nil;
     callAlertTimer = nil;
     
@@ -70,6 +73,8 @@ static const float callAlertStepInterval = 0.5;
     
     alert = [NSImage imageNamed:@"alert"];
     alertInverted = [NSImage imageNamed:@"alert_inverted"];
+    self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
+    self.labelDisplayName.hidden = YES;
 }
 
 - (void) dealloc {
@@ -121,6 +126,7 @@ static const float callAlertStepInterval = 0.5;
             break;
         }
         case LinphoneCallConnected: {
+            [self labelCallState].hidden = YES;
             [self stopRingCountTimer];
             [self stopCallAlertTimer];
 
@@ -135,9 +141,6 @@ static const float callAlertStepInterval = 0.5;
             linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
 
             
-
-            
-            self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                                  target:self
                                                                selector:@selector(inCallTick:)
@@ -239,7 +242,6 @@ static const float callAlertStepInterval = 0.5;
 - (void)update {
     [self view]; //Force view load
     
-    NSString* address = nil;
     const LinphoneAddress* addr = linphone_call_get_remote_address(call);
     if (addr != NULL) {
         BOOL useLinphoneAddress = true;
@@ -279,7 +281,8 @@ static const float callAlertStepInterval = 0.5;
     if(address == nil) {
         address = @"Unknown";
     }
-    self.labelDisplayName.stringValue = address;
+    //update caller address in window title
+    [[AppDelegate sharedInstance].callWindowController.window setTitle:[NSString stringWithFormat:windowTitle, address, [self getTimeStringFromSeconds:0]]];
 }
 
 
@@ -307,7 +310,8 @@ static const float callAlertStepInterval = 0.5;
     NSTimeInterval callDuration = [[NSDate date] timeIntervalSince1970] - startCallTime;
     
     NSString *string_time = [self getTimeStringFromSeconds:callDuration];
-    self.labelCallDuration.stringValue = string_time;
+    //Update call duration in window title
+    [[AppDelegate sharedInstance].callWindowController.window setTitle:[NSString stringWithFormat:windowTitle, address, string_time]];
 }
 
 -(NSString *)getTimeStringFromSeconds:(int)seconds

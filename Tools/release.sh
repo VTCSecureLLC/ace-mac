@@ -235,6 +235,28 @@ else
         --name $(basename "$PKG_FILE") \
         --file "$PKG_FILE"
   fi
+
+  if [ -f $APP_ZIP_FILE ]; then
+    TARGET=ACE-HockeyApp-$tag.zip
+    echo "Uploading $APP_ZIP_FILE as $TARGET to github release $tag : $(ls -la $APP_ZIP_FILE)"
+    /tmp/github-release upload \
+        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
+        --repo ${GITHUB_REPO[1]:-ace-mac} \
+        --tag $tag \
+        --name $TARGET \
+        --file "$APP_ZIP_FILE"
+  fi
+
+  if [ -f $DSYM_ZIP_FILE ]; then
+    TARGET=ACE-HockeyApp-$tag.dsym.zip
+    echo "Uploading $DSYM_ZIP_FILE as $TARGET to github release $tag : $(ls -la $DSYM_ZIP_FILE)"
+    /tmp/github-release upload \
+        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
+        --repo ${GITHUB_REPO[1]:-ace-mac} \
+        --tag $tag \
+        --name $TARGET \
+        --file "$DSYM_ZIP_FILE"
+  fi
 fi
 
 if [ -f "sync/cleanup.sh" ]; then

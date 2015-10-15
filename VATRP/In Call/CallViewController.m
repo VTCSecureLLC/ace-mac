@@ -16,7 +16,9 @@
     NSTimer *timerCallDuration;
     NSTimer *timerRingCount;
     NSTimeInterval startCallTime;
-    
+    NSTimer *callAlertTimer;
+    NSImage *alert;
+    NSImage *alertInverted;
     KeypadWindowController *keypadWindowController;
 }
 
@@ -28,10 +30,9 @@
 @property (weak) IBOutlet NSTextField *ringCountLabel;
 
 @property (weak) IBOutlet NSImageView *callAlertImageView;
-@property (weak) NSImage *alert;
-@property (weak) NSImage *alertInverted;
 
-@property (weak) NSTimer *callAlertTimer;
+
+
 
 - (IBAction)onButtonAnswer:(id)sender;
 - (IBAction)onButtonDecline:(id)sender;
@@ -46,23 +47,29 @@
 
 dispatch_queue_t callAlertAnimationQueue;
 static const float callAlertStepInterval = 0.5;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
     
     timerCallDuration = nil;
+    callAlertTimer = nil;
+    
     self.buttonAnswer.wantsLayer = YES;
     [self.buttonAnswer.layer setBackgroundColor:[NSColor greenColor].CGColor];
     self.buttonDecline.wantsLayer = YES;
     [self.buttonDecline.layer setBackgroundColor:[NSColor redColor].CGColor];
+    
+    self.view.wantsLayer = YES;
+    self.remoteVideoView.wantsLayer = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
     
-    _alert = [NSImage imageNamed:@"alert"];
-    _alertInverted = [NSImage imageNamed:@"alert_inverted"];
+    alert = [NSImage imageNamed:@"alert"];
+    alertInverted = [NSImage imageNamed:@"alert_inverted"];
 }
 
 - (void) dealloc {
@@ -73,11 +80,6 @@ static const float callAlertStepInterval = 0.5;
 
 - (IBAction)onButtonAnswer:(id)sender {
     [[LinphoneManager instance] acceptCall:call];
-  
-    if(_callAlertTimer != nil){
-        [_callAlertTimer invalidate];
-        _callAlertTimer = nil;
-    }
 }
 
 - (IBAction)onButtonDecline:(id)sender {
@@ -110,12 +112,9 @@ static const float callAlertStepInterval = 0.5;
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call...";
-            
-           // [self startRingCountTimer];
-            
-            callAlertAnimationQueue = dispatch_queue_create("alert queue",DISPATCH_QUEUE_PRIORITY_DEFAULT);
-            _callAlertTimer = [NSTimer scheduledTimerWithTimeInterval:callAlertStepInterval target:self selector:@selector(callFlashAlert) userInfo:nil repeats:true];
-            [_callAlertTimer fire];
+            [self startRingCountTimer];
+            [self startCallAlertTimer];
+
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -123,34 +122,38 @@ static const float callAlertStepInterval = 0.5;
         }
         case LinphoneCallConnected: {
             [self stopRingCountTimer];
-            VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-            [videoCallWindowController showWindow:self];
-            VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
-            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
+            [self stopCallAlertTimer];
+
+            CallWindowController *callWindow = [AppDelegate sharedInstance].callWindowController;
+            [callWindow showWindow:self];
+            CallViewController *callController = (CallViewController*)callWindow.contentViewController;
+            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(callController.remoteVideoView));
             
 
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
             linphone_core_use_preview_window([LinphoneManager getLc], YES);
             linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
 
-
-            self.labelCallState.stringValue = @"Connected";
-
-            self.buttonAnswer.hidden = YES;
-            self.buttonDecline.frame = CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width)/2,
-                                                  self.buttonDecline.frame.origin.y,
-                                                  self.buttonDecline.frame.size.width,
-                                                  self.buttonDecline.frame.size.height);
             
-            [self.buttonDecline setTitle:@"End Call"];
+
             
-            self.labelCallDuration.hidden = NO;
+            self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                                  target:self
                                                                selector:@selector(inCallTick:)
                                                                userInfo:nil
                                                                 repeats:YES];
             startCallTime = [[NSDate date] timeIntervalSince1970];
+            
+            
+            self.labelCallState.stringValue = @"Connected";
+            self.buttonAnswer.hidden = YES;
+            
+            [self.buttonDecline setTitle:@"End Call"];
+            self.buttonDecline.frame = CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width) / 2,
+                                                  self.buttonDecline.frame.origin.y,
+                                                  self.buttonDecline.frame.size.width,
+                                                  self.buttonDecline.frame.size.height);
         }
             break;
         case LinphoneCallOutgoingInit: {
@@ -161,6 +164,7 @@ static const float callAlertStepInterval = 0.5;
             self.labelCallState.stringValue = @"Ringing...";
 
             [self startRingCountTimer];
+            [self startCallAlertTimer];
         }
             break;
         case LinphoneCallPausedByRemote:
@@ -193,6 +197,7 @@ static const float callAlertStepInterval = 0.5;
         case LinphoneCallError:
         {
             [self stopRingCountTimer];
+            [self stopCallAlertTimer];
             self.labelCallState.stringValue = @"Call Error";
             //            [self displayCallError:call message: message];
         }
@@ -200,6 +205,7 @@ static const float callAlertStepInterval = 0.5;
         {
             self.labelCallState.stringValue = @"Call End";
             [self stopRingCountTimer];
+            [self stopCallAlertTimer];
 
             //            if (canHideInCallView) {
             //                // Go to dialer view
@@ -221,8 +227,8 @@ static const float callAlertStepInterval = 0.5;
 
 - (void)dismiss {
     [[AppDelegate sharedInstance].callWindowController close];
-    VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-    [videoCallWindowController close];
+  //  VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+   // [videoCallWindowController close];
 
     if (timerCallDuration && [timerCallDuration isValid]) {
         [timerCallDuration invalidate];
@@ -320,12 +326,12 @@ BOOL inverted = false;
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if(inverted){
-                [_callAlertImageView setImage: _alertInverted];
+                [_callAlertImageView setImage: alertInverted];
                 inverted = false;
             }
             
             else{
-                [_callAlertImageView setImage: _alert];
+                [_callAlertImageView setImage: alert];
                 inverted = true;
             }
             
@@ -338,7 +344,7 @@ BOOL inverted = false;
 - (void)startRingCountTimer {
     self.ringCountLabel.hidden = NO;
     [self ringCountTimer];
-    timerRingCount = [NSTimer scheduledTimerWithTimeInterval:3.75
+    timerRingCount = [NSTimer scheduledTimerWithTimeInterval:1
                                                       target:self
                                                     selector:@selector(ringCountTimer)
                                                     userInfo:nil
@@ -350,8 +356,24 @@ BOOL inverted = false;
         [timerRingCount invalidate];
         timerRingCount = nil;
     }
-
+    
     self.ringCountLabel.hidden = YES;
+}
+
+-(void)startCallAlertTimer{
+    [_callAlertImageView setHidden:NO];
+    callAlertAnimationQueue = dispatch_queue_create("alert queue",DISPATCH_QUEUE_PRIORITY_DEFAULT);
+    callAlertTimer = [NSTimer scheduledTimerWithTimeInterval:callAlertStepInterval target:self selector:@selector(callFlashAlert) userInfo:nil repeats:true];
+    [callAlertTimer fire];
+}
+
+-(void)stopCallAlertTimer{
+    if (callAlertTimer && [callAlertTimer isValid]) {
+        [callAlertTimer invalidate];
+        callAlertTimer = nil;
+
+    }
+    [_callAlertImageView setHidden:YES];
 }
 
 - (void)ringCountTimer {

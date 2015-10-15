@@ -52,10 +52,10 @@
     LinphoneCore *lc = [LinphoneManager getLc];
     
     if(linphone_core_get_current_call(lc) != NULL){
-        VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+        CallWindowController *videoCallWindowController = [AppDelegate sharedInstance].callWindowController;
         [videoCallWindowController showWindow:self];
-        VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
-        linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
+        CallViewController *videoCallViewController = (CallViewController*)videoCallWindowController.contentViewController;
+        linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.remoteVideoView));
     }
     
     linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);

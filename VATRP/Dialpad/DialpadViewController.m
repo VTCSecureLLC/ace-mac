@@ -93,11 +93,14 @@
         case LinphoneCallOutgoing:
             break;
         case LinphoneCallConnected: {
-            VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-            [videoCallWindowController showWindow:self];
-            VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
-            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
-            linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.videoPreview));
+            //VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+            //[videoCallWindowController showWindow:self];
+           // VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
+            
+            CallWindowController *videoCallWindowController = [AppDelegate sharedInstance].callWindowController;
+            CallViewController *videoCallViewController = (CallViewController*)videoCallWindowController.contentViewController;
+            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.remoteVideoView));
+            //linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.videoPreview));
         }
             break;
         case LinphoneCallUpdatedByRemote:

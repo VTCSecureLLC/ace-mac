@@ -440,6 +440,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <customView canDrawConcurrently="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rNs-vo-8Kp">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            </customView>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a02-CJ-5eJ">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                                 <animations/>
@@ -524,6 +527,7 @@
                         <outlet property="labelCallDuration" destination="Clc-u1-SgN" id="Nf7-Mx-1su"/>
                         <outlet property="labelCallState" destination="pGQ-jA-e6Y" id="jLA-eo-439"/>
                         <outlet property="labelDisplayName" destination="L5V-lg-qaA" id="rn5-w1-D0u"/>
+                        <outlet property="remoteVideoView" destination="rNs-vo-8Kp" id="S5A-KG-Wjq"/>
                         <outlet property="ringCountLabel" destination="A5y-js-CKy" id="ZXN-YF-U3p"/>
                     </connections>
                 </viewController>
@@ -942,7 +946,7 @@ DQ
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ZGT-XZ-fwQ">
-                                    <rect key="frame" x="1" y="8" width="0.0" height="15"/>
+                                    <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>
@@ -1443,7 +1447,7 @@ DQ
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="OqV-Q8-dmH">
-                                    <rect key="frame" x="1" y="8" width="0.0" height="15"/>
+                                    <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>
@@ -1585,7 +1589,7 @@ DQ
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="cuX-DK-Z0U">
-                                    <rect key="frame" x="1" y="8" width="0.0" height="15"/>
+                                    <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>

@@ -98,6 +98,26 @@ if [ -d "$XCARCHIVE" ]; then
              -exportProvisioningProfile "$PROVISIONING_PROFILE"
 fi
 
+if [ -d "$XCARCHIVE" ]; then
+  # Create an application zip file from the archive build
+
+  APP_DIR=$(find build/derived -name '*.dSYM' | head -1)
+  APP_ZIP_FILE=/tmp/ace-app.zip
+  if [ -f $APP_ZIP_FILE ]; then
+    rm -f $APP_ZIP_FILE
+  fi
+  (cd $(dirname $APP_DIR) ; zip -r $APP_ZIP_FILE $(basename $APP_DIR))
+
+  # Create a dSYM zip file from the archive build
+
+  DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
+  DSYM_ZIP_FILE=${PKG_FILE}.dsym.zip
+  if [ -f $DSYM_ZIP_FILE ]; then
+    rm -f $DSYM_ZIP_FILE
+  fi
+  (cd $(dirname $DSYM_DIR) ; zip -r $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
+fi
+
 # Release via HockeyApp if credentials are available
 
 if [ -z "$HOCKEYAPP_TOKEN" ]; then
@@ -105,27 +125,25 @@ if [ -z "$HOCKEYAPP_TOKEN" ]; then
 else
 
   if [ -d "$XCARCHIVE" ]; then
-    # Create an application zip file from the archive build
-
-    APP_DIR=$(find build/derived -name '*.dSYM' | head -1)
-    APP_ZIP_FILE=/tmp/ace-app.zip
-    if [ -f $APP_ZIP_FILE ]; then
-      rm -f $APP_ZIP_FILE
-    fi
-    (cd $(dirname $APP_DIR) ; zip -r $APP_ZIP_FILE $(basename $APP_DIR))
-
-    # Create a dSYM zip file from the archive build
-
-    DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
-    DSYM_ZIP_FILE=${PKG_FILE}.dsym.zip
-    if [ -f $DSYM_ZIP_FILE ]; then
-      rm -f $DSYM_ZIP_FILE
-    fi
-    (cd $(dirname $DSYM_DIR) ; zip -r $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
 
     # Distribute via HockeyApp
 
     echo "Uploading to HockeyApp"
+    echo 'curl \'
+    echo ' -F "status=2" \'
+    echo ' -F "notify=1" \'
+    echo ' -F "commit_sha='"${SHA1}"'" \'
+    echo ' -F "build_server_url=https://travis-ci.org/'"${TRAVIS_REPO_SLUG}"'/builds/'"${TRAVIS_BUILD_ID}"'" \'
+    echo ' -F "repository_url=http://github.com/'"${TRAVIS_REPO_SLUG}"'" \'
+    echo ' -F "release_type=2" \'
+    echo ' -F "notes='"$(git log -1 --pretty=format:%B)"'" \'
+    echo ' -F "notes_type=1" \'
+    echo ' -F "mandatory=0" \'
+    echo ' -F "ipa=@'"$APP_ZIP_FILE"'" \'
+    echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
+    echo ' -H "X-HockeyAppToken: REDACTED" \'
+    echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
+
     curl \
       -F "status=2" \
       -F "notify=1" \
@@ -216,6 +234,28 @@ else
         --tag $tag \
         --name $(basename "$PKG_FILE") \
         --file "$PKG_FILE"
+  fi
+
+  if [ -f $APP_ZIP_FILE ]; then
+    TARGET=ACE-HockeyApp-$tag.zip
+    echo "Uploading $APP_ZIP_FILE as $TARGET to github release $tag : $(ls -la $APP_ZIP_FILE)"
+    /tmp/github-release upload \
+        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
+        --repo ${GITHUB_REPO[1]:-ace-mac} \
+        --tag $tag \
+        --name $TARGET \
+        --file "$APP_ZIP_FILE"
+  fi
+
+  if [ -f $DSYM_ZIP_FILE ]; then
+    TARGET=ACE-HockeyApp-$tag.dsym.zip
+    echo "Uploading $DSYM_ZIP_FILE as $TARGET to github release $tag : $(ls -la $DSYM_ZIP_FILE)"
+    /tmp/github-release upload \
+        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
+        --repo ${GITHUB_REPO[1]:-ace-mac} \
+        --tag $tag \
+        --name $TARGET \
+        --file "$DSYM_ZIP_FILE"
   fi
 fi
 

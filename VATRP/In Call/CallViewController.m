@@ -175,9 +175,8 @@ static const float callAlertStepInterval = 0.5;
             const LinphoneCallParams* remote = linphone_call_get_remote_params(call);
             
             /* remote wants to add video */
-            if (linphone_core_video_enabled(lc) && !linphone_call_params_video_enabled(current) &&
-                linphone_call_params_video_enabled(remote) &&
-                !linphone_core_get_video_policy(lc)->automatically_accept) {
+            if (!linphone_call_params_video_enabled(current) &&
+                linphone_call_params_video_enabled(remote)) {
                 linphone_core_defer_call_update(lc, call);
                 //                [self displayAskToEnableVideoCall:call];
                 LinphoneCallParams* paramsCopy = linphone_call_params_copy(linphone_call_get_current_params(call));

@@ -230,9 +230,6 @@ static const float callAlertStepInterval = 0.5;
 
 - (void)dismiss {
     [[AppDelegate sharedInstance].callWindowController close];
-  //  VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-   // [videoCallWindowController close];
-
     if (timerCallDuration && [timerCallDuration isValid]) {
         [timerCallDuration invalidate];
         timerCallDuration = nil;

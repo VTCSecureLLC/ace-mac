@@ -74,11 +74,12 @@
     if([transport isEqualToString:@"Unencrypted (TCP)"]){
         transport = @"TCP";
     }
-    
     else if([transport isEqualToString:@"Encrypted (TLS)"]){
         transport = @"TLS";
+    } else {
+        transport = @"TCP";
     }
-    
+
     if ([self verificationWithUsername:username password:password domain:domain withTransport:transport]) {
         if ([LinphoneManager instance].connectivity == none) {
             NSAlert *alert = [[NSAlert alloc]init];
@@ -89,7 +90,7 @@
             
             //            [alert addButtonWithTitle:NSLocalizedString(@"Continue", nil) block:^{
             //                [waitView setHidden:true];
-            //                [self addProxyConfig:username password:password domain:domain withTransport:transport];
+            [self addProxyConfig:username password:password domain:domain withTransport:transport port:port];
             //                [[PhoneMainView instance] changeCurrentView:[DialerViewController compositeViewDescription]];
             //            }];
             //            [alert show];
@@ -136,6 +137,8 @@
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
     NSString* server_address = domain;
     
+    NSLog(@"addProxyConfig transport=%@",transport);
+    
     char normalizedUserName[256];
     linphone_proxy_config_normalize_number(proxyCfg, [username cStringUsingEncoding:[NSString defaultCStringEncoding]], normalizedUserName, sizeof(normalizedUserName));
     
@@ -150,7 +153,7 @@
         if( transport != nil ){
             server_address = [NSString stringWithFormat:@"%@;transport=%@", server_address, [transport lowercaseString]];
             
-            if ([transport isEqualToString:@"TLS"]) {
+            if ([transport isEqualToString:@"tls"]) {
                 
                 NSString *cer_file = [Utils resourcePathForFile:@"cafile" Type:@"pem"];
                 

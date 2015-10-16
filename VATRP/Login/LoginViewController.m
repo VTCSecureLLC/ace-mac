@@ -99,7 +99,7 @@
     _loginAccount.password = self.textFieldPassword.stringValue;
     _loginAccount.domain = @"bc1.vatrp.net";
     _loginAccount.transport = @"TCP";
-    _loginAccount.port = 5060;
+    _loginAccount.port = 25060;
     
     [[RegistrationService sharedInstance] registerWithUsername:_loginAccount.username
                                                       password:_loginAccount.password

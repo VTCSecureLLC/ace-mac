@@ -130,7 +130,6 @@ else
 
     echo "Uploading to HockeyApp"
     echo 'curl \'
-    echo ' -X PUT \'
     echo ' -F "status=2" \'
     echo ' -F "notify=1" \'
     echo ' -F "commit_sha='"${SHA1}"'" \'
@@ -146,7 +145,6 @@ else
     echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
 
     curl \
-      -X PUT \
       -F "status=2" \
       -F "notify=1" \
       -F "commit_sha=${SHA1}" \

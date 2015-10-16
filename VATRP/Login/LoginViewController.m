@@ -78,7 +78,7 @@
     
     if (!first) {
         MSVideoSize vsize;
-        MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
+        MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
         linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
         
         [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ACE_FIRST_OPEN"];

@@ -2014,6 +2014,25 @@ DQ
                         <rect key="frame" x="0.0" y="0.0" width="450" height="386"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEp-6A-Uvx">
+                                <rect key="frame" x="157" y="238" width="170" height="26"/>
+                                <animations/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="YO1-Ap-8gX">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <objectValues>
+                                        <string>Provider 1</string>
+                                        <string>Provider 2</string>
+                                        <string>Provider 3</string>
+                                        <string>Provider 4</string>
+                                        <string>Provider 5</string>
+                                    </objectValues>
+                                </comboBoxCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="yt7-aL-AyJ" id="5yU-Bk-gLX"/>
+                                </connections>
+                            </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFY-7p-Xe9">
                                 <rect key="frame" x="18" y="242" width="126" height="20"/>
                                 <animations/>
@@ -2052,6 +2071,9 @@ DQ
                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                     </allowedInputSourceLocales>
                                 </secureTextFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="Req-x3-Xup" id="5Ps-uZ-fuU"/>
+                                </connections>
                             </secureTextField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVi-K9-fBt">
                                 <rect key="frame" x="142" y="69" width="167" height="36"/>
@@ -2065,6 +2087,7 @@ DQ
                                 </buttonCell>
                                 <connections>
                                     <action selector="onButtonLogin:" target="taJ-cA-vAy" id="uVM-bY-rE7"/>
+                                    <outlet property="nextKeyView" destination="hfr-Le-Bvd" id="hxq-Ba-H4s"/>
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQI-Kw-hFm">
@@ -2101,17 +2124,6 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kze-7h-dxO">
-                                <rect key="frame" x="20" y="331" width="38" height="35"/>
-                                <animations/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="settings" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="6xb-9E-aOD">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="11" name=".HelveticaNeueDeskInterface-Regular"/>
-                                </buttonCell>
-                                <connections>
-                                    <segue destination="San-o0-UCl" kind="show" id="mRP-Ek-VOO"/>
-                                </connections>
-                            </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yt7-aL-AyJ">
                                 <rect key="frame" x="157" y="212" width="167" height="22"/>
                                 <animations/>
@@ -2120,6 +2132,9 @@ DQ
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="YXB-JB-2wd" id="9Rl-j6-U9T"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jrJ-3C-iZJ">
                                 <rect key="frame" x="18" y="155" width="126" height="20"/>
@@ -2144,6 +2159,9 @@ DQ
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="hfr-Le-Bvd" id="AwQ-IA-HXC"/>
+                                </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hfr-Le-Bvd">
                                 <rect key="frame" x="157" y="125" width="167" height="22"/>
@@ -2153,28 +2171,20 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <outlet property="nextKeyView" destination="IVi-K9-fBt" id="fuO-II-b5x"/>
+                                    <outlet property="nextKeyView" destination="IVi-K9-fBt" id="1aD-1j-caL"/>
                                 </connections>
                             </textField>
-                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEp-6A-Uvx">
-                                <rect key="frame" x="157" y="238" width="170" height="26"/>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kze-7h-dxO">
+                                <rect key="frame" x="20" y="290" width="38" height="35"/>
                                 <animations/>
-                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="YO1-Ap-8gX">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <objectValues>
-                                        <string>Provider 1</string>
-                                        <string>Provider 2</string>
-                                        <string>Provider 3</string>
-                                        <string>Provider 4</string>
-                                        <string>Provider 5</string>
-                                    </objectValues>
-                                </comboBoxCell>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="settings" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="6xb-9E-aOD">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="11" name=".HelveticaNeueDeskInterface-Regular"/>
+                                </buttonCell>
                                 <connections>
-                                    <outlet property="nextKeyView" destination="yt7-aL-AyJ" id="TCn-F9-mxb"/>
+                                    <segue destination="San-o0-UCl" kind="show" id="mRP-Ek-VOO"/>
                                 </connections>
-                            </comboBox>
+                            </button>
                         </subviews>
                         <animations/>
                     </view>

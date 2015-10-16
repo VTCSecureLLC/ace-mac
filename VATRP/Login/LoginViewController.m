@@ -56,6 +56,8 @@
     if (_loginAccount) {
         self.textFieldUsername.stringValue = _loginAccount.username;
         self.textFieldPassword.stringValue = _loginAccount.password;
+        self.textFieldDomain.stringValue = _loginAccount.domain;
+        self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", _loginAccount.port];
     }
 }
 
@@ -63,9 +65,9 @@
     _loginAccount = [[AccountModel alloc] init];
     _loginAccount.username = self.textFieldUsername.stringValue;
     _loginAccount.password = self.textFieldPassword.stringValue;
-    _loginAccount.domain = @"bc1.vatrp.net";
+    _loginAccount.domain = self.textFieldDomain.stringValue;
     _loginAccount.transport = @"TCP";
-    _loginAccount.port = 25060;
+    _loginAccount.port = self.textFieldPort.intValue;
     
     [[RegistrationService sharedInstance] registerWithUsername:_loginAccount.username
                                                       password:_loginAccount.password

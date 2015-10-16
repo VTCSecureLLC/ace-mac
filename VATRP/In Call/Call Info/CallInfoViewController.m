@@ -87,16 +87,14 @@
             float recvFPS = linphone_call_params_get_received_framerate(current);
             self.labelReceivingVideoFPS.stringValue = [NSString stringWithFormat:@"%.1fFPS", recvFPS];
             
-            
             LinphoneAVPFMode avpfMode = linphone_core_get_avpf_mode([LinphoneManager getLc]);
             if(avpfMode == LinphoneAVPFEnabled){
                 self.labelAVPF.stringValue = @"ON";
             }
-            
             else {
                 self.labelAVPF.stringValue = @"OFF";
             }
-            
+
             const LinphoneCallStats *audio_stats = linphone_call_get_audio_stats(call);
             const LinphoneCallStats *video_stats = linphone_call_get_video_stats(call);
             

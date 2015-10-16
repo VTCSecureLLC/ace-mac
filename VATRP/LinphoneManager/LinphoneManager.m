@@ -499,7 +499,7 @@ exit_dbmigration:
 	if (theLinphoneCore==nil) {
 		@throw([NSException exceptionWithName:@"LinphoneCoreException" reason:@"Linphone core not initialized yet" userInfo:nil]);
 	}
-    linphone_core_set_avpf_mode(theLinphoneCore, LinphoneAVPFEnabled);
+	linphone_core_set_avpf_mode(theLinphoneCore, LinphoneAVPFEnabled);
 	return theLinphoneCore;
 }
 

@@ -173,7 +173,6 @@
         }
         case LinphoneCallUpdatedByRemote:
         {
-
             break;
         }
         case LinphoneCallError:

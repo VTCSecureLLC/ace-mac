@@ -10,4 +10,8 @@
 
 @interface HomeWindowController : NSWindowController
 
+-(NSPoint) getWindowOrigin;
+-(CGSize) getWindowSize;
+
+-(void) setWindowPos:(NSPoint) pos;
 @end

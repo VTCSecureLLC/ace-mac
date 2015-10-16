@@ -14,5 +14,6 @@
 @property (nonatomic, assign) LinphoneCall* call;
 
 - (void)setOutgoingCall:(LinphoneCall*)acall;
+@property (weak) IBOutlet NSView *remoteVideoView;
 
 @end

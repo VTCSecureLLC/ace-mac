@@ -89,6 +89,9 @@
 		4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9C01BB1BDC900FCD070 /* vatrp.ico */; };
 		4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170761BACC61F00880FFD /* SystemConfiguration.framework */; };
 		4A5170791BACD10D00880FFD /* linphonerc in Resources */ = {isa = PBXBuildFile; fileRef = 4A5170781BACD10D00880FFD /* linphonerc */; };
+		4A6717021BCD05CC00139A6F /* KeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6716FF1BCD05CC00139A6F /* KeypadViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6717011BCD05CC00139A6F /* KeypadWindowController.m */; settings = {ASSET_TAGS = (); }; };
+		4A6717051BCD05EE00139A6F /* keypad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6717041BCD05EE00139A6F /* keypad.png */; settings = {ASSET_TAGS = (); }; };
 		4A902DDD1BB9489B00ECFD86 /* AccountsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DDC1BB9489B00ECFD86 /* AccountsService.m */; settings = {ASSET_TAGS = (); }; };
 		4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DE51BB949E700ECFD86 /* AccountModel.m */; settings = {ASSET_TAGS = (); }; };
 		4A902DE91BB95A7000ECFD86 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A902DE81BB95A7000ECFD86 /* Utils.m */; settings = {ASSET_TAGS = (); }; };
@@ -390,6 +393,11 @@
 		4A5170741BACC61500880FFD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4A5170761BACC61F00880FFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4A5170781BACD10D00880FFD /* linphonerc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = linphonerc; sourceTree = "<group>"; };
+		4A6716FE1BCD05CC00139A6F /* KeypadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadViewController.h; sourceTree = "<group>"; };
+		4A6716FF1BCD05CC00139A6F /* KeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeypadViewController.m; sourceTree = "<group>"; };
+		4A6717001BCD05CC00139A6F /* KeypadWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadWindowController.h; sourceTree = "<group>"; };
+		4A6717011BCD05CC00139A6F /* KeypadWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeypadWindowController.m; sourceTree = "<group>"; };
+		4A6717041BCD05EE00139A6F /* keypad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keypad.png; sourceTree = "<group>"; };
 		4A902DDB1BB9489B00ECFD86 /* AccountsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AccountsService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4A902DDC1BB9489B00ECFD86 /* AccountsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AccountsService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4A902DE41BB949E700ECFD86 /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AccountModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -703,6 +711,17 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		4A6716FD1BCD05CC00139A6F /* Keypad */ = {
+			isa = PBXGroup;
+			children = (
+				4A6717001BCD05CC00139A6F /* KeypadWindowController.h */,
+				4A6717011BCD05CC00139A6F /* KeypadWindowController.m */,
+				4A6716FE1BCD05CC00139A6F /* KeypadViewController.h */,
+				4A6716FF1BCD05CC00139A6F /* KeypadViewController.m */,
+			);
+			path = Keypad;
+			sourceTree = "<group>";
+		};
 		4A902DDA1BB9486800ECFD86 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -781,6 +800,7 @@
 				4A50F9B91BB1BDC900FCD070 /* cameraview.png */,
 				4A50F9BA1BB1BDC900FCD070 /* contacts.png */,
 				4A50F9BB1BB1BDC900FCD070 /* dialpad.png */,
+				4A6717041BCD05EE00139A6F /* keypad.png */,
 				4A50F9BC1BB1BDC900FCD070 /* incoming.png */,
 				4A50F9BD1BB1BDC900FCD070 /* missed.png */,
 				4A50F9BE1BB1BDC900FCD070 /* recents.png */,
@@ -909,6 +929,7 @@
 			isa = PBXGroup;
 			children = (
 				4AADCFB31BCB99C600BF8ABA /* Call Info */,
+				4A6716FD1BCD05CC00139A6F /* Keypad */,
 				4AE0C6761BB2E9D000B4E208 /* CallWindowController.h */,
 				4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */,
 				4AE0C6791BB2E9E900B4E208 /* CallViewController.h */,
@@ -1115,6 +1136,7 @@
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				5E02C8DE1BBED147003EA32B /* alert_inverted.jpg in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
+				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
@@ -1154,6 +1176,7 @@
 			files = (
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
+				4A6717021BCD05CC00139A6F /* KeypadViewController.m in Sources */,
 				4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */,
 				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
 				4A902DFB1BB9823200ECFD86 /* CodecModel.m in Sources */,
@@ -1185,6 +1208,7 @@
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
+				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
 				4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */,

@@ -46,14 +46,20 @@
     switch (button.tag) {
         case 10: {
             self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"*"];
+            linphone_core_play_dtmf([LinphoneManager getLc], '*', 100);
         }
             break;
         case 11: {
             self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"#"];
+            linphone_core_play_dtmf([LinphoneManager getLc], '#', 100);
         }
             break;
         default: {
-            self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:[NSString stringWithFormat:@"%ld", (long)button.tag]];
+            NSString *number = [NSString stringWithFormat:@"%ld", (long)button.tag];
+            const char *charArray = [number UTF8String];
+            char charNumber = charArray[0];
+            linphone_core_play_dtmf([LinphoneManager getLc], charNumber, 100);
+            self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:number];
         }
             break;
     }
@@ -87,11 +93,9 @@
         case LinphoneCallOutgoing:
             break;
         case LinphoneCallConnected: {
-            VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-            [videoCallWindowController showWindow:self];
-            VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
-            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
-            linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.videoPreview));
+            CallWindowController *videoCallWindowController = [AppDelegate sharedInstance].callWindowController;
+            CallViewController *videoCallViewController = (CallViewController*)videoCallWindowController.contentViewController;
+            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.remoteVideoView));
         }
             break;
         case LinphoneCallUpdatedByRemote:

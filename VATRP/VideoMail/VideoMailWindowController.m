@@ -27,6 +27,16 @@
     self.isShow = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
+    
+    NSPoint barOrigin = [[AppDelegate sharedInstance] getTabWindowOrigin];
+    
+    NSPoint currentWindowSize = {self.window.frame.size.width, self.window.frame.size.height};
+    NSPoint barWindowSize = [[AppDelegate sharedInstance] getTabWindowSize];
+    
+    NSPoint pos;
+    pos.x = barOrigin.x + barWindowSize.x;
+    pos.y = barOrigin.y;
+    [self.window setFrameOrigin : pos];
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification
@@ -42,10 +52,10 @@
     LinphoneCore *lc = [LinphoneManager getLc];
     
     if(linphone_core_get_current_call(lc) != NULL){
-        VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+        CallWindowController *videoCallWindowController = [AppDelegate sharedInstance].callWindowController;
         [videoCallWindowController showWindow:self];
-        VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
-        linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
+        CallViewController *videoCallViewController = (CallViewController*)videoCallWindowController.contentViewController;
+        linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.remoteVideoView));
     }
     
     linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);

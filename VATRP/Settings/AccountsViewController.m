@@ -41,7 +41,6 @@
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg=NULL;
     linphone_core_get_default_proxy(lc,&cfg);
-    
     if (cfg) {
         const char *identity=linphone_proxy_config_get_identity(cfg);
         LinphoneAddress *addr=linphone_address_new(identity);
@@ -54,7 +53,7 @@
             transport = linphone_address_get_transport(addr);
         }
         
-        NSString *sip_transport = @"";
+        NSString *sip_transport;
         switch (transport) {
             case LinphoneTransportTcp:
                 sip_transport = @"Unencrypted (TCP)";
@@ -62,10 +61,11 @@
             case LinphoneTransportTls:
                 sip_transport = @"Encrypted (TLS)";
                 break;
-                
             default:
+                sip_transport = @"Unencrypted (TCP)";
                 break;
         }
+        [self.comboBoxTransport selectItemWithObjectValue:sip_transport];
     }
     
     accountModel = [[AccountsService sharedInstance] getDefaultAccount];
@@ -74,13 +74,22 @@
         if(accountModel.username != NULL) { self.textFieldUsername.stringValue = accountModel.username; }
         if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
         if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
-        self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
-        if(accountModel.transport != NULL) { [self.comboBoxTransport selectItemWithObjectValue:accountModel.transport]; }
+        if(accountModel.transport != NULL) {
+            if([[accountModel.transport lowercaseString] isEqualToString:@"tls"]) {;
+                [self.comboBoxTransport selectItemWithObjectValue:@"Encrypted (TLS)"];
+                self.textFieldPort.stringValue = @"25061";
+            } else {
+                [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
+                self.textFieldPort.stringValue = @"25060";
+            }
+        }
+        if(accountModel.port > 0 ) {
+            self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+        }
     }
-    
     else{
         self.textFieldDomain.stringValue = @"bc1.vatrp.net";
-        self.textFieldPort.stringValue = @"5060";
+        self.textFieldPort.stringValue = @"25060";
         [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
     }
 }
@@ -102,10 +111,17 @@
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 
+    NSString *transport;
+    if([self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"]) {
+        transport=@"TLS";
+    } else {
+        transport=@"TCP";
+    }
+
     [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
                                                     Password:self.secureTextFieldPassword.stringValue
                                                       Domain:self.textFieldDomain.stringValue
-                                                   Transport:self.comboBoxTransport.stringValue
+                                                   Transport:transport
                                                         Port:self.textFieldPort.intValue
                                                    isDefault:YES];
 
@@ -134,6 +150,16 @@
 
 - (IBAction)onComboboxTransport:(id)sender {
     isChanged = YES;
+
+    if([self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"]) {
+        if(self.textFieldPort.intValue == 25060) {
+            self.textFieldPort.stringValue = @"25061";
+        }
+    } else {
+        if(self.textFieldPort.intValue == 25061) {
+            self.textFieldPort.stringValue = @"25060";
+        }
+    }
 }
 
 - (IBAction)onCheckBoxAutoAnswerCall:(id)sender {

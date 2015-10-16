@@ -47,6 +47,15 @@
     LinphoneProxyConfig* proxyCfg = NULL;
     linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
     
+    LinphoneAVPFMode mode;
+    if(self.buttonEnableAVPF.state == 1){
+        mode = LinphoneAVPFEnabled;
+    }
+    
+    else{
+        mode = LinphoneAVPFDisabled;
+    }
+    linphone_core_set_avpf_mode([LinphoneManager getLc], mode);
     if (proxyCfg) {
         linphone_proxy_config_enable_avpf(proxyCfg, self.buttonEnableAVPF.state);
     }

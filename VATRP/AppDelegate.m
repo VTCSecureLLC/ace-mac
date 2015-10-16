@@ -169,35 +169,18 @@
         case LinphoneCallConnected:
         case LinphoneCallStreamsRunning:
         {
-//            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }
         case LinphoneCallUpdatedByRemote:
         {
-//            const LinphoneCallParams* current = linphone_call_get_current_params(call);
-//            const LinphoneCallParams* remote = linphone_call_get_remote_params(call);
-//            
-//            if (linphone_call_params_video_enabled(current) && !linphone_call_params_video_enabled(remote)) {
-//                [self changeCurrentView:[InCallViewController compositeViewDescription]];
-//            }
+
             break;
         }
         case LinphoneCallError:
         {
-//            [self displayCallError:call message: message];
         }
         case LinphoneCallEnd:
         {
-//            if (canHideInCallView) {
-//                // Go to dialer view
-//                DialerViewController *controller = DYNAMIC_CAST([self changeCurrentView:[DialerViewController compositeViewDescription]], DialerViewController);
-//                if(controller != nil) {
-//                    [controller setAddress:@""];
-//                    [controller setTransferMode:FALSE];
-//                }
-//            } else {
-//                [self changeCurrentView:[InCallViewController compositeViewDescription]];
-//            }
             break;
         }
         default:

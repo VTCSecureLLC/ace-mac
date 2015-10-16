@@ -93,7 +93,9 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonDecline:(id)sender {
-    linphone_core_terminate_call([LinphoneManager getLc], call);
+    if(linphone_core_get_current_call([LinphoneManager getLc]) != NULL){
+        linphone_core_terminate_call([LinphoneManager getLc], call);
+    }
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
@@ -191,14 +193,13 @@ static const float callAlertStepInterval = 0.5;
             const LinphoneCallParams* current = linphone_call_get_current_params(call);
             const LinphoneCallParams* remote = linphone_call_get_remote_params(call);
             
-            /* remote wants to add video */
-            if (!linphone_call_params_video_enabled(current) &&
-                linphone_call_params_video_enabled(remote)) {
+            /* remote wants to add video, check if video is supported */
+            if (linphone_core_video_supported(lc) && !linphone_call_params_video_enabled(current) && linphone_call_params_video_enabled(remote)) {
+
                 linphone_core_defer_call_update(lc, call);
-                //                [self displayAskToEnableVideoCall:call];
                 LinphoneCallParams* paramsCopy = linphone_call_params_copy(linphone_call_get_current_params(call));
                 linphone_call_params_enable_video(paramsCopy, TRUE);
-                linphone_core_accept_call_update([LinphoneManager getLc], call, paramsCopy);
+                linphone_core_accept_call_update(lc, call, paramsCopy);
                 linphone_call_params_destroy(paramsCopy);
                 
             } else if (linphone_call_params_video_enabled(current) && !linphone_call_params_video_enabled(remote)) {

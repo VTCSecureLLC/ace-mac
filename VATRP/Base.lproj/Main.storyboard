@@ -710,10 +710,27 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pdc-TM-pTD">
+                                <rect key="frame" x="18" y="24" width="180" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="AVPF:" id="ctv-5L-sTk">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HTZ-yF-rom">
+                                <rect key="frame" x="208" y="24" width="300" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="OFF" id="0a5-mJ-sQ3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <animations/>
                     </view>
                     <connections>
+                        <outlet property="labelAVPF" destination="HTZ-yF-rom" id="KyZ-4y-2Cd"/>
                         <outlet property="labelAudioCodec" destination="cyR-ka-G6U" id="zbg-EZ-jXO"/>
                         <outlet property="labelAudioDownloadBandwidth" destination="O8H-hc-zZk" id="JF3-fz-gwm"/>
                         <outlet property="labelAudioUploadBandwidth" destination="jd2-wW-u2s" id="cM8-Xl-WuK"/>

@@ -51,40 +51,6 @@
     [[LinphoneManager instance]	startLinphoneCore];
     [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
 
-    PayloadType *pt;
-    const MSList *elem;
-    LinphoneCore *lc=[LinphoneManager getLc];
-
-    for (elem=linphone_core_get_video_codecs(lc);elem!=NULL;elem=elem->next){
-        pt=(PayloadType*)elem->data;
-        NSString *pref=[LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
-        int enable = linphone_core_enable_payload_type(lc,pt,1);
-        
-        NSLog(@"enable: %d", enable);
-    }
-
-    linphone_core_enable_video(lc, YES, YES);
-
-    LpConfig *config = linphone_core_get_config(lc);
-    LinphoneVideoPolicy policy;
-    policy.automatically_accept = YES;//[self boolForKey:@"accept_video_preference"];
-    policy.automatically_initiate = YES;//[self boolForKey:@"start_video_preference"];
-    linphone_core_set_video_policy(lc, &policy);
-    linphone_core_enable_self_view(lc, YES); // [self boolForKey:@"self_video_preference"]
-    BOOL preview_preference = YES;//[self boolForKey:@"preview_preference"];
-    lp_config_set_int(config, [LINPHONERC_APPLICATION_KEY UTF8String], "preview_preference", preview_preference);
-    
-    NSString *first = [[NSUserDefaults standardUserDefaults] objectForKey:@"ACE_FIRST_OPEN"];
-    
-    if (!first) {
-        MSVideoSize vsize;
-        MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
-        linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
-        
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ACE_FIRST_OPEN"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-
     _loginAccount = [[AccountsService sharedInstance] getDefaultAccount];
     
     if (_loginAccount) {

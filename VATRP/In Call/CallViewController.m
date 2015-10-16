@@ -8,6 +8,8 @@
 
 #import "CallViewController.h"
 #import "VideoCallViewController.h"
+#import "CallInfoWindowController.h"
+#import "SettingsWindowController.h"
 #import "KeypadWindowController.h"
 #import "AppDelegate.h"
 
@@ -16,6 +18,8 @@
     NSTimer *timerCallDuration;
     NSTimer *timerRingCount;
     NSTimeInterval startCallTime;
+    
+    CallInfoWindowController *callInfoWindowController;
     NSTimer *callAlertTimer;
     NSImage *alert;
     NSImage *alertInverted;
@@ -36,6 +40,7 @@
 
 - (IBAction)onButtonAnswer:(id)sender;
 - (IBAction)onButtonDecline:(id)sender;
+- (IBAction)onButtonCallInfo:(id)sender;
 - (IBAction)onButtonKeypad:(id)sender;
 - (void) inCallTick:(NSTimer*)timer;
 
@@ -89,6 +94,11 @@ static const float callAlertStepInterval = 0.5;
 
 - (IBAction)onButtonDecline:(id)sender {
     linphone_core_terminate_call([LinphoneManager getLc], call);
+}
+
+- (IBAction)onButtonCallInfo:(id)sender {
+    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+    [callInfoWindowController showWindow:self];
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
@@ -228,6 +238,9 @@ static const float callAlertStepInterval = 0.5;
 
 
 - (void)dismiss {
+    [callInfoWindowController close];
+    callInfoWindowController = nil;
+    
     [[AppDelegate sharedInstance].callWindowController close];
     if (timerCallDuration && [timerCallDuration isValid]) {
         [timerCallDuration invalidate];

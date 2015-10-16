@@ -105,6 +105,8 @@
 		4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */; };
 		4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */; };
 		4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E651BAFECF2007C1949 /* Localizable.strings */; };
+		4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */; settings = {ASSET_TAGS = (); }; };
 		4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560C1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m */; };
 		4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF560F1BAFFC5700241DC2 /* VideoCallViewController.m */; };
 		4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF56151BB157AC00241DC2 /* AccountsViewController.m */; };
@@ -124,6 +126,7 @@
 		5E02C8DE1BBED147003EA32B /* alert_inverted.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */; settings = {ASSET_TAGS = (); }; };
 		5E02C8DF1BBED147003EA32B /* alert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E02C8DD1BBED147003EA32B /* alert.jpg */; settings = {ASSET_TAGS = (); }; };
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; settings = {ASSET_TAGS = (); }; };
 		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
 		CE3D252D1BA7739400028600 /* libbellesip.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25001BA7739400028600 /* libbellesip.0.dylib */; };
 		CE3D252E1BA7739400028600 /* libbzrtp.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25011BA7739400028600 /* libbzrtp.0.dylib */; };
@@ -414,6 +417,10 @@
 		4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory~ipad"; sourceTree = "<group>"; };
 		4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc~ipad"; sourceTree = "<group>"; };
 		4AAD8E651BAFECF2007C1949 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		4AADCFB41BCB99C600BF8ABA /* CallInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallInfoViewController.h; sourceTree = "<group>"; };
+		4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallInfoViewController.m; sourceTree = "<group>"; };
+		4AADCFB71BCB99E600BF8ABA /* CallInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallInfoWindowController.h; sourceTree = "<group>"; };
+		4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallInfoWindowController.m; sourceTree = "<group>"; };
 		4AAF560B1BAFFC3B00241DC2 /* VideoCallWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VideoCallWindowController.h; path = VATRP/VideoCall/VideoCallWindowController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4AAF560C1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VATRP/VideoCall/VideoCallWindowController.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4AAF560E1BAFFC5700241DC2 /* VideoCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VideoCallViewController.h; path = VATRP/VideoCall/VideoCallViewController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -449,6 +456,7 @@
 		5E02C8DD1BBED147003EA32B /* alert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alert.jpg; sourceTree = "<group>"; };
 		5E02C8E31BBEF161003EA32B /* SelfVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfVideoViewController.h; sourceTree = "<group>"; };
 		5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfVideoViewController.m; sourceTree = "<group>"; };
+		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
 		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = VATRP/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
 		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
 		CE3D24FE1BA7739400028600 /* libavcodec.56.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.56.dylib; path = VATRP/linphonesdk/libs/libavcodec.56.dylib; sourceTree = "<group>"; };
@@ -753,6 +761,17 @@
 			path = sounds;
 			sourceTree = "<group>";
 		};
+		4AADCFB31BCB99C600BF8ABA /* Call Info */ = {
+			isa = PBXGroup;
+			children = (
+				4AADCFB71BCB99E600BF8ABA /* CallInfoWindowController.h */,
+				4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */,
+				4AADCFB41BCB99C600BF8ABA /* CallInfoViewController.h */,
+				4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */,
+			);
+			path = "Call Info";
+			sourceTree = "<group>";
+		};
 		4AAF560A1BAFFC0400241DC2 /* VideoCall */ = {
 			isa = PBXGroup;
 			children = (
@@ -777,6 +796,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CE34B2B41BD1014C0010A2B0 /* info-icon.png */,
 				5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */,
 				5E02C8DD1BBED147003EA32B /* alert.jpg */,
 				4AAF56191BB1615900241DC2 /* accounts_icon.png */,
@@ -911,6 +931,7 @@
 		4AE0C6751BB2E72900B4E208 /* In Call */ = {
 			isa = PBXGroup;
 			children = (
+				4AADCFB31BCB99C600BF8ABA /* Call Info */,
 				4A6716FD1BCD05CC00139A6F /* Keypad */,
 				4AE0C6761BB2E9D000B4E208 /* CallWindowController.h */,
 				4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */,
@@ -1108,6 +1129,7 @@
 				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
 				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
+				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
@@ -1182,6 +1204,7 @@
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
 				4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */,
+				4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */,
 				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */,
@@ -1192,6 +1215,7 @@
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
+				4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

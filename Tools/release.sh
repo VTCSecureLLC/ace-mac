@@ -159,8 +159,7 @@ else
       -F "ipa=@$APP_ZIP_FILE" \
       -F "dsym=@$DSYM_ZIP_FILE" \
       -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
-      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/upload \
-    | python -m json.tool
+      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/upload || true
 
     #if [ -x /usr/local/bin/puck ]; then
     #

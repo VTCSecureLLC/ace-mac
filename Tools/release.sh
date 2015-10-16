@@ -81,7 +81,7 @@ tag="$(bundle exec semver)-${TRAVIS_BUILD_NUMBER:-1}"-${SHA1}
 
 IFS=/ GITHUB_REPO=($TRAVIS_REPO_SLUG); IFS=""
 
-PKG_FILE=/tmp/ace-mac.pkg
+PKG_FILE=/tmp/ACE
 
 if [ -e "${PKG_FILE}".app ]; then
   rm -fr "${PKG_FILE}".app
@@ -101,8 +101,8 @@ fi
 if [ -d "$XCARCHIVE" ]; then
   # Create an application zip file from the archive build
 
-  APP_DIR=$(find build/derived -name '*.dSYM' | head -1)
-  APP_ZIP_FILE=/tmp/ace-app.zip
+  APP_DIR="${PKG_FILE}".app
+  APP_ZIP_FILE=/tmp/ACE.app.zip
   if [ -f $APP_ZIP_FILE ]; then
     rm -f $APP_ZIP_FILE
   fi
@@ -130,6 +130,7 @@ else
 
     echo "Uploading to HockeyApp"
     echo 'curl \'
+    echo ' -X PUT \'
     echo ' -F "status=2" \'
     echo ' -F "notify=1" \'
     echo ' -F "commit_sha='"${SHA1}"'" \'
@@ -145,6 +146,7 @@ else
     echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
 
     curl \
+      -X PUT \
       -F "status=2" \
       -F "notify=1" \
       -F "commit_sha=${SHA1}" \

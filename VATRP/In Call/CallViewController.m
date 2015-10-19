@@ -11,6 +11,9 @@
 #import "CallInfoWindowController.h"
 #import "SettingsWindowController.h"
 #import "KeypadWindowController.h"
+#import "ChatWindowController.h"
+#import "CallService.h"
+#import "ChatService.h"
 #import "AppDelegate.h"
 
 
@@ -42,6 +45,7 @@
 - (IBAction)onButtonDecline:(id)sender;
 - (IBAction)onButtonCallInfo:(id)sender;
 - (IBAction)onButtonKeypad:(id)sender;
+- (IBAction)onButtonOpenMessage:(id)sender;
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -89,13 +93,15 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonAnswer:(id)sender {
-    [[LinphoneManager instance] acceptCall:call];
+    [[CallService sharedInstance] accept];
 }
 
 - (IBAction)onButtonDecline:(id)sender {
-    if(linphone_core_get_current_call([LinphoneManager getLc]) != NULL){
-        linphone_core_terminate_call([LinphoneManager getLc], call);
-    }
+    [[CallService sharedInstance] decline];
+}
+
+- (IBAction)onButtonOpenMessage:(id)sender {
+    [[ChatService sharedInstance] openChatWindow];
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
@@ -120,12 +126,11 @@ static const float callAlertStepInterval = 0.5;
 
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
     if(call == acall && (astate == LinphoneCallEnd || astate == LinphoneCallError)) {
-//        [delegate incomingCallAborted:call];
         [self performSelector:@selector(dismiss) withObject:nil afterDelay:1.0];
     }
-    
-    LinphoneCore* lc = [LinphoneManager getLc];
 
+    LinphoneCore *lc = [LinphoneManager getLc];
+    
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call...";
@@ -142,15 +147,15 @@ static const float callAlertStepInterval = 0.5;
             [self stopRingCountTimer];
             [self stopCallAlertTimer];
 
-            CallWindowController *callWindow = [AppDelegate sharedInstance].callWindowController;
+            CallWindowController *callWindow = [[CallService sharedInstance] getCallWindowController];
             [callWindow showWindow:self];
             CallViewController *callController = (CallViewController*)callWindow.contentViewController;
-            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(callController.remoteVideoView));
+            linphone_core_set_native_video_window_id(lc, (__bridge void *)(callController.remoteVideoView));
             
 
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
-            linphone_core_use_preview_window([LinphoneManager getLc], YES);
-            linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
+            linphone_core_use_preview_window(lc, YES);
+            linphone_core_set_native_preview_window_id(lc, (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
 
             
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
@@ -239,10 +244,14 @@ static const float callAlertStepInterval = 0.5;
 
 
 - (void)dismiss {
+    VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
+    [videoCallWindowController close];
+
     [callInfoWindowController close];
     callInfoWindowController = nil;
     
-    [[AppDelegate sharedInstance].callWindowController close];
+    [[[CallService sharedInstance] getCallWindowController] close];
+
     if (timerCallDuration && [timerCallDuration isValid]) {
         [timerCallDuration invalidate];
         timerCallDuration = nil;
@@ -256,33 +265,10 @@ static const float callAlertStepInterval = 0.5;
     if (addr != NULL) {
         BOOL useLinphoneAddress = true;
         // contact name
-        char* lAddress = linphone_address_as_string_uri_only(addr);
-        if(lAddress) {
-//            NSString *normalizedSipAddress = [FastAddressBook normalizeSipURI:[NSString stringWithUTF8String:lAddress]];
-//            ABRecordRef contact = [[[LinphoneManager instance] fastAddressBook] getContact:normalizedSipAddress];
-//            if(contact) {
-//                UIImage *tmpImage = [FastAddressBook getContactImage:contact thumbnail:false];
-//                if(tmpImage != nil) {
-//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
-//                        UIImage *tmpImage2 = [UIImage decodedImageWithImage:tmpImage];
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            avatarImage.image = tmpImage2;
-//                        });
-//                    });
-//                }
-//                address = [FastAddressBook getContactDisplayName:contact];
-//                useLinphoneAddress = false;
-//            }
-//            ms_free(lAddress);
-        }
         if(useLinphoneAddress) {
             const char* lDisplayName = linphone_address_get_display_name(addr);
             const char* lUserName = linphone_address_get_username(addr);
-//            TODO: Address Book
-//            if (lDisplayName)
-//                address = [NSString stringWithUTF8String:lDisplayName];
-//            else
-                if(lUserName)
+            if(lUserName)
                 address = [NSString stringWithUTF8String:lUserName];
         }
     }
@@ -292,7 +278,7 @@ static const float callAlertStepInterval = 0.5;
         address = @"Unknown";
     }
     //update caller address in window title
-    [[AppDelegate sharedInstance].callWindowController.window setTitle:[NSString stringWithFormat:windowTitle, address, [self getTimeStringFromSeconds:0]]];
+    [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, [self getTimeStringFromSeconds:0]]];
 }
 
 
@@ -321,7 +307,7 @@ static const float callAlertStepInterval = 0.5;
     
     NSString *string_time = [self getTimeStringFromSeconds:callDuration];
     //Update call duration in window title
-    [[AppDelegate sharedInstance].callWindowController.window setTitle:[NSString stringWithFormat:windowTitle, address, string_time]];
+    [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, string_time]];
 }
 
 -(NSString *)getTimeStringFromSeconds:(int)seconds

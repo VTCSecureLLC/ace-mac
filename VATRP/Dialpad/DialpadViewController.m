@@ -66,7 +66,13 @@
 }
 
 - (IBAction)onButtonVideo:(id)sender {
-    [self call:self.textFieldNumber.stringValue displayName:@"ACE"];
+    LinphoneCore *lc = [LinphoneManager getLc];
+    LinphoneCallParams *params = linphone_core_create_default_call_parameters(lc);
+    LinphoneAddress* linphoneAddress = linphone_core_interpret_url(lc, [self.textFieldNumber.stringValue cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+    linphone_call_params_enable_realtime_text(params, true);
+    linphone_core_invite_address_with_params(lc, linphoneAddress, params);
+    
+//    [self call:self.textFieldNumber.stringValue displayName:@"ACE"];
 }
 
 - (void)call:(NSString*)address displayName:(NSString *)displayName {

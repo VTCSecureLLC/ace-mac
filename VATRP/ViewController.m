@@ -10,12 +10,13 @@
 #import "ContactsWindowController.h"
 #import "RecentsWindowController.h"
 #import "DialpadWindowController.h"
+#import "ChatWindowController.h"
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
+#import "ChatService.h"
 
 
 @interface ViewController () {
-    
 }
 
 @property (nonatomic, retain) ContactsWindowController *contactsWindowController;
@@ -24,6 +25,7 @@
 
 @property (weak) IBOutlet NSTextField *textFieldRegistrationStatus;
 @property (weak) IBOutlet NSTextField *textFieldAccount;
+@property (weak) IBOutlet NSTextField *labelMessageBadgNumber;
 
 - (IBAction)onButtonRecents:(id)sender;
 - (IBAction)onButtonContacts:(id)sender;
@@ -51,6 +53,19 @@
                                              selector:@selector(registrationUpdateEvent:)
                                                  name:kLinphoneRegistrationUpdate
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(chatUnreadMessageEvent:)
+                                                 name:kCHAT_UNREAD_MESSAGE
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(chatCleareUnreadMessageEvent:)
+                                                 name:kCHAT_CLEARE_UNREAD_MESSAGES
+                                               object:nil];
+    
+    
+    
     
     
     linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
@@ -152,6 +167,17 @@
 
     [self.videoMailWindowController showWindow:self];
     self.videoMailWindowController.isShow = YES;
+}
+
+- (void)chatUnreadMessageEvent:(NSNotification*)notif {
+    NSLog(@"notif: %@", notif);
+    
+    NSDictionary *object = (NSDictionary*)[notif object];
+    self.labelMessageBadgNumber.integerValue = [[object objectForKey:@"unread_messages_count"] integerValue];
+}
+
+- (void)chatCleareUnreadMessageEvent:(NSNotification*)notif {
+    
 }
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {

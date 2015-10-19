@@ -908,7 +908,6 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 		[dict setObject:[NSValue valueWithPointer:body] forKey:@"content"];
 	}
 	[[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneNotifyReceived object:self userInfo:dict];
-
 }
 
 static void linphone_iphone_notify_received(LinphoneCore *lc, LinphoneEvent *lev, const char *notified_event, const LinphoneContent *body) {
@@ -1818,16 +1817,20 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 #pragma mark - Call Functions
 
 - (void)acceptCall:(LinphoneCall *)call {
-	LinphoneCallParams* lcallParams = linphone_core_create_call_params(theLinphoneCore,call);
-	if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
-		bool low_bandwidth = self.network == network_2g;
-		if(low_bandwidth) {
-//			LOGI(@"Low bandwidth mode");
-		}
-		linphone_call_params_enable_low_bandwidth(lcallParams, low_bandwidth);
-	}
+    LinphoneCallParams *calleeParams = linphone_core_create_default_call_parameters(theLinphoneCore);
+    
+    if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
+        bool low_bandwidth = self.network == network_2g;
+        if(low_bandwidth) {
+            //			LOGI(@"Low bandwidth mode");
+        }
+        linphone_call_params_enable_low_bandwidth(calleeParams, low_bandwidth);
+    }
 
-	linphone_core_accept_call_with_params(theLinphoneCore,call, lcallParams);
+    const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
+    linphone_call_params_enable_realtime_text(calleeParams,linphone_call_params_realtime_text_enabled(callerParams));
+    linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
+
 }
 
 - (void)call:(NSString *)address displayName:(NSString*)displayName transfer:(BOOL)transfer {

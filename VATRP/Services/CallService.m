@@ -8,7 +8,6 @@
 
 #import "CallService.h"
 #import "ChatService.h"
-#import "CallWindowController.h"
 
 
 @interface CallService () {
@@ -44,6 +43,10 @@
     }
     
     return self;
+}
+
+- (CallWindowController*) getCallWindowController {
+    return callWindowController;
 }
 
 - (int) decline {

@@ -11,6 +11,7 @@
 #import "VideoCallViewController.h"
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
+#import "CallService.h"
 
 @interface DialpadViewController () <NSAlertDelegate>
 
@@ -99,11 +100,9 @@
         case LinphoneCallOutgoing:
             break;
         case LinphoneCallConnected: {
-            VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-            [videoCallWindowController showWindow:self];
-            VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
-            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
-            linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.videoPreview));
+            CallWindowController *videoCallWindowController = [[CallService sharedInstance] getCallWindowController];
+            CallViewController *videoCallViewController = (CallViewController*)videoCallWindowController.contentViewController;
+            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.remoteVideoView));
         }
             break;
         case LinphoneCallUpdatedByRemote:

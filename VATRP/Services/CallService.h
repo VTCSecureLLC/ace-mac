@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CallWindowController.h"
 #import "LinphoneManager.h"
 
 @interface CallService : NSObject
 
 + (CallService *)sharedInstance;
+- (CallWindowController*) getCallWindowController;
 - (int) decline;
 - (void) accept;
 - (LinphoneCall*) getCurrentCall;

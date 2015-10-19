@@ -11,6 +11,7 @@
 #import "VideoCallViewController.h"
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
+#import "CallService.h"
 
 @interface DialpadViewController () <NSAlertDelegate>
 
@@ -66,7 +67,13 @@
 }
 
 - (IBAction)onButtonVideo:(id)sender {
-    [self call:self.textFieldNumber.stringValue displayName:@"ACE"];
+    LinphoneCore *lc = [LinphoneManager getLc];
+    LinphoneCallParams *params = linphone_core_create_default_call_parameters(lc);
+    LinphoneAddress* linphoneAddress = linphone_core_interpret_url(lc, [self.textFieldNumber.stringValue cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+    linphone_call_params_enable_realtime_text(params, true);
+    linphone_core_invite_address_with_params(lc, linphoneAddress, params);
+    
+//    [self call:self.textFieldNumber.stringValue displayName:@"ACE"];
 }
 
 - (void)call:(NSString*)address displayName:(NSString *)displayName {
@@ -93,11 +100,9 @@
         case LinphoneCallOutgoing:
             break;
         case LinphoneCallConnected: {
-            VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-            [videoCallWindowController showWindow:self];
-            VideoCallViewController *videoCallViewController = (VideoCallViewController*)videoCallWindowController.contentViewController;
-            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.view));
-            linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.videoPreview));
+            CallWindowController *videoCallWindowController = [[CallService sharedInstance] getCallWindowController];
+            CallViewController *videoCallViewController = (CallViewController*)videoCallWindowController.contentViewController;
+            linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.remoteVideoView));
         }
             break;
         case LinphoneCallUpdatedByRemote:

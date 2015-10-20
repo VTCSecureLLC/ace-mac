@@ -2,8 +2,8 @@
 //  CallInfoViewController.m
 //  ACE
 //
-//  Created by Edgar Sukiasyan on 10/12/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Created by Ruben Semerjyan on 10/12/15.
+//  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
 #import "CallInfoViewController.h"

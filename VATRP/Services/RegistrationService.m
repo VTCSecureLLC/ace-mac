@@ -29,6 +29,11 @@
     if (self) {
         [[LinphoneManager instance]	startLinphoneCore];
         [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(registrationUpdateEvent:)
+                                                     name:kLinphoneRegistrationUpdate
+                                                   object:nil];
     }
     
     return self;
@@ -253,6 +258,41 @@
 - (void)clearProxyConfig {
     linphone_core_clear_proxy_config([LinphoneManager getLc]);
     linphone_core_clear_all_auth_info([LinphoneManager getLc]);
+}
+
+- (void)registrationUpdateEvent:(NSNotification*)notif {
+    LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
+    
+    if (state == LinphoneRegistrationOk) {
+        NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
+        NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
+        
+        LinphoneCore *lc = [LinphoneManager getLc];
+        PayloadType *pt;
+        const MSList *elem;
+        
+        const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
+        
+        for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+            if ([dictAudioCodec objectForKey:pref]) {
+                linphone_core_enable_payload_type(lc, pt, [[dictAudioCodec objectForKey:pref] boolValue]);
+            }
+        }
+        
+        const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
+        
+        for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+            if ([dictVideoCodec objectForKey:pref]) {
+                linphone_core_enable_payload_type(lc, pt, [[dictVideoCodec objectForKey:pref] boolValue]);
+            }
+        }
+    }
 }
 
 @end

@@ -11,6 +11,4 @@
 #import "AccountModel.h"
 @interface LoginViewController : NSViewController <BFViewController>
 
-@property AccountModel *loginAccount;
-
 @end

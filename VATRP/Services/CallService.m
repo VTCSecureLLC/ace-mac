@@ -67,6 +67,7 @@
 
     if(currentCall == aCall && (state == LinphoneCallEnd || state == LinphoneCallError)) {
         [callWindowController performSelector:@selector(close) withObject:nil afterDelay:1.0];
+        callWindowController = nil;
     }
 
     NSString *message = [notif.userInfo objectForKey: @"message"];

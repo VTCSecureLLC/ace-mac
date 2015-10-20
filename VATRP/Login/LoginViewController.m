@@ -16,7 +16,9 @@
 #import "Utils.h"
 
 
-@interface LoginViewController ()
+@interface LoginViewController () {
+    AccountModel *loginAccount;
+}
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
 @property (weak) IBOutlet NSTextField *textFieldPassword;
@@ -50,34 +52,21 @@
 
     [[LinphoneManager instance]	startLinphoneCore];
     [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
-
-    _loginAccount = [[AccountsService sharedInstance] getDefaultAccount];
-    
-    if (_loginAccount) {
-        self.textFieldUsername.stringValue = _loginAccount.username;
-        self.textFieldPassword.stringValue = _loginAccount.password;
-        self.textFieldDomain.stringValue = _loginAccount.domain;
-        self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", _loginAccount.port];
-    }
 }
 
 - (IBAction)onButtonLogin:(id)sender {
-    _loginAccount = [[AccountModel alloc] init];
-    _loginAccount.username = self.textFieldUsername.stringValue;
-    _loginAccount.password = self.textFieldPassword.stringValue;
-    _loginAccount.domain = self.textFieldDomain.stringValue;
-    _loginAccount.transport = @"TCP";
-    _loginAccount.port = self.textFieldPort.intValue;
+    loginAccount = [[AccountModel alloc] init];
+    loginAccount.username = self.textFieldUsername.stringValue;
+    loginAccount.password = self.textFieldPassword.stringValue;
+    loginAccount.domain = self.textFieldDomain.stringValue;
+    loginAccount.transport = @"TCP";
+    loginAccount.port = self.textFieldPort.intValue;
     
-    [[RegistrationService sharedInstance] registerWithUsername:_loginAccount.username
-                                                      password:_loginAccount.password
-                                                        domain:_loginAccount.domain
-                                                     transport:_loginAccount.transport
-                                                          port:_loginAccount.port];
-
-    [[AppDelegate sharedInstance] showTabWindow];
-    [[AppDelegate sharedInstance].loginWindowController close];
-    [AppDelegate sharedInstance].loginWindowController = nil;
+    [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
+                                                      password:loginAccount.password
+                                                        domain:loginAccount.domain
+                                                     transport:loginAccount.transport
+                                                          port:loginAccount.port];
 }
 
 - (void)configuringUpdate:(NSNotification *)notif {
@@ -170,12 +159,17 @@
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message{
     switch (state) {
         case LinphoneRegistrationOk: {
-            [[AccountsService sharedInstance] addAccountWithUsername:_loginAccount.username
-                                                        Password:_loginAccount.password
-                                                        Domain:_loginAccount.domain
-                                                        Transport:_loginAccount.transport
-                                                        Port:_loginAccount.port
+            [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
+                                                        Password:loginAccount.password
+                                                        Domain:loginAccount.domain
+                                                        Transport:loginAccount.transport
+                                                        Port:loginAccount.port
                                                         isDefault:YES];
+            
+            [[AppDelegate sharedInstance] showTabWindow];
+            [[AppDelegate sharedInstance].loginWindowController close];
+            [AppDelegate sharedInstance].loginWindowController = nil;
+            
             break;
         }
         case LinphoneRegistrationNone:

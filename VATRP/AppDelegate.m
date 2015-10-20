@@ -18,7 +18,6 @@
 
 @interface AppDelegate () {
     HomeWindowController *homeWindowController;
-    
     VideoCallWindowController *videoCallWindowController;
 }
 
@@ -81,6 +80,18 @@
     CGSize cgSize = [homeWindowController getWindowSize];
     NSPoint size = {cgSize.width, cgSize.height};
     return size;
+}
+
+-(void) applicationDidResignActive:(NSNotification *)notification{
+    CallWindowController *callWindowController = [[CallService sharedInstance] getCallWindowController];
+    if(callWindowController){
+        LinphoneCall *call = linphone_core_get_current_call([LinphoneManager getLc]);
+        if(call){
+            [callWindowController.window orderFrontRegardless];
+            [callWindowController.window setLevel:NSFloatingWindowLevel];
+            [self.viewController.videoMailWindowController enableSelfVideo];
+        }
+    }
 }
 
 -(void) setTabWindowPos:(NSPoint)pos{

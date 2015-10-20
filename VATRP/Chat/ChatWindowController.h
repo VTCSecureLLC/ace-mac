@@ -1,5 +1,5 @@
 //
-//  KeypadViewController.h
+//  ChatWindowController.h
 //  ACE
 //
 //  Created by Ruben Semerjyan on 10/13/15.
@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface KeypadViewController : NSViewController
+@interface ChatWindowController : NSWindowController
+
+@property (nonatomic, assign) BOOL isShow;
 
 @end

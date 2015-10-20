@@ -3,7 +3,7 @@
 //  MacApp
 //
 //  Created by Norayr Harutyunyan on 8/27/15.
-//  Copyright (c) 2015 Cinehost. All rights reserved.
+//  Copyright (c) 2015 VTCSecure. All rights reserved.
 //
 
 #import "VideoCallWindowController.h"
@@ -11,6 +11,9 @@
 #import "VideoMailWindowController.h"
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
+#import "CallService.h"
+
+
 @interface VideoMailWindowController ()
 
 @end
@@ -52,7 +55,7 @@
     LinphoneCore *lc = [LinphoneManager getLc];
     
     if(linphone_core_get_current_call(lc) != NULL){
-        CallWindowController *videoCallWindowController = [AppDelegate sharedInstance].callWindowController;
+        CallWindowController *videoCallWindowController = [[CallService sharedInstance] getCallWindowController];
         [videoCallWindowController showWindow:self];
         CallViewController *videoCallViewController = (CallViewController*)videoCallWindowController.contentViewController;
         linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(videoCallViewController.remoteVideoView));

@@ -84,15 +84,14 @@
 }
 
 -(void) applicationDidResignActive:(NSNotification *)notification{
-    if(callWindowController){
+    if(self.callWindowController){
         LinphoneCall *call = linphone_core_get_current_call([LinphoneManager getLc]);
         if(call){
-            [callWindowController.window orderFrontRegardless];
-            [callWindowController.window setLevel:NSFloatingWindowLevel];
-            [viewController.videoMailWindowController enableSelfVideo];
+            [self.callWindowController.window orderFrontRegardless];
+            [self.callWindowController.window setLevel:NSFloatingWindowLevel];
+            [self.viewController.videoMailWindowController enableSelfVideo];
         }
     }
-
 }
 
 -(void) setTabWindowPos:(NSPoint)pos{

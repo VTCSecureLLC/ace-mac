@@ -32,6 +32,7 @@
 - (IBAction)onButtonDialpad:(id)sender;
 - (IBAction)onButtonVidelMail:(id)sender;
 - (IBAction)onButtonSettings:(id)sender;
+- (void) updateUI;
 
 
 @end
@@ -68,7 +69,8 @@
     linphone_core_use_preview_window([LinphoneManager getLc], YES);
     linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
     linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
-
+    
+    [self updateUI];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -222,6 +224,24 @@
         }
         default:
             break;
+    }
+}
+
+- (void) updateUI {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    LinphoneProxyConfig *cfg=NULL;
+    linphone_core_get_default_proxy(lc,&cfg);
+    
+    if (cfg) {
+        const char *identity=linphone_proxy_config_get_identity(cfg);
+        LinphoneAddress *addr=linphone_address_new(identity);
+        const char* user = linphone_address_get_username(addr);
+        NSString *username = [NSString stringWithUTF8String:user];
+        
+        self.textFieldAccount.stringValue = [NSString stringWithFormat:@"Account: %@", username];
+
+        LinphoneRegistrationState state = linphone_proxy_config_get_state(cfg);
+        [self registrationUpdate:state message:nil];
     }
 }
 

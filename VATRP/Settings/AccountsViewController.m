@@ -127,21 +127,11 @@
 
     AccountModel *accountModel_ = [[AccountsService sharedInstance] getDefaultAccount];
     
-    LoginWindowController *loginWindowController = [AppDelegate sharedInstance].loginWindowController;
-    LoginViewController *loginViewController = [AppDelegate sharedInstance].loginViewController;
-
     if (accountModel_) {
-        loginViewController.loginAccount = accountModel_;
         [[RegistrationService sharedInstance] registerWithAccountModel:accountModel_];
     }
 
     self.settingsFeedbackText.stringValue = @"Settings saved";
-    
-   
-    if(loginWindowController){
-        [[AppDelegate sharedInstance] showTabWindow];
-    }
-    
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {

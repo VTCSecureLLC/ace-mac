@@ -132,6 +132,15 @@
     
     self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
     [self.loginWindowController showWindow:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self.loginViewController
+                                             selector:@selector(configuringUpdate:)
+                                                 name:kLinphoneConfiguringStateUpdate
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self.loginViewController
+                                             selector:@selector(registrationUpdateEvent:)
+                                                 name:kLinphoneRegistrationUpdate
+                                               object:nil];
 }
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {

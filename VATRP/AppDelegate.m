@@ -83,11 +83,12 @@
 }
 
 -(void) applicationDidResignActive:(NSNotification *)notification{
-    if(self.callWindowController){
+    CallWindowController *callWindowController = [[CallService sharedInstance] getCallWindowController];
+    if(callWindowController){
         LinphoneCall *call = linphone_core_get_current_call([LinphoneManager getLc]);
         if(call){
-            [self.callWindowController.window orderFrontRegardless];
-            [self.callWindowController.window setLevel:NSFloatingWindowLevel];
+            [callWindowController.window orderFrontRegardless];
+            [callWindowController.window setLevel:NSFloatingWindowLevel];
             [self.viewController.videoMailWindowController enableSelfVideo];
         }
     }

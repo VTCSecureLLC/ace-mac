@@ -57,7 +57,10 @@
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
+    LinphoneCore *lc = [LinphoneManager getLc];
+    if(linphone_core_get_current_call(lc)){
+        linphone_core_terminate_all_calls(lc);
+    }
 }
 
 + (AppDelegate*)sharedInstance {

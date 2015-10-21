@@ -16,6 +16,7 @@
 @property (weak) IBOutlet NSButton *buttonAutoAnswer;
 @property (weak) IBOutlet NSButton *buttonEnableAVPF;
 @property (weak) IBOutlet NSButton *buttonSendDTMF;
+@property (weak) IBOutlet NSButton *buttonEnableAdaptiveRateControl;
 
 @end
 
@@ -34,6 +35,8 @@
     if (proxyCfg) {
         self.buttonEnableAVPF.state = linphone_proxy_config_avpf_enabled(proxyCfg);
     }
+    
+    self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
 }
 
 - (void) save {
@@ -61,6 +64,10 @@
     }
     
     linphone_core_set_use_info_for_dtmf([LinphoneManager getLc], self.buttonSendDTMF.state);
+    linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], self.buttonEnableAdaptiveRateControl.state);
+}
+- (IBAction)onCheckBoxEnableAdaptiveRateControl:(id)sender {
+    isChanged = YES;
 }
 
 - (IBAction)onCheckBoxAutoAnswerCall:(id)sender {

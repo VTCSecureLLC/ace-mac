@@ -28,10 +28,16 @@
 #  ORTP_LIBRARIES - The libraries needed to use oRTP
 #  ORTP_CPPFLAGS - The cflags needed to use oRTP
 
-include("${CMAKE_CURRENT_LIST_DIR}/ORTPTargets.cmake")
+if(NOT LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
+	include("${CMAKE_CURRENT_LIST_DIR}/ORTPTargets.cmake")
+endif()
 
 get_filename_component(ORTP_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-set(ORTP_INCLUDE_DIRS "${ORTP_CMAKE_DIR}/../../../include")
-set(ORTP_LIBRARIES BelledonneCommunications::ortp)
+if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
+	set(ORTP_INCLUDE_DIRS "${EP_ortp_INCLUDE_DIR}")
+else()
+	set(ORTP_INCLUDE_DIRS "${ORTP_CMAKE_DIR}/../../../include")
+endif()
+set(ORTP_LIBRARIES ortp)
 set(ORTP_CPPFLAGS )
 set(ORTP_FOUND 1)

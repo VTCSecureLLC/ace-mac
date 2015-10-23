@@ -209,6 +209,13 @@ LINPHONE_PUBLIC const LinphonePayloadType* linphone_call_params_get_used_audio_c
 LINPHONE_PUBLIC const LinphonePayloadType* linphone_call_params_get_used_video_codec(const LinphoneCallParams *cp);
 
 /**
+ * Get the text codec used in the call, described as a LinphonePayloadType structure.
+ * @param[in] cp LinphoneCallParams object
+ * @return The LinphonePayloadType object corresponding to the text codec being used in the call.
+**/
+LINPHONE_PUBLIC const LinphonePayloadType* linphone_call_params_get_used_text_codec(const LinphoneCallParams *cp);
+
+/**
  * Tell whether the call has been configured in low bandwidth mode or not.
  * This mode can be automatically discovered thanks to a stun server when activate_edge_workarounds=1 in section [net] of configuration file.
  * An application that would have reliable way to know network capacity may not use activate_edge_workarounds=1 but instead manually configure
@@ -290,14 +297,14 @@ LINPHONE_PUBLIC  LinphoneMediaDirection linphone_call_params_get_audio_direction
 LINPHONE_PUBLIC  LinphoneMediaDirection linphone_call_params_get_video_direction(const LinphoneCallParams *cp);
 
 /**
- * Set the audio stream direction. Only relevant for multicast
+ * Set the audio stream direction.
  * @param[in] cl LinphoneCallParams object
  * @param[in] The audio stream direction associated with this call params.
 **/
 LINPHONE_PUBLIC void linphone_call_params_set_audio_direction(LinphoneCallParams *cp, LinphoneMediaDirection dir);
 
 /**
- * Set the video stream direction. Only relevant for multicast
+ * Set the video stream direction.
  * @param[in] cl LinphoneCallParams object
  * @param[in] The video stream direction associated with this call params.
 **/
@@ -387,6 +394,59 @@ LINPHONE_PUBLIC int linphone_call_params_enable_realtime_text(LinphoneCallParams
  * @ingroup media_parameters
 **/
 LINPHONE_PUBLIC bool_t linphone_call_params_realtime_text_enabled(const LinphoneCallParams *params);
+
+/**
+ * Add a custom attribute related to all the streams in the SDP exchanged within SIP messages during a call.
+ * @param[in] params The #LinphoneCallParams to add a custom SDP attribute to.
+ * @param[in] attribute_name The name of the attribute to add.
+ * @param[in] attribute_value The content value of the attribute to add.
+ * @ingroup media_parameters
+**/
+LINPHONE_PUBLIC void linphone_call_params_add_custom_sdp_attribute(LinphoneCallParams *params, const char *attribute_name, const char *attribute_value);
+
+/**
+ * Add a custom attribute related to a specific stream in the SDP exchanged within SIP messages during a call.
+ * @param[in] params The #LinphoneCallParams to add a custom SDP attribute to.
+ * @param[in] type The type of the stream to add a custom SDP attribute to.
+ * @param[in] attribute_name The name of the attribute to add.
+ * @param[in] attribute_value The content value of the attribute to add.
+ * @ingroup media_parameters
+**/
+LINPHONE_PUBLIC void linphone_call_params_add_custom_sdp_media_attribute(LinphoneCallParams *params, LinphoneStreamType type, const char *attribute_name, const char *attribute_value);
+
+/**
+ * Get a custom SDP attribute that is related to all the streams.
+ * @param[in] params The #LinphoneCallParams to get the custom SDP attribute from.
+ * @param[in] attribute_name The name of the attribute to get.
+ * @return The content value of the attribute or NULL if not found.
+ * @ingroup media_parameters
+**/
+LINPHONE_PUBLIC const char * linphone_call_params_get_custom_sdp_attribute(const LinphoneCallParams *params, const char *attribute_name);
+
+/**
+ * Get a custom SDP attribute that is related to a specific stream.
+ * @param[in] params The #LinphoneCallParams to get the custom SDP attribute from.
+ * @param[in] type The type of the stream to add a custom SDP attribute to.
+ * @param[in] attribute_name The name of the attribute to get.
+ * @return The content value of the attribute or NULL if not found.
+ * @ingroup media_parameters
+**/
+LINPHONE_PUBLIC const char * linphone_call_params_get_custom_sdp_media_attribute(const LinphoneCallParams *params, LinphoneStreamType type, const char *attribute_name);
+
+/**
+ * Clear the custom SDP attributes related to all the streams in the SDP exchanged within SIP messages during a call.
+ * @param[in] params The #LinphoneCallParams to clear the custom SDP attributes from.
+ * @ingroup media_parameters
+**/
+LINPHONE_PUBLIC void linphone_call_params_clear_custom_sdp_attributes(LinphoneCallParams *params);
+
+/**
+ * Clear the custom SDP attributes related to a specific stream in the SDP exchanged within SIP messages during a call.
+ * @param[in] params The #LinphoneCallParams to clear the custom SDP attributes from.
+ * @param[in] type The type of the stream to clear the custom SDP attributes from.
+ * @ingroup media_parameters
+**/
+LINPHONE_PUBLIC void linphone_call_params_clear_custom_sdp_media_attributes(LinphoneCallParams *params, LinphoneStreamType type);
 
 
 /*******************************************************************************

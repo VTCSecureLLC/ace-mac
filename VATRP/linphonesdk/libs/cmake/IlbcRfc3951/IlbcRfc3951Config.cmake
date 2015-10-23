@@ -31,5 +31,5 @@ include("${CMAKE_CURRENT_LIST_DIR}/IlbcRfc3951Targets.cmake")
 
 get_filename_component(ILBCRFC3951_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 set(ILBCRFC3951_INCLUDE_DIRS "${ILBCRFC3951_CMAKE_DIR}/../../../include")
-set(ILBCRFC3951_LIBRARIES BelledonneCommunications::ilbcrfc3951)
+set(ILBCRFC3951_LIBRARIES ilbcrfc3951)
 set(ILBCRFC3951_FOUND 1)

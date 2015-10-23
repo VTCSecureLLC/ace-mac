@@ -28,14 +28,25 @@
 #  BELLESIP_LIBRARIES - The libraries needed to use belle-sip
 #  BELLESIP_LDFLAGS - The linking flags needed to use belle-sip
 
-include("${CMAKE_CURRENT_LIST_DIR}/BelleSIPTargets.cmake")
+if(NOT LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
+	include("${CMAKE_CURRENT_LIST_DIR}/BelleSIPTargets.cmake")
+endif()
+
 if(OFF)
-	find_package(Tunnel)
+	if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
+		include("${EP_tunnel_CONFIG_DIR}/TunnelConfig.cmake")
+	else()
+		find_package(Tunnel)
+	endif()
 endif()
 
 get_filename_component(BELLESIP_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-set(BELLESIP_INCLUDE_DIRS "${BELLESIP_CMAKE_DIR}/../../../include")
-set(BELLESIP_LIBRARIES BelledonneCommunications::bellesip)
+if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
+	set(BELLESIP_INCLUDE_DIRS "${EP_bellesip_INCLUDE_DIR}")
+else()
+	set(BELLESIP_INCLUDE_DIRS "${BELLESIP_CMAKE_DIR}/../../../include")
+endif()
+set(BELLESIP_LIBRARIES bellesip)
 set(BELLESIP_LDFLAGS -framework Foundation)
 if(TUNNEL_FOUND)
 	list(APPEND BELLESIP_INCLUDE_DIRS ${TUNNEL_INCLUDE_DIRS})

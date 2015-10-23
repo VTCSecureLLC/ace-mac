@@ -2618,10 +2618,34 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sZ9-mG-ZXw">
+                                <rect key="frame" x="240" y="278" width="208" height="26"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="cRq-ZT-5Zs">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="onComboBoxCaptureDevice:" target="QfL-Ff-65I" id="dDY-be-M7o"/>
+                                </connections>
+                            </comboBox>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ob-iv-njd">
+                                <rect key="frame" x="33" y="283" width="191" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Camera" id="3mY-sW-PD9">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ebS-L6-vVr">
+                                <rect key="frame" x="240" y="149" width="205" height="125"/>
+                            </customView>
                         </subviews>
                         <animations/>
                     </view>
                     <connections>
+                        <outlet property="cameraPreview" destination="ebS-L6-vVr" id="4Qd-OF-KX6"/>
+                        <outlet property="comboBoxCaptureDevices" destination="sZ9-mG-ZXw" id="ZJ8-l1-FVF"/>
                         <outlet property="comboBoxVideoSize" destination="2oG-57-1i9" id="X6Y-iy-vEY"/>
                     </connections>
                 </viewController>

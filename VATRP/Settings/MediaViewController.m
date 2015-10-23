@@ -8,6 +8,7 @@
 
 #import "MediaViewController.h"
 #import "LinphoneManager.h"
+#import "AppDelegate.h"
 
 #define kPREFERED_VIDEO_RESOLUTION @"kPREFERED_VIDEO_RESOLUTION"
 
@@ -16,21 +17,22 @@
 }
 
 @property (weak) IBOutlet NSComboBox *comboBoxVideoSize;
-
+@property (weak) IBOutlet NSComboBox *comboBoxCaptureDevices;
+@property (weak) IBOutlet NSView *cameraPreview;
 @end
 
 @implementation MediaViewController
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    
     isChanged = NO;
 }
+
+char **camlist;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    
     NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:kPREFERED_VIDEO_RESOLUTION];
     
     if (video_resolution) {
@@ -56,6 +58,13 @@
             self.comboBoxVideoSize.stringValue = @"None";
         }
     }
+    camlist = (char**)linphone_core_get_video_devices([LinphoneManager getLc]);
+    for (char* cam = *camlist;*camlist!=NULL;cam=*++camlist) {
+        [self.comboBoxCaptureDevices addItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
+    }
+    
+    const char * cam = linphone_core_get_video_device([LinphoneManager getLc]);
+    [self.comboBoxCaptureDevices selectItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
 }
 
 - (IBAction)onComboboxPreferedVideoResolution:(id)sender {
@@ -86,8 +95,20 @@
     }
 
     linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
-    
     [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxVideoSize.stringValue forKey:kPREFERED_VIDEO_RESOLUTION];
 }
 
+- (IBAction)onComboBoxCaptureDevice:(id)sender {
+    [self displaySelectedVideoDevice];
+}
+
+-(void) displaySelectedVideoDevice {
+    const char *cam = [self.comboBoxCaptureDevices.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
+    LinphoneCore *lc = [LinphoneManager getLc];
+    linphone_core_set_video_device(lc, cam);
+
+    [[AppDelegate sharedInstance].viewController showVideoMailWindow];
+    linphone_core_use_preview_window(lc, YES);
+    linphone_core_set_native_preview_window_id(lc, (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
+}
 @end

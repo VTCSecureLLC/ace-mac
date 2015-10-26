@@ -129,6 +129,9 @@ char **soundlist;
 - (IBAction)onComboBoxSpeaker:(id)sender {
     const char *speaker = [self.comboBoxSpeaker.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
     linphone_core_set_playback_device([LinphoneManager getLc], speaker);
+	
+    const char* lPlay = [[LinphoneManager bundleFile:@"msg.wav"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
+    linphone_core_play_local([LinphoneManager getLc], lPlay);
 }
 
 -(void) displaySelectedVideoDevice {

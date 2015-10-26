@@ -90,6 +90,8 @@ char **soundlist;
     
     [self initializeRecorder];
     [self initializeLevelTimer];
+    
+    [self displaySelectedVideoDevice];
 }
 
 - (IBAction)onComboboxPreferedVideoResolution:(id)sender {
@@ -144,10 +146,11 @@ char **soundlist;
     const char *cam = [self.comboBoxCaptureDevices.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
     LinphoneCore *lc = [LinphoneManager getLc];
     linphone_core_set_video_device(lc, cam);
-
-    [[AppDelegate sharedInstance].viewController showVideoMailWindow];
+    
+    linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
     linphone_core_use_preview_window(lc, YES);
-    linphone_core_set_native_preview_window_id(lc, (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
+    linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.cameraPreview));
+    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
 }
 
 - (void)initializeRecorder
@@ -181,9 +184,6 @@ char **soundlist;
 - (void)levelTimerCallback:(NSTimer *)timer
 {
     [self.recorder updateMeters];
-   // double peakPowerForChannel = pow(10, (0.05 * [self.recorder peakPowerForChannel:0]));
-    NSLog(@"PEAK POWER: %f", [self.recorder peakPowerForChannel:0]);
-    
     [self.levelIndicatorMicrophone setDoubleValue:[self.recorder peakPowerForChannel:0]];
 }
 @end

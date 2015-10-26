@@ -43,6 +43,10 @@
                                                  selector:@selector(textComposeEvent:)
                                                      name:kLinphoneTextComposeEvent
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
         unread_messages = 0;
     }
     
@@ -140,43 +144,34 @@
         
         uint32_t rttCode = linphone_chat_room_get_char(room);
         NSString *string = [NSString stringWithFormat:@"%c", rttCode];
-        NSLog(@"string: %@", string);
-        
-        if (!chatWindowController || !chatWindowController.isShow) {
-            unread_messages++;
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
-                                                                object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
-                                                              userInfo:nil];
-        }
 
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:composing], @"composing",
-                                                                        string, @"text", nil];
+        if (!string || !string.length) {
+            return;
+        }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_RECEIVE_MESSAGE
-                                                            object:dict
-                                                          userInfo:nil];
+//        if (!chatWindowController || !chatWindowController.isShow) {
+//            unread_messages++;
+//            [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
+//                                                                object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
+//                                                              userInfo:nil];
+//        }
+//
+//        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:composing], @"composing",
+//                                                                        string, @"text", nil];
+//        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_RECEIVE_MESSAGE
+//                                                            object:dict
+//                                                          userInfo:nil];
     }
 }
 
-
-//- (void)textComposeEvent:(NSNotification *)notif {
-//    LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
-//    if (room) {
-//        uint32_t c = linphone_chat_room_get_char(room);
-//        
-//        if (c == 0x2028 || c == 10){ // In case of enter.
-//            [self performSelectorOnMainThread:@selector(runonmainthread:) withObject:@"\n" waitUntilDone:NO];
-//        }
-//        else if (c == '\b' || c == 8){ // In case of backspace.
-//            [self performSelectorOnMainThread:@selector(runonmainthreadremove) withObject:nil waitUntilDone:NO];
-//        }
-//        else// In case of everything else except empty.
-//        {
-//            NSLog(@"The logging: %d", c);
-//            NSString * string = [NSString stringWithFormat:@"%C", (unichar)c];
-//            [self performSelectorOnMainThread:@selector(runonmainthread:) withObject:string waitUntilDone:NO];
-//        }
-//    }
-//}
+- (void)textReceivedEvent:(NSNotification *)notif {
+    if (!chatWindowController || !chatWindowController.isShow) {
+        unread_messages++;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
+                                                            object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
+                                                          userInfo:nil];
+    }
+}
 
 @end

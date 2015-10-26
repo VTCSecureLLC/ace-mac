@@ -9,7 +9,7 @@
 #import "MediaViewController.h"
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
-
+@import AVFoundation;
 #define kPREFERED_VIDEO_RESOLUTION @"kPREFERED_VIDEO_RESOLUTION"
 
 @interface MediaViewController () {
@@ -19,8 +19,12 @@
 @property (weak) IBOutlet NSComboBox *comboBoxVideoSize;
 @property (weak) IBOutlet NSComboBox *comboBoxCaptureDevices;
 @property (weak) IBOutlet NSComboBox *comboBoxSpeaker;
-
 @property (weak) IBOutlet NSView *cameraPreview;
+
+@property (retain) AVAudioRecorder *recorder;
+@property (retain) NSTimer *timerRecordingLevelsUpdate;
+@property (weak) IBOutlet NSLevelIndicator *levelIndicatorMicrophone;
+
 @end
 
 @implementation MediaViewController
@@ -84,6 +88,10 @@ char **soundlist;
     const char *speaker = linphone_core_get_playback_device([LinphoneManager getLc]);
     [self.comboBoxSpeaker selectItemWithObjectValue:[NSString stringWithCString:speaker encoding:NSUTF8StringEncoding]];
     
+    [self initializeRecorder];
+    [self initializeLevelTimer];
+    
+    [self displaySelectedVideoDevice];
 }
 
 - (IBAction)onComboboxPreferedVideoResolution:(id)sender {
@@ -138,9 +146,44 @@ char **soundlist;
     const char *cam = [self.comboBoxCaptureDevices.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
     LinphoneCore *lc = [LinphoneManager getLc];
     linphone_core_set_video_device(lc, cam);
-
-    [[AppDelegate sharedInstance].viewController showVideoMailWindow];
+    
+    linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
     linphone_core_use_preview_window(lc, YES);
-    linphone_core_set_native_preview_window_id(lc, (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
+    linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.cameraPreview));
+    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
+}
+
+- (void)initializeRecorder
+{
+    NSURL *url = [NSURL fileURLWithPath:@"/dev/null"];
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithFloat: 44100.0],                 AVSampleRateKey,
+                              [NSNumber numberWithInt: kAudioFormatAppleLossless], AVFormatIDKey,
+                              [NSNumber numberWithInt: 1],                         AVNumberOfChannelsKey,
+                              [NSNumber numberWithInt: AVAudioQualityMax],         AVEncoderAudioQualityKey,
+                              nil];
+    
+    NSError *error;
+    
+    self.recorder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error:&error];
+    
+    if (self.recorder) {
+        [self.recorder prepareToRecord];
+        [self.recorder setMeteringEnabled:YES];
+        [self.recorder record];
+    } else
+        NSLog(@"Error in initializeRecorder: %@", [error description]);
+}
+
+- (void)initializeLevelTimer
+{
+    self.timerRecordingLevelsUpdate = [NSTimer scheduledTimerWithTimeInterval: 0.03 target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
+}
+
+- (void)levelTimerCallback:(NSTimer *)timer
+{
+    [self.recorder updateMeters];
+    [self.levelIndicatorMicrophone setDoubleValue:[self.recorder peakPowerForChannel:0]];
 }
 @end

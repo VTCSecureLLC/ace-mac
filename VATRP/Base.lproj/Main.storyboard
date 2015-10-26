@@ -2656,8 +2656,12 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <levelIndicator canDrawConcurrently="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kv5-Gi-xZr">
+                                <rect key="frame" x="240" y="229" width="205" height="20"/>
+                                <levelIndicatorCell key="cell" continuous="YES" alignment="left" doubleValue="-5" minValue="-15" maxValue="10" criticalValue="10" numberOfTickMarks="25" levelIndicatorStyle="continuousCapacity" id="sED-DI-Bac"/>
+                            </levelIndicator>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eVT-Ph-EaP">
-                                <rect key="frame" x="240" y="222" width="208" height="26"/>
+                                <rect key="frame" x="240" y="197" width="208" height="26"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="yry-xn-Gc8">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2668,7 +2672,7 @@ DQ
                                 </connections>
                             </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hns-Bd-VWf">
-                                <rect key="frame" x="33" y="227" width="191" height="17"/>
+                                <rect key="frame" x="33" y="202" width="191" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Speaker" id="0Wx-on-sVW">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2683,6 +2687,7 @@ DQ
                         <outlet property="comboBoxMicrophone" destination="S0u-ch-DvC" id="j7P-8n-E5D"/>
                         <outlet property="comboBoxSpeaker" destination="eVT-Ph-EaP" id="nVo-gj-vS5"/>
                         <outlet property="comboBoxVideoSize" destination="2oG-57-1i9" id="X6Y-iy-vEY"/>
+                        <outlet property="levelIndicatorMicrophone" destination="kv5-Gi-xZr" id="sRM-R6-J8n"/>
                     </connections>
                 </viewController>
                 <customObject id="4GJ-27-Ttc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

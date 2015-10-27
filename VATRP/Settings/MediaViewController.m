@@ -19,6 +19,7 @@
 @property (weak) IBOutlet NSComboBox *comboBoxVideoSize;
 @property (weak) IBOutlet NSComboBox *comboBoxCaptureDevices;
 @property (weak) IBOutlet NSComboBox *comboBoxSpeaker;
+@property (weak) IBOutlet NSComboBox *comboBoxMediaEncription;
 @property (weak) IBOutlet NSView *cameraPreview;
 
 @property (retain) AVAudioRecorder *recorder;
@@ -64,6 +65,24 @@ char **soundlist;
             self.comboBoxVideoSize.stringValue = @"None";
         }
     }
+    
+    LinphoneMediaEncryption menc = linphone_core_get_media_encryption([LinphoneManager getLc]);
+
+    switch (menc) {
+        case LinphoneMediaEncryptionSRTP:
+            self.comboBoxMediaEncription.stringValue = @"Encrypted (SRTP)";
+            break;
+        case LinphoneMediaEncryptionZRTP:
+            self.comboBoxMediaEncription.stringValue = @"Encrypted (ZRTP)";
+            break;
+        case LinphoneMediaEncryptionDTLS:
+            self.comboBoxMediaEncription.stringValue = @"Encrypted (DTLS)";
+            break;
+        case LinphoneMediaEncryptionNone:
+            self.comboBoxMediaEncription.stringValue = @"Unencrypted";
+            break;
+    }
+    
     camlist = (char**)linphone_core_get_video_devices([LinphoneManager getLc]);
     for (char* cam = *camlist;*camlist!=NULL;cam=*++camlist) {
         [self.comboBoxCaptureDevices addItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
@@ -123,6 +142,18 @@ char **soundlist;
 
     linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
     [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxVideoSize.stringValue forKey:kPREFERED_VIDEO_RESOLUTION];
+    
+    int retval = 0;
+    
+    if (self.comboBoxMediaEncription.stringValue && [self.comboBoxMediaEncription.stringValue compare:@"Encrypted (SRTP)"] == NSOrderedSame)
+        retval = linphone_core_set_media_encryption([LinphoneManager getLc], LinphoneMediaEncryptionSRTP);
+    else if (self.comboBoxMediaEncription.stringValue && [self.comboBoxMediaEncription.stringValue compare:@"Encrypted (ZRTP)"] == NSOrderedSame)
+        retval = linphone_core_set_media_encryption([LinphoneManager getLc], LinphoneMediaEncryptionZRTP);
+    else if (self.comboBoxMediaEncription.stringValue && [self.comboBoxMediaEncription.stringValue compare:@"Encrypted (DTLS)"] == NSOrderedSame)
+        retval = linphone_core_set_media_encryption([LinphoneManager getLc], LinphoneMediaEncryptionDTLS);
+    else
+        retval = linphone_core_set_media_encryption([LinphoneManager getLc], LinphoneMediaEncryptionNone);
+
 }
 
 - (IBAction)onComboBoxCaptureDevice:(id)sender {
@@ -140,6 +171,10 @@ char **soundlist;
 	
     const char* lPlay = [[LinphoneManager bundleFile:@"msg.wav"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
     linphone_core_play_local([LinphoneManager getLc], lPlay);
+}
+
+- (IBAction)onComboboxMediaEncription:(id)sender {
+    isChanged = YES;
 }
 
 -(void) displaySelectedVideoDevice {
@@ -186,4 +221,5 @@ char **soundlist;
     [self.recorder updateMeters];
     [self.levelIndicatorMicrophone setDoubleValue:[self.recorder peakPowerForChannel:0]];
 }
+
 @end

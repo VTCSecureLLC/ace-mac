@@ -8,14 +8,22 @@
 
 #import "MediaViewController.h"
 #import "LinphoneManager.h"
-
+#import "AppDelegate.h"
+@import AVFoundation;
 #define kPREFERED_VIDEO_RESOLUTION @"kPREFERED_VIDEO_RESOLUTION"
 
 @interface MediaViewController () {
     BOOL isChanged;
 }
-
+@property (weak) IBOutlet NSComboBox *comboBoxMicrophone;
 @property (weak) IBOutlet NSComboBox *comboBoxVideoSize;
+@property (weak) IBOutlet NSComboBox *comboBoxCaptureDevices;
+@property (weak) IBOutlet NSComboBox *comboBoxSpeaker;
+@property (weak) IBOutlet NSView *cameraPreview;
+
+@property (retain) AVAudioRecorder *recorder;
+@property (retain) NSTimer *timerRecordingLevelsUpdate;
+@property (weak) IBOutlet NSLevelIndicator *levelIndicatorMicrophone;
 
 @end
 
@@ -23,14 +31,14 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    
     isChanged = NO;
 }
 
+char **camlist;
+char **soundlist;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    
     NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:kPREFERED_VIDEO_RESOLUTION];
     
     if (video_resolution) {
@@ -56,6 +64,34 @@
             self.comboBoxVideoSize.stringValue = @"None";
         }
     }
+    camlist = (char**)linphone_core_get_video_devices([LinphoneManager getLc]);
+    for (char* cam = *camlist;*camlist!=NULL;cam=*++camlist) {
+        [self.comboBoxCaptureDevices addItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
+    }
+    
+    const char * cam = linphone_core_get_video_device([LinphoneManager getLc]);
+    [self.comboBoxCaptureDevices selectItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
+
+    soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
+    for (char* device = *soundlist;*soundlist!=NULL;device=*++soundlist) {
+        if(linphone_core_sound_device_can_capture([LinphoneManager getLc], device)){
+            [self.comboBoxMicrophone addItemWithObjectValue:[NSString stringWithCString:device encoding:NSUTF8StringEncoding]];
+        }
+        else if(linphone_core_sound_device_can_playback([LinphoneManager getLc], device)){
+                [self.comboBoxSpeaker addItemWithObjectValue:[NSString stringWithCString:device encoding:NSUTF8StringEncoding]];
+        }
+    }
+    
+    const char * mic= linphone_core_get_capture_device([LinphoneManager getLc]);
+    [self.comboBoxMicrophone selectItemWithObjectValue:[NSString stringWithCString:mic encoding:NSUTF8StringEncoding]];
+    
+    const char *speaker = linphone_core_get_playback_device([LinphoneManager getLc]);
+    [self.comboBoxSpeaker selectItemWithObjectValue:[NSString stringWithCString:speaker encoding:NSUTF8StringEncoding]];
+    
+    [self initializeRecorder];
+    [self initializeLevelTimer];
+    
+    [self displaySelectedVideoDevice];
 }
 
 - (IBAction)onComboboxPreferedVideoResolution:(id)sender {
@@ -86,8 +122,68 @@
     }
 
     linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
-    
     [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxVideoSize.stringValue forKey:kPREFERED_VIDEO_RESOLUTION];
 }
 
+- (IBAction)onComboBoxCaptureDevice:(id)sender {
+    [self displaySelectedVideoDevice];
+}
+
+- (IBAction)onComboBoxMicrophone:(id)sender {
+        const char *mic = [self.comboBoxMicrophone.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
+        linphone_core_set_capture_device([LinphoneManager getLc], mic);
+}
+
+- (IBAction)onComboBoxSpeaker:(id)sender {
+    const char *speaker = [self.comboBoxSpeaker.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
+    linphone_core_set_playback_device([LinphoneManager getLc], speaker);
+	
+    const char* lPlay = [[LinphoneManager bundleFile:@"msg.wav"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
+    linphone_core_play_local([LinphoneManager getLc], lPlay);
+}
+
+-(void) displaySelectedVideoDevice {
+    const char *cam = [self.comboBoxCaptureDevices.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
+    LinphoneCore *lc = [LinphoneManager getLc];
+    linphone_core_set_video_device(lc, cam);
+    
+    linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
+    linphone_core_use_preview_window(lc, YES);
+    linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.cameraPreview));
+    linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
+}
+
+- (void)initializeRecorder
+{
+    NSURL *url = [NSURL fileURLWithPath:@"/dev/null"];
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithFloat: 44100.0],                 AVSampleRateKey,
+                              [NSNumber numberWithInt: kAudioFormatAppleLossless], AVFormatIDKey,
+                              [NSNumber numberWithInt: 1],                         AVNumberOfChannelsKey,
+                              [NSNumber numberWithInt: AVAudioQualityMax],         AVEncoderAudioQualityKey,
+                              nil];
+    
+    NSError *error;
+    
+    self.recorder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error:&error];
+    
+    if (self.recorder) {
+        [self.recorder prepareToRecord];
+        [self.recorder setMeteringEnabled:YES];
+        [self.recorder record];
+    } else
+        NSLog(@"Error in initializeRecorder: %@", [error description]);
+}
+
+- (void)initializeLevelTimer
+{
+    self.timerRecordingLevelsUpdate = [NSTimer scheduledTimerWithTimeInterval: 0.03 target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
+}
+
+- (void)levelTimerCallback:(NSTimer *)timer
+{
+    [self.recorder updateMeters];
+    [self.levelIndicatorMicrophone setDoubleValue:[self.recorder peakPowerForChannel:0]];
+}
 @end

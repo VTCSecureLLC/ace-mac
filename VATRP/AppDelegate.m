@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HomeWindowController.h"
+#import "AboutWindowController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
@@ -19,6 +20,7 @@
 @interface AppDelegate () {
     HomeWindowController *homeWindowController;
     VideoCallWindowController *videoCallWindowController;
+    AboutWindowController *aboutWindowController;
 }
 
 @end
@@ -117,6 +119,15 @@
 
 - (void)onMenuItemPreferences:(id)sender {
     [viewController showSettingsWindow];
+}
+
+- (IBAction)onMenuItemAbout:(id)sender {
+    if (!aboutWindowController) {
+        aboutWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AboutWindowController"];
+        [aboutWindowController showWindow:self];
+    } else {
+        [aboutWindowController showWindow:self];
+    }
 }
 
 - (void)onMenuItemPreferencesSignOut:(id)sender {

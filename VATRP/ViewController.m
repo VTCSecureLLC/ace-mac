@@ -137,7 +137,7 @@
 //        }
 //    }
 
-    [[ChatService sharedInstance] openChatWindow];
+    [[ChatService sharedInstance] openChatWindowWithUser:nil];
 }
 
 - (IBAction)onButtonSettings:(id)sender {

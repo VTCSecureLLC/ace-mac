@@ -12,5 +12,6 @@
 
 @property (weak) IBOutlet NSTextField *textFieldInitials;
 @property (weak) IBOutlet NSTextField *textFieldLastMessage;
+@property (weak) IBOutlet NSTextField *textFieldUnredMessageCount;
 
 @end

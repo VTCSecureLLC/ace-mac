@@ -7,9 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "ChatViewController.h"
 
 @interface ChatWindowController : NSWindowController
 
 @property (nonatomic, assign) BOOL isShow;
+
+- (ChatViewController*) getChatViewController;
 
 @end

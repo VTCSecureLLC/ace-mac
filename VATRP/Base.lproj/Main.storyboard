@@ -458,7 +458,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="700" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="66" horizontalPageScroll="10" verticalLineScroll="66" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FE6-yu-OcL">
+                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="64" horizontalPageScroll="10" verticalLineScroll="64" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FE6-yu-OcL">
                                 <rect key="frame" x="-1" y="0.0" width="243" height="450"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="zir-oe-ame">
                                     <rect key="frame" x="0.0" y="0.0" width="243" height="450"/>
@@ -468,11 +468,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="243" height="450"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
-                                            <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="ContactCell" width="240" minWidth="40" maxWidth="1000" id="Ute-vy-Ovh">
+                                                <tableColumn identifier="ContactCell" width="243" minWidth="40" maxWidth="1000" id="Ute-vy-Ovh">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Contact">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -486,7 +485,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="Contact" id="D21-xR-BT1" customClass="ContactTableCellView">
-                                                            <rect key="frame" x="1" y="1" width="240" height="64"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="243" height="64"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yQL-Uf-APv">
@@ -521,6 +520,15 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXt-Ga-w80">
+                                                                    <rect key="frame" x="202" y="41" width="30" height="17"/>
+                                                                    <animations/>
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="gjI-AM-Pgh">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
                                                             </subviews>
                                                             <animations/>
                                                             <connections>
@@ -528,6 +536,7 @@
                                                                 <outlet property="textField" destination="1ka-RU-8Te" id="je9-Xo-Sv2"/>
                                                                 <outlet property="textFieldInitials" destination="1aW-Mf-yCT" id="C8d-CC-djT"/>
                                                                 <outlet property="textFieldLastMessage" destination="h9g-eC-W8p" id="SdP-7I-uQT"/>
+                                                                <outlet property="textFieldUnredMessageCount" destination="pXt-Ga-w80" id="dr0-ws-oYv"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
@@ -663,10 +672,19 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cE8-H9-HAD">
                                 <rect key="frame" x="288" y="460" width="394" height="17"/>
                                 <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Ruben" id="KqE-fp-VFd">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Ruben" id="KqE-fp-VFd">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hcm-Xo-nRT">
+                                <rect key="frame" x="288" y="458" width="394" height="19"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" placeholderString="No recipients" drawsBackground="YES" id="Onm-XK-ZLT">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </textFieldCell>
                             </textField>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qGY-fJ-AdF" customClass="BackgroundedView">
@@ -688,9 +706,11 @@
                         <animations/>
                     </view>
                     <connections>
+                        <outlet property="scrollViewContacts" destination="FE6-yu-OcL" id="0Ox-8C-SaA"/>
                         <outlet property="tableViewContacts" destination="psF-F5-WOD" id="TgS-80-h8E"/>
                         <outlet property="tableViewContent" destination="5zm-Fa-KNr" id="2za-Dc-2ee"/>
                         <outlet property="textFieldMessage" destination="dtw-vN-xFd" id="Wwv-5z-y33"/>
+                        <outlet property="textFieldNoRecipient" destination="hcm-Xo-nRT" id="FgD-za-Nyu"/>
                         <outlet property="textFieldRemoteUri" destination="cE8-H9-HAD" id="36f-Tl-vFR"/>
                         <outlet property="viewChatContentBG" destination="CJU-r9-zul" id="3nv-WT-NHb"/>
                         <outlet property="viewSeparateLine" destination="qGY-fJ-AdF" id="wiM-cc-WAH"/>
@@ -1019,7 +1039,6 @@
                         <outlet property="labelVideoDownloadBandwidth" destination="ZiE-wf-GJK" id="G7w-g3-QUa"/>
                         <outlet property="labelVideoUploadBandwidth" destination="sty-SR-Fiw" id="COC-L6-aq6"/>
                         <outlet property="textFieldMessage" destination="dtw-vN-xFd" id="Jyt-G3-1d4"/>
-                        <outlet property="textFieldRemoteUri" destination="cE8-H9-HAD" id="BpB-Vh-0xB"/>
                         <outlet property="viewSeparateLine" destination="qGY-fJ-AdF" id="hW0-gd-g61"/>
                     </connections>
                 </viewController>
@@ -2558,6 +2577,7 @@ DQ
                             </textField>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sZ9-mG-ZXw">
                                 <rect key="frame" x="240" y="278" width="208" height="26"/>
+                                <animations/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="cRq-ZT-5Zs">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2569,6 +2589,7 @@ DQ
                             </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ob-iv-njd">
                                 <rect key="frame" x="33" y="283" width="191" height="17"/>
+                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Camera" id="3mY-sW-PD9">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2577,6 +2598,7 @@ DQ
                             </textField>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ebS-L6-vVr">
                                 <rect key="frame" x="240" y="149" width="205" height="125"/>
+                                <animations/>
                             </customView>
                         </subviews>
                         <animations/>

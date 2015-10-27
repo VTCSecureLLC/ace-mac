@@ -1816,7 +1816,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 #pragma mark - Call Functions
 
 - (void)acceptCall:(LinphoneCall *)call {
-    LinphoneCallParams *calleeParams = linphone_core_create_default_call_parameters(theLinphoneCore);
+    LinphoneCallParams *calleeParams = linphone_core_create_call_params(theLinphoneCore, call);
     
     if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
         bool low_bandwidth = self.network == network_2g;

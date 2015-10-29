@@ -58,17 +58,21 @@
 
     if (!chatWindowController) {
         chatWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ChatWindowController"];
+        if (user) {
+            ChatViewController *chatViewController = [chatWindowController getChatViewController];
+            chatViewController.selectUser = user;
+        }
+
         [chatWindowController showWindow:self];
     } else {
         if (!chatWindowController.isShow) {
+            if (user) {
+                ChatViewController *chatViewController = [chatWindowController getChatViewController];
+                chatViewController.selectUser = user;
+            }
             [chatWindowController showWindow:self];
             chatWindowController.isShow = YES;
         }
-    }
-    
-    if (user) {
-        ChatViewController *chatViewController = [chatWindowController getChatViewController];
-//        chatViewController.
     }
 }
 

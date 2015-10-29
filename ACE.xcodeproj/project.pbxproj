@@ -133,8 +133,6 @@
 		4AC389E21B8E87530063298F /* VATRPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389E11B8E87530063298F /* VATRPTests.m */; };
 		4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */; };
 		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
-		5E02C8DE1BBED147003EA32B /* alert_inverted.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */; };
-		5E02C8DF1BBED147003EA32B /* alert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E02C8DD1BBED147003EA32B /* alert.jpg */; };
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
 		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
@@ -480,8 +478,6 @@
 		4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4AE0C6791BB2E9E900B4E208 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CallViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alert_inverted.jpg; sourceTree = "<group>"; };
-		5E02C8DD1BBED147003EA32B /* alert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alert.jpg; sourceTree = "<group>"; };
 		5E02C8E31BBEF161003EA32B /* SelfVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfVideoViewController.h; sourceTree = "<group>"; };
 		5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfVideoViewController.m; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
@@ -853,8 +849,6 @@
 				4AB556411BDE2453003382B2 /* app_icon.png */,
 				4AA203C51BD4D2A000DD9A4D /* chat_icon.png */,
 				CE34B2B41BD1014C0010A2B0 /* info-icon.png */,
-				5E02C8DC1BBED147003EA32B /* alert_inverted.jpg */,
-				5E02C8DD1BBED147003EA32B /* alert.jpg */,
 				4AAF56191BB1615900241DC2 /* accounts_icon.png */,
 				4A50F9B91BB1BDC900FCD070 /* cameraview.png */,
 				4A50F9BA1BB1BDC900FCD070 /* contacts.png */,
@@ -1190,7 +1184,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E02C8DF1BBED147003EA32B /* alert.jpg in Resources */,
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
 				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
@@ -1209,7 +1202,6 @@
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
-				5E02C8DE1BBED147003EA32B /* alert_inverted.jpg in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,

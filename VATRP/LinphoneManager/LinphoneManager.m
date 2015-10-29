@@ -289,15 +289,14 @@ struct codec_name_pref_table codec_pref_table[]={
 		[self copyDefaultSettings];
 		[self overrideDefaultSettings];
 
-//		//set default values for first boot
-//		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
-//#ifdef DEBUG
-//			[self lpConfigSetBool:TRUE  forKey:@"debugenable_preference"];
-//#else
-//			[self lpConfigSetBool:FALSE forKey:@"debugenable_preference"];
-//#endif
-//		}
-
+		//set default values for first boot
+		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
+#ifdef DEBUG
+			[self lpConfigSetBool:TRUE  forKey:@"debugenable_preference"];
+#else
+			[self lpConfigSetBool:FALSE forKey:@"debugenable_preference"];
+#endif
+		}
 		[self migrateFromUserPrefs];
 	}
 	return self;
@@ -466,7 +465,7 @@ exit_dbmigration:
 	NSDictionary* defaults = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
 	NSArray* defaults_keys = [defaults allKeys];
 	NSDictionary* values   = @{@"backgroundmode_preference" :@YES,
-							   @"debugenable_preference"    :@NO,
+							   @"debugenable_preference"    :@YES,
 							   @"start_at_boot_preference"  :@YES};
 	BOOL shouldSync        = FALSE;
 
@@ -499,7 +498,6 @@ exit_dbmigration:
 	if (theLinphoneCore==nil) {
 		@throw([NSException exceptionWithName:@"LinphoneCoreException" reason:@"Linphone core not initialized yet" userInfo:nil]);
 	}
-	linphone_core_set_avpf_mode(theLinphoneCore, LinphoneAVPFEnabled);
 	return theLinphoneCore;
 }
 
@@ -1784,7 +1782,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 #pragma mark - Call Functions
 
 - (void)acceptCall:(LinphoneCall *)call {
-    LinphoneCallParams *calleeParams = linphone_core_create_default_call_parameters(theLinphoneCore);
+    LinphoneCallParams *calleeParams = linphone_core_create_call_params(theLinphoneCore, call);
     
     if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
         bool low_bandwidth = self.network == network_2g;

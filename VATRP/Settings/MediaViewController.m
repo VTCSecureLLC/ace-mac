@@ -178,6 +178,10 @@ char **soundlist;
 }
 
 -(void) displaySelectedVideoDevice {
+    if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow == YES){
+        [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
+    }
+    
     const char *cam = [self.comboBoxCaptureDevices.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
     LinphoneCore *lc = [LinphoneManager getLc];
     linphone_core_set_video_device(lc, cam);

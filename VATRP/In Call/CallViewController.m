@@ -230,6 +230,10 @@ static const float callAlertStepInterval = 0.5;
             self.labelCallState.stringValue = @"Call End";
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
+            
+            if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
+                [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
+            }
 
             //            if (canHideInCallView) {
             //                // Go to dialer view

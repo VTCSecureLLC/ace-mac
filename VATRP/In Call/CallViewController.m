@@ -96,7 +96,17 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonOpenMessage:(id)sender {
-    [[ChatService sharedInstance] openChatWindow];
+    const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    NSString *userName = nil;
+    
+    if (addr != NULL) {
+        const char* lUserName = linphone_address_get_username(addr);
+
+        if (lUserName)
+            userName = [NSString stringWithUTF8String:lUserName];
+    }
+
+    [[ChatService sharedInstance] openChatWindowWithUser:userName];
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {

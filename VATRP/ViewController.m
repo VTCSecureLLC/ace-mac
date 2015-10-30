@@ -31,7 +31,7 @@
 - (IBAction)onButtonRecents:(id)sender;
 - (IBAction)onButtonContacts:(id)sender;
 - (IBAction)onButtonDialpad:(id)sender;
-- (IBAction)onButtonVidelMail:(id)sender;
+- (IBAction)onButtonVideoMail:(id)sender;
 - (IBAction)onButtonSettings:(id)sender;
 - (void) updateUI;
 
@@ -122,7 +122,7 @@
     }
 }
 
-- (IBAction)onButtonVidelMail:(id)sender {
+- (IBAction)onButtonVideoMail:(id)sender {
 //    if (!self.videoMailWindowController) {
 //        self.videoMailWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoMail"];
 //        [self.videoMailWindowController showWindow:self];

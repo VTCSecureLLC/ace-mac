@@ -1847,7 +1847,7 @@ DQ
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="onButtonVidelMail:" target="XfG-lQ-9wD" id="mOl-YQ-QEq"/>
+                                    <action selector="onButtonVideoMail:" target="XfG-lQ-9wD" id="mOl-YQ-QEq"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lLk-sD-MFo">

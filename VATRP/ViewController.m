@@ -123,20 +123,6 @@
 }
 
 - (IBAction)onButtonVideoMail:(id)sender {
-//    if (!self.videoMailWindowController) {
-//        self.videoMailWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoMail"];
-//        [self.videoMailWindowController showWindow:self];
-//        [self.videoMailWindowController enableSelfVideo];
-//    } else {
-//        if (self.videoMailWindowController.isShow) {
-//            [self.videoMailWindowController close];
-//        } else {
-//            [self.videoMailWindowController showWindow:self];
-//            [self.videoMailWindowController enableSelfVideo];
-//            self.videoMailWindowController.isShow = YES;
-//        }
-//    }
-
     [[ChatService sharedInstance] openChatWindowWithUser:nil];
 }
 

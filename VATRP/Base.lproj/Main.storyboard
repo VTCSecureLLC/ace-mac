@@ -651,7 +651,7 @@
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="tna-Dr-AKi">
-                                    <rect key="frame" x="0.0" y="434" width="241" height="16"/>
+                                    <rect key="frame" x="0.0" y="-16" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>
@@ -723,7 +723,7 @@
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Zhy-yk-KzQ">
-                                    <rect key="frame" x="1" y="393" width="459" height="16"/>
+                                    <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>
@@ -1734,7 +1734,7 @@ DQ
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ZGT-XZ-fwQ">
-                                    <rect key="frame" x="1" y="183" width="433" height="16"/>
+                                    <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>
@@ -1890,7 +1890,7 @@ DQ
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="onCheckBoxAutoAnswerCall:" target="wId-2F-cAs" id="UjK-By-Sx1"/>
+                                    <action selector="onCheckBox:" target="wId-2F-cAs" id="IPe-7E-kLf"/>
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LEd-Vj-4hY">
@@ -1901,7 +1901,7 @@ DQ
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="onCheckBoxEnableAVPF:" target="wId-2F-cAs" id="Xjx-cG-TiN"/>
+                                    <action selector="onCheckBox:" target="wId-2F-cAs" id="gy7-Ry-SR4"/>
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YBS-aD-KiG">
@@ -1911,6 +1911,9 @@ DQ
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBox:" target="wId-2F-cAs" id="HsJ-eO-5fX"/>
+                                </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vzY-IM-lKh">
                                 <rect key="frame" x="70" y="264" width="204" height="28"/>
@@ -1920,7 +1923,18 @@ DQ
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="onCheckBoxEnableAdaptiveRateControl:" target="wId-2F-cAs" id="HJC-Eo-1hw"/>
+                                    <action selector="onCheckBox:" target="wId-2F-cAs" id="iIa-6a-WJD"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ts4-xy-wnZ">
+                                <rect key="frame" x="70" y="234" width="204" height="28"/>
+                                <animations/>
+                                <buttonCell key="cell" type="check" title="Enable Real Time Text" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="t9E-VJ-9TK">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBox:" target="wId-2F-cAs" id="fca-5c-1X7"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1930,6 +1944,7 @@ DQ
                         <outlet property="buttonAutoAnswer" destination="UN6-zf-zZj" id="UPy-Qf-ISX"/>
                         <outlet property="buttonEnableAVPF" destination="LEd-Vj-4hY" id="cMi-uD-fTZ"/>
                         <outlet property="buttonEnableAdaptiveRateControl" destination="vzY-IM-lKh" id="aD4-gP-KEy"/>
+                        <outlet property="buttonEnableRealTimeText" destination="ts4-xy-wnZ" id="a33-ox-yDG"/>
                         <outlet property="buttonSendDTMF" destination="YBS-aD-KiG" id="zwH-FH-Ia9"/>
                     </connections>
                 </viewController>
@@ -2257,7 +2272,7 @@ DQ
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="OqV-Q8-dmH">
-                                    <rect key="frame" x="1" y="118" width="438" height="16"/>
+                                    <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>
@@ -2399,7 +2414,7 @@ DQ
                                 </clipView>
                                 <animations/>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="cuX-DK-Z0U">
-                                    <rect key="frame" x="1" y="118" width="438" height="16"/>
+                                    <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>

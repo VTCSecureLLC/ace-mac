@@ -833,8 +833,8 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 
 #pragma mark - Text Received Functions
 
-//- (void)onMessageReceived:(LinphoneCore *)lc room:(LinphoneChatRoom *)room  message:(LinphoneChatMessage*)msg {
-//
+- (void)onMessageReceived:(LinphoneCore *)lc room:(LinphoneChatRoom *)room  message:(LinphoneChatMessage*)msg {
+
 //	if (silentPushCompletion) {
 //
 //		// we were woken up by a silent push. Call the completion handler with NEWDATA
@@ -843,59 +843,26 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 //		silentPushCompletion(UIBackgroundFetchResultNewData);
 //		silentPushCompletion = nil;
 //	}
-//	const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
-//	char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
-//	NSString* address                    = [NSString stringWithUTF8String:c_address];
-//	NSString* remote_uri                 = [NSString stringWithUTF8String:c_address];
-//	const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
-//	NSString* callID                     = [NSString stringWithUTF8String:call_id];
-//
-//	ms_free(c_address);
-//
-//	if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-//
-//		ABRecordRef contact = [fastAddressBook getContact:address];
-//		if(contact) {
-//			address = [FastAddressBook getContactDisplayName:contact];
-//		} else {
-//			if ([[LinphoneManager instance] lpConfigBoolForKey:@"show_contacts_emails_preference"] == true) {
-//				LinphoneAddress *linphoneAddress = linphone_address_new([address cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-//				address = [NSString stringWithUTF8String:linphone_address_get_username(linphoneAddress)];
-//				linphone_address_destroy(linphoneAddress);
-//			}
-//		}
-//		if(address == nil) {
-//			address = NSLocalizedString(@"Unknown", nil);
-//		}
-//
-//		// Create a new notification
-//		UILocalNotification* notif = [[UILocalNotification alloc] init];
-//		if (notif) {
-//			notif.repeatInterval = 0;
-//			if( [[UIDevice currentDevice].systemVersion floatValue] >= 8){
-//				notif.category       = @"incoming_msg";
-//			}
-//			notif.alertBody      = [NSString  stringWithFormat:NSLocalizedString(@"IM_MSG",nil), address];
-//			notif.alertAction    = NSLocalizedString(@"Show", nil);
-//			notif.soundName      = @"msg.caf";
-//			notif.userInfo       = @{@"from":address, @"from_addr":remote_uri, @"call-id":callID};
-//
-//			[[UIApplication sharedApplication] presentLocalNotificationNow:notif];
-//		}
-//	}
-//
-//	// Post event
-//	NSDictionary* dict = @{@"room"        :[NSValue valueWithPointer:room],
-//						   @"from_address":[NSValue valueWithPointer:linphone_chat_message_get_from_address(msg)],
-//						   @"message"     :[NSValue valueWithPointer:msg],
-//						   @"call-id"     : callID};
-//
-//	[[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneTextReceived object:self userInfo:dict];
-//}
+    
+	const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
+	char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
+	const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
+	NSString* callID                     = [NSString stringWithUTF8String:call_id];
 
-//static void linphone_iphone_message_received(LinphoneCore *lc, LinphoneChatRoom *room, LinphoneChatMessage *message) {
-//	[(__bridge LinphoneManager*)linphone_core_get_user_data(lc) onMessageReceived:lc room:room message:message];
-//}
+	ms_free(c_address);
+
+	// Post event
+	NSDictionary* dict = @{@"room"        :[NSValue valueWithPointer:room],
+						   @"from_address":[NSValue valueWithPointer:linphone_chat_message_get_from_address(msg)],
+						   @"message"     :[NSValue valueWithPointer:msg],
+						   @"call-id"     : callID};
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneTextReceived object:self userInfo:dict];
+}
+
+static void linphone_iphone_message_received(LinphoneCore *lc, LinphoneChatRoom *room, LinphoneChatMessage *message) {
+	[(__bridge LinphoneManager*)linphone_core_get_user_data(lc) onMessageReceived:lc room:room message:message];
+}
 
 - (void)onNotifyReceived:(LinphoneCore *)lc event:(LinphoneEvent *)lev notifyEvent:(const char *)notified_event content:(const LinphoneContent *)body {
 	// Post event
@@ -1192,7 +1159,7 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 											  .display_warning = linphone_iphone_log_user_warning,
 											  .display_url = NULL,
 											  .text_received = NULL,
-											  .message_received = NULL,
+                                              .message_received = linphone_iphone_message_received,
 											  .dtmf_received = NULL,
 											  .transfer_state_changed = linphone_iphone_transfer_state_changed,
 											  .is_composing_received = linphone_iphone_is_composing_received,

@@ -89,6 +89,15 @@
 		4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9C01BB1BDC900FCD070 /* vatrp.ico */; };
 		4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170761BACC61F00880FFD /* SystemConfiguration.framework */; };
 		4A5170791BACD10D00880FFD /* linphonerc in Resources */ = {isa = PBXBuildFile; fileRef = 4A5170781BACD10D00880FFD /* linphonerc */; };
+		4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DD1D71BD8DADB003BE9A2 /* NSArray+Reversing.m */; };
+		4A5DD1DB1BD8DADB003BE9A2 /* NSImage+Merge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DD1D91BD8DADB003BE9A2 /* NSImage+Merge.m */; };
+		4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5DD1E31BD904B3003BE9A2 /* messageIncomingBubbleBottom.png */; };
+		4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5DD1E41BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png */; };
+		4A5DD1EB1BD904B3003BE9A2 /* messageIncomingBubbleTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5DD1E51BD904B3003BE9A2 /* messageIncomingBubbleTop.png */; };
+		4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5DD1E61BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png */; };
+		4A5DD1ED1BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5DD1E71BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png */; };
+		4A5DD1EE1BD904B3003BE9A2 /* messageOutgoingBubbleTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5DD1E81BD904B3003BE9A2 /* messageOutgoingBubbleTop.png */; };
+		4A5DD1F11BD909FB003BE9A2 /* ChatItemTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DD1F01BD909FB003BE9A2 /* ChatItemTableCellView.m */; };
 		4A6717021BCD05CC00139A6F /* KeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6716FF1BCD05CC00139A6F /* KeypadViewController.m */; };
 		4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6717011BCD05CC00139A6F /* KeypadWindowController.m */; };
 		4A6717051BCD05EE00139A6F /* keypad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6717041BCD05EE00139A6F /* keypad.png */; };
@@ -122,6 +131,8 @@
 		4AB556421BDE2454003382B2 /* app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB556411BDE2453003382B2 /* app_icon.png */; };
 		4AB556451BDE2598003382B2 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB556441BDE2598003382B2 /* AboutWindowController.m */; };
 		4AB556481BDE25AD003382B2 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB556471BDE25AD003382B2 /* AboutViewController.m */; };
+		4AB5564B1BDE765E003382B2 /* NewMessageCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB5564A1BDE765E003382B2 /* NewMessageCellView.m */; };
+		4AB556561BE2406B003382B2 /* messages.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB556551BE2406B003382B2 /* messages.png */; };
 		4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC13F941BBBFD21008305CD /* CallLogService.m */; };
 		4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC13F9D1BBC0769008305CD /* SettingsViewController.m */; };
 		4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC344841BB9A777000C4909 /* MediaViewController.m */; };
@@ -131,6 +142,9 @@
 		4AC389D31B8E87530063298F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D21B8E87530063298F /* Images.xcassets */; };
 		4AC389D61B8E87530063298F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D41B8E87530063298F /* Main.storyboard */; };
 		4AC389E21B8E87530063298F /* VATRPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389E11B8E87530063298F /* VATRPTests.m */; };
+		4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AC975F31BDA22F700AD35C8 /* chat_message_inprogress.png */; };
+		4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AC975F51BDA23B400AD35C8 /* chat_message_delivered.png */; };
+		4AC975F81BDA23E900AD35C8 /* chat_message_not_delivered.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AC975F71BDA23E900AD35C8 /* chat_message_not_delivered.png */; };
 		4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */; };
 		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; };
@@ -402,6 +416,18 @@
 		4A5170741BACC61500880FFD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4A5170761BACC61F00880FFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4A5170781BACD10D00880FFD /* linphonerc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = linphonerc; sourceTree = "<group>"; };
+		4A5DD1D61BD8DADB003BE9A2 /* NSArray+Reversing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reversing.h"; sourceTree = "<group>"; };
+		4A5DD1D71BD8DADB003BE9A2 /* NSArray+Reversing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reversing.m"; sourceTree = "<group>"; };
+		4A5DD1D81BD8DADB003BE9A2 /* NSImage+Merge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Merge.h"; sourceTree = "<group>"; };
+		4A5DD1D91BD8DADB003BE9A2 /* NSImage+Merge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Merge.m"; sourceTree = "<group>"; };
+		4A5DD1E31BD904B3003BE9A2 /* messageIncomingBubbleBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageIncomingBubbleBottom.png; sourceTree = "<group>"; };
+		4A5DD1E41BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageIncomingBubbleMiddle.png; sourceTree = "<group>"; };
+		4A5DD1E51BD904B3003BE9A2 /* messageIncomingBubbleTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageIncomingBubbleTop.png; sourceTree = "<group>"; };
+		4A5DD1E61BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageOutgoingBubbleBottom.png; sourceTree = "<group>"; };
+		4A5DD1E71BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageOutgoingBubbleMiddle.png; sourceTree = "<group>"; };
+		4A5DD1E81BD904B3003BE9A2 /* messageOutgoingBubbleTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageOutgoingBubbleTop.png; sourceTree = "<group>"; };
+		4A5DD1EF1BD909FB003BE9A2 /* ChatItemTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatItemTableCellView.h; sourceTree = "<group>"; };
+		4A5DD1F01BD909FB003BE9A2 /* ChatItemTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatItemTableCellView.m; sourceTree = "<group>"; };
 		4A6716FE1BCD05CC00139A6F /* KeypadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadViewController.h; sourceTree = "<group>"; };
 		4A6716FF1BCD05CC00139A6F /* KeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeypadViewController.m; sourceTree = "<group>"; };
 		4A6717001BCD05CC00139A6F /* KeypadWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadWindowController.h; sourceTree = "<group>"; };
@@ -456,6 +482,9 @@
 		4AB556441BDE2598003382B2 /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
 		4AB556461BDE25AD003382B2 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		4AB556471BDE25AD003382B2 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		4AB556491BDE765E003382B2 /* NewMessageCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageCellView.h; sourceTree = "<group>"; };
+		4AB5564A1BDE765E003382B2 /* NewMessageCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageCellView.m; sourceTree = "<group>"; };
+		4AB556551BE2406B003382B2 /* messages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages.png; sourceTree = "<group>"; };
 		4AC13F931BBBFD21008305CD /* CallLogService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CallLogService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4AC13F941BBBFD21008305CD /* CallLogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallLogService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4AC13F9C1BBC0769008305CD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SettingsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -474,6 +503,9 @@
 		4AC389DB1B8E87530063298F /* VATRPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VATRPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AC389E01B8E87530063298F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AC389E11B8E87530063298F /* VATRPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VATRPTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		4AC975F31BDA22F700AD35C8 /* chat_message_inprogress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_message_inprogress.png; sourceTree = "<group>"; };
+		4AC975F51BDA23B400AD35C8 /* chat_message_delivered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_message_delivered.png; sourceTree = "<group>"; };
+		4AC975F71BDA23E900AD35C8 /* chat_message_not_delivered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_message_not_delivered.png; sourceTree = "<group>"; };
 		4AE0C6761BB2E9D000B4E208 /* CallWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CallWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4AE0C6791BB2E9E900B4E208 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CallViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -737,6 +769,33 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		4A5DD1D51BD8DA9D003BE9A2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				4A5DD1D61BD8DADB003BE9A2 /* NSArray+Reversing.h */,
+				4A5DD1D71BD8DADB003BE9A2 /* NSArray+Reversing.m */,
+				4A5DD1D81BD8DADB003BE9A2 /* NSImage+Merge.h */,
+				4A5DD1D91BD8DADB003BE9A2 /* NSImage+Merge.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		4A5DD1E21BD904B3003BE9A2 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				4AC975F71BDA23E900AD35C8 /* chat_message_not_delivered.png */,
+				4AC975F51BDA23B400AD35C8 /* chat_message_delivered.png */,
+				4AC975F31BDA22F700AD35C8 /* chat_message_inprogress.png */,
+				4A5DD1E31BD904B3003BE9A2 /* messageIncomingBubbleBottom.png */,
+				4A5DD1E41BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png */,
+				4A5DD1E51BD904B3003BE9A2 /* messageIncomingBubbleTop.png */,
+				4A5DD1E61BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png */,
+				4A5DD1E71BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png */,
+				4A5DD1E81BD904B3003BE9A2 /* messageOutgoingBubbleTop.png */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 		4A6716FD1BCD05CC00139A6F /* Keypad */ = {
 			isa = PBXGroup;
 			children = (
@@ -807,6 +866,10 @@
 				4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */,
 				4AA203BE1BD4CAF500DD9A4D /* ContactTableCellView.h */,
 				4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */,
+				4A5DD1EF1BD909FB003BE9A2 /* ChatItemTableCellView.h */,
+				4A5DD1F01BD909FB003BE9A2 /* ChatItemTableCellView.m */,
+				4AB556491BDE765E003382B2 /* NewMessageCellView.h */,
+				4AB5564A1BDE765E003382B2 /* NewMessageCellView.m */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -846,11 +909,13 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4A5DD1E21BD904B3003BE9A2 /* Message */,
 				4AB556411BDE2453003382B2 /* app_icon.png */,
 				4AA203C51BD4D2A000DD9A4D /* chat_icon.png */,
 				CE34B2B41BD1014C0010A2B0 /* info-icon.png */,
 				4AAF56191BB1615900241DC2 /* accounts_icon.png */,
 				4A50F9B91BB1BDC900FCD070 /* cameraview.png */,
+				4AB556551BE2406B003382B2 /* messages.png */,
 				4A50F9BA1BB1BDC900FCD070 /* contacts.png */,
 				4A50F9BB1BB1BDC900FCD070 /* dialpad.png */,
 				4A6717041BCD05EE00139A6F /* keypad.png */,
@@ -936,6 +1001,7 @@
 				4AAFD9FC1BA610F100C35A74 /* LinphoneManager */,
 				4A902DDA1BB9486800ECFD86 /* Services */,
 				4A902DE31BB949C900ECFD86 /* Models */,
+				4A5DD1D51BD8DA9D003BE9A2 /* Categories */,
 				4AA203BB1BD4CAF500DD9A4D /* Custom UI */,
 				2BA68DC71B985EE300145575 /* BFNavigationController */,
 				4AB556401BDE229A003382B2 /* About */,
@@ -1185,7 +1251,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
+				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
+				4AB556561BE2406B003382B2 /* messages.png in Resources */,
+				4A5DD1EB1BD904B3003BE9A2 /* messageIncomingBubbleTop.png in Resources */,
 				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
+				4AC975F81BDA23E900AD35C8 /* chat_message_not_delivered.png in Resources */,
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
 				4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */,
 				4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */,
@@ -1197,18 +1267,24 @@
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
+				4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */,
+				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
+				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
+				4A5DD1ED1BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png in Resources */,
+				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
+				4A5DD1EE1BD904B3003BE9A2 /* messageOutgoingBubbleTop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1271,6 +1347,7 @@
 				2B463F0B1B984E49008E8333 /* SettingsWindowController.m in Sources */,
 				4AB556451BDE2598003382B2 /* AboutWindowController.m in Sources */,
 				2BA68DD71B98617000145575 /* LoginViewController.m in Sources */,
+				4A5DD1F11BD909FB003BE9A2 /* ChatItemTableCellView.m in Sources */,
 				5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */,
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
@@ -1283,6 +1360,9 @@
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
+				4A5DD1DB1BD8DADB003BE9A2 /* NSImage+Merge.m in Sources */,
+				4AB5564B1BDE765E003382B2 /* NewMessageCellView.m in Sources */,
+				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,

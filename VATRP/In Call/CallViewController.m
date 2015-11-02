@@ -96,7 +96,17 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonOpenMessage:(id)sender {
-    [[ChatService sharedInstance] openChatWindow];
+    const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    NSString *userName = nil;
+    
+    if (addr != NULL) {
+        const char* lUserName = linphone_address_get_username(addr);
+
+        if (lUserName)
+            userName = [NSString stringWithUTF8String:lUserName];
+    }
+
+    [[ChatService sharedInstance] openChatWindowWithUser:userName];
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
@@ -220,6 +230,10 @@ static const float callAlertStepInterval = 0.5;
             self.labelCallState.stringValue = @"Call End";
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
+            
+            if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
+                [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
+            }
 
             //            if (canHideInCallView) {
             //                // Go to dialer view

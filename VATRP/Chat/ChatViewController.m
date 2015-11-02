@@ -143,36 +143,6 @@
         
         self.selectUser = nil;
         return;
-        
-        int count = ms_list_size(contacts);
-
-        for (int i = 0; i < count; i++) {
-            LinphoneChatRoom *chatRoom = (LinphoneChatRoom *)ms_list_nth_data(contacts,  i);
-            
-            if (chatRoom == nil) {
-                NSLog(@"Cannot update chat cell: null chat");
-                continue;
-            }
-            
-            const LinphoneAddress *linphoneAddress = linphone_chat_room_get_peer_address(chatRoom);
-            
-            if (linphoneAddress == NULL)
-                continue;
-            
-            const char *username_char = linphone_address_get_username(linphoneAddress);
-            
-            if (username_char) {
-                NSString *username = [NSString stringWithUTF8String:username_char];
-                
-                if (username && [username isEqualToString:self.selectUser]) {
-                    [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:i] afterDelay:0.0];
-                    
-                    break;
-                }
-            }
-        }
-        
-        self.selectUser = nil;
     } else {
         [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:0] afterDelay:0.0];
     }
@@ -439,30 +409,35 @@ static void chatTable_free_chatrooms(void *data) {
         
         LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
         
-        if (currentCall_ && lUserName) {
-            NSString *remote_address;
-            const LinphoneAddress* addr = linphone_call_get_remote_address(currentCall_);
-            if (addr != NULL) {
-                BOOL useLinphoneAddress = true;
-                // contact name
-                if(useLinphoneAddress) {
-                    const char* remote_user_name = linphone_address_get_username(addr);
-                    if(remote_user_name)
-                        remote_address = [NSString stringWithUTF8String:remote_user_name];
+        if (currentCall_) {
+            const LinphoneCallParams* remote = linphone_call_get_remote_params(currentCall_);
+            BOOL rtt_enabled = linphone_call_params_realtime_text_enabled(remote);
+            
+            if (currentCall_ && lUserName && rtt_enabled && [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]) {
+                NSString *remote_address;
+                const LinphoneAddress* addr = linphone_call_get_remote_address(currentCall_);
+                if (addr != NULL) {
+                    BOOL useLinphoneAddress = true;
+                    // contact name
+                    if(useLinphoneAddress) {
+                        const char* remote_user_name = linphone_address_get_username(addr);
+                        if(remote_user_name)
+                            remote_address = [NSString stringWithUTF8String:remote_user_name];
+                    }
                 }
-            }
-            
-            // Set Address
-            if (remote_address == nil) {
-                remote_address = @"Unknown";
-            }
-            
-            NSString *displayName = [NSString stringWithUTF8String:lUserName];
-            
-            if (remote_address && remote_address == displayName) {
-                self.scrollViewIncoming.hidden = NO;
-                self.scrollViewOutgoing.hidden = NO;
-                self.scrollViewContent.hidden = YES;
+                
+                // Set Address
+                if (remote_address == nil) {
+                    remote_address = @"Unknown";
+                }
+                
+                NSString *displayName = [NSString stringWithUTF8String:lUserName];
+                
+                if (remote_address && remote_address == displayName) {
+                    self.scrollViewIncoming.hidden = NO;
+                    self.scrollViewOutgoing.hidden = NO;
+                    self.scrollViewContent.hidden = YES;
+                }
             }
         }
 

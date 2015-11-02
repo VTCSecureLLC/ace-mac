@@ -8,6 +8,7 @@
 
 #import "TestingViewController.h"
 #import "LinphoneManager.h"
+#import "CallService.h"
 
 @interface TestingViewController () {
     BOOL isChanged;
@@ -17,6 +18,7 @@
 @property (weak) IBOutlet NSButton *buttonEnableAVPF;
 @property (weak) IBOutlet NSButton *buttonSendDTMF;
 @property (weak) IBOutlet NSButton *buttonEnableAdaptiveRateControl;
+@property (weak) IBOutlet NSButton *buttonEnableRealTimeText;
 
 @end
 
@@ -37,6 +39,7 @@
     }
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
+    self.buttonEnableRealTimeText.state = [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED];
 }
 
 - (void) save {
@@ -44,6 +47,7 @@
         return;
     }
     
+    [[NSUserDefaults standardUserDefaults] setBool:self.buttonEnableRealTimeText.state forKey:kREAL_TIME_TEXT_ENABLED];
     [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -66,15 +70,8 @@
     linphone_core_set_use_info_for_dtmf([LinphoneManager getLc], self.buttonSendDTMF.state);
     linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], self.buttonEnableAdaptiveRateControl.state);
 }
-- (IBAction)onCheckBoxEnableAdaptiveRateControl:(id)sender {
-    isChanged = YES;
-}
 
-- (IBAction)onCheckBoxAutoAnswerCall:(id)sender {
-    isChanged = YES;
-}
-
-- (IBAction)onCheckBoxEnableAVPF:(id)sender {
+- (IBAction)onCheckBox:(id)sender {
     isChanged = YES;
 }
 

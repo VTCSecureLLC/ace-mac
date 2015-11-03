@@ -26,7 +26,9 @@
                                         <menuItem isSeparatorItem="YES" id="Vdn-KY-TV2"/>
                                         <menuItem title="Provide VATRP Feedback" id="1gL-fB-Nk5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Provide VATRP Feedback" systemMenu="services" id="uHZ-8A-MP1"/>
+                                            <connections>
+                                                <action selector="onMenuItemACEFeedBack:" target="Voe-Tx-rLC" id="p7b-Hg-BwH"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="U6u-jY-bhT"/>
                                         <menuItem title="Check for Update" id="uqD-pG-08q">
@@ -168,28 +170,6 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Help" id="LTC-O3-4bZ">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Help" systemMenu="help" id="WHx-8v-fUx">
-                                    <items>
-                                        <menuItem title="Learn about" id="wSg-dD-bz1">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="OT0-x4-ao7"/>
-                                        <menuItem title="Go to Support" id="Gg1-Oj-C8k">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="qBj-Zf-P2N"/>
-                                        <menuItem title="Welcome Tour" id="QHo-9P-FaY">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="uRy-6q-yud"/>
-                                        <menuItem title="Privacy Policy" id="B6n-de-DjH">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                             <menuItem title="Audio" id="H2w-lI-P6a">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Audio" id="mai-Rg-yW5">
@@ -214,6 +194,28 @@
                                             <connections>
                                                 <action selector="copy:" target="Ady-hI-5gd" id="g4w-SM-bjS"/>
                                             </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Help" id="LTC-O3-4bZ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Help" systemMenu="help" id="WHx-8v-fUx">
+                                    <items>
+                                        <menuItem title="Learn about" id="wSg-dD-bz1">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="OT0-x4-ao7"/>
+                                        <menuItem title="Go to Support" id="Gg1-Oj-C8k">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="qBj-Zf-P2N"/>
+                                        <menuItem title="Welcome Tour" id="QHo-9P-FaY">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="uRy-6q-yud"/>
+                                        <menuItem title="Privacy Policy" id="B6n-de-DjH">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
                                 </menu>

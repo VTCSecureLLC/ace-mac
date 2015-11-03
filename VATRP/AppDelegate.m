@@ -168,6 +168,10 @@
                                                object:nil];
 }
 
+- (IBAction)onMenuItemACEFeedBack:(id)sender {
+    [[[BITHockeyManager sharedHockeyManager] feedbackManager] showFeedbackWindow];
+}
+
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
     

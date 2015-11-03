@@ -1793,7 +1793,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     }
 
     const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
-    linphone_call_params_enable_realtime_text(calleeParams,linphone_call_params_realtime_text_enabled(callerParams));
+    linphone_call_params_enable_realtime_text(calleeParams,[[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
 
 }

@@ -604,7 +604,7 @@ static void chatTable_free_chatrooms(void *data) {
     
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
     
-    if (currentCall_) {
+    if (currentCall_ && selectedChatRoom) {
         NSString *remote_address;
         const LinphoneAddress* addr = linphone_call_get_remote_address(currentCall_);
         if (addr != NULL) {
@@ -670,6 +670,15 @@ static void chatTable_free_chatrooms(void *data) {
                 
                 const char *domain = linphone_proxy_config_get_domain(cfg);
 
+                if (!self.textFieldNoRecipient.stringValue.length) {
+                    NSAlert *alert = [[NSAlert alloc] init];
+                    [alert addButtonWithTitle:@"OK"];
+                    [alert setMessageText:@"Invalid address. Please specify the entire SIP address for the chat"];
+                    [alert runModal];
+                    
+                    return YES;
+                }
+                
                 NSString *sip_url = [NSString stringWithFormat:@"sip:%@@%s", self.textFieldNoRecipient.stringValue, domain];
                 LinphoneAddress *addr = linphone_address_new([sip_url UTF8String]);
                 
@@ -678,6 +687,8 @@ static void chatTable_free_chatrooms(void *data) {
                     [alert addButtonWithTitle:@"OK"];
                     [alert setMessageText:@"Invalid address. Please specify the entire SIP address for the chat"];
                     [alert runModal];
+                    
+                    return YES;
                 } else {
                     selectedChatRoom = linphone_core_get_chat_room(lc, addr);
                     
@@ -686,6 +697,8 @@ static void chatTable_free_chatrooms(void *data) {
                         [alert addButtonWithTitle:@"OK"];
                         [alert setMessageText:@"Invalid address. Please specify the entire SIP address for the chat"];
                         [alert runModal];
+                        
+                        return YES;
                     } else {
                         if (selectedContactCell) {
                             [selectedContactCell.layer setBackgroundColor:[NSColor clearColor].CGColor];

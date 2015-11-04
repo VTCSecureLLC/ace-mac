@@ -173,6 +173,10 @@
     [[[BITHockeyManager sharedHockeyManager] feedbackManager] showFeedbackWindow];
 }
 
+-(void) SignOut {
+    [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
+}
+
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
     

@@ -9,6 +9,7 @@
 #import "TestingViewController.h"
 #import "LinphoneManager.h"
 #import "CallService.h"
+#import "AppDelegate.h"
 
 @interface TestingViewController () {
     BOOL isChanged;
@@ -73,6 +74,22 @@
 
 - (IBAction)onCheckBox:(id)sender {
     isChanged = YES;
+}
+
+- (IBAction)onButtonCleareUserData:(id)sender {
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"linphone_chats.db"];
+    
+    if ([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:nil];
+    }
+    
+    [[AppDelegate sharedInstance] SignOut];
 }
 
 @end

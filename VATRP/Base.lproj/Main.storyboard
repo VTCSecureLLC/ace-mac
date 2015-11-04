@@ -1966,6 +1966,17 @@ DQ
                                     <action selector="onCheckBox:" target="wId-2F-cAs" id="fca-5c-1X7"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7w-zJ-O1T">
+                                <rect key="frame" x="72" y="193" width="177" height="36"/>
+                                <animations/>
+                                <buttonCell key="cell" type="smallSquare" title="Cleare user data" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D8d-58-twG">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onButtonCleareUserData:" target="wId-2F-cAs" id="hdw-LX-OKl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                     </view>

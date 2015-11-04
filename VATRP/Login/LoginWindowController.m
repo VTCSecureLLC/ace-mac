@@ -30,6 +30,7 @@
 
     if (accountModel &&
         accountModel.username &&
+        accountModel.userID &&
         accountModel.password &&
         accountModel.domain &&
         accountModel.transport &&

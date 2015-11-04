@@ -136,6 +136,7 @@
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
         [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+                                                          UserID:@""
                                                         Password:@""
                                                           Domain:@""
                                                        Transport:@""

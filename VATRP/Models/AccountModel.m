@@ -12,6 +12,7 @@
 @implementation AccountModel
 
 @synthesize username;
+@synthesize userID;
 @synthesize password;
 @synthesize domain;
 @synthesize transport;
@@ -31,6 +32,7 @@
 
 - (void) loadByDictionary:(NSDictionary*)dict {
     self.username = [Utils stringValueDict:dict Key:@"username"];
+    self.userID = [Utils stringValueDict:dict Key:@"userID"];
     self.password = [Utils stringValueDict:dict Key:@"password"];
     self.domain = [Utils stringValueDict:dict Key:@"domain"];
     self.transport = [Utils stringValueDict:dict Key:@"transport"];
@@ -42,6 +44,7 @@
     NSMutableDictionary *mDict = [[NSMutableDictionary alloc] init];
     
     [mDict setObject:self.username forKeyedSubscript:@"username"];
+    [mDict setObject:self.userID forKeyedSubscript:@"userID"];
     [mDict setObject:self.password forKeyedSubscript:@"password"];
     [mDict setObject:self.domain forKeyedSubscript:@"domain"];
     [mDict setObject:self.transport forKeyedSubscript:@"transport"];

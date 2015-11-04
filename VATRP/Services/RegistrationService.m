@@ -41,6 +41,7 @@
 
 - (void) registerWithAccountModel:(AccountModel*)accountModel {
     [self verificationSignInWithUsername:accountModel.username
+                                  UserID:accountModel.userID ? accountModel.userID : accountModel.username
                                 password:accountModel.password
                                   domain:accountModel.domain
                            withTransport:accountModel.transport
@@ -48,11 +49,13 @@
 }
 
 - (void) registerWithUsername:(NSString*)username
+                       UserID:(NSString*)userID
                      password:(NSString*)password
                        domain:(NSString*)domain
                     transport:(NSString*)transport
                          port:(int)port {
     [self verificationSignInWithUsername:username
+                                  UserID:userID ? userID : username
                                 password:password
                                   domain:domain
                            withTransport:transport
@@ -74,7 +77,7 @@
     }
 }
 
-- (void) verificationSignInWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport port:(int)port {
+- (void) verificationSignInWithUsername:(NSString*)username UserID:(NSString*)userID password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport port:(int)port {
     
     if([transport isEqualToString:@"Unencrypted (TCP)"]){
         transport = @"TCP";
@@ -85,7 +88,7 @@
         transport = @"TCP";
     }
 
-    if ([self verificationWithUsername:username password:password domain:domain withTransport:transport]) {
+    if ([self verificationWithUsername:username UserID:userID password:password domain:domain withTransport:transport]) {
         if ([LinphoneManager instance].connectivity == none) {
             NSAlert *alert = [[NSAlert alloc]init];
             [alert addButtonWithTitle:NSLocalizedString(@"Stay here", nil)];
@@ -95,12 +98,12 @@
             
             //            [alert addButtonWithTitle:NSLocalizedString(@"Continue", nil) block:^{
             //                [waitView setHidden:true];
-            [self addProxyConfig:username password:password domain:domain withTransport:transport port:port];
+            [self addProxyConfig:username UserID:userID password:password domain:domain withTransport:transport port:port];
             //                [[PhoneMainView instance] changeCurrentView:[DialerViewController compositeViewDescription]];
             //            }];
             //            [alert show];
         } else {
-            BOOL success = [self addProxyConfig:username password:password domain:domain withTransport:transport port:port];
+            BOOL success = [self addProxyConfig:username UserID:userID password:password domain:domain withTransport:transport port:port];
             //            if( !success ){
             //                waitView.hidden = true;
             //            }
@@ -108,7 +111,7 @@
     }
 }
 
-- (BOOL) verificationWithUsername:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
+- (BOOL) verificationWithUsername:(NSString*)username UserID:(NSString*)userID password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
     NSMutableString *errors = [NSMutableString string];
     if ([username length] == 0) {
         [errors appendString:[NSString stringWithFormat:NSLocalizedString(@"Please enter a valid username.\n", nil)]];
@@ -136,7 +139,7 @@
     return TRUE;
 }
 
-- (BOOL)addProxyConfig:(NSString*)username password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport port:(int)port {
+- (BOOL)addProxyConfig:(NSString*)username UserID:(NSString*)userID password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport port:(int)port {
     transport = [transport lowercaseString];
     LinphoneCore* lc = [LinphoneManager getLc];
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
@@ -196,9 +199,10 @@
     ms_free(c_parsedAddress);
     
     LinphoneAuthInfo* info = linphone_auth_info_new([username UTF8String]
-                                                    , NULL, [password UTF8String]
-                                                    , NULL
-                                                    , NULL
+                                                    ,[userID UTF8String]
+                                                    ,[password UTF8String]
+                                                    ,NULL
+                                                    ,NULL
                                                     ,linphone_proxy_config_get_domain(proxyCfg));
     
     [self setDefaultSettings:proxyCfg];

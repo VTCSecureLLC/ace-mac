@@ -18,6 +18,7 @@
 }
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
+@property (weak) IBOutlet NSTextField *textFieldUserID;
 @property (weak) IBOutlet NSSecureTextField *secureTextFieldPassword;
 @property (weak) IBOutlet NSTextField *textFieldDomain;
 @property (weak) IBOutlet NSTextField *textFieldPort;
@@ -72,6 +73,7 @@
     
     if(accountModel){
         if(accountModel.username != NULL) { self.textFieldUsername.stringValue = accountModel.username; }
+        if(accountModel.userID != NULL) { self.textFieldUserID.stringValue = accountModel.userID; }
         if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
         if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
         if(accountModel.transport != NULL) {
@@ -119,6 +121,7 @@
     }
 
     [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
+                                                    UserID:self.textFieldUserID.stringValue
                                                     Password:self.secureTextFieldPassword.stringValue
                                                       Domain:self.textFieldDomain.stringValue
                                                    Transport:transport

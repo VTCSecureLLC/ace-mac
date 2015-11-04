@@ -12,7 +12,13 @@
 @interface AccountsService : NSObject
 
 + (AccountsService *)sharedInstance;
-- (void) addAccountWithUsername:(NSString*)username Password:(NSString*)password Domain:(NSString*)domain Transport:(NSString*)transport Port:(int)port isDefault:(BOOL)isDefault;
+- (void) addAccountWithUsername:(NSString*)username
+                         UserID:(NSString*)userID
+                       Password:(NSString*)password
+                         Domain:(NSString*)domain
+                      Transport:(NSString*)transport
+                           Port:(int)port
+                      isDefault:(BOOL)isDefault;
 - (void) removeAccountWithUsername:(NSString*)username;
 - (AccountModel*) getDefaultAccount;
 

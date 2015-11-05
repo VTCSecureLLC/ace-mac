@@ -18,12 +18,12 @@ list(APPEND _IMPORT_CHECK_FILES_FOR_bellesip "${_IMPORT_PREFIX}/lib/libbellesip.
 # Import target "ortp" for configuration "Release"
 set_property(TARGET ortp APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(ortp PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libortp.9.dylib"
-  IMPORTED_SONAME_RELEASE "@rpath/libortp.9.dylib"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libortp.10.dylib"
+  IMPORTED_SONAME_RELEASE "@rpath/libortp.10.dylib"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS ortp )
-list(APPEND _IMPORT_CHECK_FILES_FOR_ortp "${_IMPORT_PREFIX}/lib/libortp.9.dylib" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_ortp "${_IMPORT_PREFIX}/lib/libortp.10.dylib" )
 
 # Import target "bzrtp" for configuration "Release"
 set_property(TARGET bzrtp APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
@@ -38,32 +38,32 @@ list(APPEND _IMPORT_CHECK_FILES_FOR_bzrtp "${_IMPORT_PREFIX}/lib/libbzrtp.0.dyli
 # Import target "mediastreamer_base" for configuration "Release"
 set_property(TARGET mediastreamer_base APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(mediastreamer_base PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libmediastreamer_base.5.dylib"
-  IMPORTED_SONAME_RELEASE "@rpath/libmediastreamer_base.5.dylib"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libmediastreamer_base.6.dylib"
+  IMPORTED_SONAME_RELEASE "@rpath/libmediastreamer_base.6.dylib"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS mediastreamer_base )
-list(APPEND _IMPORT_CHECK_FILES_FOR_mediastreamer_base "${_IMPORT_PREFIX}/lib/libmediastreamer_base.5.dylib" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_mediastreamer_base "${_IMPORT_PREFIX}/lib/libmediastreamer_base.6.dylib" )
 
 # Import target "mediastreamer_voip" for configuration "Release"
 set_property(TARGET mediastreamer_voip APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(mediastreamer_voip PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libmediastreamer_voip.5.dylib"
-  IMPORTED_SONAME_RELEASE "@rpath/libmediastreamer_voip.5.dylib"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libmediastreamer_voip.6.dylib"
+  IMPORTED_SONAME_RELEASE "@rpath/libmediastreamer_voip.6.dylib"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS mediastreamer_voip )
-list(APPEND _IMPORT_CHECK_FILES_FOR_mediastreamer_voip "${_IMPORT_PREFIX}/lib/libmediastreamer_voip.5.dylib" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_mediastreamer_voip "${_IMPORT_PREFIX}/lib/libmediastreamer_voip.6.dylib" )
 
 # Import target "linphone" for configuration "Release"
 set_property(TARGET linphone APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(linphone PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/liblinphone.7.dylib"
-  IMPORTED_SONAME_RELEASE "@rpath/liblinphone.7.dylib"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/liblinphone.8.dylib"
+  IMPORTED_SONAME_RELEASE "@rpath/liblinphone.8.dylib"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS linphone )
-list(APPEND _IMPORT_CHECK_FILES_FOR_linphone "${_IMPORT_PREFIX}/lib/liblinphone.7.dylib" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_linphone "${_IMPORT_PREFIX}/lib/liblinphone.8.dylib" )
 
 # Commands beyond this point should not need to know the version.
 set(CMAKE_IMPORT_FILE_VERSION)

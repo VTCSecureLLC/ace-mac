@@ -477,7 +477,9 @@ static void chatTable_free_chatrooms(void *data) {
     if (selectedChatRoom != NULL) {
         LinphoneCore *lc = [LinphoneManager getLc];
         const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
-        LinphoneCallParams *lcallParams = linphone_core_create_default_call_parameters(lc);
+        LinphoneCall *thiscall;
+        thiscall = linphone_core_get_current_call(lc);
+        LinphoneCallParams *lcallParams = linphone_core_create_call_params(lc, thiscall);
         linphone_call_params_enable_audio(lcallParams, false);
         linphone_call_params_enable_realtime_text(lcallParams, true);
         currentCall = linphone_core_invite_address_with_params(lc, addr, lcallParams);

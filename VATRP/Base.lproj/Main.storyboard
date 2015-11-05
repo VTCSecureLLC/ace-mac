@@ -1988,7 +1988,7 @@ DQ
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="ogO-AX-hsJ">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="776" y="519" width="450" height="386"/>
+                        <rect key="contentRect" x="776" y="519" width="450" height="416"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
                     </window>
                     <connections>
@@ -2004,7 +2004,7 @@ DQ
             <objects>
                 <viewController id="wrp-WB-VfH" sceneMemberID="viewController">
                     <view key="view" id="gsC-oy-sw5">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="388"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="416"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </view>
@@ -2031,7 +2031,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ep4-y8-ezA">
-                                <rect key="frame" x="48" y="331" width="185" height="20"/>
+                                <rect key="frame" x="48" y="303" width="185" height="20"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Password" id="m8V-KD-UFG">
                                     <font key="font" metaFont="system"/>
@@ -2040,7 +2040,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IHD-GN-QX6">
-                                <rect key="frame" x="48" y="303" width="185" height="20"/>
+                                <rect key="frame" x="48" y="275" width="185" height="20"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Domain" id="lb1-6k-d8w">
                                     <font key="font" metaFont="system"/>
@@ -2049,7 +2049,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l5M-TV-TVb">
-                                <rect key="frame" x="48" y="275" width="185" height="20"/>
+                                <rect key="frame" x="48" y="247" width="185" height="20"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Port" id="d6f-wL-wQs">
                                     <font key="font" metaFont="system"/>
@@ -2058,7 +2058,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXD-Ew-LsR">
-                                <rect key="frame" x="48" y="247" width="185" height="20"/>
+                                <rect key="frame" x="48" y="219" width="185" height="20"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Transport" id="0oQ-p4-9dr">
                                     <font key="font" metaFont="system"/>
@@ -2076,10 +2076,33 @@ DQ
                                 </textFieldCell>
                                 <connections>
                                     <outlet property="delegate" destination="kdm-MC-IU1" id="F15-Ke-fPn"/>
+                                    <outlet property="nextKeyView" destination="RwF-G4-ymG" id="aog-bU-rsn"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OSm-Mh-hkz">
+                                <rect key="frame" x="48" y="331" width="185" height="20"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="UserID" id="dJX-Bf-Ueb">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RwF-G4-ymG">
+                                <rect key="frame" x="245" y="330" width="184" height="22"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Xsh-cp-4qp">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="kdm-MC-IU1" id="kfn-eX-DJS"/>
+                                    <outlet property="nextKeyView" destination="2Xu-1K-KKV" id="iVd-E2-o04"/>
                                 </connections>
                             </textField>
                             <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Xu-1K-KKV">
-                                <rect key="frame" x="245" y="330" width="184" height="22"/>
+                                <rect key="frame" x="245" y="302" width="184" height="22"/>
                                 <animations/>
                                 <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="98f-GW-Bfk">
                                     <font key="font" metaFont="system"/>
@@ -2091,10 +2114,11 @@ DQ
                                 </secureTextFieldCell>
                                 <connections>
                                     <outlet property="delegate" destination="kdm-MC-IU1" id="haw-R5-1pc"/>
+                                    <outlet property="nextKeyView" destination="k0N-cs-rYc" id="laZ-6J-coT"/>
                                 </connections>
                             </secureTextField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k0N-cs-rYc">
-                                <rect key="frame" x="245" y="302" width="184" height="22"/>
+                                <rect key="frame" x="245" y="274" width="184" height="22"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="dwg-Tn-epE">
                                     <font key="font" metaFont="system"/>
@@ -2103,10 +2127,11 @@ DQ
                                 </textFieldCell>
                                 <connections>
                                     <outlet property="delegate" destination="kdm-MC-IU1" id="nsc-3q-wgA"/>
+                                    <outlet property="nextKeyView" destination="Q3Q-9s-Rkw" id="nbE-5e-DjM"/>
                                 </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3Q-9s-Rkw">
-                                <rect key="frame" x="245" y="275" width="184" height="22"/>
+                                <rect key="frame" x="245" y="247" width="184" height="22"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="gCT-CX-Owt">
                                     <font key="font" metaFont="system"/>
@@ -2118,7 +2143,7 @@ DQ
                                 </connections>
                             </textField>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sL8-fC-hfK">
-                                <rect key="frame" x="246" y="246" width="186" height="26"/>
+                                <rect key="frame" x="246" y="218" width="186" height="26"/>
                                 <animations/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="2g4-Ze-R1D">
                                     <font key="font" metaFont="system"/>
@@ -2131,6 +2156,7 @@ DQ
                                 </comboBoxCell>
                                 <connections>
                                     <action selector="onComboboxTransport:" target="kdm-MC-IU1" id="IFW-tE-H8U"/>
+                                    <outlet property="nextKeyView" destination="MCD-n6-8D8" id="GIK-KF-koK"/>
                                 </connections>
                             </comboBox>
                         </subviews>
@@ -2141,6 +2167,7 @@ DQ
                         <outlet property="secureTextFieldPassword" destination="2Xu-1K-KKV" id="AbG-4j-TrG"/>
                         <outlet property="textFieldDomain" destination="k0N-cs-rYc" id="eia-xB-7rZ"/>
                         <outlet property="textFieldPort" destination="Q3Q-9s-Rkw" id="dcY-xk-9Bd"/>
+                        <outlet property="textFieldUserID" destination="RwF-G4-ymG" id="VAV-KU-IFQ"/>
                         <outlet property="textFieldUsername" destination="MCD-n6-8D8" id="BlG-NC-x5F"/>
                     </connections>
                 </viewController>
@@ -2475,11 +2502,11 @@ DQ
             <objects>
                 <viewController storyboardIdentifier="ServiceSelectionViewController" id="MoO-yp-xMY" customClass="ServiceSelectionViewController" sceneMemberID="viewController">
                     <view key="view" id="PFg-lT-38Z">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="386"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="416"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q0X-8a-5ml">
-                                <rect key="frame" x="137" y="178" width="177" height="36"/>
+                                <rect key="frame" x="137" y="208" width="177" height="36"/>
                                 <animations/>
                                 <buttonCell key="cell" type="smallSquare" title="Video Relay Service" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ndi-4d-0Fu">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2490,7 +2517,7 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2tb-uT-pMU">
-                                <rect key="frame" x="137" y="136" width="177" height="36"/>
+                                <rect key="frame" x="137" y="166" width="177" height="36"/>
                                 <animations/>
                                 <buttonCell key="cell" type="smallSquare" title="IP - Relay" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="N07-MO-fs0">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2501,7 +2528,7 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fc-Fy-rUQ">
-                                <rect key="frame" x="56" y="309" width="338" height="37"/>
+                                <rect key="frame" x="56" y="339" width="338" height="37"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="ACE" id="XbJ-wb-l2N">
                                     <font key="font" metaFont="system" size="36"/>
@@ -2510,7 +2537,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCM-9Y-vaX">
-                                <rect key="frame" x="56" y="270" width="338" height="23"/>
+                                <rect key="frame" x="56" y="300" width="338" height="23"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Let's Get Started..." id="5E7-no-eXH">
                                     <font key="font" metaFont="system" size="19"/>
@@ -2519,7 +2546,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BtO-SR-Daj">
-                                <rect key="frame" x="56" y="237" width="338" height="23"/>
+                                <rect key="frame" x="56" y="267" width="338" height="23"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Which Service do you use the most?" id="QN3-03-JZy">
                                     <font key="font" metaFont="system" size="19"/>
@@ -2528,7 +2555,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WR5-bx-Zur">
-                                <rect key="frame" x="137" y="94" width="177" height="36"/>
+                                <rect key="frame" x="137" y="124" width="177" height="36"/>
                                 <animations/>
                                 <buttonCell key="cell" type="smallSquare" title="IP - CTS" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iFc-AC-Yjd">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2551,11 +2578,11 @@ DQ
             <objects>
                 <viewController storyboardIdentifier="LoginViewController" id="taJ-cA-vAy" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" id="e9X-9W-ZGV">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="386"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="416"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEp-6A-Uvx">
-                                <rect key="frame" x="157" y="238" width="170" height="26"/>
+                                <rect key="frame" x="157" y="268" width="170" height="26"/>
                                 <animations/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="YO1-Ap-8gX">
                                     <font key="font" metaFont="system"/>
@@ -2574,7 +2601,7 @@ DQ
                                 </connections>
                             </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFY-7p-Xe9">
-                                <rect key="frame" x="18" y="242" width="126" height="20"/>
+                                <rect key="frame" x="18" y="272" width="126" height="20"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Select Provider" id="vUX-E1-hk4">
                                     <font key="font" metaFont="system"/>
@@ -2583,7 +2610,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wpF-Nx-sj2">
-                                <rect key="frame" x="18" y="213" width="126" height="20"/>
+                                <rect key="frame" x="18" y="243" width="126" height="20"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Username" id="ccC-Nz-Nfo">
                                     <font key="font" metaFont="system"/>
@@ -2647,7 +2674,7 @@ DQ
                                 </buttonCell>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7c-vP-sOG">
-                                <rect key="frame" x="56" y="319" width="338" height="37"/>
+                                <rect key="frame" x="56" y="349" width="338" height="37"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="ACE" id="6of-9s-sK2">
                                     <font key="font" metaFont="system" size="36"/>
@@ -2656,7 +2683,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQz-sA-YP2">
-                                <rect key="frame" x="56" y="288" width="338" height="23"/>
+                                <rect key="frame" x="56" y="318" width="338" height="23"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Select Default VRS Provider" id="7ov-HT-SOd">
                                     <font key="font" metaFont="system" size="19"/>
@@ -2665,7 +2692,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yt7-aL-AyJ">
-                                <rect key="frame" x="157" y="212" width="167" height="22"/>
+                                <rect key="frame" x="157" y="242" width="167" height="22"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="6W3-vd-8Sz">
                                     <font key="font" metaFont="system"/>
@@ -2673,7 +2700,28 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <outlet property="nextKeyView" destination="YXB-JB-2wd" id="9Rl-j6-U9T"/>
+                                    <outlet property="nextKeyView" destination="bgQ-Ln-HGi" id="8A4-MF-QPZ"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ief-go-9QR">
+                                <rect key="frame" x="18" y="213" width="126" height="20"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="User-ID" id="jYc-PQ-Gst">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bgQ-Ln-HGi">
+                                <rect key="frame" x="157" y="212" width="167" height="22"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mAK-T6-DaT">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="YXB-JB-2wd" id="W0S-Be-moY"/>
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jrJ-3C-iZJ">
@@ -2725,6 +2773,7 @@ DQ
                         <outlet property="textFieldDomain" destination="Req-x3-Xup" id="Yoa-9U-Zj8"/>
                         <outlet property="textFieldPassword" destination="YXB-JB-2wd" id="OhC-gx-MzO"/>
                         <outlet property="textFieldPort" destination="hfr-Le-Bvd" id="ARA-Kt-ovI"/>
+                        <outlet property="textFieldUserID" destination="bgQ-Ln-HGi" id="MxB-yi-VZk"/>
                         <outlet property="textFieldUsername" destination="yt7-aL-AyJ" id="WEU-lu-Wxt"/>
                     </connections>
                 </viewController>

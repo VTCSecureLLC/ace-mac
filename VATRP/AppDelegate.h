@@ -29,6 +29,7 @@
 -(NSPoint) getTabWindowSize;
 -(NSPoint) getTabWindowOrigin;
 -(void) setTabWindowPos:(NSPoint) pos;
+-(void) SignOut;
 
 @end
 

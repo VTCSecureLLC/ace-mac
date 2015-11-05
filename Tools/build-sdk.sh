@@ -138,3 +138,34 @@ make -C mediastreamer2 install
 find / -name 'liblinphone*dylib*' -print
 popd
 pwd
+
+# Copy in the generated binaries
+rsync -aq /usr/local/lib/ VATRP/linphonesdk/libs/
+rsync -aq /usr/local/include/ VATRP/linphonesdk/include/
+rsync -aq /usr/local/lib/mediastreamer/plugins/ VATRP/linphonesdk/libs/mediastreamer/plugins/
+
+# Make the libraries relocatable
+set +e
+for library in $(find VATRP/linphonesdk/libs/ -name '*.dylib' -type f -print) ; do
+  otool -L "$library" | \
+  (
+    set -x
+    read source
+    origin=$(echo $source | sed -e 's/:$//')
+    chmod 644 $origin
+    install_name_tool -id "@rpath/$(basename $origin)" "./$origin"
+    grep -e '/opt/local\|/usr/local\|/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib' | \
+    awk '{print $1}' | sed -e 's%^/opt/local/%%' -e 's%^/usr/local/%%' -e 's%^/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib/%%' | \
+    (
+      while read file ; do \
+        echo $file
+        install_name_tool -change "/opt/local/$file" "@rpath/$(basename $file)" "./$origin"
+        install_name_tool -change "/usr/local/$file" "@rpath/$(basename $file)" "./$origin"
+        install_name_tool -change "/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib/$file" "@rpath/$(basename $file)" "./$origin"
+      done
+    )
+  )
+done
+set -e
+
+

@@ -106,7 +106,7 @@ export PATH=$PATH:~/.local/bin
   ./autogen.sh && ./configure --prefix=/usr/local && CFLAGS="$CFLAGS -Wno-error" make install || ( rm -fr /opt/gtk-quartz-engine ; exit 1 )
 )
 
-cd VATRP/submodules/linphone
+pushd VATRP/submodules/linphone
 
 git submodule update --init --recursive
 
@@ -135,6 +135,6 @@ make -C oRTP install
 make -C mediastreamer2 install
 
 # Overwrite the Belledonne provided binary linphonesdk folder with our source compiled version
-find / -name '*linphone*sdk*' -print
-rsync -SHPaxv linphonesdk/ ../linphonesdk/
-
+find / -name 'liblinphone*dylib*' -print
+popd
+pwd

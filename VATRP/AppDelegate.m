@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HomeWindowController.h"
+#import "AboutWindowController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
@@ -19,6 +20,7 @@
 @interface AppDelegate () {
     HomeWindowController *homeWindowController;
     VideoCallWindowController *videoCallWindowController;
+    AboutWindowController *aboutWindowController;
 }
 
 @end
@@ -119,12 +121,22 @@
     [viewController showSettingsWindow];
 }
 
+- (IBAction)onMenuItemAbout:(id)sender {
+    if (!aboutWindowController) {
+        aboutWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AboutWindowController"];
+        [aboutWindowController showWindow:self];
+    } else {
+        [aboutWindowController showWindow:self];
+    }
+}
+
 - (void)onMenuItemPreferencesSignOut:(id)sender {
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
         [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+                                                          UserID:@""
                                                         Password:@""
                                                           Domain:@""
                                                        Transport:@""
@@ -155,6 +167,14 @@
                                              selector:@selector(registrationUpdateEvent:)
                                                  name:kLinphoneRegistrationUpdate
                                                object:nil];
+}
+
+- (IBAction)onMenuItemACEFeedBack:(id)sender {
+    [[[BITHockeyManager sharedHockeyManager] feedbackManager] showFeedbackWindow];
+}
+
+-(void) SignOut {
+    [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
 }
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {

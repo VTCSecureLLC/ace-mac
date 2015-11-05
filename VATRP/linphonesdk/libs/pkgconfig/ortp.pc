@@ -1,10 +1,10 @@
 # This is a comment
-prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT
-exec_prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT/bin
-includedir=/Users/francois/projects/linphone-cmake-builder/OUTPUT/include
+prefix=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT
+exec_prefix=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/bin
+includedir=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include
 
 Name: oRTP 
 Description: Implement the RFC3550 (RTP) with a easy to use API with high and low level access.
-Version: 0.24.2
-Libs: -L/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib -lortp 
-Cflags: -I/Users/francois/projects/linphone-cmake-builder/OUTPUT/include 
+Version: 0.25.0
+Libs: -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lortp 
+Cflags: -I/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include 

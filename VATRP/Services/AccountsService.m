@@ -59,9 +59,17 @@
     }
 }
 
-- (void) addAccountWithUsername:(NSString*)username Password:(NSString*)password Domain:(NSString*)domain Transport:(NSString*)transport Port:(int)port isDefault:(BOOL)isDefault {
+- (void) addAccountWithUsername:(NSString*)username
+                         UserID:(NSString*)userID
+                       Password:(NSString*)password
+                         Domain:(NSString*)domain
+                      Transport:(NSString*)transport
+                           Port:(int)port
+                      isDefault:(BOOL)isDefault
+{
     AccountModel *accountModel = [[AccountModel alloc] init];
     accountModel.username = username;
+    accountModel.userID = userID;
     accountModel.password = password;
     accountModel.domain = domain;
     accountModel.transport = transport;

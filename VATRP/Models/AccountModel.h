@@ -14,6 +14,7 @@
 - (NSDictionary*) serializedDictionary;
 
 @property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSString *password;
 @property (nonatomic, retain) NSString *domain;
 @property (nonatomic, retain) NSString *transport;

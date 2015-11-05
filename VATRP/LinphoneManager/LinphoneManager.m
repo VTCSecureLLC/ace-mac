@@ -289,15 +289,14 @@ struct codec_name_pref_table codec_pref_table[]={
 		[self copyDefaultSettings];
 		[self overrideDefaultSettings];
 
-//		//set default values for first boot
-//		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
-//#ifdef DEBUG
-//			[self lpConfigSetBool:TRUE  forKey:@"debugenable_preference"];
-//#else
-//			[self lpConfigSetBool:FALSE forKey:@"debugenable_preference"];
-//#endif
-//		}
-
+		//set default values for first boot
+		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
+#ifdef DEBUG
+			[self lpConfigSetBool:TRUE  forKey:@"debugenable_preference"];
+#else
+			[self lpConfigSetBool:FALSE forKey:@"debugenable_preference"];
+#endif
+		}
 		[self migrateFromUserPrefs];
 	}
 	return self;
@@ -466,7 +465,7 @@ exit_dbmigration:
 	NSDictionary* defaults = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
 	NSArray* defaults_keys = [defaults allKeys];
 	NSDictionary* values   = @{@"backgroundmode_preference" :@YES,
-							   @"debugenable_preference"    :@NO,
+							   @"debugenable_preference"    :@YES,
 							   @"start_at_boot_preference"  :@YES};
 	BOOL shouldSync        = FALSE;
 
@@ -499,7 +498,6 @@ exit_dbmigration:
 	if (theLinphoneCore==nil) {
 		@throw([NSException exceptionWithName:@"LinphoneCoreException" reason:@"Linphone core not initialized yet" userInfo:nil]);
 	}
-	linphone_core_set_avpf_mode(theLinphoneCore, LinphoneAVPFEnabled);
 	return theLinphoneCore;
 }
 
@@ -835,8 +833,8 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 
 #pragma mark - Text Received Functions
 
-//- (void)onMessageReceived:(LinphoneCore *)lc room:(LinphoneChatRoom *)room  message:(LinphoneChatMessage*)msg {
-//
+- (void)onMessageReceived:(LinphoneCore *)lc room:(LinphoneChatRoom *)room  message:(LinphoneChatMessage*)msg {
+
 //	if (silentPushCompletion) {
 //
 //		// we were woken up by a silent push. Call the completion handler with NEWDATA
@@ -845,59 +843,26 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 //		silentPushCompletion(UIBackgroundFetchResultNewData);
 //		silentPushCompletion = nil;
 //	}
-//	const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
-//	char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
-//	NSString* address                    = [NSString stringWithUTF8String:c_address];
-//	NSString* remote_uri                 = [NSString stringWithUTF8String:c_address];
-//	const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
-//	NSString* callID                     = [NSString stringWithUTF8String:call_id];
-//
-//	ms_free(c_address);
-//
-//	if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-//
-//		ABRecordRef contact = [fastAddressBook getContact:address];
-//		if(contact) {
-//			address = [FastAddressBook getContactDisplayName:contact];
-//		} else {
-//			if ([[LinphoneManager instance] lpConfigBoolForKey:@"show_contacts_emails_preference"] == true) {
-//				LinphoneAddress *linphoneAddress = linphone_address_new([address cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-//				address = [NSString stringWithUTF8String:linphone_address_get_username(linphoneAddress)];
-//				linphone_address_destroy(linphoneAddress);
-//			}
-//		}
-//		if(address == nil) {
-//			address = NSLocalizedString(@"Unknown", nil);
-//		}
-//
-//		// Create a new notification
-//		UILocalNotification* notif = [[UILocalNotification alloc] init];
-//		if (notif) {
-//			notif.repeatInterval = 0;
-//			if( [[UIDevice currentDevice].systemVersion floatValue] >= 8){
-//				notif.category       = @"incoming_msg";
-//			}
-//			notif.alertBody      = [NSString  stringWithFormat:NSLocalizedString(@"IM_MSG",nil), address];
-//			notif.alertAction    = NSLocalizedString(@"Show", nil);
-//			notif.soundName      = @"msg.caf";
-//			notif.userInfo       = @{@"from":address, @"from_addr":remote_uri, @"call-id":callID};
-//
-//			[[UIApplication sharedApplication] presentLocalNotificationNow:notif];
-//		}
-//	}
-//
-//	// Post event
-//	NSDictionary* dict = @{@"room"        :[NSValue valueWithPointer:room],
-//						   @"from_address":[NSValue valueWithPointer:linphone_chat_message_get_from_address(msg)],
-//						   @"message"     :[NSValue valueWithPointer:msg],
-//						   @"call-id"     : callID};
-//
-//	[[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneTextReceived object:self userInfo:dict];
-//}
+    
+	const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
+	char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
+	const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
+	NSString* callID                     = [NSString stringWithUTF8String:call_id];
 
-//static void linphone_iphone_message_received(LinphoneCore *lc, LinphoneChatRoom *room, LinphoneChatMessage *message) {
-//	[(__bridge LinphoneManager*)linphone_core_get_user_data(lc) onMessageReceived:lc room:room message:message];
-//}
+	ms_free(c_address);
+
+	// Post event
+	NSDictionary* dict = @{@"room"        :[NSValue valueWithPointer:room],
+						   @"from_address":[NSValue valueWithPointer:linphone_chat_message_get_from_address(msg)],
+						   @"message"     :[NSValue valueWithPointer:msg],
+						   @"call-id"     : callID};
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneTextReceived object:self userInfo:dict];
+}
+
+static void linphone_iphone_message_received(LinphoneCore *lc, LinphoneChatRoom *room, LinphoneChatMessage *message) {
+	[(__bridge LinphoneManager*)linphone_core_get_user_data(lc) onMessageReceived:lc room:room message:message];
+}
 
 - (void)onNotifyReceived:(LinphoneCore *)lc event:(LinphoneEvent *)lev notifyEvent:(const char *)notified_event content:(const LinphoneContent *)body {
 	// Post event
@@ -1194,7 +1159,7 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 											  .display_warning = linphone_iphone_log_user_warning,
 											  .display_url = NULL,
 											  .text_received = NULL,
-											  .message_received = NULL,
+                                              .message_received = linphone_iphone_message_received,
 											  .dtmf_received = NULL,
 											  .transfer_state_changed = linphone_iphone_transfer_state_changed,
 											  .is_composing_received = linphone_iphone_is_composing_received,
@@ -1817,7 +1782,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 #pragma mark - Call Functions
 
 - (void)acceptCall:(LinphoneCall *)call {
-    LinphoneCallParams *calleeParams = linphone_core_create_default_call_parameters(theLinphoneCore);
+    LinphoneCallParams *calleeParams = linphone_core_create_call_params(theLinphoneCore, call);
     
     if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
         bool low_bandwidth = self.network == network_2g;
@@ -1828,7 +1793,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     }
 
     const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
-    linphone_call_params_enable_realtime_text(calleeParams,linphone_call_params_realtime_text_enabled(callerParams));
+    linphone_call_params_enable_realtime_text(calleeParams,[[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
 
 }
@@ -1859,7 +1824,9 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	LinphoneProxyConfig* proxyCfg;
 	//get default proxy
 	linphone_core_get_default_proxy(theLinphoneCore,&proxyCfg);
-	LinphoneCallParams* lcallParams = linphone_core_create_default_call_parameters(theLinphoneCore);
+        LinphoneCall *thiscall;
+        thiscall = linphone_core_get_current_call(theLinphoneCore);
+        LinphoneCallParams *lcallParams = linphone_core_create_call_params(theLinphoneCore, thiscall);
     
     // VTCSecure add user location when emergency number is dialled.
 //    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];

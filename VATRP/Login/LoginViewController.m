@@ -21,6 +21,7 @@
 }
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
+@property (weak) IBOutlet NSTextField *textFieldUserID;
 @property (weak) IBOutlet NSTextField *textFieldPassword;
 @property (weak) IBOutlet NSTextField *textFieldDomain;
 @property (weak) IBOutlet NSTextField *textFieldPort;
@@ -57,12 +58,14 @@
 - (IBAction)onButtonLogin:(id)sender {
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;
+    loginAccount.userID = self.textFieldUserID.stringValue;
     loginAccount.password = self.textFieldPassword.stringValue;
     loginAccount.domain = self.textFieldDomain.stringValue;
     loginAccount.transport = @"TCP";
     loginAccount.port = self.textFieldPort.intValue;
     
     [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
+                                                        UserID:loginAccount.userID
                                                       password:loginAccount.password
                                                         domain:loginAccount.domain
                                                      transport:loginAccount.transport
@@ -160,11 +163,12 @@
     switch (state) {
         case LinphoneRegistrationOk: {
             [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
-                                                        Password:loginAccount.password
-                                                        Domain:loginAccount.domain
-                                                        Transport:loginAccount.transport
-                                                        Port:loginAccount.port
-                                                        isDefault:YES];
+                                                              UserID:loginAccount.userID
+                                                            Password:loginAccount.password
+                                                              Domain:loginAccount.domain
+                                                           Transport:loginAccount.transport
+                                                                Port:loginAccount.port
+                                                           isDefault:YES];
             
             [[AppDelegate sharedInstance] showTabWindow];
             [[AppDelegate sharedInstance].loginWindowController close];

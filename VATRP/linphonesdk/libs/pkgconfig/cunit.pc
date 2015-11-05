@@ -1,10 +1,10 @@
-prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT
-exec_prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT/bin
-libdir=/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib
-includedir=/Users/francois/projects/linphone-cmake-builder/OUTPUT/include
+prefix=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT
+exec_prefix=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/bin
+libdir=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib
+includedir=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include
 
 Name: CUnit
 Description: C Unit Testing Framework
 Version: 2.1-2-
-Libs: -L/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib -lcunit
-Cflags: -I/Users/francois/projects/linphone-cmake-builder/OUTPUT/include
+Libs: -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lcunit
+Cflags: -I/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include

@@ -47,6 +47,9 @@ extern "C" {
 
 struct _LinphoneCore;
 struct _LinphoneChatRoom;
+struct _LinphoneAuthInfo;
+struct _SipSetupContext;
+struct _LinphoneInfoMessage;
 
 /**
  * Linphone core main object created by function linphone_core_new() .
@@ -110,6 +113,23 @@ enum _LinphoneTransportType{
  * @ingroup linphone_address
 **/
 typedef enum _LinphoneTransportType LinphoneTransportType;
+
+/**
+ * Enum describing the stream types.
+ * @ingroup initializing
+**/
+enum _LinphoneStreamType {
+	LinphoneStreamTypeAudio,
+	LinphoneStreamTypeVideo,
+	LinphoneStreamTypeText,
+	LinphoneStreamTypeUnknown /* WARNING: Make sure this value remains the last one in the list */
+};
+
+/**
+ * Enum describing the stream types.
+ * @ingroup initializing
+**/
+typedef enum _LinphoneStreamType LinphoneStreamType;
 
 /**
  * Object that represents a SIP address.
@@ -425,10 +445,6 @@ LINPHONE_PUBLIC	void linphone_address_destroy(LinphoneAddress *u);
  */
 LINPHONE_PUBLIC LinphoneAddress * linphone_core_create_address(LinphoneCore *lc, const char *address);
 
-struct _SipSetupContext;
-
-
-struct _LinphoneInfoMessage;
 /**
  * The LinphoneInfoMessage is an object representing an informational message sent or received by the core.
 **/
@@ -469,9 +485,9 @@ typedef struct _LinphoneVideoPolicy LinphoneVideoPolicy;
  * @{
 **/
 
-#define LINPHONE_CALL_STATS_AUDIO 0
-#define LINPHONE_CALL_STATS_VIDEO 1
-#define LINPHONE_CALL_STATS_TEXT  2
+#define LINPHONE_CALL_STATS_AUDIO ((int)LinphoneStreamTypeAudio)
+#define LINPHONE_CALL_STATS_VIDEO ((int)LinphoneStreamTypeVideo)
+#define LINPHONE_CALL_STATS_TEXT  ((int)LinphoneStreamTypeText)
 
 /**
  * Enum describing ICE states.
@@ -929,7 +945,7 @@ LINPHONE_PUBLIC int linphone_call_get_stream_count(LinphoneCall *call);
  * @param call
  * @param stream_index
  *
- * @return MsAudio if stream_index = 0, MsVideo otherwise
+ * @return the type (MSAudio, MSVideo, MSText) of the stream of given index.
 **/
 LINPHONE_PUBLIC MSFormatType linphone_call_get_stream_type(LinphoneCall *call, int stream_index);
 
@@ -1004,8 +1020,6 @@ LINPHONE_PUBLIC	const char *linphone_registration_state_to_string(LinphoneRegist
  */
 
 #include "linphone_proxy_config.h"
-
-struct _LinphoneAuthInfo;
 
 /**
  * @addtogroup authentication
@@ -1556,7 +1570,7 @@ LINPHONE_PUBLIC void linphone_chat_message_start_file_download(LinphoneChatMessa
  * Start the download of the file referenced in a LinphoneChatMessage from remote server.
  * @param[in] message LinphoneChatMessage object.
  */
-LINPHONE_PUBLIC void linphone_chat_message_download_file(LinphoneChatMessage *message);
+LINPHONE_PUBLIC int linphone_chat_message_download_file(LinphoneChatMessage *message);
 /**
  * Cancel an ongoing file transfer attached to this message.(upload or download)
  * @param msg	#LinphoneChatMessage
@@ -2883,6 +2897,15 @@ LINPHONE_PUBLIC void linphone_core_remove_auth_info(LinphoneCore *lc, const Linp
 
 LINPHONE_PUBLIC const MSList *linphone_core_get_auth_info_list(const LinphoneCore *lc);
 
+/**
+ * Find authentication info matching realm, username, domain criteria.
+ * First of all, (realm,username) pair are searched. If multiple results (which should not happen because realm are supposed to be unique), then domain is added to the search.
+ * @param lc the LinphoneCore
+ * @param realm the authentication 'realm' (optional)
+ * @param username the SIP username to be authenticated (mandatory)
+ * @param domain the SIP domain name (optional)
+ * @return a #LinphoneAuthInfo
+**/
 LINPHONE_PUBLIC const LinphoneAuthInfo *linphone_core_find_auth_info(LinphoneCore *lc, const char *realm, const char *username, const char *sip_domain);
 
 LINPHONE_PUBLIC void linphone_core_abort_authentication(LinphoneCore *lc,  LinphoneAuthInfo *info);
@@ -2969,7 +2992,7 @@ LINPHONE_PUBLIC	void linphone_core_set_text_port(LinphoneCore *lc, int port);
 
 LINPHONE_PUBLIC	void linphone_core_set_text_port_range(LinphoneCore *lc, int min_port, int max_port);
 
-LINPHONE_PUBLIC	void linphone_core_set_nortp_timeout(LinphoneCore *lc, int port);
+LINPHONE_PUBLIC	void linphone_core_set_nortp_timeout(LinphoneCore *lc, int seconds);
 
 LINPHONE_PUBLIC	void linphone_core_set_use_info_for_dtmf(LinphoneCore *lc, bool_t use_info);
 
@@ -3244,6 +3267,13 @@ LINPHONE_PUBLIC const MSList * linphone_core_get_call_logs(LinphoneCore *lc);
  * @return \mslist{LinphoneCallLog}
 **/
 LINPHONE_PUBLIC MSList * linphone_core_get_call_history_for_address(LinphoneCore *lc, const LinphoneAddress *addr);
+
+/**
+ * Get the latest outgoing call log.
+ * @param[in] lc LinphoneCore object
+ * @return {LinphoneCallLog}
+**/
+LINPHONE_PUBLIC LinphoneCallLog * linphone_core_get_last_outgoing_call_log(LinphoneCore *lc);
 
 /**
  * Erase the call log.
@@ -3758,7 +3788,22 @@ LINPHONE_PUBLIC LinphoneCall* linphone_core_find_call_from_uri(const LinphoneCor
 
 LINPHONE_PUBLIC	int linphone_core_add_to_conference(LinphoneCore *lc, LinphoneCall *call);
 LINPHONE_PUBLIC	int linphone_core_add_all_to_conference(LinphoneCore *lc);
-LINPHONE_PUBLIC	int linphone_core_remove_from_conference(LinphoneCore *lc, LinphoneCall *call);
+/**
+ * Remove a call from the conference.
+ * @param lc the linphone core
+ * @param call a call that has been previously merged into the conference.
+ *
+ * After removing the remote participant belonging to the supplied call, the call becomes a normal call in paused state.
+ * If one single remote participant is left alone together with the local user in the conference after the removal, then the conference is
+ * automatically transformed into a simple call in StreamsRunning state.
+ * The conference's resources are then automatically destroyed.
+ *
+ * In other words, unless linphone_core_leave_conference() is explicitly called, the last remote participant of a conference is automatically
+ * put in a simple call in running state.
+ *
+ * @return 0 if successful, -1 otherwise.
+ **/
+ LINPHONE_PUBLIC	int linphone_core_remove_from_conference(LinphoneCore *lc, LinphoneCall *call);
 /**
  * Indicates whether the local participant is part of a conference.
  * @param lc the linphone core

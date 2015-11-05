@@ -1,12 +1,12 @@
 # This is a comment
-prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT
-exec_prefix=/Users/francois/projects/linphone-cmake-builder/OUTPUT/bin
-includedir=/Users/francois/projects/linphone-cmake-builder/OUTPUT/include
+prefix=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT
+exec_prefix=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/bin
+includedir=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include
 
 Name: belle-sip 
 Description: A c based implementation of the SIP (RFC 3261)  telephony protocol 
 Requires.private:  cunit 
-Version: 1.4.1
-Libs: -L/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib -lbellesip
-Libs.private: -L/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib -lantlr3c -L/Users/francois/projects/linphone-cmake-builder/OUTPUT/lib -lpolarssl -ldl
-Cflags: -I/Users/francois/projects/linphone-cmake-builder/OUTPUT/include 
+Version: 1.4.2
+Libs: -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lbellesip
+Libs.private: -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lantlr3c -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lpolarssl -ldl
+Cflags: -I/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include 

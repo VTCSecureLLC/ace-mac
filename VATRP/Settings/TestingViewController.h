@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface TestingViewController : NSViewController
+@interface TestingViewController : NSViewController <NSTextFieldDelegate>
 
 - (void) save;
 

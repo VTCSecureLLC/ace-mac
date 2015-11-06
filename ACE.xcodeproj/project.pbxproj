@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		134C36D71BEB926200DAADB8 /* liblinphone.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 134C36D61BEB926200DAADB8 /* liblinphone.8.dylib */; };
+		134C36D91BEB927E00DAADB8 /* libmediastreamer_voip.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 134C36D81BEB927E00DAADB8 /* libmediastreamer_voip.6.dylib */; };
+		134C36DB1BEB929B00DAADB8 /* libmediastreamer_base.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 134C36DA1BEB929B00DAADB8 /* libmediastreamer_base.6.dylib */; };
+		134C36DD1BEB92C900DAADB8 /* libortp.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 134C36DC1BEB92C900DAADB8 /* libortp.10.dylib */; };
+		134C36DE1BEB92EB00DAADB8 /* libortp.10.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 134C36DC1BEB92C900DAADB8 /* libortp.10.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		134C36DF1BEB92EB00DAADB8 /* libmediastreamer_base.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 134C36DA1BEB929B00DAADB8 /* libmediastreamer_base.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		134C36E01BEB92EB00DAADB8 /* libmediastreamer_voip.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 134C36D81BEB927E00DAADB8 /* libmediastreamer_voip.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		134C36E11BEB92EB00DAADB8 /* liblinphone.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 134C36D61BEB926200DAADB8 /* liblinphone.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		134C36E21BEBA21700DAADB8 /* libavcodec.53.61.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31458E211BC2E18D002CA54D /* libavcodec.53.61.100.dylib */; };
+		134C36E31BEBA21700DAADB8 /* libavutil.51.35.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31458E221BC2E18D002CA54D /* libavutil.51.35.100.dylib */; };
+		134C36E41BEBA22400DAADB8 /* libavcodec.53.61.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31458E211BC2E18D002CA54D /* libavcodec.53.61.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		134C36E51BEBA22400DAADB8 /* libavutil.51.35.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31458E221BC2E18D002CA54D /* libavutil.51.35.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		20A9933A1BB5B9F6008612F9 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; };
 		2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF51B984E49008E8333 /* ContactsWindowController.m */; };
 		2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF81B984E49008E8333 /* DialpadViewController.m */; };
@@ -41,10 +53,6 @@
 		31458E1A1BC2DEFB002CA54D /* libmssilk.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31458E141BC2DEFB002CA54D /* libmssilk.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31458E1B1BC2DEFB002CA54D /* libmswebrtc.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31458E151BC2DEFB002CA54D /* libmswebrtc.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31458E1D1BC2DF89002CA54D /* libmsopenh264.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31458E1C1BC2DF89002CA54D /* libmsopenh264.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		31458E1E1BC2E161002CA54D /* libavcodec.53.61.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31E698CE1BBCCCC000D7160B /* libavcodec.53.61.100.dylib */; };
-		31458E1F1BC2E161002CA54D /* libavutil.51.35.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31E698D01BBCCCD200D7160B /* libavutil.51.35.100.dylib */; };
-		31458E231BC2E18D002CA54D /* libavcodec.53.61.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31458E211BC2E18D002CA54D /* libavcodec.53.61.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		31458E241BC2E18D002CA54D /* libavutil.51.35.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31458E221BC2E18D002CA54D /* libavutil.51.35.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31458E251BC2E1BB002CA54D /* libswscale.2.1.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31ED2B611BBCD3CD0060319E /* libswscale.2.1.100.dylib */; };
 		31458E261BC2E1D6002CA54D /* libswscale.2.1.100.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 31ED2B611BBCD3CD0060319E /* libswscale.2.1.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		31458E281BC2E3B7002CA54D /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31458E271BC2E3B7002CA54D /* libiconv.2.dylib */; };
@@ -170,12 +178,8 @@
 		CE3D253E1BA7739400028600 /* libharfbuzz.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */; };
 		CE3D253F1BA7739400028600 /* libhogweed.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25121BA7739400028600 /* libhogweed.2.dylib */; };
 		CE3D25401BA7739400028600 /* libjpeg.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25131BA7739400028600 /* libjpeg.8.dylib */; };
-		CE3D25411BA7739400028600 /* liblinphone.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25141BA7739400028600 /* liblinphone.7.dylib */; };
-		CE3D25421BA7739400028600 /* libmediastreamer_base.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */; };
-		CE3D25431BA7739400028600 /* libmediastreamer_voip.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */; };
 		CE3D25441BA7739400028600 /* libmp3lame.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25171BA7739400028600 /* libmp3lame.0.dylib */; };
 		CE3D25451BA7739400028600 /* libnettle.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25181BA7739400028600 /* libnettle.4.dylib */; };
-		CE3D25471BA7739400028600 /* libortp.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251A1BA7739400028600 /* libortp.9.dylib */; };
 		CE3D25481BA7739400028600 /* libpango-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */; };
 		CE3D25491BA7739400028600 /* libpangocairo-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */; };
 		CE3D254A1BA7739400028600 /* libpangoft2-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */; };
@@ -206,12 +210,8 @@
 		CE6758901BA88BB0005396EF /* libharfbuzz.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25111BA7739400028600 /* libharfbuzz.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE6758911BA88BB0005396EF /* libhogweed.2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25121BA7739400028600 /* libhogweed.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE6758921BA88BB0005396EF /* libjpeg.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25131BA7739400028600 /* libjpeg.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CE6758931BA88BB0005396EF /* liblinphone.7.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25141BA7739400028600 /* liblinphone.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CE6758941BA88BB0005396EF /* libmediastreamer_base.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25151BA7739400028600 /* libmediastreamer_base.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CE6758951BA88BB0005396EF /* libmediastreamer_voip.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25161BA7739400028600 /* libmediastreamer_voip.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE6758961BA88BB0005396EF /* libmp3lame.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25171BA7739400028600 /* libmp3lame.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE6758971BA88BB0005396EF /* libnettle.4.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D25181BA7739400028600 /* libnettle.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CE6758991BA88BB0005396EF /* libortp.9.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251A1BA7739400028600 /* libortp.9.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE67589A1BA88BB0005396EF /* libpango-1.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251B1BA7739400028600 /* libpango-1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE67589B1BA88BB0005396EF /* libpangocairo-1.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251C1BA7739400028600 /* libpangocairo-1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE67589C1BA88BB0005396EF /* libpangoft2-1.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE3D251D1BA7739400028600 /* libpangoft2-1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -256,11 +256,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				134C36E41BEBA22400DAADB8 /* libavcodec.53.61.100.dylib in CopyFiles */,
+				134C36E51BEBA22400DAADB8 /* libavutil.51.35.100.dylib in CopyFiles */,
+				134C36DE1BEB92EB00DAADB8 /* libortp.10.dylib in CopyFiles */,
+				134C36DF1BEB92EB00DAADB8 /* libmediastreamer_base.6.dylib in CopyFiles */,
+				134C36E01BEB92EB00DAADB8 /* libmediastreamer_voip.6.dylib in CopyFiles */,
+				134C36E11BEB92EB00DAADB8 /* liblinphone.8.dylib in CopyFiles */,
 				31458E2C1BC2F884002CA54D /* libswresample.0.6.100.dylib in CopyFiles */,
 				31458E2A1BC2E3E3002CA54D /* libiconv.2.dylib in CopyFiles */,
 				31458E261BC2E1D6002CA54D /* libswscale.2.1.100.dylib in CopyFiles */,
-				31458E231BC2E18D002CA54D /* libavcodec.53.61.100.dylib in CopyFiles */,
-				31458E241BC2E18D002CA54D /* libavutil.51.35.100.dylib in CopyFiles */,
 				31458E0D1BC2DD9B002CA54D /* libmsopenh264.0.dylib in CopyFiles */,
 				31458E071BC2DC8B002CA54D /* libffi.6.dylib in CopyFiles */,
 				31458E051BC2DC79002CA54D /* libintl.8.dylib in CopyFiles */,
@@ -301,12 +305,8 @@
 				CE6758901BA88BB0005396EF /* libharfbuzz.0.dylib in CopyFiles */,
 				CE6758911BA88BB0005396EF /* libhogweed.2.dylib in CopyFiles */,
 				CE6758921BA88BB0005396EF /* libjpeg.8.dylib in CopyFiles */,
-				CE6758931BA88BB0005396EF /* liblinphone.7.dylib in CopyFiles */,
-				CE6758941BA88BB0005396EF /* libmediastreamer_base.5.dylib in CopyFiles */,
-				CE6758951BA88BB0005396EF /* libmediastreamer_voip.5.dylib in CopyFiles */,
 				CE6758961BA88BB0005396EF /* libmp3lame.0.dylib in CopyFiles */,
 				CE6758971BA88BB0005396EF /* libnettle.4.dylib in CopyFiles */,
-				CE6758991BA88BB0005396EF /* libortp.9.dylib in CopyFiles */,
 				CE67589A1BA88BB0005396EF /* libpango-1.0.0.dylib in CopyFiles */,
 				CE67589B1BA88BB0005396EF /* libpangocairo-1.0.0.dylib in CopyFiles */,
 				CE67589C1BA88BB0005396EF /* libpangoft2-1.0.0.dylib in CopyFiles */,
@@ -322,6 +322,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		134C36D61BEB926200DAADB8 /* liblinphone.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.8.dylib; path = VATRP/linphonesdk/libs/liblinphone.8.dylib; sourceTree = "<group>"; };
+		134C36D81BEB927E00DAADB8 /* libmediastreamer_voip.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.6.dylib; path = VATRP/linphonesdk/libs/libmediastreamer_voip.6.dylib; sourceTree = "<group>"; };
+		134C36DA1BEB929B00DAADB8 /* libmediastreamer_base.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.6.dylib; path = VATRP/linphonesdk/libs/libmediastreamer_base.6.dylib; sourceTree = "<group>"; };
+		134C36DC1BEB92C900DAADB8 /* libortp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.10.dylib; path = VATRP/linphonesdk/libs/libortp.10.dylib; sourceTree = "<group>"; };
 		20A993391BB5B9F6008612F9 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		2B463EF41B984E49008E8333 /* ContactsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsWindowController.h; sourceTree = "<group>"; };
 		2B463EF51B984E49008E8333 /* ContactsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsWindowController.m; sourceTree = "<group>"; };
@@ -567,11 +571,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				134C36E21BEBA21700DAADB8 /* libavcodec.53.61.100.dylib in Frameworks */,
+				134C36E31BEBA21700DAADB8 /* libavutil.51.35.100.dylib in Frameworks */,
+				134C36DD1BEB92C900DAADB8 /* libortp.10.dylib in Frameworks */,
+				134C36DB1BEB929B00DAADB8 /* libmediastreamer_base.6.dylib in Frameworks */,
+				134C36D91BEB927E00DAADB8 /* libmediastreamer_voip.6.dylib in Frameworks */,
+				134C36D71BEB926200DAADB8 /* liblinphone.8.dylib in Frameworks */,
 				31458E2D1BC2F8A4002CA54D /* libswresample.0.6.100.dylib in Frameworks */,
 				31458E281BC2E3B7002CA54D /* libiconv.2.dylib in Frameworks */,
 				31458E251BC2E1BB002CA54D /* libswscale.2.1.100.dylib in Frameworks */,
-				31458E1E1BC2E161002CA54D /* libavcodec.53.61.100.dylib in Frameworks */,
-				31458E1F1BC2E161002CA54D /* libavutil.51.35.100.dylib in Frameworks */,
 				31458E0E1BC2DE0D002CA54D /* libmsopenh264.0.dylib in Frameworks */,
 				31458E0C1BC2DD7C002CA54D /* libsqlite3.dylib in Frameworks */,
 				31458E0A1BC2DD5D002CA54D /* libantlr3c.1.dylib in Frameworks */,
@@ -613,12 +621,8 @@
 				CE3D253F1BA7739400028600 /* libhogweed.2.dylib in Frameworks */,
 				CE3D25401BA7739400028600 /* libjpeg.8.dylib in Frameworks */,
 				20A9933A1BB5B9F6008612F9 /* HockeySDK.framework in Frameworks */,
-				CE3D25411BA7739400028600 /* liblinphone.7.dylib in Frameworks */,
-				CE3D25421BA7739400028600 /* libmediastreamer_base.5.dylib in Frameworks */,
-				CE3D25431BA7739400028600 /* libmediastreamer_voip.5.dylib in Frameworks */,
 				CE3D25441BA7739400028600 /* libmp3lame.0.dylib in Frameworks */,
 				CE3D25451BA7739400028600 /* libnettle.4.dylib in Frameworks */,
-				CE3D25471BA7739400028600 /* libortp.9.dylib in Frameworks */,
 				CE3D25481BA7739400028600 /* libpango-1.0.0.dylib in Frameworks */,
 				CE3D25491BA7739400028600 /* libpangocairo-1.0.0.dylib in Frameworks */,
 				CE3D254A1BA7739400028600 /* libpangoft2-1.0.0.dylib in Frameworks */,
@@ -644,6 +648,10 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				134C36DC1BEB92C900DAADB8 /* libortp.10.dylib */,
+				134C36DA1BEB929B00DAADB8 /* libmediastreamer_base.6.dylib */,
+				134C36D81BEB927E00DAADB8 /* libmediastreamer_voip.6.dylib */,
+				134C36D61BEB926200DAADB8 /* liblinphone.8.dylib */,
 				31458E271BC2E3B7002CA54D /* libiconv.2.dylib */,
 				31458E0B1BC2DD7C002CA54D /* libsqlite3.dylib */,
 				3181BDE91BBE3F6F00854A9A /* libxml2.2.dylib */,

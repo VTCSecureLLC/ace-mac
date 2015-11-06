@@ -6,7 +6,7 @@ includedir=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/inc
 Name: belle-sip 
 Description: A c based implementation of the SIP (RFC 3261)  telephony protocol 
 Requires.private:  cunit 
-Version: 1.4.1
+Version: 1.4.2
 Libs: -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lbellesip
 Libs.private: -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lantlr3c -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lpolarssl -ldl
 Cflags: -I/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include 

@@ -9,6 +9,7 @@
 #import "TestingViewController.h"
 #import "LinphoneManager.h"
 #import "CallService.h"
+#import "AppDelegate.h"
 
 @interface TestingViewController () {
     BOOL isChanged;
@@ -19,6 +20,8 @@
 @property (weak) IBOutlet NSButton *buttonSendDTMF;
 @property (weak) IBOutlet NSButton *buttonEnableAdaptiveRateControl;
 @property (weak) IBOutlet NSButton *buttonEnableRealTimeText;
+@property (weak) IBOutlet NSTextField *textFieldMaxUpload;
+@property (weak) IBOutlet NSTextField *textFieldMaxDownload;
 
 @end
 
@@ -40,6 +43,18 @@
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
     self.buttonEnableRealTimeText.state = [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED];
+    
+    self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
+    self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
+    [numberFormatter setAllowsFloats:NO];
+    [[self.textFieldMaxUpload cell] setFormatter:numberFormatter];
+    [[self.textFieldMaxDownload cell] setFormatter:numberFormatter];
+    
+    [self.textFieldMaxUpload setDelegate:self];
+    [self.textFieldMaxDownload setDelegate:self];
 }
 
 - (void) save {
@@ -69,10 +84,33 @@
     
     linphone_core_set_use_info_for_dtmf([LinphoneManager getLc], self.buttonSendDTMF.state);
     linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], self.buttonEnableAdaptiveRateControl.state);
+    
+    linphone_core_set_upload_bandwidth([LinphoneManager getLc], self.textFieldMaxUpload.intValue);
+    linphone_core_set_download_bandwidth([LinphoneManager getLc], self.textFieldMaxDownload.intValue);
 }
 
 - (IBAction)onCheckBox:(id)sender {
     isChanged = YES;
+}
+
+- (void)controlTextDidChange:(NSNotification *)notification {
+    isChanged = YES;
+}
+
+- (IBAction)onButtonCleareUserData:(id)sender {
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"linphone_chats.db"];
+    
+    if ([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:nil];
+    }
+    
+    [[AppDelegate sharedInstance] SignOut];
 }
 
 @end

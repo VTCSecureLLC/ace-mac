@@ -30,4 +30,8 @@
     self.isShow = NO;
 }
 
+- (ChatViewController*) getChatViewController {
+    return (ChatViewController*)self.contentViewController;
+}
+
 @end

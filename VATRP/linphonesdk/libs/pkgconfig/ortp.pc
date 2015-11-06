@@ -5,6 +5,6 @@ includedir=/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/inc
 
 Name: oRTP 
 Description: Implement the RFC3550 (RTP) with a easy to use API with high and low level access.
-Version: 0.24.2
+Version: 0.25.0
 Libs: -L/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/lib -lortp 
 Cflags: -I/Volumes/SSD/workspace_mac/linphone-desktop-all-codecs-mac/OUTPUT/include 

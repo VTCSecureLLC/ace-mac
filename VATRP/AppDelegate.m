@@ -47,12 +47,14 @@
                                              selector:@selector(registrationUpdateEvent:)
                                                  name:kLinphoneRegistrationUpdate
                                                object:nil];
-    
-    
+#ifdef DEBUG
+    NSLog(@"Debug: No crashes will be reported");
+#else
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b7b28171bab92ce345aac7d54f435020"];
     [[BITHockeyManager sharedHockeyManager].crashManager setAutoSubmitCrashReport: YES];
     [[BITHockeyManager sharedHockeyManager] startManager];
-    
+#endif
+
     linphone_core_set_log_level(ORTP_DEBUG);
     linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
 }
@@ -136,6 +138,7 @@
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
         [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+                                                          UserID:@""
                                                         Password:@""
                                                           Domain:@""
                                                        Transport:@""
@@ -166,6 +169,14 @@
                                              selector:@selector(registrationUpdateEvent:)
                                                  name:kLinphoneRegistrationUpdate
                                                object:nil];
+}
+
+- (IBAction)onMenuItemACEFeedBack:(id)sender {
+    [[[BITHockeyManager sharedHockeyManager] feedbackManager] showFeedbackWindow];
+}
+
+-(void) SignOut {
+    [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
 }
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {

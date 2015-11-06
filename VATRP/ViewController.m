@@ -17,6 +17,7 @@
 
 
 @interface ViewController () {
+    ChatWindowController *chatWindowController;
 }
 
 @property (nonatomic, retain) ContactsWindowController *contactsWindowController;
@@ -30,7 +31,7 @@
 - (IBAction)onButtonRecents:(id)sender;
 - (IBAction)onButtonContacts:(id)sender;
 - (IBAction)onButtonDialpad:(id)sender;
-- (IBAction)onButtonVidelMail:(id)sender;
+- (IBAction)onButtonVideoMail:(id)sender;
 - (IBAction)onButtonSettings:(id)sender;
 - (void) updateUI;
 
@@ -121,20 +122,8 @@
     }
 }
 
-- (IBAction)onButtonVidelMail:(id)sender {
-    if (!self.videoMailWindowController) {
-        self.videoMailWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoMail"];
-        [self.videoMailWindowController showWindow:self];
-        [self.videoMailWindowController enableSelfVideo];
-    } else {
-        if (self.videoMailWindowController.isShow) {
-            [self.videoMailWindowController close];
-        } else {
-            [self.videoMailWindowController showWindow:self];
-            [self.videoMailWindowController enableSelfVideo];
-            self.videoMailWindowController.isShow = YES;
-        }
-    }    
+- (IBAction)onButtonVideoMail:(id)sender {
+    [[ChatService sharedInstance] openChatWindowWithUser:nil];
 }
 
 - (IBAction)onButtonSettings:(id)sender {

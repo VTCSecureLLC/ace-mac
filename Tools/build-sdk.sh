@@ -9,7 +9,7 @@ brew cask install java
 brew install homebrew/dupes/zlib
 brew link --force zlib
 
-brew install doxygen nasm yasm optipng imagemagick coreutils intltool gettext ninja cmake
+brew install doxygen nasm yasm optipng imagemagick coreutils intltool gettext ninja cmake graphviz
 which make || brew install make
 
 [ -h /usr/local/bin/make ] || ln -s /usr/local/bin/gmake /usr/local/bin/make

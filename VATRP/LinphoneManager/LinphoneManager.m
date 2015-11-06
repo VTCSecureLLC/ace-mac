@@ -609,69 +609,6 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
 		address = NSLocalizedString(@"Unknown", nil);
 	}
 
-//	if (state == LinphoneCallIncomingReceived) {
-//
-//		/*first step is to re-enable ctcall center*/
-//		CTCallCenter* lCTCallCenter = [[CTCallCenter alloc] init];
-//
-//		/*should we reject this call ?*/
-//		if ([lCTCallCenter currentCalls]!=nil) {
-//			char *tmp=linphone_call_get_remote_address_as_string(call);
-//			if (tmp) {
-//				LOGI(@"Mobile call ongoing... rejecting call from [%s]",tmp);
-//				ms_free(tmp);
-//			}
-//			linphone_core_decline_call(theLinphoneCore, call,LinphoneReasonBusy);
-//			return;
-//		}
-
-//		if(	[UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-//
-//			LinphoneCallLog* callLog=linphone_call_get_call_log(call);
-//			NSString* callId=[NSString stringWithUTF8String:linphone_call_log_get_call_id(callLog)];
-//
-//			if (![[LinphoneManager instance] popPushCallID:callId]){
-//				// case where a remote notification is not already received
-//				// Create a new local notification
-//				data->notification = [[UILocalNotification alloc] init];
-//				if (data->notification) {
-//
-//					// iOS8 doesn't need the timer trick for the local notification.
-//					if ([[UIDevice currentDevice].systemVersion floatValue] >= 8 &&
-//						[self lpConfigBoolForKey:@"repeat_call_notification"] == NO) {
-//						data->notification.soundName = @"ring.caf";
-//						data->notification.category = @"incoming_call";
-//					} else {
-//						data->notification.soundName = @"shortring.caf";
-//						data->timer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(localNotifContinue:) userInfo:data->notification repeats:TRUE];
-//					}
-//
-//					data->notification.repeatInterval = 0;
-//
-//					data->notification.alertBody =[NSString  stringWithFormat:NSLocalizedString(@"IC_MSG",nil), address];
-//					data->notification.alertAction = NSLocalizedString(@"Answer", nil);
-//					data->notification.userInfo = @{@"callId": callId, @"timer":[NSNumber numberWithInt:1] };
-//					data->notification.applicationIconBadgeNumber = 1;
-//
-//					[[UIApplication sharedApplication] presentLocalNotificationNow:data->notification];
-//
-//					if (!incallBgTask){
-//						incallBgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: ^{
-//							LOGW(@"Call cannot ring any more, too late");
-//							[[UIApplication sharedApplication] endBackgroundTask:incallBgTask];
-//							incallBgTask=0;
-//						}];
-//
-//						if( data->timer ){
-//							[[NSRunLoop currentRunLoop] addTimer:data->timer forMode:NSRunLoopCommonModes];
-//						}
-//					}
-//
-//				}
-//			}
-//		}
-//	}
-
 	// we keep the speaker auto-enabled state in this static so that we don't
 	// force-enable it on ICE re-invite if the user disabled it.
 	static BOOL speaker_already_enabled = FALSE;
@@ -687,32 +624,6 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
 			/*IOS specific*/
 			linphone_core_start_dtmf_stream(theLinphoneCore);
 		}
-//		if (incallBgTask) {
-//			[[UIApplication sharedApplication]  endBackgroundTask:incallBgTask];
-//			incallBgTask=0;
-//		}
-//		if(data != nil && data->notification != nil) {
-//			LinphoneCallLog *log = linphone_call_get_call_log(call);
-//
-//			// cancel local notif if needed
-//			if( data->timer ){
-//				[data->timer invalidate];
-//				data->timer = nil;
-//			}
-//			[[UIApplication sharedApplication] cancelLocalNotification:data->notification];
-//
-//			data->notification = nil;
-//
-//			if(log == NULL || linphone_call_log_get_status(log) == LinphoneCallMissed) {
-//				UILocalNotification *notification = [[UILocalNotification alloc] init];
-//				notification.repeatInterval = 0;
-//				notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"You missed a call from %@", nil), address];
-//				notification.alertAction = NSLocalizedString(@"Show", nil);
-//				notification.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithUTF8String:linphone_call_log_get_call_id(log)] forKey:@"callLog"];
-//				[[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-//			}
-//
-//		}
 	}
 
 	if(state == LinphoneCallReleased) {

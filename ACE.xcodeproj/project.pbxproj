@@ -122,6 +122,10 @@
 		4AB556421BDE2454003382B2 /* app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB556411BDE2453003382B2 /* app_icon.png */; };
 		4AB556451BDE2598003382B2 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB556441BDE2598003382B2 /* AboutWindowController.m */; };
 		4AB556481BDE25AD003382B2 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB556471BDE25AD003382B2 /* AboutViewController.m */; };
+		4AB556691BE27085003382B2 /* HistoryTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB556681BE27085003382B2 /* HistoryTableCellView.m */; };
+		4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB5566B1BE272D5003382B2 /* call_status_incoming.png */; };
+		4AB5566F1BE272D5003382B2 /* call_status_missed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB5566C1BE272D5003382B2 /* call_status_missed.png */; };
+		4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB5566D1BE272D5003382B2 /* call_status_outgoing.png */; };
 		4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC13F941BBBFD21008305CD /* CallLogService.m */; };
 		4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC13F9D1BBC0769008305CD /* SettingsViewController.m */; };
 		4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC344841BB9A777000C4909 /* MediaViewController.m */; };
@@ -456,6 +460,11 @@
 		4AB556441BDE2598003382B2 /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
 		4AB556461BDE25AD003382B2 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		4AB556471BDE25AD003382B2 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		4AB556671BE27085003382B2 /* HistoryTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableCellView.h; sourceTree = "<group>"; };
+		4AB556681BE27085003382B2 /* HistoryTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableCellView.m; sourceTree = "<group>"; };
+		4AB5566B1BE272D5003382B2 /* call_status_incoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_status_incoming.png; sourceTree = "<group>"; };
+		4AB5566C1BE272D5003382B2 /* call_status_missed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_status_missed.png; sourceTree = "<group>"; };
+		4AB5566D1BE272D5003382B2 /* call_status_outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_status_outgoing.png; sourceTree = "<group>"; };
 		4AC13F931BBBFD21008305CD /* CallLogService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CallLogService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4AC13F941BBBFD21008305CD /* CallLogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallLogService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4AC13F9C1BBC0769008305CD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SettingsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -807,6 +816,8 @@
 				4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */,
 				4AA203BE1BD4CAF500DD9A4D /* ContactTableCellView.h */,
 				4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */,
+				4AB556671BE27085003382B2 /* HistoryTableCellView.h */,
+				4AB556681BE27085003382B2 /* HistoryTableCellView.m */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -846,6 +857,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4AB5566A1BE272D5003382B2 /* Call Log */,
 				4AB556411BDE2453003382B2 /* app_icon.png */,
 				4AA203C51BD4D2A000DD9A4D /* chat_icon.png */,
 				CE34B2B41BD1014C0010A2B0 /* info-icon.png */,
@@ -881,6 +893,16 @@
 				4AB556471BDE25AD003382B2 /* AboutViewController.m */,
 			);
 			path = About;
+			sourceTree = "<group>";
+		};
+		4AB5566A1BE272D5003382B2 /* Call Log */ = {
+			isa = PBXGroup;
+			children = (
+				4AB5566B1BE272D5003382B2 /* call_status_incoming.png */,
+				4AB5566C1BE272D5003382B2 /* call_status_missed.png */,
+				4AB5566D1BE272D5003382B2 /* call_status_outgoing.png */,
+			);
+			path = "Call Log";
 			sourceTree = "<group>";
 		};
 		4AC389BC1B8E87520063298F = {
@@ -1195,11 +1217,13 @@
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
+				4AB5566F1BE272D5003382B2 /* call_status_missed.png in Resources */,
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
+				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
@@ -1209,6 +1233,7 @@
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
+				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1254,6 +1279,7 @@
 				4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */,
 				4AA203B71BD4C92600DD9A4D /* ChatWindowController.m in Sources */,
 				4AC389D11B8E87530063298F /* ViewController.m in Sources */,
+				4AB556691BE27085003382B2 /* HistoryTableCellView.m in Sources */,
 				4A902DDD1BB9489B00ECFD86 /* AccountsService.m in Sources */,
 				4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */,
 				4AC389CE1B8E87530063298F /* main.m in Sources */,

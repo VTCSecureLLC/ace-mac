@@ -107,6 +107,7 @@ export PATH=$PATH:~/.local/bin
 )
 
 pushd VATRP/submodules/linphone
+export PACKAGE_VERSION=$(git describe --abbrev=0)
 
 git submodule update --init --recursive
 

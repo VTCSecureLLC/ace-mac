@@ -107,10 +107,11 @@ export PATH=$PATH:~/.local/bin
 )
 
 pushd VATRP/submodules/linphone
-export PACKAGE_VERSION=$(git describe --abbrev=0)
-echo PACKAGE_VERSION=$PACKAGE_VERSION
 
 git submodule update --init --recursive
+
+export PACKAGE_VERSION=$(git describe --abbrev=0)
+echo PACKAGE_VERSION=$PACKAGE_VERSION
 
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 ./autogen.sh

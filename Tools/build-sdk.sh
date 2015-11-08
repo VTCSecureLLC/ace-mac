@@ -138,14 +138,14 @@ make -C oRTP install
 make -C mediastreamer2 install
 
 # Overwrite the Belledonne provided binary linphonesdk folder with our source compiled version
-find / -name 'liblinphone*dylib*' -print
 popd
 pwd
+
+mkdir -p VATRP/linphonesdk/libs/ VATRP/linphonesdk/include/
 
 # Copy in the generated binaries
 rsync -aq /usr/local/lib/ VATRP/linphonesdk/libs/
 rsync -aq /usr/local/include/ VATRP/linphonesdk/include/
-rsync -aq /usr/local/lib/mediastreamer/plugins/ VATRP/linphonesdk/libs/mediastreamer/plugins/
 
 # Make the libraries relocatable
 set +e

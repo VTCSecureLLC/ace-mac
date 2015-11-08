@@ -145,7 +145,7 @@ mkdir -p VATRP/linphonesdk/libs/ VATRP/linphonesdk/include/
 
 # Copy in the generated binaries
 rsync -aq /usr/local/lib/ VATRP/linphonesdk/libs/
-rsync -aq /usr/local/include/ VATRP/linphonesdk/include/
+rsync -aq /usr/local/include/ VATRP/linphonesdk/include/ || true
 
 # Make the libraries relocatable
 set +e

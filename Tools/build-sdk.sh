@@ -169,6 +169,7 @@ for library in $(find VATRP/linphonesdk/libs/ -name '*.dylib' -type f -print) ; 
     )
   )
 done
-set -e
 
+rsync -aq VATRP/linphonesdk/libs/ /usr/local/lib/
+set -e
 

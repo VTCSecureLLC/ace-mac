@@ -7,6 +7,7 @@
 //
 
 #import "RegistrationService.h"
+#import "SDPNegotiationService.h"
 #import "LinphoneManager.h"
 #import "Utils.h"
 
@@ -221,7 +222,7 @@
 
     for (elem=linphone_core_get_video_codecs(lc);elem!=NULL;elem=elem->next){
         pt=(PayloadType*)elem->data;
-        NSString *pref=[LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        NSString *pref=[SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         int enable = linphone_core_enable_payload_type(lc,pt,1);
 
         NSLog(@"enable: %d", enable);
@@ -279,7 +280,7 @@
         
         for (elem = audioCodecs; elem != NULL; elem = elem->next) {
             pt = (PayloadType *)elem->data;
-            NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+            NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
             if ([dictAudioCodec objectForKey:pref]) {
                 linphone_core_enable_payload_type(lc, pt, [[dictAudioCodec objectForKey:pref] boolValue]);
@@ -290,7 +291,7 @@
         
         for (elem = videoCodecs; elem != NULL; elem = elem->next) {
             pt = (PayloadType *)elem->data;
-            NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+            NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
             if ([dictVideoCodec objectForKey:pref]) {
                 linphone_core_enable_payload_type(lc, pt, [[dictVideoCodec objectForKey:pref] boolValue]);

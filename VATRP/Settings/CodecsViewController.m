@@ -8,6 +8,7 @@
 
 #import "CodecsViewController.h"
 #import "LinphoneManager.h"
+#import "SDPNegotiationService.h"
 #import "CodecModel.h"
 
 #define kUSER_DEFAULTS_AUDIO_CODECS_MAP @"kUSER_DEFAULTS_AUDIO_CODECS_MAP"
@@ -56,7 +57,7 @@
     
     for (elem = audioCodecs; elem != NULL; elem = elem->next) {
         pt = (PayloadType *)elem->data;
-        NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
         if (pref) {
             bool_t value = linphone_core_payload_type_enabled(lc, pt);
@@ -82,7 +83,7 @@
     
     for (elem = videoCodecs; elem != NULL; elem = elem->next) {
         pt = (PayloadType *)elem->data;
-        NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
         if (pref) {
             bool_t value = linphone_core_payload_type_enabled(lc, pt);
@@ -172,7 +173,7 @@
     
     for (elem = audioCodecs; elem != NULL; elem = elem->next) {
         pt = (PayloadType *)elem->data;
-        NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
         if (pref) {
             CodecModel *codecModel = [self getAudioCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
@@ -199,7 +200,7 @@
     
     for (elem = videoCodecs; elem != NULL; elem = elem->next) {
         pt = (PayloadType *)elem->data;
-        NSString *pref = [LinphoneManager getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
         if (pref) {
             CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]

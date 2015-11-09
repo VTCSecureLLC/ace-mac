@@ -144,8 +144,8 @@ pwd
 mkdir -p VATRP/linphonesdk/libs/ VATRP/linphonesdk/include/
 
 # Copy in the generated binaries
-rsync -aq /usr/local/lib/ VATRP/linphonesdk/libs/
-rsync -aq /usr/local/include/ VATRP/linphonesdk/include/ || true
+rsync -SHPaxv /usr/local/lib/ VATRP/linphonesdk/libs/
+rsync -SHPaxv /usr/local/include/ VATRP/linphonesdk/include/ || true
 
 # Make the libraries relocatable
 set +e
@@ -170,6 +170,6 @@ for library in $(find VATRP/linphonesdk/libs/ -name '*.dylib' -type f -print) ; 
   )
 done
 
-rsync -aq VATRP/linphonesdk/libs/ /usr/local/lib/
+rsync -SHPaxv VATRP/linphonesdk/libs/ /usr/local/lib/
 set -e
 

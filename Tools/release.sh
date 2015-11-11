@@ -61,7 +61,7 @@ fi
 xctool -project ACE.xcodeproj \
        -scheme VATRP \
        -sdk macosx \
-       -configuration Debug \
+       -configuration Release \
        -derivedDataPath build/derived \
        archive \
        -archivePath $XCARCHIVE \
@@ -92,7 +92,7 @@ fi
 if [ -d "$XCARCHIVE" ]; then
   xcodebuild -exportArchive \
              -exportFormat app \
-             -configuration Debug \
+             -configuration Release \
              -archivePath $XCARCHIVE \
              -exportPath $PKG_FILE \
              -exportProvisioningProfile "$PROVISIONING_PROFILE"

@@ -46,4 +46,18 @@
     return myFile;
 }
 
++ (void) setButtonTitleColor:(NSColor*)color Button:(NSButton*)button {
+    NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[button attributedTitle]];
+    NSRange titleRange = NSMakeRange(0, [colorTitle length]);
+    [colorTitle addAttribute:NSForegroundColorAttributeName value:color range:titleRange];
+    [button setAttributedTitle:colorTitle];
+}
+
++ (void) setUIBorderColor:(NSColor*)color CornerRadius:(CGFloat)cornerRadius Width:(CGFloat)width Control:(NSControl*)control {
+    [control setWantsLayer:YES];
+    [control.layer setBorderColor:color.CGColor];
+    [control.layer setBorderWidth:width];
+    [control.layer setCornerRadius:cornerRadius];
+}
+
 @end

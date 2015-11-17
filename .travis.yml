@@ -20,11 +20,12 @@ before_script:
 - chmod +x gas-preprocessor.pl
 - sudo mv gas-preprocessor.pl /usr/local/bin
 - sudo ln -s /usr/local/bin/glibtoolize /usr/local/bin/libtoolize
+- sudo mkdir -p /opt/
+- sudo mkdir -p /opt/local
 - sudo ln -s /usr/local/lib /opt/local/lib
 - git submodule update --init --recursive
 - bundle install
 - ./Tools/git_version.sh
-
 script:
 - python prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_H263=YES -DENABLE_FFMPEG=YES -DENABLE_NON_FREE_CODECS=ON  -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_AMRWB=YES -DENABLE_AMRNB=YES -DENABLE_OPENH264=YES -DENABLE_G729=YES -DENABLE_MPEG4=YES -DENABLE_H263P=ON -DENABLE_ILBC=ON -DENABLE_ISAC=ON -DENABLE_SILK=ON -p
 - make -j8

@@ -221,9 +221,7 @@ static const float callAlertStepInterval = 0.5;
         {
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
-
-            self.labelCallState.stringValue = @"Call Error";
-            //            [self displayCallError:call message: message];
+            [self displayCallError:call message:@"Call Error"];
         }
         case LinphoneCallEnd:
         {
@@ -252,6 +250,48 @@ static const float callAlertStepInterval = 0.5;
     }
 }
 
+- (void)displayCallError:(LinphoneCall *)call message:(NSString *)message {
+    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(call));
+    NSString *lUserName =
+    lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
+    NSString *lMessage;
+    NSString *lTitle;
+    
+    // get default proxy
+    LinphoneProxyConfig *proxyCfg;
+    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    if (proxyCfg == nil) {
+        lMessage = NSLocalizedString(@"Please make sure your device is connected to the internet and double check your "
+                                     @"SIP account configuration in the settings.",
+                                     nil);
+    } else {
+        lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
+    }
+    
+    switch (linphone_call_get_reason(call)) {
+        case LinphoneReasonNotFound:
+            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
+            break;
+        case LinphoneReasonBusy:
+            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
+            break;
+        default:
+            if (message != nil) {
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, message];
+            }
+            break;
+    }
+    
+    lTitle = NSLocalizedString(@"Call failed", nil);
+
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"OK"];
+    [alert setMessageText:lTitle];
+    [alert setInformativeText:lMessage];
+    [alert setAlertStyle:NSWarningAlertStyle];
+
+    [alert runModal];
+}
 
 - (void)dismiss {
     VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];

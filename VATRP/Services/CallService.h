@@ -14,6 +14,7 @@
 
 + (CallService *)sharedInstance;
 - (CallWindowController*) getCallWindowController;
++ (void) callTo:(NSString*)number;
 - (int) decline;
 - (void) accept;
 - (LinphoneCall*) getCurrentCall;

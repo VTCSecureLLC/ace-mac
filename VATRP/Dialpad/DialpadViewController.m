@@ -68,6 +68,7 @@
 
 - (IBAction)onButtonVideo:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
+    
     LinphoneCall *thiscall;
     thiscall = linphone_core_get_current_call(lc);
     LinphoneCallParams *params = linphone_core_create_call_params(lc, thiscall);

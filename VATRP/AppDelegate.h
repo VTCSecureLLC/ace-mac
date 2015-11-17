@@ -10,6 +10,9 @@
 #import "LoginWindowController.h"
 #import "LoginViewController.h"
 #import "VideoCallWindowController.h"
+#import "ContactsWindowController.h"
+#import "RecentsWindowController.h"
+#import "ChatWindowController.h"
 #import "ViewController.h"
 
 
@@ -20,6 +23,15 @@
 @property (nonatomic, retain) ViewController *viewController;
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;
 @property (weak) IBOutlet NSMenuItem *menuItemSignOut;
+
+
+
+@property (nonatomic, retain) ContactsWindowController *contactsWindowController;
+@property (nonatomic, retain) RecentsWindowController *recentsWindowController;
+@property (nonatomic, retain) SettingsWindowController *settingsWindowController;
+@property (nonatomic, retain) VideoMailWindowController *videoMailWindowController;
+@property (nonatomic, retain) ChatWindowController *chatWindowController;
+
 
 + (AppDelegate*)sharedInstance;
 - (void) showTabWindow;

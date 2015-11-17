@@ -1,59 +1,59 @@
 //
-//  RecentsViewController.m
-//  MacApp
+//  RecentsView.m
+//  ACE
 //
-//  Created by Norayr Harutyunyan on 8/28/15.
-//  Copyright (c) 2015 VTCSecure. All rights reserved.
+//  Created by Norayr Harutyunyan on 11/11/15.
+//  Copyright © 2015 Home. All rights reserved.
 //
 
-#import "RecentsViewController.h"
+#import "RecentsView.h"
 #import "HistoryTableCellView.h"
 #import "LinphoneManager.h"
+#import "ViewManager.h"
 
-@interface RecentsViewController () {
+
+@interface RecentsView () {
     NSMutableArray *callLogs;
     BOOL missedFilter;
+    
+    NSString *dialPadFilter;
 }
 
-@property (weak) IBOutlet NSTableView *tableViewCallLog;
-@property (weak) IBOutlet NSSegmentedControl *segmentedControlCallType;
-
-- (void)loadData;
+@property (weak) IBOutlet NSScrollView *scrollViewRecents;
+@property (weak) IBOutlet NSTableView *tableViewRecents;
 
 @end
 
-@implementation RecentsViewController
+@implementation RecentsView
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
+
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    
+    [self setBackgroundColor:[NSColor clearColor]];
     
     callLogs = [[NSMutableArray alloc] init];
     missedFilter = false;
-}
-
-#pragma mark - ViewController Functions
-
-- (void) viewWillAppear {
-    [super viewWillAppear];
-    
-    self.segmentedControlCallType.selectedSegment = 0;
+    dialPadFilter = nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdate:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dialpadTextUpdate:)
+                                                 name:DIALPAD_TEXT_CHANGED
+                                               object:nil];
     
     [self loadData];
 }
 
-- (void)viewWillDisappear {
-    [super viewWillDisappear];
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLinphoneCallUpdate object:nil];
+    // Drawing code here.
 }
-
-#pragma mark - Event Functions
 
 - (void)callUpdate:(NSNotification*)notif {
     LinphoneCall *aCall = [[notif.userInfo objectForKey: @"call"] pointerValue];
@@ -69,6 +69,20 @@
         default:
             break;
     }
+}
+
+- (void)dialpadTextUpdate:(NSNotification*)notif {
+    NSString *dialpadText = [notif object];
+
+    NSLog(@"dialpadText: %@", dialpadText);
+    
+    if (dialpadText && dialpadText.length) {
+        dialPadFilter = dialpadText;
+    } else {
+        dialPadFilter = nil;
+    }
+    
+    [self loadData];
 }
 
 #pragma mark - Property Functions
@@ -93,17 +107,26 @@
                 [callLogs addObject:[NSValue valueWithPointer:log]];
             }
         } else {
-            [callLogs addObject:[NSValue valueWithPointer:log]];
+            if (dialPadFilter) {
+                NSString *addr = [self addressFromCallLog:log];
+                
+                if (addr && [addr containsString:dialPadFilter]) {
+                    [callLogs addObject:[NSValue valueWithPointer:log]];
+                }
+            } else {
+                [callLogs addObject:[NSValue valueWithPointer:log]];
+            }
         }
+        
         logs = ms_list_next(logs);
     }
     
-    [self.tableViewCallLog reloadData];
+    [self.tableViewRecents reloadData];
 }
 
 - (IBAction)onSegmentCallType:(id)sender {
     NSSegmentedControl *segmentedControl = (NSSegmentedControl*)sender;
-
+    
     [self setMissedFilter:segmentedControl.selectedSegment];
     NSLog(@"segmentedControl.selectedSegment: %ld", (long)segmentedControl.selectedSegment);
 }
@@ -126,7 +149,7 @@
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
-//    selectedRow = marrayLoad[row];
+    //    selectedRow = marrayLoad[row];
     
     LinphoneCallLog *callLog = [[callLogs objectAtIndex:row] pointerValue];
     LinphoneAddress *addr;
@@ -154,8 +177,47 @@
         // Go to dialer view
         [[LinphoneManager instance] call:address displayName:address transfer:NO];
     }
-
+    
     return YES;
+}
+
+- (NSString*) addressFromCallLog:(LinphoneCallLog*)callLog {
+    LinphoneAddress *addr;
+    if (linphone_call_log_get_dir(callLog) == LinphoneCallIncoming) {
+        addr = linphone_call_log_get_from(callLog);
+    } else {
+        addr = linphone_call_log_get_to(callLog);
+    }
+    
+    NSString *address = nil;
+    if (addr != NULL) {
+        BOOL useLinphoneAddress = true;
+        // contact name
+        if (useLinphoneAddress) {
+            const char *lDisplayName = linphone_address_get_display_name(addr);
+            const char *lUserName = linphone_address_get_username(addr);
+            if (lDisplayName)
+                address = [NSString stringWithUTF8String:lDisplayName];
+            else if (lUserName)
+                address = [NSString stringWithUTF8String:lUserName];
+        }
+    }
+    
+    if (address != nil) {
+        return address;
+    }
+    
+    return nil;
+}
+
+- (void) setFrame:(NSRect)frame {
+    [super setFrame:frame];
+    
+    [self.scrollViewRecents setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLinphoneCallUpdate object:nil];
 }
 
 @end

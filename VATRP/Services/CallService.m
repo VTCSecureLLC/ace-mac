@@ -49,6 +49,17 @@
     return callWindowController;
 }
 
++ (void) callTo:(NSString*)number {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    
+    LinphoneCall *thiscall;
+    thiscall = linphone_core_get_current_call(lc);
+    LinphoneCallParams *params = linphone_core_create_call_params(lc, thiscall);
+    LinphoneAddress* linphoneAddress = linphone_core_interpret_url(lc, [number cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+    linphone_call_params_enable_realtime_text(params, [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+    linphone_core_invite_address_with_params(lc, linphoneAddress, params);
+}
+
 - (int) decline {
     return linphone_core_terminate_call([LinphoneManager getLc], currentCall);
 }

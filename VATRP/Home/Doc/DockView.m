@@ -1,18 +1,18 @@
 //
-//  DocView.m
+//  DockView.m
 //  ACE
 //
 //  Created by Norayr Harutyunyan on 11/10/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Copyright (c) 2015 VTCSecure. All rights reserved.
 //
 
-#import "DocView.h"
+#import "DockView.h"
 #import "Utils.h"
 #import "AppDelegate.h"
 #import "ChatService.h"
 
 
-@interface DocView () {
+@interface DockView () {
     NSButton *selectedDocViewItem;
 }
 
@@ -25,7 +25,7 @@
 @end
 
 
-@implementation DocView
+@implementation DockView
 
 @synthesize delegate = _delegate;
 
@@ -52,8 +52,8 @@
 }
 
 - (IBAction)onButtonRecents:(id)sender {
-    if ([_delegate respondsToSelector:@selector(didClickDocViewRecents:)]) {
-        [_delegate didClickDocViewRecents:self];
+    if ([_delegate respondsToSelector:@selector(didClickDockViewRecents:)]) {
+        [_delegate didClickDockViewRecents:self];
     }    
 }
 
@@ -71,22 +71,22 @@
         }
     }
 
-    if ([_delegate respondsToSelector:@selector(didClickDocViewContacts:)]) {
-        [_delegate didClickDocViewContacts:self];
+    if ([_delegate respondsToSelector:@selector(didClickDockViewContacts:)]) {
+        [_delegate didClickDockViewContacts:self];
     }
 }
 
 - (IBAction)onButtonDialpad:(id)sender {
-    if ([_delegate respondsToSelector:@selector(didClickDocViewDialpad:)]) {
-        [_delegate didClickDocViewDialpad:self];
+    if ([_delegate respondsToSelector:@selector(didClickDockViewDialpad:)]) {
+        [_delegate didClickDockViewDialpad:self];
     }
 }
 
 - (IBAction)onButtonResources:(id)sender {
     [[ChatService sharedInstance] openChatWindowWithUser:nil];
 
-    if ([_delegate respondsToSelector:@selector(didClickDocViewResources:)]) {
-        [_delegate didClickDocViewResources:self];
+    if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
+        [_delegate didClickDockViewResources:self];
     }
 }
 
@@ -105,33 +105,33 @@
         }
     }
 
-    if ([_delegate respondsToSelector:@selector(didClickDocViewSettings:)]) {
-        [_delegate didClickDocViewSettings:self];
+    if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+        [_delegate didClickDockViewSettings:self];
     }
 }
 
-- (void) selectItemWithDocViewItem:(DocViewItem)docViewItem {
+- (void) selectItemWithDocViewItem:(DockViewItem)docViewItem {
     [selectedDocViewItem setWantsLayer:YES];
     [selectedDocViewItem.layer setBackgroundColor:[NSColor clearColor].CGColor];
     
     switch (docViewItem) {
-        case DocViewItemRecents: {
+        case DockViewItemRecents: {
             selectedDocViewItem = self.buttonRecents;
         }
             break;
-        case DocViewItemContacts: {
+        case DockViewItemContacts: {
             selectedDocViewItem = self.buttonContacts;
         }
             break;
-        case DocViewItemDialpad: {
+        case DockViewItemDialpad: {
             selectedDocViewItem = self.buttonDialpad;
         }
             break;
-        case DocViewItemResources: {
+        case DockViewItemResources: {
             selectedDocViewItem = self.buttonResources;
         }
             break;
-        case DocViewItemSettings: {
+        case DockViewItemSettings: {
             selectedDocViewItem = self.buttonSettings;
         }
             break;

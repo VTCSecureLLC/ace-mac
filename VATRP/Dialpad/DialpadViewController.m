@@ -7,7 +7,6 @@
 //
 
 #import "DialpadViewController.h"
-#import "SDPNegotiationService.h"
 #import "VideoCallWindowController.h"
 #import "VideoCallViewController.h"
 #import "AppDelegate.h"
@@ -69,7 +68,6 @@
 
 - (IBAction)onButtonVideo:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
-    [[SDPNegotiationService sharedInstance] initializeSDP:lc];
     
     LinphoneCall *thiscall;
     thiscall = linphone_core_get_current_call(lc);

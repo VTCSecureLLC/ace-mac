@@ -7,8 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "HomeViewController.h"
 
 @interface HomeWindowController : NSWindowController
+
+- (HomeViewController*) getHomeViewController;
 
 -(NSPoint) getWindowOrigin;
 -(CGSize) getWindowSize;

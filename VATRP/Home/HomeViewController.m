@@ -3,23 +3,24 @@
 //  ACE
 //
 //  Created by Norayr Harutyunyan on 11/10/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Copyright (c) 2015 VTCSecure. All rights reserved.
 //
 
 #import "HomeViewController.h"
 #import "ViewManager.h"
-#import "DocView.h"
+#import "DockView.h"
 #import "DialPadView.h"
 #import "ProfileView.h"
 #import "RecentsView.h"
+#import "VideoView.h"
 
 
-@interface HomeViewController () <DocViewDelegate> {
+@interface HomeViewController () <DockViewDelegate> {
     BackgroundedView *viewCurrent;
 }
 
-@property (weak) IBOutlet BackgroundedView *viewConteiner;
-@property (weak) IBOutlet DocView *docView;
+@property (weak) IBOutlet BackgroundedView *viewContainer;
+@property (weak) IBOutlet DockView *dockView;
 @property (weak) IBOutlet DialPadView *dialPadView;
 @property (weak) IBOutlet ProfileView *profileView;
 @property (weak) IBOutlet RecentsView *recentsView;
@@ -32,14 +33,14 @@
     [super viewDidLoad];
     // Do view setup here.
     
-    [self.viewConteiner setBackgroundColor:[NSColor clearColor]];
+    [self.viewContainer setBackgroundColor:[NSColor clearColor]];
     BackgroundedView *v = (BackgroundedView*)self.view;
     [v setBackgroundColor:[NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
-    self.docView.delegate = self;
+    self.dockView.delegate = self;
     
-    [self.viewConteiner setBackgroundColor:[NSColor redColor]];
+    [self.viewContainer setBackgroundColor:[NSColor redColor]];
     
-    [ViewManager sharedInstance].docView = self.docView;
+    [ViewManager sharedInstance].dockView = self.dockView;
     [ViewManager sharedInstance].dialPadView = self.dialPadView;
     [ViewManager sharedInstance].profileView = self.profileView;
     [ViewManager sharedInstance].recentsView = self.recentsView;
@@ -49,24 +50,24 @@
 
 #pragma mark DocView Delegate
 
-- (void) didClickDocViewRecents:(DocView*)docView_ {
-    [self.viewConteiner setFrame:NSMakeRect(0, 81, 310, 567)];
+- (void) didClickDockViewRecents:(DockView*)docView_ {
+    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
-    [self.docView selectItemWithDocViewItem:DocViewItemRecents];
+    [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
 }
 
-- (void) didClickDocViewContacts:(DocView*)docView_ {
+- (void) didClickDockViewContacts:(DockView*)docView_ {
 }
 
-- (void) didClickDocViewDialpad:(DocView*)docView_ {
-    if (self.viewConteiner.frame.origin.y == 81) {
-        [self.viewConteiner setFrame:NSMakeRect(0, 351, 310, 297)];
+- (void) didClickDockViewDialpad:(DockView*)dockView_ {
+    if (self.viewContainer.frame.origin.y == 81) {
+        [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];
         [viewCurrent setFrame:NSMakeRect(0, 0, 310, 297)];
-        [self.docView selectItemWithDocViewItem:DocViewItemDialpad];
+        [self.dockView selectItemWithDocViewItem:DockViewItemDialpad];
     } else {
-        [self.viewConteiner setFrame:NSMakeRect(0, 81, 310, 567)];
+        [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
         [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
-        [self.docView selectItemWithDocViewItem:DocViewItemRecents];
+        [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
     }
     
     
@@ -84,10 +85,10 @@
 //    }
 }
 
-- (void) didClickDocViewResources:(DocView*)docView_ {
+- (void) didClickDockViewResources:(DockView*)dockView_ {
 }
 
-- (void) didClickDocViewSettings:(DocView*)docView_ {
+- (void) didClickDockViewSettings:(DockView*)dockView_ {
 }
 
 @end

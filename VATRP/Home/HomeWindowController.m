@@ -27,6 +27,13 @@
     [self setWindowPos: pos];
 
     self.window.title = [self getACEBuildNumber];
+    [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 310, self.window.frame.size.height)
+                  display:YES
+                  animate:NO];
+}
+
+- (HomeViewController*) getHomeViewController {
+    return (HomeViewController*)self.contentViewController;
 }
 
 -(NSString*)getACEBuildNumber{

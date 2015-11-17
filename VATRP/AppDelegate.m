@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "HomeWindowController.h"
 #import "AboutWindowController.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
@@ -18,7 +17,6 @@
 #import <HockeySDK/HockeySDK.h>
 
 @interface AppDelegate () {
-    HomeWindowController *homeWindowController;
     VideoCallWindowController *videoCallWindowController;
     AboutWindowController *aboutWindowController;
 }
@@ -29,6 +27,7 @@
 
 @synthesize loginWindowController;
 @synthesize loginViewController;
+@synthesize homeWindowController;
 @synthesize viewController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -71,20 +70,20 @@
 }
 
 - (void) showTabWindow {
-    homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
-    [homeWindowController showWindow:self];
+    self.homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
+    [self.homeWindowController showWindow:self];
 
     [[AppDelegate sharedInstance].loginWindowController close];
     [AppDelegate sharedInstance].loginWindowController = nil;
 }
 
 -(NSPoint) getTabWindowOrigin{
-    NSPoint origin = [homeWindowController getWindowOrigin];
+    NSPoint origin = [self.homeWindowController getWindowOrigin];
     return origin;
 }
 
 -(NSPoint) getTabWindowSize{
-    CGSize cgSize = [homeWindowController getWindowSize];
+    CGSize cgSize = [self.homeWindowController getWindowSize];
     NSPoint size = {cgSize.width, cgSize.height};
     return size;
 }
@@ -102,12 +101,12 @@
 }
 
 -(void) setTabWindowPos:(NSPoint)pos{
-    [homeWindowController setWindowPos:pos];
+    [self.homeWindowController setWindowPos:pos];
 }
 
 - (void) closeTabWindow {
-    [homeWindowController close];
-    homeWindowController = nil;
+    [self.homeWindowController close];
+    self.homeWindowController = nil;
 }
 
 - (VideoCallWindowController*) getVideoCallWindow {

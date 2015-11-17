@@ -8,6 +8,7 @@
 
 #import "CallService.h"
 #import "ChatService.h"
+#import "AppDelegate.h"
 
 
 @interface CallService () {
@@ -140,11 +141,21 @@
         case LinphoneCallError:
         case LinphoneCallEnd: {
             [[ChatService sharedInstance] closeChatWindow];
+
+            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+                     display:YES
+                     animate:YES];
         }
             break;
         case LinphoneCallReleased: {
             [[ChatService sharedInstance] closeChatWindow];
             currentCall = NULL;
+
+            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+                     display:YES
+                     animate:YES];
         }
             break;
         default:
@@ -167,13 +178,20 @@
         [lm acceptCall:call];
         
     } else {
-        callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
-        [callWindowController showWindow:self];
-        
-        if (callWindowController != nil) {
-            CallViewController *callViewController = [callWindowController getCallViewController];
-            [callViewController setCall:call];
-        }
+        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+
+        [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:call];
+//        
+//        callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
+//        [callWindowController showWindow:self];
+//        
+//        if (callWindowController != nil) {
+//            CallViewController *callViewController = [callWindowController getCallViewController];
+//            [callViewController setCall:call];
+//        }
     }
 }
 

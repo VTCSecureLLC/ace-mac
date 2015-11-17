@@ -3,11 +3,11 @@
 //  ACE
 //
 //  Created by Norayr Harutyunyan on 11/11/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Copyright (c) 2015 VTCSecure. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "DocView.h"
+#import "DockView.h"
 #import "DialPadView.h"
 #import "ProfileView.h"
 #import "RecentsView.h"
@@ -19,7 +19,7 @@
 
 + (ViewManager *)sharedInstance;
 
-@property (nonatomic, retain) DocView *docView;
+@property (nonatomic, retain) DockView *dockView;
 @property (nonatomic, retain) DialPadView *dialPadView;
 @property (nonatomic, retain) ProfileView *profileView;
 @property (nonatomic, retain) RecentsView *recentsView;

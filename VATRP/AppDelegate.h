@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "LoginWindowController.h"
 #import "LoginViewController.h"
+#import "HomeWindowController.h"
 #import "VideoCallWindowController.h"
 #import "ContactsWindowController.h"
 #import "RecentsWindowController.h"
@@ -20,6 +21,7 @@
 
 @property (nonatomic, retain) LoginWindowController *loginWindowController;
 @property (nonatomic, retain) LoginViewController *loginViewController;
+@property (nonatomic, retain) HomeWindowController *homeWindowController;
 @property (nonatomic, retain) ViewController *viewController;
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;
 @property (weak) IBOutlet NSMenuItem *menuItemSignOut;

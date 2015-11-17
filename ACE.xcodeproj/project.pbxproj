@@ -137,13 +137,15 @@
 		4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAF56191BB1615900241DC2 /* accounts_icon.png */; };
 		4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */; };
 		4AB2A2CF1BF2258C006AC5C6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2CE1BF2258C006AC5C6 /* HomeViewController.m */; };
-		4AB2A2D31BF2273E006AC5C6 /* DocView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2D21BF2273E006AC5C6 /* DocView.m */; };
+		4AB2A2D31BF2273E006AC5C6 /* DockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2D21BF2273E006AC5C6 /* DockView.m */; };
 		4AB2A2DD1BF241CD006AC5C6 /* DialPadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2DC1BF241CD006AC5C6 /* DialPadView.m */; };
 		4AB2A2E11BF32C79006AC5C6 /* ProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2E01BF32C79006AC5C6 /* ProfileView.m */; };
 		4AB2A2E31BF33F74006AC5C6 /* cameraview2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB2A2E21BF33F74006AC5C6 /* cameraview2.png */; };
 		4AB2A2E61BF34469006AC5C6 /* RecentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2E51BF34469006AC5C6 /* RecentsView.m */; };
 		4AB2A2EC1BF36E2B006AC5C6 /* ViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2EB1BF36E2B006AC5C6 /* ViewManager.m */; };
 		4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB2A2F01BF399DD006AC5C6 /* dialpadDelete.png */; };
+		4AB2A2F51BF4768D006AC5C6 /* VideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2F41BF4768D006AC5C6 /* VideoView.m */; };
+		4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2A2FA1BF488EA006AC5C6 /* CallControllersView.m */; };
 		4AB556421BDE2454003382B2 /* app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB556411BDE2453003382B2 /* app_icon.png */; };
 		4AB556451BDE2598003382B2 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB556441BDE2598003382B2 /* AboutWindowController.m */; };
 		4AB556481BDE25AD003382B2 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB556471BDE25AD003382B2 /* AboutViewController.m */; };
@@ -496,8 +498,8 @@
 		4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinphoneManager.m; path = VATRP/LinphoneManager/LinphoneManager.m; sourceTree = SOURCE_ROOT; };
 		4AB2A2CD1BF2258C006AC5C6 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		4AB2A2CE1BF2258C006AC5C6 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		4AB2A2D11BF2273E006AC5C6 /* DocView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocView.h; sourceTree = "<group>"; };
-		4AB2A2D21BF2273E006AC5C6 /* DocView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocView.m; sourceTree = "<group>"; };
+		4AB2A2D11BF2273E006AC5C6 /* DockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DockView.h; sourceTree = "<group>"; };
+		4AB2A2D21BF2273E006AC5C6 /* DockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DockView.m; sourceTree = "<group>"; };
 		4AB2A2DB1BF241CD006AC5C6 /* DialPadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialPadView.h; sourceTree = "<group>"; };
 		4AB2A2DC1BF241CD006AC5C6 /* DialPadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialPadView.m; sourceTree = "<group>"; };
 		4AB2A2DF1BF32C79006AC5C6 /* ProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileView.h; sourceTree = "<group>"; };
@@ -508,6 +510,10 @@
 		4AB2A2EA1BF36E2B006AC5C6 /* ViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewManager.h; sourceTree = "<group>"; };
 		4AB2A2EB1BF36E2B006AC5C6 /* ViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewManager.m; sourceTree = "<group>"; };
 		4AB2A2F01BF399DD006AC5C6 /* dialpadDelete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dialpadDelete.png; sourceTree = "<group>"; };
+		4AB2A2F31BF4768D006AC5C6 /* VideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoView.h; sourceTree = "<group>"; };
+		4AB2A2F41BF4768D006AC5C6 /* VideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoView.m; sourceTree = "<group>"; };
+		4AB2A2F91BF488EA006AC5C6 /* CallControllersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallControllersView.h; sourceTree = "<group>"; };
+		4AB2A2FA1BF488EA006AC5C6 /* CallControllersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallControllersView.m; sourceTree = "<group>"; };
 		4AB556411BDE2453003382B2 /* app_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon.png; sourceTree = "<group>"; };
 		4AB556431BDE2598003382B2 /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
 		4AB556441BDE2598003382B2 /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
@@ -814,6 +820,7 @@
 				4AB2A2D01BF22721006AC5C6 /* Doc */,
 				4AB2A2DA1BF241B3006AC5C6 /* DialPad */,
 				4AB2A2DE1BF32C55006AC5C6 /* Profile */,
+				4AB2A2F21BF4766B006AC5C6 /* Video */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -998,8 +1005,8 @@
 		4AB2A2D01BF22721006AC5C6 /* Doc */ = {
 			isa = PBXGroup;
 			children = (
-				4AB2A2D11BF2273E006AC5C6 /* DocView.h */,
-				4AB2A2D21BF2273E006AC5C6 /* DocView.m */,
+				4AB2A2D11BF2273E006AC5C6 /* DockView.h */,
+				4AB2A2D21BF2273E006AC5C6 /* DockView.m */,
 			);
 			path = Doc;
 			sourceTree = "<group>";
@@ -1020,6 +1027,17 @@
 				4AB2A2E01BF32C79006AC5C6 /* ProfileView.m */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		4AB2A2F21BF4766B006AC5C6 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				4AB2A2F31BF4768D006AC5C6 /* VideoView.h */,
+				4AB2A2F41BF4768D006AC5C6 /* VideoView.m */,
+				4AB2A2F91BF488EA006AC5C6 /* CallControllersView.h */,
+				4AB2A2FA1BF488EA006AC5C6 /* CallControllersView.m */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 		4AB556401BDE229A003382B2 /* About */ = {
@@ -1310,7 +1328,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
-				ORGANIZATIONNAME = Home;
+				ORGANIZATIONNAME = VTCSecure;
 				TargetAttributes = {
 					4AC389C41B8E87530063298F = {
 						CreatedOnToolsVersion = 6.4;
@@ -1423,7 +1441,7 @@
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
 				4A6717021BCD05CC00139A6F /* KeypadViewController.m in Sources */,
 				4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */,
-				4AB2A2D31BF2273E006AC5C6 /* DocView.m in Sources */,
+				4AB2A2D31BF2273E006AC5C6 /* DockView.m in Sources */,
 				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
 				4A902DFB1BB9823200ECFD86 /* CodecModel.m in Sources */,
 				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
@@ -1436,11 +1454,13 @@
 				4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */,
 				4AC389CE1B8E87530063298F /* main.m in Sources */,
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
+				4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
 				4AA203C01BD4CAF500DD9A4D /* BackgroundedView.m in Sources */,
 				4A13AA171BC6A5B9000C9358 /* TestingViewController.m in Sources */,
 				4AB2A2E61BF34469006AC5C6 /* RecentsView.m in Sources */,
+				4AB2A2F51BF4768D006AC5C6 /* VideoView.m in Sources */,
 				2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */,
 				2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */,
 				5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */,

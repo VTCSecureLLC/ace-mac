@@ -234,7 +234,7 @@
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-618" y="-778"/>
+            <point key="canvasLocation" x="-1404" y="-741"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -243,7 +243,7 @@
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="310" height="700"/>
+                        <rect key="contentRect" x="196" y="240" width="1013" height="700"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
                     </window>
                     <connections>
@@ -252,17 +252,17 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="-977"/>
+            <point key="canvasLocation" x="-379" y="-1051"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="MQb-eq-DCh">
             <objects>
                 <viewController storyboardIdentifier="HomeViewController" id="f5W-XC-ZdQ" customClass="HomeViewController" sceneMemberID="viewController">
                     <view key="view" id="L4A-2d-4g6" customClass="BackgroundedView">
-                        <rect key="frame" x="0.0" y="0.0" width="310" height="700"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1013" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCP-sF-zhB" customClass="DocView">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCP-sF-zhB" customClass="DockView">
                                 <rect key="frame" x="0.0" y="0.0" width="310" height="80"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IeB-UT-Ifz">
@@ -560,13 +560,13 @@
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1VK-jT-7Ad" customClass="RecentsView">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
                                         <subviews>
-                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2P-Jw-G7F">
+                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2P-Jw-G7F">
                                                 <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
                                                 <clipView key="contentView" ambiguous="YES" id="xe7-Rp-bfy">
                                                     <rect key="frame" x="1" y="1" width="308" height="295"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="1kJ-XL-p9i">
+                                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" viewBased="YES" id="1kJ-XL-p9i">
                                                             <rect key="frame" x="0.0" y="0.0" width="308" height="295"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <animations/>
@@ -646,7 +646,7 @@
                                                 </clipView>
                                                 <animations/>
                                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="roq-Hx-GkO">
-                                                    <rect key="frame" x="1" y="551" width="308" height="16"/>
+                                                    <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <animations/>
                                                 </scroller>
@@ -666,20 +666,62 @@
                                 </subviews>
                                 <animations/>
                             </customView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ONY-1b-r4g" customClass="VideoView">
+                                <rect key="frame" x="310" y="0.0" width="703" height="700"/>
+                                <subviews>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VdL-8A-skc">
+                                        <rect key="frame" x="486" y="20" width="176" height="99"/>
+                                        <animations/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="elO-ql-yb4" customClass="CallControllersView">
+                                        <rect key="frame" x="198" y="67" width="307" height="89"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uda-Ee-Bo1">
+                                                <rect key="frame" x="13" y="23" width="126" height="43"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" title="Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="NNS-K9-6in">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="20" name=".HelveticaNeueDeskInterface-Regular"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonAnswer:" target="elO-ql-yb4" id="Gz4-yE-2XX"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PDv-US-LZm">
+                                                <rect key="frame" x="168" y="23" width="126" height="43"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="Nbq-PR-ePD">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="20" name=".HelveticaNeueDeskInterface-Regular"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonDecline:" target="elO-ql-yb4" id="gBZ-U0-Yly"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <animations/>
+                                    </customView>
+                                </subviews>
+                                <animations/>
+                                <connections>
+                                    <outlet property="localVideo" destination="VdL-8A-skc" id="LyZ-L7-h8j"/>
+                                </connections>
+                            </customView>
                         </subviews>
                         <animations/>
                     </view>
                     <connections>
                         <outlet property="dialPadView" destination="e4g-m7-al7" id="HO8-m1-MVM"/>
-                        <outlet property="docView" destination="ZCP-sF-zhB" id="55m-fd-MRE"/>
+                        <outlet property="dockView" destination="ZCP-sF-zhB" id="VQn-IW-MAn"/>
                         <outlet property="profileView" destination="sNe-CT-gua" id="o2B-uz-hEI"/>
                         <outlet property="recentsView" destination="1VK-jT-7Ad" id="tCI-nJ-aah"/>
-                        <outlet property="viewConteiner" destination="EEV-Wa-LvY" id="8zm-iL-gdS"/>
+                        <outlet property="videoView" destination="ONY-1b-r4g" id="D8v-Zc-Vmj"/>
+                        <outlet property="viewContainer" destination="EEV-Wa-LvY" id="ntR-15-kWr"/>
                     </connections>
                 </viewController>
                 <customObject id="nie-3i-IYX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="-153"/>
+            <point key="canvasLocation" x="-379.5" y="-175"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="5eQ-RW-85u">
@@ -2478,7 +2520,7 @@ DQ
                 </windowController>
                 <customObject id="jJb-7x-mkN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-559" y="3"/>
+            <point key="canvasLocation" x="-1305" y="-54"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Hyp-LX-3yW">
@@ -2492,7 +2534,7 @@ DQ
                 </viewController>
                 <customObject id="Bhe-VH-ikf" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-739" y="554"/>
+            <point key="canvasLocation" x="-1305" y="569"/>
         </scene>
         <!--Accounts View Controller-->
         <scene sceneID="h6J-Pz-DZX">
@@ -3052,7 +3094,7 @@ DQ
                 </viewController>
                 <customObject id="49i-MK-gRo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-269" y="555"/>
+            <point key="canvasLocation" x="-835" y="570"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="xdP-7i-d3b">
@@ -3260,7 +3302,7 @@ DQ
                 </viewController>
                 <customObject id="sJs-hG-HRR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="193" y="555"/>
+            <point key="canvasLocation" x="-373" y="570"/>
         </scene>
         <!--Media View Controller-->
         <scene sceneID="Jpd-i7-6el">

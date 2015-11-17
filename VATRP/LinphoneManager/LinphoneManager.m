@@ -37,7 +37,7 @@
 #include "linphone/linphonecore_utils.h"
 #include "linphone/lpconfig.h"
 #include "mediastreamer2/mscommon.h"
-
+#import "SDPNegotiationService.h"
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -583,6 +583,10 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
 			[self setSpeakerEnabled:TRUE];
 			speaker_already_enabled = TRUE;
 		}
+        
+        if(state == LinphoneCallOutgoingInit || state == LinphoneCallIncomingReceived){
+                [[SDPNegotiationService sharedInstance] initializeSDP:theLinphoneCore];
+        }
 	}
 
 //	if (state == LinphoneCallConnected && !mCallCenter) {

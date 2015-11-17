@@ -171,6 +171,21 @@
 		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; };
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
+		69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A01BFB5C83005C62FA /* chat_active.png */; };
+		69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A11BFB5C83005C62FA /* chat_disabled.png */; };
+		69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A21BFB5C83005C62FA /* chat_inactive.png */; };
+		69A025B21BFB5C83005C62FA /* mute_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A31BFB5C83005C62FA /* mute_active.png */; };
+		69A025B31BFB5C83005C62FA /* mute_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A41BFB5C83005C62FA /* mute_disabled.png */; };
+		69A025B41BFB5C83005C62FA /* mute_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A51BFB5C83005C62FA /* mute_inactive.png */; };
+		69A025B51BFB5C83005C62FA /* numpad_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A61BFB5C83005C62FA /* numpad_active.png */; };
+		69A025B61BFB5C83005C62FA /* numpad_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A71BFB5C83005C62FA /* numpad_disabled.png */; };
+		69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A81BFB5C83005C62FA /* numpad_inactive.png */; };
+		69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A91BFB5C83005C62FA /* speaker_active.png */; };
+		69A025B91BFB5C83005C62FA /* speaker_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AA1BFB5C83005C62FA /* speaker_disabled.png */; };
+		69A025BA1BFB5C83005C62FA /* speaker_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AB1BFB5C83005C62FA /* speaker_inactive.png */; };
+		69A025BB1BFB5C83005C62FA /* video_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AC1BFB5C83005C62FA /* video_active.png */; };
+		69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AD1BFB5C83005C62FA /* video_disabled.png */; };
+		69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AE1BFB5C83005C62FA /* video_inactive.png */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
 		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
 		CE3D252D1BA7739400028600 /* libbellesip.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25001BA7739400028600 /* libbellesip.0.dylib */; };
@@ -556,6 +571,21 @@
 		5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfVideoViewController.m; sourceTree = "<group>"; };
 		5E3CA6411BF0F9B700D9913F /* SDPNegotiationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPNegotiationService.h; sourceTree = "<group>"; };
 		5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPNegotiationService.m; sourceTree = "<group>"; };
+		69A025A01BFB5C83005C62FA /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
+		69A025A11BFB5C83005C62FA /* chat_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_disabled.png; sourceTree = "<group>"; };
+		69A025A21BFB5C83005C62FA /* chat_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_inactive.png; sourceTree = "<group>"; };
+		69A025A31BFB5C83005C62FA /* mute_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute_active.png; sourceTree = "<group>"; };
+		69A025A41BFB5C83005C62FA /* mute_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute_disabled.png; sourceTree = "<group>"; };
+		69A025A51BFB5C83005C62FA /* mute_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute_inactive.png; sourceTree = "<group>"; };
+		69A025A61BFB5C83005C62FA /* numpad_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numpad_active.png; sourceTree = "<group>"; };
+		69A025A71BFB5C83005C62FA /* numpad_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numpad_disabled.png; sourceTree = "<group>"; };
+		69A025A81BFB5C83005C62FA /* numpad_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numpad_inactive.png; sourceTree = "<group>"; };
+		69A025A91BFB5C83005C62FA /* speaker_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speaker_active.png; sourceTree = "<group>"; };
+		69A025AA1BFB5C83005C62FA /* speaker_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speaker_disabled.png; sourceTree = "<group>"; };
+		69A025AB1BFB5C83005C62FA /* speaker_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speaker_inactive.png; sourceTree = "<group>"; };
+		69A025AC1BFB5C83005C62FA /* video_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_active.png; sourceTree = "<group>"; };
+		69A025AD1BFB5C83005C62FA /* video_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_disabled.png; sourceTree = "<group>"; };
+		69A025AE1BFB5C83005C62FA /* video_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_inactive.png; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
 		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = VATRP/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
 		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
@@ -973,6 +1003,7 @@
 			children = (
 				4AB5566A1BE272D5003382B2 /* Call Log */,
 				4A5DD1E21BD904B3003BE9A2 /* Message */,
+				69A0259F1BFB5C83005C62FA /* inCall */,
 				4AB556411BDE2453003382B2 /* app_icon.png */,
 				4AA203C51BD4D2A000DD9A4D /* chat_icon.png */,
 				CE34B2B41BD1014C0010A2B0 /* info-icon.png */,
@@ -1185,6 +1216,28 @@
 			path = "VATRP/In Call";
 			sourceTree = SOURCE_ROOT;
 		};
+		69A0259F1BFB5C83005C62FA /* inCall */ = {
+			isa = PBXGroup;
+			children = (
+				69A025A01BFB5C83005C62FA /* chat_active.png */,
+				69A025A11BFB5C83005C62FA /* chat_disabled.png */,
+				69A025A21BFB5C83005C62FA /* chat_inactive.png */,
+				69A025A31BFB5C83005C62FA /* mute_active.png */,
+				69A025A41BFB5C83005C62FA /* mute_disabled.png */,
+				69A025A51BFB5C83005C62FA /* mute_inactive.png */,
+				69A025A61BFB5C83005C62FA /* numpad_active.png */,
+				69A025A71BFB5C83005C62FA /* numpad_disabled.png */,
+				69A025A81BFB5C83005C62FA /* numpad_inactive.png */,
+				69A025A91BFB5C83005C62FA /* speaker_active.png */,
+				69A025AA1BFB5C83005C62FA /* speaker_disabled.png */,
+				69A025AB1BFB5C83005C62FA /* speaker_inactive.png */,
+				69A025AC1BFB5C83005C62FA /* video_active.png */,
+				69A025AD1BFB5C83005C62FA /* video_disabled.png */,
+				69A025AE1BFB5C83005C62FA /* video_inactive.png */,
+			);
+			path = inCall;
+			sourceTree = "<group>";
+		};
 		CE6758A81BA8C99D005396EF /* opt */ = {
 			isa = PBXGroup;
 			children = (
@@ -1367,6 +1420,7 @@
 				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
 				4A5DD1EB1BD904B3003BE9A2 /* messageIncomingBubbleTop.png in Resources */,
+				69A025BA1BFB5C83005C62FA /* speaker_inactive.png in Resources */,
 				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
 				4AC975F81BDA23E900AD35C8 /* chat_message_not_delivered.png in Resources */,
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
@@ -1374,8 +1428,12 @@
 				4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */,
 				4AB556421BDE2454003382B2 /* app_icon.png in Resources */,
 				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
+				69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */,
 				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
+				69A025B31BFB5C83005C62FA /* mute_disabled.png in Resources */,
+				69A025B51BFB5C83005C62FA /* numpad_active.png in Resources */,
+				69A025B91BFB5C83005C62FA /* speaker_disabled.png in Resources */,
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
@@ -1383,8 +1441,11 @@
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
 				4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */,
+				69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */,
 				4AB2A2E31BF33F74006AC5C6 /* cameraview2.png in Resources */,
+				69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */,
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
+				69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
@@ -1393,10 +1454,17 @@
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
+				69A025B61BFB5C83005C62FA /* numpad_disabled.png in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
+				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
+				69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */,
 				4A5DD1ED1BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png in Resources */,
 				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
+				69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */,
+				69A025B21BFB5C83005C62FA /* mute_active.png in Resources */,
+				69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */,
+				69A025B41BFB5C83005C62FA /* mute_inactive.png in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,

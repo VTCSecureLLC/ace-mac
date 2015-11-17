@@ -198,13 +198,20 @@
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
-    callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
-    [callWindowController showWindow:self];
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+             display:YES
+             animate:YES];
     
-    if (callWindowController != nil) {
-        CallViewController *callViewController = [callWindowController getCallViewController];
-        [callViewController setOutgoingCall:call];
-    }
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];
+    
+//    callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
+//    [callWindowController showWindow:self];
+//    
+//    if (callWindowController != nil) {
+//        CallViewController *callViewController = [callWindowController getCallViewController];
+//        [callViewController setOutgoingCall:call];
+//    }
 }
 
 @end

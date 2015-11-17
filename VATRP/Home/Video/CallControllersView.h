@@ -7,7 +7,24 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CallService.h"
+
+@protocol CallControllersViewDelegate;
 
 @interface CallControllersView : NSView
+
+@property (nonatomic, assign) id<CallControllersViewDelegate> delegate;
+
+- (void)setCall:(LinphoneCall*)acall;
+- (void)setOutgoingCall:(LinphoneCall*)acall;
+
+@end
+
+@protocol CallControllersViewDelegate <NSObject>
+
+@optional
+
+- (BOOL) didClickCallControllersViewVideo:(CallControllersView*)callControllersView_;
+
 
 @end

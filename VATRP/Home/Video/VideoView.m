@@ -12,13 +12,14 @@
 #import "SettingsWindowController.h"
 #import "KeypadWindowController.h"
 #import "ChatWindowController.h"
+#import "CallControllersView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CallService.h"
 #import "ChatService.h"
 #import "AppDelegate.h"
 
 
-@interface VideoView () {
+@interface VideoView () <CallControllersViewDelegate> {
     NSTimer *timerCallDuration;
     NSTimer *timerRingCount;
     NSTimeInterval startCallTime;
@@ -32,8 +33,9 @@
 @property (weak) IBOutlet NSTextField *labelDisplayName;
 @property (weak) IBOutlet NSTextField *labelCallState;
 @property (weak) IBOutlet NSTextField *labelCallDuration;
-@property (weak) IBOutlet NSButton *buttonAnswer;
-@property (weak) IBOutlet NSButton *buttonDecline;
+
+@property (weak) IBOutlet CallControllersView *callControllersView;
+
 @property (weak) IBOutlet NSTextField *ringCountLabel;
 
 @property (weak) IBOutlet NSImageView *callAlertImageView;
@@ -61,11 +63,6 @@
     
     timerCallDuration = nil;
     
-    self.buttonAnswer.wantsLayer = YES;
-    [self.buttonAnswer.layer setBackgroundColor:[NSColor greenColor].CGColor];
-    self.buttonDecline.wantsLayer = YES;
-    [self.buttonDecline.layer setBackgroundColor:[NSColor redColor].CGColor];
-    
     self.wantsLayer = YES;
     self.remoteVideoView.wantsLayer = YES;
     
@@ -76,6 +73,8 @@
     
     self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
     self.labelDisplayName.hidden = YES;
+    
+    self.callControllersView.delegate = self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -134,36 +133,22 @@
             [self labelCallState].hidden = YES;
             [self stopRingCountTimer];
             
-//            CallWindowController *callWindow = [[CallService sharedInstance] getCallWindowController];
-//            [callWindow showWindow:self];
-//            CallViewController *callController = (CallViewController*)callWindow.contentViewController;
-//            linphone_core_set_native_video_window_id(lc, (__bridge void *)(callController.remoteVideoView));
-            
-
             linphone_core_set_native_video_window_id(lc, (__bridge void *)(self));
-
             
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
             linphone_core_use_preview_window(lc, YES);
             linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
-            
             
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                                  target:self
                                                                selector:@selector(inCallTick:)
                                                                userInfo:nil
                                                                 repeats:YES];
+            
             startCallTime = [[NSDate date] timeIntervalSince1970];
             
             
             self.labelCallState.stringValue = @"Connected";
-            self.buttonAnswer.hidden = YES;
-            
-            [self.buttonDecline setTitle:@"End Call"];
-            self.buttonDecline.frame = CGRectMake((self.frame.size.width - self.buttonDecline.frame.size.width) / 2,
-                                                  self.buttonDecline.frame.origin.y,
-                                                  self.buttonDecline.frame.size.width,
-                                                  self.buttonDecline.frame.size.height);
         }
             break;
         case LinphoneCallOutgoingInit: {
@@ -320,18 +305,15 @@
     call = acall;
     [self update];
     [self callUpdate:call state:linphone_call_get_state(call)];
+    
+    [self.callControllersView setCall:acall];
 }
 
 - (void)setOutgoingCall:(LinphoneCall*)acall {
     call = acall;
     [self update];
     
-    self.buttonAnswer.hidden = YES;
-    self.buttonDecline.frame = CGRectMake((self.frame.size.width - self.buttonDecline.frame.size.width)/2,
-                                          self.buttonDecline.frame.origin.y,
-                                          self.buttonDecline.frame.size.width,
-                                          self.buttonDecline.frame.size.height);
-    [self.buttonDecline setTitle:@"Cancel"];
+    [self.callControllersView setOutgoingCall:acall];
 }
 
 - (void) inCallTick:(NSTimer*)timer {

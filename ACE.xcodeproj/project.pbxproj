@@ -186,6 +186,7 @@
 		69A025BB1BFB5C83005C62FA /* video_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AC1BFB5C83005C62FA /* video_active.png */; };
 		69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AD1BFB5C83005C62FA /* video_disabled.png */; };
 		69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AE1BFB5C83005C62FA /* video_inactive.png */; };
+		69C726751BFC6DF6002198A7 /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C726741BFC6DF6002198A7 /* NumpadView.m */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
 		CE3D252A1BA7739400028600 /* libatk-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */; };
 		CE3D252D1BA7739400028600 /* libbellesip.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3D25001BA7739400028600 /* libbellesip.0.dylib */; };
@@ -586,6 +587,8 @@
 		69A025AC1BFB5C83005C62FA /* video_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_active.png; sourceTree = "<group>"; };
 		69A025AD1BFB5C83005C62FA /* video_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_disabled.png; sourceTree = "<group>"; };
 		69A025AE1BFB5C83005C62FA /* video_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_inactive.png; sourceTree = "<group>"; };
+		69C726731BFC6DF6002198A7 /* NumpadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumpadView.h; sourceTree = "<group>"; };
+		69C726741BFC6DF6002198A7 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
 		CE3D24FC1BA7739300028600 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = VATRP/linphonesdk/libs/libantlr3c.dylib; sourceTree = "<group>"; };
 		CE3D24FD1BA7739400028600 /* libatk-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libatk-1.0.0.dylib"; path = "VATRP/linphonesdk/libs/libatk-1.0.0.dylib"; sourceTree = "<group>"; };
@@ -1067,6 +1070,7 @@
 				4AB2A2F41BF4768D006AC5C6 /* VideoView.m */,
 				4AB2A2F91BF488EA006AC5C6 /* CallControllersView.h */,
 				4AB2A2FA1BF488EA006AC5C6 /* CallControllersView.m */,
+				69C726731BFC6DF6002198A7 /* NumpadView.h */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -1682,6 +1686,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

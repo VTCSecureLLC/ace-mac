@@ -12,5 +12,6 @@
 @interface HomeViewController : NSViewController
 
 @property (weak) IBOutlet VideoView *videoView;
+@property (weak) IBOutlet NSView *callView;
 
 @end

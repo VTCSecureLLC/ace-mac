@@ -23,9 +23,6 @@ before_script:
 - chmod +x gas-preprocessor.pl
 - sudo mv gas-preprocessor.pl /usr/local/bin
 - sudo ln -s /usr/local/bin/glibtoolize /usr/local/bin/libtoolize
-- sudo mkdir -p /opt/
-- sudo mkdir -p /opt/local
-- sudo ln -s /usr/local/lib /opt/local/lib
 - git submodule update --init --recursive
 - bundle install
 - ./Tools/git_version.sh

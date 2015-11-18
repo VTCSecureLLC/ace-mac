@@ -366,7 +366,7 @@
                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bfy-BC-UYg">
                                         <rect key="frame" x="20" y="236" width="208" height="24"/>
                                         <animations/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" title="123123" drawsBackground="YES" usesSingleLineMode="YES" id="Duh-dd-OjV">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" drawsBackground="YES" usesSingleLineMode="YES" id="Duh-dd-OjV">
                                             <font key="font" metaFont="system" size="24"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -510,6 +510,9 @@
                                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="cameraview2" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="6gG-xN-uCF">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="28"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                         </buttonCell>
                                         <connections>
                                             <action selector="onButtonVideo:" target="e4g-m7-al7" id="TOS-GK-MMt"/>
@@ -529,6 +532,9 @@
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="dialpadDelete" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Bus-BD-PDJ">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
                                         </buttonCell>
                                         <connections>
                                             <action selector="onButtonDelete:" target="e4g-m7-al7" id="rGI-rA-r1x"/>
@@ -666,119 +672,300 @@
                                 </subviews>
                                 <animations/>
                             </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ONY-1b-r4g" customClass="VideoView">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gMr-jS-MXT">
                                 <rect key="frame" x="310" y="0.0" width="720" height="700"/>
-                                <animations/>
-                                <connections>
-                                    <outlet property="callControllersView" destination="elO-ql-yb4" id="O0s-5N-sRL"/>
-                                    <outlet property="localVideo" destination="VdL-8A-skc" id="LyZ-L7-h8j"/>
-                                </connections>
-                            </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="elO-ql-yb4" customClass="CallControllersView">
-                                <rect key="frame" x="395" y="42" width="550" height="158"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xzM-0g-iEn">
-                                        <rect key="frame" x="0.0" y="82" width="110" height="76"/>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ONY-1b-r4g" customClass="VideoView">
+                                        <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <animations/>
-                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="video_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="nTr-2W-ab8">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
                                         <connections>
-                                            <action selector="onButtonVideo:" target="elO-ql-yb4" id="Q4F-ol-uPc"/>
+                                            <outlet property="callControllersView" destination="elO-ql-yb4" id="O0s-5N-sRL"/>
+                                            <outlet property="localVideo" destination="VdL-8A-skc" id="LyZ-L7-h8j"/>
+                                            <outlet property="numpadView" destination="eDd-Jj-zKg" id="UoR-m4-WQ1"/>
                                         </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdw-q6-WoX">
-                                        <rect key="frame" x="110" y="82" width="110" height="76"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="elO-ql-yb4" customClass="CallControllersView">
+                                        <rect key="frame" x="85" y="42" width="550" height="222"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="afq-e4-FVh">
+                                                <rect key="frame" x="53" y="172" width="444" height="34"/>
+                                                <animations/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Calling..." id="eb9-Nx-Vzq">
+                                                    <font key="font" size="19" name=".HelveticaNeueDeskInterface-Regular"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xzM-0g-iEn">
+                                                <rect key="frame" x="0.0" y="82" width="110" height="76"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="video_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="nTr-2W-ab8">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system" size="10"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonVideo:" target="elO-ql-yb4" id="Q4F-ol-uPc"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdw-q6-WoX">
+                                                <rect key="frame" x="110" y="82" width="110" height="76"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="mute_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="tPt-yz-Cys">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system" size="10"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonMute:" target="elO-ql-yb4" id="gea-J2-9xP"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xdp-rG-9Fh">
+                                                <rect key="frame" x="220" y="82" width="110" height="76"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="speaker_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="DCl-WR-chd">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system" size="10"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonSpeaker:" target="elO-ql-yb4" id="5wb-9t-L7N"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Gd-op-cJL">
+                                                <rect key="frame" x="330" y="82" width="110" height="76"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="numpad_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="v0Z-JW-qjk">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system" size="10"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonKeypad:" target="elO-ql-yb4" id="bPQ-1C-VvA"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="loc-W5-ee6">
+                                                <rect key="frame" x="440" y="82" width="110" height="76"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="chat_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Jzr-fV-NwU">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system" size="10"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonChat:" target="elO-ql-yb4" id="VfX-TH-Vae"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uda-Ee-Bo1">
+                                                <rect key="frame" x="0.0" y="0.0" width="248" height="68"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" title="Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="NNS-K9-6in">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="38" name="HelveticaNeue"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonAnswer:" target="elO-ql-yb4" id="Gz4-yE-2XX"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PDv-US-LZm">
+                                                <rect key="frame" x="302" y="0.0" width="248" height="68"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="Nbq-PR-ePD">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="38" name="HelveticaNeue"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonDecline:" target="elO-ql-yb4" id="gBZ-U0-Yly"/>
+                                                </connections>
+                                            </button>
+                                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="sJq-Ke-FcI">
+                                                <rect key="frame" x="38" y="111" width="16" height="16"/>
+                                                <animations/>
+                                            </progressIndicator>
+                                        </subviews>
                                         <animations/>
-                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="mute_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="tPt-yz-Cys">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
                                         <connections>
-                                            <action selector="onButtonMute:" target="elO-ql-yb4" id="gea-J2-9xP"/>
+                                            <outlet property="buttonAnswer" destination="Uda-Ee-Bo1" id="3N7-uw-Haw"/>
+                                            <outlet property="buttonChat" destination="loc-W5-ee6" id="h8Y-bt-9RU"/>
+                                            <outlet property="buttonDecline" destination="PDv-US-LZm" id="eKP-KH-reR"/>
+                                            <outlet property="buttonKeypad" destination="6Gd-op-cJL" id="K4v-be-IWr"/>
+                                            <outlet property="buttonMute" destination="fdw-q6-WoX" id="cxq-Q0-iTn"/>
+                                            <outlet property="buttonSpeaker" destination="xdp-rG-9Fh" id="Ow6-9u-2Tu"/>
+                                            <outlet property="buttonVideo" destination="xzM-0g-iEn" id="pQH-2J-I0W"/>
+                                            <outlet property="labelCallState" destination="afq-e4-FVh" id="eeX-Oq-o0O"/>
+                                            <outlet property="videoProgressIndicator" destination="sJq-Ke-FcI" id="kid-SH-TE4"/>
                                         </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xdp-rG-9Fh">
-                                        <rect key="frame" x="220" y="82" width="110" height="76"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VdL-8A-skc">
+                                        <rect key="frame" x="544" y="580" width="150" height="100"/>
                                         <animations/>
-                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="speaker_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="DCl-WR-chd">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
+                                    </customView>
+                                    <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eDd-Jj-zKg" customClass="NumpadView">
+                                        <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                                        <subviews>
+                                            <customView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IN0-Xg-ewg" customClass="BackgroundedView">
+                                                <rect key="frame" x="355" y="217" width="230" height="307"/>
+                                                <subviews>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="YsP-mH-Kw5">
+                                                        <rect key="frame" x="0.0" y="231" width="76" height="76"/>
+                                                        <shadow key="shadow">
+                                                            <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </shadow>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="1" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Dau-Gi-CQF">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="7iN-aV-QCd"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="M3C-jr-nXI">
+                                                        <rect key="frame" x="77" y="231" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="2" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="cr1-78-GT6">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="d2t-t2-epf"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="jci-nP-wBI">
+                                                        <rect key="frame" x="154" y="231" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="3" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Ews-aw-hk8">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="7wi-10-V43"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="l3C-Cv-Cgf">
+                                                        <rect key="frame" x="0.0" y="154" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="4" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="JZR-Ff-cTZ">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="JFJ-Xj-Oy5"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="GI8-jX-7i2">
+                                                        <rect key="frame" x="77" y="154" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="5" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="DdD-QR-auf">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                            <string key="keyEquivalent">5</string>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="qhj-m7-DBO"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="RpY-an-9bm">
+                                                        <rect key="frame" x="154" y="154" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="6" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="mLg-YN-ies">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="ijC-09-vk6"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="S0Z-Bb-WLR">
+                                                        <rect key="frame" x="0.0" y="77" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="7" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Fnl-a9-W64">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="wXg-Eg-WZj"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="kEQ-4M-Hia">
+                                                        <rect key="frame" x="77" y="77" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="8" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Qlt-kM-6c1">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="zyi-da-Kf2"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="j1m-j4-Xea">
+                                                        <rect key="frame" x="154" y="77" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="9" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Wjf-7x-krc">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="bkG-u9-l9O"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="g1F-LK-0KH">
+                                                        <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="*" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="hB9-aJ-o8B">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="45"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="sul-hZ-I96"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="012-xk-fJK">
+                                                        <rect key="frame" x="77" y="0.0" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="0" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="5eN-cv-7VU">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="RPU-YI-RCA"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="Jnx-hm-Vc0">
+                                                        <rect key="frame" x="154" y="0.0" width="76" height="76"/>
+                                                        <animations/>
+                                                        <buttonCell key="cell" type="smallSquare" title="#" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="ETQ-H1-20I">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system" size="30"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="onButtonNumber:" target="eDd-Jj-zKg" id="QBi-ii-DVj"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <animations/>
+                                            </customView>
+                                        </subviews>
+                                        <animations/>
                                         <connections>
-                                            <action selector="onButtonSpeaker:" target="elO-ql-yb4" id="5wb-9t-L7N"/>
+                                            <outlet property="buttonEight" destination="kEQ-4M-Hia" id="Iol-W1-uBb"/>
+                                            <outlet property="buttonFive" destination="GI8-jX-7i2" id="33S-r2-yJz"/>
+                                            <outlet property="buttonFour" destination="l3C-Cv-Cgf" id="P3g-Gc-t9Z"/>
+                                            <outlet property="buttonNine" destination="j1m-j4-Xea" id="7jJ-6o-giQ"/>
+                                            <outlet property="buttonOne" destination="YsP-mH-Kw5" id="Rwd-jI-CXO"/>
+                                            <outlet property="buttonSeven" destination="S0Z-Bb-WLR" id="jvn-CB-Cdm"/>
+                                            <outlet property="buttonSharp" destination="Jnx-hm-Vc0" id="aNm-3t-rdU"/>
+                                            <outlet property="buttonSix" destination="RpY-an-9bm" id="H1l-CY-dFW"/>
+                                            <outlet property="buttonStar" destination="g1F-LK-0KH" id="aWb-eN-jRq"/>
+                                            <outlet property="buttonThree" destination="jci-nP-wBI" id="fch-ii-6w8"/>
+                                            <outlet property="buttonTwo" destination="M3C-jr-nXI" id="nhB-90-DZv"/>
+                                            <outlet property="buttonZero" destination="012-xk-fJK" id="4Qr-lB-J62"/>
+                                            <outlet property="viewBG" destination="IN0-Xg-ewg" id="pcT-at-yR6"/>
                                         </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Gd-op-cJL">
-                                        <rect key="frame" x="330" y="82" width="110" height="76"/>
-                                        <animations/>
-                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="numpad_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="v0Z-JW-qjk">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onButtonKeypad:" target="elO-ql-yb4" id="bPQ-1C-VvA"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="loc-W5-ee6">
-                                        <rect key="frame" x="440" y="82" width="110" height="76"/>
-                                        <animations/>
-                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="chat_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Jzr-fV-NwU">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="10"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onButtonChat:" target="elO-ql-yb4" id="VfX-TH-Vae"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uda-Ee-Bo1">
-                                        <rect key="frame" x="0.0" y="0.0" width="248" height="68"/>
-                                        <animations/>
-                                        <buttonCell key="cell" type="square" title="Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="NNS-K9-6in">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="38" name="HelveticaNeue"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onButtonAnswer:" target="elO-ql-yb4" id="Gz4-yE-2XX"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PDv-US-LZm">
-                                        <rect key="frame" x="302" y="0.0" width="248" height="68"/>
-                                        <animations/>
-                                        <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="Nbq-PR-ePD">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="38" name="HelveticaNeue"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onButtonDecline:" target="elO-ql-yb4" id="gBZ-U0-Yly"/>
-                                        </connections>
-                                    </button>
-                                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="sJq-Ke-FcI">
-                                        <rect key="frame" x="38" y="111" width="16" height="16"/>
-                                        <animations/>
-                                    </progressIndicator>
+                                    </customView>
                                 </subviews>
-                                <animations/>
-                                <connections>
-                                    <outlet property="buttonAnswer" destination="Uda-Ee-Bo1" id="3N7-uw-Haw"/>
-                                    <outlet property="buttonChat" destination="loc-W5-ee6" id="h8Y-bt-9RU"/>
-                                    <outlet property="buttonDecline" destination="PDv-US-LZm" id="eKP-KH-reR"/>
-                                    <outlet property="buttonKeypad" destination="6Gd-op-cJL" id="K4v-be-IWr"/>
-                                    <outlet property="buttonMute" destination="fdw-q6-WoX" id="cxq-Q0-iTn"/>
-                                    <outlet property="buttonSpeaker" destination="xdp-rG-9Fh" id="Ow6-9u-2Tu"/>
-                                    <outlet property="buttonVideo" destination="xzM-0g-iEn" id="pQH-2J-I0W"/>
-                                    <outlet property="videoProgressIndicator" destination="sJq-Ke-FcI" id="kid-SH-TE4"/>
-                                </connections>
-                            </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VdL-8A-skc">
-                                <rect key="frame" x="834" y="580" width="176" height="99"/>
                                 <animations/>
                             </customView>
                         </subviews>
                         <animations/>
                     </view>
                     <connections>
+                        <outlet property="callView" destination="gMr-jS-MXT" id="Wuk-VK-v6i"/>
                         <outlet property="dialPadView" destination="e4g-m7-al7" id="HO8-m1-MVM"/>
                         <outlet property="dockView" destination="ZCP-sF-zhB" id="VQn-IW-MAn"/>
                         <outlet property="profileView" destination="sNe-CT-gua" id="o2B-uz-hEI"/>
@@ -789,7 +976,7 @@
                 </viewController>
                 <customObject id="nie-3i-IYX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-379.5" y="-175"/>
+            <point key="canvasLocation" x="-425" y="-196"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="5eQ-RW-85u">

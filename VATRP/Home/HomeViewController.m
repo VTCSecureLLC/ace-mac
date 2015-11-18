@@ -13,6 +13,7 @@
 #import "ProfileView.h"
 #import "RecentsView.h"
 #import "VideoView.h"
+#import "NumpadView.h"
 
 
 @interface HomeViewController () <DockViewDelegate> {
@@ -44,6 +45,7 @@
     [ViewManager sharedInstance].dialPadView = self.dialPadView;
     [ViewManager sharedInstance].profileView = self.profileView;
     [ViewManager sharedInstance].recentsView = self.recentsView;
+    [ViewManager sharedInstance].callView = self.callView;
     
     viewCurrent = (BackgroundedView*)self.recentsView;
 }
@@ -69,20 +71,6 @@
         [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
         [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
     }
-    
-    
-    
-    
-    
-    
-//    if (self.dialPadView.superview) {
-//        [self.dialPadView removeFromSuperview];
-//        [viewCurrent setFrame:NSMakeRect(0, 0, 310, 568)];
-//    } else {
-//        [self.dialPadView setFrame:NSMakeRect(0, 81, 310, self.dialPadView.frame.size.height)];
-//        [self.view addSubview:self.dialPadView];
-//        [viewCurrent setFrame:NSMakeRect(0, 270, 310, 297)];
-//    }
 }
 
 - (void) didClickDockViewResources:(DockView*)dockView_ {

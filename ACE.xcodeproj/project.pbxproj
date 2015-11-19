@@ -22,7 +22,7 @@
 		2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD31B98615500145575 /* ServiceSelectionViewController.m */; };
 		2BA68DD71B98617000145575 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DD61B98617000145575 /* LoginViewController.m */; };
 		2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA68DDA1B98733E00145575 /* HomeWindowController.m */; };
-		314CF99E1BB74F1E0015C7FF /* HockeySDK.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		314CF99E1BB74F1E0015C7FF /* HockeySDK.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4A13AA171BC6A5B9000C9358 /* TestingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A13AA161BC6A5B9000C9358 /* TestingViewController.m */; };
 		4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BAB961BC4FAE200640476 /* cafile.pem */; };
 		4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BABAD1BC5236400640476 /* RegistrationService.m */; };
@@ -311,15 +311,15 @@
 		73EDA2FB1BFA9F6D00EC7039 /* libcunit.1.0.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20D1BFA9F2C00EC7039 /* libcunit.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2FC1BFA9F6D00EC7039 /* libcunit.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20E1BFA9F2C00EC7039 /* libcunit.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2FD1BFA9F6D00EC7039 /* libgsm.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73EDA3001BFA9F6D00EC7039 /* libilbcrfc3951.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2121BFA9F2C00EC7039 /* libilbcrfc3951.a */; };
+		73EDA3001BFA9F6D00EC7039 /* libilbcrfc3951.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2121BFA9F2C00EC7039 /* libilbcrfc3951.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3031BFA9F6D00EC7039 /* liblinphone.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3041BFA9F6D00EC7039 /* liblinphone.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3051BFA9F6D00EC7039 /* libmediastreamer_base.6.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2171BFA9F2C00EC7039 /* libmediastreamer_base.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3061BFA9F6D00EC7039 /* libmediastreamer_base.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2181BFA9F2C00EC7039 /* libmediastreamer_base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3071BFA9F6D00EC7039 /* libmediastreamer_voip.6.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2191BFA9F2C00EC7039 /* libmediastreamer_voip.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3081BFA9F6D00EC7039 /* libmediastreamer_voip.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21A1BFA9F2C00EC7039 /* libmediastreamer_voip.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73EDA3091BFA9F6D00EC7039 /* libopencore-amrnb.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21B1BFA9F2C00EC7039 /* libopencore-amrnb.a */; };
-		73EDA30A1BFA9F6D00EC7039 /* libopencore-amrwb.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21C1BFA9F2C00EC7039 /* libopencore-amrwb.a */; };
+		73EDA3091BFA9F6D00EC7039 /* libopencore-amrnb.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21B1BFA9F2C00EC7039 /* libopencore-amrnb.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		73EDA30A1BFA9F6D00EC7039 /* libopencore-amrwb.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21C1BFA9F2C00EC7039 /* libopencore-amrwb.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA30B1BFA9F6D00EC7039 /* libopenh264.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21D1BFA9F2C00EC7039 /* libopenh264.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA30C1BFA9F6D00EC7039 /* libopenh264.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21E1BFA9F2C00EC7039 /* libopenh264.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA30D1BFA9F6D00EC7039 /* libopus.5.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21F1BFA9F2C00EC7039 /* libopus.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -328,7 +328,7 @@
 		73EDA3101BFA9F6D00EC7039 /* libortp.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2221BFA9F2C00EC7039 /* libortp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3111BFA9F6D00EC7039 /* libpolarssl.1.4.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2231BFA9F2C00EC7039 /* libpolarssl.1.4.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3121BFA9F6D00EC7039 /* libpolarssl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2241BFA9F2C00EC7039 /* libpolarssl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73EDA3131BFA9F6E00EC7039 /* libpolarssl.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2251BFA9F2C00EC7039 /* libpolarssl.a */; };
+		73EDA3131BFA9F6E00EC7039 /* libpolarssl.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2251BFA9F2C00EC7039 /* libpolarssl.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3141BFA9F6E00EC7039 /* libpolarssl.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2261BFA9F2C00EC7039 /* libpolarssl.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3151BFA9F6E00EC7039 /* libspeex.6.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2271BFA9F2C00EC7039 /* libspeex.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3161BFA9F6E00EC7039 /* libspeex.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2281BFA9F2C00EC7039 /* libspeex.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -343,13 +343,13 @@
 		73EDA31F1BFA9F6E00EC7039 /* libswscale.2.1.100.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2311BFA9F2C00EC7039 /* libswscale.2.1.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3201BFA9F6E00EC7039 /* libswscale.2.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2321BFA9F2C00EC7039 /* libswscale.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3211BFA9F6E00EC7039 /* libswscale.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2331BFA9F2C00EC7039 /* libswscale.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73EDA3221BFA9F6E00EC7039 /* libvo-amrwbenc.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2341BFA9F2C00EC7039 /* libvo-amrwbenc.a */; };
-		73EDA3231BFA9F6E00EC7039 /* libvpx.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2351BFA9F2C00EC7039 /* libvpx.a */; };
+		73EDA3221BFA9F6E00EC7039 /* libvo-amrwbenc.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2341BFA9F2C00EC7039 /* libvo-amrwbenc.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		73EDA3231BFA9F6E00EC7039 /* libvpx.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2351BFA9F2C00EC7039 /* libvpx.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3241BFA9F6E00EC7039 /* libxml2.2.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2361BFA9F2C00EC7039 /* libxml2.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3251BFA9F6E00EC7039 /* libxml2.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2371BFA9F2C00EC7039 /* libxml2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73EDA3281BFA9F6E00EC7039 /* libz.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23A1BFA9F2C00EC7039 /* libz.a */; };
+		73EDA3281BFA9F6E00EC7039 /* libz.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23A1BFA9F2C00EC7039 /* libz.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
 /* End PBXBuildFile section */

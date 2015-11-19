@@ -13,9 +13,8 @@ env:
 before_script:
 - pushd /usr/local/Library/Homebrew/ ; git branch --set-upstream-to=origin/master master ; git pull ; popd
 - brew update 1>/dev/null
-- brew install doxygen nasm yasm optipng imagemagick coreutils intltool ninja antlr cmake gettext homebrew/dupes/libiconv
+- brew install doxygen nasm yasm optipng imagemagick coreutils intltool ninja antlr cmake gettext
 - brew link --force gettext
-- brew link --force homebrew/dupes/libiconv
 - brew install cairo --without-x11
 - brew install gtk+ --without-x11
 - brew install gtk-mac-integration hicolor-icon-theme

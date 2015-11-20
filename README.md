@@ -1,34 +1,41 @@
-Linphone is a free VoIP and video softphone based on the SIP protocol.
+# ACE Mac
 
-![Dialer screenshot](http://www.linphone.org/img/slideshow-computer.png)
+## Specific instructions for ACE Mac build
 
-# Getting started
+0. Get build time dependancies:
+    
+    A. Get homebrew from http://brew.sh/
+    
+    B. Open terminal app and run: 
 
-Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
+        brew update 
+        brew install doxygen nasm yasm optipng imagemagick coreutils intltool ninja antlr cmake gettext
+        brew link --force gettext
+        brew install cairo --without-x11
+        brew install gtk+ --without-x11
+        brew install gtk-mac-integration hicolor-icon-theme
+        wget --no-check-certificate https://raw.github.com/yuvi/gas-preprocessor/master/gas-preprocessor.pl
+        chmod +x gas-preprocessor.pl
+        sudo mv gas-preprocessor.pl /usr/local/bin
+        sudo ln -s /usr/local/bin/glibtoolize /usr/local/bin/libtoolize
+        
+    C. Initalize your git submodules: 
+        
+        git submodule update --init --recursive
 
-1. Install some build tools: CMake, Python.
-2. Prepare the build by running the prepare.py script.
-3. Build the project using the appropriate build tool (make, ninja, Xcode, Visual Studio).
+1. Open terminal app in the current directory and run:
 
-## Specific instructions for the Linux platform
+        prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_H263=YES -DENABLE_FFMPEG=YES -DENABLE_NON_FREE_CODECS=ON  -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_AMRWB=YES -DENABLE_AMRNB=YES -DENABLE_OPENH264=YES -DENABLE_G729=YES -DENABLE_MPEG4=YES -DENABLE_H263P=ON -DENABLE_ILBC=ON -DENABLE_ISAC=ON -DENABLE_SILK=ON -p
 
-1. Prepare the build in a terminal by running the following command in the current directory:
-        ./prepare.py
-2. Build the project in a terminal with:
-        make
+2. Build the SDK with:
 
-## Specific instructions for the Windows platform
+        make 
 
-1. Open a Windows command line (cmd.exe) in the current directory and run:
-        python prepare.py
-2. Open the generated Visual Studio solution (WORK/cmake/Project.sln) and build it.
+3. Open the ACE.xcodeproj in Xcode and run the project
 
-## Specific instructions for the Mac OS X platform
-
-1. Open iTerm.app in the current directory and run:
-        ./prepare.py
-2. Build the project with:
-        make
+Bonus. Update your local git repository:
+    
+    git pull && git submodule update --recursive 
 
 # Customizing your build
 

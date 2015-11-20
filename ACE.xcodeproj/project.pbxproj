@@ -125,6 +125,7 @@
 		69A025BB1BFB5C83005C62FA /* video_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AC1BFB5C83005C62FA /* video_active.png */; };
 		69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AD1BFB5C83005C62FA /* video_disabled.png */; };
 		69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AE1BFB5C83005C62FA /* video_inactive.png */; };
+		7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; };
 		739C3F111BFCE6D800F9EFCE /* libmsamr.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2B81BFA9F4B00EC7039 /* libmsamr.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		739C3F121BFCE6D800F9EFCE /* libmsamr.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2B91BFA9F4B00EC7039 /* libmsamr.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		739C3F131BFCE6D800F9EFCE /* libmsbcg729.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2BA1BFA9F4B00EC7039 /* libmsbcg729.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -745,6 +746,7 @@
 				73ED2AF81BFCE7CE00C182F2 /* libmsilbc.0.dylib in Frameworks */,
 				73ED2AF91BFCE7CE00C182F2 /* libmsilbc.0.dylib in Frameworks */,
 				73ED2AFA1BFCE7CE00C182F2 /* libmsopenh264.0.dylib in Frameworks */,
+				7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */,
 				73ED2AFB1BFCE7CE00C182F2 /* libmsopenh264.0.dylib in Frameworks */,
 				73ED2AFC1BFCE7CE00C182F2 /* libmssilk.0.dylib in Frameworks */,
 				73ED2AFD1BFCE7CE00C182F2 /* libmssilk.0.dylib in Frameworks */,

@@ -3,11 +3,14 @@
 //  ACE
 //
 //  Created by Norayr Harutyunyan on 11/10/15.
-//  Copyright © 2015 Home. All rights reserved.
+//  Copyright (c) 2015 VTCSecure. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
+#import "VideoView.h"
 
 @interface HomeViewController : NSViewController
+
+@property (weak) IBOutlet VideoView *videoView;
 
 @end

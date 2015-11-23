@@ -492,13 +492,6 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
 	[(__bridge LinphoneManager*)linphone_core_get_user_data(lc)  displayStatus:status];
 }
 
-//LINPHONE_PUBLIC	const char *linphone_core_get_version(void);
-+ (const char *)getLinphoneCoreVersion
-{
-    return linphone_core_get_version();
-}
-
-
 #pragma mark - Call State Functions
 
 - (void)localNotifContinue:(NSTimer*) timer {
@@ -911,8 +904,7 @@ void networkReachabilityCallBack(SCNetworkReachabilityRef target, SCNetworkReach
 				}
 				linphone_core_set_network_reachable(theLinphoneCore,true);
 				linphone_core_iterate(theLinphoneCore);
-                NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-				NSLog(@"Network connectivity changed to type [%s]. LinphoneVersion: %@",(newConnectivity==wifi?"wifi":"wwan"), linphoneVersion);
+				NSLog(@"Network connectivity changed to type [%s].",(newConnectivity==wifi?"wifi":"wwan"));
 			}
 			lm.connectivity = newConnectivity;
 			switch (lm.tunnelMode) {
@@ -942,8 +934,7 @@ void networkReachabilityCallBack(SCNetworkReachabilityRef target, SCNetworkReach
 	zeroAddress.sin_family = AF_INET;
 
 	if (proxyReachability) {
-        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-		NSLog(@"Cancelling old network reachability. LinphoneVersion: %@", linphoneVersion);
+		NSLog(@"Cancelling old network reachability.");
 		SCNetworkReachabilityUnscheduleFromRunLoop(proxyReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 		CFRelease(proxyReachability);
 		proxyReachability = nil;
@@ -968,13 +959,11 @@ void networkReachabilityCallBack(SCNetworkReachabilityRef target, SCNetworkReach
 	proxyReachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)&zeroAddress);
 
 	if (!SCNetworkReachabilitySetCallback(proxyReachability, (SCNetworkReachabilityCallBack)networkReachabilityCallBack, ctx)){
-        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-		NSLog(@"Cannot register reachability cb: %s. LinphoneVersion: %@", SCErrorString(SCError()), linphoneVersion);
+		NSLog(@"Cannot register reachability cb: %s.", SCErrorString(SCError()));
 		return;
 	}
 	if(!SCNetworkReachabilityScheduleWithRunLoop(proxyReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)){
-        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-		NSLog(@"Cannot register schedule reachability cb: %s. LinphoneVersion: %@", SCErrorString(SCError()), linphoneVersion);
+		NSLog(@"Cannot register schedule reachability cb: %s.", SCErrorString(SCError()));
 		return;
 	}
 
@@ -1965,7 +1954,6 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 }
 - (NSString *)lpConfigStringForKey:(NSString *)key forSection:(NSString *)section withDefault:(NSString *)defaultValue {
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-    NSLog(@"LinphoneVersion: %@", linphoneVersion);
     NSLog(@"key: %@", key);
     NSLog(@"section: %@", section);
     NSLog(@"defaultValue: %@", defaultValue);

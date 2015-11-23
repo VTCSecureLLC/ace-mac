@@ -234,8 +234,16 @@ static NSFont *CELL_FONT = nil;
 static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState state) {
     ChatItemTableCellView *thiz = (__bridge ChatItemTableCellView *)linphone_chat_message_get_user_data(msg);
 
-    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-    NSLog(@"State for message [%p] changed to %s. LinphoneVersion: %@", msg, linphone_chat_message_state_to_string(state), linphoneVersion);
+    if ((state != LinphoneChatMessageStateNotDelivered) && (state != LinphoneChatMessageStateFileTransferError))
+    {
+        NSLog(@"State for message [%p] changed to %s.", msg, linphone_chat_message_state_to_string(state));
+    }
+    else
+    {
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+        NSLog(@"State for message [%p] changed to %s. LinphoneVersion: %@", msg, linphone_chat_message_state_to_string(state), linphoneVersion);
+    }
+
     if (linphone_chat_message_get_file_transfer_information(msg) != NULL) {
         if (state == LinphoneChatMessageStateDelivered || state == LinphoneChatMessageStateNotDelivered) {
             // we need to refresh the tableview because the filetransfer delegate unreffed

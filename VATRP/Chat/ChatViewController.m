@@ -269,8 +269,7 @@ static void chatTable_free_chatrooms(void *data) {
             NSString *displayName = nil;
             
             if (chatRoom == nil) {
-                NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-                NSLog(@"Cannot update chat cell: null chat. LinphoneVersion: %@", linphoneVersion);
+                NSLog(@"Cannot update chat cell: null chat");
                 return nil;
             }
             
@@ -579,9 +578,8 @@ static void chatTable_free_chatrooms(void *data) {
     NSDictionary *dict_message = [aNotification object];
     
 //    BOOL composing = [[dict_message objectForKey:@"composing"] boolValue];
-    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSString *text = [dict_message objectForKey:@"text"];
-    NSLog(@"LinphoneVersion: %@, text: %@", linphoneVersion, text);
+    NSLog(@"text: %@", text);
     
     LinphoneChatRoom *room = [[[aNotification userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == selectedChatRoom) {
@@ -596,8 +594,7 @@ static void chatTable_free_chatrooms(void *data) {
         
         if (linphone_call_params_realtime_text_enabled(current)) {
             char c = (char) linphone_chat_room_get_char(room);
-            NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-            NSLog(@"LinphoneVersion %@, char: %c", linphoneVersion, c);
+            NSLog(@"char: %c", c);
         }
     }
     
@@ -653,8 +650,7 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
 {
-    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-    NSLog(@"Selector method is (%@). LinphoneVersion: %@", NSStringFromSelector( commandSelector ), linphoneVersion );
+    NSLog(@"Selector method is (%@)", NSStringFromSelector( commandSelector ) );
     
     if (commandSelector == @selector(insertNewline:)) {
         //Do something against ENTER key
@@ -766,8 +762,7 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (BOOL)sendMessage:(NSString *)message withExterlBodyUrl:(NSURL *)externalUrl withInternalURL:(NSURL *)internalUrl LinphoneChatRoom:(LinphoneChatRoom*)room {
     if (room == NULL) {
-        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-        NSLog(@"Cannot send message: No chatroom. LinphoneVersion: %@", linphoneVersion);
+        NSLog(@"Cannot send message: No chatroom.");
         return FALSE;
     }
     
@@ -800,8 +795,15 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     const char *text = (linphone_chat_message_get_file_transfer_information(msg) != NULL)
     ? "photo transfer"
     : linphone_chat_message_get_text(msg);
-    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-    NSLog(@"Delivery status for [%s] is [%s]. LinphoneVersion: %@", text, linphone_chat_message_state_to_string(state), linphoneVersion);
+    if ((state != LinphoneChatMessageStateNotDelivered) && (state != LinphoneChatMessageStateFileTransferError))
+    {
+        NSLog(@"Delivery status for [%s] is [%s].", text, linphone_chat_message_state_to_string(state));
+    }
+    else
+    {
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+        NSLog(@"Delivery status for [%s] is [%s]. LinphoneVersion: %@", text, linphone_chat_message_state_to_string(state), linphoneVersion);
+    }
     ChatViewController *thiz = (__bridge ChatViewController *)ud;
     
     

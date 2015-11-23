@@ -149,8 +149,7 @@
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room) {
         BOOL composing = linphone_chat_room_is_remote_composing(room);
-        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
-        NSLog(@"composing: %d. LinphoneVersion: %@", composing, linphoneVersion);
+        NSLog(@"composing: %d.", composing);
         
         uint32_t rttCode = linphone_chat_room_get_char(room);
         NSString *string = [NSString stringWithFormat:@"%c", rttCode];

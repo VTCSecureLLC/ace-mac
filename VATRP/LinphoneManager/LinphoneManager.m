@@ -492,6 +492,12 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
 	[(__bridge LinphoneManager*)linphone_core_get_user_data(lc)  displayStatus:status];
 }
 
+//LINPHONE_PUBLIC	const char *linphone_core_get_version(void);
++ (const char *)getLinphoneCoreVersion
+{
+    return linphone_core_get_version();
+}
+
 
 #pragma mark - Call State Functions
 

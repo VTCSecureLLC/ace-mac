@@ -110,7 +110,7 @@
     @catch(NSException *e){
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
 
-        NSLog(@"Tried to remove account that does not exist. LinphoneVersion: ", %@linphoneVersion);
+        NSLog(@"Tried to remove account that does not exist. LinphoneVersion: %@", linphoneVersion);
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];

@@ -48,9 +48,8 @@
 
 - (void) load {
     NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_ACCOUNT_LIST];
-    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
 
-    NSLog(@"Linphone Version: %@, NSUserDefaults dump: %@", linphoneVersion, [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     for (NSString *key in dict) {
         NSDictionary *accountDict = [dict objectForKey:key];
         AccountModel *accountModel = [[AccountModel alloc] init];

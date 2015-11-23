@@ -581,7 +581,7 @@ static void chatTable_free_chatrooms(void *data) {
 //    BOOL composing = [[dict_message objectForKey:@"composing"] boolValue];
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSString *text = [dict_message objectForKey:@"text"];
-    NSLog(@"LinphoneVersion: %@, text: %@", linphoneVersiontext);
+    NSLog(@"LinphoneVersion: %@, text: %@", linphoneVersion, text);
     
     LinphoneChatRoom *room = [[[aNotification userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == selectedChatRoom) {

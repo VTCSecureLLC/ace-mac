@@ -833,7 +833,8 @@ static void linphone_iphone_is_composing_received(LinphoneCore *lc, LinphoneChat
 }
 
 static void showNetworkFlags(SCNetworkReachabilityFlags flags){
-	NSLog(@"Network connection flags:");
+    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+	NSLog(@"LinphoneVersion: %@. Network connection flags:", linphoneVersion);
 	if (flags==0)
 		NSLog(@"no flags.");
 	if (flags & kSCNetworkReachabilityFlagsTransientConnection)
@@ -910,7 +911,8 @@ void networkReachabilityCallBack(SCNetworkReachabilityRef target, SCNetworkReach
 				}
 				linphone_core_set_network_reachable(theLinphoneCore,true);
 				linphone_core_iterate(theLinphoneCore);
-				NSLog(@"Network connectivity changed to type [%s]",(newConnectivity==wifi?"wifi":"wwan"));
+                NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+				NSLog(@"Network connectivity changed to type [%s]. LinphoneVersion: %@",(newConnectivity==wifi?"wifi":"wwan"), linphoneVersion);
 			}
 			lm.connectivity = newConnectivity;
 			switch (lm.tunnelMode) {
@@ -940,7 +942,8 @@ void networkReachabilityCallBack(SCNetworkReachabilityRef target, SCNetworkReach
 	zeroAddress.sin_family = AF_INET;
 
 	if (proxyReachability) {
-		NSLog(@"Cancelling old network reachability");
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+		NSLog(@"Cancelling old network reachability. LinphoneVersion: %@", linphoneVersion);
 		SCNetworkReachabilityUnscheduleFromRunLoop(proxyReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 		CFRelease(proxyReachability);
 		proxyReachability = nil;
@@ -965,11 +968,13 @@ void networkReachabilityCallBack(SCNetworkReachabilityRef target, SCNetworkReach
 	proxyReachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)&zeroAddress);
 
 	if (!SCNetworkReachabilitySetCallback(proxyReachability, (SCNetworkReachabilityCallBack)networkReachabilityCallBack, ctx)){
-		NSLog(@"Cannot register reachability cb: %s", SCErrorString(SCError()));
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+		NSLog(@"Cannot register reachability cb: %s. LinphoneVersion: %@", SCErrorString(SCError()), linphoneVersion);
 		return;
 	}
 	if(!SCNetworkReachabilityScheduleWithRunLoop(proxyReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)){
-		NSLog(@"Cannot register schedule reachability cb: %s", SCErrorString(SCError()));
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+		NSLog(@"Cannot register schedule reachability cb: %s. LinphoneVersion: %@", SCErrorString(SCError()), linphoneVersion);
 		return;
 	}
 
@@ -1899,12 +1904,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 
 -(void)setLogsEnabled:(BOOL)enabled {
 	if (enabled) {
-		NSLog(@"Enabling debug logs");
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+		NSLog(@"Enabling debug logs. LinphoneVersion: %@", linphoneVersion);
 //		linphone_core_enable_logs_with_cb((OrtpLogFunc)linphone_iphone_log_handler);
 		linphone_core_set_log_level(ORTP_DEBUG);
 		linphone_core_enable_log_collection(enabled);
 	} else {
-		NSLog(@"Disabling debug logs");
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+		NSLog(@"Disabling debug logs. LinphoneVersion: %@", linphoneVersion);
 		linphone_core_enable_log_collection(enabled);
 		linphone_core_disable_logs();
 	}
@@ -1957,6 +1964,8 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	return [self lpConfigStringForKey:key forSection:section withDefault:nil];
 }
 - (NSString *)lpConfigStringForKey:(NSString *)key forSection:(NSString *)section withDefault:(NSString *)defaultValue {
+    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+    NSLog(@"LinphoneVersion: %@", linphoneVersion);
     NSLog(@"key: %@", key);
     NSLog(@"section: %@", section);
     NSLog(@"defaultValue: %@", defaultValue);

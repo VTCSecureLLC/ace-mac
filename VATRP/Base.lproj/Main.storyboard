@@ -758,6 +758,17 @@
                                         <rect key="frame" x="38" y="111" width="16" height="16"/>
                                         <animations/>
                                     </progressIndicator>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chO-KT-Q2r">
+                                        <rect key="frame" x="517" y="121" width="33" height="37"/>
+                                        <animations/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="info-icon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="N93-qa-Te1">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onButtonCallInfo:" target="elO-ql-yb4" id="iuX-UU-dLh"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <connections>
@@ -789,7 +800,7 @@
                 </viewController>
                 <customObject id="nie-3i-IYX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-379.5" y="-175"/>
+            <point key="canvasLocation" x="-380" y="-175"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="5eQ-RW-85u">

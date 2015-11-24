@@ -8,7 +8,6 @@
 
 #import "VideoView.h"
 #import "VideoCallViewController.h"
-#import "CallInfoWindowController.h"
 #import "SettingsWindowController.h"
 #import "KeypadWindowController.h"
 #import "ChatWindowController.h"
@@ -24,7 +23,6 @@
     NSTimer *timerRingCount;
     NSTimeInterval startCallTime;
     
-    CallInfoWindowController *callInfoWindowController;
     KeypadWindowController *keypadWindowController;
     
     NSString *windowTitle, *address;
@@ -87,11 +85,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kLinphoneCallUpdate
                                                   object:nil];
-}
-
-- (IBAction)onButtonCallInfo:(id)sender {
-    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
-    [callInfoWindowController showWindow:self];
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
@@ -266,8 +259,7 @@
     VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
     [videoCallWindowController close];
     
-    [callInfoWindowController close];
-    callInfoWindowController = nil;
+    [self.callControllersView dismisCallInfoWindow];
     
     [[[CallService sharedInstance] getCallWindowController] close];
     

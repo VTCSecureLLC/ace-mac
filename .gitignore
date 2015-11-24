@@ -6,3 +6,6 @@ diskimage/
 ACE/ACE.app
 LastCommit.txt
 sync/
+WORK
+OUTPUT
+Makefile

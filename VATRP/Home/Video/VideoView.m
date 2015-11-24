@@ -65,6 +65,8 @@
     
     self.wantsLayer = YES;
     self.remoteVideoView.wantsLayer = YES;
+    self.labelDisplayName.wantsLayer = YES;
+    self.labelCallState.wantsLayer = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
@@ -72,7 +74,7 @@
                                                object:nil];
     
     self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
-    self.labelDisplayName.hidden = YES;
+//    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
 }
@@ -118,7 +120,7 @@
     
     switch (astate) {
         case LinphoneCallIncomingReceived: {
-            self.labelCallState.stringValue = @"Incoming Call...";
+            self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimer];
             
             [self startCallFlashingAnimation];
@@ -130,7 +132,6 @@
         case LinphoneCallConnected: {
             [self stopCallFlashingAnimation];
             
-            [self labelCallState].hidden = YES;
             [self stopRingCountTimer];
             
             linphone_core_set_native_video_window_id(lc, (__bridge void *)(self));
@@ -148,15 +149,15 @@
             startCallTime = [[NSDate date] timeIntervalSince1970];
             
             
-            self.labelCallState.stringValue = @"Connected";
+            self.labelCallState.stringValue = @"Connected 00:00";
         }
             break;
         case LinphoneCallOutgoingInit: {
-            self.labelCallState.stringValue = @"Calling...";
+            self.labelCallState.stringValue = @"Calling 00:00";
         }
             break;
         case LinphoneCallOutgoingRinging: {
-            self.labelCallState.stringValue = @"Ringing...";
+            self.labelCallState.stringValue = @"Ringing 00:00";
             
             [self startRingCountTimer];
         }
@@ -294,6 +295,8 @@
     if(address == nil) {
         address = @"Unknown";
     }
+    
+    self.labelDisplayName.stringValue = address;
     //update caller address in window title
     [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, [self getTimeStringFromSeconds:0]]];
 }
@@ -321,6 +324,8 @@
     
     NSString *string_time = [self getTimeStringFromSeconds:callDuration];
     //Update call duration in window title
+    
+    self.labelCallState.stringValue = [NSString stringWithFormat:@"Connected %@",string_time];
     [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, string_time]];
 }
 

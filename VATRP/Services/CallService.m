@@ -164,6 +164,8 @@
 }
 
 - (void)displayIncomingCall:(LinphoneCall*)call {
+    [NSApp activateIgnoringOtherApps:YES];
+
     currentCall = call;
     
     LinphoneCallLog* callLog = linphone_call_get_call_log(call);

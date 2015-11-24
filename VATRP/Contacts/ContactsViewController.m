@@ -45,6 +45,7 @@
     [_importButton setTitle:@"Import Contact"];
     
     [_importButton setTarget:self];
+    [_importButton setAction:@selector(importContactFromVCard)];
     [self.view addSubview:_firstNameField];
     [self.view addSubview:_lastNameField];
     [self.view addSubview:_sipAddressField];
@@ -54,6 +55,29 @@
 }
 
 
+-(void) importContactFromVCard{
+    ABPerson *person;
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    [panel setCanChooseFiles:YES];
+    [panel setCanChooseDirectories:NO];
+    [panel setAllowsMultipleSelection:NO];
+    
+    NSInteger clicked = [panel runModal];
+    
+    if (clicked == NSFileHandlingPanelOKButton) {
+        
+        NSString *path = panel.URL.relativePath;
+        person = [ContactsService importContact: path];
+    }
+    
+    if(person){
+        _firstNameField.stringValue = [person valueForKey:kABFirstNameProperty];
+        _lastNameField.stringValue = [person valueForKey:kABLastNameProperty];
+        _sipAddressField.stringValue = [person valueForKey:kABJobTitleProperty];
+    }
+
+    
+}
 -(void) exportContactToVCard{
     
     NSOpenPanel *panel = [NSOpenPanel openPanel];

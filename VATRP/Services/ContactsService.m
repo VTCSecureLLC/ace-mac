@@ -16,7 +16,20 @@
     return self;
 }
 
++(ABPerson*) importContact:(NSString*)path{
+    NSData *vCardData = [[NSData alloc] initWithContentsOfFile:path];
+    ABPerson *person = [[ABPerson alloc] initWithVCardRepresentation:vCardData];
+    
+    NSAlert *alert = [[NSAlert alloc] init];
+    
+    [alert addButtonWithTitle:@"OK"];
+    [alert setMessageText:@"Contact imported"];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    [alert runModal];
+    return person;
+}
 +(void) exportContact: (NSString*) firstName : (NSString*) lastName : (NSString*) sipAddress :(NSString*)path{
+
     ABPerson *person = [[ABPerson alloc] initWithAddressBook:[ABAddressBook sharedAddressBook]];
     [person setValue:firstName forKey:kABFirstNameProperty];
     [person setValue:lastName forKey:kABLastNameProperty];

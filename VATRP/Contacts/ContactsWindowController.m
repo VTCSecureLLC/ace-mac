@@ -24,19 +24,6 @@
     self.isShow = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
-    
-    NSString *content = @"FILE SYSTEM VCARD 3.0.";
-    NSString *filePath = @"/Users/zackmatthews/github.com/accounts/vtcsecure/ace-mac/contact.vcard";
-    NSData *fileContents = [content dataUsingEncoding:NSUTF8StringEncoding];
-    [[NSFileManager defaultManager] createFileAtPath:filePath
-                                            contents:fileContents
-                                          attributes:nil];
-    
-    
-    NSError *error = nil;
-    NSString *retrievedContent = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-    
-    NSLog(@"vCard info = %@", retrievedContent);
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

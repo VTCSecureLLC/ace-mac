@@ -48,7 +48,7 @@
 
 - (void) load {
     NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_ACCOUNT_LIST];
-    
+
     NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     for (NSString *key in dict) {
         NSDictionary *accountDict = [dict objectForKey:key];

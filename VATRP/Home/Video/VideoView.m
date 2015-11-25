@@ -13,6 +13,7 @@
 #import "KeypadWindowController.h"
 #import "ChatWindowController.h"
 #import "CallControllersView.h"
+#import "NumpadView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CallService.h"
 #import "ChatService.h"
@@ -31,10 +32,11 @@
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
-@property (weak) IBOutlet NSTextField *labelCallState;
 @property (weak) IBOutlet NSTextField *labelCallDuration;
+@property (weak) IBOutlet NSTextField *labelCallState;
 
 @property (weak) IBOutlet CallControllersView *callControllersView;
+@property (weak) IBOutlet NumpadView *numpadView;
 
 @property (weak) IBOutlet NSTextField *ringCountLabel;
 
@@ -123,7 +125,7 @@
             self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimer];
             
-            [self startCallFlashingAnimation];
+//            [self startCallFlashingAnimation];
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -147,8 +149,6 @@
                                                                 repeats:YES];
             
             startCallTime = [[NSDate date] timeIntervalSince1970];
-            
-            
             self.labelCallState.stringValue = @"Connected 00:00";
         }
             break;
@@ -192,27 +192,19 @@
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             [self displayCallError:call message:@"Call Error"];
+            self.numpadView.hidden = YES;
+
+            break;
         }
         case LinphoneCallEnd:
         {
-            self.labelCallState.stringValue = @"Call End";
+            self.numpadView.hidden = YES;
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             
             if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
                 [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
             }
-            
-            //            if (canHideInCallView) {
-            //                // Go to dialer view
-            //                DialerViewController *controller = DYNAMIC_CAST([self changeCurrentView:[DialerViewController compositeViewDescription]], DialerViewController);
-            //                if(controller != nil) {
-            //                    [controller setAddress:@""];
-            //                    [controller setTransferMode:FALSE];
-            //                }
-            //            } else {
-            //                [self changeCurrentView:[InCallViewController compositeViewDescription]];
-            //            }
             break;
         }
         default:
@@ -299,6 +291,12 @@
     self.labelDisplayName.stringValue = address;
     //update caller address in window title
     [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, [self getTimeStringFromSeconds:0]]];
+}
+
+#pragma mark - CallControllersView Delegate
+
+- (void) didClickCallControllersViewNumpad:(CallControllersView*)callControllersView_ {
+    self.numpadView.hidden = !self.numpadView.hidden;
 }
 
 

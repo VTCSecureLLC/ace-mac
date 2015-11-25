@@ -524,12 +524,12 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (IBAction)onButtonSend:(id)sender {
     if (selectedChatRoom != NULL) {
-        LinphoneCore *lc = [LinphoneManager getLc];
-        const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
-        LinphoneCallParams *lcallParams = linphone_core_create_default_call_parameters(lc);
-        linphone_call_params_enable_audio(lcallParams, false);
-        linphone_call_params_enable_realtime_text(lcallParams, true);
-        currentCall = linphone_core_invite_address_with_params(lc, addr, lcallParams);
+//        LinphoneCore *lc = [LinphoneManager getLc];
+//        const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
+//        LinphoneCallParams *lcallParams = linphone_core_create_default_call_parameters(lc);
+//        linphone_call_params_enable_audio(lcallParams, false);
+//        linphone_call_params_enable_realtime_text(lcallParams, true);
+//        currentCall = linphone_core_invite_address_with_params(lc, addr, lcallParams);
     }
 }
 

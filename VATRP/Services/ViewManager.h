@@ -23,5 +23,6 @@
 @property (nonatomic, retain) DialPadView *dialPadView;
 @property (nonatomic, retain) ProfileView *profileView;
 @property (nonatomic, retain) RecentsView *recentsView;
+@property (nonatomic, retain) NSView *callView;
 
 @end

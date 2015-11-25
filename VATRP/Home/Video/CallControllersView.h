@@ -26,6 +26,7 @@
 @optional
 
 - (BOOL) didClickCallControllersViewVideo:(CallControllersView*)callControllersView_;
+- (void) didClickCallControllersViewNumpad:(CallControllersView*)callControllersView_;
 
 
 @end

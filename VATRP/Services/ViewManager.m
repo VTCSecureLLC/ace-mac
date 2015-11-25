@@ -14,6 +14,7 @@
 @synthesize dialPadView;
 @synthesize profileView;
 @synthesize recentsView;
+@synthesize callView;
 
 + (ViewManager *)sharedInstance
 {

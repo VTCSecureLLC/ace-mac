@@ -21,6 +21,8 @@
     CallInfoWindowController *callInfoWindowController;
 }
 
+@property (weak) IBOutlet NSTextField *labelCallState;
+
 @property (weak) IBOutlet NSButton *buttonAnswer;
 @property (weak) IBOutlet NSButton *buttonDecline;
 
@@ -102,6 +104,9 @@
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(didClickCallControllersViewNumpad:)]) {
+        [_delegate didClickCallControllersViewNumpad:self];
+    }
 }
 
 - (IBAction)onButtonChat:(id)sender {
@@ -189,14 +194,17 @@
     
     switch (astate) {
         case LinphoneCallIncomingReceived: {
+            self.labelCallState.hidden = NO;
+            self.labelCallState.stringValue = @"Incoming Call...";
         }
-        case LinphoneCallIncomingEarlyMedia:
-        {
+        case LinphoneCallIncomingEarlyMedia: {
             break;
         }
         case LinphoneCallConnected: {
             self.buttonAnswer.hidden = YES;
-            
+            self.labelCallState.hidden = YES;
+            self.labelCallState.stringValue = @"Connected";
+
             [self.buttonDecline setTitle:@"End Call"];
             [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
             self.buttonDecline.frame = CGRectMake((self.frame.size.width - self.buttonDecline.frame.size.width) / 2,
@@ -208,28 +216,28 @@
         }
             break;
         case LinphoneCallOutgoingInit: {
+            self.labelCallState.hidden = NO;
+            self.labelCallState.stringValue = @"Calling...";
         }
             break;
         case LinphoneCallOutgoingRinging: {
+            self.labelCallState.stringValue = @"Ringing...";
         }
             break;
         case LinphoneCallPausedByRemote:
-        case LinphoneCallStreamsRunning:
-        {
+        case LinphoneCallStreamsRunning: {
             [self update];
 
             break;
         }
-        case LinphoneCallUpdatedByRemote:
-        {
+        case LinphoneCallUpdatedByRemote: {
             break;
         }
-        case LinphoneCallError:
-        {
+        case LinphoneCallError: {
             break;
         }
-        case LinphoneCallEnd:
-        {
+        case LinphoneCallEnd: {
+            self.labelCallState.stringValue = @"Call End";
             break;
         }
         default:

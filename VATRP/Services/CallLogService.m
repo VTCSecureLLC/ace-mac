@@ -36,7 +36,8 @@
 }
 
 - (void)coreUpdateEvent:(NSNotification *)notif {
-    NSLog(@"coreUpdateEvent");
+    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+    NSLog(@"coreUpdateEvent, LinphoneVersion: %@", linphoneVersion);
 }
 
 @end

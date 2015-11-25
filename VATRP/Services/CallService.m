@@ -179,9 +179,16 @@
         
     } else {
         NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
-                 display:YES
-                 animate:YES];
+        
+        if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
+            [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
+                     display:YES
+                     animate:YES];
+        } else {
+            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+                     display:YES
+                     animate:YES];
+        }
 
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:call];
 //        
@@ -199,10 +206,17 @@
     currentCall = call;
 
     NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
-             display:YES
-             animate:YES];
-    
+
+    if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
+        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+    } else {
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+    }
+
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];
     
 //    callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];

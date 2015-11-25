@@ -594,7 +594,6 @@ static void chatTable_free_chatrooms(void *data) {
         
         if (linphone_call_params_realtime_text_enabled(current)) {
             char c = (char) linphone_chat_room_get_char(room);
-            
             NSLog(@"char: %c", c);
         }
     }
@@ -763,7 +762,7 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (BOOL)sendMessage:(NSString *)message withExterlBodyUrl:(NSURL *)externalUrl withInternalURL:(NSURL *)internalUrl LinphoneChatRoom:(LinphoneChatRoom*)room {
     if (room == NULL) {
-        NSLog(@"Cannot send message: No chatroom");
+        NSLog(@"Cannot send message: No chatroom.");
         return FALSE;
     }
     
@@ -796,7 +795,15 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     const char *text = (linphone_chat_message_get_file_transfer_information(msg) != NULL)
     ? "photo transfer"
     : linphone_chat_message_get_text(msg);
-    NSLog(@"Delivery status for [%s] is [%s]", text, linphone_chat_message_state_to_string(state));
+    if ((state != LinphoneChatMessageStateNotDelivered) && (state != LinphoneChatMessageStateFileTransferError))
+    {
+        NSLog(@"Delivery status for [%s] is [%s].", text, linphone_chat_message_state_to_string(state));
+    }
+    else
+    {
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+        NSLog(@"Delivery status for [%s] is [%s]. LinphoneVersion: %@", text, linphone_chat_message_state_to_string(state), linphoneVersion);
+    }
     ChatViewController *thiz = (__bridge ChatViewController *)ud;
     
     

@@ -247,7 +247,8 @@
         linphone_core_update_call(lc, call, call_params);
         linphone_call_params_destroy(call_params);
     } else {
-        NSLog(@"Cannot toggle video button, because no current call");
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+        NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
     }
 }
 
@@ -263,7 +264,8 @@
         linphone_core_update_call(lc, call, call_params);
         linphone_call_params_destroy(call_params);
     } else {
-        NSLog(@"Cannot toggle video button, because no current call");
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+        NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
     }
 }
 

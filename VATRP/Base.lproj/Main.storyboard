@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
@@ -2369,11 +2369,11 @@ DQ
             </objects>
             <point key="canvasLocation" x="1757" y="589"/>
         </scene>
-        <!--View Controller-->
+        <!--Contacts View Controller-->
         <scene sceneID="6EK-5N-x0i">
             <objects>
                 <customObject id="zCD-jr-p6w" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController id="B1j-ha-NHp" sceneMemberID="viewController">
+                <viewController id="B1j-ha-NHp" customClass="ContactsViewController" sceneMemberID="viewController">
                     <view key="view" id="7ji-WL-fCW">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2836,7 +2836,7 @@ DQ
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWl-cT-n0O">
                                 <rect key="frame" x="20" y="239" width="440" height="135"/>
                                 <clipView key="contentView" ambiguous="YES" id="kcY-Pw-tBg">
-                                    <rect key="frame" x="1" y="0.0" width="438" height="134"/>
+                                    <rect key="frame" x="1" y="23" width="438" height="111"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="7sW-dQ-8Bu" viewBased="YES" id="dVh-VC-nau">
@@ -2978,7 +2978,7 @@ DQ
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDq-Po-t6g">
                                 <rect key="frame" x="20" y="70" width="440" height="135"/>
                                 <clipView key="contentView" ambiguous="YES" id="Swo-KF-8hM">
-                                    <rect key="frame" x="1" y="0.0" width="438" height="134"/>
+                                    <rect key="frame" x="1" y="23" width="438" height="111"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="zB8-sw-BQz" viewBased="YES" id="lsC-EJ-Gf6">

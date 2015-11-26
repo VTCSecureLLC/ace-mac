@@ -150,7 +150,9 @@
 //    if (room) {
 //        BOOL composing = linphone_chat_room_is_remote_composing(room);
 //        NSLog(@"composing: %d", composing);
-//        
+//        BOOL composing = linphone_chat_room_is_remote_composing(room);
+//        NSLog(@"composing: %d.", composing);
+//
 //        uint32_t rttCode = linphone_chat_room_get_char(room);
 //        NSString *string = [NSString stringWithFormat:@"%c", rttCode];
 //

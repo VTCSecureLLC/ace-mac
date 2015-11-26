@@ -144,10 +144,7 @@
             [[ChatService sharedInstance] closeChatWindow];
             [[ViewManager sharedInstance].rttView viewWillDisappear];
 
-            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-                     display:YES
-                     animate:YES];
+            [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
         }
             break;
         case LinphoneCallReleased: {
@@ -155,10 +152,7 @@
             [[ViewManager sharedInstance].rttView viewWillDisappear];
             currentCall = NULL;
 
-            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-                     display:YES
-                     animate:YES];
+            [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
         }
             break;
         default:
@@ -182,18 +176,7 @@
         
     } else {
         [[ViewManager sharedInstance].rttView viewWillAppear];
-
-        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-        
-        if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
-            [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
-                     display:YES
-                     animate:YES];
-        } else {
-            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
-                     display:YES
-                     animate:YES];
-        }
+        [self openCallWindow];
 
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:call];
 //        
@@ -212,18 +195,7 @@
 
     [[ViewManager sharedInstance].rttView viewWillAppear];
     
-    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-
-    if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
-        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
-                 display:YES
-                 animate:YES];
-    } else {
-        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
-                 display:YES
-                 animate:YES];
-    }
-
+    [self openCallWindow];
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];
     
 //    callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
@@ -233,6 +205,26 @@
 //        CallViewController *callViewController = [callWindowController getCallViewController];
 //        [callViewController setOutgoingCall:call];
 //    }
+}
+
+- (void) openCallWindow {
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
+        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+    } else {
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+    }
+}
+
+- (void) closeCallWindow {
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+             display:YES
+             animate:YES];
 }
 
 @end

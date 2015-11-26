@@ -2,7 +2,7 @@
 //  ContactTableCellView.h
 //  ACE
 //
-//  Created by Ruben Semerjyan on 10/14/15.
+//  Created by User on 24/11/15.
 //  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
@@ -10,8 +10,7 @@
 
 @interface ContactTableCellView : NSTableCellView
 
-@property (weak) IBOutlet NSTextField *textFieldInitials;
-@property (weak) IBOutlet NSTextField *textFieldLastMessage;
-@property (weak) IBOutlet NSTextField *textFieldUnredMessageCount;
+@property (weak) IBOutlet NSTextField *nameTextField;
+@property (weak) IBOutlet NSTextField *phoneTextField;
 
 @end

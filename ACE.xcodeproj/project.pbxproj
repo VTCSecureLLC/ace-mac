@@ -61,7 +61,7 @@
 		4AA203B71BD4C92600DD9A4D /* ChatWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203B51BD4C92600DD9A4D /* ChatWindowController.m */; };
 		4AA203BA1BD4CAA200DD9A4D /* CallService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203B91BD4CAA200DD9A4D /* CallService.m */; };
 		4AA203C01BD4CAF500DD9A4D /* BackgroundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */; };
-		4AA203C11BD4CAF500DD9A4D /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */; };
+		4AA203C11BD4CAF500DD9A4D /* ChatContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203BF1BD4CAF500DD9A4D /* ChatContactTableCellView.m */; };
 		4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203C31BD4CF3500DD9A4D /* ChatService.m */; };
 		4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AA203C51BD4D2A000DD9A4D /* chat_icon.png */; };
 		4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5C1BACD437007C1949 /* linphonerc-factory */; };
@@ -354,6 +354,9 @@
 		73EDA3281BFA9F6E00EC7039 /* libz.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23A1BFA9F2C00EC7039 /* libz.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
+		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
+		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
+		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -560,8 +563,8 @@
 		4AA203B91BD4CAA200DD9A4D /* CallService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallService.m; sourceTree = "<group>"; };
 		4AA203BC1BD4CAF500DD9A4D /* BackgroundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundedView.h; sourceTree = "<group>"; };
 		4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundedView.m; sourceTree = "<group>"; };
-		4AA203BE1BD4CAF500DD9A4D /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
-		4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
+		4AA203BE1BD4CAF500DD9A4D /* ChatContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContactTableCellView.h; sourceTree = "<group>"; };
+		4AA203BF1BD4CAF500DD9A4D /* ChatContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactTableCellView.m; sourceTree = "<group>"; };
 		4AA203C21BD4CF3500DD9A4D /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
 		4AA203C31BD4CF3500DD9A4D /* ChatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatService.m; sourceTree = "<group>"; };
 		4AA203C51BD4D2A000DD9A4D /* chat_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_icon.png; sourceTree = "<group>"; };
@@ -730,6 +733,12 @@
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
+		CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
+		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
+		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
+		CE48DF931C04B5110046E727 /* AddContactDialogBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactDialogBox.m; sourceTree = "<group>"; };
+		CE7005FD1C048F0000E667F8 /* ContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsView.h; sourceTree = "<group>"; };
+		CE7005FE1C048F0000E667F8 /* ContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -908,6 +917,10 @@
 			children = (
 				2B463EF41B984E49008E8333 /* ContactsWindowController.h */,
 				2B463EF51B984E49008E8333 /* ContactsWindowController.m */,
+				CE7005FD1C048F0000E667F8 /* ContactsView.h */,
+				CE7005FE1C048F0000E667F8 /* ContactsView.m */,
+				CE48DF921C04B5110046E727 /* AddContactDialogBox.h */,
+				CE48DF931C04B5110046E727 /* AddContactDialogBox.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -1107,14 +1120,16 @@
 			children = (
 				4AA203BC1BD4CAF500DD9A4D /* BackgroundedView.h */,
 				4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */,
-				4AA203BE1BD4CAF500DD9A4D /* ContactTableCellView.h */,
-				4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */,
+				4AA203BE1BD4CAF500DD9A4D /* ChatContactTableCellView.h */,
+				4AA203BF1BD4CAF500DD9A4D /* ChatContactTableCellView.m */,
 				4AB556671BE27085003382B2 /* HistoryTableCellView.h */,
 				4AB556681BE27085003382B2 /* HistoryTableCellView.m */,
 				4A5DD1EF1BD909FB003BE9A2 /* ChatItemTableCellView.h */,
 				4A5DD1F01BD909FB003BE9A2 /* ChatItemTableCellView.m */,
 				4AB556491BDE765E003382B2 /* NewMessageCellView.h */,
 				4AB5564A1BDE765E003382B2 /* NewMessageCellView.m */,
+				CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */,
+				CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -1616,9 +1631,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */,
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */,
+				CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */,
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
+				CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */,
 				4A6717021BCD05CC00139A6F /* KeypadViewController.m in Sources */,
 				4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */,
 				4AB2A2D31BF2273E006AC5C6 /* DockView.m in Sources */,
@@ -1647,7 +1665,7 @@
 				4AB556481BDE25AD003382B2 /* AboutViewController.m in Sources */,
 				4A902DF81BB9746600ECFD86 /* CodecsViewController.m in Sources */,
 				4AA203B61BD4C92600DD9A4D /* ChatViewController.m in Sources */,
-				4AA203C11BD4CAF500DD9A4D /* ContactTableCellView.m in Sources */,
+				4AA203C11BD4CAF500DD9A4D /* ChatContactTableCellView.m in Sources */,
 				2B463F0B1B984E49008E8333 /* SettingsWindowController.m in Sources */,
 				4AB556451BDE2598003382B2 /* AboutWindowController.m in Sources */,
 				2BA68DD71B98617000145575 /* LoginViewController.m in Sources */,

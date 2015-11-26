@@ -7,7 +7,7 @@
 //
 
 #import "ChatViewController.h"
-#import "ContactTableCellView.h"
+#import "ChatContactTableCellView.h"
 #import "ChatItemTableCellView.h"
 #import "BackgroundedView.h"
 #import "NewMessageCellView.h"
@@ -17,7 +17,7 @@
 #import "ChatService.h"
 
 @interface ChatViewController () {
-    ContactTableCellView *selectedContactCell;
+    ChatContactTableCellView *selectedContactCell;
     
     MSList *contacts;
     
@@ -247,7 +247,7 @@ static void chatTable_free_chatrooms(void *data) {
     
     if (tableView == self.tableViewContacts) {
         if ([identifier isEqualTo:@"ContactCell"]) {
-            ContactTableCellView *cellView = [tableView makeViewWithIdentifier:@"Contact" owner:self];
+            ChatContactTableCellView *cellView = [tableView makeViewWithIdentifier:@"Contact" owner:self];
             
             if (stateNewMessage && row == 0) {
                 cellView.textField.stringValue = @"New Message";
@@ -369,7 +369,7 @@ static void chatTable_free_chatrooms(void *data) {
             [selectedContactCell.layer setBackgroundColor:[NSColor clearColor].CGColor];
         }
         
-        ContactTableCellView *selectedCell = (ContactTableCellView*)[tableView viewAtColumn:0 row:index makeIfNecessary:NO];
+        ChatContactTableCellView *selectedCell = (ChatContactTableCellView*)[tableView viewAtColumn:0 row:index makeIfNecessary:NO];
         [selectedCell setWantsLayer:YES];
         [selectedCell.layer setBackgroundColor:[NSColor colorWithDeviceRed:43.0/255.0 green:146.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor];
         selectedContactCell = selectedCell;

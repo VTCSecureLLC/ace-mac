@@ -1027,7 +1027,13 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 
 //scheduling loop
 - (void)iterate {
-	linphone_core_iterate(theLinphoneCore);
+    @try {
+        if ([NSThread mainThread])
+            linphone_core_iterate(theLinphoneCore);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"linphone_core_iterate exception: %@", exception);
+    }
 }
 
 //- (void)audioSessionInterrupted:(NSNotification *)notification

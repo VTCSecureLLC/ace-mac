@@ -8,6 +8,7 @@
 
 #import "CallService.h"
 #import "ChatService.h"
+#import "ViewManager.h"
 #import "AppDelegate.h"
 
 
@@ -141,6 +142,7 @@
         case LinphoneCallError:
         case LinphoneCallEnd: {
             [[ChatService sharedInstance] closeChatWindow];
+            [[ViewManager sharedInstance].rttView viewWillDisappear];
 
             NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
             [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
@@ -150,6 +152,7 @@
             break;
         case LinphoneCallReleased: {
             [[ChatService sharedInstance] closeChatWindow];
+            [[ViewManager sharedInstance].rttView viewWillDisappear];
             currentCall = NULL;
 
             NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
@@ -178,6 +181,8 @@
         [lm acceptCall:call];
         
     } else {
+        [[ViewManager sharedInstance].rttView viewWillAppear];
+
         NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         
         if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
@@ -205,6 +210,8 @@
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
+    [[ViewManager sharedInstance].rttView viewWillAppear];
+    
     NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
 
     if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {

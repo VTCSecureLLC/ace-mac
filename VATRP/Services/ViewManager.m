@@ -15,6 +15,7 @@
 @synthesize profileView;
 @synthesize recentsView;
 @synthesize callView;
+@synthesize rttView;
 
 + (ViewManager *)sharedInstance
 {

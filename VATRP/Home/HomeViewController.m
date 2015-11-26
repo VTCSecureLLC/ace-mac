@@ -79,4 +79,10 @@
 - (void) didClickDockViewSettings:(DockView*)dockView_ {
 }
 
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
+    NSLog(@"- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector");
+    
+    return NO;
+}
+
 @end

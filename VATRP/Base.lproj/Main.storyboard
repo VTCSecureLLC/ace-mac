@@ -259,7 +259,7 @@
             <objects>
                 <viewController storyboardIdentifier="HomeViewController" id="f5W-XC-ZdQ" customClass="HomeViewController" sceneMemberID="viewController">
                     <view key="view" id="L4A-2d-4g6" customClass="BackgroundedView">
-                        <rect key="frame" x="0.0" y="0.0" width="1030" height="700"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1328" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCP-sF-zhB" customClass="DockView">
@@ -510,9 +510,6 @@
                                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="cameraview2" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="6gG-xN-uCF">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="28"/>
-                                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
                                         </buttonCell>
                                         <connections>
                                             <action selector="onButtonVideo:" target="e4g-m7-al7" id="TOS-GK-MMt"/>
@@ -961,6 +958,114 @@ CA
                                 </subviews>
                                 <animations/>
                             </customView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Fx-Rj-KVU" customClass="RTTView">
+                                <rect key="frame" x="1030" y="0.0" width="298" height="701"/>
+                                <subviews>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q4q-k9-rAm">
+                                        <rect key="frame" x="0.0" y="0.0" width="298" height="60"/>
+                                        <animations/>
+                                        <buttonCell key="cell" type="square" title="Send" bezelStyle="shadowlessSquare" image="send_message" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TW4-bw-4PL">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onButtonSend:" target="7Fx-Rj-KVU" id="sTd-ml-1HI"/>
+                                        </connections>
+                                    </button>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CdF-2Y-Wnw" customClass="BackgroundedView">
+                                        <rect key="frame" x="0.0" y="59" width="298" height="41"/>
+                                        <subviews>
+                                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V46-I4-rdM">
+                                                <rect key="frame" x="12" y="9" width="274" height="22"/>
+                                                <animations/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" placeholderString="Message" drawsBackground="YES" id="Ovu-GU-XYY">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                                                </textFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="7Fx-Rj-KVU" id="0pD-gA-mpe"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <animations/>
+                                    </customView>
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEs-rV-Ndv">
+                                        <rect key="frame" x="0.0" y="100" width="298" height="600"/>
+                                        <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="5LG-em-Kku">
+                                            <rect key="frame" x="0.0" y="0.0" width="298" height="600"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="gaT-af-7wt">
+                                                    <rect key="frame" x="0.0" y="0.0" width="298" height="600"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <animations/>
+                                                    <size key="intercellSpacing" width="3" height="2"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                    <tableColumns>
+                                                        <tableColumn identifier="ChatCell" width="295" minWidth="40" maxWidth="1000" id="IN4-Xs-HYd">
+                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                                <font key="font" metaFont="smallSystem"/>
+                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                            </tableHeaderCell>
+                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="H88-yb-qpv">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                            <prototypeCellViews>
+                                                                <tableCellView id="cD4-YM-mYG" customClass="ChatItemTableCellView">
+                                                                    <rect key="frame" x="1" y="1" width="295" height="50"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L7q-b5-9C9">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                                                            <animations/>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="oF5-BL-bUl"/>
+                                                                        </imageView>
+                                                                    </subviews>
+                                                                    <animations/>
+                                                                    <connections>
+                                                                        <outlet property="imageViewUserPicture" destination="L7q-b5-9C9" id="9zD-8D-4fP"/>
+                                                                    </connections>
+                                                                </tableCellView>
+                                                            </prototypeCellViews>
+                                                        </tableColumn>
+                                                    </tableColumns>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="7Fx-Rj-KVU" id="hba-SA-Dwn"/>
+                                                        <outlet property="delegate" destination="7Fx-Rj-KVU" id="n91-AJ-gRS"/>
+                                                    </connections>
+                                                </tableView>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <animations/>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="R3z-0o-g3G">
+                                            <rect key="frame" x="0.0" y="-16" width="0.0" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="vdg-42-MLj">
+                                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                                <animations/>
+                                <connections>
+                                    <outlet property="buttonSend" destination="q4q-k9-rAm" id="y9V-B0-c9f"/>
+                                    <outlet property="messageEnterBG" destination="CdF-2Y-Wnw" id="PJo-UY-rF5"/>
+                                    <outlet property="scrollViewContent" destination="YEs-rV-Ndv" id="1r8-xD-Kjv"/>
+                                    <outlet property="tableViewContent" destination="gaT-af-7wt" id="y7q-br-ZZf"/>
+                                    <outlet property="textFieldMessage" destination="V46-I4-rdM" id="Evi-Dx-AZ7"/>
+                                </connections>
+                            </customView>
                         </subviews>
                         <animations/>
                     </view>
@@ -976,7 +1081,7 @@ CA
                 </viewController>
                 <customObject id="nie-3i-IYX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-425" y="-196"/>
+            <point key="canvasLocation" x="-379" y="-125"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="5eQ-RW-85u">
@@ -3978,6 +4083,7 @@ DQ
         <image name="mute_active" width="38" height="42"/>
         <image name="numpad_active" width="36" height="36"/>
         <image name="recents" width="25" height="40"/>
+        <image name="send_message" width="298" height="60"/>
         <image name="settings" width="25" height="40"/>
         <image name="speaker_active" width="41" height="34"/>
         <image name="video_active" width="58" height="30"/>

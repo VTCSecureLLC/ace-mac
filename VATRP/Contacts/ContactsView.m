@@ -13,7 +13,7 @@
 #include "linphone/linphone_tunnel.h"
 #include "LinphoneManager.h"
 
-@interface ContactsView ()
+@interface ContactsView ()<ContactTableCellViewDelegate>
 
 @property (weak) IBOutlet NSScrollView *scrollViewContacts;
 @property (weak) IBOutlet NSTableView *tableViewContacts;
@@ -123,13 +123,12 @@
         const char *name = linphone_friend_get_name(friend);
         [self.contactInfos addObject:@{@"name" : [[NSString alloc] initWithUTF8String:name],
                                        @"phone" : [[NSString alloc] initWithUTF8String:addressString]}];
-        proxies =ms_list_next(proxies);
+        proxies = ms_list_next(proxies);
     }
     if (self.contactInfos && self.contactInfos.count > 0) {
         [self.tableViewContacts reloadData];
     }
 }
-
 
 #pragma mark - TableView delegate methods
 
@@ -138,7 +137,7 @@
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
-    return 40;
+    return 50;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -146,7 +145,18 @@
     NSDictionary *dict = [self.contactInfos objectAtIndex:row];
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
     [cellView.phoneTextField setStringValue:[dict objectForKey:@"phone"]];
+    cellView.delegate = self;
     return cellView;
+}
+
+#pragma mark - ContactTableCellView delegate methods
+
+- (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
+    
+}
+
+- (void)didClickEditButton:(ContactTableCellView *)contactCellView {
+    
 }
 
 - (void) dealloc {
@@ -158,7 +168,7 @@
     const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
     while (friends != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)friends->data;
-        friends = friends->next;
+        friends = ms_list_next(friends);
         linphone_core_remove_friend([LinphoneManager getLc], friend);
     }
     [self.tableViewContacts reloadData];

@@ -21,7 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"Add contact details"];
-    // Do view setup here.
 }
 
 - (IBAction)onButtonDone:(id)sender {

@@ -703,9 +703,9 @@
                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSBonjour" id="uIw-mx-2Al"/>
                                                                                 </imageView>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="00L-jm-923">
-                                                                                    <rect key="frame" x="41" y="26" width="237" height="20"/>
+                                                                                    <rect key="frame" x="41" y="27" width="237" height="19"/>
                                                                                     <animations/>
-                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Contact name" id="cir-WZ-SdS">
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Contact nameadfahjsdlfkasdjf;laksdjfas;ldkfjas;dlfk" id="cir-WZ-SdS">
                                                                                         <font key="font" metaFont="system" size="15"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -720,9 +720,33 @@
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
                                                                                 </textField>
+                                                                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rwg-sd-00j">
+                                                                                    <rect key="frame" x="210" y="0.0" width="35" height="27"/>
+                                                                                    <animations/>
+                                                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="info-icon" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gnT-ud-b9T">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="onEditClick:" target="fKX-dw-Xv0" id="lgi-Bo-uxP"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YLX-Qk-N2p">
+                                                                                    <rect key="frame" x="261" y="0.0" width="35" height="27"/>
+                                                                                    <animations/>
+                                                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="chat_message_not_delivered" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ng-rB-95Z">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="onDeleteClick:" target="fKX-dw-Xv0" id="KZh-rh-xxk"/>
+                                                                                    </connections>
+                                                                                </button>
                                                                             </subviews>
                                                                             <animations/>
                                                                             <connections>
+                                                                                <outlet property="deleteButton" destination="YLX-Qk-N2p" id="pHC-i7-NBL"/>
+                                                                                <outlet property="editButton" destination="rwg-sd-00j" id="kRQ-I1-Tou"/>
                                                                                 <outlet property="imageViewCallStatus" destination="yRf-Mu-drO" id="pP1-Zc-Eab"/>
                                                                                 <outlet property="nameTextField" destination="00L-jm-923" id="ndG-XZ-bRn"/>
                                                                                 <outlet property="phoneTextField" destination="4px-3m-nXw" id="bwe-VP-O7Y"/>
@@ -3984,6 +4008,7 @@ DQ
         <image name="cameraview2" width="78" height="14"/>
         <image name="chat_active" width="42" height="39"/>
         <image name="chat_icon" width="48" height="48"/>
+        <image name="chat_message_not_delivered" width="18" height="17"/>
         <image name="contacts" width="24" height="40"/>
         <image name="dialpad" width="26" height="40"/>
         <image name="dialpadDelete" width="38" height="25"/>

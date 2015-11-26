@@ -54,17 +54,17 @@
     mouseLocation = [self convertPoint:mouseLocation fromView:nil];
     
     if (NSPointInRect(mouseLocation, [self bounds])) {
-        [self mouseEntered];
+        [self mouseEntered:nil];
     } else {
-        [self mouseExited];
+        [self mouseExited:nil];
     }
 }
 
-- (void)mouseEntered {
+- (void)mouseEntered:(NSEvent *)theEvent {
     [self hideButtons:NO];
 }
 
-- (void)mouseExited {
+- (void)mouseExited:(NSEvent *)theEvent {
     [self hideButtons:YES];
 }
 

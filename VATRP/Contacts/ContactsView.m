@@ -37,7 +37,7 @@
         
         self.contactInfos = [NSMutableArray new];
         firstTime = NO;
-        [self getContactInfosFromCore];
+        [self refreshContactList];
     }
 }
 
@@ -73,8 +73,10 @@
 - (void)contactInfoDone:(NSNotification*)notif {
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
     [self checkAndAddFriendIntoLPCore:contactInfo];
-    [self reloadData];
+    [self refreshContactList];
 }
+
+#pragma mark - Linphonefriend related functions
 
 - (void)checkAndAddFriendIntoLPCore:(NSDictionary*)contactInfo {
     NSString *phoneString = [contactInfo objectForKey:@"phone"];
@@ -98,23 +100,8 @@
     }
 }
 
-- (void)reloadData {
+- (void)refreshContactList {
     [self.contactInfos removeAllObjects];
-    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
-    while (friends != NULL) {
-        LinphoneFriend* friend = (LinphoneFriend*)friends->data;
-        const LinphoneAddress *address = linphone_friend_get_address(friend);
-        const char *addressString = linphone_address_as_string_uri_only(address);
-        const char *name = linphone_friend_get_name(friend);
-        [self.contactInfos addObject:@{@"name" : [[NSString alloc] initWithUTF8String:name],
-                                       @"phone" : [[NSString alloc] initWithUTF8String:addressString]}];
-        friends =ms_list_next(friends);
-    }
-    
-    [self.tableViewContacts reloadData];
-}
-
-- (void)getContactInfosFromCore {
     const MSList* proxies = linphone_core_get_friend_list([LinphoneManager getLc]);
     while (proxies != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)proxies->data;
@@ -125,8 +112,40 @@
                                        @"phone" : [[NSString alloc] initWithUTF8String:addressString]}];
         proxies = ms_list_next(proxies);
     }
-    if (self.contactInfos && self.contactInfos.count > 0) {
-        [self.tableViewContacts reloadData];
+    [self.tableViewContacts reloadData];
+}
+
+- (void)clearFriendsList {
+    [self.contactInfos removeAllObjects];
+    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
+    while (friends != NULL) {
+        LinphoneFriend* friend = (LinphoneFriend*)friends->data;
+        friends = ms_list_next(friends);
+        linphone_core_remove_friend([LinphoneManager getLc], friend);
+    }
+    [self.tableViewContacts reloadData];
+}
+
+- (LinphoneFriend*)makeFriendFrom:(NSString*)name and:(NSString*)phone {
+    
+    LinphoneFriend *newFriend = linphone_friend_new_with_address ([phone  UTF8String]);
+    linphone_friend_set_name(newFriend, [name  UTF8String]);
+    
+    return newFriend;
+}
+
+- (void)deleteFriendFromCore:(const LinphoneFriend*)contact {
+    LinphoneAddress *deletedAddress = (LinphoneAddress*)linphone_friend_get_address(contact);
+    char* delAddress = linphone_address_as_string(deletedAddress);
+    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
+    while (friends != NULL) {
+        LinphoneFriend* friend = (LinphoneFriend*)friends->data;
+        friends = ms_list_next(friends);
+        LinphoneAddress *friendAddress = (LinphoneAddress*)linphone_friend_get_address(friend);
+        char* frAddress = linphone_address_as_string(friendAddress);
+        if (strcmp(delAddress, frAddress) == 0) {
+            linphone_core_remove_friend([LinphoneManager getLc], friend);
+        }
     }
 }
 
@@ -152,7 +171,10 @@
 #pragma mark - ContactTableCellView delegate methods
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
-    
+    const LinphoneFriend* selectedFriend = [self makeFriendFrom:[contactCellView.nameTextField stringValue]
+                                                            and:[contactCellView.phoneTextField stringValue]];
+    [self deleteFriendFromCore:selectedFriend];
+    [self refreshContactList];
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
@@ -161,17 +183,6 @@
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoFilled" object:nil];
-}
-
-- (void)clearFriendsList {
-    [self.contactInfos removeAllObjects];
-    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
-    while (friends != NULL) {
-        LinphoneFriend* friend = (LinphoneFriend*)friends->data;
-        friends = ms_list_next(friends);
-        linphone_core_remove_friend([LinphoneManager getLc], friend);
-    }
-    [self.tableViewContacts reloadData];
 }
 
 @end

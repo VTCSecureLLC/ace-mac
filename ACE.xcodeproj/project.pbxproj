@@ -112,7 +112,6 @@
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
 		5EEC29081C024CCA00BA43FB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29071C024CCA00BA43FB /* ContactsViewController.m */; };
 		5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29311C0373DD00BA43FB /* ContactsService.m */; };
-		692EDEEA1C05AA3D006073E2 /* RTTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 692EDEE91C05AA3D006073E2 /* RTTView.m */; };
 		692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 692EDEEB1C05AC7E006073E2 /* send_message.png */; };
 		692EDEF41C05F978006073E2 /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 692EDEF31C05F978006073E2 /* NumpadView.m */; };
 		69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A01BFB5C83005C62FA /* chat_active.png */; };
@@ -652,7 +651,6 @@
 		5EEC29071C024CCA00BA43FB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		5EEC29301C0373DD00BA43FB /* ContactsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsService.h; sourceTree = "<group>"; };
 		5EEC29311C0373DD00BA43FB /* ContactsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsService.m; sourceTree = "<group>"; };
-		692EDEE91C05AA3D006073E2 /* RTTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTView.m; sourceTree = "<group>"; };
 		692EDEEB1C05AC7E006073E2 /* send_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_message.png; sourceTree = "<group>"; };
 		692EDEF31C05F978006073E2 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
 		69A025A01BFB5C83005C62FA /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
@@ -1667,7 +1665,6 @@
 				4AB2A2D31BF2273E006AC5C6 /* DockView.m in Sources */,
 				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
 				4A902DFB1BB9823200ECFD86 /* CodecModel.m in Sources */,
-				692EDEEA1C05AA3D006073E2 /* RTTView.m in Sources */,
 				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
 				4A902DE91BB95A7000ECFD86 /* Utils.m in Sources */,
 				4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */,

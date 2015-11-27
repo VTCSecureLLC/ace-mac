@@ -226,11 +226,9 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
 //		photoLibrary = [[ALAssetsLibrary alloc] init];
 		self->_isTesting = [LinphoneManager isRunningTests];
 
-        configDb=lp_config_new ("/Users/user/Documents/linphonerc");
-        
-		//[self renameDefaultSettings];
-		//[self copyDefaultSettings];
-		//[self overrideDefaultSettings];
+		[self renameDefaultSettings];
+		[self copyDefaultSettings];
+		[self overrideDefaultSettings];
 
 		//set default values for first boot
 		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
@@ -1543,21 +1541,9 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	if ([LinphoneManager runningOnIpad] && [[NSFileManager defaultManager] fileExistsAtPath:factoryIpad]){
 		factory = factoryIpad;
 	}
-    
 	NSString *confiFileName = [LinphoneManager documentFile:@"linphonerc"];
-    
 	configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
 										, [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-    
-    
-    //    if ([[NSFileManager defaultManager] fileExistsAtPath:confiFileName] == NO) {
-    //configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
-    //                                    , [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-    //    } else {
-    //
-    //        //lp_config_read_file(configDb, [confiFileName UTF8String]);
-    //        configDb = lp_config_new_from_buffer([factory UTF8String]);
-    //    }
 }
 #pragma mark - Audio route Functions
 

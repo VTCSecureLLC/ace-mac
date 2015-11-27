@@ -942,7 +942,7 @@
         <!--Add Contact Dialog Box-->
         <scene sceneID="X16-Wt-nwY">
             <objects>
-                <viewController id="55J-Cw-0Kj" customClass="AddContactDialogBox" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddContactDialogBox" id="55J-Cw-0Kj" customClass="AddContactDialogBox" sceneMemberID="viewController">
                     <view key="view" id="kyj-j3-yZc">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="186"/>
                         <autoresizingMask key="autoresizingMask"/>

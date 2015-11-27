@@ -20,7 +20,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"Add contact details"];
+    if (self.isEditing) {
+        [self setTitle:@"Edit contact details"];
+        [self.nameTextField setStringValue:self.nameString];
+        [self.phoneTextField setStringValue:self.phoneString];
+    } else {
+        [self setTitle:@"Add contact details"];
+    }
 }
 
 - (IBAction)onButtonDone:(id)sender {
@@ -28,11 +34,19 @@
         [self dismissController:nil];
         return;
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoFilled"
-                                                        object:@{@"name" : [self.nameTextField stringValue],
-                                                                 @"phone": [self.phoneTextField stringValue]}
-                                                      userInfo:nil];
+    if (self.isEditing) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
+                                                            object:@{@"name" : [self.nameTextField stringValue],
+                                                                     @"phone": [self.phoneTextField stringValue],
+                                                                     @"oldName": self.nameString,
+                                                                     @"oldPhone" : self.phoneString}
+                                                          userInfo:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoFilled"
+                                                            object:@{@"name" : [self.nameTextField stringValue],
+                                                                     @"phone": [self.phoneTextField stringValue]}
+                                                          userInfo:nil];
+    }
     [self dismissController:nil];
 }
 

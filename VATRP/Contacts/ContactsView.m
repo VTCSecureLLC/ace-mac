@@ -12,8 +12,12 @@
 #include "linphone/linphonecore.h"
 #include "linphone/linphone_tunnel.h"
 #include "LinphoneManager.h"
+#import "AppDelegate.h"
+#import "AddContactDialogBox.h"
 
-@interface ContactsView ()<ContactTableCellViewDelegate>
+@interface ContactsView ()<ContactTableCellViewDelegate> {
+    AddContactDialogBox *editContactDialogBox;
+}
 
 @property (weak) IBOutlet NSScrollView *scrollViewContacts;
 @property (weak) IBOutlet NSTableView *tableViewContacts;
@@ -31,8 +35,12 @@
     if (firstTime) {
         [self.addContactButton becomeFirstResponder];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(contactInfoDone:)
+                                                 selector:@selector(contactInfoFillDone:)
                                                      name:@"contactInfoFilled"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contactEditDone:)
+                                                     name:@"contactInfoEditDone"
                                                    object:nil];
         
         self.contactInfos = [NSMutableArray new];
@@ -70,15 +78,25 @@
 
 }
 
-- (void)contactInfoDone:(NSNotification*)notif {
+#pragma mark - Observer functions declarations
+
+- (void)contactInfoFillDone:(NSNotification*)notif {
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
-    [self checkAndAddFriendIntoLPCore:contactInfo];
+    [self addFriendInLPCoreWithInfo:contactInfo];
+    [self refreshContactList];
+}
+
+- (void)contactEditDone:(NSNotification*)notif {
+    NSDictionary *contactInfo = (NSDictionary*)[notif object];
+    [self deleteFriendFromLPCoreWithName:[contactInfo objectForKey:@"oldName"]
+                              andAddress:[contactInfo objectForKey:@"oldPhone"]];
+    [self addFriendInLPCoreWithInfo:contactInfo];
     [self refreshContactList];
 }
 
 #pragma mark - Linphonefriend related functions
 
-- (void)checkAndAddFriendIntoLPCore:(NSDictionary*)contactInfo {
+- (void)addFriendInLPCoreWithInfo:(NSDictionary*)contactInfo {
     NSString *phoneString = [contactInfo objectForKey:@"phone"];
     if ([phoneString length] >= 3) {
         NSString *str = [phoneString substringToIndex:4];
@@ -134,7 +152,7 @@
     return newFriend;
 }
 
-- (void)deleteFriendFromCore:(const LinphoneFriend*)contact {
+- (void)deleteFriendFromLPCore:(const LinphoneFriend*)contact {
     LinphoneAddress *deletedAddress = (LinphoneAddress*)linphone_friend_get_address(contact);
     char* delAddress = linphone_address_as_string(deletedAddress);
     const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
@@ -147,6 +165,16 @@
             linphone_core_remove_friend([LinphoneManager getLc], friend);
         }
     }
+}
+
+- (void)deleteFriendFromLPCoreWithName:(NSString*)name andAddress:(NSString*)sipURI {
+    const LinphoneFriend* selectedFriend = [self makeFriendFrom:name
+                                                            and:sipURI];
+    [self deleteFriendFromLPCore:selectedFriend];
+}
+
+- (void)deleteFriendFromLPCoreWithInfo:(NSDictionary*)dict {
+    [self deleteFriendFromLPCoreWithName:[dict objectForKey:@"name"] andAddress:[dict objectForKey:@"phone"]];
 }
 
 #pragma mark - TableView delegate methods
@@ -173,12 +201,16 @@
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
     const LinphoneFriend* selectedFriend = [self makeFriendFrom:[contactCellView.nameTextField stringValue]
                                                             and:[contactCellView.phoneTextField stringValue]];
-    [self deleteFriendFromCore:selectedFriend];
+    [self deleteFriendFromLPCore:selectedFriend];
     [self refreshContactList];
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
-    
+    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+    editContactDialogBox.isEditing = YES;
+    editContactDialogBox.nameString = [contactCellView.nameTextField stringValue];
+    editContactDialogBox.phoneString = [contactCellView.phoneTextField stringValue];
+    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
 }
 
 - (void) dealloc {

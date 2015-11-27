@@ -8,6 +8,7 @@
 
 #import "CallService.h"
 #import "ChatService.h"
+#import "ViewManager.h"
 #import "AppDelegate.h"
 
 
@@ -141,12 +142,14 @@
         case LinphoneCallError:
         case LinphoneCallEnd: {
             [[ChatService sharedInstance] closeChatWindow];
+            [[ViewManager sharedInstance].rttView viewWillDisappear];
 
             [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
         }
             break;
         case LinphoneCallReleased: {
             [[ChatService sharedInstance] closeChatWindow];
+            [[ViewManager sharedInstance].rttView viewWillDisappear];
             currentCall = NULL;
 
             [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
@@ -174,6 +177,7 @@
         [lm acceptCall:call];
         
     } else {
+        [[ViewManager sharedInstance].rttView viewWillAppear];
         [self openCallWindow];
 
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:call];
@@ -191,6 +195,8 @@
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
+    [[ViewManager sharedInstance].rttView viewWillAppear];
+    
     [self openCallWindow];
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];
     
@@ -205,9 +211,15 @@
 
 - (void) openCallWindow {
     NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
-             display:YES
-             animate:YES];
+    if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
+        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+    } else {
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+    }
 }
 
 - (void) closeCallWindow {

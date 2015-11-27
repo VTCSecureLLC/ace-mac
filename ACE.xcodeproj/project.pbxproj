@@ -357,6 +357,10 @@
 		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
 		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
 		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
+		CEF3B8111C0897BB00F35757 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8101C0897BB00F35757 /* male.png */; };
+		CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8151C08A40D00F35757 /* edit_32x32.png */; };
+		CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8161C08A40D00F35757 /* trash_32x32.png */; };
+		CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8191C08BC9200F35757 /* whiteMale.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -739,6 +743,10 @@
 		CE48DF931C04B5110046E727 /* AddContactDialogBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactDialogBox.m; sourceTree = "<group>"; };
 		CE7005FD1C048F0000E667F8 /* ContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsView.h; sourceTree = "<group>"; };
 		CE7005FE1C048F0000E667F8 /* ContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsView.m; sourceTree = "<group>"; };
+		CEF3B8101C0897BB00F35757 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
+		CEF3B8151C08A40D00F35757 /* edit_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_32x32.png; sourceTree = "<group>"; };
+		CEF3B8161C08A40D00F35757 /* trash_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_32x32.png; sourceTree = "<group>"; };
+		CEF3B8191C08BC9200F35757 /* whiteMale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteMale.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1169,6 +1177,10 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CEF3B8151C08A40D00F35757 /* edit_32x32.png */,
+				CEF3B8161C08A40D00F35757 /* trash_32x32.png */,
+				CEF3B8191C08BC9200F35757 /* whiteMale.png */,
+				CEF3B8101C0897BB00F35757 /* male.png */,
 				4AB5566A1BE272D5003382B2 /* Call Log */,
 				4A5DD1E21BD904B3003BE9A2 /* Message */,
 				69A0259F1BFB5C83005C62FA /* inCall */,
@@ -1553,6 +1565,7 @@
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
 				4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */,
 				4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */,
+				CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */,
 				4AB556421BDE2454003382B2 /* app_icon.png in Resources */,
 				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
 				69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */,
@@ -1561,9 +1574,11 @@
 				69A025B31BFB5C83005C62FA /* mute_disabled.png in Resources */,
 				69A025B51BFB5C83005C62FA /* numpad_active.png in Resources */,
 				69A025B91BFB5C83005C62FA /* speaker_disabled.png in Resources */,
+				CEF3B8111C0897BB00F35757 /* male.png in Resources */,
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
+				CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */,
 				4AB5566F1BE272D5003382B2 /* call_status_missed.png in Resources */,
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
@@ -1585,6 +1600,7 @@
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
 				69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */,
+				CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */,
 				4A5DD1ED1BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png in Resources */,
 				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,

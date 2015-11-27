@@ -17,6 +17,7 @@
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
+    NSString *selectedProviderName;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollViewContacts;
@@ -47,8 +48,8 @@
                                                    object:nil];
         
         self.contactInfos = [NSMutableArray new];
-        firstTime = NO;
         [self refreshContactList];
+        firstTime = NO;
     }
 }
 
@@ -85,14 +86,16 @@
 
 - (void)contactInfoFillDone:(NSNotification*)notif {
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
+    selectedProviderName = [contactInfo objectForKey:@"provider"];
     [self addFriendInLPCoreWithInfo:contactInfo];
     [self refreshContactList];
 }
 
 - (void)contactEditDone:(NSNotification*)notif {
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
+    selectedProviderName = [contactInfo objectForKey:@"provider"];
     [self deleteFriendFromLPCoreWithName:[contactInfo objectForKey:@"oldName"]
-                              andAddress:[contactInfo objectForKey:@"oldPhone"]];
+                              andAddress:[self makeSipURIWith:[contactInfo objectForKey:@"oldPhone"] andProviderAddress:[contactInfo objectForKey:@"provider"]]];
     [self addFriendInLPCoreWithInfo:contactInfo];
     [self refreshContactList];
 }
@@ -100,16 +103,10 @@
 #pragma mark - Linphonefriend related functions
 
 - (void)addFriendInLPCoreWithInfo:(NSDictionary*)contactInfo {
-    NSString *phoneString = [contactInfo objectForKey:@"phone"];
-    if ([phoneString length] >= 3) {
-        NSString *str = [phoneString substringToIndex:4];
-        if (![str isEqualToString:@"sip:"]) {
-            return;
-        }
-    } else {
-        return;
-    }
-    LinphoneFriend *newFriend = linphone_friend_new_with_address ([[contactInfo objectForKey:@"phone"]  UTF8String]);
+    
+    const char *address = [[self makeSipURIWith:[contactInfo objectForKey:@"phone"] andProviderAddress:[contactInfo objectForKey:@"provider"]] UTF8String];
+    
+    LinphoneFriend *newFriend = linphone_friend_new_with_address (address);
     if (!newFriend) {
         return;
     }
@@ -148,7 +145,6 @@
 }
 
 - (LinphoneFriend*)makeFriendFrom:(NSString*)name and:(NSString*)phone {
-    
     LinphoneFriend *newFriend = linphone_friend_new_with_address ([phone  UTF8String]);
     linphone_friend_set_name(newFriend, [name  UTF8String]);
     
@@ -202,7 +198,7 @@
 - (IBAction)columnChangeSelected:(id)sender {
     NSInteger selectedRow = [self.tableViewContacts selectedRow];
     NSDictionary *calltoContact = [self.contactInfos objectAtIndex:selectedRow];
-    [self callTo:[calltoContact objectForKey:@"name"]];
+    [self callTo:[self makeAccountnameFromSipURI:[calltoContact objectForKey:@"phone"]]];
 }
 
 #pragma mark - ContactTableCellView delegate methods
@@ -218,7 +214,8 @@
     editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
     editContactDialogBox.isEditing = YES;
     editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
-    editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];
+    editContactDialogBox.oldPhone = [self makeAccountnameFromSipURI:[contactCellView.phoneTextField stringValue]];
+    editContactDialogBox.oldProviderName = selectedProviderName;
     [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
 }
 
@@ -228,5 +225,16 @@
     [[LinphoneManager instance] call:name displayName:name transfer:NO];
 }
 
+#pragma mark - Helper functions
+
+- (NSString*)makeSipURIWith:(NSString*)accountName andProviderAddress:(NSString*)providerAddress {
+    return  [[[@"sip:" stringByAppendingString:accountName] stringByAppendingString:@"@"] stringByAppendingString:providerAddress];
+}
+
+- (NSString*)makeAccountnameFromSipURI:(NSString*)sipURI {
+    NSString *str = [sipURI substringFromIndex:4];
+    NSArray *subStrings = [str componentsSeparatedByString:@"@"];
+    return [subStrings objectAtIndex:0];
+}
 
 @end

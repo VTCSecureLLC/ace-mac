@@ -49,7 +49,7 @@
     
     viewCurrent = (BackgroundedView*)self.recentsView;
     
-    [self.contactsView setBackgroundColor:[NSColor yellowColor]];
+    [self.contactsView setBackgroundColor:[NSColor whiteColor]];
 }
 
 #pragma mark DocView Delegate

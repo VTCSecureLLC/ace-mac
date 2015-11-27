@@ -29,6 +29,9 @@
 
 @implementation ContactsView
 
+
+#pragma mark - View lifecycle methods
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     static BOOL firstTime = YES;
@@ -56,26 +59,26 @@
 - (void) setFrame:(NSRect)frame {
     [super setFrame:frame];
     [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
-    [self.addContactButton setFrame:NSMakeRect(135, 568 - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
-    [self.clearListButton setFrame:NSMakeRect(20, 568 - 40, self.clearListButton.frame.size.width, self.clearListButton.frame.size.height)];
+    [self.addContactButton setFrame:NSMakeRect(135, frame.size.height - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
+    [self.clearListButton setFrame:NSMakeRect(20, frame.size.height - 40, self.clearListButton.frame.size.width, self.clearListButton.frame.size.height)];
 }
 
-- (IBAction)onButtonAddContact:(id)sender {
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoFilled" object:nil];
 }
+
+#pragma mark - Buttons actions methods
 
 - (IBAction)onButtonClearList:(id)sender {
     NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"
                                      defaultButton:@"Cancel" alternateButton:@"OK"
                                        otherButton:nil informativeTextWithFormat:
                       @"Are you sure?. You want to delete all the contacts?"];
-    
-    
     [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == 0) {
             [self clearFriendsList];
         }
     }];
-
 }
 
 #pragma mark - Observer functions declarations
@@ -196,6 +199,12 @@
     return cellView;
 }
 
+- (IBAction)columnChangeSelected:(id)sender {
+    NSInteger selectedRow = [self.tableViewContacts selectedRow];
+    NSDictionary *calltoContact = [self.contactInfos objectAtIndex:selectedRow];
+    [self callTo:[calltoContact objectForKey:@"name"]];
+}
+
 #pragma mark - ContactTableCellView delegate methods
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
@@ -208,13 +217,16 @@
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
     editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
     editContactDialogBox.isEditing = YES;
-    editContactDialogBox.nameString = [contactCellView.nameTextField stringValue];
-    editContactDialogBox.phoneString = [contactCellView.phoneTextField stringValue];
+    editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
+    editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];
     [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
 }
 
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoFilled" object:nil];
+#pragma mark - Functions related to the call
+
+- (void)callTo:(NSString*)name {
+    [[LinphoneManager instance] call:name displayName:name transfer:NO];
 }
+
 
 @end

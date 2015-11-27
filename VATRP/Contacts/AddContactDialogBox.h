@@ -10,7 +10,7 @@
 
 @interface AddContactDialogBox : NSViewController
 
-@property (strong, nonatomic) NSString *nameString;
-@property (strong, nonatomic) NSString *phoneString;
+@property (strong, nonatomic) NSString *oldName;
+@property (strong, nonatomic) NSString *oldPhone;
 @property BOOL isEditing;
 @end

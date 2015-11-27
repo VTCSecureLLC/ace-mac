@@ -712,7 +712,7 @@
                                                                                     </textFieldCell>
                                                                                 </textField>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4px-3m-nXw">
-                                                                                    <rect key="frame" x="41" y="7" width="133" height="16"/>
+                                                                                    <rect key="frame" x="41" y="7" width="163" height="16"/>
                                                                                     <animations/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Phone number" id="3Es-mp-Ewm">
                                                                                         <font key="font" metaFont="system" size="10"/>
@@ -747,17 +747,15 @@
                                                                             <connections>
                                                                                 <outlet property="deleteButton" destination="YLX-Qk-N2p" id="pHC-i7-NBL"/>
                                                                                 <outlet property="editButton" destination="rwg-sd-00j" id="kRQ-I1-Tou"/>
-                                                                                <outlet property="imageViewCallStatus" destination="yRf-Mu-drO" id="pP1-Zc-Eab"/>
                                                                                 <outlet property="nameTextField" destination="00L-jm-923" id="ndG-XZ-bRn"/>
                                                                                 <outlet property="phoneTextField" destination="4px-3m-nXw" id="bwe-VP-O7Y"/>
-                                                                                <outlet property="textFieldCallDuration" destination="4px-3m-nXw" id="mMS-ZR-OM5"/>
-                                                                                <outlet property="textFieldRemoteName" destination="00L-jm-923" id="jmc-js-Zv8"/>
                                                                             </connections>
                                                                         </tableCellView>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>
                                                             <connections>
+                                                                <action selector="columnChangeSelected:" target="rAt-4g-nXf" id="QQx-EG-o6U"/>
                                                                 <outlet property="dataSource" destination="rAt-4g-nXf" id="VG2-bX-Mr7"/>
                                                                 <outlet property="delegate" destination="rAt-4g-nXf" id="oF0-vw-0Ar"/>
                                                             </connections>
@@ -779,19 +777,18 @@
                                                 </scroller>
                                             </scrollView>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aA9-62-0dk">
-                                                <rect key="frame" x="135" y="255" width="40" height="37"/>
+                                                <rect key="frame" x="135" y="256" width="40" height="37"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ukx-om-fhO">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="onButtonAddContact:" target="rAt-4g-nXf" id="YAN-Im-8MF"/>
                                                     <segue destination="55J-Cw-0Kj" kind="modal" id="T9B-6D-utP"/>
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cH6-T9-SqM">
-                                                <rect key="frame" x="20" y="256" width="68" height="35"/>
+                                                <rect key="frame" x="20" y="257" width="68" height="35"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="square" title="Clear List" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nhd-nM-mL7">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -948,7 +945,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2OY-ih-kfh">
-                                <rect key="frame" x="71" y="128" width="99" height="21"/>
+                                <rect key="frame" x="81" y="128" width="90" height="21"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Username:" id="iUD-5J-DfE">
                                     <font key="font" metaFont="system" size="16"/>
@@ -957,7 +954,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZt-Py-fKh">
-                                <rect key="frame" x="40" y="91" width="121" height="19"/>
+                                <rect key="frame" x="50" y="91" width="121" height="19"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Phone number:" id="rsE-x7-l3R">
                                     <font key="font" metaFont="system" size="16"/>
@@ -966,25 +963,25 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fKp-56-PaS">
-                                <rect key="frame" x="176" y="124" width="217" height="30"/>
+                                <rect key="frame" x="174" y="128" width="217" height="24"/>
                                 <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="rV2-cN-iWY">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Armen" drawsBackground="YES" id="rV2-cN-iWY">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qz9-NP-3mE">
-                                <rect key="frame" x="176" y="85" width="217" height="30"/>
+                                <rect key="frame" x="174" y="91" width="217" height="24"/>
                                 <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="TtP-ZT-o5z">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="sip:Armen@sip.linphone.org" drawsBackground="YES" id="TtP-ZT-o5z">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HsD-fS-HaZ">
-                                <rect key="frame" x="136" y="25" width="178" height="32"/>
+                                <rect key="frame" x="136" y="13" width="178" height="32"/>
                                 <animations/>
                                 <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UWZ-D7-GpT">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -995,7 +992,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHE-hN-SnK">
-                                <rect key="frame" x="174" y="67" width="221" height="17"/>
+                                <rect key="frame" x="174" y="73" width="221" height="17"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="exp: sip:joe@sip.linphone.org" id="2EP-dN-F4X">
                                     <font key="font" size="11" name="HelveticaNeue-Italic"/>

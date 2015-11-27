@@ -125,11 +125,13 @@
 }
 
 - (void) dealloc {
-    NSLog(@"dealloc");
+    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+    NSLog(@"dealloc - Dialpad. LinphoneVersion: %@", linphoneVersion);
 }
 
 - (void)viewDidMoveToSuperview {
-    NSLog(@"viewDidMoveToSuperview");
+    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+    NSLog(@"DialPadView.viewDidMoveToSuperview: LinphoneVersion: %@", linphoneVersion);
     
     [self addSubview:self.buttonOne];
     [self.buttonOne setFrame:NSMakeRect(0, 176, 103, 44)];

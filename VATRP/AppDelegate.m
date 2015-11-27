@@ -46,6 +46,9 @@
                                              selector:@selector(registrationUpdateEvent:)
                                                  name:kLinphoneRegistrationUpdate
                                                object:nil];
+    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+    NSLog(@"LinphoneVersion: %@", linphoneVersion);
+
 #ifdef DEBUG
     NSLog(@"Debug: No crashes will be reported");
 #else
@@ -213,7 +216,8 @@ void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {
             return;
     }
     // since \r are interpreted like \n, avoid double new lines when logging packets
-    NSLog(@"%c %@", levelC, [formatedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"]);
+    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+    NSLog(@"%@ %c %@",linphoneVersion, levelC, [formatedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"]);
 }
 
 @end

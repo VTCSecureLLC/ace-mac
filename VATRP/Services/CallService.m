@@ -142,20 +142,14 @@
         case LinphoneCallEnd: {
             [[ChatService sharedInstance] closeChatWindow];
 
-            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-                     display:YES
-                     animate:YES];
+            [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
         }
             break;
         case LinphoneCallReleased: {
             [[ChatService sharedInstance] closeChatWindow];
             currentCall = NULL;
 
-            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-            [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-                     display:YES
-                     animate:YES];
+            [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
         }
             break;
         default:
@@ -164,6 +158,8 @@
 }
 
 - (void)displayIncomingCall:(LinphoneCall*)call {
+    [NSApp activateIgnoringOtherApps:YES];
+
     currentCall = call;
     
     LinphoneCallLog* callLog = linphone_call_get_call_log(call);
@@ -178,10 +174,7 @@
         [lm acceptCall:call];
         
     } else {
-        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
-                 display:YES
-                 animate:YES];
+        [self openCallWindow];
 
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:call];
 //        
@@ -198,11 +191,7 @@
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
-    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
-             display:YES
-             animate:YES];
-    
+    [self openCallWindow];
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];
     
 //    callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
@@ -212,6 +201,20 @@
 //        CallViewController *callViewController = [callWindowController getCallViewController];
 //        [callViewController setOutgoingCall:call];
 //    }
+}
+
+- (void) openCallWindow {
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+             display:YES
+             animate:YES];
+}
+
+- (void) closeCallWindow {
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+             display:YES
+             animate:YES];
 }
 
 @end

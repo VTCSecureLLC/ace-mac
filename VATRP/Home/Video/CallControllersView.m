@@ -7,6 +7,7 @@
 //
 
 #import "CallControllersView.h"
+#import "CallInfoWindowController.h"
 #import "ChatService.h"
 #import "Utils.h"
 
@@ -16,6 +17,8 @@
     
     BOOL last_update_state;
     BOOL isSendingVideo;
+
+    CallInfoWindowController *callInfoWindowController;
 }
 
 @property (weak) IBOutlet NSTextField *labelCallState;
@@ -116,6 +119,16 @@
 
 - (IBAction)onButtonDecline:(id)sender {
     [[CallService sharedInstance] decline];
+}
+
+- (IBAction)onButtonCallInfo:(id)sender {
+    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+    [callInfoWindowController showWindow:self];
+}
+
+- (void)dismisCallInfoWindow {
+    [callInfoWindowController close];
+    callInfoWindowController = nil;
 }
 
 //- (IBAction)onButtonOpenMessage:(id)sender {

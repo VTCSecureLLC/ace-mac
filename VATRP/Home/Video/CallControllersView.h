@@ -17,6 +17,7 @@
 
 - (void)setCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;
+- (void)dismisCallInfoWindow;
 
 @end
 

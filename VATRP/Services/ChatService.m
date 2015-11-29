@@ -146,18 +146,20 @@
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
-    LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
-    if (room) {
-        BOOL composing = linphone_chat_room_is_remote_composing(room);
-        NSLog(@"composing: %d", composing);
-        
-        uint32_t rttCode = linphone_chat_room_get_char(room);
-        NSString *string = [NSString stringWithFormat:@"%c", rttCode];
-
-        if (!string || !string.length) {
-            return;
-        }
-        
+//    LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
+//    if (room) {
+//        BOOL composing = linphone_chat_room_is_remote_composing(room);
+//        NSLog(@"composing: %d", composing);
+//        BOOL composing = linphone_chat_room_is_remote_composing(room);
+//        NSLog(@"composing: %d.", composing);
+//
+//        uint32_t rttCode = linphone_chat_room_get_char(room);
+//        NSString *string = [NSString stringWithFormat:@"%c", rttCode];
+//
+//        if (!string || !string.length) {
+//            return;
+//        }
+//        
 //        if (!chatWindowController || !chatWindowController.isShow) {
 //            unread_messages++;
 //            [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
@@ -171,7 +173,7 @@
 //        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_RECEIVE_MESSAGE
 //                                                            object:dict
 //                                                          userInfo:nil];
-    }
+//    }
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {

@@ -7,7 +7,9 @@
 //
 
 #import "CallControllersView.h"
+#import "CallInfoWindowController.h"
 #import "ChatService.h"
+#import "ViewManager.h"
 #import "Utils.h"
 
 
@@ -16,6 +18,8 @@
     
     BOOL last_update_state;
     BOOL isSendingVideo;
+
+    CallInfoWindowController *callInfoWindowController;
 }
 
 @property (weak) IBOutlet NSTextField *labelCallState;
@@ -107,6 +111,21 @@
 }
 
 - (IBAction)onButtonChat:(id)sender {
+    if (self.window.frame.size.width == 1328) {
+        [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+                      display:YES
+                      animate:YES];
+    } else {
+        if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+            [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+        } else {
+            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+        }
+    }
 }
 
 
@@ -116,6 +135,16 @@
 
 - (IBAction)onButtonDecline:(id)sender {
     [[CallService sharedInstance] decline];
+}
+
+- (IBAction)onButtonCallInfo:(id)sender {
+    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+    [callInfoWindowController showWindow:self];
+}
+
+- (void)dismisCallInfoWindow {
+    [callInfoWindowController close];
+    callInfoWindowController = nil;
 }
 
 //- (IBAction)onButtonOpenMessage:(id)sender {
@@ -247,7 +276,8 @@
         linphone_core_update_call(lc, call, call_params);
         linphone_call_params_destroy(call_params);
     } else {
-        NSLog(@"Cannot toggle video button, because no current call");
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+        NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
     }
 }
 
@@ -263,7 +293,8 @@
         linphone_core_update_call(lc, call, call_params);
         linphone_call_params_destroy(call_params);
     } else {
-        NSLog(@"Cannot toggle video button, because no current call");
+        NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+        NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
     }
 }
 

@@ -108,7 +108,7 @@
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
     }
     @catch(NSException *e){
-        NSLog(@"Tried to remove account that does not exist");
+        NSLog(@"Tried to remove account that does not exist.");
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];

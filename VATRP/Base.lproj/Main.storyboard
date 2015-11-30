@@ -833,9 +833,19 @@
                                     <outlet property="callControllersView" destination="elO-ql-yb4" id="O0s-5N-sRL"/>
                                     <outlet property="labelCallState" destination="qkg-1w-egJ" id="6dy-cf-ods"/>
                                     <outlet property="labelDisplayName" destination="ty4-p7-oo2" id="X4o-Tv-Fxh"/>
+                                    <outlet property="labelRingCount" destination="aPz-UD-Uzd" id="AOU-iH-eGt"/>
                                     <outlet property="localVideo" destination="VdL-8A-skc" id="LyZ-L7-h8j"/>
                                 </connections>
                             </customView>
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aPz-UD-Uzd">
+                                <rect key="frame" x="537" y="296" width="253" height="107"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="zMZ-fH-fgH">
+                                    <font key="font" size="89" name=".HelveticaNeueDeskInterface-Bold"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ty4-p7-oo2">
                                 <rect key="frame" x="320" y="619" width="700" height="40"/>
                                 <animations/>

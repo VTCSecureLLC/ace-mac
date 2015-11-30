@@ -366,6 +366,7 @@
 		CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8151C08A40D00F35757 /* edit_32x32.png */; };
 		CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8161C08A40D00F35757 /* trash_32x32.png */; };
 		CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8191C08BC9200F35757 /* whiteMale.png */; };
+		CEF4A2FE1C0C253E00B41CDC /* LinphoneContactService.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -761,6 +762,8 @@
 		CEF3B8151C08A40D00F35757 /* edit_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_32x32.png; sourceTree = "<group>"; };
 		CEF3B8161C08A40D00F35757 /* trash_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_32x32.png; sourceTree = "<group>"; };
 		CEF3B8191C08BC9200F35757 /* whiteMale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteMale.png; sourceTree = "<group>"; };
+		CEF4A2FC1C0C253E00B41CDC /* LinphoneContactService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinphoneContactService.h; sourceTree = "<group>"; };
+		CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinphoneContactService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1105,6 +1108,8 @@
 				5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */,
 				4AB2A2EA1BF36E2B006AC5C6 /* ViewManager.h */,
 				4AB2A2EB1BF36E2B006AC5C6 /* ViewManager.m */,
+				CEF4A2FC1C0C253E00B41CDC /* LinphoneContactService.h */,
+				CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1732,6 +1737,7 @@
 				5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */,
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AB2A2E11BF32C79006AC5C6 /* ProfileView.m in Sources */,
+				CEF4A2FE1C0C253E00B41CDC /* LinphoneContactService.m in Sources */,
 				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
 				4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */,
 				4AA203BA1BD4CAA200DD9A4D /* CallService.m in Sources */,

@@ -11,6 +11,8 @@
 #import "AddContactDialogBox.h"
 #include "linphone/linphonecore.h"
 #include "linphone/linphone_tunnel.h"
+
+#import "LinphoneContactService.h"
 #include "LinphoneManager.h"
 #import "AppDelegate.h"
 #import "AddContactDialogBox.h"
@@ -77,7 +79,7 @@
                       @"Are you sure?. You want to delete all the contacts?"];
     [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == 0) {
-            [self clearFriendsList];
+            [[LinphoneContactService sharedInstance] deleteContactList];
         }
     }];
 }
@@ -85,95 +87,39 @@
 #pragma mark - Observer functions declarations
 
 - (void)contactInfoFillDone:(NSNotification*)notif {
+    
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
     selectedProviderName = [contactInfo objectForKey:@"provider"];
-    [self addFriendInLPCoreWithInfo:contactInfo];
+    
+    NSString *newDisplayName = [contactInfo objectForKey:@"name"];
+    NSString *newSipURI = [self makeSipURIWith:[contactInfo objectForKey:@"phone"] andProviderAddress:[contactInfo objectForKey:@"provider"]];
+    
+    [[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI];
     [self refreshContactList];
 }
 
 - (void)contactEditDone:(NSNotification*)notif {
+    
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
     selectedProviderName = [contactInfo objectForKey:@"provider"];
-    [self deleteFriendFromLPCoreWithName:[contactInfo objectForKey:@"oldName"]
-                              andAddress:[self makeSipURIWith:[contactInfo objectForKey:@"oldPhone"] andProviderAddress:[contactInfo objectForKey:@"provider"]]];
-    [self addFriendInLPCoreWithInfo:contactInfo];
+    
+    NSString *oldDisplayName = [contactInfo objectForKey:@"oldName"];
+    NSString *oldSipURI = [self makeSipURIWith:[contactInfo objectForKey:@"oldPhone"] andProviderAddress:[contactInfo objectForKey:@"provider"]];
+    
+    [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:oldDisplayName andSipUri:oldSipURI];
+    
+    NSString *newDisplayName = [contactInfo objectForKey:@"name"];
+    NSString *newSipURI = [self makeSipURIWith:[contactInfo objectForKey:@"phone"] andProviderAddress:[contactInfo objectForKey:@"provider"]];
+    
+    [[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI];
+    
     [self refreshContactList];
-}
-
-#pragma mark - Linphonefriend related functions
-
-- (void)addFriendInLPCoreWithInfo:(NSDictionary*)contactInfo {
-    
-    const char *address = [[self makeSipURIWith:[contactInfo objectForKey:@"phone"] andProviderAddress:[contactInfo objectForKey:@"provider"]] UTF8String];
-    
-    LinphoneFriend *newFriend = linphone_friend_new_with_address (address);
-    if (!newFriend) {
-        return;
-    }
-    int t = linphone_friend_set_name(newFriend, [[contactInfo objectForKey:@"name"]  UTF8String]);
-    if  (t == 0) {
-        linphone_friend_enable_subscribes(newFriend,TRUE);
-        linphone_friend_set_inc_subscribe_policy(newFriend,LinphoneSPAccept);
-        linphone_core_add_friend([LinphoneManager getLc],newFriend);
-    }
 }
 
 - (void)refreshContactList {
     [self.contactInfos removeAllObjects];
-    const MSList* proxies = linphone_core_get_friend_list([LinphoneManager getLc]);
-    while (proxies != NULL) {
-        LinphoneFriend* friend = (LinphoneFriend*)proxies->data;
-        const LinphoneAddress *address = linphone_friend_get_address(friend);
-        const char *addressString = linphone_address_as_string_uri_only(address);
-        const char *name = linphone_friend_get_name(friend);
-        [self.contactInfos addObject:@{@"name" : [[NSString alloc] initWithUTF8String:name],
-                                       @"phone" : [[NSString alloc] initWithUTF8String:addressString]}];
-        proxies = ms_list_next(proxies);
-    }
+    self.contactInfos = [[LinphoneContactService sharedInstance] contactList];
     [self.tableViewContacts reloadData];
-}
-
-- (void)clearFriendsList {
-    [self.contactInfos removeAllObjects];
-    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
-    while (friends != NULL) {
-        LinphoneFriend* friend = (LinphoneFriend*)friends->data;
-        friends = ms_list_next(friends);
-        linphone_core_remove_friend([LinphoneManager getLc], friend);
-    }
-    [self.tableViewContacts reloadData];
-}
-
-- (LinphoneFriend*)makeFriendFrom:(NSString*)name and:(NSString*)phone {
-    LinphoneFriend *newFriend = linphone_friend_new_with_address ([phone  UTF8String]);
-    linphone_friend_set_name(newFriend, [name  UTF8String]);
-    
-    return newFriend;
-}
-
-- (void)deleteFriendFromLPCore:(const LinphoneFriend*)contact {
-    LinphoneAddress *deletedAddress = (LinphoneAddress*)linphone_friend_get_address(contact);
-    char* delAddress = linphone_address_as_string(deletedAddress);
-    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
-    while (friends != NULL) {
-        LinphoneFriend* friend = (LinphoneFriend*)friends->data;
-        friends = ms_list_next(friends);
-        LinphoneAddress *friendAddress = (LinphoneAddress*)linphone_friend_get_address(friend);
-        char* frAddress = linphone_address_as_string(friendAddress);
-        if (strcmp(delAddress, frAddress) == 0) {
-            linphone_core_remove_friend([LinphoneManager getLc], friend);
-        }
-    }
-}
-
-- (void)deleteFriendFromLPCoreWithName:(NSString*)name andAddress:(NSString*)sipURI {
-    const LinphoneFriend* selectedFriend = [self makeFriendFrom:name
-                                                            and:sipURI];
-    [self deleteFriendFromLPCore:selectedFriend];
-}
-
-- (void)deleteFriendFromLPCoreWithInfo:(NSDictionary*)dict {
-    [self deleteFriendFromLPCoreWithName:[dict objectForKey:@"name"] andAddress:[dict objectForKey:@"phone"]];
 }
 
 #pragma mark - TableView delegate methods
@@ -204,9 +150,8 @@
 #pragma mark - ContactTableCellView delegate methods
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
-    const LinphoneFriend* selectedFriend = [self makeFriendFrom:[contactCellView.nameTextField stringValue]
-                                                            and:[contactCellView.phoneTextField stringValue]];
-    [self deleteFriendFromLPCore:selectedFriend];
+    [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
+    
     [self refreshContactList];
 }
 

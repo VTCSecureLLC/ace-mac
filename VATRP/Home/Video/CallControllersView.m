@@ -9,6 +9,7 @@
 #import "CallControllersView.h"
 #import "CallInfoWindowController.h"
 #import "ChatService.h"
+#import "ViewManager.h"
 #import "Utils.h"
 
 
@@ -110,6 +111,21 @@
 }
 
 - (IBAction)onButtonChat:(id)sender {
+    if (self.window.frame.size.width == 1328) {
+        [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+                      display:YES
+                      animate:YES];
+    } else {
+        if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+            [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+        } else {
+            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+        }
+    }
 }
 
 

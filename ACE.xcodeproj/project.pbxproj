@@ -112,6 +112,8 @@
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
 		5EEC29081C024CCA00BA43FB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29071C024CCA00BA43FB /* ContactsViewController.m */; };
 		5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29311C0373DD00BA43FB /* ContactsService.m */; };
+		692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 692EDEEB1C05AC7E006073E2 /* send_message.png */; };
+		692EDEF41C05F978006073E2 /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 692EDEF31C05F978006073E2 /* NumpadView.m */; };
 		69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A01BFB5C83005C62FA /* chat_active.png */; };
 		69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A11BFB5C83005C62FA /* chat_disabled.png */; };
 		69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A21BFB5C83005C62FA /* chat_inactive.png */; };
@@ -127,6 +129,7 @@
 		69A025BB1BFB5C83005C62FA /* video_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AC1BFB5C83005C62FA /* video_active.png */; };
 		69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AD1BFB5C83005C62FA /* video_disabled.png */; };
 		69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AE1BFB5C83005C62FA /* video_inactive.png */; };
+		69D8B2EE1C076E1F0034576B /* RTTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D8B2ED1C076E1F0034576B /* RTTView.m */; };
 		738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; };
 		739C3F111BFCE6D800F9EFCE /* libmsamr.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2B81BFA9F4B00EC7039 /* libmsamr.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -355,7 +358,6 @@
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3281BFA9F6E00EC7039 /* libz.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23A1BFA9F2C00EC7039 /* libz.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		69C726751BFC6DF6002198A7 /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C726741BFC6DF6002198A7 /* NumpadView.m */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
 /* End PBXBuildFile section */
 
@@ -649,6 +651,8 @@
 		5EEC29071C024CCA00BA43FB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		5EEC29301C0373DD00BA43FB /* ContactsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsService.h; sourceTree = "<group>"; };
 		5EEC29311C0373DD00BA43FB /* ContactsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsService.m; sourceTree = "<group>"; };
+		692EDEEB1C05AC7E006073E2 /* send_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_message.png; sourceTree = "<group>"; };
+		692EDEF31C05F978006073E2 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
 		69A025A01BFB5C83005C62FA /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
 		69A025A11BFB5C83005C62FA /* chat_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_disabled.png; sourceTree = "<group>"; };
 		69A025A21BFB5C83005C62FA /* chat_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_inactive.png; sourceTree = "<group>"; };
@@ -664,6 +668,9 @@
 		69A025AC1BFB5C83005C62FA /* video_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_active.png; sourceTree = "<group>"; };
 		69A025AD1BFB5C83005C62FA /* video_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_disabled.png; sourceTree = "<group>"; };
 		69A025AE1BFB5C83005C62FA /* video_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_inactive.png; sourceTree = "<group>"; };
+		69C726731BFC6DF6002198A7 /* NumpadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumpadView.h; sourceTree = "<group>"; };
+		69D8B2EC1C076E1F0034576B /* RTTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTView.h; sourceTree = "<group>"; };
+		69D8B2ED1C076E1F0034576B /* RTTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTView.m; sourceTree = "<group>"; };
 		73EDA1FE1BFA9F2C00EC7039 /* libantlr3c.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.1.dylib"; sourceTree = "<group>"; };
 		73EDA1FF1BFA9F2C00EC7039 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.dylib"; sourceTree = "<group>"; };
 		73EDA2001BFA9F2C00EC7039 /* libavcodec.53.61.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.53.61.100.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libavcodec.53.61.100.dylib"; sourceTree = "<group>"; };
@@ -736,8 +743,6 @@
 		73EDA2C21BFA9F4B00EC7039 /* libmssilk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmssilk.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmssilk.dylib"; sourceTree = "<group>"; };
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
-		69C726731BFC6DF6002198A7 /* NumpadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumpadView.h; sourceTree = "<group>"; };
-		69C726741BFC6DF6002198A7 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1015,6 +1020,7 @@
 				4AB2A2DA1BF241B3006AC5C6 /* DialPad */,
 				4AB2A2DE1BF32C55006AC5C6 /* Profile */,
 				4AB2A2F21BF4766B006AC5C6 /* Video */,
+				69D8B2EB1C076E1F0034576B /* RTT */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1033,6 +1039,7 @@
 		4A5DD1E21BD904B3003BE9A2 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				692EDEEB1C05AC7E006073E2 /* send_message.png */,
 				4AC975F71BDA23E900AD35C8 /* chat_message_not_delivered.png */,
 				4AC975F51BDA23B400AD35C8 /* chat_message_delivered.png */,
 				4AC975F31BDA22F700AD35C8 /* chat_message_inprogress.png */,
@@ -1233,6 +1240,7 @@
 				4AB2A2F91BF488EA006AC5C6 /* CallControllersView.h */,
 				4AB2A2FA1BF488EA006AC5C6 /* CallControllersView.m */,
 				69C726731BFC6DF6002198A7 /* NumpadView.h */,
+				692EDEF31C05F978006073E2 /* NumpadView.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -1386,6 +1394,15 @@
 				69A025AE1BFB5C83005C62FA /* video_inactive.png */,
 			);
 			path = inCall;
+			sourceTree = "<group>";
+		};
+		69D8B2EB1C076E1F0034576B /* RTT */ = {
+			isa = PBXGroup;
+			children = (
+				69D8B2EC1C076E1F0034576B /* RTTView.h */,
+				69D8B2ED1C076E1F0034576B /* RTTView.m */,
+			);
+			path = RTT;
 			sourceTree = "<group>";
 		};
 		CE6758B11BA8C9BF005396EF /* linphonesdk */ = {
@@ -1567,6 +1584,7 @@
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
 				69A025B31BFB5C83005C62FA /* mute_disabled.png in Resources */,
 				69A025B51BFB5C83005C62FA /* numpad_active.png in Resources */,
+				692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */,
 				69A025B91BFB5C83005C62FA /* speaker_disabled.png in Resources */,
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */,
@@ -1641,6 +1659,7 @@
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */,
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
+				69D8B2EE1C076E1F0034576B /* RTTView.m in Sources */,
 				4A6717021BCD05CC00139A6F /* KeypadViewController.m in Sources */,
 				4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */,
 				4AB2A2D31BF2273E006AC5C6 /* DockView.m in Sources */,
@@ -1687,6 +1706,7 @@
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */,
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
+				692EDEF41C05F978006073E2 /* NumpadView.m in Sources */,
 				4AB2A2EC1BF36E2B006AC5C6 /* ViewManager.m in Sources */,
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
@@ -1816,8 +1836,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;

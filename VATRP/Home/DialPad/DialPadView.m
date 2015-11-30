@@ -124,6 +124,35 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
 }
 
+- (void) mouseDown:(NSEvent *)theEvent {
+
+    NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+
+    if (CGRectContainsPoint(self.buttonOne.frame, curPoint)) {
+        [self onButtonNumber:self.buttonOne];
+    } else if (CGRectContainsPoint(self.buttonTwo.frame, curPoint)) {
+        [self onButtonNumber:self.buttonTwo];
+    } else if (CGRectContainsPoint(self.buttonThree.frame, curPoint)) {
+        [self onButtonNumber:self.buttonThree];
+    } else if (CGRectContainsPoint(self.buttonFour.frame, curPoint)) {
+        [self onButtonNumber:self.buttonFour];
+    } else if (CGRectContainsPoint(self.buttonFive.frame, curPoint)) {
+        [self onButtonNumber:self.buttonFive];
+    } else if (CGRectContainsPoint(self.buttonSix.frame, curPoint)) {
+        [self onButtonNumber:self.buttonSix];
+    } else if (CGRectContainsPoint(self.buttonSeven.frame, curPoint)) {
+        [self onButtonNumber:self.buttonSeven];
+    } else if (CGRectContainsPoint(self.buttonEight.frame, curPoint)) {
+        [self onButtonNumber:self.buttonEight];
+    } else if (CGRectContainsPoint(self.buttonNine.frame, curPoint)) {
+        [self onButtonNumber:self.buttonNine];
+    }
+    
+    
+    
+    NSLog(@"moveDown: %@", NSStringFromPoint(curPoint));;
+}
+
 - (void) dealloc {
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSLog(@"dealloc - Dialpad. LinphoneVersion: %@", linphoneVersion);

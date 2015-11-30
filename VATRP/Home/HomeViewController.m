@@ -14,10 +14,12 @@
 #import "RecentsView.h"
 #import "VideoView.h"
 #import "NumpadView.h"
+#import "ProviderTableCellView.h"
 
 
-@interface HomeViewController () <DockViewDelegate> {
+@interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     BackgroundedView *viewCurrent;
+    NSArray *providersArray;
 }
 
 @property (weak) IBOutlet BackgroundedView *viewContainer;
@@ -25,6 +27,9 @@
 @property (weak) IBOutlet DialPadView *dialPadView;
 @property (weak) IBOutlet ProfileView *profileView;
 @property (weak) IBOutlet RecentsView *recentsView;
+
+@property (weak) IBOutlet NSTableView *providerTableView;
+@property (weak) IBOutlet NSView *providersView;
 
 @end
 
@@ -48,11 +53,15 @@
     [ViewManager sharedInstance].callView = self.callView;
     
     viewCurrent = (BackgroundedView*)self.recentsView;
+    [self initProvidersArray];
+    [self.dialPadView setProvButtonImage:[NSImage imageNamed:@"provider_logo_zvrs"]];
+    [self.providerTableView reloadData];
 }
 
 #pragma mark DocView Delegate
 
 - (void) didClickDockViewRecents:(DockView*)docView_ {
+    self.providersView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
     [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
@@ -81,8 +90,47 @@
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
     NSLog(@"- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector");
-    
     return NO;
+}
+
+- (void)initProvidersArray {
+    providersArray = @[@"provider_logo_caag", @"provider_logo_convorelay", @"provider_logo_globalvrs",
+                       @"provider_logo_purplevrs", @"provider_logo_sorenson", @"provider_logo_zvrs"];
+    self.providerTableView.delegate = self;
+    self.providerTableView.dataSource = self;
+}
+
+#pragma mark - TableView delegate methods
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return providersArray.count;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+    ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
+    
+    NSString *imageName = [providersArray objectAtIndex:row];
+    [cellView.providerImageView setImage:[NSImage imageNamed:imageName]];
+    
+    return cellView;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
+    return 53;
+}
+
+- (IBAction)didSelectedTableRow:(id)sender {
+    NSInteger selectedRow = [self.providerTableView selectedRow];
+    if (selectedRow >= 0 && selectedRow < providersArray.count) {
+        NSString *imageStrname = [providersArray objectAtIndex:selectedRow];
+        [self.dialPadView setProvButtonImage:[NSImage imageNamed:imageStrname]];
+        self.providersView.hidden = YES;
+
+    }
+}
+
+- (IBAction)onButtonProv:(id)sender {
+    self.providersView.hidden = !self.providersView.hidden;
 }
 
 @end

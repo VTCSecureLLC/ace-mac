@@ -137,4 +137,8 @@
     [self.buttonOne setFrame:NSMakeRect(0, 176, 103, 44)];
 }
 
+- (void)setProvButtonImage:(NSImage*)img {
+    [self.buttonProvider setImage:img];
+}
+
 @end

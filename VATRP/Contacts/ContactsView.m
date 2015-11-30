@@ -143,8 +143,10 @@
 
 - (IBAction)columnChangeSelected:(id)sender {
     NSInteger selectedRow = [self.tableViewContacts selectedRow];
-    NSDictionary *calltoContact = [self.contactInfos objectAtIndex:selectedRow];
-    [self callTo:[self makeAccountnameFromSipURI:[calltoContact objectForKey:@"phone"]]];
+    if (selectedRow >= 0 && selectedRow < self.contactInfos.count) {
+        NSDictionary *calltoContact = [self.contactInfos objectAtIndex:selectedRow];
+        [self callTo:[self makeAccountnameFromSipURI:[calltoContact objectForKey:@"phone"]]];
+    }
 }
 
 #pragma mark - ContactTableCellView delegate methods

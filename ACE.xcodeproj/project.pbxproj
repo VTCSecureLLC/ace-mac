@@ -367,6 +367,7 @@
 		CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8161C08A40D00F35757 /* trash_32x32.png */; };
 		CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8191C08BC9200F35757 /* whiteMale.png */; };
 		CEF4A2FE1C0C253E00B41CDC /* LinphoneContactService.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */; };
+		CEF4A3021C0C5BE400B41CDC /* import_export.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF4A3011C0C5BE400B41CDC /* import_export.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -764,6 +765,7 @@
 		CEF3B8191C08BC9200F35757 /* whiteMale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteMale.png; sourceTree = "<group>"; };
 		CEF4A2FC1C0C253E00B41CDC /* LinphoneContactService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinphoneContactService.h; sourceTree = "<group>"; };
 		CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinphoneContactService.m; sourceTree = "<group>"; };
+		CEF4A3011C0C5BE400B41CDC /* import_export.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import_export.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1201,6 +1203,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CEF4A3011C0C5BE400B41CDC /* import_export.png */,
 				CEF3B8151C08A40D00F35757 /* edit_32x32.png */,
 				CEF3B8161C08A40D00F35757 /* trash_32x32.png */,
 				CEF3B8191C08BC9200F35757 /* whiteMale.png */,
@@ -1609,6 +1612,7 @@
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
 				4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */,
 				4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */,
+				CEF4A3021C0C5BE400B41CDC /* import_export.png in Resources */,
 				CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */,
 				4AB556421BDE2454003382B2 /* app_icon.png in Resources */,
 				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,

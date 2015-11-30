@@ -11,6 +11,7 @@
 #import "AddContactDialogBox.h"
 #include "linphone/linphonecore.h"
 #include "linphone/linphone_tunnel.h"
+#import "DockView.h"
 
 #import "LinphoneContactService.h"
 #include "LinphoneManager.h"
@@ -26,6 +27,7 @@
 @property (weak) IBOutlet NSTableView *tableViewContacts;
 @property (weak) IBOutlet NSButton *addContactButton;
 @property (weak) IBOutlet NSButton *clearListButton;
+@property (weak) IBOutlet NSButton *syncButton;
 @property (strong, nonatomic) NSMutableArray *contactInfos;
 
 @end
@@ -63,6 +65,7 @@
     [super setFrame:frame];
     [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
     [self.addContactButton setFrame:NSMakeRect(135, frame.size.height - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
+        [self.syncButton setFrame:NSMakeRect(250, frame.size.height - 40, self.syncButton.frame.size.width, self.syncButton.frame.size.height)];
     [self.clearListButton setFrame:NSMakeRect(20, frame.size.height - 40, self.clearListButton.frame.size.width, self.clearListButton.frame.size.height)];
 }
 
@@ -82,6 +85,21 @@
             [[LinphoneContactService sharedInstance] deleteContactList];
         }
     }];
+}
+
+- (IBAction)onSyncButton:(id)sender {
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.contactsWindowController) {
+        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
+        [app.contactsWindowController showWindow:self];
+    } else {
+        if (app.contactsWindowController.isShow) {
+            [app.contactsWindowController close];
+        } else {
+            [app.contactsWindowController showWindow:self];
+            app.contactsWindowController.isShow = YES;
+        }
+    }
 }
 
 #pragma mark - Observer functions declarations

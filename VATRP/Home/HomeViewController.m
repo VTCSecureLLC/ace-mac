@@ -13,6 +13,7 @@
 #import "ProfileView.h"
 #import "RecentsView.h"
 #import "VideoView.h"
+#import "ContactsView.h"
 #import "NumpadView.h"
 
 
@@ -25,6 +26,7 @@
 @property (weak) IBOutlet DialPadView *dialPadView;
 @property (weak) IBOutlet ProfileView *profileView;
 @property (weak) IBOutlet RecentsView *recentsView;
+@property (weak) IBOutlet ContactsView *contactsView;
 
 @end
 
@@ -48,17 +50,28 @@
     [ViewManager sharedInstance].callView = self.callView;
     
     viewCurrent = (BackgroundedView*)self.recentsView;
+    
+    [self.contactsView setBackgroundColor:[NSColor whiteColor]];
 }
 
 #pragma mark DocView Delegate
 
 - (void) didClickDockViewRecents:(DockView*)docView_ {
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
+    viewCurrent.hidden = YES;
+    viewCurrent = (BackgroundedView*)self.recentsView;
+    viewCurrent.hidden = NO;
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
     [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
 }
 
 - (void) didClickDockViewContacts:(DockView*)docView_ {
+    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
+    viewCurrent.hidden = YES;
+    viewCurrent = (BackgroundedView*)self.contactsView;
+    viewCurrent.hidden = NO;
+    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+     [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
 }
 
 - (void) didClickDockViewDialpad:(DockView*)dockView_ {
@@ -69,7 +82,12 @@
     } else {
         [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
         [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
-        [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
+        
+        if ([viewCurrent isKindOfClass:[RecentsView class]]) {
+            [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
+        } else if ([viewCurrent isKindOfClass:[ContactsView class]]) {
+            [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
+        }
     }
 }
 

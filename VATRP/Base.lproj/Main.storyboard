@@ -482,17 +482,21 @@
                                             <action selector="onButtonNumber:" target="e4g-m7-al7" id="0DN-Og-DMB"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FgC-SF-oSE">
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAj-a1-RPH">
                                         <rect key="frame" x="103" y="44" width="104" height="44"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7vZ-K9-mJp">
+                                                <rect key="frame" x="0.0" y="0.0" width="104" height="44"/>
+                                                <animations/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="hx9-tY-S6f">
+                                                    <font key="font" metaFont="system" size="30"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
                                         <animations/>
-                                        <buttonCell key="cell" type="smallSquare" title="0" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="EqU-CB-X2S">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="30"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onButtonNumber:" target="e4g-m7-al7" id="4CH-dY-YoD"/>
-                                        </connections>
-                                    </button>
+                                    </customView>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="DhK-7s-gt0">
                                         <rect key="frame" x="207" y="44" width="103" height="44"/>
                                         <animations/>
@@ -550,8 +554,8 @@
                                     <outlet property="buttonStar" destination="wCq-uv-vTI" id="GTM-Ig-vjj"/>
                                     <outlet property="buttonThree" destination="VTH-jo-9S6" id="t42-Qw-45E"/>
                                     <outlet property="buttonTwo" destination="Q2L-HJ-Nsf" id="bHz-v9-aLr"/>
-                                    <outlet property="buttonZero" destination="FgC-SF-oSE" id="y38-R1-NgC"/>
                                     <outlet property="textFieldNumber" destination="Bfy-BC-UYg" id="jgt-Q3-cr6"/>
+                                    <outlet property="viewZeroButton" destination="sAj-a1-RPH" id="FTL-Jv-fcF"/>
                                 </connections>
                             </customView>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EEV-Wa-LvY" customClass="BackgroundedView">

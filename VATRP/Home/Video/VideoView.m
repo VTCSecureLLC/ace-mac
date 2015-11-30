@@ -36,7 +36,7 @@
 @property (weak) IBOutlet CallControllersView *callControllersView;
 @property (weak) IBOutlet NumpadView *numpadView;
 
-@property (weak) IBOutlet NSTextField *ringCountLabel;
+@property (weak) IBOutlet NSTextField *labelRingCount;
 
 @property (weak) IBOutlet NSImageView *callAlertImageView;
 @property (weak) IBOutlet NSView *localVideo;
@@ -116,9 +116,9 @@
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call 00:00";
-            [self startRingCountTimer];
+            [self startRingCountTimerWithTimeInterval:3.75];
             
-//            [self startCallFlashingAnimation];
+            [self startCallFlashingAnimation];
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -152,7 +152,7 @@
         case LinphoneCallOutgoingRinging: {
             self.labelCallState.stringValue = @"Ringing 00:00";
             
-            [self startRingCountTimer];
+            [self startRingCountTimerWithTimeInterval:3.6];
         }
             break;
         case LinphoneCallPausedByRemote:
@@ -328,10 +328,12 @@
     return [dcFormatter stringFromTimeInterval:seconds];
 }
 
-- (void)startRingCountTimer {
-    self.ringCountLabel.hidden = NO;
+- (void)startRingCountTimerWithTimeInterval:(NSTimeInterval)time {
+    [self stopRingCountTimer];
+    
+    self.labelRingCount.hidden = NO;
     [self ringCountTimer];
-    timerRingCount = [NSTimer scheduledTimerWithTimeInterval:1
+    timerRingCount = [NSTimer scheduledTimerWithTimeInterval:time
                                                       target:self
                                                     selector:@selector(ringCountTimer)
                                                     userInfo:nil
@@ -344,11 +346,12 @@
         timerRingCount = nil;
     }
     
-    self.ringCountLabel.hidden = YES;
+    self.labelRingCount.hidden = YES;
+    self.labelRingCount.intValue = 0;
 }
 
 - (void)ringCountTimer {
-    self.ringCountLabel.stringValue = [@(self.ringCountLabel.stringValue.intValue + 1) stringValue];
+    self.labelRingCount.stringValue = [@(self.labelRingCount.intValue + 1) stringValue];
 }
 
 - (void) startCallFlashingAnimation {

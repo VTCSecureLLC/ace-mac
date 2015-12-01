@@ -30,6 +30,7 @@
     
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];
     [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:self.imageViewProfile.frame.size.width/2.0 Width:2 Control:self.imageViewProfile];
+    [self.imageViewProfile setImage:[NSImage imageNamed:@"whiteMale"]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(registrationUpdateEvent:)

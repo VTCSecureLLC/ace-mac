@@ -366,7 +366,7 @@
                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bfy-BC-UYg">
                                         <rect key="frame" x="20" y="236" width="208" height="24"/>
                                         <animations/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" title="123123" drawsBackground="YES" usesSingleLineMode="YES" id="Duh-dd-OjV">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" title="123123" drawsBackground="YES" usesSingleLineMode="YES" id="Duh-dd-OjV">
                                             <font key="font" metaFont="system" size="24"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -482,17 +482,21 @@
                                             <action selector="onButtonNumber:" target="e4g-m7-al7" id="0DN-Og-DMB"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FgC-SF-oSE">
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAj-a1-RPH">
                                         <rect key="frame" x="103" y="44" width="104" height="44"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7vZ-K9-mJp">
+                                                <rect key="frame" x="0.0" y="0.0" width="104" height="44"/>
+                                                <animations/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="hx9-tY-S6f">
+                                                    <font key="font" metaFont="system" size="30"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
                                         <animations/>
-                                        <buttonCell key="cell" type="smallSquare" title="0" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="EqU-CB-X2S">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="30"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onButtonNumber:" target="e4g-m7-al7" id="4CH-dY-YoD"/>
-                                        </connections>
-                                    </button>
+                                    </customView>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="DhK-7s-gt0">
                                         <rect key="frame" x="207" y="44" width="103" height="44"/>
                                         <animations/>
@@ -620,8 +624,8 @@
                                     <outlet property="buttonStar" destination="wCq-uv-vTI" id="GTM-Ig-vjj"/>
                                     <outlet property="buttonThree" destination="VTH-jo-9S6" id="t42-Qw-45E"/>
                                     <outlet property="buttonTwo" destination="Q2L-HJ-Nsf" id="bHz-v9-aLr"/>
-                                    <outlet property="buttonZero" destination="FgC-SF-oSE" id="y38-R1-NgC"/>
                                     <outlet property="textFieldNumber" destination="Bfy-BC-UYg" id="jgt-Q3-cr6"/>
+                                    <outlet property="viewZeroButton" destination="sAj-a1-RPH" id="FTL-Jv-fcF"/>
                                 </connections>
                             </customView>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EEV-Wa-LvY" customClass="BackgroundedView">
@@ -733,6 +737,162 @@
                                             <outlet property="tableViewRecents" destination="1kJ-XL-p9i" id="Qsa-C4-czF"/>
                                         </connections>
                                     </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rAt-4g-nXf" customClass="ContactsView">
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
+                                        <subviews>
+                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="49" horizontalPageScroll="10" verticalLineScroll="49" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChY-B5-BDB">
+                                                <rect key="frame" x="0.0" y="0.0" width="310" height="254"/>
+                                                <clipView key="contentView" ambiguous="YES" id="gj1-G2-Pix">
+                                                    <rect key="frame" x="1" y="1" width="308" height="252"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="47" rowSizeStyle="automatic" viewBased="YES" id="cAY-t8-48s">
+                                                            <rect key="frame" x="0.0" y="0.0" width="308" height="252"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <animations/>
+                                                            <size key="intercellSpacing" width="3" height="2"/>
+                                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                            <tableColumns>
+                                                                <tableColumn identifier="Contact" width="305" minWidth="40" maxWidth="1000" id="5bC-BX-rsn">
+                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Recent">
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                                    </tableHeaderCell>
+                                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="s8T-tN-6z1">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                    <prototypeCellViews>
+                                                                        <tableCellView identifier="ContactCell" id="fKX-dw-Xv0" customClass="ContactTableCellView">
+                                                                            <rect key="frame" x="1" y="1" width="305" height="47"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <subviews>
+                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yRf-Mu-drO">
+                                                                                    <rect key="frame" x="5" y="12" width="30" height="30"/>
+                                                                                    <animations/>
+                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="uIw-mx-2Al"/>
+                                                                                </imageView>
+                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="00L-jm-923">
+                                                                                    <rect key="frame" x="41" y="27" width="237" height="19"/>
+                                                                                    <animations/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Contact nameadfahjsdlfkasdjf;laksdjfas;ldkfjas;dlfk" id="cir-WZ-SdS">
+                                                                                        <font key="font" metaFont="system" size="15"/>
+                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4px-3m-nXw">
+                                                                                    <rect key="frame" x="41" y="7" width="190" height="16"/>
+                                                                                    <animations/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Phone number" id="3Es-mp-Ewm">
+                                                                                        <font key="font" metaFont="system" size="10"/>
+                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YLX-Qk-N2p">
+                                                                                    <rect key="frame" x="274" y="9" width="20" height="22"/>
+                                                                                    <animations/>
+                                                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trash_32x32" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ng-rB-95Z">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="onDeleteClick:" target="fKX-dw-Xv0" id="KZh-rh-xxk"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rwg-sd-00j">
+                                                                                    <rect key="frame" x="237" y="9" width="20" height="22"/>
+                                                                                    <animations/>
+                                                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="edit_32x32" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gnT-ud-b9T">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="onEditClick:" target="fKX-dw-Xv0" id="lgi-Bo-uxP"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                            </subviews>
+                                                                            <animations/>
+                                                                            <connections>
+                                                                                <outlet property="deleteButton" destination="YLX-Qk-N2p" id="pHC-i7-NBL"/>
+                                                                                <outlet property="editButton" destination="rwg-sd-00j" id="kRQ-I1-Tou"/>
+                                                                                <outlet property="nameTextField" destination="00L-jm-923" id="ndG-XZ-bRn"/>
+                                                                                <outlet property="phoneTextField" destination="4px-3m-nXw" id="bwe-VP-O7Y"/>
+                                                                            </connections>
+                                                                        </tableCellView>
+                                                                    </prototypeCellViews>
+                                                                </tableColumn>
+                                                            </tableColumns>
+                                                            <connections>
+                                                                <action selector="columnChangeSelected:" target="rAt-4g-nXf" id="QQx-EG-o6U"/>
+                                                                <outlet property="dataSource" destination="rAt-4g-nXf" id="VG2-bX-Mr7"/>
+                                                                <outlet property="delegate" destination="rAt-4g-nXf" id="oF0-vw-0Ar"/>
+                                                            </connections>
+                                                        </tableView>
+                                                    </subviews>
+                                                    <animations/>
+                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </clipView>
+                                                <animations/>
+                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ZHh-z8-4k0">
+                                                    <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <animations/>
+                                                </scroller>
+                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="V72-F0-aWf">
+                                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <animations/>
+                                                </scroller>
+                                            </scrollView>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aA9-62-0dk">
+                                                <rect key="frame" x="135" y="256" width="40" height="37"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ukx-om-fhO">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <segue destination="55J-Cw-0Kj" kind="modal" id="T9B-6D-utP"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cH6-T9-SqM">
+                                                <rect key="frame" x="20" y="257" width="68" height="35"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" title="Clear List" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nhd-nM-mL7">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonClearList:" target="rAt-4g-nXf" id="Yw0-OP-NPY"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qtn-X6-U14">
+                                                <rect key="frame" x="250" y="256" width="40" height="37"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="import_export" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JZt-Zt-9w7">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onSyncButton:" target="rAt-4g-nXf" id="gZX-q0-OTo"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="addContactButton" destination="aA9-62-0dk" id="C4I-YN-uAB"/>
+                                            <outlet property="clearListButton" destination="cH6-T9-SqM" id="KO2-d8-OsY"/>
+                                            <outlet property="scrollViewContacts" destination="ChY-B5-BDB" id="zT2-Jw-Te3"/>
+                                            <outlet property="syncButton" destination="qtn-X6-U14" id="LTh-2k-tHc"/>
+                                            <outlet property="tableViewContacts" destination="cAY-t8-48s" id="oRj-cs-WLW"/>
+                                        </connections>
+                                    </customView>
                                 </subviews>
                                 <animations/>
                             </customView>
@@ -743,9 +903,19 @@
                                     <outlet property="callControllersView" destination="elO-ql-yb4" id="O0s-5N-sRL"/>
                                     <outlet property="labelCallState" destination="qkg-1w-egJ" id="6dy-cf-ods"/>
                                     <outlet property="labelDisplayName" destination="ty4-p7-oo2" id="X4o-Tv-Fxh"/>
+                                    <outlet property="labelRingCount" destination="aPz-UD-Uzd" id="AOU-iH-eGt"/>
                                     <outlet property="localVideo" destination="VdL-8A-skc" id="LyZ-L7-h8j"/>
                                 </connections>
                             </customView>
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aPz-UD-Uzd">
+                                <rect key="frame" x="537" y="296" width="253" height="107"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="zMZ-fH-fgH">
+                                    <font key="font" size="89" name=".HelveticaNeueDeskInterface-Bold"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ty4-p7-oo2">
                                 <rect key="frame" x="320" y="619" width="700" height="40"/>
                                 <animations/>
@@ -988,6 +1158,7 @@
                         <animations/>
                     </view>
                     <connections>
+                        <outlet property="contactsView" destination="rAt-4g-nXf" id="pTo-16-9dq"/>
                         <outlet property="dialPadView" destination="e4g-m7-al7" id="HO8-m1-MVM"/>
                         <outlet property="dockView" destination="ZCP-sF-zhB" id="VQn-IW-MAn"/>
                         <outlet property="profileView" destination="sNe-CT-gua" id="o2B-uz-hEI"/>
@@ -1001,6 +1172,105 @@
                 <customObject id="nie-3i-IYX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-379" y="-125"/>
+        </scene>
+        <!--Add Contact Dialog Box-->
+        <scene sceneID="X16-Wt-nwY">
+            <objects>
+                <viewController storyboardIdentifier="AddContactDialogBox" id="55J-Cw-0Kj" customClass="AddContactDialogBox" sceneMemberID="viewController">
+                    <view key="view" id="kyj-j3-yZc">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="263"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZt-Py-fKh">
+                                <rect key="frame" x="37" y="168" width="129" height="19"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Account number:" id="rsE-x7-l3R">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fKp-56-PaS">
+                                <rect key="frame" x="174" y="205" width="217" height="24"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Enter name" drawsBackground="YES" id="rV2-cN-iWY">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qz9-NP-3mE">
+                                <rect key="frame" x="174" y="168" width="217" height="24"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="Enter account" drawsBackground="YES" id="TtP-ZT-o5z">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HsD-fS-HaZ">
+                                <rect key="frame" x="136" y="24" width="178" height="32"/>
+                                <animations/>
+                                <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UWZ-D7-GpT">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onButtonDone:" target="55J-Cw-0Kj" id="ie7-yY-mEB"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHE-hN-SnK">
+                                <rect key="frame" x="174" y="152" width="221" height="17"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="exp: peter_3" id="2EP-dN-F4X">
+                                    <font key="font" size="11" name="HelveticaNeue-Italic"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JEO-fG-Fj1">
+                                <rect key="frame" x="64" y="123" width="102" height="17"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Provider:" id="ywF-du-OjG">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cDN-RC-MnR">
+                                <rect key="frame" x="174" y="118" width="220" height="26"/>
+                                <animations/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString=" Select provider" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="6" id="k3S-Yo-r7w">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <outlet property="dataSource" destination="55J-Cw-0Kj" id="tTa-sa-Jup"/>
+                                    <outlet property="delegate" destination="55J-Cw-0Kj" id="uSJ-fx-3JG"/>
+                                </connections>
+                            </comboBox>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2OY-ih-kfh">
+                                <rect key="frame" x="109" y="205" width="57" height="21"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="iUD-5J-DfE">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <animations/>
+                    </view>
+                    <connections>
+                        <outlet property="nameTextField" destination="fKp-56-PaS" id="FpZ-sK-B9S"/>
+                        <outlet property="phoneTextField" destination="qz9-NP-3mE" id="LqA-km-OKL"/>
+                        <outlet property="providerComboBox" destination="cDN-RC-MnR" id="mnm-pb-PLl"/>
+                    </connections>
+                </viewController>
+                <customObject id="yg0-4Q-JPQ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1305" y="-507.5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="5eQ-RW-85u">
@@ -1351,7 +1621,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="Contact" id="D21-xR-BT1" customClass="ContactTableCellView">
+                                                        <tableCellView identifier="Contact" id="D21-xR-BT1" customClass="ChatContactTableCellView">
                                                             <rect key="frame" x="0.0" y="0.0" width="243" height="64"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -4023,6 +4293,7 @@ DQ
     </scenes>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSAddTemplate" width="11" height="11"/>
         <image name="accounts_icon" width="250" height="250"/>
         <image name="app_icon" width="341.33334350585938" height="341.33334350585938"/>
         <image name="cameraview" width="26" height="26"/>
@@ -4032,8 +4303,11 @@ DQ
         <image name="contacts" width="24" height="40"/>
         <image name="dialpad" width="26" height="40"/>
         <image name="dialpadDelete" width="38" height="25"/>
+        <image name="edit_32x32" width="20.756755828857422" height="20.756755828857422"/>
+        <image name="import_export" width="128" height="128"/>
         <image name="info-icon" width="48" height="48"/>
         <image name="keypad" width="48" height="48"/>
+        <image name="male" width="53" height="53"/>
         <image name="messages" width="32" height="40"/>
         <image name="mute_active" width="38" height="42"/>
         <image name="numpad_active" width="36" height="36"/>
@@ -4041,6 +4315,7 @@ DQ
         <image name="send_message" width="298" height="60"/>
         <image name="settings" width="25" height="40"/>
         <image name="speaker_active" width="41" height="34"/>
+        <image name="trash_32x32" width="20.756755828857422" height="20.756755828857422"/>
         <image name="video_active" width="58" height="30"/>
     </resources>
 </document>

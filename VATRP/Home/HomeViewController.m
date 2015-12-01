@@ -41,7 +41,7 @@
     [v setBackgroundColor:[NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
     self.dockView.delegate = self;
     
-    [self.viewContainer setBackgroundColor:[NSColor redColor]];
+    [self.viewContainer setBackgroundColor:[NSColor whiteColor]];
     
     [ViewManager sharedInstance].dockView = self.dockView;
     [ViewManager sharedInstance].dialPadView = self.dialPadView;
@@ -59,6 +59,7 @@
 - (void) didClickDockViewRecents:(DockView*)docView_ {
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
+    self.recentsView.callsSegmentControll.hidden = NO;
     viewCurrent = (BackgroundedView*)self.recentsView;
     viewCurrent.hidden = NO;
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];

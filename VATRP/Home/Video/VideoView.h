@@ -13,7 +13,10 @@
 
 @property (nonatomic, assign) LinphoneCall* call;
 
+- (void)setIncomingCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;
+- (void)showSecondCallView:(LinphoneCall*)aCall;
+- (void)hideSecondCallView;
 
 @property (weak) IBOutlet NSView *remoteVideoView;
 

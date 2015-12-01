@@ -77,6 +77,12 @@
     [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:self.buttonProvider];
     
     [[self.buttonCall layer] setBackgroundColor:[NSColor colorWithRed:13.0/255.0 green:110.0/255.0 blue:15.0/255.0 alpha:1.0].CGColor];
+    
+    NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(103, 44, 104, 44)
+                                                                options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow )
+                                                                  owner:self
+                                                               userInfo:nil];
+    [self addTrackingArea:trackingArea];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -122,6 +128,22 @@
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent {
+    [self performSelector:@selector(longPressPlus) withObject:nil afterDelay:1.0];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(longPressPlus) object:nil];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(longPressPlus) object:nil];
+}
+
+- (void) longPressPlus {
+    self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"+"];
 }
 
 - (void) dealloc {

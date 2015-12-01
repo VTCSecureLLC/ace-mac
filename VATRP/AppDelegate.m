@@ -61,6 +61,22 @@
     linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
 }
 
+- (NSMenu *)applicationDockMenu:(NSApplication *)sender
+{
+    NSLog(@"applicationDockMenu");
+    
+    NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Main app menu"];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"My Quit" action:@selector(myQuit:) keyEquivalent:@""];
+    [menu addItem:item];
+    
+    return menu;
+}
+
+-(void)myQuit:(id)sender {
+    NSLog(@"My Quit called");
+    [[NSApplication sharedApplication] terminate:self];
+}
+
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     LinphoneCore *lc = [LinphoneManager getLc];
     if(linphone_core_get_current_call(lc)){

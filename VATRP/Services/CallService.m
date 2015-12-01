@@ -61,12 +61,20 @@
     linphone_core_invite_address_with_params(lc, linphoneAddress, params);
 }
 
-- (int) decline {
-    return linphone_core_terminate_call([LinphoneManager getLc], currentCall);
+- (int) decline:(LinphoneCall *)aCall {
+    return linphone_core_terminate_call([LinphoneManager getLc], aCall);
 }
 
-- (void) accept {
-    [[LinphoneManager instance] acceptCall:currentCall];
+- (void) accept:(LinphoneCall *)aCall {
+    [[LinphoneManager instance] acceptCall:aCall];
+}
+
+- (void) pause:(LinphoneCall*)aCall {
+    linphone_core_pause_call([LinphoneManager getLc], aCall);
+}
+
+- (void) resume:(LinphoneCall*)aCall {
+    linphone_core_resume_call([LinphoneManager getLc], aCall);
 }
 
 - (LinphoneCall*) getCurrentCall {
@@ -77,25 +85,17 @@
     LinphoneCall *aCall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState state = [[notif.userInfo objectForKey: @"state"] intValue];
 
-    if(currentCall == aCall && (state == LinphoneCallEnd || state == LinphoneCallError)) {
-        [callWindowController performSelector:@selector(close) withObject:nil afterDelay:1.0];
-        callWindowController = nil;
-    }
-
-    NSString *message = [notif.userInfo objectForKey: @"message"];
-
-    //    // Don't handle call state during incoming call view
-    //    if([[self currentView] equal:[IncomingCallViewController compositeViewDescription]] && state != LinphoneCallError && state != LinphoneCallEnd) {
-    //        return;
-    //    }
-    
     LinphoneCore *lc = [LinphoneManager getLc];
     
     switch (state) {
         case LinphoneCallIncomingReceived:
         case LinphoneCallIncomingEarlyMedia:
         {
-            [self displayIncomingCall:aCall];
+            if (currentCall && aCall != currentCall) {
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showSecondCallView:aCall];
+            } else {
+                [self displayIncomingCall:aCall];
+            }
             
             NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
             
@@ -113,8 +113,12 @@
             }
         }
             break;
+        case LinphoneCallConnected: {
+            currentCall = aCall;
+            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:currentCall];
+        }
+            break;
         case LinphoneCallPausedByRemote:
-        case LinphoneCallConnected:
         case LinphoneCallStreamsRunning:
         {
             break;
@@ -140,16 +144,37 @@
             break;
         case LinphoneCallError:
         case LinphoneCallEnd: {
-            [[ChatService sharedInstance] closeChatWindow];
+            if (currentCall && aCall != currentCall) {
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondCallView];
+            } else {
+                [[ChatService sharedInstance] closeChatWindow];
+                [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
+            }
 
-            [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
         }
             break;
         case LinphoneCallReleased: {
+            if (currentCall && aCall != currentCall) {
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondCallView];
+            }
+            
             [[ChatService sharedInstance] closeChatWindow];
             currentCall = NULL;
 
             [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
+
+            const MSList *call_list = linphone_core_get_calls(lc);
+            if (call_list) {
+                int count = ms_list_size(call_list);
+                
+                if (count) {
+                    currentCall = (LinphoneCall*)call_list->data;
+
+                    if (currentCall) {
+                        [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:currentCall];
+                    }
+                }
+            }
         }
             break;
         default:
@@ -176,15 +201,7 @@
     } else {
         [self openCallWindow];
 
-        [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:call];
-//        
-//        callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
-//        [callWindowController showWindow:self];
-//        
-//        if (callWindowController != nil) {
-//            CallViewController *callViewController = [callWindowController getCallViewController];
-//            [callViewController setCall:call];
-//        }
+        [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setIncomingCall:call];
     }
 }
 
@@ -193,14 +210,6 @@
 
     [self openCallWindow];
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];
-    
-//    callWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"XXX"];
-//    [callWindowController showWindow:self];
-//    
-//    if (callWindowController != nil) {
-//        CallViewController *callViewController = [callWindowController getCallViewController];
-//        [callViewController setOutgoingCall:call];
-//    }
 }
 
 - (void) openCallWindow {
@@ -211,10 +220,14 @@
 }
 
 - (void) closeCallWindow {
-    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-             display:YES
-             animate:YES];
+    LinphoneCore *lc = [LinphoneManager getLc];
+
+    if (!linphone_core_get_calls(lc)) {
+        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+                 display:YES
+                 animate:YES];
+    }
 }
 
 @end

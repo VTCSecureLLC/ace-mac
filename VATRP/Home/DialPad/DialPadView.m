@@ -14,7 +14,7 @@
 
 
 @interface DialPadView () {
-    
+    BOOL plusWorked;
 }
 
 @property (weak) IBOutlet NSTextField *textFieldNumber;
@@ -32,6 +32,7 @@
 @property (weak) IBOutlet NSButton *buttonSharp;
 @property (weak) IBOutlet NSButton *buttonCall;
 @property (weak) IBOutlet NSButton *buttonProvider;
+@property (weak) IBOutlet NSView *viewZeroButton;
 
 @end
 
@@ -77,6 +78,14 @@
     [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:self.buttonProvider];
     
     [[self.buttonCall layer] setBackgroundColor:[NSColor colorWithRed:13.0/255.0 green:110.0/255.0 blue:15.0/255.0 alpha:1.0].CGColor];
+
+    NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(103, 44, 104, 44)
+                                                                options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow )
+                                                                  owner:self
+                                                               userInfo:nil];
+    [self addTrackingArea:trackingArea];
+    
+    plusWorked = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -122,6 +131,36 @@
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent {
+    [self performSelector:@selector(longPressPlus) withObject:nil afterDelay:1.0];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(longPressPlus) object:nil];
+
+    if (plusWorked) {
+        plusWorked = NO;
+        return;
+    }
+    
+    CGPoint location = theEvent.locationInWindow;
+    location.y = location.y - 80;
+    
+    if (CGRectContainsPoint(self.viewZeroButton.frame, location)) {
+        linphone_core_play_dtmf([LinphoneManager getLc], '0', 100);
+        self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"0"];
+    }
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(longPressPlus) object:nil];
+}
+
+- (void) longPressPlus {
+    self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"+"];
+    plusWorked = YES;
 }
 
 - (void) dealloc {

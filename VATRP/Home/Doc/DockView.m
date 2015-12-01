@@ -58,18 +58,18 @@
 }
 
 - (IBAction)onButtonContacts:(id)sender {
-    AppDelegate *app = [AppDelegate sharedInstance];
-    if (!app.contactsWindowController) {
-        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
-        [app.contactsWindowController showWindow:self];
-    } else {
-        if (app.contactsWindowController.isShow) {
-            [app.contactsWindowController close];
-        } else {
-            [app.contactsWindowController showWindow:self];
-            app.contactsWindowController.isShow = YES;
-        }
-    }
+//    AppDelegate *app = [AppDelegate sharedInstance];
+//    if (!app.contactsWindowController) {
+//        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
+//        [app.contactsWindowController showWindow:self];
+//    } else {
+//        if (app.contactsWindowController.isShow) {
+//            [app.contactsWindowController close];
+//        } else {
+//            [app.contactsWindowController showWindow:self];
+//            app.contactsWindowController.isShow = YES;
+//        }
+//    }
 
     if ([_delegate respondsToSelector:@selector(didClickDockViewContacts:)]) {
         [_delegate didClickDockViewContacts:self];

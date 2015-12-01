@@ -28,6 +28,7 @@
 
 - (void)myWindowWillClose:(NSNotification *)notification {
     self.isShow = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didClosedMessagesWindow" object:nil];
 }
 
 - (ChatViewController*) getChatViewController {

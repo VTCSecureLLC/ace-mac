@@ -53,7 +53,7 @@
     return self;
 }
 
-- (void) openChatWindowWithUser:(NSString*)user {
+- (BOOL) openChatWindowWithUser:(NSString*)user {
     unread_messages = 0;
 
     if (!chatWindowController) {
@@ -64,6 +64,7 @@
         }
 
         [chatWindowController showWindow:self];
+        return YES;
     } else {
         if (!chatWindowController.isShow) {
             if (user) {
@@ -72,8 +73,14 @@
             }
             [chatWindowController showWindow:self];
             chatWindowController.isShow = YES;
+            return YES;
+        } else {
+            [chatWindowController close];
+            chatWindowController = nil;
         }
     }
+    
+    return NO;
 }
 
 - (void) closeChatWindow {

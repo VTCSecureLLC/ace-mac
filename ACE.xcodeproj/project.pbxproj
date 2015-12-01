@@ -358,6 +358,10 @@
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3281BFA9F6E00EC7039 /* libz.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23A1BFA9F2C00EC7039 /* libz.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */; };
+		CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */; };
+		CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */; };
+		CE0D5D581C0D898D00214C47 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D571C0D898D00214C47 /* male.png */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
 		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
 		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
@@ -752,6 +756,10 @@
 		73EDA2C21BFA9F4B00EC7039 /* libmssilk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmssilk.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmssilk.dylib"; sourceTree = "<group>"; };
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
+		CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_incoming.png; sourceTree = "<group>"; };
+		CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_missed.png; sourceTree = "<group>"; };
+		CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_outgoing.png; sourceTree = "<group>"; };
+		CE0D5D571C0D898D00214C47 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
 		CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
 		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
@@ -1203,6 +1211,10 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CE0D5D571C0D898D00214C47 /* male.png */,
+				CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */,
+				CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */,
+				CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */,
 				CEF4A3011C0C5BE400B41CDC /* import_export.png */,
 				CEF3B8151C08A40D00F35757 /* edit_32x32.png */,
 				CEF3B8161C08A40D00F35757 /* trash_32x32.png */,
@@ -1602,6 +1614,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */,
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
 				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
@@ -1627,6 +1640,7 @@
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
+				CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */,
 				CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */,
 				4AB5566F1BE272D5003382B2 /* call_status_missed.png in Resources */,
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
@@ -1646,6 +1660,8 @@
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				69A025B61BFB5C83005C62FA /* numpad_disabled.png in Resources */,
+				CE0D5D581C0D898D00214C47 /* male.png in Resources */,
+				CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
 				69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */,

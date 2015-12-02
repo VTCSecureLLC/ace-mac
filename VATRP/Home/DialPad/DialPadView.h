@@ -11,4 +11,6 @@
 
 @interface DialPadView : BackgroundedView
 
+- (void)setProvButtonImage:(NSImage*)img;
+
 @end

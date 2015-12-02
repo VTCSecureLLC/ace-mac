@@ -359,6 +359,13 @@
 		73EDA3281BFA9F6E00EC7039 /* libz.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23A1BFA9F2C00EC7039 /* libz.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
+		CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC641061C0C86F500BA927F /* ProviderTableCellView.m */; };
+		CEC641171C0C9EE600BA927F /* provider_logo_caag.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641111C0C9EE600BA927F /* provider_logo_caag.png */; };
+		CEC641181C0C9EE600BA927F /* provider_logo_convorelay.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */; };
+		CEC641191C0C9EE600BA927F /* provider_logo_globalvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641131C0C9EE600BA927F /* provider_logo_globalvrs.png */; };
+		CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */; };
+		CEC6411B1C0C9EE600BA927F /* provider_logo_sorenson.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */; };
+		CEC6411C1C0C9EE600BA927F /* provider_logo_zvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */; };
 		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
 		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
 		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
@@ -753,6 +760,14 @@
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
+		CEC641051C0C86F500BA927F /* ProviderTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProviderTableCellView.h; sourceTree = "<group>"; };
+		CEC641061C0C86F500BA927F /* ProviderTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProviderTableCellView.m; sourceTree = "<group>"; };
+		CEC641111C0C9EE600BA927F /* provider_logo_caag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_caag.png; sourceTree = "<group>"; };
+		CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_convorelay.png; sourceTree = "<group>"; };
+		CEC641131C0C9EE600BA927F /* provider_logo_globalvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_globalvrs.png; sourceTree = "<group>"; };
+		CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_purplevrs.png; sourceTree = "<group>"; };
+		CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_sorenson.png; sourceTree = "<group>"; };
+		CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_zvrs.png; sourceTree = "<group>"; };
 		CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
 		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
 		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
@@ -1162,6 +1177,8 @@
 				4A5DD1F01BD909FB003BE9A2 /* ChatItemTableCellView.m */,
 				4AB556491BDE765E003382B2 /* NewMessageCellView.h */,
 				4AB5564A1BDE765E003382B2 /* NewMessageCellView.m */,
+				CEC641051C0C86F500BA927F /* ProviderTableCellView.h */,
+				CEC641061C0C86F500BA927F /* ProviderTableCellView.m */,
 				CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */,
 				CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */,
 			);
@@ -1203,6 +1220,12 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CEC641111C0C9EE600BA927F /* provider_logo_caag.png */,
+				CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */,
+				CEC641131C0C9EE600BA927F /* provider_logo_globalvrs.png */,
+				CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */,
+				CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */,
+				CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */,
 				CEF4A3011C0C5BE400B41CDC /* import_export.png */,
 				CEF3B8151C08A40D00F35757 /* edit_32x32.png */,
 				CEF3B8161C08A40D00F35757 /* trash_32x32.png */,
@@ -1638,8 +1661,11 @@
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
 				69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
+				CEC6411C1C0C9EE600BA927F /* provider_logo_zvrs.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
+				CEC641181C0C9EE600BA927F /* provider_logo_convorelay.png in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
+				CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */,
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
@@ -1649,8 +1675,10 @@
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
 				69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */,
+				CEC6411B1C0C9EE600BA927F /* provider_logo_sorenson.png in Resources */,
 				CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */,
 				4A5DD1ED1BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png in Resources */,
+				CEC641191C0C9EE600BA927F /* provider_logo_globalvrs.png in Resources */,
 				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
 				69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */,
@@ -1659,6 +1687,7 @@
 				69A025B41BFB5C83005C62FA /* mute_inactive.png in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
+				CEC641171C0C9EE600BA927F /* provider_logo_caag.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
 				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
@@ -1760,6 +1789,7 @@
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
+				CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */,
 				5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
 				4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */,

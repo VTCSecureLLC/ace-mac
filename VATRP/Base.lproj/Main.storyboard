@@ -793,8 +793,8 @@
                                                     <rect key="frame" x="1" y="1" width="308" height="252"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" viewBased="YES" id="1kJ-XL-p9i">
-                                                            <rect key="frame" x="0.0" y="0.0" width="308" height="252"/>
+                                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="55" viewBased="YES" id="1kJ-XL-p9i">
+                                                            <rect key="frame" x="0.0" y="0.0" width="308" height="295"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <animations/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -815,16 +815,11 @@
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
                                                                         <tableCellView identifier="CallLog" id="5P1-p1-aLd" customClass="HistoryTableCellView">
-                                                                            <rect key="frame" x="1" y="1" width="305" height="40"/>
+                                                                            <rect key="frame" x="1" y="1" width="305" height="57"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
-                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Al0-Um-Bkg">
-                                                                                    <rect key="frame" x="5" y="5" width="30" height="30"/>
-                                                                                    <animations/>
-                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="f0r-wm-WKx"/>
-                                                                                </imageView>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k1l-hr-eWW">
-                                                                                    <rect key="frame" x="41" y="19" width="237" height="20"/>
+                                                                                    <rect key="frame" x="62" y="28" width="166" height="20"/>
                                                                                     <animations/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Remote name" id="mNx-mW-Kzz">
                                                                                         <font key="font" metaFont="system" size="15"/>
@@ -833,7 +828,7 @@
                                                                                     </textFieldCell>
                                                                                 </textField>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sbu-gw-l5T">
-                                                                                    <rect key="frame" x="41" y="0.0" width="133" height="16"/>
+                                                                                    <rect key="frame" x="62" y="11" width="133" height="16"/>
                                                                                     <animations/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Call Duration" id="JS3-Kk-XuT">
                                                                                         <font key="font" metaFont="system" size="10"/>
@@ -842,7 +837,7 @@
                                                                                     </textFieldCell>
                                                                                 </textField>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e2a-CI-U1m">
-                                                                                    <rect key="frame" x="159" y="19" width="145" height="16"/>
+                                                                                    <rect key="frame" x="168" y="32" width="130" height="16"/>
                                                                                     <animations/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Call Date" id="SfI-SH-KuG">
                                                                                         <font key="font" metaFont="cellTitle"/>
@@ -850,9 +845,20 @@
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
                                                                                 </textField>
+                                                                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4La-6l-5tw">
+                                                                                    <rect key="frame" x="8" y="4" width="48" height="48"/>
+                                                                                    <animations/>
+                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="fh5-FF-XPN"/>
+                                                                                </imageView>
+                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Al0-Um-Bkg">
+                                                                                    <rect key="frame" x="8" y="4" width="26" height="26"/>
+                                                                                    <animations/>
+                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="f0r-wm-WKx"/>
+                                                                                </imageView>
                                                                             </subviews>
                                                                             <animations/>
                                                                             <connections>
+                                                                                <outlet property="imageContactView" destination="4La-6l-5tw" id="aS6-nY-pjU"/>
                                                                                 <outlet property="imageViewCallStatus" destination="Al0-Um-Bkg" id="vYR-vD-ZZl"/>
                                                                                 <outlet property="textFieldCallDate" destination="e2a-CI-U1m" id="ZBo-Uz-BLh"/>
                                                                                 <outlet property="textFieldCallDuration" destination="Sbu-gw-l5T" id="ftA-CD-VS3"/>
@@ -947,7 +953,7 @@
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="00L-jm-923">
                                                                                     <rect key="frame" x="41" y="27" width="237" height="19"/>
                                                                                     <animations/>
-                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Contact nameadfahjsdlfkasdjf;laksdjfas;ldkfjas;dlfk" id="cir-WZ-SdS">
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Contact" id="cir-WZ-SdS">
                                                                                         <font key="font" metaFont="system" size="15"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

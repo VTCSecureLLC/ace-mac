@@ -54,6 +54,7 @@
 {
     self.isShow = NO;
     [AppDelegate sharedInstance].viewController.settingsWindowController = nil;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didClosedSettingsWindow" object:nil];
 }
 
 - (IBAction)onToolbarItemAccount:(id)sender {

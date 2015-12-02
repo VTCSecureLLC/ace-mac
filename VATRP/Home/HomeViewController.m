@@ -59,6 +59,37 @@
     [self.dialPadView setProvButtonImage:[NSImage imageNamed:@"provider_logo_zvrs"]];
     [self.providerTableView reloadData];
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
+    [self setObservers];
+}
+
+#pragma mark - Observers and related functions
+
+- (void)setObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didClosedSettingsWindow:)
+                                                 name:@"didClosedSettingsWindow"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didClosedMessagesWindow:)
+                                                 name:@"didClosedMessagesWindow"
+                                               object:nil];
+}
+
+- (void)removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"didClosedSettingsWindow"
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"didClosedMessagesWindow"
+                                                  object:nil];
+}
+
+- (void)didClosedMessagesWindow:(NSNotification*)not {
+    [self.dockView clearDockViewMessagesBackgroundColor:YES];
+}
+
+- (void)didClosedSettingsWindow:(NSNotification*)not {
+    [self.dockView clearDockViewSettingsBackgroundColor:YES];
 }
 
 #pragma mark DocView Delegate
@@ -70,6 +101,7 @@
     viewCurrent = (BackgroundedView*)self.recentsView;
     viewCurrent.hidden = NO;
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
 }
 
@@ -79,6 +111,7 @@
     viewCurrent = (BackgroundedView*)self.contactsView;
     viewCurrent.hidden = NO;
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
      [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
 }
 
@@ -90,6 +123,7 @@
     } else {
         [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
         [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+        [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
         
         if ([viewCurrent isKindOfClass:[RecentsView class]]) {
             [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
@@ -100,14 +134,20 @@
 }
 
 - (void) didClickDockViewResources:(DockView*)dockView_ {
+    [self.dockView clearDockViewMessagesBackgroundColor:NO];
 }
 
 - (void) didClickDockViewSettings:(DockView*)dockView_ {
+    [self.dockView clearDockViewSettingsBackgroundColor:NO];
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
     NSLog(@"- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector");
     return NO;
+}
+
+- (void)dealloc {
+    [self removeObservers];
 }
 
 - (void)initProvidersArray {

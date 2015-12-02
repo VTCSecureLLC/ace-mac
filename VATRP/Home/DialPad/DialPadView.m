@@ -133,7 +133,30 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
 }
 
-- (void)mouseDown:(NSEvent *)theEvent {
+- (void) mouseDown:(NSEvent *)theEvent {
+
+    NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+
+    if (CGRectContainsPoint(self.buttonOne.frame, curPoint)) {
+        [self onButtonNumber:self.buttonOne];
+    } else if (CGRectContainsPoint(self.buttonTwo.frame, curPoint)) {
+        [self onButtonNumber:self.buttonTwo];
+    } else if (CGRectContainsPoint(self.buttonThree.frame, curPoint)) {
+        [self onButtonNumber:self.buttonThree];
+    } else if (CGRectContainsPoint(self.buttonFour.frame, curPoint)) {
+        [self onButtonNumber:self.buttonFour];
+    } else if (CGRectContainsPoint(self.buttonFive.frame, curPoint)) {
+        [self onButtonNumber:self.buttonFive];
+    } else if (CGRectContainsPoint(self.buttonSix.frame, curPoint)) {
+        [self onButtonNumber:self.buttonSix];
+    } else if (CGRectContainsPoint(self.buttonSeven.frame, curPoint)) {
+        [self onButtonNumber:self.buttonSeven];
+    } else if (CGRectContainsPoint(self.buttonEight.frame, curPoint)) {
+        [self onButtonNumber:self.buttonEight];
+    } else if (CGRectContainsPoint(self.buttonNine.frame, curPoint)) {
+        [self onButtonNumber:self.buttonNine];
+    }
+    
     [self performSelector:@selector(longPressPlus) withObject:nil afterDelay:1.0];
 }
 
@@ -174,6 +197,10 @@
     
     [self addSubview:self.buttonOne];
     [self.buttonOne setFrame:NSMakeRect(0, 176, 103, 44)];
+}
+
+- (void)setProvButtonImage:(NSImage*)img {
+    [self.buttonProvider setImage:img];
 }
 
 @end

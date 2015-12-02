@@ -787,10 +787,10 @@
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1VK-jT-7Ad" customClass="RecentsView">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
                                         <subviews>
-                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="57" horizontalPageScroll="10" verticalLineScroll="57" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2P-Jw-G7F">
-                                                <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
+                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2P-Jw-G7F">
+                                                <rect key="frame" x="0.0" y="0.0" width="310" height="254"/>
                                                 <clipView key="contentView" ambiguous="YES" id="xe7-Rp-bfy">
-                                                    <rect key="frame" x="1" y="1" width="308" height="295"/>
+                                                    <rect key="frame" x="1" y="1" width="308" height="252"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="55" viewBased="YES" id="1kJ-XL-p9i">
@@ -889,9 +889,24 @@
                                                     <animations/>
                                                 </scroller>
                                             </scrollView>
+                                            <segmentedControl hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PJO-x3-NEf">
+                                                <rect key="frame" x="62" y="265" width="187" height="25"/>
+                                                <animations/>
+                                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedRounded" trackingMode="selectOne" id="pge-U3-a96">
+                                                    <font key="font" metaFont="system"/>
+                                                    <segments>
+                                                        <segment label="All Calls" width="90" selected="YES"/>
+                                                        <segment label="Missed Calls" width="90" tag="1"/>
+                                                    </segments>
+                                                </segmentedCell>
+                                                <connections>
+                                                    <action selector="onSegmentCallType:" target="1VK-jT-7Ad" id="5Z0-uh-8jH"/>
+                                                </connections>
+                                            </segmentedControl>
                                         </subviews>
                                         <animations/>
                                         <connections>
+                                            <outlet property="callsSegmentControll" destination="PJO-x3-NEf" id="RRX-7c-Alt"/>
                                             <outlet property="scrollViewRecents" destination="G2P-Jw-G7F" id="yBj-eI-tDI"/>
                                             <outlet property="tableViewRecents" destination="1kJ-XL-p9i" id="Qsa-C4-czF"/>
                                         </connections>

@@ -56,7 +56,6 @@
 }
 
 - (void)callUpdate:(NSNotification*)notif {
-    LinphoneCall *aCall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState state = [[notif.userInfo objectForKey: @"state"] intValue];
     
     switch (state) {
@@ -213,7 +212,9 @@
 - (void) setFrame:(NSRect)frame {
     [super setFrame:frame];
     
-    [self.scrollViewRecents setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
+    [self.scrollViewRecents setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
+    
+    [self.callsSegmentControll setFrame:NSMakeRect((frame.size.width - self.callsSegmentControll.frame.size.width)/2, frame.size.height - 30, self.callsSegmentControll.frame.size.width, self.callsSegmentControll.frame.size.height)];
 }
 
 - (void) dealloc {

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "BackgroundedView.h"
 
-@interface DialPadView : BackgroundedView
+@interface DialPadView : BackgroundedView <NSTextFieldDelegate>
 
 - (void)setProvButtonImage:(NSImage*)img;
 

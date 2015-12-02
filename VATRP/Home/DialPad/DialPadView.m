@@ -84,7 +84,7 @@
                                                                   owner:self
                                                                userInfo:nil];
     [self addTrackingArea:trackingArea];
-    
+    self.textFieldNumber.delegate = self;
     plusWorked = NO;
 }
 
@@ -92,6 +92,12 @@
     [super drawRect:dirtyRect];
     
     // Drawing code here.
+}
+
+#pragma mark - NSTextView delegate methods
+
+- (void)controlTextDidChange:(NSNotification *)obj {
+    [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
 }
 
 - (IBAction)onButtonNumber:(id)sender {

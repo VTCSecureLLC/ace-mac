@@ -21,6 +21,7 @@
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
     NSString *selectedProviderName;
+    NSString *dialPadFilter;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollViewContacts;
@@ -42,15 +43,7 @@
     static BOOL firstTime = YES;
     if (firstTime) {
         [self.addContactButton becomeFirstResponder];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(contactInfoFillDone:)
-                                                     name:@"contactInfoFilled"
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(contactEditDone:)
-                                                     name:@"contactInfoEditDone"
-                                                   object:nil];
-        
+        [self setObservers];
         self.contactInfos = [NSMutableArray new];
         [self refreshContactList];
         firstTime = NO;
@@ -61,48 +54,22 @@
     [super drawRect:dirtyRect];
 }
 
-- (void) setFrame:(NSRect)frame {
-    [super setFrame:frame];
-    [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
-    [self.addContactButton setFrame:NSMakeRect(135, frame.size.height - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
-        [self.syncButton setFrame:NSMakeRect(250, frame.size.height - 40, self.syncButton.frame.size.width, self.syncButton.frame.size.height)];
-    [self.clearListButton setFrame:NSMakeRect(20, frame.size.height - 40, self.clearListButton.frame.size.width, self.clearListButton.frame.size.height)];
+#pragma mark - Observers related functions
+
+- (void)setObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactInfoFillDone:)
+                                                 name:@"contactInfoFilled"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactEditDone:)
+                                                 name:@"contactInfoEditDone"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dialpadTextUpdate:)
+                                                 name:@"DIALPAD_TEXT_CHANGED"
+                                               object:nil];
 }
-
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoFilled" object:nil];
-}
-
-#pragma mark - Buttons actions methods
-
-- (IBAction)onButtonClearList:(id)sender {
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"
-                                     defaultButton:@"Cancel" alternateButton:@"OK"
-                                       otherButton:nil informativeTextWithFormat:
-                      @"Are you sure?. You want to delete all the contacts?"];
-    [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
-        if (returnCode == 0) {
-            [[LinphoneContactService sharedInstance] deleteContactList];
-        }
-    }];
-}
-
-- (IBAction)onSyncButton:(id)sender {
-    AppDelegate *app = [AppDelegate sharedInstance];
-    if (!app.contactsWindowController) {
-        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
-        [app.contactsWindowController showWindow:self];
-    } else {
-        if (app.contactsWindowController.isShow) {
-            [app.contactsWindowController close];
-        } else {
-            [app.contactsWindowController showWindow:self];
-            app.contactsWindowController.isShow = YES;
-        }
-    }
-}
-
-#pragma mark - Observer functions declarations
 
 - (void)contactInfoFillDone:(NSNotification*)notif {
     
@@ -134,9 +101,61 @@
     [self refreshContactList];
 }
 
+- (void)removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoFilled" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoEditDone" object:nil];
+}
+
+- (void) setFrame:(NSRect)frame {
+    [super setFrame:frame];
+    [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
+    [self.addContactButton setFrame:NSMakeRect(135, frame.size.height - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
+        [self.syncButton setFrame:NSMakeRect(250, frame.size.height - 40, self.syncButton.frame.size.width, self.syncButton.frame.size.height)];
+    [self.clearListButton setFrame:NSMakeRect(20, frame.size.height - 40, self.clearListButton.frame.size.width, self.clearListButton.frame.size.height)];
+}
+
+- (void) dealloc {
+    [self removeObservers];
+}
+
+#pragma mark - Buttons actions methods
+
+- (IBAction)onButtonClearList:(id)sender {
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"
+                                     defaultButton:@"Cancel" alternateButton:@"OK"
+                                       otherButton:nil informativeTextWithFormat:
+                      @"Are you sure?. You want to delete all the contacts?"];
+    [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == 0) {
+            [[LinphoneContactService sharedInstance] deleteContactList];
+        }
+    }];
+}
+
+- (IBAction)onSyncButton:(id)sender {
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.contactsWindowController) {
+        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
+        [app.contactsWindowController showWindow:self];
+    } else {
+        if (app.contactsWindowController.isShow) {
+            [app.contactsWindowController close];
+        } else {
+            [app.contactsWindowController showWindow:self];
+            app.contactsWindowController.isShow = YES;
+        }
+    }
+}
+
 - (void)refreshContactList {
     [self.contactInfos removeAllObjects];
     self.contactInfos = [[LinphoneContactService sharedInstance] contactList];
+    [self.tableViewContacts reloadData];
+}
+
+- (void)refreshContactListWithBySearchText:(NSString*)searchedText {
+    [self.contactInfos removeAllObjects];
+    self.contactInfos = [[LinphoneContactService sharedInstance] contactListBySearchText:searchedText];
     [self.tableViewContacts reloadData];
 }
 
@@ -200,6 +219,10 @@
     NSString *str = [sipURI substringFromIndex:4];
     NSArray *subStrings = [str componentsSeparatedByString:@"@"];
     return [subStrings objectAtIndex:0];
+}
+
+- (void)dialpadTextUpdate:(NSNotification*)notif {
+    [self refreshContactListWithBySearchText:[notif object]];
 }
 
 @end

@@ -14,6 +14,7 @@
 
 @interface DockView () {
     NSButton *selectedDocViewItem;
+    NSArray *dockViewButtons;
 }
 
 @property (weak) IBOutlet NSButton *buttonRecents;
@@ -43,6 +44,7 @@
     selectedDocViewItem = self.buttonDialpad;
     [selectedDocViewItem setWantsLayer:YES];
     [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+    dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, nil];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -58,18 +60,18 @@
 }
 
 - (IBAction)onButtonContacts:(id)sender {
-    AppDelegate *app = [AppDelegate sharedInstance];
-    if (!app.contactsWindowController) {
-        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
-        [app.contactsWindowController showWindow:self];
-    } else {
-        if (app.contactsWindowController.isShow) {
-            [app.contactsWindowController close];
-        } else {
-            [app.contactsWindowController showWindow:self];
-            app.contactsWindowController.isShow = YES;
-        }
-    }
+//    AppDelegate *app = [AppDelegate sharedInstance];
+//    if (!app.contactsWindowController) {
+//        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
+//        [app.contactsWindowController showWindow:self];
+//    } else {
+//        if (app.contactsWindowController.isShow) {
+//            [app.contactsWindowController close];
+//        } else {
+//            [app.contactsWindowController showWindow:self];
+//            app.contactsWindowController.isShow = YES;
+//        }
+//    }
 
     if ([_delegate respondsToSelector:@selector(didClickDockViewContacts:)]) {
         [_delegate didClickDockViewContacts:self];
@@ -83,10 +85,11 @@
 }
 
 - (IBAction)onButtonResources:(id)sender {
-    [[ChatService sharedInstance] openChatWindowWithUser:nil];
-
-    if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
-        [_delegate didClickDockViewResources:self];
+    BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
+    if (isOpenedChatWindow) {
+        if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
+            [_delegate didClickDockViewResources:self];
+        }
     }
 }
 
@@ -95,6 +98,9 @@
     if (!app.settingsWindowController) {
         app.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
         [app.settingsWindowController showWindow:self];
+        if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+            [_delegate didClickDockViewSettings:self];
+        }
     } else {
         if (app.settingsWindowController.isShow) {
             [app.settingsWindowController close];
@@ -102,18 +108,50 @@
         } else {
             [app.settingsWindowController showWindow:self];
             app.settingsWindowController.isShow = YES;
+            if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+                [_delegate didClickDockViewSettings:self];
+            }
         }
     }
+}
 
-    if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-        [_delegate didClickDockViewSettings:self];
+#pragma mark - Functions for buttons background color chnages
+- (void)clearDockViewButtonsBackgroundColorsExceptDialPadButton:(BOOL)clear {
+    for (NSButton *bt in dockViewButtons) {
+        if (clear) {
+            [bt setWantsLayer:YES];
+            [bt.layer setBackgroundColor:[NSColor clearColor].CGColor];
+        } else {
+            if (![bt.title isEqualToString:@"Dialpad"]) {
+                [bt setWantsLayer:YES];
+                [bt.layer setBackgroundColor:[NSColor clearColor].CGColor];
+            }
+        }
+    }
+}
+
+- (void)clearDockViewSettingsBackgroundColor:(BOOL)clear {
+    if (clear) {
+        [self.buttonSettings setWantsLayer:YES];
+        [self.buttonSettings.layer setBackgroundColor:[NSColor clearColor].CGColor];
+    } else {
+        [self.buttonSettings setWantsLayer:YES];
+        [self.buttonSettings.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+    }
+}
+
+- (void)clearDockViewMessagesBackgroundColor:(BOOL)clear {
+    if (clear) {
+        [self.buttonResources setWantsLayer:YES];
+        [self.buttonResources.layer setBackgroundColor:[NSColor clearColor].CGColor];
+    } else {
+        [self.buttonResources setWantsLayer:YES];
+        [self.buttonResources.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
     }
 }
 
 - (void) selectItemWithDocViewItem:(DockViewItem)docViewItem {
-    [selectedDocViewItem setWantsLayer:YES];
-    [selectedDocViewItem.layer setBackgroundColor:[NSColor clearColor].CGColor];
-    
+
     switch (docViewItem) {
         case DockViewItemRecents: {
             selectedDocViewItem = self.buttonRecents;

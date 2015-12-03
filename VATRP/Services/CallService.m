@@ -52,6 +52,9 @@
 }
 
 + (void) callTo:(NSString*)number {
+    if ((number == nil) || [number isEqualToString:@""]) {
+        return;
+    }
     LinphoneCore *lc = [LinphoneManager getLc];
     
     LinphoneCall *thiscall;

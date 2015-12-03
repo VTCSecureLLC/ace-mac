@@ -8,22 +8,29 @@
 
 #import "HistoryTableCellView.h"
 
+@interface HistoryTableCellView () {
+    NSImageView *statusImageView;
+     NSImage *image;
+}
+
+@end
+
 @implementation HistoryTableCellView
 
 - (void) setCallLog:(LinphoneCallLog*)callLog {
     // Set up the cell...
     LinphoneAddress *addr;
-    NSImage *image;
-    
+   
+    image = nil;
     if (linphone_call_log_get_dir(callLog) == LinphoneCallIncoming) {
         if (linphone_call_log_get_status(callLog) != LinphoneCallMissed) {
-            image = [NSImage imageNamed:@"call_status_incoming.png"];
+            image = [NSImage imageNamed:@"icon_call_dir_incoming.png"];
         } else {
-            image = [NSImage imageNamed:@"call_status_missed.png"];
+            image = [NSImage imageNamed:@"icon_call_dir_missed.png"];
         }
         addr = linphone_call_log_get_from(callLog);
     } else {
-        image = [NSImage imageNamed:@"call_status_outgoing.png"];
+        image = [NSImage imageNamed:@"icon_call_dir_outgoing.png"];
         addr = linphone_call_log_get_to(callLog);
     }
     
@@ -58,7 +65,10 @@
     int duration = linphone_call_log_get_duration(callLog);
     
     [self.textFieldRemoteName setStringValue:address];
-    [self.imageViewCallStatus setImage:image];
+    [statusImageView removeFromSuperview];
+    statusImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(8, 4, 26, 26)];
+    [statusImageView setImage:image];
+    [self addSubview:statusImageView];
     [self.textFieldCallDate setStringValue:formattedDateString];
     [self.textFieldCallDuration setStringValue:[HistoryTableCellView timeFormatConvertToSeconds:duration]];
 }

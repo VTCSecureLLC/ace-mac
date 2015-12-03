@@ -67,6 +67,30 @@
     return contacts;
 }
 
+- (NSMutableArray*)contactListBySearchText:(NSString *)searchText {
+    NSMutableArray *contacts = [NSMutableArray new];
+    const MSList* proxies = linphone_core_get_friend_list([LinphoneManager getLc]);
+    while (proxies != NULL) {
+        LinphoneFriend* friend = (LinphoneFriend*)proxies->data;
+        const LinphoneAddress *address = linphone_friend_get_address(friend);
+        const char *addressString = linphone_address_as_string_uri_only(address);
+        const char *name = linphone_friend_get_name(friend);
+        NSString *sipURI = [NSString stringWithUTF8String:addressString];
+        NSString *displayName = [NSString stringWithUTF8String:name];
+        if (![searchText isEqualToString:@""] && searchText != nil) {
+            if  ( ([displayName rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound) ||
+                 ([sipURI rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound) )  {
+                [contacts addObject:@{@"name" : displayName, @"phone" : sipURI}];
+            }
+        } else {
+            [contacts addObject:@{@"name" : displayName, @"phone" : sipURI}];
+        }
+        proxies = ms_list_next(proxies);
+    }
+
+    return contacts;
+}
+
 - (void)deleteContact:(const LinphoneFriend *)contact {
     LinphoneAddress *deletedAddress = (LinphoneAddress*)linphone_friend_get_address(contact);
     char* delAddress = linphone_address_as_string(deletedAddress);

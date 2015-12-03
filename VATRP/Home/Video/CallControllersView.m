@@ -315,10 +315,7 @@
         LinphoneCallAppData *callAppData = (__bridge LinphoneCallAppData *)linphone_call_get_user_pointer(call);
         callAppData->videoRequested =
         TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
-        LinphoneCallParams *call_params = linphone_call_params_copy(linphone_call_get_current_params(call));
         linphone_call_enable_camera(call, TRUE);
-        linphone_core_update_call(lc, call, NULL);
-        linphone_call_params_destroy(call_params);
         
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
@@ -337,11 +334,8 @@
         //    The choice is this or a no webcam image. For testing, using no webcam image.
 //        NSString *pathToImageString = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"png"];
 //        const char *pathToImage = [pathToImageString UTF8String];
-        LinphoneCallParams *call_params = linphone_call_params_copy(linphone_call_get_current_params(call));
 //        linphone_core_set_static_picture(lc, pathToImage);
         linphone_call_enable_camera(call, FALSE);
-        linphone_core_update_call(lc, call, NULL);
-        linphone_call_params_destroy(call_params);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);

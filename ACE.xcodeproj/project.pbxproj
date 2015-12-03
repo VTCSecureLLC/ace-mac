@@ -61,7 +61,7 @@
 		4AA203B71BD4C92600DD9A4D /* ChatWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203B51BD4C92600DD9A4D /* ChatWindowController.m */; };
 		4AA203BA1BD4CAA200DD9A4D /* CallService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203B91BD4CAA200DD9A4D /* CallService.m */; };
 		4AA203C01BD4CAF500DD9A4D /* BackgroundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */; };
-		4AA203C11BD4CAF500DD9A4D /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */; };
+		4AA203C11BD4CAF500DD9A4D /* ChatContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203BF1BD4CAF500DD9A4D /* ChatContactTableCellView.m */; };
 		4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203C31BD4CF3500DD9A4D /* ChatService.m */; };
 		4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AA203C51BD4D2A000DD9A4D /* chat_icon.png */; };
 		4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5C1BACD437007C1949 /* linphonerc-factory */; };
@@ -115,9 +115,10 @@
 		69557C761C0EE6E9004A40ED /* SecondCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69557C751C0EE6E9004A40ED /* SecondCallView.m */; };
 		69557C781C0EE85A004A40ED /* call swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 69557C771C0EE85A004A40ED /* call swap.png */; };
 		697840811C087F28000ED450 /* SecondIncomingCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 697840801C087F28000ED450 /* SecondIncomingCallView.m */; };
-		697840831C087F33000ED450 /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 697840821C087F33000ED450 /* NumpadView.m */; };
 		697840851C089B55000ED450 /* call hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840841C089B55000ED450 /* call hold.png */; };
 		697840871C089CB9000ED450 /* call resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840861C089CB9000ED450 /* call resume.png */; };
+		692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 692EDEEB1C05AC7E006073E2 /* send_message.png */; };
+		692EDEF41C05F978006073E2 /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 692EDEF31C05F978006073E2 /* NumpadView.m */; };
 		69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A01BFB5C83005C62FA /* chat_active.png */; };
 		69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A11BFB5C83005C62FA /* chat_disabled.png */; };
 		69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A21BFB5C83005C62FA /* chat_inactive.png */; };
@@ -133,6 +134,7 @@
 		69A025BB1BFB5C83005C62FA /* video_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AC1BFB5C83005C62FA /* video_active.png */; };
 		69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AD1BFB5C83005C62FA /* video_disabled.png */; };
 		69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025AE1BFB5C83005C62FA /* video_inactive.png */; };
+		69D8B2EE1C076E1F0034576B /* RTTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D8B2ED1C076E1F0034576B /* RTTView.m */; };
 		738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; };
 		739C3F111BFCE6D800F9EFCE /* libmsamr.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2B81BFA9F4B00EC7039 /* libmsamr.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -361,7 +363,27 @@
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3281BFA9F6E00EC7039 /* libz.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23A1BFA9F2C00EC7039 /* libz.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */; };
+		CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */; };
+		CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */; };
+		CE0D5D581C0D898D00214C47 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D571C0D898D00214C47 /* male.png */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
+		CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC641061C0C86F500BA927F /* ProviderTableCellView.m */; };
+		CEC641171C0C9EE600BA927F /* provider_logo_caag.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641111C0C9EE600BA927F /* provider_logo_caag.png */; };
+		CEC641181C0C9EE600BA927F /* provider_logo_convorelay.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */; };
+		CEC641191C0C9EE600BA927F /* provider_logo_globalvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641131C0C9EE600BA927F /* provider_logo_globalvrs.png */; };
+		CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */; };
+		CEC6411B1C0C9EE600BA927F /* provider_logo_sorenson.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */; };
+		CEC6411C1C0C9EE600BA927F /* provider_logo_zvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */; };
+		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
+		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
+		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
+		CEF3B8111C0897BB00F35757 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8101C0897BB00F35757 /* male.png */; };
+		CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8151C08A40D00F35757 /* edit_32x32.png */; };
+		CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8161C08A40D00F35757 /* trash_32x32.png */; };
+		CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8191C08BC9200F35757 /* whiteMale.png */; };
+		CEF4A2FE1C0C253E00B41CDC /* LinphoneContactService.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */; };
+		CEF4A3021C0C5BE400B41CDC /* import_export.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF4A3011C0C5BE400B41CDC /* import_export.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -568,8 +590,8 @@
 		4AA203B91BD4CAA200DD9A4D /* CallService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallService.m; sourceTree = "<group>"; };
 		4AA203BC1BD4CAF500DD9A4D /* BackgroundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundedView.h; sourceTree = "<group>"; };
 		4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundedView.m; sourceTree = "<group>"; };
-		4AA203BE1BD4CAF500DD9A4D /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
-		4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
+		4AA203BE1BD4CAF500DD9A4D /* ChatContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContactTableCellView.h; sourceTree = "<group>"; };
+		4AA203BF1BD4CAF500DD9A4D /* ChatContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactTableCellView.m; sourceTree = "<group>"; };
 		4AA203C21BD4CF3500DD9A4D /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
 		4AA203C31BD4CF3500DD9A4D /* ChatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatService.m; sourceTree = "<group>"; };
 		4AA203C51BD4D2A000DD9A4D /* chat_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_icon.png; sourceTree = "<group>"; };
@@ -662,6 +684,7 @@
 		697840821C087F33000ED450 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
 		697840841C089B55000ED450 /* call hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call hold.png"; sourceTree = "<group>"; };
 		697840861C089CB9000ED450 /* call resume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call resume.png"; sourceTree = "<group>"; };
+		692EDEEB1C05AC7E006073E2 /* send_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_message.png; sourceTree = "<group>"; };
 		69A025A01BFB5C83005C62FA /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
 		69A025A11BFB5C83005C62FA /* chat_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_disabled.png; sourceTree = "<group>"; };
 		69A025A21BFB5C83005C62FA /* chat_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_inactive.png; sourceTree = "<group>"; };
@@ -678,6 +701,8 @@
 		69A025AD1BFB5C83005C62FA /* video_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_disabled.png; sourceTree = "<group>"; };
 		69A025AE1BFB5C83005C62FA /* video_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_inactive.png; sourceTree = "<group>"; };
 		69C726731BFC6DF6002198A7 /* NumpadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumpadView.h; sourceTree = "<group>"; };
+		69D8B2EC1C076E1F0034576B /* RTTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTView.h; sourceTree = "<group>"; };
+		69D8B2ED1C076E1F0034576B /* RTTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTView.m; sourceTree = "<group>"; };
 		73EDA1FE1BFA9F2C00EC7039 /* libantlr3c.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.1.dylib"; sourceTree = "<group>"; };
 		73EDA1FF1BFA9F2C00EC7039 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.dylib"; sourceTree = "<group>"; };
 		73EDA2001BFA9F2C00EC7039 /* libavcodec.53.61.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.53.61.100.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libavcodec.53.61.100.dylib"; sourceTree = "<group>"; };
@@ -750,7 +775,32 @@
 		73EDA2C21BFA9F4B00EC7039 /* libmssilk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmssilk.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmssilk.dylib"; sourceTree = "<group>"; };
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
+		CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_incoming.png; sourceTree = "<group>"; };
+		CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_missed.png; sourceTree = "<group>"; };
+		CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_outgoing.png; sourceTree = "<group>"; };
+		CE0D5D571C0D898D00214C47 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
+		CEC641051C0C86F500BA927F /* ProviderTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProviderTableCellView.h; sourceTree = "<group>"; };
+		CEC641061C0C86F500BA927F /* ProviderTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProviderTableCellView.m; sourceTree = "<group>"; };
+		CEC641111C0C9EE600BA927F /* provider_logo_caag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_caag.png; sourceTree = "<group>"; };
+		CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_convorelay.png; sourceTree = "<group>"; };
+		CEC641131C0C9EE600BA927F /* provider_logo_globalvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_globalvrs.png; sourceTree = "<group>"; };
+		CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_purplevrs.png; sourceTree = "<group>"; };
+		CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_sorenson.png; sourceTree = "<group>"; };
+		CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_zvrs.png; sourceTree = "<group>"; };
+		CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
+		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
+		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
+		CE48DF931C04B5110046E727 /* AddContactDialogBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactDialogBox.m; sourceTree = "<group>"; };
+		CE7005FD1C048F0000E667F8 /* ContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsView.h; sourceTree = "<group>"; };
+		CE7005FE1C048F0000E667F8 /* ContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsView.m; sourceTree = "<group>"; };
+		CEF3B8101C0897BB00F35757 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
+		CEF3B8151C08A40D00F35757 /* edit_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_32x32.png; sourceTree = "<group>"; };
+		CEF3B8161C08A40D00F35757 /* trash_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_32x32.png; sourceTree = "<group>"; };
+		CEF3B8191C08BC9200F35757 /* whiteMale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteMale.png; sourceTree = "<group>"; };
+		CEF4A2FC1C0C253E00B41CDC /* LinphoneContactService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinphoneContactService.h; sourceTree = "<group>"; };
+		CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinphoneContactService.m; sourceTree = "<group>"; };
+		CEF4A3011C0C5BE400B41CDC /* import_export.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import_export.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -929,6 +979,10 @@
 			children = (
 				2B463EF41B984E49008E8333 /* ContactsWindowController.h */,
 				2B463EF51B984E49008E8333 /* ContactsWindowController.m */,
+				CE7005FD1C048F0000E667F8 /* ContactsView.h */,
+				CE7005FE1C048F0000E667F8 /* ContactsView.m */,
+				CE48DF921C04B5110046E727 /* AddContactDialogBox.h */,
+				CE48DF931C04B5110046E727 /* AddContactDialogBox.m */,
 				5EEC29061C024CCA00BA43FB /* ContactsViewController.h */,
 				5EEC29071C024CCA00BA43FB /* ContactsViewController.m */,
 			);
@@ -1027,6 +1081,7 @@
 				4AB2A2DA1BF241B3006AC5C6 /* DialPad */,
 				4AB2A2DE1BF32C55006AC5C6 /* Profile */,
 				4AB2A2F21BF4766B006AC5C6 /* Video */,
+				69D8B2EB1C076E1F0034576B /* RTT */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1045,6 +1100,7 @@
 		4A5DD1E21BD904B3003BE9A2 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				692EDEEB1C05AC7E006073E2 /* send_message.png */,
 				4AC975F71BDA23E900AD35C8 /* chat_message_not_delivered.png */,
 				4AC975F51BDA23B400AD35C8 /* chat_message_delivered.png */,
 				4AC975F31BDA22F700AD35C8 /* chat_message_inprogress.png */,
@@ -1089,6 +1145,8 @@
 				5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */,
 				4AB2A2EA1BF36E2B006AC5C6 /* ViewManager.h */,
 				4AB2A2EB1BF36E2B006AC5C6 /* ViewManager.m */,
+				CEF4A2FC1C0C253E00B41CDC /* LinphoneContactService.h */,
+				CEF4A2FD1C0C253E00B41CDC /* LinphoneContactService.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1131,14 +1189,18 @@
 			children = (
 				4AA203BC1BD4CAF500DD9A4D /* BackgroundedView.h */,
 				4AA203BD1BD4CAF500DD9A4D /* BackgroundedView.m */,
-				4AA203BE1BD4CAF500DD9A4D /* ContactTableCellView.h */,
-				4AA203BF1BD4CAF500DD9A4D /* ContactTableCellView.m */,
+				4AA203BE1BD4CAF500DD9A4D /* ChatContactTableCellView.h */,
+				4AA203BF1BD4CAF500DD9A4D /* ChatContactTableCellView.m */,
 				4AB556671BE27085003382B2 /* HistoryTableCellView.h */,
 				4AB556681BE27085003382B2 /* HistoryTableCellView.m */,
 				4A5DD1EF1BD909FB003BE9A2 /* ChatItemTableCellView.h */,
 				4A5DD1F01BD909FB003BE9A2 /* ChatItemTableCellView.m */,
 				4AB556491BDE765E003382B2 /* NewMessageCellView.h */,
 				4AB5564A1BDE765E003382B2 /* NewMessageCellView.m */,
+				CEC641051C0C86F500BA927F /* ProviderTableCellView.h */,
+				CEC641061C0C86F500BA927F /* ProviderTableCellView.m */,
+				CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */,
+				CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -1178,6 +1240,21 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CE0D5D571C0D898D00214C47 /* male.png */,
+				CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */,
+				CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */,
+				CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */,
+				CEC641111C0C9EE600BA927F /* provider_logo_caag.png */,
+				CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */,
+				CEC641131C0C9EE600BA927F /* provider_logo_globalvrs.png */,
+				CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */,
+				CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */,
+				CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */,
+				CEF4A3011C0C5BE400B41CDC /* import_export.png */,
+				CEF3B8151C08A40D00F35757 /* edit_32x32.png */,
+				CEF3B8161C08A40D00F35757 /* trash_32x32.png */,
+				CEF3B8191C08BC9200F35757 /* whiteMale.png */,
+				CEF3B8101C0897BB00F35757 /* male.png */,
 				4AB5566A1BE272D5003382B2 /* Call Log */,
 				4A5DD1E21BD904B3003BE9A2 /* Message */,
 				69A0259F1BFB5C83005C62FA /* inCall */,
@@ -1408,6 +1485,15 @@
 			path = inCall;
 			sourceTree = "<group>";
 		};
+		69D8B2EB1C076E1F0034576B /* RTT */ = {
+			isa = PBXGroup;
+			children = (
+				69D8B2EC1C076E1F0034576B /* RTTView.h */,
+				69D8B2ED1C076E1F0034576B /* RTTView.m */,
+			);
+			path = RTT;
+			sourceTree = "<group>";
+		};
 		CE6758B11BA8C9BF005396EF /* linphonesdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1570,6 +1656,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */,
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
 				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
@@ -1580,6 +1667,8 @@
 				4AAF561A1BB1615900241DC2 /* accounts_icon.png in Resources */,
 				4A50F9C11BB1BDC900FCD070 /* cameraview.png in Resources */,
 				4A50F9C51BB1BDC900FCD070 /* missed.png in Resources */,
+				CEF4A3021C0C5BE400B41CDC /* import_export.png in Resources */,
+				CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */,
 				4AB556421BDE2454003382B2 /* app_icon.png in Resources */,
 				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
 				69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */,
@@ -1587,10 +1676,14 @@
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
 				69A025B31BFB5C83005C62FA /* mute_disabled.png in Resources */,
 				69A025B51BFB5C83005C62FA /* numpad_active.png in Resources */,
+				692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */,
 				69A025B91BFB5C83005C62FA /* speaker_disabled.png in Resources */,
+				CEF3B8111C0897BB00F35757 /* male.png in Resources */,
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
+				CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */,
+				CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */,
 				4AB5566F1BE272D5003382B2 /* call_status_missed.png in Resources */,
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
@@ -1601,8 +1694,11 @@
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
 				69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
+				CEC6411C1C0C9EE600BA927F /* provider_logo_zvrs.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
+				CEC641181C0C9EE600BA927F /* provider_logo_convorelay.png in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
+				CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */,
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
@@ -1610,10 +1706,15 @@
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				69A025B61BFB5C83005C62FA /* numpad_disabled.png in Resources */,
+				CE0D5D581C0D898D00214C47 /* male.png in Resources */,
+				CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
 				69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */,
+				CEC6411B1C0C9EE600BA927F /* provider_logo_sorenson.png in Resources */,
+				CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */,
 				4A5DD1ED1BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png in Resources */,
+				CEC641191C0C9EE600BA927F /* provider_logo_globalvrs.png in Resources */,
 				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
 				69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */,
@@ -1623,6 +1724,7 @@
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				69557C781C0EE85A004A40ED /* call swap.png in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
+				CEC641171C0C9EE600BA927F /* provider_logo_caag.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
 				697840871C089CB9000ED450 /* call resume.png in Resources */,
@@ -1661,9 +1763,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */,
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */,
+				CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */,
 				2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */,
+				CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */,
+				69D8B2EE1C076E1F0034576B /* RTTView.m in Sources */,
 				4A6717021BCD05CC00139A6F /* KeypadViewController.m in Sources */,
 				4AC13F951BBBFD21008305CD /* CallLogService.m in Sources */,
 				4AB2A2D31BF2273E006AC5C6 /* DockView.m in Sources */,
@@ -1694,7 +1800,7 @@
 				5EEC29081C024CCA00BA43FB /* ContactsViewController.m in Sources */,
 				4A902DF81BB9746600ECFD86 /* CodecsViewController.m in Sources */,
 				4AA203B61BD4C92600DD9A4D /* ChatViewController.m in Sources */,
-				4AA203C11BD4CAF500DD9A4D /* ContactTableCellView.m in Sources */,
+				4AA203C11BD4CAF500DD9A4D /* ChatContactTableCellView.m in Sources */,
 				2B463F0B1B984E49008E8333 /* SettingsWindowController.m in Sources */,
 				4AB556451BDE2598003382B2 /* AboutWindowController.m in Sources */,
 				2BA68DD71B98617000145575 /* LoginViewController.m in Sources */,
@@ -1704,6 +1810,7 @@
 				5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */,
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AB2A2E11BF32C79006AC5C6 /* ProfileView.m in Sources */,
+				CEF4A2FE1C0C253E00B41CDC /* LinphoneContactService.m in Sources */,
 				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
 				4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */,
 				4AA203BA1BD4CAA200DD9A4D /* CallService.m in Sources */,
@@ -1713,6 +1820,7 @@
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */,
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
+				692EDEF41C05F978006073E2 /* NumpadView.m in Sources */,
 				4AB2A2EC1BF36E2B006AC5C6 /* ViewManager.m in Sources */,
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
@@ -1722,6 +1830,7 @@
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
+				CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */,
 				5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
 				4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */,

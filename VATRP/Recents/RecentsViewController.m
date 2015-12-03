@@ -97,7 +97,7 @@
         }
         logs = ms_list_next(logs);
     }
-    
+
     [self.tableViewCallLog reloadData];
 }
 

@@ -8,14 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+void Triger(int x)
+{
+    NSLog(@"SIGABRT");
+}
+
 int main(int argc, const char * argv[]) {
-//    @try {
-        return NSApplicationMain(argc, argv);
-//    }
-//    @catch (NSException *exception) {
-//        NSLog(@"@catch exception: %@", exception);
-//    }
-//    @finally {
-//        NSLog(@"@@finally exception");
-//    }
+    signal(SIGABRT, Triger);
+
+    return NSApplicationMain(argc, argv);
 }

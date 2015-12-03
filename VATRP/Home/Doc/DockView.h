@@ -24,7 +24,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) id<DockViewDelegate> delegate;
 
 - (void) selectItemWithDocViewItem:(DockViewItem)docViewItem;
-
+- (void)clearDockViewButtonsBackgroundColorsExceptDialPadButton:(BOOL)clear;
+- (void)clearDockViewSettingsBackgroundColor:(BOOL)clear;
+- (void)clearDockViewMessagesBackgroundColor:(BOOL)clear;
 @end
 
 @protocol DockViewDelegate <NSObject>

@@ -9,6 +9,7 @@
 #import "CallControllersView.h"
 #import "CallInfoWindowController.h"
 #import "ChatService.h"
+#import "ViewManager.h"
 #import "Utils.h"
 
 
@@ -95,9 +96,12 @@
     
     if (isSendingVideo) {
         [self onVideoOn];
+        [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     } else {
         [self onVideoOff];
+        [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     }
+    [self.videoProgressIndicator stopAnimation:self];
 }
 
 - (IBAction)onButtonMute:(id)sender {
@@ -127,6 +131,21 @@
 }
 
 - (IBAction)onButtonChat:(id)sender {
+    if (self.window.frame.size.width == 1328) {
+        [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+                      display:YES
+                      animate:YES];
+    } else {
+        if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+            [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+        } else {
+            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+        }
+    }
 }
 
 
@@ -297,9 +316,10 @@
         callAppData->videoRequested =
         TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
         LinphoneCallParams *call_params = linphone_call_params_copy(linphone_call_get_current_params(call));
-        linphone_call_params_enable_video(call_params, TRUE);
-        linphone_core_update_call(lc, call, call_params);
+        linphone_call_enable_camera(call, TRUE);
+        linphone_core_update_call(lc, call, NULL);
         linphone_call_params_destroy(call_params);
+        
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
@@ -313,9 +333,14 @@
         return;
     
     if (call) {
+        // ToDo VATRP-842: Setting a static image, but until the static image is working in linphone we are currently seeing a black image.
+        //    The choice is this or a no webcam image. For testing, using no webcam image.
+//        NSString *pathToImageString = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"png"];
+//        const char *pathToImage = [pathToImageString UTF8String];
         LinphoneCallParams *call_params = linphone_call_params_copy(linphone_call_get_current_params(call));
-        linphone_call_params_enable_video(call_params, FALSE);
-        linphone_core_update_call(lc, call, call_params);
+//        linphone_core_set_static_picture(lc, pathToImage);
+        linphone_call_enable_camera(call, FALSE);
+        linphone_core_update_call(lc, call, NULL);
         linphone_call_params_destroy(call_params);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];

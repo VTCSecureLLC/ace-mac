@@ -96,4 +96,18 @@
     }
 }
 
+- (NSString*)contactNameFromAddress:(LinphoneAddress*)address {
+    NSString *name = @"";
+    
+    LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], address);
+    
+    if (friend) {
+        const char *str = linphone_friend_get_name(friend);
+        name = [NSString stringWithUTF8String:str];
+        return name;
+    }
+    
+    return name;
+}
+
 @end

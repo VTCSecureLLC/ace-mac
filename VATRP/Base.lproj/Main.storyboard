@@ -787,14 +787,14 @@
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1VK-jT-7Ad" customClass="RecentsView">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
                                         <subviews>
-                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2P-Jw-G7F">
+                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="57" horizontalPageScroll="10" verticalLineScroll="57" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2P-Jw-G7F">
                                                 <rect key="frame" x="0.0" y="0.0" width="310" height="254"/>
                                                 <clipView key="contentView" ambiguous="YES" id="xe7-Rp-bfy">
                                                     <rect key="frame" x="1" y="1" width="308" height="252"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="55" viewBased="YES" id="1kJ-XL-p9i">
-                                                            <rect key="frame" x="0.0" y="0.0" width="308" height="295"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="308" height="252"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <animations/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -827,17 +827,8 @@
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
                                                                                 </textField>
-                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sbu-gw-l5T">
-                                                                                    <rect key="frame" x="62" y="11" width="133" height="16"/>
-                                                                                    <animations/>
-                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Call Duration" id="JS3-Kk-XuT">
-                                                                                        <font key="font" metaFont="system" size="10"/>
-                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                                    </textFieldCell>
-                                                                                </textField>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e2a-CI-U1m">
-                                                                                    <rect key="frame" x="168" y="32" width="130" height="16"/>
+                                                                                    <rect key="frame" x="165" y="32" width="139" height="16"/>
                                                                                     <animations/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Call Date" id="SfI-SH-KuG">
                                                                                         <font key="font" metaFont="cellTitle"/>
@@ -855,6 +846,24 @@
                                                                                     <animations/>
                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="f0r-wm-WKx"/>
                                                                                 </imageView>
+                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sbu-gw-l5T">
+                                                                                    <rect key="frame" x="228" y="11" width="76" height="16"/>
+                                                                                    <animations/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Call Duration" id="JS3-Kk-XuT">
+                                                                                        <font key="font" metaFont="system" size="10"/>
+                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BG1-Xc-Bjd">
+                                                                                    <rect key="frame" x="64" y="11" width="150" height="16"/>
+                                                                                    <animations/>
+                                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" title="Sip URI" drawsBackground="YES" id="WdF-LZ-7JN">
+                                                                                        <font key="font" metaFont="system" size="10"/>
+                                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
                                                                             </subviews>
                                                                             <animations/>
                                                                             <connections>
@@ -863,6 +872,7 @@
                                                                                 <outlet property="textFieldCallDate" destination="e2a-CI-U1m" id="ZBo-Uz-BLh"/>
                                                                                 <outlet property="textFieldCallDuration" destination="Sbu-gw-l5T" id="ftA-CD-VS3"/>
                                                                                 <outlet property="textFieldRemoteName" destination="k1l-hr-eWW" id="7yG-97-MG9"/>
+                                                                                <outlet property="textFieldSipURI" destination="BG1-Xc-Bjd" id="oyd-ov-eoB"/>
                                                                             </connections>
                                                                         </tableCellView>
                                                                     </prototypeCellViews>

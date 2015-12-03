@@ -88,11 +88,11 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonAnswer:(id)sender {
-    [[CallService sharedInstance] accept];
+    [[CallService sharedInstance] accept:self.call];
 }
 
 - (IBAction)onButtonDecline:(id)sender {
-    [[CallService sharedInstance] decline];
+    [[CallService sharedInstance] decline:self.call];
 }
 
 - (IBAction)onButtonOpenMessage:(id)sender {

@@ -57,8 +57,24 @@
     [[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 
-    linphone_core_set_log_level(ORTP_DEBUG);
+    linphone_core_set_log_level(ORTP_MESSAGE);
     linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
+}
+
+- (NSMenu *)applicationDockMenu:(NSApplication *)sender
+{
+    NSLog(@"applicationDockMenu");
+    
+    NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Main app menu"];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"My Quit" action:@selector(myQuit:) keyEquivalent:@""];
+    [menu addItem:item];
+    
+    return menu;
+}
+
+-(void)myQuit:(id)sender {
+    NSLog(@"My Quit called");
+    [[NSApplication sharedApplication] terminate:self];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

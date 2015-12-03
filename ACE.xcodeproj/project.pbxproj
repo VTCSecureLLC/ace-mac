@@ -112,6 +112,11 @@
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
 		5EEC29081C024CCA00BA43FB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29071C024CCA00BA43FB /* ContactsViewController.m */; };
 		5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29311C0373DD00BA43FB /* ContactsService.m */; };
+		69557C761C0EE6E9004A40ED /* SecondCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69557C751C0EE6E9004A40ED /* SecondCallView.m */; };
+		69557C781C0EE85A004A40ED /* call swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 69557C771C0EE85A004A40ED /* call swap.png */; };
+		697840811C087F28000ED450 /* SecondIncomingCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 697840801C087F28000ED450 /* SecondIncomingCallView.m */; };
+		697840851C089B55000ED450 /* call hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840841C089B55000ED450 /* call hold.png */; };
+		697840871C089CB9000ED450 /* call resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840861C089CB9000ED450 /* call resume.png */; };
 		692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 692EDEEB1C05AC7E006073E2 /* send_message.png */; };
 		692EDEF41C05F978006073E2 /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 692EDEF31C05F978006073E2 /* NumpadView.m */; };
 		69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A01BFB5C83005C62FA /* chat_active.png */; };
@@ -671,8 +676,15 @@
 		5EEC29071C024CCA00BA43FB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		5EEC29301C0373DD00BA43FB /* ContactsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsService.h; sourceTree = "<group>"; };
 		5EEC29311C0373DD00BA43FB /* ContactsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsService.m; sourceTree = "<group>"; };
+		69557C741C0EE6E9004A40ED /* SecondCallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondCallView.h; sourceTree = "<group>"; };
+		69557C751C0EE6E9004A40ED /* SecondCallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondCallView.m; sourceTree = "<group>"; };
+		69557C771C0EE85A004A40ED /* call swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call swap.png"; sourceTree = "<group>"; };
+		6978407F1C087F28000ED450 /* SecondIncomingCallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondIncomingCallView.h; sourceTree = "<group>"; };
+		697840801C087F28000ED450 /* SecondIncomingCallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondIncomingCallView.m; sourceTree = "<group>"; };
+		697840821C087F33000ED450 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
+		697840841C089B55000ED450 /* call hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call hold.png"; sourceTree = "<group>"; };
+		697840861C089CB9000ED450 /* call resume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call resume.png"; sourceTree = "<group>"; };
 		692EDEEB1C05AC7E006073E2 /* send_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_message.png; sourceTree = "<group>"; };
-		692EDEF31C05F978006073E2 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
 		69A025A01BFB5C83005C62FA /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
 		69A025A11BFB5C83005C62FA /* chat_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_disabled.png; sourceTree = "<group>"; };
 		69A025A21BFB5C83005C62FA /* chat_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_inactive.png; sourceTree = "<group>"; };
@@ -1310,7 +1322,11 @@
 				4AB2A2F91BF488EA006AC5C6 /* CallControllersView.h */,
 				4AB2A2FA1BF488EA006AC5C6 /* CallControllersView.m */,
 				69C726731BFC6DF6002198A7 /* NumpadView.h */,
-				692EDEF31C05F978006073E2 /* NumpadView.m */,
+				697840821C087F33000ED450 /* NumpadView.m */,
+				6978407F1C087F28000ED450 /* SecondIncomingCallView.h */,
+				697840801C087F28000ED450 /* SecondIncomingCallView.m */,
+				69557C741C0EE6E9004A40ED /* SecondCallView.h */,
+				69557C751C0EE6E9004A40ED /* SecondCallView.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -1447,6 +1463,9 @@
 		69A0259F1BFB5C83005C62FA /* inCall */ = {
 			isa = PBXGroup;
 			children = (
+				69557C771C0EE85A004A40ED /* call swap.png */,
+				697840861C089CB9000ED450 /* call resume.png */,
+				697840841C089B55000ED450 /* call hold.png */,
 				69A025A01BFB5C83005C62FA /* chat_active.png */,
 				69A025A11BFB5C83005C62FA /* chat_disabled.png */,
 				69A025A21BFB5C83005C62FA /* chat_inactive.png */,
@@ -1682,6 +1701,7 @@
 				CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */,
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
+				697840851C089B55000ED450 /* call hold.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
@@ -1702,10 +1722,12 @@
 				69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */,
 				69A025B41BFB5C83005C62FA /* mute_inactive.png in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
+				69557C781C0EE85A004A40ED /* call swap.png in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				CEC641171C0C9EE600BA927F /* provider_logo_caag.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
+				697840871C089CB9000ED450 /* call resume.png in Resources */,
 				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
 				4A5DD1EE1BD904B3003BE9A2 /* messageOutgoingBubbleTop.png in Resources */,
 			);
@@ -1756,6 +1778,7 @@
 				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
 				4A902DE91BB95A7000ECFD86 /* Utils.m in Sources */,
 				4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */,
+				697840811C087F28000ED450 /* SecondIncomingCallView.m in Sources */,
 				4AA203B71BD4C92600DD9A4D /* ChatWindowController.m in Sources */,
 				4AC389D11B8E87530063298F /* ViewController.m in Sources */,
 				4AB556691BE27085003382B2 /* HistoryTableCellView.m in Sources */,
@@ -1783,6 +1806,7 @@
 				2BA68DD71B98617000145575 /* LoginViewController.m in Sources */,
 				4A5DD1F11BD909FB003BE9A2 /* ChatItemTableCellView.m in Sources */,
 				4AB2A2DD1BF241CD006AC5C6 /* DialPadView.m in Sources */,
+				697840831C087F33000ED450 /* NumpadView.m in Sources */,
 				5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */,
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AB2A2E11BF32C79006AC5C6 /* ProfileView.m in Sources */,
@@ -1792,6 +1816,7 @@
 				4AA203BA1BD4CAA200DD9A4D /* CallService.m in Sources */,
 				4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */,
 				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
+				69557C761C0EE6E9004A40ED /* SecondCallView.m in Sources */,
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */,
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,

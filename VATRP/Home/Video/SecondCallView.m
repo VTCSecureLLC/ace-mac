@@ -2,25 +2,25 @@
 //  SecondCallView.m
 //  ACE
 //
-//  Created by Norayr Harutyunyan on 11/27/15.
+//  Created by Norayr Harutyunyan on 12/2/15.
 //  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
 #import "SecondCallView.h"
-#import <QuartzCore/QuartzCore.h>
 #import "Utils.h"
 
 @interface SecondCallView () {
-    NSRect selfOriginFrame;
+    NSTimer *timerCallDuration;
 }
 
-@property (weak) IBOutlet BackgroundedView *viewAlphed;
+@property (weak) IBOutlet BackgroundedView *viewAlphaed;
+@property (weak) IBOutlet NSButton *buttonHangup;
 @property (weak) IBOutlet NSTextField *labelDisplayName;
-
-@property (weak) IBOutlet NSButton *buttonAnswer;
-@property (weak) IBOutlet NSButton *buttonDecline;
+@property (weak) IBOutlet NSTextField *labelCallDuration;
+@property (weak) IBOutlet NSTextField *labelCallState;
 
 @end
+
 
 @implementation SecondCallView
 
@@ -29,41 +29,75 @@
 - (void) awakeFromNib {
     [super awakeFromNib];
     
-//    self.wantsLayer = YES;
-//    [self setBackgroundColor:[NSColor redColor]];
-    
-    self.viewAlphed.wantsLayer = YES;
-    [self.viewAlphed setBackgroundColor:[NSColor grayColor]];
-    [self.viewAlphed setAlphaValue:0.3];
+    self.wantsLayer = YES;
     [self setBackgroundColor:[NSColor clearColor]];
     
-    self.buttonAnswer.wantsLayer = YES;
-    self.buttonDecline.wantsLayer = YES;
+    self.viewAlphaed.wantsLayer = YES;
+    [self.viewAlphaed setBackgroundColor:[NSColor colorWithRed:82.0/255.0 green:105.0/255.0 blue:117.0/255.0 alpha:1.0]];
+    [self.viewAlphaed setAlphaValue:0.7];
+    [self setBackgroundColor:[NSColor clearColor]];
     
-    [self.buttonAnswer.layer setBackgroundColor:[NSColor greenColor].CGColor];
-    [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonAnswer];
-    [self.buttonDecline.layer setBackgroundColor:[NSColor redColor].CGColor];
-    [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
+    self.buttonHangup.wantsLayer = YES;
+    
+    [self.buttonHangup.layer setBackgroundColor:[NSColor colorWithRed:190.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0].CGColor];
+    [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonHangup];
     
     self.labelDisplayName.wantsLayer = YES;
-    selfOriginFrame = self.frame;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(callUpdateEvent:)
+                                                 name:kLinphoneCallUpdate
+                                               object:nil];
+}
+
+- (IBAction)onButtonSwap:(id)sender {
+    [[CallService sharedInstance] swapCallsToCall:self.call];
+}
+
+- (IBAction)onButtonHangup:(id)sender {
+    [[CallService sharedInstance] decline:self.call];
 }
 
 #pragma mark - Property Functions
 
 - (void)setCall:(LinphoneCall*)acall {
     call = acall;
-    [self update];
+    
+    if (call) {
+        [self update];
+        [self setHidden:NO];
+        
+        [self startCallDurationTimer];
+    }
 }
 
-- (IBAction)onButtonAnswer:(id)sender {
-    [[CallService sharedInstance] accept:self.call];
-    [self setHidden:YES];
+#pragma mark - Event Functions
+
+- (void)callUpdateEvent:(NSNotification*)notif {
+    LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
+    LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
+    [self callUpdate:acall state:astate];
 }
 
-- (IBAction)onButtonDecline:(id)sender {
-    [[CallService sharedInstance] decline:self.call];
-    [self setHidden:YES];
+#pragma mark -
+
+- (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
+    if (!self.call || self.call != acall) {
+        return;
+    }
+
+    switch (astate) {
+        case LinphoneCallError:
+        case LinphoneCallEnd:
+        {
+            self.call = nil;
+            [self setHidden:YES];
+            [self stopCallDurationTimer];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)update {
@@ -88,34 +122,48 @@
     self.labelDisplayName.stringValue = address;
 }
 
-- (void) shakeWindow {
-    self.frame = selfOriginFrame;
-
-    static int numberOfShakes = 3;
-    static float durationOfShake = 0.5f;
-    static float vigourOfShake = 0.05f;
-    
-    CGRect frame = [self frame];
-    CAKeyframeAnimation *shakeAnimation = [CAKeyframeAnimation animation];
-    
-    CGMutablePathRef shakePath = CGPathCreateMutable();
-    CGPathMoveToPoint(shakePath, NULL, NSMinX(frame), NSMinY(frame));
-    
-    for (NSInteger index = 0; index < numberOfShakes; index++){
-        CGPathAddLineToPoint(shakePath, NULL, NSMinX(frame) - frame.size.width * vigourOfShake, NSMinY(frame));
-        CGPathAddLineToPoint(shakePath, NULL, NSMinX(frame) + frame.size.width * vigourOfShake, NSMinY(frame));
+- (void) inCallTick:(NSTimer*)timer {
+    if (self.call) {
+        int call_Duration = linphone_call_get_duration(self.call);
+        self.labelCallDuration.stringValue = [Utils getTimeStringFromSeconds:call_Duration];
+        
+        LinphoneCallState call_state = linphone_call_get_state(self.call);
+        
+        switch (call_state) {
+            case LinphoneCallConnected:
+            case LinphoneCallStreamsRunning:
+            {
+//                self.labelCallState.stringValue = [NSString stringWithFormat:@"Connected %@",string_time];
+            }
+                break;
+            case LinphoneCallPaused:
+            case LinphoneCallPausedByRemote:
+            {
+//                self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@",string_time];
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
-    
-    CGPathCloseSubpath(shakePath);
-    shakeAnimation.path = shakePath;
-    shakeAnimation.duration = durationOfShake;
-    
-    [self setAnimations:[NSDictionary dictionaryWithObject: shakeAnimation forKey:@"frameOrigin"]];
-    [[self animator] setFrameOrigin:NSMakePoint(frame.origin.x + 1, frame.origin.y)];
 }
 
-- (void)mouseDown:(NSEvent *)theEvent {
-    [self shakeWindow];
+- (void) startCallDurationTimer {
+    [self stopCallDurationTimer];
+    
+    timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
+                                                         target:self
+                                                       selector:@selector(inCallTick:)
+                                                       userInfo:nil
+                                                        repeats:YES];
+}
+
+- (void) stopCallDurationTimer {
+    if (timerCallDuration && [timerCallDuration isValid]) {
+        [timerCallDuration invalidate];
+        timerCallDuration = nil;
+    }
 }
 
 @end

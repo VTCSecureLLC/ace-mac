@@ -17,6 +17,8 @@
     LinphoneCall *currentCall;
 }
 
++ (int) callsCount;
+
 @end
 
 
@@ -77,6 +79,16 @@
     linphone_core_resume_call([LinphoneManager getLc], aCall);
 }
 
+- (void) swapCallsToCall:(LinphoneCall*)aCall {
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:aCall];
+
+    linphone_core_pause_call([LinphoneManager getLc], currentCall);
+    linphone_core_resume_call([LinphoneManager getLc], aCall);
+
+    currentCall = aCall;
+}
+
 - (LinphoneCall*) getCurrentCall {
     return currentCall;
 }
@@ -91,8 +103,17 @@
         case LinphoneCallIncomingReceived:
         case LinphoneCallIncomingEarlyMedia:
         {
+            int call_count = [CallService callsCount];
+            
+            if (call_count == 3) {
+                [self decline:aCall]; //    linphone_core_set_max_calls(lc, 2);
+
+                
+                break;
+            }
+            
             if (currentCall && aCall != currentCall) {
-                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showSecondCallView:aCall];
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showSecondIncomingCallView:aCall];
             } else {
                 [self displayIncomingCall:aCall];
             }
@@ -114,6 +135,12 @@
         }
             break;
         case LinphoneCallConnected: {
+            int call_count = [CallService callsCount];
+            
+            if (currentCall && aCall != currentCall && call_count > 1) {
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
+            }
+            
             currentCall = aCall;
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:currentCall];
         }
@@ -144,8 +171,16 @@
             break;
         case LinphoneCallError:
         case LinphoneCallEnd: {
-            if (currentCall && aCall != currentCall) {
+            int call_count = [CallService callsCount];
+
+            if (call_count == 1) {
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondCallView];
+                const MSList *call_list = linphone_core_get_calls(lc);
+                currentCall = (LinphoneCall*)call_list->data;
+            }
+            
+            if (currentCall && aCall != currentCall) {
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondIncomingCallView];
             } else {
                 [[ChatService sharedInstance] closeChatWindow];
                 [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
@@ -155,7 +190,7 @@
             break;
         case LinphoneCallReleased: {
             if (currentCall && aCall != currentCall) {
-                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondCallView];
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondIncomingCallView];
             }
             
             [[ChatService sharedInstance] closeChatWindow];
@@ -228,6 +263,13 @@
                  display:YES
                  animate:YES];
     }
+}
+
++ (int) callsCount {
+    const MSList *call_list = linphone_core_get_calls([LinphoneManager getLc]);
+    int call_count = ms_list_size(call_list);
+    
+    return call_count;
 }
 
 @end

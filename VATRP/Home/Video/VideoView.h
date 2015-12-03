@@ -15,7 +15,9 @@
 
 - (void)setIncomingCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;
-- (void)showSecondCallView:(LinphoneCall*)aCall;
+- (void)showSecondIncomingCallView:(LinphoneCall*)aCall;
+- (void)hideSecondIncomingCallView;
+- (void)setCallToSecondCallView:(LinphoneCall*)aCall;
 - (void)hideSecondCallView;
 
 @property (weak) IBOutlet NSView *remoteVideoView;

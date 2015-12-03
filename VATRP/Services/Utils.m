@@ -60,4 +60,12 @@
     [control.layer setCornerRadius:cornerRadius];
 }
 
++ (NSString *)getTimeStringFromSeconds:(int)seconds {
+    NSDateComponentsFormatter *dcFormatter = [[NSDateComponentsFormatter alloc] init];
+    dcFormatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;
+    dcFormatter.allowedUnits = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    dcFormatter.unitsStyle = NSDateComponentsFormatterUnitsStylePositional;
+    return [dcFormatter stringFromTimeInterval:seconds];
+}
+
 @end

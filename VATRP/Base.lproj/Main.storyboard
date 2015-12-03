@@ -833,7 +833,8 @@
                                             <outlet property="labelCallState" destination="qkg-1w-egJ" id="6dy-cf-ods"/>
                                             <outlet property="labelDisplayName" destination="ty4-p7-oo2" id="X4o-Tv-Fxh"/>
                                             <outlet property="localVideo" destination="VdL-8A-skc" id="LyZ-L7-h8j"/>
-                                            <outlet property="secondCallView" destination="8qU-Av-wLE" id="qHq-kD-fui"/>
+                                            <outlet property="secondCallView" destination="ciG-eB-8UG" id="DfT-I8-SBp"/>
+                                            <outlet property="secondIncomingCallView" destination="8qU-Av-wLE" id="GIp-Qe-pym"/>
                                         </connections>
                                     </customView>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ty4-p7-oo2">
@@ -978,15 +979,77 @@
                                         <rect key="frame" x="524" y="580" width="176" height="99"/>
                                         <animations/>
                                     </customView>
-                                    <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-Av-wLE" customClass="SecondCallView">
-                                        <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                                    <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ciG-eB-8UG" customClass="SecondCallView">
+                                        <rect key="frame" x="6" y="510" width="186" height="184"/>
                                         <subviews>
-                                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kYB-AW-VHV" customClass="BackgroundedView">
-                                                <rect key="frame" x="175" y="351" width="370" height="120"/>
+                                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sah-nT-h6i" customClass="BackgroundedView">
+                                                <rect key="frame" x="0.0" y="0.0" width="186" height="184"/>
                                                 <animations/>
                                             </customView>
+                                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q7a-4U-oK0">
+                                                <rect key="frame" x="69" y="70" width="55" height="67"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="call swap" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="d0t-Np-H1c">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonSwap:" target="ciG-eB-8UG" id="kIN-hx-SmJ"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZBE-Oe-Fbl">
+                                                <rect key="frame" x="0.0" y="27" width="186" height="30"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" title="Hang up" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="CHD-OP-KPN">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="20" name="HelveticaNeue"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonHangup:" target="ciG-eB-8UG" id="p2t-7l-6Dn"/>
+                                                </connections>
+                                            </button>
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dra-5b-TPE">
+                                                <rect key="frame" x="0.0" y="150" width="186" height="30"/>
+                                                <animations/>
+                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="12341234" id="alV-Sh-0M8">
+                                                    <font key="font" metaFont="system" size="25"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="McK-74-5vN">
+                                                <rect key="frame" x="4" y="4" width="89" height="20"/>
+                                                <animations/>
+                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="On Hold" id="cOb-nD-gyf">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ap-QH-6nK">
+                                                <rect key="frame" x="94" y="4" width="89" height="20"/>
+                                                <animations/>
+                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="03:54" id="xSK-Xj-RKK">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="buttonHangup" destination="ZBE-Oe-Fbl" id="lz3-XY-0TB"/>
+                                            <outlet property="labelCallDuration" destination="6ap-QH-6nK" id="iJI-fW-hLz"/>
+                                            <outlet property="labelCallState" destination="McK-74-5vN" id="BaH-y3-cbm"/>
+                                            <outlet property="labelDisplayName" destination="Dra-5b-TPE" id="c9X-OH-AJx"/>
+                                            <outlet property="viewAlphaed" destination="Sah-nT-h6i" id="fuk-Rl-hiV"/>
+                                        </connections>
+                                    </customView>
+                                    <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-Av-wLE" customClass="SecondIncomingCallView">
+                                        <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                                        <subviews>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Me-Zp-xDb">
-                                                <rect key="frame" x="186" y="430" width="350" height="40"/>
+                                                <rect key="frame" x="184" y="488" width="350" height="40"/>
                                                 <animations/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="u2S-m0-V16">
                                                     <font key="font" metaFont="system" size="32"/>
@@ -995,18 +1058,29 @@
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gLH-Ne-Ypf">
-                                                <rect key="frame" x="186" y="362" width="160" height="50"/>
+                                                <rect key="frame" x="116" y="394" width="230" height="60"/>
                                                 <animations/>
-                                                <buttonCell key="cell" type="square" title="Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="9ph-Mg-Avb">
+                                                <buttonCell key="cell" type="square" title="End &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="9ph-Mg-Avb">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="32" name="HelveticaNeue"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="onButtonAnswer:" target="8qU-Av-wLE" id="aKJ-jX-wTY"/>
+                                                    <action selector="onButtonEndAnswer:" target="8qU-Av-wLE" id="OAb-3h-S2h"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C0l-xn-ddU">
+                                                <rect key="frame" x="374" y="394" width="230" height="60"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="square" title="Hold &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="OUa-Bx-guz">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="32" name="HelveticaNeue"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonHoldAnswer:" target="8qU-Av-wLE" id="P3v-mN-gRP"/>
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oR4-GN-SE0">
-                                                <rect key="frame" x="374" y="362" width="160" height="50"/>
+                                                <rect key="frame" x="245" y="317" width="230" height="60"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="xna-Z4-Ode">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1016,11 +1090,16 @@
                                                     <action selector="onButtonDecline:" target="8qU-Av-wLE" id="lzl-yb-nNL"/>
                                                 </connections>
                                             </button>
+                                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kYB-AW-VHV" customClass="BackgroundedView">
+                                                <rect key="frame" x="90" y="302" width="538" height="244"/>
+                                                <animations/>
+                                            </customView>
                                         </subviews>
                                         <animations/>
                                         <connections>
-                                            <outlet property="buttonAnswer" destination="gLH-Ne-Ypf" id="ss1-Sj-khr"/>
                                             <outlet property="buttonDecline" destination="oR4-GN-SE0" id="6GZ-L7-uDx"/>
+                                            <outlet property="buttonEndAnswer" destination="gLH-Ne-Ypf" id="JJZ-ba-e3O"/>
+                                            <outlet property="buttonHoldAnswer" destination="C0l-xn-ddU" id="GyX-CG-utS"/>
                                             <outlet property="labelDisplayName" destination="8Me-Zp-xDb" id="CHX-qF-Br0"/>
                                             <outlet property="viewAlphed" destination="kYB-AW-VHV" id="xKp-vN-cCw"/>
                                         </connections>
@@ -4043,6 +4122,7 @@ DQ
         <image name="accounts_icon" width="250" height="250"/>
         <image name="app_icon" width="341.33334350585938" height="341.33334350585938"/>
         <image name="call hold" width="30" height="40"/>
+        <image name="call swap" width="55" height="67"/>
         <image name="cameraview" width="26" height="26"/>
         <image name="cameraview2" width="78" height="14"/>
         <image name="chat_active" width="42" height="39"/>

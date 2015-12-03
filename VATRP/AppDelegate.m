@@ -57,7 +57,7 @@
     [[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 
-    linphone_core_set_log_level(ORTP_DEBUG);
+    linphone_core_set_log_level(ORTP_MESSAGE);
     linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
 }
 

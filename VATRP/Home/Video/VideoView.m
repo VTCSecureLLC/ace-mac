@@ -13,11 +13,13 @@
 #import "ChatWindowController.h"
 #import "CallControllersView.h"
 #import "NumpadView.h"
+#import "SecondIncomingCallView.h"
 #import "SecondCallView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CallService.h"
 #import "ChatService.h"
 #import "AppDelegate.h"
+#import "Utils.h"
 
 
 @interface VideoView () <CallControllersViewDelegate> {
@@ -30,11 +32,11 @@
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
-@property (weak) IBOutlet NSTextField *labelCallDuration;
 @property (weak) IBOutlet NSTextField *labelCallState;
 
 @property (weak) IBOutlet CallControllersView *callControllersView;
 @property (weak) IBOutlet NumpadView *numpadView;
+@property (weak) IBOutlet SecondIncomingCallView *secondIncomingCallView;
 @property (weak) IBOutlet SecondCallView *secondCallView;
 
 @property (weak) IBOutlet NSTextField *ringCountLabel;
@@ -43,11 +45,6 @@
 @property (weak) IBOutlet NSView *localVideo;
 
 
-- (IBAction)onButtonAnswer:(id)sender;
-- (IBAction)onButtonDecline:(id)sender;
-- (IBAction)onButtonCallInfo:(id)sender;
-- (IBAction)onButtonKeypad:(id)sender;
-- (IBAction)onButtonOpenMessage:(id)sender;
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -74,7 +71,6 @@
                                                  name:kLinphoneCallUpdate
                                                object:nil];
     
-    self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
 //    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
@@ -152,6 +148,7 @@
         }
             break;
         case LinphoneCallOutgoingRinging: {
+
             self.labelCallState.stringValue = @"Ringing 00:00";
             
             [self startRingCountTimer];
@@ -159,7 +156,7 @@
             break;
         case LinphoneCallPaused: {
             int call_Duration = linphone_call_get_duration(acall);
-            NSString *string_time = [self getTimeStringFromSeconds:call_Duration];
+            NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
             self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@",string_time];
         }
             break;
@@ -189,6 +186,7 @@
         }
         case LinphoneCallError:
         {
+            self.call = nil;
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             [self displayCallError:call message:@"Call Error"];
@@ -198,6 +196,7 @@
         }
         case LinphoneCallEnd:
         {
+            self.call = nil;
             self.numpadView.hidden = YES;
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
@@ -289,7 +288,7 @@
     
     self.labelDisplayName.stringValue = address;
     //update caller address in window title
-    [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, [self getTimeStringFromSeconds:0]]];
+    [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, [Utils getTimeStringFromSeconds:0]]];
 }
 
 #pragma mark - CallControllersView Delegate
@@ -303,7 +302,11 @@
 
 - (void)setCall:(LinphoneCall*)acall {
     call = acall;
-    [self.callControllersView setCall:call];
+    
+    if (call) {
+        [self update];
+        [self.callControllersView setCall:call];
+    }
 }
 
 - (void)setIncomingCall:(LinphoneCall*)acall {
@@ -321,35 +324,42 @@
     [self.callControllersView setOutgoingCall:acall];
 }
 
-- (void)showSecondCallView:(LinphoneCall*)aCall {
+- (void)showSecondIncomingCallView:(LinphoneCall *)aCall {
+    [self.secondIncomingCallView setCall:aCall];
+    [self.secondIncomingCallView setHidden:NO];
+}
+
+- (void)hideSecondIncomingCallView {
+    [self.secondIncomingCallView setHidden:YES];
+}
+
+- (void)setCallToSecondCallView:(LinphoneCall*)aCall {
     [self.secondCallView setCall:aCall];
-    [self.secondCallView setHidden:NO];
 }
 
 - (void)hideSecondCallView {
+    [self.secondCallView setCall:nil];
     [self.secondCallView setHidden:YES];
 }
 
 - (void) inCallTick:(NSTimer*)timer {
-    LinphoneCall *call_ = linphone_core_get_current_call([LinphoneManager getLc]);
-    
-    if (call_) {
-        int call_Duration = linphone_call_get_duration(call_);
-        NSString *string_time = [self getTimeStringFromSeconds:call_Duration];
+    if (call) {
+        int call_Duration = linphone_call_get_duration(call);
+        NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
 
-        LinphoneCallState call_state = linphone_call_get_state(call_);
+        LinphoneCallState call_state = linphone_call_get_state(call);
         
         switch (call_state) {
             case LinphoneCallConnected:
             case LinphoneCallStreamsRunning:
             {
-                self.labelCallState.stringValue = [NSString stringWithFormat:@"Connected %@",string_time];
+                self.labelCallState.stringValue = [NSString stringWithFormat:@"Connected %@", string_time];
             }
                 break;
             case LinphoneCallPaused:
             case LinphoneCallPausedByRemote:
             {
-                self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@",string_time];
+                self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@", string_time];
             }
                 break;
                 
@@ -359,15 +369,6 @@
         
         [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, string_time]];
     }
-}
-
--(NSString *)getTimeStringFromSeconds:(int)seconds
-{
-    NSDateComponentsFormatter *dcFormatter = [[NSDateComponentsFormatter alloc] init];
-    dcFormatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;
-    dcFormatter.allowedUnits = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    dcFormatter.unitsStyle = NSDateComponentsFormatterUnitsStylePositional;
-    return [dcFormatter stringFromTimeInterval:seconds];
 }
 
 - (void)startRingCountTimer {

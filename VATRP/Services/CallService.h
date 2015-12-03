@@ -19,6 +19,7 @@
 - (void) accept:(LinphoneCall*)aCall;
 - (void) pause:(LinphoneCall*)aCall;
 - (void) resume:(LinphoneCall*)aCall;
+- (void) swapCallsToCall:(LinphoneCall*)aCall;
 - (LinphoneCall*) getCurrentCall;
 
 @end

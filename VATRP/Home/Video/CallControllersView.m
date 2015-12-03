@@ -135,7 +135,7 @@
 }
 
 - (IBAction)onButtonDecline:(id)sender {
-    LinphoneCall *activeCall = linphone_core_get_current_call([LinphoneManager getLc]);
+    LinphoneCall *activeCall = [[CallService sharedInstance] getCurrentCall];
     [[CallService sharedInstance] decline:activeCall];
 }
 
@@ -166,6 +166,11 @@
 #pragma mark - Property Functions
 - (void)setCall:(LinphoneCall*)acall {
     call = acall;
+    
+    if (call) {
+        LinphoneCallState call_state = linphone_call_get_state(call);
+        [self callUpdate:call state:call_state];
+    }
 }
 
 - (void)setIncomingCall:(LinphoneCall*)acall {
@@ -207,7 +212,7 @@
 #pragma mark -
 
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
-    if(call == acall && (astate == LinphoneCallEnd || astate == LinphoneCallError)) {
+    if (!call || call != acall) {
         return;
     }
     

@@ -94,18 +94,13 @@
         const char* character = [message UTF8String];
     
         for (int i = 0; i < strlen(character); i++) {
-            int result = linphone_chat_message_put_char(rtt_message, character[i]);
-            
-//            if (!result) {
-//                linphone_chat_room_send_chat_message(chat_room, rtt_message);
-//                
-//                return YES;
-//            }
+            if (linphone_chat_message_put_char(rtt_message, character[i]))
+                return NO;
         }
         
     }
     
-    return NO;
+    return YES;
 }
 
 - (BOOL) sendEnter {
@@ -137,9 +132,11 @@
     
     if (room) {
         LinphoneChatMessage* msg = linphone_chat_room_create_message(room, "");
-        linphone_chat_message_put_char(msg, char_simbol);
         
-        return YES;
+        if (!linphone_chat_message_put_char(msg, char_simbol))
+            return YES;
+        
+        return NO;
     }
     
     return NO;

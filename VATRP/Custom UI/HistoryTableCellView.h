@@ -18,4 +18,5 @@
 @property (weak) IBOutlet NSTextField *textFieldCallDate;
 @property (weak) IBOutlet NSTextField *textFieldCallDuration;
 @property (weak) IBOutlet NSImageView *imageContactView;
+@property (weak) IBOutlet NSTextField *textFieldSipURI;
 @end

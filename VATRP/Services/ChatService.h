@@ -15,7 +15,7 @@
 @interface ChatService : NSObject
 
 + (ChatService *)sharedInstance;
-- (void) openChatWindowWithUser:(NSString*)user;
+- (BOOL) openChatWindowWithUser:(NSString*)user;
 - (void) closeChatWindow;
 - (BOOL) sendMessagt:(NSString*)message;
 - (BOOL) sendEnter;

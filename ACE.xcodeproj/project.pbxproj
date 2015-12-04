@@ -363,6 +363,10 @@
 		CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */; };
 		CE0D5D581C0D898D00214C47 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D571C0D898D00214C47 /* male.png */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
+		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
+		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
+		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
+		CEA6DE751C1088AA0013CB76 /* plus icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA6DE741C1088AA0013CB76 /* plus icon.png */; };
 		CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC641061C0C86F500BA927F /* ProviderTableCellView.m */; };
 		CEC641171C0C9EE600BA927F /* provider_logo_caag.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641111C0C9EE600BA927F /* provider_logo_caag.png */; };
 		CEC641181C0C9EE600BA927F /* provider_logo_convorelay.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */; };
@@ -370,9 +374,6 @@
 		CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */; };
 		CEC6411B1C0C9EE600BA927F /* provider_logo_sorenson.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */; };
 		CEC6411C1C0C9EE600BA927F /* provider_logo_zvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */; };
-		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
-		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
-		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
 		CEF3B8111C0897BB00F35757 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8101C0897BB00F35757 /* male.png */; };
 		CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8151C08A40D00F35757 /* edit_32x32.png */; };
 		CEF3B8181C08A40D00F35757 /* trash_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3B8161C08A40D00F35757 /* trash_32x32.png */; };
@@ -768,6 +769,13 @@
 		CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_outgoing.png; sourceTree = "<group>"; };
 		CE0D5D571C0D898D00214C47 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
+		CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
+		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
+		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
+		CE48DF931C04B5110046E727 /* AddContactDialogBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactDialogBox.m; sourceTree = "<group>"; };
+		CE7005FD1C048F0000E667F8 /* ContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsView.h; sourceTree = "<group>"; };
+		CE7005FE1C048F0000E667F8 /* ContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsView.m; sourceTree = "<group>"; };
+		CEA6DE741C1088AA0013CB76 /* plus icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus icon.png"; sourceTree = "<group>"; };
 		CEC641051C0C86F500BA927F /* ProviderTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProviderTableCellView.h; sourceTree = "<group>"; };
 		CEC641061C0C86F500BA927F /* ProviderTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProviderTableCellView.m; sourceTree = "<group>"; };
 		CEC641111C0C9EE600BA927F /* provider_logo_caag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_caag.png; sourceTree = "<group>"; };
@@ -776,12 +784,6 @@
 		CEC641141C0C9EE600BA927F /* provider_logo_purplevrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_purplevrs.png; sourceTree = "<group>"; };
 		CEC641151C0C9EE600BA927F /* provider_logo_sorenson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_sorenson.png; sourceTree = "<group>"; };
 		CEC641161C0C9EE600BA927F /* provider_logo_zvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = provider_logo_zvrs.png; sourceTree = "<group>"; };
-		CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
-		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
-		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
-		CE48DF931C04B5110046E727 /* AddContactDialogBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactDialogBox.m; sourceTree = "<group>"; };
-		CE7005FD1C048F0000E667F8 /* ContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsView.h; sourceTree = "<group>"; };
-		CE7005FE1C048F0000E667F8 /* ContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsView.m; sourceTree = "<group>"; };
 		CEF3B8101C0897BB00F35757 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
 		CEF3B8151C08A40D00F35757 /* edit_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_32x32.png; sourceTree = "<group>"; };
 		CEF3B8161C08A40D00F35757 /* trash_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_32x32.png; sourceTree = "<group>"; };
@@ -1228,6 +1230,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CEA6DE741C1088AA0013CB76 /* plus icon.png */,
 				CE0D5D571C0D898D00214C47 /* male.png */,
 				CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */,
 				CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */,
@@ -1642,6 +1645,7 @@
 				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
 				4A5DD1EB1BD904B3003BE9A2 /* messageIncomingBubbleTop.png in Resources */,
+				CEA6DE751C1088AA0013CB76 /* plus icon.png in Resources */,
 				69A025BA1BFB5C83005C62FA /* speaker_inactive.png in Resources */,
 				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
 				4AC975F81BDA23E900AD35C8 /* chat_message_not_delivered.png in Resources */,

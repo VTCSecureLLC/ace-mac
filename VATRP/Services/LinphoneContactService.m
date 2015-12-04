@@ -51,6 +51,20 @@
     return newFriend;
 }
 
+- (BOOL)addContactFromByAddress:(LinphoneAddress*)address {
+    BOOL contactExistsInCore = NO;
+    LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], address);
+    if (friend) {
+        return contactExistsInCore;
+    } else {
+        
+        linphone_core_add_friend([LinphoneManager getLc], friend);
+        contactExistsInCore = YES;
+    }
+    
+    return contactExistsInCore;
+}
+
 - (NSMutableArray*)contactList {
     NSMutableArray *contacts = [NSMutableArray new];
     const MSList* proxies = linphone_core_get_friend_list([LinphoneManager getLc]);

@@ -27,6 +27,7 @@
 @property (weak) IBOutlet NSButton *buttonAnswer;
 @property (weak) IBOutlet NSButton *buttonDecline;
 
+@property (weak) IBOutlet NSButton *buttonHold;
 @property (weak) IBOutlet NSButton *buttonVideo;
 @property (weak) IBOutlet NSButton *buttonMute;
 @property (weak) IBOutlet NSButton *buttonSpeaker;
@@ -45,6 +46,7 @@
     [super awakeFromNib];
 
     isSendingVideo = YES;
+    self.buttonHold.wantsLayer = YES;
     self.buttonVideo.wantsLayer = YES;
     self.buttonMute.wantsLayer = YES;
     self.buttonSpeaker.wantsLayer = YES;
@@ -53,6 +55,7 @@
     self.buttonAnswer.wantsLayer = YES;
     self.buttonDecline.wantsLayer = YES;
 
+    [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
@@ -70,6 +73,20 @@
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];    
+}
+
+- (IBAction)onButtonHold:(id)sender {
+    if (call) {
+        LinphoneCallState call_state = linphone_call_get_state(call);
+     
+        if (call_state == LinphoneCallPaused) {
+            linphone_core_resume_call([LinphoneManager getLc], call);
+        } else {
+            linphone_core_pause_call([LinphoneManager getLc], call);
+        }
+        
+        [self.buttonHold setEnabled:NO];
+    }
 }
 
 - (IBAction)onButtonVideo:(id)sender {
@@ -133,11 +150,12 @@
 
 
 - (IBAction)onButtonAnswer:(id)sender {
-    [[CallService sharedInstance] accept];
+    [[CallService sharedInstance] accept:call];
 }
 
 - (IBAction)onButtonDecline:(id)sender {
-    [[CallService sharedInstance] decline];
+    LinphoneCall *activeCall = [[CallService sharedInstance] getCurrentCall];
+    [[CallService sharedInstance] decline:activeCall];
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
@@ -165,8 +183,16 @@
 //}
 
 #pragma mark - Property Functions
-
 - (void)setCall:(LinphoneCall*)acall {
+    call = acall;
+    
+    if (call) {
+        LinphoneCallState call_state = linphone_call_get_state(call);
+        [self callUpdate:call state:call_state];
+    }
+}
+
+- (void)setIncomingCall:(LinphoneCall*)acall {
     call = acall;
     
     [self callUpdate:call state:linphone_call_get_state(call)];
@@ -205,7 +231,7 @@
 #pragma mark -
 
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
-    if(call == acall && (astate == LinphoneCallEnd || astate == LinphoneCallError)) {
+    if (!call || call != acall) {
         return;
     }
     
@@ -243,8 +269,23 @@
             self.labelCallState.stringValue = @"Ringing...";
         }
             break;
-        case LinphoneCallPausedByRemote:
+        case LinphoneCallPaused: {
+            [self.buttonHold setImage:[NSImage imageNamed:@"call resume"]];
+            [self.buttonHold setEnabled:YES];
+            [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+        }
+            break;
+        case LinphoneCallPausedByRemote: {
+            [self.buttonHold setImage:[NSImage imageNamed:@"call resume"]];
+            [self.buttonHold setEnabled:NO];
+            [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+        }
+            break;
         case LinphoneCallStreamsRunning: {
+
+            [self.buttonHold setImage:[NSImage imageNamed:@"call hold"]];
+            [self.buttonHold setEnabled:YES];
+            [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
             [self update];
 
             break;
@@ -274,10 +315,7 @@
         LinphoneCallAppData *callAppData = (__bridge LinphoneCallAppData *)linphone_call_get_user_pointer(call);
         callAppData->videoRequested =
         TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
-        LinphoneCallParams *call_params = linphone_call_params_copy(linphone_call_get_current_params(call));
         linphone_call_enable_camera(call, TRUE);
-        linphone_core_update_call(lc, call, NULL);
-        linphone_call_params_destroy(call_params);
         
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
@@ -296,11 +334,8 @@
         //    The choice is this or a no webcam image. For testing, using no webcam image.
 //        NSString *pathToImageString = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"png"];
 //        const char *pathToImage = [pathToImageString UTF8String];
-        LinphoneCallParams *call_params = linphone_call_params_copy(linphone_call_get_current_params(call));
 //        linphone_core_set_static_picture(lc, pathToImage);
         linphone_call_enable_camera(call, FALSE);
-        linphone_core_update_call(lc, call, NULL);
-        linphone_call_params_destroy(call_params);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
@@ -334,12 +369,11 @@
         [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     }
 
-    
-
     return video_enabled;
 }
 
 - (void) enableDisableButtons:(BOOL)enable {
+    [self.buttonHold setEnabled:enable];
     [self.buttonVideo setEnabled:enable];
     [self.buttonMute setEnabled:enable];
     [self.buttonSpeaker setEnabled:enable];

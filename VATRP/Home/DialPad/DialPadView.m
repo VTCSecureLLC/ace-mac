@@ -189,6 +189,7 @@
 
 - (void) longPressPlus {
     self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"+"];
+
     plusWorked = YES;
 }
 

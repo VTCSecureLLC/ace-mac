@@ -1,6 +1,6 @@
 //
 //  Utils.m
-//  HappyTaxi
+//  ACE
 //
 //  Created by Ruben Semerjyan on 4/26/15.
 //  Copyright (c) 2015 VTCSecure. All rights reserved.
@@ -79,6 +79,12 @@
 
 + (NSString*)makeSipURIWithAccountName:(NSString*)accountName andProviderAddress:(NSString*)providerAddress {
     return  [[[@"sip:" stringByAppendingString:accountName] stringByAppendingString:@"@"] stringByAppendingString:providerAddress];
+}
+
++(NSString*)makeAccountNumberFromSipURI:(NSString*)sipURI {
+    NSString *str = [sipURI substringFromIndex:4];
+    NSArray *subStrings = [str componentsSeparatedByString:@"@"];
+    return [subStrings objectAtIndex:0];
 }
 
 @end

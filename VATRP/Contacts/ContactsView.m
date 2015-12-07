@@ -105,10 +105,10 @@
         [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:oldDisplayName andSipUri:oldSipURI];
         [self refreshContactList];
     } else {
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Invalid sip uri"
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect number format"
                                          defaultButton:@"OK" alternateButton:@""
                                            otherButton:nil informativeTextWithFormat:
-                          @"Please enter valid account name"];
+                          @"Please enter correct formatted Account Number"];
         [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
         }];
     }
@@ -212,7 +212,7 @@
     editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
     editContactDialogBox.isEditing = YES;
     editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
-    editContactDialogBox.oldPhone = [self makeAccountnameFromSipURI:[contactCellView.phoneTextField stringValue]];
+    editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];
     editContactDialogBox.oldProviderName = selectedProviderName;
     [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
 }

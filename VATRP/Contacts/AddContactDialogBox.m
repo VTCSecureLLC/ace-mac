@@ -33,7 +33,7 @@
     if (self.isEditing) {
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
-        [self.phoneTextField setStringValue:self.oldPhone];
+        [self.phoneTextField setStringValue:[Utils makeAccountNumberFromSipURI:self.oldPhone]];
     } else {
         [self setTitle:@"Add contact"];
     }
@@ -70,7 +70,7 @@
                                                             object:@{@"name" : [self.nameTextField stringValue],
                                                                      @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
                                                                      @"oldName": self.oldName,
-                                                                     @"oldPhone" : [self createFullSipUriFromString:self.oldPhone],
+                                                                     @"oldPhone" : self.oldPhone,
                                                                      @"provider" : providerAddress}
                                                           userInfo:nil];
     } else {

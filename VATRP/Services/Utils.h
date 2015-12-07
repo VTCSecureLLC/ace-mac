@@ -1,6 +1,6 @@
 //
 //  Utils.h
-//  HappyTaxi
+//  ACE
 //
 //  Created by Ruben Semerjyan on 4/26/15.
 //  Copyright (c) 2015 VTCSecure. All rights reserved.
@@ -19,5 +19,6 @@
 + (NSString *)getTimeStringFromSeconds:(int)seconds;
 + (BOOL) nsStringIsValidSip:(NSString *)checkString;
 + (NSString*)makeSipURIWithAccountName:(NSString*)accountName andProviderAddress:(NSString*)providerAddress;
++ (NSString*)makeAccountNumberFromSipURI:(NSString*)sipURI;
 
 @end

@@ -1198,6 +1198,7 @@
                                             <outlet property="callControllersView" destination="A7N-2c-iqT" id="u2X-vy-6di"/>
                                             <outlet property="labelCallState" destination="bRW-5L-eQn" id="CZ7-Bb-Yj6"/>
                                             <outlet property="labelDisplayName" destination="V5s-GS-ax9" id="QCs-Jl-119"/>
+                                            <outlet property="labelRingCount" destination="GCL-19-J8a" id="31z-pY-aeZ"/>
                                             <outlet property="localVideo" destination="tyK-Cn-OT4" id="Pff-VI-r3M"/>
                                             <outlet property="numpadView" destination="Ovu-cs-Ecb" id="YTP-w4-s8h"/>
                                             <outlet property="secondCallView" destination="yaC-yt-d1Z" id="UxI-Gx-8O7"/>
@@ -1219,6 +1220,15 @@
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Call status" id="37I-aq-yzM">
                                             <font key="font" metaFont="system" size="20"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GCL-19-J8a">
+                                        <rect key="frame" x="10" y="286" width="700" height="130"/>
+                                        <animations/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="1" id="SEg-Hr-jYu">
+                                            <font key="font" metaFont="system" size="120"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>

@@ -1,6 +1,6 @@
 //
 //  Utils.m
-//  HappyTaxi
+//  ACE
 //
 //  Created by Ruben Semerjyan on 4/26/15.
 //  Copyright (c) 2015 VTCSecure. All rights reserved.
@@ -66,6 +66,25 @@
     dcFormatter.allowedUnits = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     dcFormatter.unitsStyle = NSDateComponentsFormatterUnitsStylePositional;
     return [dcFormatter stringFromTimeInterval:seconds];
+}
+
++ (BOOL) nsStringIsValidSip:(NSString *)checkString {
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
+
++ (NSString*)makeSipURIWithAccountName:(NSString*)accountName andProviderAddress:(NSString*)providerAddress {
+    return  [[[@"sip:" stringByAppendingString:accountName] stringByAppendingString:@"@"] stringByAppendingString:providerAddress];
+}
+
++(NSString*)makeAccountNumberFromSipURI:(NSString*)sipURI {
+    NSString *str = [sipURI substringFromIndex:4];
+    NSArray *subStrings = [str componentsSeparatedByString:@"@"];
+    return [subStrings objectAtIndex:0];
 }
 
 @end

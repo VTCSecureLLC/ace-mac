@@ -12,6 +12,6 @@
 
 @interface AccountsViewController : NSViewController
 
-- (void) save;
+- (BOOL) save;
 
 @end

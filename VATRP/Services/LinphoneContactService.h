@@ -26,4 +26,6 @@
 - (void)deleteContactWithDisplayName:(NSString*)name andSipUri:(NSString*)sipURI;
 - (void)deleteContactList;
 
+- (NSString*)contactNameFromAddress:(LinphoneAddress*)address;
+
 @end

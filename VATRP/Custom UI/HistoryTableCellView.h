@@ -21,9 +21,8 @@
 @property (weak) IBOutlet NSTextField *textFieldCallDuration;
 @property (weak) IBOutlet NSImageView *imageContactView;
 @property (weak) IBOutlet NSButton *plusButton;
-
 @property (nonatomic, assign) id<HistoryTableCellViewViewDelegate> delegate;
-
+@property (weak) IBOutlet NSTextField *textFieldSipURI;
 @end
 
 @protocol HistoryTableCellViewViewDelegate <NSObject>

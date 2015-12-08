@@ -123,10 +123,7 @@
     if (![self getCurrentChatRoom])
         return;
     
-    MSList *list = linphone_chat_room_get_history([self getCurrentChatRoom], 0);
-    int count = ms_list_size(list);
-    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], count);
-    count = ms_list_size(messageList);
+    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 0);
 }
 
 - (void)clearMessageList {
@@ -238,8 +235,6 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
-    NSInteger count = ms_list_size(messageList);
-
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == [self getCurrentChatRoom]) {
 //        BOOL composing = linphone_chat_room_is_remote_composing(room);
@@ -261,7 +256,7 @@ static void chatTable_free_chatrooms(void *data) {
             } else {
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
-                    ms_list_remove(self->messageList, incomingChatMessage);
+                    self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
                     NSString *str_msg = [NSString stringWithUTF8String:text_char];
                     if ([text isEqualToString:@"\b"]) {
                         if (str_msg && str_msg.length > 0) {
@@ -276,8 +271,7 @@ static void chatTable_free_chatrooms(void *data) {
                     incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
                 }
                 
-                count = ms_list_size(messageList);
-                ms_list_append(self->messageList, incomingChatMessage);
+                self->messageList = ms_list_append(self->messageList, incomingChatMessage);
                 
                 if (incomingCellView) {
                     CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:self.frame.size.width];
@@ -291,7 +285,7 @@ static void chatTable_free_chatrooms(void *data) {
                     [self.tableViewContent reloadData];
                 }
                 
-                count = ms_list_size(messageList);
+                NSInteger count = ms_list_size(messageList);
                 [self.tableViewContent scrollRowToVisible:count-1];
             }
         }
@@ -361,7 +355,13 @@ static void chatTable_free_chatrooms(void *data) {
 - (void)textDidChange:(NSNotification *)aNotification {
     NSUInteger lastSimbolIndex = self.textFieldMessage.stringValue.length - 1;
     NSString *lastSimbol = [self.textFieldMessage.stringValue substringFromIndex:lastSimbolIndex];
-    [[ChatService sharedInstance] sendMessagt:lastSimbol];
+    
+    if (![[ChatService sharedInstance] sendMessagt:lastSimbol]) {
+        NSAlert *alert = [[NSAlert alloc]init];
+        [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+        [alert setMessageText:NSLocalizedString(@"Problem sending RTT text.", nil)];
+        [alert runModal];
+    }
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
@@ -394,7 +394,9 @@ static void chatTable_free_chatrooms(void *data) {
         
         
         outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
-        ms_list_append(self->messageList, outgoingChatMessage);
+
+        self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
+
         [self.tableViewContent reloadData];
         
         NSInteger count = ms_list_size(messageList);

@@ -17,5 +17,6 @@
 + (void) setButtonTitleColor:(NSColor*)color Button:(NSButton*)button;
 + (void) setUIBorderColor:(NSColor*)color CornerRadius:(CGFloat)cornerRadius Width:(CGFloat)width Control:(NSControl*)control;
 + (NSString*)makeAccountNameFromSipURI:(NSString*)sipURI;
++ (NSString *)getTimeStringFromSeconds:(int)seconds;
 
 @end

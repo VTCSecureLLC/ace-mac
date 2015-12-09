@@ -15,6 +15,7 @@
 #import "CallLogService.h"
 #import "ChatService.h"
 #import <HockeySDK/HockeySDK.h>
+#import "LinphoneLocationManager.h"
 
 @interface AppDelegate () {
     VideoCallWindowController *videoCallWindowController;
@@ -41,6 +42,7 @@
 
     videoCallWindowController = nil;
     
+    [[LinphoneLocationManager sharedManager] startMonitoring];
     // Set observers
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(registrationUpdateEvent:)

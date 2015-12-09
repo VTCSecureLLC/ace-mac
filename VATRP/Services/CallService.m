@@ -226,7 +226,11 @@
 }
 
 - (void)displayIncomingCall:(LinphoneCall*)call {
-    [NSApp activateIgnoringOtherApps:YES];
+    if ([AppDelegate sharedInstance].homeWindowController.window.miniaturized) {
+        [[AppDelegate sharedInstance].homeWindowController.window makeKeyAndOrderFront:self];
+    } else {
+        [NSApp activateIgnoringOtherApps:YES];
+    }
 
     currentCall = call;
     

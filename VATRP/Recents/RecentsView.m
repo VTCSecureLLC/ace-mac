@@ -142,7 +142,7 @@
     editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
     editContactDialogBox.isEditing = YES;
     editContactDialogBox.oldName = @"";
-    editContactDialogBox.oldPhone = [Utils makeAccountNameFromSipURI:[info objectForKey:@"sipUri"]];
+    editContactDialogBox.oldPhone = [info objectForKey:@"sipUri"];
     [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
 }
 

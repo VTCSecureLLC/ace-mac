@@ -31,11 +31,11 @@
     return self;
 }
 
-- (void)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
+- (BOOL)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
     
     LinphoneFriend *friend = linphone_friend_new_with_address ([sipURI UTF8String]);
     if (!friend) {
-        return;
+        return NO;
     }
     int t = linphone_friend_set_name(friend, [name  UTF8String]);
     if  (t == 0) {
@@ -43,6 +43,7 @@
         linphone_friend_set_inc_subscribe_policy(friend,LinphoneSPAccept);
         linphone_core_add_friend([LinphoneManager getLc],friend);
     }
+    return YES;
 }
 
 - (LinphoneFriend*)createContactFromName:(NSString *)name andSipUri:(NSString *)sipURI {

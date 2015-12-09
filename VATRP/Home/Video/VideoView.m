@@ -186,7 +186,6 @@
         }
         case LinphoneCallError:
         {
-        
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             [self displayCallError:call message:@"Call Error"];

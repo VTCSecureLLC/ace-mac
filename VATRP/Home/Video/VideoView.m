@@ -186,11 +186,11 @@
         }
         case LinphoneCallError:
         {
-            self.call = nil;
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             [self displayCallError:call message:@"Call Error"];
             self.numpadView.hidden = YES;
+            self.call = nil;
 
             break;
         }

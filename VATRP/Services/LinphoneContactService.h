@@ -15,6 +15,7 @@
 
 + (LinphoneContactService *)sharedInstance;
 
+- (BOOL)addContactFromByAddress:(LinphoneAddress*)address;
 - (BOOL)addContactWithDisplayName:(NSString*)name andSipUri:(NSString*)sipURI;
 - (LinphoneFriend*)createContactFromName:(NSString*)name andSipUri:(NSString*)sipURI;
 

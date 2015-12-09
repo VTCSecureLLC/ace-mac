@@ -60,6 +60,12 @@
     [control.layer setCornerRadius:cornerRadius];
 }
 
++ (NSString*)makeAccountNameFromSipURI:(NSString*)sipURI {
+    NSString *str = [sipURI substringFromIndex:4];
+    NSArray *subStrings = [str componentsSeparatedByString:@"@"];
+    return [subStrings objectAtIndex:0];
+}
+
 + (NSString *)getTimeStringFromSeconds:(int)seconds {
     NSDateComponentsFormatter *dcFormatter = [[NSDateComponentsFormatter alloc] init];
     dcFormatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;

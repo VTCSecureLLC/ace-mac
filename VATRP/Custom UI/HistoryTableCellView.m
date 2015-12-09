@@ -11,12 +11,18 @@
 
 @interface HistoryTableCellView () {
     NSImageView *statusImageView;
-     NSImage *image;
+    NSTrackingArea *_trackingArea;
+    NSImage *image;
+    LinphoneAddress *userAddress;
 }
 
 @end
 
 @implementation HistoryTableCellView
+
+- (void)awakeFromNib {
+    [self createTrackingArea];
+}
 
 - (void) setCallLog:(LinphoneCallLog*)callLog {
     // Set up the cell...
@@ -30,9 +36,11 @@
             image = [NSImage imageNamed:@"icon_call_dir_missed.png"];
         }
         addr = linphone_call_log_get_from(callLog);
+        userAddress = addr;
     } else {
         image = [NSImage imageNamed:@"icon_call_dir_outgoing.png"];
         addr = linphone_call_log_get_to(callLog);
+        userAddress = addr;
     }
     
     NSString *address = nil;
@@ -47,8 +55,7 @@
                 address = [NSString stringWithUTF8String:lDisplayName];
             else if (lUserName)
                 address = [NSString stringWithUTF8String:lUserName];
-        }
-    }
+        }    }
     
     const char* uri = linphone_address_as_string_uri_only(addr);
     self.textFieldSipURI.stringValue = [NSString stringWithUTF8String:uri];
@@ -58,6 +65,11 @@
     }
     
     time_t start_date = linphone_call_log_get_start_date(callLog);
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+
     int duration = linphone_call_log_get_duration(callLog);
     
     [self.textFieldRemoteName setStringValue:address];
@@ -66,8 +78,8 @@
     [statusImageView setImage:image];
     [self addSubview:statusImageView];
     
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:start_date];
-    [self.textFieldCallDate setStringValue:[self makeStringFromDate:date]];
+    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:start_date];
+    [self.textFieldCallDate setStringValue:[self makeStringFromDate:date1]];
     
     [self.textFieldCallDuration setStringValue:[HistoryTableCellView timeFormatConvertToSeconds:duration]];
     
@@ -135,5 +147,58 @@
     return dateString;
 }
 
+- (void)hidePlusButton:(BOOL)yesNo {
+    if (userAddress != nil) {
+        LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], userAddress);
+        if (!friend) {
+            self.imageContactView.hidden = !yesNo;
+            statusImageView.hidden = !yesNo;
+            self.plusButton.hidden = yesNo;
+        }
+    }
+}
+
+#pragma mark - mouse overall methods
+
+- (void)createTrackingArea {
+    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds options:NSTrackingMouseEnteredAndExited|NSTrackingActiveInActiveApp owner:self userInfo:nil];
+    [self addTrackingArea:_trackingArea];
+    
+    NSPoint mouseLocation = [[self window] mouseLocationOutsideOfEventStream];
+    mouseLocation = [self convertPoint:mouseLocation fromView:nil];
+    
+    if (NSPointInRect(mouseLocation, [self bounds])) {
+        [self mouseEntered:nil];
+    } else {
+        [self mouseExited:nil];
+    }
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+    [self hidePlusButton:NO];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+    [self hidePlusButton:YES];
+}
+
+#pragma mark - Buttons actions
+
+- (IBAction)onPlusClick:(id)sender {
+    if ([_delegate respondsToSelector:@selector(didClickPlusButton:withInfo:)]) {
+        NSString *name = nil;
+        const char *lDisplayName = linphone_address_get_display_name(userAddress);
+        if (lDisplayName) {
+            name = [NSString stringWithUTF8String:lDisplayName];
+        } else {
+            name = @"";
+        }
+        const char* uri = linphone_address_as_string_uri_only(userAddress);
+        NSDictionary *dict = @{@"name" : name,
+                               @"sipUri" : [NSString stringWithUTF8String:uri] };
+    
+        [_delegate didClickPlusButton:self withInfo:dict];
+    }
+}
 
 @end

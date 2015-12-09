@@ -17,6 +17,7 @@
 #include "LinphoneManager.h"
 #import "AppDelegate.h"
 #import "AddContactDialogBox.h"
+#import "Utils.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
@@ -196,7 +197,7 @@
     NSInteger selectedRow = [self.tableViewContacts selectedRow];
     if (selectedRow >= 0 && selectedRow < self.contactInfos.count) {
         NSDictionary *calltoContact = [self.contactInfos objectAtIndex:selectedRow];
-        [self callTo:[self makeAccountnameFromSipURI:[calltoContact objectForKey:@"phone"]]];
+        [self callTo:[Utils makeAccountNameFromSipURI:[calltoContact objectForKey:@"phone"]]];
     }
 }
 
@@ -227,12 +228,6 @@
 
 - (NSString*)makeSipURIWith:(NSString*)accountName andProviderAddress:(NSString*)providerAddress {
     return  [[[@"sip:" stringByAppendingString:accountName] stringByAppendingString:@"@"] stringByAppendingString:providerAddress];
-}
-
-- (NSString*)makeAccountnameFromSipURI:(NSString*)sipURI {
-    NSString *str = [sipURI substringFromIndex:4];
-    NSArray *subStrings = [str componentsSeparatedByString:@"@"];
-    return [subStrings objectAtIndex:0];
 }
 
 - (void)dialpadTextUpdate:(NSNotification*)notif {

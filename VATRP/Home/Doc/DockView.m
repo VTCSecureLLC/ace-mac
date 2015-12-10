@@ -44,7 +44,7 @@
     selectedDocViewItem = self.buttonDialpad;
     [selectedDocViewItem setWantsLayer:YES];
     [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
-    dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, nil];
+    dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, self.buttonSettings, nil];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -94,24 +94,29 @@
 }
 
 - (IBAction)onButtonSettings:(id)sender {
-    AppDelegate *app = [AppDelegate sharedInstance];
-    if (!app.settingsWindowController) {
-        app.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
-        [app.settingsWindowController showWindow:self];
-        if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-            [_delegate didClickDockViewSettings:self];
-        }
-    } else {
-        if (app.settingsWindowController.isShow) {
-            [app.settingsWindowController close];
-            app.settingsWindowController = nil;
-        } else {
-            [app.settingsWindowController showWindow:self];
-            app.settingsWindowController.isShow = YES;
-            if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-                [_delegate didClickDockViewSettings:self];
-            }
-        }
+//    AppDelegate *app = [AppDelegate sharedInstance];
+//    if (!app.settingsWindowController) {
+//        app.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+//        [app.settingsWindowController showWindow:self];
+//        if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+//            [_delegate didClickDockViewSettings:self];
+//        }
+//    } else {
+//        if (app.settingsWindowController.isShow) {
+//            [app.settingsWindowController close];
+//            app.settingsWindowController = nil;
+//        } else {
+//            [app.settingsWindowController showWindow:self];
+//            app.settingsWindowController.isShow = YES;
+//            if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+//                [_delegate didClickDockViewSettings:self];
+//            }
+//        }
+//    }
+
+
+    if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+        [_delegate didClickDockViewSettings:self];
     }
 }
 

@@ -116,6 +116,10 @@
 		69557C761C0EE6E9004A40ED /* SecondCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69557C751C0EE6E9004A40ED /* SecondCallView.m */; };
 		69557C781C0EE85A004A40ED /* call swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 69557C771C0EE85A004A40ED /* call swap.png */; };
 		69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 697840821C087F33000ED450 /* NumpadView.m */; };
+		6973591B1C1721EF00A24D09 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6973591A1C1721EF00A24D09 /* SettingsView.m */; };
+		697359241C17344400A24D09 /* SettingsUI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 697359231C17344400A24D09 /* SettingsUI.plist */; };
+		697359271C17391B00A24D09 /* SettingsHeaderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 697359261C17391B00A24D09 /* SettingsHeaderModel.m */; };
+		6973592A1C17393400A24D09 /* SettingsItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 697359291C17393400A24D09 /* SettingsItemModel.m */; };
 		697840811C087F28000ED450 /* SecondIncomingCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 697840801C087F28000ED450 /* SecondIncomingCallView.m */; };
 		697840851C089B55000ED450 /* call hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840841C089B55000ED450 /* call hold.png */; };
 		697840871C089CB9000ED450 /* call resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840861C089CB9000ED450 /* call resume.png */; };
@@ -680,6 +684,13 @@
 		69557C741C0EE6E9004A40ED /* SecondCallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondCallView.h; sourceTree = "<group>"; };
 		69557C751C0EE6E9004A40ED /* SecondCallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondCallView.m; sourceTree = "<group>"; };
 		69557C771C0EE85A004A40ED /* call swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call swap.png"; sourceTree = "<group>"; };
+		697359191C1721EF00A24D09 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		6973591A1C1721EF00A24D09 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		697359231C17344400A24D09 /* SettingsUI.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SettingsUI.plist; sourceTree = "<group>"; };
+		697359251C17391B00A24D09 /* SettingsHeaderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsHeaderModel.h; sourceTree = "<group>"; };
+		697359261C17391B00A24D09 /* SettingsHeaderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsHeaderModel.m; sourceTree = "<group>"; };
+		697359281C17393400A24D09 /* SettingsItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsItemModel.h; sourceTree = "<group>"; };
+		697359291C17393400A24D09 /* SettingsItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsItemModel.m; sourceTree = "<group>"; };
 		6978407F1C087F28000ED450 /* SecondIncomingCallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondIncomingCallView.h; sourceTree = "<group>"; };
 		697840801C087F28000ED450 /* SecondIncomingCallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondIncomingCallView.m; sourceTree = "<group>"; };
 		697840821C087F33000ED450 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
@@ -1028,6 +1039,8 @@
 				4AC344841BB9A777000C4909 /* MediaViewController.m */,
 				4A13AA151BC6A5B9000C9358 /* TestingViewController.h */,
 				4A13AA161BC6A5B9000C9358 /* TestingViewController.m */,
+				697359191C1721EF00A24D09 /* SettingsView.h */,
+				6973591A1C1721EF00A24D09 /* SettingsView.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1158,6 +1171,10 @@
 				4A902DE51BB949E700ECFD86 /* AccountModel.m */,
 				4A902DF91BB9823200ECFD86 /* CodecModel.h */,
 				4A902DFA1BB9823200ECFD86 /* CodecModel.m */,
+				697359251C17391B00A24D09 /* SettingsHeaderModel.h */,
+				697359261C17391B00A24D09 /* SettingsHeaderModel.m */,
+				697359281C17393400A24D09 /* SettingsItemModel.h */,
+				697359291C17393400A24D09 /* SettingsItemModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1416,6 +1433,7 @@
 				4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */,
 				4AC389C91B8E87530063298F /* Info.plist */,
 				4AC389CD1B8E87530063298F /* main.m */,
+				697359231C17344400A24D09 /* SettingsUI.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1700,6 +1718,7 @@
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */,
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
+				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
@@ -1816,14 +1835,17 @@
 				4AA203BA1BD4CAA200DD9A4D /* CallService.m in Sources */,
 				4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */,
 				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
+				6973591B1C1721EF00A24D09 /* SettingsView.m in Sources */,
 				69557C761C0EE6E9004A40ED /* SecondCallView.m in Sources */,
 				2B463F091B984E49008E8333 /* RecentsViewController.m in Sources */,
 				4AC13F9E1BBC0769008305CD /* SettingsViewController.m in Sources */,
 				2B463F081B984E49008E8333 /* DialpadWindowController.m in Sources */,
+				697359271C17391B00A24D09 /* SettingsHeaderModel.m in Sources */,
 				4AB2A2EC1BF36E2B006AC5C6 /* ViewManager.m in Sources */,
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
 				4A5DD1DB1BD8DADB003BE9A2 /* NSImage+Merge.m in Sources */,
+				6973592A1C17393400A24D09 /* SettingsItemModel.m in Sources */,
 				4AB5564B1BDE765E003382B2 /* NewMessageCellView.m in Sources */,
 				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,

@@ -23,6 +23,10 @@
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="zFE-r2-ifq"/>
                                         <menuItem title="Preferences…" keyEquivalent="," id="iMU-0u-Qmn"/>
+                                        <menuItem isSeparatorItem="YES" id="eGa-h9-rzZ"/>
+                                        <menuItem title="Old Settings" id="OkD-C0-eW5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Vdn-KY-TV2"/>
                                         <menuItem title="Provide VATRP Feedback" id="1gL-fB-Nk5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -228,7 +232,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
                     <connections>
-                        <outlet property="menuItemPreferences" destination="iMU-0u-Qmn" id="RXa-JS-TZA"/>
+                        <outlet property="menuItemPreferences" destination="OkD-C0-eW5" id="6bx-LR-mHl"/>
                         <outlet property="menuItemSignOut" destination="CDK-gl-PAo" id="Ysv-9d-rDh"/>
                     </connections>
                 </customObject>
@@ -1077,6 +1081,82 @@
                                             <outlet property="tableViewContacts" destination="cAY-t8-48s" id="oRj-cs-WLW"/>
                                         </connections>
                                     </customView>
+                                    <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gvt-Fm-S7x" customClass="SettingsView">
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
+                                        <subviews>
+                                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="49" horizontalPageScroll="10" verticalLineScroll="49" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9S-Om-UcL">
+                                                <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
+                                                <clipView key="contentView" ambiguous="YES" id="Sdy-Xd-dzT">
+                                                    <rect key="frame" x="1" y="1" width="308" height="295"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="47" rowSizeStyle="automatic" viewBased="YES" id="wIo-x2-Kb2">
+                                                            <rect key="frame" x="0.0" y="0.0" width="308" height="295"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <animations/>
+                                                            <size key="intercellSpacing" width="3" height="2"/>
+                                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                            <tableColumns>
+                                                                <tableColumn identifier="Contact" width="305" minWidth="40" maxWidth="1000" id="OkE-Ft-6So">
+                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Recent">
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                                    </tableHeaderCell>
+                                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="EJP-Nw-B6W">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                    <prototypeCellViews>
+                                                                        <tableCellView identifier="SettingsCell" id="Q6k-fX-ylE">
+                                                                            <rect key="frame" x="1" y="1" width="305" height="47"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <animations/>
+                                                                        </tableCellView>
+                                                                        <textField identifier="GroupCell" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="SqV-Zj-9rf">
+                                                                            <rect key="frame" x="1" y="50" width="305" height="20"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                            <animations/>
+                                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="fX3-UR-y4c">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                    </prototypeCellViews>
+                                                                </tableColumn>
+                                                            </tableColumns>
+                                                            <connections>
+                                                                <outlet property="dataSource" destination="gvt-Fm-S7x" id="PNf-fG-fLO"/>
+                                                                <outlet property="delegate" destination="gvt-Fm-S7x" id="dih-3T-8oq"/>
+                                                            </connections>
+                                                        </tableView>
+                                                    </subviews>
+                                                    <animations/>
+                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </clipView>
+                                                <animations/>
+                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="zBW-IE-reD">
+                                                    <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <animations/>
+                                                </scroller>
+                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="AKL-xT-nwX">
+                                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <animations/>
+                                                </scroller>
+                                            </scrollView>
+                                        </subviews>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="scrollViewContacts" destination="R9S-Om-UcL" id="rgJ-lO-tJD"/>
+                                            <outlet property="tableViewContacts" destination="wIo-x2-Kb2" id="EgY-TS-5Va"/>
+                                        </connections>
+                                    </customView>
                                 </subviews>
                                 <animations/>
                             </customView>
@@ -1196,6 +1276,7 @@
                                         <animations/>
                                         <connections>
                                             <outlet property="callControllersView" destination="A7N-2c-iqT" id="u2X-vy-6di"/>
+                                            <outlet property="labelCallDuration" destination="BCE-oT-0Kc" id="EOj-lM-Kau"/>
                                             <outlet property="labelCallState" destination="bRW-5L-eQn" id="CZ7-Bb-Yj6"/>
                                             <outlet property="labelDisplayName" destination="V5s-GS-ax9" id="QCs-Jl-119"/>
                                             <outlet property="localVideo" destination="tyK-Cn-OT4" id="Pff-VI-r3M"/>
@@ -1222,8 +1303,17 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-oT-0Kc">
+                                        <rect key="frame" x="10" y="550" width="700" height="27"/>
+                                        <animations/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="0:00:05" id="fFR-vd-WOI">
+                                            <font key="font" metaFont="system" size="20"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A7N-2c-iqT" customClass="CallControllersView">
-                                        <rect key="frame" x="85" y="42" width="550" height="234"/>
+                                        <rect key="frame" x="28" y="42" width="665" height="158"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IFo-kC-Psa">
                                                 <rect key="frame" x="0.0" y="82" width="110" height="76"/>
@@ -1236,19 +1326,12 @@
                                                     <action selector="onButtonVideo:" target="A7N-2c-iqT" id="h76-rj-0vM"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxg-mb-bAI">
-                                                <rect key="frame" x="0.0" y="159" width="110" height="76"/>
+                                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="A60-of-7KD">
+                                                <rect key="frame" x="38" y="111" width="16" height="16"/>
                                                 <animations/>
-                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="call hold" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="gcB-lR-nl5">
-                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system" size="10"/>
-                                                </buttonCell>
-                                                <connections>
-                                                    <action selector="onButtonHold:" target="A7N-2c-iqT" id="05W-vX-MSL"/>
-                                                </connections>
-                                            </button>
+                                            </progressIndicator>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yQo-Zw-suQ">
-                                                <rect key="frame" x="110" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="111" y="82" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="mute_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="dLp-RD-8lQ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1259,7 +1342,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dj4-9v-xbv">
-                                                <rect key="frame" x="220" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="222" y="82" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="speaker_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Aq0-hS-f8g">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1270,7 +1353,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-9V-FyW">
-                                                <rect key="frame" x="330" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="333" y="82" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="numpad_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="yUE-WF-uSO">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1281,7 +1364,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ikE-j2-eXF">
-                                                <rect key="frame" x="440" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="444" y="82" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="chat_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="bZC-0P-rNV">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1289,6 +1372,17 @@
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="onButtonChat:" target="A7N-2c-iqT" id="P2x-rX-jKk"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxg-mb-bAI">
+                                                <rect key="frame" x="555" y="82" width="110" height="76"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="call hold" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="gcB-lR-nl5">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system" size="10"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onButtonHold:" target="A7N-2c-iqT" id="05W-vX-MSL"/>
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sTe-0r-4gL">
@@ -1313,12 +1407,8 @@
                                                     <action selector="onButtonDecline:" target="A7N-2c-iqT" id="uXF-AM-P3r"/>
                                                 </connections>
                                             </button>
-                                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="A60-of-7KD">
-                                                <rect key="frame" x="38" y="111" width="16" height="16"/>
-                                                <animations/>
-                                            </progressIndicator>
                                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dyV-DE-okd">
-                                                <rect key="frame" x="517" y="121" width="33" height="37"/>
+                                                <rect key="frame" x="632" y="121" width="33" height="37"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="info-icon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="J6I-k0-Uub">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1649,6 +1739,7 @@
                         <outlet property="providerTableView" destination="xe3-H4-JmS" id="dnm-o4-leR"/>
                         <outlet property="providersView" destination="wMR-Jk-waL" id="wly-ar-eTl"/>
                         <outlet property="recentsView" destination="1VK-jT-7Ad" id="tCI-nJ-aah"/>
+                        <outlet property="settingsView" destination="gvt-Fm-S7x" id="m5K-Sc-a1m"/>
                         <outlet property="videoView" destination="APm-Qq-3qG" id="GQk-Uk-EPe"/>
                         <outlet property="viewContainer" destination="EEV-Wa-LvY" id="ntR-15-kWr"/>
                     </connections>
@@ -4224,7 +4315,7 @@ DQ
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQI-Kw-hFm">
-                                <rect key="frame" x="155" y="46" width="171" height="18"/>
+                                <rect key="frame" x="159" y="51" width="163" height="11"/>
                                 <animations/>
                                 <buttonCell key="cell" type="check" title="Remember Password" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1ij-uP-mz3">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

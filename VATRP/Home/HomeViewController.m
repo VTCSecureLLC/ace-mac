@@ -15,6 +15,7 @@
 #import "VideoView.h"
 #import "ContactsView.h"
 #import "NumpadView.h"
+#import "SettingsView.h"
 #import "ProviderTableCellView.h"
 
 
@@ -29,6 +30,7 @@
 @property (weak) IBOutlet ProfileView *profileView;
 @property (weak) IBOutlet RecentsView *recentsView;
 @property (weak) IBOutlet ContactsView *contactsView;
+@property (weak) IBOutlet SettingsView *settingsView;
 
 @property (weak) IBOutlet NSTableView *providerTableView;
 @property (weak) IBOutlet NSView *providersView;
@@ -41,7 +43,6 @@
     [super viewDidLoad];
     // Do view setup here.
     
-    [self.viewContainer setBackgroundColor:[NSColor clearColor]];
     BackgroundedView *v = (BackgroundedView*)self.view;
     [v setBackgroundColor:[NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
     self.dockView.delegate = self;
@@ -59,6 +60,7 @@
     [self.dialPadView setProvButtonImage:[NSImage imageNamed:@"provider_logo_zvrs"]];
     [self.providerTableView reloadData];
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
+    [self.settingsView setBackgroundColor:[NSColor whiteColor]];
     [self setObservers];
 }
 
@@ -107,6 +109,7 @@
 }
 
 - (void) didClickDockViewContacts:(DockView*)docView_ {
+    self.providersView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     viewCurrent = (BackgroundedView*)self.contactsView;
@@ -130,6 +133,8 @@
             [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
         } else if ([viewCurrent isKindOfClass:[ContactsView class]]) {
             [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
+        } else if ([viewCurrent isKindOfClass:[SettingsView class]]) {
+            [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
         }
     }
 }
@@ -139,7 +144,14 @@
 }
 
 - (void) didClickDockViewSettings:(DockView*)dockView_ {
-    [self.dockView clearDockViewSettingsBackgroundColor:NO];
+    self.providersView.hidden = YES;
+    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
+    viewCurrent.hidden = YES;
+    viewCurrent = (BackgroundedView*)self.settingsView;
+    viewCurrent.hidden = NO;
+    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
+    [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {

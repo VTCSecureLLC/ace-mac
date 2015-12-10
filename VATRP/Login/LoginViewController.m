@@ -108,7 +108,12 @@
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     NSString* message = [notif.userInfo objectForKey:@"message"];
-    [self registrationUpdate:[[notif.userInfo objectForKey: @"state"] intValue] message:message];
+    LinphoneRegistrationState state = [[notif.userInfo objectForKey: @"state"] intValue];
+    [self registrationUpdate:state message:message];
+    
+    if (state == LinphoneRegistrationOk) {
+        [[[[AppDelegate sharedInstance].homeWindowController getHomeViewController] getProfileView] registrationUpdateEvent:notif];
+    }
 }
 
 - (void)fillDefaultValues {

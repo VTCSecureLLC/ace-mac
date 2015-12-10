@@ -16,6 +16,7 @@
 + (NSString*) resourcePathForFile:(NSString*)fileName Type:(NSString*)type;
 + (void) setButtonTitleColor:(NSColor*)color Button:(NSButton*)button;
 + (void) setUIBorderColor:(NSColor*)color CornerRadius:(CGFloat)cornerRadius Width:(CGFloat)width Control:(NSControl*)control;
++ (NSString*)makeAccountNameFromSipURI:(NSString*)sipURI;
 + (NSString *)getTimeStringFromSeconds:(int)seconds;
 + (BOOL) nsStringIsValidSip:(NSString *)checkString;
 + (NSString*)makeSipURIWithAccountName:(NSString*)accountName andProviderAddress:(NSString*)providerAddress;

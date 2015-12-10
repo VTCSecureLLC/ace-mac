@@ -11,4 +11,6 @@
 
 @interface ProfileView : BackgroundedView
 
+- (void)registrationUpdateEvent:(NSNotification*)notif;
+
 @end

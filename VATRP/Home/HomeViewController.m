@@ -10,7 +10,6 @@
 #import "ViewManager.h"
 #import "DockView.h"
 #import "DialPadView.h"
-#import "ProfileView.h"
 #import "RecentsView.h"
 #import "VideoView.h"
 #import "ContactsView.h"
@@ -189,6 +188,10 @@
 
 - (IBAction)onButtonProv:(id)sender {
     self.providersView.hidden = !self.providersView.hidden;
+}
+
+- (ProfileView*) getProfileView {
+    return self.profileView;
 }
 
 @end

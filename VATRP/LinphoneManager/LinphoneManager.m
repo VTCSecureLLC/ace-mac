@@ -29,7 +29,7 @@
 //#import <CoreTelephony/CTCallCenter.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
 //#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-//#import "LinphoneLocationManager.h"
+#import "LinphoneLocationManager.h"
 
 #import "LinphoneManager.h"
 //#import "LinphoneCoreSettingsStore.h"
@@ -1690,16 +1690,17 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
         thiscall = linphone_core_get_current_call(theLinphoneCore);
         LinphoneCallParams *lcallParams = linphone_core_create_call_params(theLinphoneCore, thiscall);
     
-    // VTCSecure add user location when emergency number is dialled.
-//    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
+  //   VTCSecure add user location when emergency number is dialled.
+    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
 //    if (emergency != nil && ([address hasPrefix:emergency] || [address hasPrefix:[@"sip:" stringByAppendingString:emergency]])) {
-//        NSString *locationString;
-//        if (![[LinphoneLocationManager sharedManager] isAuthorized:TRUE]) locationString = NSLocalizedString(@"not authorized by user",nil);
-//        else if (![[LinphoneLocationManager sharedManager] locationPlausible]) locationString =  NSLocalizedString(@"user location could not be established",nil);
-//        else locationString  =  [[LinphoneLocationManager sharedManager] currentLocationAsText];
+//         NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
 //        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 //    }
     
+    if ([address isEqualToString:@"911"]) {
+        NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
+        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+    }
     
 	if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
 		bool low_bandwidth = self.network == network_2g;
@@ -1722,6 +1723,9 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 //		[error show];
 
 	}
+    
+        linphone_call_params_enable_realtime_text(lcallParams, [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+    
 	LinphoneAddress* linphoneAddress = linphone_core_interpret_url(theLinphoneCore, [address cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 
 	if (linphoneAddress) {

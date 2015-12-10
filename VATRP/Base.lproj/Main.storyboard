@@ -815,11 +815,11 @@
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
                                                                         <tableCellView identifier="CallLog" id="5P1-p1-aLd" customClass="HistoryTableCellView">
-                                                                            <rect key="frame" x="1" y="1" width="305" height="57"/>
+                                                                            <rect key="frame" x="1" y="1" width="305" height="56"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k1l-hr-eWW">
-                                                                                    <rect key="frame" x="62" y="28" width="166" height="20"/>
+                                                                                    <rect key="frame" x="62" y="27" width="166" height="20"/>
                                                                                     <animations/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Remote name" id="mNx-mW-Kzz">
                                                                                         <font key="font" metaFont="system" size="15"/>
@@ -837,12 +837,12 @@
                                                                                     </textFieldCell>
                                                                                 </textField>
                                                                                 <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4La-6l-5tw">
-                                                                                    <rect key="frame" x="8" y="4" width="48" height="48"/>
+                                                                                    <rect key="frame" x="8" y="3" width="48" height="48"/>
                                                                                     <animations/>
                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="fh5-FF-XPN"/>
                                                                                 </imageView>
                                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Al0-Um-Bkg">
-                                                                                    <rect key="frame" x="8" y="4" width="26" height="26"/>
+                                                                                    <rect key="frame" x="8" y="3" width="26" height="26"/>
                                                                                     <animations/>
                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="f0r-wm-WKx"/>
                                                                                 </imageView>
@@ -864,11 +864,23 @@
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
                                                                                 </textField>
+                                                                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EvU-CF-yte">
+                                                                                    <rect key="frame" x="8" y="3" width="48" height="48"/>
+                                                                                    <animations/>
+                                                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="plus icon" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="w5h-2e-GY3">
+                                                                                        <behavior key="behavior" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="onPlusClick:" target="5P1-p1-aLd" id="F8b-RE-fpX"/>
+                                                                                    </connections>
+                                                                                </button>
                                                                             </subviews>
                                                                             <animations/>
                                                                             <connections>
                                                                                 <outlet property="imageContactView" destination="4La-6l-5tw" id="aS6-nY-pjU"/>
                                                                                 <outlet property="imageViewCallStatus" destination="Al0-Um-Bkg" id="vYR-vD-ZZl"/>
+                                                                                <outlet property="plusButton" destination="EvU-CF-yte" id="7mR-ss-Smk"/>
                                                                                 <outlet property="textFieldCallDate" destination="e2a-CI-U1m" id="ZBo-Uz-BLh"/>
                                                                                 <outlet property="textFieldCallDuration" destination="Sbu-gw-l5T" id="ftA-CD-VS3"/>
                                                                                 <outlet property="textFieldRemoteName" destination="k1l-hr-eWW" id="7yG-97-MG9"/>
@@ -922,7 +934,7 @@
                                         </connections>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rAt-4g-nXf" customClass="ContactsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="166"/>
                                         <subviews>
                                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="49" horizontalPageScroll="10" verticalLineScroll="49" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChY-B5-BDB">
                                                 <rect key="frame" x="0.0" y="0.0" width="310" height="254"/>
@@ -4797,6 +4809,7 @@ DQ
         <image name="messages" width="32" height="40"/>
         <image name="mute_active" width="38" height="42"/>
         <image name="numpad_active" width="36" height="36"/>
+        <image name="plus icon" width="53" height="53"/>
         <image name="recents" width="25" height="40"/>
         <image name="send_message" width="298" height="60"/>
         <image name="settings" width="25" height="40"/>

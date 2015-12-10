@@ -31,11 +31,11 @@
     return self;
 }
 
-- (void)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
+- (BOOL)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
     
     LinphoneFriend *friend = linphone_friend_new_with_address ([sipURI UTF8String]);
     if (!friend) {
-        return;
+        return NO;
     }
     int t = linphone_friend_set_name(friend, [name  UTF8String]);
     if  (t == 0) {
@@ -43,12 +43,27 @@
         linphone_friend_set_inc_subscribe_policy(friend,LinphoneSPAccept);
         linphone_core_add_friend([LinphoneManager getLc],friend);
     }
+    return YES;
 }
 
 - (LinphoneFriend*)createContactFromName:(NSString *)name andSipUri:(NSString *)sipURI {
     LinphoneFriend *newFriend = linphone_friend_new_with_address ([sipURI  UTF8String]);
     linphone_friend_set_name(newFriend, [name  UTF8String]);
     return newFriend;
+}
+
+- (BOOL)addContactFromByAddress:(LinphoneAddress*)address {
+    BOOL contactExistsInCore = NO;
+    LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], address);
+    if (friend) {
+        return contactExistsInCore;
+    } else {
+        
+        linphone_core_add_friend([LinphoneManager getLc], friend);
+        contactExistsInCore = YES;
+    }
+    
+    return contactExistsInCore;
 }
 
 - (NSMutableArray*)contactList {

@@ -10,13 +10,18 @@
 #import "HistoryTableCellView.h"
 #import "LinphoneManager.h"
 #import "ViewManager.h"
+#import "LinphoneContactService.h"
+#import "AppDelegate.h"
+#import "AddContactDialogBox.h"
+#import "Utils.h"
 
 
-@interface RecentsView () {
+@interface RecentsView () <HistoryTableCellViewViewDelegate> {
     NSMutableArray *callLogs;
     BOOL missedFilter;
-    
+    AddContactDialogBox *editContactDialogBox;
     NSString *dialPadFilter;
+    LinphoneCallLog *selectedCallLog;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollViewRecents;
@@ -44,6 +49,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dialpadTextUpdate:)
                                                  name:DIALPAD_TEXT_CHANGED
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactEditDone:)
+                                                 name:@"contactInfoEditDone"
                                                object:nil];
     
     [self loadData];
@@ -73,8 +82,6 @@
 - (void)dialpadTextUpdate:(NSNotification*)notif {
     NSString *dialpadText = [notif object];
 
-    NSLog(@"dialpadText: %@", dialpadText);
-    
     if (dialpadText && dialpadText.length) {
         dialPadFilter = dialpadText;
     } else {
@@ -130,13 +137,26 @@
     NSLog(@"segmentedControl.selectedSegment: %ld", (long)segmentedControl.selectedSegment);
 }
 
+- (void)didClickPlusButton:(HistoryTableCellView *)contactCellView withInfo:(NSDictionary *)info {
+    
+    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+    editContactDialogBox.isEditing = YES;
+    editContactDialogBox.oldName = @"";
+    editContactDialogBox.oldPhone = [info objectForKey:@"sipUri"];
+    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+}
+
+- (void)contactEditDone:(NSNotification*)notif {
+    [self.tableViewRecents reloadData];
+}
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     return callLogs.count;
 }
 
 - (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
     HistoryTableCellView *cellView = [tableView makeViewWithIdentifier:@"CallLog" owner:self];
-    
+    cellView.delegate = self;
     LinphoneCallLog *log = [[callLogs objectAtIndex:row] pointerValue];
     [cellView setCallLog:log];
     

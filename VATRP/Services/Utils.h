@@ -1,6 +1,6 @@
 //
 //  Utils.h
-//  HappyTaxi
+//  ACE
 //
 //  Created by Ruben Semerjyan on 4/26/15.
 //  Copyright (c) 2015 VTCSecure. All rights reserved.
@@ -16,6 +16,10 @@
 + (NSString*) resourcePathForFile:(NSString*)fileName Type:(NSString*)type;
 + (void) setButtonTitleColor:(NSColor*)color Button:(NSButton*)button;
 + (void) setUIBorderColor:(NSColor*)color CornerRadius:(CGFloat)cornerRadius Width:(CGFloat)width Control:(NSControl*)control;
++ (NSString*)makeAccountNameFromSipURI:(NSString*)sipURI;
 + (NSString *)getTimeStringFromSeconds:(int)seconds;
++ (BOOL) nsStringIsValidSip:(NSString *)checkString;
++ (NSString*)makeSipURIWithAccountName:(NSString*)accountName andProviderAddress:(NSString*)providerAddress;
++ (NSString*)makeAccountNumberFromSipURI:(NSString*)sipURI;
 
 @end

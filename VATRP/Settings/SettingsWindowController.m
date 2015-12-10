@@ -81,12 +81,14 @@
 }
 
 - (void) didClickSettingsViewControllerSeve:(SettingsViewController*)settingsViewController {
-    [accountsViewController save];
+    if (![accountsViewController save]) {
+        return;
+    }
     [codecsViewController save];
     [mediaViewController save];
     [testingViewController save];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    
     [self close];
 }
 

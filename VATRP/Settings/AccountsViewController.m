@@ -38,7 +38,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    
+}
+
+- (void)viewWillAppear {
+    [super viewWillAppear];
+    [self setFields];
+}
+
+- (void)setFields {
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg=NULL;
     linphone_core_get_default_proxy(lc,&cfg);
@@ -99,11 +106,15 @@
 - (IBAction)onButtonAutoAnswer:(id)sender {
 }
 
-- (void) save {
+- (BOOL) save {
     if (!isChanged) {
-        return;
+        return NO;
     }
-
+    
+    if ([self checkFieldsValidness]) {
+        return NO;
+    }
+    
     @try{
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
     }
@@ -112,29 +123,67 @@
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    
     NSString *transport;
     if([self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"]) {
         transport=@"TLS";
     } else {
         transport=@"TCP";
     }
-
+    
     [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
-                                                    UserID:self.textFieldUserID.stringValue
+                                                      UserID:self.textFieldUserID.stringValue
                                                     Password:self.secureTextFieldPassword.stringValue
                                                       Domain:self.textFieldDomain.stringValue
                                                    Transport:transport
                                                         Port:self.textFieldPort.intValue
                                                    isDefault:YES];
-
+    
     AccountModel *accountModel_ = [[AccountsService sharedInstance] getDefaultAccount];
     
     if (accountModel_) {
         [[RegistrationService sharedInstance] registerWithAccountModel:accountModel_];
     }
-
+    
     self.settingsFeedbackText.stringValue = @"Settings saved";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeAccountsViewController" object:nil];
+    
+    return YES;
+}
+
+- (BOOL)checkFieldsValidness {
+    
+    BOOL error = NO;
+    NSString *errorString = nil;
+    
+    if ([self.textFieldUsername.stringValue isEqual:@""]) {
+        error = YES;
+        errorString = @"Username field is required";
+    }
+    
+    if ([self.secureTextFieldPassword.stringValue isEqual:@""] && !error) {
+        error = YES;
+        errorString = @"Password field is required";
+    }
+    
+    if ([self.textFieldDomain.stringValue isEqual:@""] && !error) {
+        error = YES;
+        errorString = @"Domain field is required";
+    }
+    
+    if ([self.textFieldPort.stringValue isEqual:@""] && !error) {
+        error = YES;
+        errorString = @"Port field is required";
+    }
+    
+    if (error) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:errorString];
+        [alert runModal];
+    }
+    
+    return error;
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
@@ -143,7 +192,7 @@
 
 - (IBAction)onComboboxTransport:(id)sender {
     isChanged = YES;
-
+    
     if([self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"]) {
         if(self.textFieldPort.intValue == 25060) {
             self.textFieldPort.stringValue = @"25061";

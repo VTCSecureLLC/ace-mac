@@ -108,7 +108,7 @@
 
 - (BOOL) save {
     if (!isChanged) {
-        return NO;
+        return YES;
     }
     
     if ([self checkFieldsValidness]) {

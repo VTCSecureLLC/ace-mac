@@ -941,7 +941,7 @@
                                         </connections>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rAt-4g-nXf" customClass="ContactsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="310" height="166"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
                                         <subviews>
                                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="49" horizontalPageScroll="10" verticalLineScroll="49" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChY-B5-BDB">
                                                 <rect key="frame" x="0.0" y="0.0" width="310" height="254"/>

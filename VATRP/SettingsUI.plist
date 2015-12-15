@@ -11,14 +11,18 @@
 			<string>Start On Boot</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>START_ON_BOOT</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<real>0</real>
+			<integer>0</integer>
 			<key>title</key>
 			<string>SIP Encryption</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>SIP_ENCRYPTION</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -27,6 +31,8 @@
 			<string>Wifi Only</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>WIFI_ONLY</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -35,6 +41,8 @@
 			<string>Auto Answer</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_AUTO_ANSWER_CALL</string>
 		</dict>
 	</array>
 	<array>

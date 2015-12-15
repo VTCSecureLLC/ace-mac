@@ -83,7 +83,7 @@
     if([transport isEqualToString:@"Unencrypted (TCP)"]){
         transport = @"TCP";
     }
-    else if([transport isEqualToString:@"Encrypted (TLS)"]){
+    else if([transport isEqualToString:@"Encrypted (TLS)"] || [[transport lowercaseString] isEqualToString:@"tls"]){
         transport = @"TLS";
     } else {
         transport = @"TCP";

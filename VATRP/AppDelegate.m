@@ -59,7 +59,7 @@
     [[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 
-    linphone_core_set_log_level(ORTP_MESSAGE);
+    linphone_core_set_log_level(ORTP_DEBUG);
     linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
 }
 
@@ -136,7 +136,7 @@
     return videoCallWindowController;
 }
 
-- (void)onMenuItemPreferences:(id)sender {
+- (IBAction)onMenuItemPreferences:(id)sender {
     if (!self.settingsWindowController) {
         self.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
         [self.settingsWindowController showWindow:self];
@@ -211,10 +211,8 @@
     
     if (state == LinphoneRegistrationOk) {
         [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
-        [self.menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
     } else {
         [self.menuItemSignOut setAction:nil];
-        [self.menuItemPreferences setAction:nil];
     }
 }
 

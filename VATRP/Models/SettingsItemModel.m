@@ -13,6 +13,7 @@
 @synthesize controller_Type;
 @synthesize title;
 @synthesize defaultValue;
+@synthesize userDefaultsKey;
 
 - (id) initWithDictionary:(NSDictionary*)dict {
     self = [super init];
@@ -21,6 +22,7 @@
         self.controller_Type = [[dict objectForKey:@"controllerType"] intValue];
         self.title = [dict objectForKey:@"title"];
         self.defaultValue = [dict objectForKey:@"defaultValue"];
+        self.userDefaultsKey = [dict objectForKey:@"UserDefaultsKey"];
     }
     
     return self;

@@ -6,13 +6,18 @@
 //  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 @interface SettingsService : NSObject
 
 + (SettingsService *)sharedInstance;
 
 + (void) setSIPEncryption:(BOOL)encrypt;
-+ (void)setStartAppOnBoot:(BOOL)start;
++ (void) setStartAppOnBoot:(BOOL)start;
++ (void) setColorWithKey:(NSString*)key Color:(NSColor*)color;
++ (NSColor*) getColorWithKey:(NSString*)key;
++ (BOOL) getMicMute;
++ (BOOL) getEchoCancel;
++ (BOOL) getShowPreview;
 
 @end

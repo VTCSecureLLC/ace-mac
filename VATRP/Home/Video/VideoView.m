@@ -17,6 +17,7 @@
 #import "SecondCallView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CallService.h"
+#import "SettingsService.h"
 #import "ChatService.h"
 #import "AppDelegate.h"
 #import "Utils.h"
@@ -131,8 +132,14 @@
             linphone_core_set_native_video_window_id(lc, (__bridge void *)(self));
             
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
-            linphone_core_use_preview_window(lc, YES);
-            linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
+            
+            if ([SettingsService getShowPreview]) {
+                self.localVideo.hidden = NO;
+                linphone_core_use_preview_window(lc, YES);
+                linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
+            } else {
+                self.localVideo.hidden = YES;
+            }
             
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                                  target:self

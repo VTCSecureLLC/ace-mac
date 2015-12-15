@@ -10,6 +10,7 @@
 #import "ChatService.h"
 #import "ViewManager.h"
 #import "AppDelegate.h"
+#import "SettingsService.h"
 
 
 @interface CallService () {
@@ -149,6 +150,8 @@
             
             currentCall = aCall;
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:currentCall];
+            
+            linphone_call_enable_echo_cancellation(aCall, [SettingsService getEchoCancel]);
         }
             break;
         case LinphoneCallPausedByRemote:

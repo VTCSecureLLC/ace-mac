@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<string>General Menu</string>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Start On Boot</string>
+			<key>defaultValue</key>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>START_ON_BOOT</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>SIP Encryption</string>
+			<key>defaultValue</key>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>SIP_ENCRYPTION</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Wifi Only</string>
+			<key>defaultValue</key>
+			<false/>
+			<key>UserDefaultsKey</key>
+			<string>WIFI_ONLY</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Auto Answer</string>
+			<key>defaultValue</key>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_AUTO_ANSWER_CALL</string>
+		</dict>
+	</array>
+	<array>
+		<string>Audio/Video Menu</string>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Speaker Mute</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Mic Mute</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Echo Cancel</string>
+			<key>defaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Show Self-View</string>
+			<key>defaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Show Preview</string>
+			<key>defaultValue</key>
+			<true/>
+		</dict>
+	</array>
+	<array>
+		<string>Theme Menu</string>
+		<dict>
+			<key>controllerType</key>
+			<integer>2</integer>
+			<key>title</key>
+			<string>Foreground Color</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>2</integer>
+			<key>title</key>
+			<string>Background Color</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<real>0</real>
+			<key>title</key>
+			<string>Force 508</string>
+			<key>defaultValue</key>
+			<true/>
+		</dict>
+	</array>
+	<array>
+		<string>Text Menu</string>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>label</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+	</array>
+	<array>
+		<string>Summary Menu</string>
+		<dict>
+			<key>controllerType</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>View TSS</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Send TSS</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Show Advanced</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Show Debug</string>
+			<key>defaultValue</key>
+			<false/>
+		</dict>
+	</array>
+</array>
+</plist>

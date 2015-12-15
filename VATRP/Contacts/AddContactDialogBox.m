@@ -8,6 +8,7 @@
 
 #import "AddContactDialogBox.h"
 #import "LinphoneManager.h"
+#import "Utils.h"
 
 @interface AddContactDialogBox ()<NSComboBoxDelegate> {
     NSMutableArray *providerNames;
@@ -32,7 +33,7 @@
     if (self.isEditing) {
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
-        [self.phoneTextField setStringValue:self.oldPhone];
+        [self.phoneTextField setStringValue:[Utils makeAccountNumberFromSipURI:self.oldPhone]];
     } else {
         [self setTitle:@"Add contact"];
     }
@@ -67,7 +68,7 @@
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
                                                             object:@{@"name" : [self.nameTextField stringValue],
-                                                                     @"phone": [self.phoneTextField stringValue],
+                                                                     @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
                                                                      @"oldName": self.oldName,
                                                                      @"oldPhone" : self.oldPhone,
                                                                      @"provider" : providerAddress}
@@ -75,7 +76,7 @@
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoFilled"
                                                             object:@{@"name" : [self.nameTextField stringValue],
-                                                                     @"phone": [self.phoneTextField stringValue],
+                                                                     @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
                                                                      @"provider" : providerAddress}
                                                           userInfo:nil];
     }
@@ -109,6 +110,18 @@
         const char *domain = linphone_proxy_config_get_domain(current_conf);
         providerAddress = [NSString stringWithUTF8String:domain];
     }
+}
+
+- (NSString*)createFullSipUriFromString:(NSString*)str {
+    NSString *sipUri = str;
+    if ([Utils nsStringIsValidSip:sipUri]) {
+        sipUri = [@"sip:" stringByAppendingString:sipUri];
+    } else {
+        [self makeProviderName];
+        sipUri = [Utils makeSipURIWithAccountName:str andProviderAddress:providerAddress];
+    }
+    
+    return sipUri;
 }
 
 @end

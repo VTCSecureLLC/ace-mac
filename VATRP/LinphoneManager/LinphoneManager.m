@@ -29,7 +29,7 @@
 //#import <CoreTelephony/CTCallCenter.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
 //#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-//#import "LinphoneLocationManager.h"
+#import "LinphoneLocationManager.h"
 
 #import "LinphoneManager.h"
 //#import "LinphoneCoreSettingsStore.h"
@@ -226,9 +226,16 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
 //		photoLibrary = [[ALAssetsLibrary alloc] init];
 		self->_isTesting = [LinphoneManager isRunningTests];
 
-		[self renameDefaultSettings];
-		[self copyDefaultSettings];
-		[self overrideDefaultSettings];
+        [self setLinphoneDBFilePath];
+        
+        
+//        if ([fileManager fileExistsAtPath:dst]) {
+//            [self overrideDefaultSettings];
+//        } else {
+//            [self renameDefaultSettings];
+//            [self copyDefaultSettings];
+//            [self overrideDefaultSettings];
+//        }
 
 		//set default values for first boot
 		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
@@ -1551,6 +1558,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
 										, [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 }
+
+- (void)setLinphoneDBFilePath {
+    NSString* factory = [LinphoneManager bundleFile:@"linphonerc-factory"];
+    NSString *confiFileName = [self applicationDirectoryFile:@"linphonerc"];
+    configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
+                                        , [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+}
+
 #pragma mark - Audio route Functions
 
 - (bool)allowSpeaker {
@@ -1690,16 +1705,17 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
         thiscall = linphone_core_get_current_call(theLinphoneCore);
         LinphoneCallParams *lcallParams = linphone_core_create_call_params(theLinphoneCore, thiscall);
     
-    // VTCSecure add user location when emergency number is dialled.
-//    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
+  //   VTCSecure add user location when emergency number is dialled.
+    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
 //    if (emergency != nil && ([address hasPrefix:emergency] || [address hasPrefix:[@"sip:" stringByAppendingString:emergency]])) {
-//        NSString *locationString;
-//        if (![[LinphoneLocationManager sharedManager] isAuthorized:TRUE]) locationString = NSLocalizedString(@"not authorized by user",nil);
-//        else if (![[LinphoneLocationManager sharedManager] locationPlausible]) locationString =  NSLocalizedString(@"user location could not be established",nil);
-//        else locationString  =  [[LinphoneLocationManager sharedManager] currentLocationAsText];
+//         NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
 //        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 //    }
     
+    if ([address isEqualToString:@"911"]) {
+        NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
+        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+    }
     
 	if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
 		bool low_bandwidth = self.network == network_2g;
@@ -1722,6 +1738,9 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 //		[error show];
 
 	}
+    
+        linphone_call_params_enable_realtime_text(lcallParams, [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+    
 	LinphoneAddress* linphoneAddress = linphone_core_interpret_url(theLinphoneCore, [address cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 
 	if (linphoneAddress) {
@@ -1826,6 +1845,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0];
 	return [documentsPath stringByAppendingPathComponent:file];
+}
+
+- (NSString*)applicationDirectoryFile:(NSString*)file {
+    NSString* bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *makePath = [[[[documentsPath stringByAppendingString:@"/"] stringByAppendingString:bundleID] stringByAppendingString:@"/"] stringByAppendingString:file];
+    return makePath;
 }
 
 + (NSString*)cacheDirectory {

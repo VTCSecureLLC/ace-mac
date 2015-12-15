@@ -35,7 +35,7 @@
 @property (weak) IBOutlet NSButton *buttonKeypad;
 @property (weak) IBOutlet NSButton *buttonChat;
 @property (weak) IBOutlet NSProgressIndicator *videoProgressIndicator;
-
+@property (weak) IBOutlet NSButton *rttStatusButton;
 @end
 
 
@@ -55,6 +55,8 @@
     self.buttonChat.wantsLayer = YES;
     self.buttonAnswer.wantsLayer = YES;
     self.buttonDecline.wantsLayer = YES;
+    self.rttStatusButton.wantsLayer = YES;
+    self.rttStatusButton.enabled = NO;
 
     [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
@@ -62,6 +64,7 @@
     [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     [self.buttonKeypad.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     [self.buttonChat.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+    [self.rttStatusButton.layer setBackgroundColor:[NSColor redColor].CGColor];
     
     [self.buttonAnswer.layer setBackgroundColor:[NSColor greenColor].CGColor];
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonAnswer];
@@ -235,9 +238,7 @@
     if (!call || call != acall) {
         return;
     }
-    
-    LinphoneCore *lc = [LinphoneManager getLc];
-    
+    [self.rttStatusButton.layer setBackgroundColor:[NSColor redColor].CGColor];
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.hidden = NO;
@@ -287,7 +288,10 @@
         }
             break;
         case LinphoneCallStreamsRunning: {
-
+            const LinphoneCallParams* current = linphone_call_get_current_params(call);
+            if (linphone_call_params_realtime_text_enabled(current)) {
+                [self.rttStatusButton.layer setBackgroundColor:[NSColor greenColor].CGColor];
+            }
             [self.buttonHold setImage:[NSImage imageNamed:@"call hold"]];
             [self.buttonHold setEnabled:YES];
             [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];

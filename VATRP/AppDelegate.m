@@ -186,16 +186,7 @@
     linphone_proxy_config_done(proxyCfg);
     
     self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
-    [self.loginWindowController showWindow:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self.loginViewController
-                                             selector:@selector(configuringUpdate:)
-                                                 name:kLinphoneConfiguringStateUpdate
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self.loginViewController
-                                             selector:@selector(registrationUpdateEvent:)
-                                                 name:kLinphoneRegistrationUpdate
-                                               object:nil];
+    [self.loginWindowController showWindow:self];    
 }
 
 - (IBAction)onMenuItemACEFeedBack:(id)sender {

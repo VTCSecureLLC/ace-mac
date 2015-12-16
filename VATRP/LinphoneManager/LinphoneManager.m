@@ -226,9 +226,16 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
 //		photoLibrary = [[ALAssetsLibrary alloc] init];
 		self->_isTesting = [LinphoneManager isRunningTests];
 
-		[self renameDefaultSettings];
-		[self copyDefaultSettings];
-		[self overrideDefaultSettings];
+        [self setLinphoneDBFilePath];
+        
+        
+//        if ([fileManager fileExistsAtPath:dst]) {
+//            [self overrideDefaultSettings];
+//        } else {
+//            [self renameDefaultSettings];
+//            [self copyDefaultSettings];
+//            [self overrideDefaultSettings];
+//        }
 
 		//set default values for first boot
 		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
@@ -1551,6 +1558,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
 										, [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 }
+
+- (void)setLinphoneDBFilePath {
+    NSString* factory = [LinphoneManager bundleFile:@"linphonerc-factory"];
+    NSString *confiFileName = [self applicationDirectoryFile:@"linphonerc"];
+    configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
+                                        , [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+}
+
 #pragma mark - Audio route Functions
 
 - (bool)allowSpeaker {
@@ -1830,6 +1845,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0];
 	return [documentsPath stringByAppendingPathComponent:file];
+}
+
+- (NSString*)applicationDirectoryFile:(NSString*)file {
+    NSString* bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *makePath = [[[[documentsPath stringByAppendingString:@"/"] stringByAppendingString:bundleID] stringByAppendingString:@"/"] stringByAppendingString:file];
+    return makePath;
 }
 
 + (NSString*)cacheDirectory {

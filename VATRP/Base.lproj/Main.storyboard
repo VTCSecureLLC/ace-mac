@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
@@ -26,6 +26,9 @@
                                         <menuItem isSeparatorItem="YES" id="eGa-h9-rzZ"/>
                                         <menuItem title="Old Settings" id="OkD-C0-eW5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onMenuItemPreferences:" target="Voe-Tx-rLC" id="JQ8-u9-1sK"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Vdn-KY-TV2"/>
                                         <menuItem title="Provide VATRP Feedback" id="1gL-fB-Nk5">
@@ -938,7 +941,7 @@
                                         </connections>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rAt-4g-nXf" customClass="ContactsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="310" height="166"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="297"/>
                                         <subviews>
                                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="49" horizontalPageScroll="10" verticalLineScroll="49" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChY-B5-BDB">
                                                 <rect key="frame" x="0.0" y="0.0" width="310" height="254"/>
@@ -1110,8 +1113,8 @@
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn identifier="Contact" width="305" minWidth="40" maxWidth="1000" id="OkE-Ft-6So">
-                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Recent">
+                                                                <tableColumn identifier="Settings" width="305" minWidth="40" maxWidth="1000" id="OkE-Ft-6So">
+                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Settings">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1325,10 +1328,10 @@
                                         </textFieldCell>
                                     </textField>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A7N-2c-iqT" customClass="CallControllersView">
-                                        <rect key="frame" x="28" y="42" width="665" height="158"/>
+                                        <rect key="frame" x="28" y="12" width="665" height="200"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IFo-kC-Psa">
-                                                <rect key="frame" x="0.0" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="0.0" y="124" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="video_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="XLr-VL-zPf">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1339,11 +1342,11 @@
                                                 </connections>
                                             </button>
                                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="A60-of-7KD">
-                                                <rect key="frame" x="38" y="111" width="16" height="16"/>
+                                                <rect key="frame" x="38" y="153" width="16" height="16"/>
                                                 <animations/>
                                             </progressIndicator>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yQo-Zw-suQ">
-                                                <rect key="frame" x="111" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="111" y="124" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="mute_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="dLp-RD-8lQ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1354,7 +1357,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dj4-9v-xbv">
-                                                <rect key="frame" x="222" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="222" y="124" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="speaker_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Aq0-hS-f8g">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1365,7 +1368,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-9V-FyW">
-                                                <rect key="frame" x="333" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="333" y="124" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="numpad_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="yUE-WF-uSO">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1376,7 +1379,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ikE-j2-eXF">
-                                                <rect key="frame" x="444" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="444" y="124" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="chat_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="bZC-0P-rNV">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1387,7 +1390,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxg-mb-bAI">
-                                                <rect key="frame" x="555" y="82" width="110" height="76"/>
+                                                <rect key="frame" x="555" y="124" width="110" height="76"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="call hold" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="gcB-lR-nl5">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1398,7 +1401,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sTe-0r-4gL">
-                                                <rect key="frame" x="0.0" y="0.0" width="248" height="68"/>
+                                                <rect key="frame" x="0.0" y="42" width="248" height="68"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="square" title="Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="jbu-MC-1km">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1409,7 +1412,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dq1-OL-PU6">
-                                                <rect key="frame" x="302" y="0.0" width="248" height="68"/>
+                                                <rect key="frame" x="302" y="42" width="248" height="68"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="6af-i9-ReU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1420,7 +1423,7 @@
                                                 </connections>
                                             </button>
                                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dyV-DE-okd">
-                                                <rect key="frame" x="632" y="121" width="33" height="37"/>
+                                                <rect key="frame" x="632" y="163" width="33" height="37"/>
                                                 <animations/>
                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="info-icon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="J6I-k0-Uub">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1429,6 +1432,14 @@
                                                 <connections>
                                                     <action selector="onButtonCallInfo:" target="A7N-2c-iqT" id="6b1-Fe-in3"/>
                                                 </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iur-AQ-p1y">
+                                                <rect key="frame" x="614" y="5" width="50" height="33"/>
+                                                <animations/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="rtt_on_off" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="mem-Gy-fQK">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
                                             </button>
                                         </subviews>
                                         <animations/>
@@ -1441,6 +1452,7 @@
                                             <outlet property="buttonMute" destination="yQo-Zw-suQ" id="AnX-sD-xKh"/>
                                             <outlet property="buttonSpeaker" destination="dj4-9v-xbv" id="quP-hx-nto"/>
                                             <outlet property="buttonVideo" destination="IFo-kC-Psa" id="Iaq-ah-7N2"/>
+                                            <outlet property="rttStatusButton" destination="Iur-AQ-p1y" id="bAo-tr-HVj"/>
                                             <outlet property="videoProgressIndicator" destination="A60-of-7KD" id="czg-Q4-FAC"/>
                                         </connections>
                                     </customView>
@@ -1758,7 +1770,7 @@
                 </viewController>
                 <customObject id="nie-3i-IYX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-379" y="-125"/>
+            <point key="canvasLocation" x="-437" y="-162"/>
         </scene>
         <!--Add Contact Dialog Box-->
         <scene sceneID="X16-Wt-nwY">
@@ -4902,6 +4914,7 @@ DQ
         <image name="numpad_active" width="36" height="36"/>
         <image name="plus icon" width="53" height="53"/>
         <image name="recents" width="25" height="40"/>
+        <image name="rtt_on_off" width="225" height="225"/>
         <image name="send_message" width="298" height="60"/>
         <image name="settings" width="25" height="40"/>
         <image name="speaker_active" width="41" height="34"/>

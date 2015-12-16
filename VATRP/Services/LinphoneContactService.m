@@ -39,7 +39,7 @@
     }
     int t = linphone_friend_set_name(friend, [name  UTF8String]);
     if  (t == 0) {
-        linphone_friend_enable_subscribes(friend,TRUE);
+        linphone_friend_enable_subscribes(friend,FALSE);
         linphone_friend_set_inc_subscribe_policy(friend,LinphoneSPAccept);
         linphone_core_add_friend([LinphoneManager getLc],friend);
     }

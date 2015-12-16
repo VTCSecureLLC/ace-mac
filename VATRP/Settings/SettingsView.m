@@ -7,8 +7,11 @@
 //
 
 #import "SettingsView.h"
+#import "SettingsService.h"
 #import "SettingsHeaderModel.h"
 #import "SettingsItemModel.h"
+#import "AccountsService.h"
+#import "RegistrationService.h"
 
 @interface SettingsView () {
     NSArray *settings;
@@ -87,8 +90,17 @@
                 [checkbox setButtonType:NSSwitchButton];
                 [checkbox setBezelStyle:0];
                 [checkbox setTitle:item.title];
-                [checkbox setState:[item.defaultValue boolValue]];
+
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                if (item.userDefaultsKey && [[[defaults dictionaryRepresentation] allKeys] containsObject:item.userDefaultsKey]) {
+                    NSInteger value = [[NSUserDefaults standardUserDefaults] boolForKey:item.userDefaultsKey];
+                    checkbox.state = value;
+                } else {
+                    [checkbox setState:[item.defaultValue boolValue]];
+                }
+                
                 [checkbox setAction:@selector(checkboxHandler:)];
+                [checkbox setTarget:self];
                 [cellView addSubview:checkbox];
             }
                 break;
@@ -134,7 +146,16 @@
 - (void) checkboxHandler:(id)sender {
     NSButton *checkbox = (NSButton*)sender;
     
+    SettingsItemModel *item = (SettingsItemModel*)settingsList[checkbox.tag];
+    [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
+
+    if ([item.userDefaultsKey isEqualToString:@"SIP_ENCRYPTION"]) {
+        [SettingsService setSIPEncryption:checkbox.state];
+    } else if ([item.userDefaultsKey isEqualToString:@"START_ON_BOOT"]) {
+        [SettingsService setStartAppOnBoot:checkbox.state];
+    }
     
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) chartColorChange:(id)sender {

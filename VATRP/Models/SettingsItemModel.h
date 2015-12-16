@@ -21,5 +21,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) controllerType controller_Type;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *defaultValue;
+@property (nonatomic, retain) NSString *userDefaultsKey;
 
 @end

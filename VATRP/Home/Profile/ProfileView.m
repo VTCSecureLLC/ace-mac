@@ -36,6 +36,8 @@
                                              selector:@selector(registrationUpdateEvent:)
                                                  name:kLinphoneRegistrationUpdate
                                                object:nil];
+    
+    [self updateUI];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

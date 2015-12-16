@@ -9,6 +9,7 @@
 #import "RegistrationService.h"
 #import "SDPNegotiationService.h"
 #import "LinphoneManager.h"
+#import "AppDelegate.h"
 #import "Utils.h"
 
 @implementation RegistrationService
@@ -267,7 +268,8 @@
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
-    
+    NSString* message = [notif.userInfo objectForKey:@"message"];
+
     if (state == LinphoneRegistrationOk) {
         NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
         NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
@@ -297,6 +299,10 @@
                 linphone_core_enable_payload_type(lc, pt, [[dictVideoCodec objectForKey:pref] boolValue]);
             }
         }
+    }
+
+    if ([AppDelegate sharedInstance].loginViewController) {
+        [[AppDelegate sharedInstance].loginViewController registrationUpdate:state message:message];
     }
 }
 

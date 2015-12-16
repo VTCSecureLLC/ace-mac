@@ -10,6 +10,7 @@
 #import "CallInfoWindowController.h"
 #import "ChatService.h"
 #import "ViewManager.h"
+#import "SettingsService.h"
 #import "Utils.h"
 
 
@@ -259,6 +260,10 @@
                                                   self.buttonDecline.frame.size.height);
             
             [self enableDisableButtons:YES];
+
+            if ([SettingsService getMicMute]) {
+                [self onButtonMute:self.buttonMute];
+            }
         }
             break;
         case LinphoneCallOutgoingInit: {

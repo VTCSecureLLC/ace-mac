@@ -62,6 +62,8 @@
 			<string>Mic Mute</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>MICROPHONE_MUTE</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -70,6 +72,8 @@
 			<string>Echo Cancel</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ECHO_CANCEL</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -78,14 +82,18 @@
 			<string>Show Self-View</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>VIDEO_SHOW_SELF_VIEW</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<real>0</real>
+			<integer>0</integer>
 			<key>title</key>
 			<string>Show Preview</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>VIDEO_SHOW_PREVIEW</string>
 		</dict>
 	</array>
 	<array>
@@ -97,6 +105,8 @@
 			<string>Foreground Color</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>APP_FOREGROUND_COLOR</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -105,6 +115,8 @@
 			<string>Background Color</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>APP_BACKGROUND_COLOR</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -113,6 +125,8 @@
 			<string>Force 508</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>APP_FORCE_508</string>
 		</dict>
 	</array>
 	<array>

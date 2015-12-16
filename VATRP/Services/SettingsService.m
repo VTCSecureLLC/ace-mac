@@ -76,6 +76,41 @@
     CFRelease(loginItems);
 }
 
++ (void) setColorWithKey:(NSString*)key Color:(NSColor*)color {
+    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSColor*) getColorWithKey:(NSString*)key {
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    
+    NSColor *color = nil;
+    if (colorData)
+        color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+
+    return color;
+}
+
++ (BOOL) getMicMute {
+    BOOL micMute = [[NSUserDefaults standardUserDefaults] boolForKey:@"MICROPHONE_MUTE"];
+    
+    return micMute;
+}
+
++ (BOOL) getEchoCancel {
+    BOOL echoCancel = [[NSUserDefaults standardUserDefaults] boolForKey:@"ECHO_CANCEL"];
+    
+    return echoCancel;
+}
+
++ (BOOL) getShowPreview {
+    BOOL showPreview = [[NSUserDefaults standardUserDefaults] boolForKey:@"VIDEO_SHOW_PREVIEW"];
+    
+    return showPreview;
+}
+
+//
 - (void)enableLoginItemWithLoginItemsReference:(LSSharedFileListRef )theLoginItemsRefs ForPath:(NSString *)appPath {
     // We call LSSharedFileListInsertItemURL to insert the item at the bottom of Login Items list.
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];

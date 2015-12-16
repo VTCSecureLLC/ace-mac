@@ -1294,6 +1294,7 @@
                                             <outlet property="labelCallDuration" destination="BCE-oT-0Kc" id="EOj-lM-Kau"/>
                                             <outlet property="labelCallState" destination="bRW-5L-eQn" id="CZ7-Bb-Yj6"/>
                                             <outlet property="labelDisplayName" destination="V5s-GS-ax9" id="QCs-Jl-119"/>
+                                            <outlet property="labelRingCount" destination="mXa-6n-h0e" id="Gw7-w4-Qlc"/>
                                             <outlet property="localVideo" destination="tyK-Cn-OT4" id="Pff-VI-r3M"/>
                                             <outlet property="numpadView" destination="Ovu-cs-Ecb" id="YTP-w4-s8h"/>
                                             <outlet property="secondCallView" destination="yaC-yt-d1Z" id="UxI-Gx-8O7"/>
@@ -1328,6 +1329,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXa-6n-h0e">
+                                        <rect key="frame" x="10" y="286" width="700" height="130"/>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="1" id="hoz-d3-ZYD">
                                             <font key="font" metaFont="system" size="120"/>

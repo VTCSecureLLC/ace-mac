@@ -10,7 +10,6 @@
 #import "BFNavigationController.h"
 #import "NSViewController+BFNavigationController.h"
 #import "AppDelegate.h"
-#import "LinphoneManager.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
 #import "Utils.h"
@@ -33,23 +32,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    [AppDelegate sharedInstance].loginViewController = self;
 }
 
 - (void)loadView {
     [super loadView];
     
-//    self.view.wantsLayer = YES;
-//    self.view.layer.backgroundColor = [NSColor redColor].CGColor;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(configuringUpdate:)
-                                                 name:kLinphoneConfiguringStateUpdate
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(registrationUpdateEvent:)
-                                                 name:kLinphoneRegistrationUpdate
-                                               object:nil];
+    [AppDelegate sharedInstance].loginViewController = self;
 
     [[LinphoneManager instance]	startLinphoneCore];
     [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
@@ -70,6 +58,12 @@
                                                         domain:loginAccount.domain
                                                      transport:loginAccount.transport
                                                           port:loginAccount.port];
+}
+
+- (void) viewDidDisappear {
+    [super viewDidDisappear];
+
+    [AppDelegate sharedInstance].loginViewController = nil;
 }
 
 - (void)configuringUpdate:(NSNotification *)notif {
@@ -164,7 +158,7 @@
 
 #pragma mark -
 
-- (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message{
+- (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message {
     switch (state) {
         case LinphoneRegistrationOk: {
             [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username

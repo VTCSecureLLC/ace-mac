@@ -113,6 +113,7 @@
                 [cellView addSubview:labelTitle];
                 
                 NSTextField *textFieldValue = [[NSTextField alloc] initWithFrame:NSMakeRect(120, 3, 170, 20)];
+                textFieldValue.tag = row;
                 textFieldValue.stringValue = item.defaultValue;
                 textFieldValue.editable = YES;
                 [cellView addSubview:textFieldValue];
@@ -127,7 +128,10 @@
                 [labelTitle setBackgroundColor:[NSColor clearColor]];
                 [cellView addSubview:labelTitle];
                 
+                NSColor *color = [SettingsService getColorWithKey:item.userDefaultsKey];
                 NSColorWell *colorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(120, 1, 170, 24)];
+                colorWell.tag = row;
+                [colorWell setColor:color ? color : [NSColor whiteColor]];
                 [colorWell setAction:@selector(chartColorChange:)];
                 [colorWell setTarget:self];
                 [cellView addSubview:colorWell];
@@ -147,12 +151,13 @@
     NSButton *checkbox = (NSButton*)sender;
     
     SettingsItemModel *item = (SettingsItemModel*)settingsList[checkbox.tag];
-    [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
 
     if ([item.userDefaultsKey isEqualToString:@"SIP_ENCRYPTION"]) {
         [SettingsService setSIPEncryption:checkbox.state];
     } else if ([item.userDefaultsKey isEqualToString:@"START_ON_BOOT"]) {
         [SettingsService setStartAppOnBoot:checkbox.state];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -162,6 +167,8 @@
     NSColorWell *colorWell = (NSColorWell*)sender;
     NSColor *color = colorWell.color;
     
+    SettingsItemModel *item = (SettingsItemModel*)settingsList[colorWell.tag];
+    [SettingsService setColorWithKey:item.userDefaultsKey Color:color];
 //    if ([color isKindOfClass:[NSColor class]]) {
 //        NSLog(@"RED: %f, GREEN: %f, BLUE: %f, ALPHA: %f", color.redComponent/(1.0/255.0), color.greenComponent/(1.0/255.0), color.blueComponent/(1.0/255.0), color.alphaComponent);
 //    } else {

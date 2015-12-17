@@ -7,8 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "LinphoneManager.h"
 #import "BFViewController.h"
 #import "AccountModel.h"
+
 @interface LoginViewController : NSViewController <BFViewController>
+
+- (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message;
 
 @end

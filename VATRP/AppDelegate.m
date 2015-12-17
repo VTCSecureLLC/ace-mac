@@ -61,6 +61,8 @@
 
     linphone_core_set_log_level(ORTP_DEBUG);
     linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
+    
+    [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
 }
 
 //- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
@@ -209,11 +211,11 @@
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
     
-    if (state == LinphoneRegistrationOk) {
-        [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
-    } else {
-        [self.menuItemSignOut setAction:nil];
-    }
+//    if (state == LinphoneRegistrationOk) {
+//        [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+//    } else {
+//        [self.menuItemSignOut setAction:nil];
+//    }
 }
 
 void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {

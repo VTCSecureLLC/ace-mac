@@ -167,11 +167,11 @@
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
         [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
-                                                          UserID:@""
+                                                          UserID:accountModel.userID
                                                         Password:@""
-                                                          Domain:@""
-                                                       Transport:@""
-                                                            Port:0
+                                                          Domain:accountModel.domain
+                                                       Transport:accountModel.transport
+                                                            Port:accountModel.port
                                                        isDefault:YES];
     }
     

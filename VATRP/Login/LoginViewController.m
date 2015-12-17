@@ -53,6 +53,15 @@
 
     [[LinphoneManager instance]	startLinphoneCore];
     [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+    
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+
+    if (accountModel) {
+        self.textFieldUsername.stringValue = accountModel.username;
+        self.textFieldUserID.stringValue = accountModel.userID;
+        self.textFieldDomain.stringValue = accountModel.domain;
+        self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+    }
 }
 
 - (IBAction)onButtonLogin:(id)sender {

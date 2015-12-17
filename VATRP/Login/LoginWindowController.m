@@ -29,17 +29,16 @@
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
 
     if (accountModel &&
-        accountModel.username &&
-        accountModel.userID &&
-        accountModel.password &&
-        accountModel.domain &&
-        accountModel.transport &&
+        accountModel.username && accountModel.username.length &&
+        accountModel.userID && accountModel.userID.length &&
+        accountModel.password && accountModel.password.length &&
+        accountModel.domain && accountModel.domain.length &&
+        accountModel.transport && accountModel.transport.length &&
         accountModel.port) {
         
         [[RegistrationService sharedInstance] asyncRegisterWithAccountModel:accountModel];
 
         [[AppDelegate sharedInstance] performSelector:@selector(showTabWindow) withObject:nil afterDelay:0.001];
-//        [[AppDelegate sharedInstance] showTabWindow];
     } else {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         

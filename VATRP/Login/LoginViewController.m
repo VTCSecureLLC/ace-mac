@@ -191,7 +191,14 @@
         case LinphoneRegistrationFailed: {
             NSAlert *alert = [[NSAlert alloc]init];
             [alert addButtonWithTitle:@"OK"];
-            [alert setMessageText:message];
+            if ([message isEqualToString:@"Forbidden"])
+            {
+                [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+            }
+            else
+            {
+                [alert setMessageText:message];
+            }
             [alert runModal];
 
             break;

@@ -69,7 +69,7 @@
 {
     AccountModel *accountModel = [[AccountModel alloc] init];
     accountModel.username = username;
-    accountModel.userID = userID;
+    accountModel.userID = userID && userID.length ? userID : username;
     accountModel.password = password;
     accountModel.domain = domain;
     accountModel.transport = transport;

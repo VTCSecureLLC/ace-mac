@@ -3,61 +3,61 @@
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-16x16.png",
+      "filename" : "transparent-16x16.png",
       "scale" : "1x"
     },
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-32x32_2.png",
+      "filename" : "transparent-32x32.png",
       "scale" : "2x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-32x32.png",
+      "filename" : "transparent-32x32-1.png",
       "scale" : "1x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-64x64.png",
+      "filename" : "transparent-64x64.png",
       "scale" : "2x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-128x128.png",
+      "filename" : "transparent-128x128.png",
       "scale" : "1x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-256x256_2.png",
+      "filename" : "transparent-256x256.png",
       "scale" : "2x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-256x256.png",
+      "filename" : "transparent-256x256-1.png",
       "scale" : "1x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-512x512_2.png",
+      "filename" : "transparent-512x512.png",
       "scale" : "2x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-512x512.png",
+      "filename" : "transparent-512x512-1.png",
       "scale" : "1x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "ace-mac-transparent-1024x1024.png",
+      "filename" : "transparent-1024x1024.png",
       "scale" : "2x"
     }
   ],

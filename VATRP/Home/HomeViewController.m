@@ -34,6 +34,7 @@
 @property (weak) IBOutlet NSTableView *providerTableView;
 @property (weak) IBOutlet NSView *providersView;
 
+@property bool hasProviderAlertBeenShown;
 @end
 
 @implementation HomeViewController
@@ -61,6 +62,8 @@
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
     [self setObservers];
+    
+    self.hasProviderAlertBeenShown = false;
 }
 
 #pragma mark - Observers and related functions
@@ -189,13 +192,26 @@
 }
 
 - (IBAction)didSelectedTableRow:(id)sender {
-    NSInteger selectedRow = [self.providerTableView selectedRow];
-    if (selectedRow >= 0 && selectedRow < providersArray.count) {
-        NSString *imageStrname = [providersArray objectAtIndex:selectedRow];
-        [self.dialPadView setProvButtonImage:[NSImage imageNamed:imageStrname]];
-        self.providersView.hidden = YES;
-
+    // VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
+    // show this once so that the user can look to see the options but not make a selection.
+    if (!self.hasProviderAlertBeenShown)
+    {
+        NSAlert *alert = [[NSAlert alloc]init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Provider Selection will be available in General Release"];
+        [alert runModal];
+        self.hasProviderAlertBeenShown = true;
     }
+    self.providersView.hidden = YES;
+    
+// VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
+//    NSInteger selectedRow = [self.providerTableView selectedRow];
+//    if (selectedRow >= 0 && selectedRow < providersArray.count) {
+//        NSString *imageStrname = [providersArray objectAtIndex:selectedRow];
+//        [self.dialPadView setProvButtonImage:[NSImage imageNamed:imageStrname]];
+//        self.providersView.hidden = YES;
+
+//    }
 }
 
 - (IBAction)onButtonProv:(id)sender {

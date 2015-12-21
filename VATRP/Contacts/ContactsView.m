@@ -46,9 +46,9 @@
         [self.addContactButton becomeFirstResponder];
         [self setObservers];
         self.contactInfos = [NSMutableArray new];
-        [self refreshContactList];
         firstTime = NO;
     }
+    [self refreshContactList];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

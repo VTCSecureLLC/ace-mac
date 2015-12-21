@@ -41,6 +41,15 @@
 
     [[LinphoneManager instance]	startLinphoneCore];
     [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+    
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+
+    if (accountModel) {
+        self.textFieldUsername.stringValue = accountModel.username;
+        self.textFieldUserID.stringValue = accountModel.userID;
+        self.textFieldDomain.stringValue = accountModel.domain;
+        self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+    }
 }
 
 - (IBAction)onButtonLogin:(id)sender {
@@ -182,7 +191,14 @@
         case LinphoneRegistrationFailed: {
             NSAlert *alert = [[NSAlert alloc]init];
             [alert addButtonWithTitle:@"OK"];
-            [alert setMessageText:message];
+            if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
+            {
+                [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+            }
+            else
+            {
+                [alert setMessageText:message];
+            }
             [alert runModal];
 
             break;

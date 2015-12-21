@@ -97,8 +97,23 @@
 #pragma mark - NSTextView delegate methods
 
 - (void)controlTextDidChange:(NSNotification *)obj {
-    [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
 }
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
+{
+    BOOL retval = NO;
+    
+    if (commandSelector == @selector(insertNewline:)) {
+        
+        retval = YES;
+        // then finish editing and make the call
+        [self.window makeFirstResponder:self.buttonCall];
+        [CallService callTo:self.textFieldNumber.stringValue];
+    }
+    return retval;
+}
+
 
 - (IBAction)onButtonNumber:(id)sender {
     NSButton *button = (NSButton*)sender;

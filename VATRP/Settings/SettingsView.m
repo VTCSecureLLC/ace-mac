@@ -7,6 +7,7 @@
 //
 
 #import "SettingsView.h"
+#import "LinphoneManager.h"
 #import "SettingsService.h"
 #import "SettingsHeaderModel.h"
 #import "SettingsItemModel.h"
@@ -205,11 +206,20 @@
     NSButton *checkbox = (NSButton*)sender;
     
     SettingsItemModel *item = (SettingsItemModel*)settingsList[checkbox.tag];
-
+    LinphoneCore *lc = [LinphoneManager getLc];
+    
     if ([item.userDefaultsKey isEqualToString:@"SIP_ENCRYPTION"]) {
         [SettingsService setSIPEncryption:checkbox.state];
     } else if ([item.userDefaultsKey isEqualToString:@"START_ON_BOOT"]) {
         [SettingsService setStartAppOnBoot:checkbox.state];
+    } else if ([item.userDefaultsKey isEqualToString:@"enable_adaptive_rate_control"]) {
+        linphone_core_enable_adaptive_rate_control(lc, checkbox.state);
+    } else if ([item.userDefaultsKey isEqualToString:@"enable_video_preference"]) {
+        linphone_core_enable_video(lc, checkbox.state, checkbox.state);
+    } else if ([item.userDefaultsKey isEqualToString:@"accept_video_preference"]) {
+        LinphoneVideoPolicy policy;
+        policy.automatically_accept = (BOOL)checkbox.state;
+        linphone_core_set_video_policy(lc, &policy);
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
     }
@@ -253,3 +263,7 @@
 }
 
 @end
+
+//enable_adaptive_rate_control
+//enable_video_preference
+//accept_video_preference

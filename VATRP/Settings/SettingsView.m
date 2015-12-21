@@ -151,13 +151,18 @@
     NSButton *checkbox = (NSButton*)sender;
     
     SettingsItemModel *item = (SettingsItemModel*)settingsList[checkbox.tag];
-
-    if ([item.userDefaultsKey isEqualToString:@"SIP_ENCRYPTION"]) {
-        [SettingsService setSIPEncryption:checkbox.state];
-    } else if ([item.userDefaultsKey isEqualToString:@"START_ON_BOOT"]) {
-        [SettingsService setStartAppOnBoot:checkbox.state];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
+    if ((item != nil) && (item.userDefaultsKey != nil))
+    {
+        if ([item.userDefaultsKey isEqualToString:@"SIP_ENCRYPTION"])
+        {
+            [SettingsService setSIPEncryption:checkbox.state];
+        } else if ([item.userDefaultsKey isEqualToString:@"START_ON_BOOT"])
+        {
+            [SettingsService setStartAppOnBoot:checkbox.state];
+        } else
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
+        }
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];

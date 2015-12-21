@@ -207,7 +207,17 @@
 }
 
 - (void)setProvButtonImage:(NSImage*)img {
-    [self.buttonProvider setImage:img];
+    // VATRP-1514: Gray out option until general release.
+    NSImage *newImage = [img copy];
+    NSColor* tint = [NSColor grayColor];
+    if (tint) {
+        [newImage lockFocus];
+        [tint set];
+        NSRect imageRect = {NSZeroPoint, [newImage size]};
+        NSRectFillUsingOperation(imageRect, NSCompositeSourceAtop);
+        [newImage unlockFocus];
+    }
+    [self.buttonProvider setImage:newImage];
 }
 
 @end

@@ -89,6 +89,15 @@
     return (AppDelegate*)[NSApplication sharedApplication].delegate;
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag {
+    
+    if(theApplication.windows.count > 0){
+        [[theApplication.windows objectAtIndex:0] makeKeyAndOrderFront:self];
+    }
+    
+    return YES;
+}
+
 - (void) showTabWindow {
     self.homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
     [self.homeWindowController showWindow:self];

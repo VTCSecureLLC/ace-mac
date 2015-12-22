@@ -16,7 +16,7 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    [[self window] setTitle:@"Dead / HoH Resources"];
+    [[self window] setTitle:@"Deaf / HoH Resources"];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 

@@ -13,8 +13,9 @@
 #import "SettingsItemModel.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
+#import "SDPNegotiationService.h"
 
-@interface SettingsView () {
+@interface SettingsView () <NSTextFieldDelegate> {
     NSArray *settings;
     NSMutableArray *settingsList;
     
@@ -130,17 +131,33 @@
                 [checkbox setBezelStyle:0];
                 [checkbox setTitle:item.title];
 
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                if (item.userDefaultsKey && [[[defaults dictionaryRepresentation] allKeys] containsObject:item.userDefaultsKey]) {
-                    NSInteger value = [[NSUserDefaults standardUserDefaults] boolForKey:item.userDefaultsKey];
-                    checkbox.state = value;
+                SettingsHeaderModel *object = settingsList[row];
+                NSInteger index = row;
+
+                while (![object isKindOfClass:[SettingsHeaderModel class]]) {
+                    index--;
+                    object = settingsList[index];
+                }
+                
+                if (object && object.title && ([object.title isEqualToString:@"Audio Codecs"] || [object.title isEqualToString:@"Video Codecs"])) {
+                    checkbox.state = [self getAudioCodecEnabledStateWithUserDefaultsKey:item];
                 } else {
-                    [checkbox setState:[item.defaultValue boolValue]];
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    if (item.userDefaultsKey && [[[defaults dictionaryRepresentation] allKeys] containsObject:item.userDefaultsKey]) {
+                        NSInteger value = [[NSUserDefaults standardUserDefaults] boolForKey:item.userDefaultsKey];
+                        checkbox.state = value;
+                    } else {
+                        [checkbox setState:[item.defaultValue boolValue]];
+                    }
                 }
                 
                 [checkbox setAction:@selector(checkboxHandler:)];
                 [checkbox setTarget:self];
                 [cellView addSubview:checkbox];
+                
+                if ([item.userDefaultsKey isEqualToString:@"ACE_ENABLE_UPNP"]) {
+                    [checkbox setEnabled:linphone_core_upnp_available()];
+                }
             }
                 break;
             case controllerType_textfield: {
@@ -151,9 +168,12 @@
                 [labelTitle setBackgroundColor:[NSColor clearColor]];
                 [cellView addSubview:labelTitle];
                 
+                NSString *textfieldValue = [self textFieldValueWithUserDefaultsKey:item.userDefaultsKey];
+                
                 NSTextField *textFieldValue = [[NSTextField alloc] initWithFrame:NSMakeRect(120 + 10*(object.position-1), 3, 170, 20)];
+                textFieldValue.delegate = self;
                 textFieldValue.tag = row;
-                textFieldValue.stringValue = item.defaultValue;
+                textFieldValue.stringValue = textfieldValue ? textfieldValue : item.defaultValue;
                 textFieldValue.editable = YES;
                 [cellView addSubview:textFieldValue];
                 
@@ -202,6 +222,62 @@
     return nil;
 }
 
+- (NSString*) textFieldValueWithUserDefaultsKey:(NSString*)key {
+    if ([key isEqualToString:@"ACE_USERNAME"]) {
+        AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+        return accountModel.username;
+    } else if ([key isEqualToString:@"ACE_AUTH_ID"]) {
+        AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+        return accountModel.userID;
+    } else if ([key isEqualToString:@"ACE_DOMAIN"]) {
+        AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+        return accountModel.domain;
+    } else {
+        return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
+    
+    return nil;
+}
+
+- (BOOL) getAudioCodecEnabledStateWithUserDefaultsKey:(SettingsItemModel*)settingsItemModel {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    PayloadType *pt;
+    const MSList *elem;
+    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
+    NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
+    
+    for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref && [pref isEqualToString:settingsItemModel.userDefaultsKey]) {
+            if ([dictAudioCodec objectForKey:pref]) {
+                return [[dictAudioCodec objectForKey:pref] boolValue];
+            } else {
+                return linphone_core_payload_type_enabled(lc, pt);
+            }
+        }
+    }
+    
+    const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
+    NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
+
+    for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref && [pref isEqualToString:settingsItemModel.userDefaultsKey]) {
+            if ([dictVideoCodec objectForKey:pref]) {
+                return [[dictVideoCodec objectForKey:pref] boolValue];
+            } else {
+                return linphone_core_payload_type_enabled(lc, pt);
+            }
+        }
+    }
+    
+    return [settingsItemModel.defaultValue  boolValue];
+}
+
 - (void) checkboxHandler:(id)sender {
     NSButton *checkbox = (NSButton*)sender;
     
@@ -220,10 +296,34 @@
         LinphoneVideoPolicy policy;
         policy.automatically_accept = (BOOL)checkbox.state;
         linphone_core_set_video_policy(lc, &policy);
-    } else {
+    } else if ([item.userDefaultsKey isEqualToString:@"stun_preference"]) {
+        [SettingsService setStun:checkbox.state];
+    } else if ([item.userDefaultsKey isEqualToString:@"ice_preference"]) {
+        [SettingsService setICE:checkbox.state];
+    } else if ([item.userDefaultsKey isEqualToString:@"ACE_ENABLE_UPNP"]) {
+        [SettingsService setUPNP:checkbox.state];
+    } else if ([item.userDefaultsKey isEqualToString:@"random_port_preference"]) {
+        [SettingsService setRandomPorts:checkbox.state];
+    } else if ([item.userDefaultsKey isEqualToString:@"use_ipv6"]) {
+        linphone_core_enable_ipv6(lc, checkbox.state);
         [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
+    } else {
+        NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
+        NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
+
+        if (item.userDefaultsKey && [[dictAudioCodec allKeys] containsObject:item.userDefaultsKey]) {
+            NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] initWithDictionary:dictAudioCodec];
+            [mdictForSave setObject:[NSNumber numberWithBool:checkbox.state] forKey:item.userDefaultsKey];
+            [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
+        } else if (item.userDefaultsKey && [[dictVideoCodec allKeys] containsObject:item.userDefaultsKey]) {
+            NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] initWithDictionary:dictVideoCodec];
+            [mdictForSave setObject:[NSNumber numberWithBool:checkbox.state] forKey:item.userDefaultsKey];
+            [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
+        }
     }
-    
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -233,14 +333,6 @@
     
     SettingsItemModel *item = (SettingsItemModel*)settingsList[colorWell.tag];
     [SettingsService setColorWithKey:item.userDefaultsKey Color:color];
-//    if ([color isKindOfClass:[NSColor class]]) {
-//        NSLog(@"RED: %f, GREEN: %f, BLUE: %f, ALPHA: %f", color.redComponent/(1.0/255.0), color.greenComponent/(1.0/255.0), color.blueComponent/(1.0/255.0), color.alphaComponent);
-//    } else {
-////        color.numberOfComponents
-//    }
-    
-//    [labelTitleColor setBackgroundColor:color];
-    
 }
 
 - (void) onButtonHandler:(id)sender {
@@ -262,8 +354,34 @@
     }
 }
 
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
+    NSTextField *textField = (NSTextField*)control;
+    LinphoneCore *lc = [LinphoneManager getLc];
+
+    SettingsItemModel *item = (SettingsItemModel*)settingsList[textField.tag];
+
+    if ([item.userDefaultsKey isEqualToString:@"stun_url_preference"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:textField.stringValue forKey:@"stun_url_preference"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
+    } else if ([item.userDefaultsKey isEqualToString:@"video_preferred_fps_preference"]) {
+        linphone_core_set_preferred_framerate(lc, textField.floatValue);
+    }
+    
+    return YES;
+}
+
 @end
 
-//enable_adaptive_rate_control
-//enable_video_preference
-//accept_video_preference
+//username
+//userID
+//domain
+//audio codecs
+//video codecs
+//stun
+//stun url
+//ice
+//upnp
+//ipv6
+//preferred fps

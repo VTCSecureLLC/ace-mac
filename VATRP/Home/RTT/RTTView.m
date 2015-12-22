@@ -113,7 +113,6 @@
 
 - (void) viewWillDisappear {
     selectedChatRoom = nil;
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

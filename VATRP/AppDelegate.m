@@ -186,9 +186,10 @@
     linphone_proxy_config_edit(proxyCfg);
     linphone_proxy_config_enable_register(proxyCfg, false);
     linphone_proxy_config_done(proxyCfg);
-    
+
     self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
-    [self.loginWindowController showWindow:self];    
+    [self.loginWindowController showWindow:self];
+  
 }
 
 - (IBAction)onMenuItemACEFeedBack:(id)sender {

@@ -50,6 +50,9 @@
                                                object:nil];
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (IBAction)onButtonSwap:(id)sender {
     [[CallService sharedInstance] swapCallsToCall:self.call];
 }

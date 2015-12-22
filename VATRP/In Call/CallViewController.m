@@ -81,10 +81,8 @@ static const float callAlertStepInterval = 0.5;
     self.labelDisplayName.hidden = YES;
 }
 
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kLinphoneCallUpdate
-                                                  object:nil];
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)onButtonAnswer:(id)sender {

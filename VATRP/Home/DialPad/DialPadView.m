@@ -97,8 +97,23 @@
 #pragma mark - NSTextView delegate methods
 
 - (void)controlTextDidChange:(NSNotification *)obj {
-    [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
 }
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
+{
+    BOOL retval = NO;
+    
+    if (commandSelector == @selector(insertNewline:)) {
+        
+        retval = YES;
+        // then finish editing and make the call
+        [self.window makeFirstResponder:self.buttonCall];
+        [CallService callTo:self.textFieldNumber.stringValue];
+    }
+    return retval;
+}
+
 
 - (IBAction)onButtonNumber:(id)sender {
     NSButton *button = (NSButton*)sender;
@@ -207,7 +222,17 @@
 }
 
 - (void)setProvButtonImage:(NSImage*)img {
-    [self.buttonProvider setImage:img];
+    // VATRP-1514: Gray out option until general release.
+    NSImage *newImage = [img copy];
+    NSColor* tint = [NSColor grayColor];
+    if (tint) {
+        [newImage lockFocus];
+        [tint set];
+        NSRect imageRect = {NSZeroPoint, [newImage size]};
+        NSRectFillUsingOperation(imageRect, NSCompositeSourceAtop);
+        [newImage unlockFocus];
+    }
+    [self.buttonProvider setImage:newImage];
 }
 
 @end

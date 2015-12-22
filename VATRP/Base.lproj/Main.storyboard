@@ -308,7 +308,7 @@
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="426-bT-7Bf">
                                         <rect key="frame" x="186" y="11" width="62" height="69"/>
                                         <animations/>
-                                        <buttonCell key="cell" type="smallSquare" title="Messaging" bezelStyle="smallSquare" image="messages" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="dfi-BD-mxI">
+                                        <buttonCell key="cell" type="smallSquare" title="Resources" bezelStyle="smallSquare" image="messages" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="dfi-BD-mxI">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="10"/>
                                         </buttonCell>
@@ -2067,7 +2067,7 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="356" minWidth="40" maxWidth="1000" id="9ck-gp-Mgu">
+                                                <tableColumn width="40" minWidth="40" maxWidth="1000" id="9ck-gp-Mgu">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -2081,7 +2081,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="G25-W7-CLw">
-                                                            <rect key="frame" x="1" y="1" width="356" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="40" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="msN-P3-ZpQ">
@@ -2109,7 +2109,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="NAj-Ru-F87">
-                                    <rect key="frame" x="1" y="119" width="223" height="15"/>
+                                    <rect key="frame" x="1" y="1" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="AdP-ld-zaB">

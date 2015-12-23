@@ -55,7 +55,10 @@
 }
 
 + (void) callTo:(NSString*)number {
-    [[LinphoneManager instance] call:number displayName:number transfer:NO];
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
+    
+    [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
+//    [[LinphoneManager instance] call:number displayName:number transfer:NO];
     
 //    if ((number == nil) || [number isEqualToString:@""]) {
 //        return;
@@ -70,6 +73,10 @@
 //    linphone_core_invite_address_with_params(lc, linphoneAddress, params);
 }
 
+- (void) callUsingLinphoneManager:(NSString*)number {
+    [[LinphoneManager instance] call:number displayName:number transfer:NO];
+}
+    
 - (int) decline:(LinphoneCall *)aCall {
     return linphone_core_terminate_call([LinphoneManager getLc], aCall);
 }

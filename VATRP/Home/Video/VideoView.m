@@ -145,6 +145,9 @@
                                                                 repeats:YES];
             
             self.labelCallState.stringValue = @"Connected 00:00";
+            
+            [self.localVideo setFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
+            [[self.localVideo animator] setFrame:NSMakeRect(524, 580, 176, 99)];
         }
             break;
         case LinphoneCallOutgoingInit: {
@@ -200,6 +203,10 @@
         }
         case LinphoneCallEnd:
         {
+            linphone_core_enable_video_preview(lc, FALSE);
+            linphone_core_use_preview_window(lc, FALSE);
+            linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
+
             self.call = nil;
             self.numpadView.hidden = YES;
             [self stopRingCountTimer];
@@ -424,6 +431,20 @@
     NSView *content = self;
     CALayer *layer = [content layer];
     [layer removeAllAnimations];
+}
+
+- (void)showVideoPreview {
+    if ([SettingsService getShowPreview]) {
+        LinphoneCore *lc = [LinphoneManager getLc];
+        const char *cam = linphone_core_get_video_device(lc);
+        linphone_core_set_video_device(lc, cam);
+        linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
+        linphone_core_use_preview_window(lc, YES);
+        linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self));
+        linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
+     } else {
+        self.localVideo.hidden = YES;
+    }
 }
 
 @end

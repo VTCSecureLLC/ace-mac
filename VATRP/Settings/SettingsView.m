@@ -30,20 +30,35 @@
 - (void) awakeFromNib {
     [super awakeFromNib];
     
-    settingsList = [[NSMutableArray alloc] init];
+    static BOOL first = YES;
     
-    NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"SettingsUI.plist"];
-    settings = [NSArray arrayWithContentsOfFile:FileDB];
-    
-    for (NSArray *array in settings) {
-        for (NSDictionary *dict in array) {
-            if ([dict isKindOfClass:[NSString class]]) {
-                SettingsHeaderModel *settingsHeaderModel = [[SettingsHeaderModel alloc] initWithTitle:(NSString *)dict];
-                [settingsList addObject:settingsHeaderModel];
-            } else {
-                SettingsItemModel *settingsItemModel = [[SettingsItemModel alloc] initWithDictionary:dict];
-                [settingsList addObject:settingsItemModel];
-            }
+    if (first) {
+        first = NO;
+        settingsList = [[NSMutableArray alloc] init];
+        
+        NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"SettingsUI.plist"]; // SettingsAdvancedUI.plist
+        settings = [NSArray arrayWithContentsOfFile:FileDB];
+        
+        [self loadSettingsFromArray:settings];
+    }
+}
+
+- (void) loadSettingsFromArray:(NSArray*)array_  {
+    static int position = 0;
+    SettingsHeaderModel *settingsHeaderModel;
+    for (NSDictionary *dict in array_) {
+        if ([dict isKindOfClass:[NSString class]]) {
+            settingsHeaderModel = [[SettingsHeaderModel alloc] initWithTitle:(NSString *)dict];
+            settingsHeaderModel.position = position;
+            [settingsList addObject:settingsHeaderModel];
+        } else if ([dict isKindOfClass:[NSDictionary class]]) {
+            SettingsItemModel *settingsItemModel = [[SettingsItemModel alloc] initWithDictionary:dict];
+            settingsItemModel.position = settingsHeaderModel.position;
+            [settingsList addObject:settingsItemModel];
+        } else if ([dict isKindOfClass:[NSArray class]]) {
+            position++;
+            [self loadSettingsFromArray:(NSArray *)dict];
+            position--;
         }
     }
 }
@@ -74,18 +89,41 @@
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
     SettingsHeaderModel *object = settingsList[row];
 
+    NSTableCellView *cellView = [tableView makeViewWithIdentifier:@"SettingsCell" owner:self];
+
+    NSArray *subviews = [cellView subviews];
+    
+    int index = 0;
+    while (index < subviews.count) {
+        id v = [subviews objectAtIndex:index];
+
+        if ([v isKindOfClass:[NSTextField class]] || [v isKindOfClass:[NSButton class]] || [v isKindOfClass:[NSColorWell class]]) {
+            [v removeFromSuperview];
+            
+            continue;
+        }
+        
+        index++;
+    }
+    
+    
     if ([object isKindOfClass:[SettingsHeaderModel class]]) {
-        NSTextField *groupCell = [tableView makeViewWithIdentifier:@"GroupCell" owner:self];
-        [groupCell setStringValue:object.title];
-        return groupCell;
+
+        NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10*(object.position-1), 3, 100, 20)];
+        labelTitle.editable = NO;
+        labelTitle.stringValue = object.title;
+        [labelTitle.cell setBordered:NO];
+        [labelTitle setBackgroundColor:[NSColor clearColor]];
+        [cellView addSubview:labelTitle];
+
+        return cellView;
     } if ([object isKindOfClass:[SettingsItemModel class]]) {
-        NSTableCellView *cellView = [tableView makeViewWithIdentifier:@"SettingsCell" owner:self];
         
         SettingsItemModel *item = (SettingsItemModel*)object;
         
         switch (item.controller_Type) {
             case controllerType_checkbox: {
-                NSButton *checkbox= [[NSButton alloc] initWithFrame:NSMakeRect(10, 3, 200, 20)];
+                NSButton *checkbox= [[NSButton alloc] initWithFrame:NSMakeRect(10 + 10*(object.position-1), 3, 200, 20)];
                 checkbox.tag = row;
                 [checkbox setButtonType:NSSwitchButton];
                 [checkbox setBezelStyle:0];
@@ -105,14 +143,14 @@
             }
                 break;
             case controllerType_textfield: {
-                NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10, 3, 100, 20)];
+                NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10 + 10*(object.position-1), 3, 100, 20)];
                 labelTitle.editable = NO;
                 labelTitle.stringValue = item.title;
                 [labelTitle.cell setBordered:NO];
                 [labelTitle setBackgroundColor:[NSColor clearColor]];
                 [cellView addSubview:labelTitle];
                 
-                NSTextField *textFieldValue = [[NSTextField alloc] initWithFrame:NSMakeRect(120, 3, 170, 20)];
+                NSTextField *textFieldValue = [[NSTextField alloc] initWithFrame:NSMakeRect(120 + 10*(object.position-1), 3, 170, 20)];
                 textFieldValue.tag = row;
                 textFieldValue.stringValue = item.defaultValue;
                 textFieldValue.editable = YES;
@@ -121,7 +159,7 @@
             }
                 break;
             case controllerType_color: {
-                NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10, 3, 100, 20)];
+                NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10 + 10*(object.position-1), 3, 100, 20)];
                 labelTitle.editable = NO;
                 labelTitle.stringValue = item.title;
                 [labelTitle.cell setBordered:NO];
@@ -129,7 +167,7 @@
                 [cellView addSubview:labelTitle];
                 
                 NSColor *color = [SettingsService getColorWithKey:item.userDefaultsKey];
-                NSColorWell *colorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(120, 1, 170, 24)];
+                NSColorWell *colorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(120 + 10*(object.position-1), 1, 170, 24)];
                 colorWell.tag = row;
                 [colorWell setColor:color ? color : [NSColor whiteColor]];
                 [colorWell setAction:@selector(chartColorChange:)];
@@ -137,13 +175,29 @@
                 [cellView addSubview:colorWell];
             }
                 break;
-                
+            case controllerType_button: {
+                NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10 + 10*(object.position-1), 3, 100, 20)];
+                labelTitle.editable = NO;
+                labelTitle.stringValue = item.title;
+                [labelTitle.cell setBordered:NO];
+                [labelTitle setBackgroundColor:[NSColor clearColor]];
+                [cellView addSubview:labelTitle];
+
+                NSButton *button = [[NSButton alloc] initWithFrame:NSMakeRect(120 + 10*(object.position-1), 2, 170, 24)];
+                [button setTarget:self];
+                [button setAction:@selector(onButtonHandler:)];
+                button.tag = row;
+                [button setTitle:item.title];
+                [cellView addSubview:button];
+            }
+                break;
             default:
                 break;
         }
         
         return cellView;
     }
+    
     return nil;
 }
 
@@ -182,6 +236,25 @@
     
 //    [labelTitleColor setBackgroundColor:color];
     
+}
+
+- (void) onButtonHandler:(id)sender {
+    NSButton *button = (NSButton*)sender;
+    
+    SettingsItemModel *item = (SettingsItemModel*)settingsList[button.tag];
+    
+    if ([item.userDefaultsKey isEqualToString:@"ACE_VIEW_TSS"]) {
+        
+    } else if ([item.userDefaultsKey isEqualToString:@"ACE_SEND_TSS"]) {
+        
+    } else if ([item.userDefaultsKey isEqualToString:@"ACE_SHOW_ADVANCED"]) {
+        [settingsList removeAllObjects];
+        NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"SettingsAdvancedUI.plist"];
+        settings = [NSArray arrayWithContentsOfFile:FileDB];
+        [self loadSettingsFromArray:settings];
+        
+        [self.tableViewContacts reloadData];
+    }
 }
 
 @end

@@ -1131,16 +1131,6 @@
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <animations/>
                                                                         </tableCellView>
-                                                                        <textField identifier="GroupCell" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="SqV-Zj-9rf">
-                                                                            <rect key="frame" x="1" y="50" width="305" height="20"/>
-                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                            <animations/>
-                                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="fX3-UR-y4c">
-                                                                                <font key="font" metaFont="system"/>
-                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                        </textField>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>

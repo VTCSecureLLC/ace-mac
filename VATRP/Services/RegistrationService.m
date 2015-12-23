@@ -41,6 +41,12 @@
     return self;
 }
 
+-(void)dealloc{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:kLinphoneRegistrationUpdate
+//                                                  object:nil];
+}
+
 - (void) registerWithAccountModel:(AccountModel*)accountModel {
     [self verificationSignInWithUsername:accountModel.username
                                   UserID:accountModel.userID ? accountModel.userID : accountModel.username

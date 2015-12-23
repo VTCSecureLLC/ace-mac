@@ -82,11 +82,8 @@
     
     // Drawing code here.
 }
-
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kLinphoneCallUpdate
-                                                  object:nil];
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
@@ -306,10 +303,15 @@
 }
 
 - (void)setOutgoingCall:(LinphoneCall*)acall {
-    call = acall;
-    [self update];
+    if(acall != NULL){
+        call = acall;
+        [self update];
     
-    [self.callControllersView setOutgoingCall:acall];
+        [self.callControllersView setOutgoingCall:acall];
+    }
+    else{
+        
+    }
 }
 
 - (void)showSecondIncomingCallView:(LinphoneCall *)aCall {

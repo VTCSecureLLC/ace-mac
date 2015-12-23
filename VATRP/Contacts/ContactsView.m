@@ -119,6 +119,7 @@
 - (void)removeObservers {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoFilled" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoEditDone" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
 }
 
 - (void) setFrame:(NSRect)frame {

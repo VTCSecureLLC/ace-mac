@@ -10,7 +10,7 @@
 #import "Utils.h"
 #import "AppDelegate.h"
 #import "ChatService.h"
-
+#import "ResourcesWindowController.h"
 
 @interface DockView () {
     NSButton *selectedDocViewItem;
@@ -22,7 +22,7 @@
 @property (weak) IBOutlet NSButton *buttonDialpad;
 @property (weak) IBOutlet NSButton *buttonResources;
 @property (weak) IBOutlet NSButton *buttonSettings;
-
+@property (strong) ResourcesWindowController *resourcesWindowController;
 @end
 
 
@@ -85,12 +85,16 @@
 }
 
 - (IBAction)onButtonResources:(id)sender {
-    BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
-    if (isOpenedChatWindow) {
-        if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
-            [_delegate didClickDockViewResources:self];
-        }
-    }
+//    BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
+//    if (isOpenedChatWindow) {
+//        if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
+//            [_delegate didClickDockViewResources:self];
+//        }
+//    }
+    
+    
+    self.resourcesWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Resources"];
+    [self.resourcesWindowController showWindow:self];
 }
 
 - (IBAction)onButtonSettings:(id)sender {

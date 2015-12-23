@@ -40,6 +40,11 @@
     [self updateUI];
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kLinphoneRegistrationUpdate
+                                                  object:nil];
+}
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     

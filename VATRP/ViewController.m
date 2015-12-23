@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
 #import "ChatService.h"
-
+#import "ResourcesWindowController.h"
 
 @interface ViewController () {
     ChatWindowController *chatWindowController;
@@ -123,7 +123,7 @@
 }
 
 - (IBAction)onButtonVideoMail:(id)sender {
-    [[ChatService sharedInstance] openChatWindowWithUser:nil];
+    //[[ChatService sharedInstance] openChatWindowWithUser:nil];    
 }
 
 - (IBAction)onButtonSettings:(id)sender {

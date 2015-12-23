@@ -110,6 +110,8 @@
 		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; };
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
+		5EC9D30D1C288D8000BFAAEC /* ResourcesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30C1C288D8000BFAAEC /* ResourcesWindowController.m */; };
+		5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */; };
 		5EEC29081C024CCA00BA43FB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29071C024CCA00BA43FB /* ContactsViewController.m */; };
 		5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29311C0373DD00BA43FB /* ContactsService.m */; };
 		691611E81C1AD6AC00E37D79 /* SettingsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 691611E71C1AD6AC00E37D79 /* SettingsService.m */; };
@@ -681,6 +683,10 @@
 		5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfVideoViewController.m; sourceTree = "<group>"; };
 		5E3CA6411BF0F9B700D9913F /* SDPNegotiationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPNegotiationService.h; sourceTree = "<group>"; };
 		5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPNegotiationService.m; sourceTree = "<group>"; };
+		5EC9D30B1C288D8000BFAAEC /* ResourcesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesWindowController.h; sourceTree = "<group>"; };
+		5EC9D30C1C288D8000BFAAEC /* ResourcesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcesWindowController.m; sourceTree = "<group>"; };
+		5EC9D30E1C288D9900BFAAEC /* ResourcesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesViewController.h; sourceTree = "<group>"; };
+		5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcesViewController.m; sourceTree = "<group>"; };
 		5EEC29061C024CCA00BA43FB /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
 		5EEC29071C024CCA00BA43FB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		5EEC29301C0373DD00BA43FB /* ContactsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsService.h; sourceTree = "<group>"; };
@@ -1412,6 +1418,7 @@
 		4AC389C71B8E87530063298F /* VATRP */ = {
 			isa = PBXGroup;
 			children = (
+				5EC9D30A1C288D5600BFAAEC /* Resources */,
 				4AAFD9FC1BA610F100C35A74 /* LinphoneManager */,
 				4A902DDA1BB9486800ECFD86 /* Services */,
 				4A902DE31BB949C900ECFD86 /* Models */,
@@ -1487,6 +1494,17 @@
 			name = "In Call";
 			path = "VATRP/In Call";
 			sourceTree = SOURCE_ROOT;
+		};
+		5EC9D30A1C288D5600BFAAEC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5EC9D30B1C288D8000BFAAEC /* ResourcesWindowController.h */,
+				5EC9D30C1C288D8000BFAAEC /* ResourcesWindowController.m */,
+				5EC9D30E1C288D9900BFAAEC /* ResourcesViewController.h */,
+				5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
 		};
 		5EEC291F1C03701700BA43FB /* vCard */ = {
 			isa = PBXGroup;
@@ -1804,6 +1822,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */,
 				69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */,
 				CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */,
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
@@ -1878,6 +1897,7 @@
 				5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
 				CEE25E941C18531700D7E082 /* LinphoneLocationManager.m in Sources */,
+				5EC9D30D1C288D8000BFAAEC /* ResourcesWindowController.m in Sources */,
 				4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */,
 				4AB2A2CF1BF2258C006AC5C6 /* HomeViewController.m in Sources */,
 			);

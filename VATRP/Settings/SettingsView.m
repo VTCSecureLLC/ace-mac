@@ -284,47 +284,49 @@
     SettingsItemModel *item = (SettingsItemModel*)settingsList[checkbox.tag];
     LinphoneCore *lc = [LinphoneManager getLc];
     
-    if ([item.userDefaultsKey isEqualToString:@"SIP_ENCRYPTION"]) {
-        [SettingsService setSIPEncryption:checkbox.state];
-    } else if ([item.userDefaultsKey isEqualToString:@"START_ON_BOOT"]) {
-        [SettingsService setStartAppOnBoot:checkbox.state];
-    } else if ([item.userDefaultsKey isEqualToString:@"enable_adaptive_rate_control"]) {
-        linphone_core_enable_adaptive_rate_control(lc, checkbox.state);
-    } else if ([item.userDefaultsKey isEqualToString:@"enable_video_preference"]) {
-        linphone_core_enable_video(lc, checkbox.state, checkbox.state);
-    } else if ([item.userDefaultsKey isEqualToString:@"accept_video_preference"]) {
-        LinphoneVideoPolicy policy;
-        policy.automatically_accept = (BOOL)checkbox.state;
-        linphone_core_set_video_policy(lc, &policy);
-    } else if ([item.userDefaultsKey isEqualToString:@"stun_preference"]) {
-        [SettingsService setStun:checkbox.state];
-    } else if ([item.userDefaultsKey isEqualToString:@"ice_preference"]) {
-        [SettingsService setICE:checkbox.state];
-    } else if ([item.userDefaultsKey isEqualToString:@"ACE_ENABLE_UPNP"]) {
-        [SettingsService setUPNP:checkbox.state];
-    } else if ([item.userDefaultsKey isEqualToString:@"random_port_preference"]) {
-        [SettingsService setRandomPorts:checkbox.state];
-    } else if ([item.userDefaultsKey isEqualToString:@"use_ipv6"]) {
-        linphone_core_enable_ipv6(lc, checkbox.state);
-        [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
-    } else {
-        NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
-        NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
-
-        if (item.userDefaultsKey && [[dictAudioCodec allKeys] containsObject:item.userDefaultsKey]) {
-            NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] initWithDictionary:dictAudioCodec];
-            [mdictForSave setObject:[NSNumber numberWithBool:checkbox.state] forKey:item.userDefaultsKey];
-            [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
-        } else if (item.userDefaultsKey && [[dictVideoCodec allKeys] containsObject:item.userDefaultsKey]) {
-            NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] initWithDictionary:dictVideoCodec];
-            [mdictForSave setObject:[NSNumber numberWithBool:checkbox.state] forKey:item.userDefaultsKey];
-            [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
-        } else {
+    if ((item != nil) && (item.userDefaultsKey != nil)) {
+        if ([item.userDefaultsKey isEqualToString:@"SIP_ENCRYPTION"]) {
+            [SettingsService setSIPEncryption:checkbox.state];
+        } else if ([item.userDefaultsKey isEqualToString:@"START_ON_BOOT"]) {
+            [SettingsService setStartAppOnBoot:checkbox.state];
+        } else if ([item.userDefaultsKey isEqualToString:@"enable_adaptive_rate_control"]) {
+            linphone_core_enable_adaptive_rate_control(lc, checkbox.state);
+        } else if ([item.userDefaultsKey isEqualToString:@"enable_video_preference"]) {
+            linphone_core_enable_video(lc, checkbox.state, checkbox.state);
+        } else if ([item.userDefaultsKey isEqualToString:@"accept_video_preference"]) {
+            LinphoneVideoPolicy policy;
+            policy.automatically_accept = (BOOL)checkbox.state;
+            linphone_core_set_video_policy(lc, &policy);
+        } else if ([item.userDefaultsKey isEqualToString:@"stun_preference"]) {
+            [SettingsService setStun:checkbox.state];
+        } else if ([item.userDefaultsKey isEqualToString:@"ice_preference"]) {
+            [SettingsService setICE:checkbox.state];
+        } else if ([item.userDefaultsKey isEqualToString:@"ACE_ENABLE_UPNP"]) {
+            [SettingsService setUPNP:checkbox.state];
+        } else if ([item.userDefaultsKey isEqualToString:@"random_port_preference"]) {
+            [SettingsService setRandomPorts:checkbox.state];
+        } else if ([item.userDefaultsKey isEqualToString:@"use_ipv6"]) {
+            linphone_core_enable_ipv6(lc, checkbox.state);
             [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
-        }
-    }
+        } else {
+            NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
+            NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
 
-    [[NSUserDefaults standardUserDefaults] synchronize];
+            if (item.userDefaultsKey && [[dictAudioCodec allKeys] containsObject:item.userDefaultsKey]) {
+                NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] initWithDictionary:dictAudioCodec];
+                [mdictForSave setObject:[NSNumber numberWithBool:checkbox.state] forKey:item.userDefaultsKey];
+                [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
+            } else if (item.userDefaultsKey && [[dictVideoCodec allKeys] containsObject:item.userDefaultsKey]) {
+                NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] initWithDictionary:dictVideoCodec];
+                [mdictForSave setObject:[NSNumber numberWithBool:checkbox.state] forKey:item.userDefaultsKey];
+                [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
+            } else {
+                [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
+            }
+        }
+
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void) chartColorChange:(id)sender {

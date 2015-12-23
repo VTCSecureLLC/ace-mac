@@ -186,6 +186,59 @@
 		</dict>
 	</array>
 	<array>
+		<string>Account</string>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Username</string>
+			<key>defaultValue</key>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_USERNAME</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Auth ID</string>
+			<key>defaultValue</key>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_AUTH_ID</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Domain</string>
+			<key>defaultValue</key>
+			<string>bc1.vatrp.net</string>
+			<key>UserDefaultsKey</key>
+			<string>ACE_DOMAIN</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Proxy</string>
+			<key>defaultValue</key>
+			<string>bc1.vatrp.net:5060</string>
+			<key>UserDefaultsKey</key>
+			<string>ACE_PROXY</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>0</integer>
+			<key>title</key>
+			<string>Outbound Proxy</string>
+			<key>defaultValue</key>
+			<false/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_OUTBOUND_PROXY</string>
+		</dict>
+	</array>
+	<array>
 		<string>Preferences</string>
 		<dict>
 			<key>controllerType</key>
@@ -220,7 +273,7 @@
 				<string>enable_adaptive_rate_control</string>
 			</dict>
 			<array>
-				<string>Codecs</string>
+				<string>Audio Codecs</string>
 				<dict>
 					<key>controllerType</key>
 					<integer>0</integer>
@@ -387,11 +440,11 @@
 			</dict>
 			<dict>
 				<key>controllerType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>title</key>
 				<string>Preferred FPS</string>
 				<key>defaultValue</key>
-				<true/>
+				<string>15</string>
 				<key>UserDefaultsKey</key>
 				<string>video_preferred_fps_preference</string>
 			</dict>
@@ -466,13 +519,13 @@
 			</dict>
 			<dict>
 				<key>controllerType</key>
-				<real>0</real>
+				<integer>1</integer>
 				<key>title</key>
 				<string>STUN URL</string>
 				<key>defaultValue</key>
-				<false/>
+				<string>stun.linphone.org</string>
 				<key>UserDefaultsKey</key>
-				<string>stun_preference</string>
+				<string>stun_url_preference</string>
 			</dict>
 			<dict>
 				<key>controllerType</key>
@@ -502,7 +555,7 @@
 				<key>defaultValue</key>
 				<false/>
 				<key>UserDefaultsKey</key>
-				<string>ACE_RANDOM_PORTS</string>
+				<string>random_port_preference</string>
 			</dict>
 			<dict>
 				<key>controllerType</key>
@@ -562,7 +615,7 @@
 				<key>defaultValue</key>
 				<false/>
 				<key>UserDefaultsKey</key>
-				<string>ACE_IPV6</string>
+				<string>use_ipv6</string>
 			</dict>
 		</array>
 		<array>
@@ -628,59 +681,6 @@
 				<string>ACE_CLEAR_LOGS</string>
 			</dict>
 		</array>
-	</array>
-	<array>
-		<string>Account</string>
-		<dict>
-			<key>controllerType</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string>Username</string>
-			<key>defaultValue</key>
-			<true/>
-			<key>UserDefaultsKey</key>
-			<string>ACE_USERNAME</string>
-		</dict>
-		<dict>
-			<key>controllerType</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string>Auth ID</string>
-			<key>defaultValue</key>
-			<true/>
-			<key>UserDefaultsKey</key>
-			<string>ACE_AUTH_ID</string>
-		</dict>
-		<dict>
-			<key>controllerType</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string>Domain</string>
-			<key>defaultValue</key>
-			<false/>
-			<key>UserDefaultsKey</key>
-			<string>ACE_DOMAIN</string>
-		</dict>
-		<dict>
-			<key>controllerType</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string>Proxy</string>
-			<key>defaultValue</key>
-			<true/>
-			<key>UserDefaultsKey</key>
-			<string>ACE_PROXY</string>
-		</dict>
-		<dict>
-			<key>controllerType</key>
-			<integer>1</integer>
-			<key>title</key>
-			<string>Outbound Proxy</string>
-			<key>defaultValue</key>
-			<true/>
-			<key>UserDefaultsKey</key>
-			<string>ACE_OUTBOUND_PROXY</string>
-		</dict>
 	</array>
 </array>
 </plist>

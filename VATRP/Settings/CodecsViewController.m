@@ -8,11 +8,9 @@
 
 #import "CodecsViewController.h"
 #import "LinphoneManager.h"
+#import "SettingsService.h"
 #import "SDPNegotiationService.h"
 #import "CodecModel.h"
-
-#define kUSER_DEFAULTS_AUDIO_CODECS_MAP @"kUSER_DEFAULTS_AUDIO_CODECS_MAP"
-#define kUSER_DEFAULTS_VIDEO_CODECS_MAP @"kUSER_DEFAULTS_VIDEO_CODECS_MAP"
 
 @interface CodecsViewController () <NSTableViewDataSource> {
     IBOutlet NSTableView *tableViewAudioCodecs;

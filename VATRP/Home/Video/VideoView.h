@@ -19,6 +19,7 @@
 - (void)hideSecondIncomingCallView;
 - (void)setCallToSecondCallView:(LinphoneCall*)aCall;
 - (void)hideSecondCallView;
+- (void)setMouseInCallWindow;
 
 @property (weak) IBOutlet NSView *remoteVideoView;
 

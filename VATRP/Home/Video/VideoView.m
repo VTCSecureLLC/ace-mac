@@ -35,6 +35,7 @@
 @property (weak) IBOutlet NSTextField *labelDisplayName;
 @property (weak) IBOutlet NSTextField *labelCallState;
 
+@property (weak) IBOutlet BackgroundedView *callControllsConteinerView;
 @property (weak) IBOutlet CallControllersView *callControllersView;
 @property (weak) IBOutlet NumpadView *numpadView;
 @property (weak) IBOutlet SecondIncomingCallView *secondIncomingCallView;
@@ -66,6 +67,7 @@
     self.remoteVideoView.wantsLayer = YES;
     self.labelDisplayName.wantsLayer = YES;
     self.labelCallState.wantsLayer = YES;
+    [self.callControllsConteinerView setBackgroundColor:[NSColor clearColor]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
@@ -405,6 +407,16 @@
     NSView *content = self;
     CALayer *layer = [content layer];
     [layer removeAllAnimations];
+}
+
+- (void)setMouseInCallWindow {
+    [self.callControllsConteinerView setHidden:NO];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
+    [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+}
+
+- (void) hideAllCallControllers {
+    [self.callControllsConteinerView setHidden:YES];
 }
 
 @end

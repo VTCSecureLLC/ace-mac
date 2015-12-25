@@ -1558,6 +1558,9 @@
                                     <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bdY-JZ-gZO" customClass="SecondIncomingCallView">
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <subviews>
+                                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BFD-JW-NCd" customClass="BackgroundedView">
+                                                <rect key="frame" x="90" y="302" width="538" height="244"/>
+                                            </customView>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-Th-Msu">
                                                 <rect key="frame" x="184" y="488" width="350" height="40"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="3bZ-AN-8nA">
@@ -1596,9 +1599,6 @@
                                                     <action selector="onButtonDecline:" target="bdY-JZ-gZO" id="Ws5-mh-0Ap"/>
                                                 </connections>
                                             </button>
-                                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BFD-JW-NCd" customClass="BackgroundedView">
-                                                <rect key="frame" x="90" y="302" width="538" height="244"/>
-                                            </customView>
                                         </subviews>
                                         <connections>
                                             <outlet property="buttonDecline" destination="dpq-8B-5BM" id="vKc-c6-tSE"/>
@@ -1904,7 +1904,7 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="40" minWidth="40" maxWidth="1000" id="9ck-gp-Mgu">
+                                                <tableColumn width="475" minWidth="40" maxWidth="1000" id="9ck-gp-Mgu">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1918,7 +1918,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="G25-W7-CLw">
-                                                            <rect key="frame" x="1" y="1" width="40" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="475" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="msN-P3-ZpQ">

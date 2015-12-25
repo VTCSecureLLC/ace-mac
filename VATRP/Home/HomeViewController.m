@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "ViewManager.h"
+#import "CallService.h"
 #import "DockView.h"
 #import "DialPadView.h"
 #import "RecentsView.h"
@@ -220,6 +221,18 @@
 
 - (ProfileView*) getProfileView {
     return self.profileView;
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent {
+    NSPoint mousePosition = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
+    
+    if ([[CallService sharedInstance] getCurrentCall]) {
+        LinphoneCallState call_state = linphone_call_get_state([[CallService sharedInstance] getCurrentCall]);
+        
+        if ((call_state == LinphoneCallConnected || call_state == LinphoneCallStreamsRunning) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700) {
+            [self.videoView setMouseInCallWindow];
+        }
+    }
 }
 
 @end

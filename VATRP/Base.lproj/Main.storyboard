@@ -3383,8 +3383,32 @@ DQ
                                     <action selector="onCheckBox:" target="wId-2F-cAs" id="fca-5c-1X7"/>
                                 </connections>
                             </button>
+                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uHz-8i-Yrm">
+                                <rect key="frame" x="185" y="206" width="150" height="26"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="Off" drawsBackground="YES" completes="NO" numberOfVisibleItems="3" id="RRR-ki-NMG">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <objectValues>
+                                        <string>Implicit</string>
+                                        <string>Explicit</string>
+                                        <string>Off</string>
+                                    </objectValues>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="onRTCPFeedbackSelected:" target="wId-2F-cAs" id="gAR-Cq-xFd"/>
+                                </connections>
+                            </comboBox>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jpP-y3-ATE">
+                                <rect key="frame" x="70" y="212" width="109" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="RTCP Feedback:" id="qMb-BX-bXu">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7w-zJ-O1T">
-                                <rect key="frame" x="72" y="108" width="177" height="36"/>
+                                <rect key="frame" x="72" y="81" width="177" height="36"/>
                                 <buttonCell key="cell" type="smallSquare" title="Clear user data" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D8d-58-twG">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -3394,7 +3418,7 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RKy-z4-eZ0">
-                                <rect key="frame" x="70" y="209" width="83" height="17"/>
+                                <rect key="frame" x="70" y="182" width="83" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Max Upload:" id="xHc-Lz-RkO">
                                     <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -3402,7 +3426,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fgS-Tu-5gJ">
-                                <rect key="frame" x="176" y="207" width="96" height="22"/>
+                                <rect key="frame" x="176" y="180" width="96" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="EBy-JM-xwG">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -3410,7 +3434,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pFW-mf-yUY">
-                                <rect key="frame" x="70" y="179" width="100" height="17"/>
+                                <rect key="frame" x="70" y="152" width="100" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Max Download:" id="42w-8V-Qae">
                                     <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -3418,7 +3442,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uzg-Vx-mD5">
-                                <rect key="frame" x="176" y="177" width="96" height="22"/>
+                                <rect key="frame" x="176" y="150" width="96" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="qey-o7-LPW">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>

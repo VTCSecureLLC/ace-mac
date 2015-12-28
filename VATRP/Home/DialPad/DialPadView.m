@@ -11,6 +11,7 @@
 #import "LinphoneManager.h"
 #import "CallService.h"
 #import "ViewManager.h"
+#import "AppDelegate.h"
 
 
 @interface DialPadView () {
@@ -143,6 +144,18 @@
 }
 
 - (IBAction)onButtonVideo:(id)sender {
+//    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+//
+//    [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
+//             display:YES
+//             animate:YES];
+//    
+//    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
+//    [self performSelector:@selector(CallTo) withObject:nil afterDelay:0.1];
+    [CallService callTo:self.textFieldNumber.stringValue];
+}
+
+- (void) CallTo {
     [CallService callTo:self.textFieldNumber.stringValue];
 }
 

@@ -79,6 +79,10 @@
                                                object:nil];    
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (IBAction)onButtonHold:(id)sender {
     if (call) {
         LinphoneCallState call_state = linphone_call_get_state(call);
@@ -189,7 +193,6 @@
 #pragma mark - Property Functions
 - (void)setCall:(LinphoneCall*)acall {
     call = acall;
-    
     if (call) {
         LinphoneCallState call_state = linphone_call_get_state(call);
         [self callUpdate:call state:call_state];

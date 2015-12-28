@@ -52,6 +52,16 @@
     }
 }
 
+//-(void)dealloc{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:kLinphoneRegistrationUpdate
+//                                                  object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:kLinphoneConfiguringStateUpdate
+//                                                  object:nil];
+//}
+
 - (IBAction)onButtonLogin:(id)sender {
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;

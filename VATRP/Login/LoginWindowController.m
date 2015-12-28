@@ -8,7 +8,7 @@
 
 #import "LoginWindowController.h"
 #import "BFNavigationController.h"
-#import "ServiceSelectionViewController.h"
+#import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
@@ -16,7 +16,7 @@
 
 @interface LoginWindowController () {
     BFNavigationController *navigationController;
-    ServiceSelectionViewController *serviceSelectionViewController;
+    LoginViewController *loginViewController;
 }
 
 @end
@@ -42,11 +42,11 @@
     } else {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         
-        serviceSelectionViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ServiceSelectionViewController"];
+        loginViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
         
         // Init navigation controller and add to window
         navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
-                                                          rootViewController:serviceSelectionViewController];
+                                                          rootViewController:loginViewController];
         
         [self.window.contentView addSubview:navigationController.view];
     }

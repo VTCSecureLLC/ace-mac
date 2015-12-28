@@ -11,12 +11,14 @@
 @implementation SettingsHeaderModel
 
 @synthesize title;
+@synthesize position;
 
 - (id) initWithTitle:(NSString*)ttl {
     self = [super init];
     
     if (self) {
         self.title = ttl;
+        self.position = 0;
     }
     
     return self;

@@ -187,6 +187,9 @@
     }
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)loadData {
     if (contacts != NULL) {
         ms_list_free_with_data(contacts, chatTable_free_chatrooms);
@@ -900,10 +903,16 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     }
 }
 
-- (void)dealloc {
-    if (contacts != nil) {
-        //        ms_list_free_with_data(contacts, chatTable_free_chatrooms);
-    }
-}
+//- (void)dealloc {
+////        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: kLinphoneCallUpdate];
+////        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneTextComposeEvent];
+////        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneTextReceived];
+////        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:NSControlTextDidChangeNotification];
+////        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kCHAT_RECEIVE_MESSAGE];
+//
+//    if (contacts != nil) {
+//        //        ms_list_free_with_data(contacts, chatTable_free_chatrooms);
+//    }
+//}
 
 @end

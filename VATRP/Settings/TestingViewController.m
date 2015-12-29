@@ -55,6 +55,7 @@
     
     [self.textFieldMaxUpload setDelegate:self];
     [self.textFieldMaxDownload setDelegate:self];
+    [self.buttonEnableAVPF setEnabled:NO];
 }
 
 - (void) save {
@@ -95,6 +96,25 @@
 
 - (void)controlTextDidChange:(NSNotification *)notification {
     isChanged = YES;
+}
+- (IBAction)onRTCPFeedbackSelected:(id)sender {
+    NSString *rtcpFeedback = ((NSComboBox*)sender).stringValue;
+    int rtcpFB;
+        if([rtcpFeedback isEqualToString:@"Implicit"]){
+                rtcpFB = 1;
+                linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
+                lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
+            }
+        else if([rtcpFeedback isEqualToString:@"Explicit"]){
+                rtcpFB = 1;
+                linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFEnabled);
+                lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
+            }
+        else{
+                rtcpFB = 0;
+                linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
+                lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
+            }
 }
 
 - (IBAction)onButtonCleareUserData:(id)sender {

@@ -7,6 +7,7 @@
 //
 
 #import "SettingsService.h"
+#import "LinphoneManager.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
 #import "AccountModel.h"
@@ -163,5 +164,62 @@
     
     return found;
 }
+
++ (void) setStun:(BOOL)enable {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    NSString *stun_server = [[NSUserDefaults standardUserDefaults] objectForKey:@"stun_url_preference"];
+    
+    if ([stun_server length] > 0) {
+        linphone_core_set_stun_server(lc, [stun_server UTF8String]);
+        BOOL ice_preference = [[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"];
+        if (ice_preference) {
+            linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
+        } else {
+            linphone_core_set_firewall_policy(lc, LinphonePolicyUseStun);
+        }
+    } else {
+        linphone_core_set_stun_server(lc, NULL);
+        linphone_core_set_firewall_policy(lc, LinphonePolicyNoFirewall);
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool:enable forKey:@"stun_preference"];
+}
+
++ (void) setICE:(BOOL)enable {
+    LinphoneCore *lc = [LinphoneManager getLc];
+
+    if (enable) {
+        linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
+    } else {
+        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
+    }
+}
+
++ (void) setUPNP:(BOOL)enable {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    
+    if (enable) {
+        linphone_core_set_firewall_policy(lc, LinphonePolicyUseUpnp);
+    } else {
+        [self setICE:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
+    }
+}
+
++ (void) setRandomPorts:(BOOL)enable {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    int port_preference = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"port_preference"];
+    
+    if (enable) {
+        port_preference = -1;
+    }
+    
+    LCSipTransports transportValue = {port_preference, port_preference, -1, -1};
+    
+    // will also update the sip_*_port section of the config
+    if (linphone_core_set_sip_transports(lc, &transportValue)) {
+        NSLog(@"cannot set transport");
+    }
+}
+
 
 @end

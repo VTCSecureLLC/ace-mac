@@ -13,5 +13,6 @@
 - (id) initWithTitle:(NSString*)ttl;
 
 @property (nonatomic, retain) NSString *title;
+@property (nonatomic, assign) int position;
 
 @end

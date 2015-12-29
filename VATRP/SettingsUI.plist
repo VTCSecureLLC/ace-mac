@@ -138,41 +138,74 @@
 			<string>label</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>label</string>
 		</dict>
 	</array>
 	<array>
 		<string>Summary Menu</string>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>title</key>
 			<string>View TSS</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_VIEW_TSS</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>title</key>
 			<string>Send TSS</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_SEND_TSS</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>title</key>
 			<string>Show Advanced</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_SHOW_ADVANCED</string>
+		</dict>
+	</array>
+	<array>
+		<string>Account</string>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Username</string>
+			<key>defaultValue</key>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_USERNAME</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>title</key>
-			<string>Show Debug</string>
+			<string>Auth ID</string>
 			<key>defaultValue</key>
-			<false/>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_AUTH_ID</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Domain</string>
+			<key>defaultValue</key>
+			<string>bc1.vatrp.net</string>
+			<key>UserDefaultsKey</key>
+			<string>ACE_DOMAIN</string>
 		</dict>
 	</array>
 </array>

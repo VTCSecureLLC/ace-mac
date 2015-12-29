@@ -73,7 +73,7 @@
 }
 
 - (void)call:(NSString*)address displayName:(NSString *)displayName {
-    [[LinphoneManager instance] call:address displayName:displayName transfer:NO];
+    [CallService callTo:address];
 }
 
 - (IBAction)onLongPressZeroButton:(id)sender {

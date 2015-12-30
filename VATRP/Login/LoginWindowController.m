@@ -9,6 +9,7 @@
 #import "LoginWindowController.h"
 #import "BFNavigationController.h"
 #import "LoginViewController.h"
+#import "TermsOfUseViewController.h"
 #import "AppDelegate.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
@@ -17,6 +18,7 @@
 @interface LoginWindowController () {
     BFNavigationController *navigationController;
     LoginViewController *loginViewController;
+    TermsOfUseViewController *termsOfUseViewController;
 }
 
 @end
@@ -42,11 +44,19 @@
     } else {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         
-        loginViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
-        
-        // Init navigation controller and add to window
-        navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
-                                                          rootViewController:loginViewController];
+        if ([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"IS_TERMS_OF_OSE_SHOWED"]) {
+            loginViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
+            
+            // Init navigation controller and add to window
+            navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
+                                                              rootViewController:loginViewController];
+        } else {
+            termsOfUseViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TermsOfUseViewController"];
+            
+            // Init navigation controller and add to window
+            navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
+                                                              rootViewController:termsOfUseViewController];
+        }
         
         [self.window.contentView addSubview:navigationController.view];
     }

@@ -8,17 +8,23 @@
 
 #import "ResourcesViewController.h"
 #import "LinphoneManager.h"
+#import "CallService.h"
+
 @interface ResourcesViewController ()
 
 @end
+
 @implementation ResourcesViewController{
     NSMutableArray *cdnResources;
     NSURLRequest *cdnRequest;
     NSURLSession *urlSession;
     
 }
+
 @synthesize tableView;
+
 const NSString *cdnDatabase = @"http://cdn.vatrp.net/numbers.json";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadDataFromCDN];
@@ -54,7 +60,7 @@ const NSString *cdnDatabase = @"http://cdn.vatrp.net/numbers.json";
     NSString *name = [resource objectForKey:@"name"];
     NSString *address = [resource objectForKey:@"address"];
     
-    [[LinphoneManager instance] call:address displayName:name transfer:NO];
+    [CallService callTo:address];
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn

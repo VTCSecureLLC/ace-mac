@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "AddContactDialogBox.h"
 #import "Utils.h"
+#import "CallService.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
@@ -222,7 +223,7 @@
 #pragma mark - Functions related to the call
 
 - (void)callTo:(NSString*)name {
-    [[LinphoneManager instance] call:name displayName:name transfer:NO];
+    [CallService callTo:name];
 }
 
 #pragma mark - Helper functions

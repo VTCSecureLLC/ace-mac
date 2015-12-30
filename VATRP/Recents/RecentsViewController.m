@@ -9,6 +9,7 @@
 #import "RecentsViewController.h"
 #import "HistoryTableCellView.h"
 #import "LinphoneManager.h"
+#import "CallService.h"
 
 @interface RecentsViewController () {
     NSMutableArray *callLogs;
@@ -152,7 +153,7 @@
     
     if (address != nil) {
         // Go to dialer view
-        [[LinphoneManager instance] call:address displayName:address transfer:NO];
+        [CallService callTo:address];
     }
 
     return YES;

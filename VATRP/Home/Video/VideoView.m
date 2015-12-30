@@ -116,6 +116,8 @@
             [self startRingCountTimerWithTimeInterval:3.75];
             
             [self startCallFlashingAnimation];
+            
+            [self.callControllsConteinerView setHidden:NO];
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -150,10 +152,14 @@
             
             [self.localVideo setFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
             [[self.localVideo animator] setFrame:NSMakeRect(524, 580, 176, 99)];
+
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
+            [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
         }
             break;
         case LinphoneCallOutgoingInit: {
             self.labelCallState.stringValue = @"Calling 00:00";
+            [self.callControllsConteinerView setHidden:NO];
         }
             break;
         case LinphoneCallOutgoingRinging: {

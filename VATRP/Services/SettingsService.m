@@ -120,7 +120,7 @@ static NSMutableArray *settingsList;
     if ([[[defaults dictionaryRepresentation] allKeys] containsObject:kREAL_TIME_TEXT_ENABLED]) {
         return [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED];
     } else {
-        return [SettingsService defaultBoolValueForBoolKey:kREAL_TIME_TEXT_ENABLED];
+        return TRUE;
     }
 }
 

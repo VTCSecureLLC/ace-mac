@@ -22,6 +22,7 @@
 + (BOOL) getMicMute;
 + (BOOL) getEchoCancel;
 + (BOOL) getShowPreview;
++ (BOOL) getRTTEnabled;
 + (void) setStun:(BOOL)enable;
 + (void) setICE:(BOOL)enable;
 + (void) setUPNP:(BOOL)enable;

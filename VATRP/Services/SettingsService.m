@@ -110,8 +110,13 @@ static NSMutableArray *settingsList;
 }
 
 + (BOOL) getShowPreview {
-    BOOL showPreview = [[NSUserDefaults standardUserDefaults] boolForKey:@"VIDEO_SHOW_PREVIEW"];
-    
+    BOOL showPreview;
+    if ([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"VIDEO_SHOW_PREVIEW"]){
+            showPreview = [[NSUserDefaults standardUserDefaults] boolForKey:@"VIDEO_SHOW_PREVIEW"];
+    }
+    else{
+        return TRUE;
+    }
     return showPreview;
 }
 

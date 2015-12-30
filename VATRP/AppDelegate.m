@@ -92,7 +92,10 @@
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag {
     
     if(theApplication.windows.count > 0){
-        [[theApplication.windows objectAtIndex:0] makeKeyAndOrderFront:self];
+        if(loginWindowController == NULL){
+            self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
+        }
+        [self.loginWindowController showWindow:self];
     }
     
     return YES;

@@ -114,21 +114,25 @@
 
 - (IBAction)onButtonMute:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
-
-    linphone_core_mute_mic(lc, !linphone_core_is_mic_muted(lc));
-    
-    if (linphone_core_is_mic_muted(lc)) {
-        [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
+    linphone_core_enable_mic(lc, !linphone_core_mic_enabled(lc));
+    if (linphone_core_mic_enabled(lc)) {
+        [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];
+      //  [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     } else {
-        [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+        [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
+        //[self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     }
 }
 
 - (IBAction)onButtonSpeaker:(id)sender {
-    if (linphone_call_get_speaker_volume_gain(call)) {
-        linphone_call_set_speaker_volume_gain(call, 0.0f);
+    const float mute_db = -1000.0f;
+    if (linphone_core_get_playback_gain_db([LinphoneManager getLc]) == mute_db) {
+        linphone_core_set_playback_gain_db([LinphoneManager getLc], 0.0f);
+        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
     } else {
-        linphone_call_set_speaker_volume_gain(call, 1.0f);
+        linphone_core_set_playback_gain_db([LinphoneManager getLc], mute_db);
+        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_inactive"]];
+        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     }
 }
 

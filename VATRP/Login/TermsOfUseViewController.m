@@ -18,6 +18,7 @@
 @property (weak) IBOutlet NSScrollView *scrollView;
 @property (weak) IBOutlet NSButton *buttonAccept;
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
+@property (weak) IBOutlet NSButton *acceptTermsCk;
 
 @end
 
@@ -53,6 +54,17 @@
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (IBAction)onAcceptTermsCheck:(NSButton *)sender
+{
+    if ([self.acceptTermsCk state] == NSOnState)
+    {
+        self.buttonAccept.enabled = true;
+    }
+    else
+    {
+        self.buttonAccept.enabled = false;
+    }
 }
 
 @end

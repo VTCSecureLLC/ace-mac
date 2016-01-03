@@ -106,7 +106,7 @@ if [ -d "$XCARCHIVE" ]; then
   if [ -f $APP_ZIP_FILE ]; then
     rm -f $APP_ZIP_FILE
   fi
-  (cd $(dirname $APP_DIR) ; zip -r $APP_ZIP_FILE $(basename $APP_DIR))
+  (cd $(dirname $APP_DIR) ; zip -r --symlinks $APP_ZIP_FILE $(basename $APP_DIR))
 
   # Create a dSYM zip file from the archive build
 
@@ -115,7 +115,7 @@ if [ -d "$XCARCHIVE" ]; then
   if [ -f $DSYM_ZIP_FILE ]; then
     rm -f $DSYM_ZIP_FILE
   fi
-  (cd $(dirname $DSYM_DIR) ; zip -r $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
+  (cd $(dirname $DSYM_DIR) ; zip -r --symlinks $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
 fi
 
 # Release via HockeyApp if credentials are available

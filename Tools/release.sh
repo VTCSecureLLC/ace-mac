@@ -100,6 +100,36 @@ if [ -d "$XCARCHIVE" ]; then
 fi
 
 if [ -d "$XCARCHIVE" ]; then
+
+  # Override all of the signing
+  find "${PKG_FILE}".app -name '*.dylib' -exec codesign -f -s "${CODE_SIGN_APPLICATION}" {} \;
+  codesign -f -s "${CODE_SIGN_APPLICATION}" "${PKG_FILE}".app/Contents/Frameworks/HockeySDK.framework
+  codesign -f -s "${CODE_SIGN_APPLICATION}" "${PKG_FILE}".app
+
+  # Show the codesigning of the generated app
+  codesign -vvvv -R="anchor apple" "${PKG_FILE}".app
+
+  # Show the Designated Requirements of the generated app
+  echo "Designated Requirements:"
+  codesign -d -r- "${PKG_FILE}".app
+
+  # Set the Designated Requirements
+  # codesign -vv -R '=identifier "com.vtcsecure.ace.mac"' "${PKG_FILE}".app
+
+  # Verify the libraries are runnable
+  for library in $(find "${PKG_FILE}".app -name '*.dylib'); do
+    # Find all libraries that are not assessed as runnable
+    if ! spctl --assess --type execute $library > /dev/null 2>&1; then
+      # Show the codesigning of the library
+      codesign -vvvv -R="anchor apple" $library
+       # Show the Designated Requirements of the library
+      codesign -d -r- $library
+    fi
+  done
+
+  # Assess an application or tool. Die now if the app is not runnable.
+  spctl --assess --type execute "${PKG_FILE}".app
+
   # Create an application zip file from the archive build
 
   APP_DIR="${PKG_FILE}".app

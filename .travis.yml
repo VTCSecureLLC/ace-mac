@@ -27,13 +27,11 @@ before_script:
 - ./Tools/git_version.sh
 script:
 - python prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_H263=YES -DENABLE_FFMPEG=YES -DENABLE_NON_FREE_CODECS=ON  -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_AMRWB=YES -DENABLE_AMRNB=YES -DENABLE_OPENH264=YES -DENABLE_G729=YES -DENABLE_MPEG4=YES -DENABLE_H263P=ON -DENABLE_ILBC=ON -DENABLE_ISAC=ON -DENABLE_SILK=ON -p
-- make -j8
+- ./Tools/build_script.sh
 - xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration
   Debug build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS="" 
-  | bundle exec xcpretty && exit ${PIPESTATUS[0]}
 - xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration
   Release build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS="" 
-  | bundle exec xcpretty && exit ${PIPESTATUS[0]}
 after_success:
 - ./Tools/release.sh
 notifications:

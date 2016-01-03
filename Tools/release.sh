@@ -215,6 +215,15 @@ else
     rm -fr ACE/
   done
 
+  for app in "${PKG_FILE}".app; do
+    mkdir -p ACE/
+    cp -a "$app" ACE/
+    #[ -d "$app".dSYM ] && cp -a "$app".dSYM ACE/
+    dmg=$(basename "$app" | sed -e 's/.app$//')
+    hdiutil create ${dmg}-HockeyApp-${tag}.dmg -srcfolder ACE/ -ov
+    rm -fr ACE/
+  done
+
   find . -name '*.dmg' -print | while read dmg; do
     echo "Uploading $dmg github release $tag : $(ls -la $dmg)"
     /tmp/github-release upload \

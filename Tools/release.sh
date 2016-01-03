@@ -95,7 +95,8 @@ if [ -d "$XCARCHIVE" ]; then
              -configuration Release \
              -archivePath $XCARCHIVE \
              -exportPath $PKG_FILE \
-             -exportProvisioningProfile "$PROVISIONING_PROFILE"
+             -exportProvisioningProfile "$PROVISIONING_PROFILE" | \
+    bundle exec xcpretty && exit ${PIPESTATUS[0]}
 fi
 
 if [ -d "$XCARCHIVE" ]; then

@@ -9,6 +9,7 @@
 #import "TestingViewController.h"
 #import "LinphoneManager.h"
 #import "CallService.h"
+#import "SettingsService.h"
 #import "AppDelegate.h"
 
 @interface TestingViewController () {
@@ -42,7 +43,7 @@
     }
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
-    self.buttonEnableRealTimeText.state = [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED];
+    self.buttonEnableRealTimeText.state = [SettingsService getRTTEnabled];
     
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);

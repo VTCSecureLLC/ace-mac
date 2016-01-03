@@ -11,6 +11,10 @@
 #import "AccountsService.h"
 #import "RegistrationService.h"
 #import "AccountModel.h"
+#import "SettingsHeaderModel.h"
+#import "SettingsItemModel.h"
+
+static NSMutableArray *settingsList;
 
 @implementation SettingsService
 
@@ -106,9 +110,23 @@
 }
 
 + (BOOL) getShowPreview {
-    BOOL showPreview = [[NSUserDefaults standardUserDefaults] boolForKey:@"VIDEO_SHOW_PREVIEW"];
-    
+    BOOL showPreview;
+    if ([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"VIDEO_SHOW_PREVIEW"]){
+            showPreview = [[NSUserDefaults standardUserDefaults] boolForKey:@"VIDEO_SHOW_PREVIEW"];
+    }
+    else{
+        return TRUE;
+    }
     return showPreview;
+}
+
++ (BOOL) getRTTEnabled {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([[[defaults dictionaryRepresentation] allKeys] containsObject:kREAL_TIME_TEXT_ENABLED]) {
+        return [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED];
+    } else {
+        return TRUE;
+    }
 }
 
 //
@@ -221,5 +239,68 @@
     }
 }
 
++ (BOOL) defaultBoolValueForBoolKey:(NSString*)key {
+    NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"SettingsAdvancedUI.plist"];
+    NSArray *settings = [NSArray arrayWithContentsOfFile:FileDB];
+    [settingsList removeAllObjects];
+    
+    [SettingsService loadSettingsFromArray:settings];
+    
+    for (int i = 0; i < settingsList.count; i++) {
+        SettingsItemModel *object = [settingsList objectAtIndex:i];
+        
+        if ([object isKindOfClass:[SettingsItemModel class]] &&
+            [object.userDefaultsKey isEqualToString:key]) {
+            
+            return [object.defaultValue boolValue];
+        }
+    }
+    
+    return NO;
+}
+
++ (NSString*) defaultStringValueForBoolKey:(NSString*)key {
+    NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"SettingsAdvancedUI.plist"];
+    NSArray *settings = [NSArray arrayWithContentsOfFile:FileDB];
+    [settingsList removeAllObjects];
+    
+    [SettingsService loadSettingsFromArray:settings];
+    
+    for (int i = 0; i < settingsList.count; i++) {
+        SettingsItemModel *object = [settingsList objectAtIndex:i];
+        
+        if ([object isKindOfClass:[SettingsItemModel class]] &&
+            [object.userDefaultsKey isEqualToString:key]) {
+            
+            return object.defaultValue;
+        }
+    }
+
+    return nil;
+}
+
++ (void) loadSettingsFromArray:(NSArray*)array_  {
+    static int position = 0;
+    SettingsHeaderModel *settingsHeaderModel;
+    
+    if (!settingsList)
+        settingsList = [[NSMutableArray alloc] init];
+
+    for (NSDictionary *dict in array_) {
+        if ([dict isKindOfClass:[NSString class]]) {
+            settingsHeaderModel = [[SettingsHeaderModel alloc] initWithTitle:(NSString *)dict];
+            settingsHeaderModel.position = position;
+            [settingsList addObject:settingsHeaderModel];
+        } else if ([dict isKindOfClass:[NSDictionary class]]) {
+            SettingsItemModel *settingsItemModel = [[SettingsItemModel alloc] initWithDictionary:dict];
+            settingsItemModel.position = settingsHeaderModel.position;
+            [settingsList addObject:settingsItemModel];
+        } else if ([dict isKindOfClass:[NSArray class]]) {
+            position++;
+            [self loadSettingsFromArray:(NSArray *)dict];
+            position--;
+        }
+    }
+}
 
 @end

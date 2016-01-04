@@ -106,23 +106,23 @@ if [ -d "$XCARCHIVE" ]; then
   codesign -f -s "${CODE_SIGN_APPLICATION}" "${PKG_FILE}".app
 
   # Show the codesigning of the generated app
-  codesign -vvvv -R="anchor apple" "${PKG_FILE}".app
+  codesign -vvvv -R="anchor apple" "${PKG_FILE}".app || true
 
   # Show the Designated Requirements of the generated app
   echo "Designated Requirements:"
-  codesign -d -r- "${PKG_FILE}".app
+  codesign -d -r- "${PKG_FILE}".app || true
 
   # Set the Designated Requirements
-  # codesign -vv -R '=identifier "com.vtcsecure.ace.mac"' "${PKG_FILE}".app
+  # codesign -vv -R '=identifier "com.vtcsecure.ace.mac"' "${PKG_FILE}".app || true
 
   # Verify the libraries are runnable
   for library in $(find "${PKG_FILE}".app -name '*.dylib'); do
     # Find all libraries that are not assessed as runnable
     if ! spctl --assess --type execute $library > /dev/null 2>&1; then
       # Show the codesigning of the library
-      codesign -vvvv -R="anchor apple" $library
+      codesign -vvvv -R="anchor apple" $library || true
        # Show the Designated Requirements of the library
-      codesign -d -r- $library
+      codesign -d -r- $library || true
     fi
   done
 

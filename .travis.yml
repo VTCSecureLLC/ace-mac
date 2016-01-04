@@ -18,7 +18,7 @@ cache:
   - /usr/local/Cellar
   - /usr/local/Library/Homebrew
 before_script:
-- brew install ccache
+- brew install ccache || brew link --force ccache
 - export CCACHE_DIR=$HOME/.ccache
 - export LINPHONE_CCACHE=ccache
 - export CCACHE_SLOPPINESS=pch_defines,time_macros,include_file_mtime,include_file_ctime,file_macro

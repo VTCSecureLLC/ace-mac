@@ -15,7 +15,6 @@ cache:
   ccache: true
   directories:
   - $HOME/.ccache
-  - /usr/local/Cellar
 before_script:
 - which ccache || brew link --force ccache
 - which md5deep || brew link --force md5deep
@@ -25,7 +24,6 @@ before_script:
 - export CCACHE_COMPILERCHECK=content
 - ccache -M 5G
 - ccache -s 
-- pushd /usr/local/Library/Homebrew/ && git pull --quiet && popd
 - brew update 1>/dev/null
 - brew install doxygen nasm yasm optipng imagemagick coreutils intltool ninja antlr cmake gettext
 - brew link --force gettext

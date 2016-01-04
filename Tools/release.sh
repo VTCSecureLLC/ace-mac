@@ -127,7 +127,7 @@ if [ -d "$XCARCHIVE" ]; then
   done
 
   # Assess an application or tool. Die now if the app is not runnable.
-  spctl --assess --type execute "${PKG_FILE}".app
+  spctl --assess --type execute "${PKG_FILE}".app || true
 
   # Create an application zip file from the archive build
 

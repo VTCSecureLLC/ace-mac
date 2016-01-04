@@ -16,8 +16,8 @@ cache:
   directories:
   - $HOME/.ccache
 before_script:
-- which ccache || brew link --force ccache
-- which md5deep || brew link --force md5deep
+- which ccache || brew install ccache || brew link --force ccache || true
+- which md5deep || brew install ccache || brew link --force md5deep || true
 - export CCACHE_DIR=$HOME/.ccache
 - export LINPHONE_CCACHE=ccache
 - export CCACHE_SLOPPINESS=pch_defines,time_macros,include_file_mtime,include_file_ctime,file_macro

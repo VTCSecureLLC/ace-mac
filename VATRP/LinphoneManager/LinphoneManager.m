@@ -38,6 +38,7 @@
 #include "linphone/lpconfig.h"
 #include "mediastreamer2/mscommon.h"
 #import "SDPNegotiationService.h"
+#import "SettingsService.h"
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -1670,7 +1671,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     }
 
     const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
-    linphone_call_params_enable_realtime_text(calleeParams,[[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+    linphone_call_params_enable_realtime_text(calleeParams, [SettingsService getRTTEnabled]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
 
 }
@@ -1739,7 +1740,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 
 	}
     
-        linphone_call_params_enable_realtime_text(lcallParams, [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+        linphone_call_params_enable_realtime_text(lcallParams, [SettingsService getRTTEnabled]);
     
 	LinphoneAddress* linphoneAddress = linphone_core_interpret_url(theLinphoneCore, [address cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 

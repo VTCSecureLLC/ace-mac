@@ -256,9 +256,9 @@
 			<key>title</key>
 			<string>Enable RTT</string>
 			<key>defaultValue</key>
-			<false/>
+			<true/>
 			<key>UserDefaultsKey</key>
-			<string>ACE_ENABLE_RTT</string>
+			<string>kREAL_TIME_TEXT_ENABLED</string>
 		</dict>
 		<array>
 			<string>Audio</string>

@@ -229,7 +229,7 @@
     if ([[CallService sharedInstance] getCurrentCall]) {
         LinphoneCallState call_state = linphone_call_get_state([[CallService sharedInstance] getCurrentCall]);
         
-        if ((call_state == LinphoneCallConnected || call_state == LinphoneCallStreamsRunning) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700) {
+        if ((call_state != LinphoneCallDeclined && call_state != LinphoneCallEnd && call_state != LinphoneCallError) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700) {
             [self.videoView setMouseInCallWindow];
         }
     }

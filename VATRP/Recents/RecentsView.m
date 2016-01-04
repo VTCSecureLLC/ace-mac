@@ -9,6 +9,7 @@
 #import "RecentsView.h"
 #import "HistoryTableCellView.h"
 #import "LinphoneManager.h"
+#import "CallService.h"
 #import "ViewManager.h"
 #import "LinphoneContactService.h"
 #import "AppDelegate.h"
@@ -194,7 +195,7 @@
     
     if (address != nil) {
         // Go to dialer view
-        [[LinphoneManager instance] call:address displayName:address transfer:NO];
+        [CallService callTo:address];
     }
     
     return YES;

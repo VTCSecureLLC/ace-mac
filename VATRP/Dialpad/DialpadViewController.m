@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
 #import "CallService.h"
+#import "SettingsService.h"
 
 @interface DialpadViewController () <NSAlertDelegate>
 
@@ -66,14 +67,14 @@
     thiscall = linphone_core_get_current_call(lc);
     LinphoneCallParams *params = linphone_core_create_call_params(lc, thiscall);
     LinphoneAddress* linphoneAddress = linphone_core_interpret_url(lc, [self.textFieldNumber.stringValue cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-    linphone_call_params_enable_realtime_text(params, [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+    linphone_call_params_enable_realtime_text(params, [SettingsService getRTTEnabled]);
     linphone_core_invite_address_with_params(lc, linphoneAddress, params);
     
 //    [self call:self.textFieldNumber.stringValue displayName:@"ACE"];
 }
 
 - (void)call:(NSString*)address displayName:(NSString *)displayName {
-    [[LinphoneManager instance] call:address displayName:displayName transfer:NO];
+    [CallService callTo:address];
 }
 
 - (IBAction)onLongPressZeroButton:(id)sender {

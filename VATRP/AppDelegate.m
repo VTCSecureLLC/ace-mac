@@ -89,18 +89,6 @@
     return (AppDelegate*)[NSApplication sharedApplication].delegate;
 }
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag {
-    
-    if(theApplication.windows.count > 0){
-        if(loginWindowController == NULL){
-            self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
-        }
-        [self.loginWindowController showWindow:self];
-    }
-    
-    return YES;
-}
-
 - (void) showTabWindow {
     self.homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
     [self.homeWindowController showWindow:self];

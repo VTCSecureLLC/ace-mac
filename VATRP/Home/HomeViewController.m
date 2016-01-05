@@ -17,6 +17,8 @@
 #import "NumpadView.h"
 #import "SettingsView.h"
 #import "ProviderTableCellView.h"
+#import "DHResourcesView.h"
+#import "ResourcesViewController.h"
 
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
@@ -31,6 +33,7 @@
 @property (weak) IBOutlet RecentsView *recentsView;
 @property (weak) IBOutlet ContactsView *contactsView;
 @property (weak) IBOutlet SettingsView *settingsView;
+@property (weak) IBOutlet DHResourcesView *dhResourcesView;
 
 @property (weak) IBOutlet NSTableView *providerTableView;
 @property (weak) IBOutlet NSView *providersView;
@@ -119,7 +122,7 @@
     viewCurrent.hidden = NO;
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
-     [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
+    [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
 }
 
 - (void) didClickDockViewDialpad:(DockView*)dockView_ {
@@ -138,12 +141,27 @@
             [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
         } else if ([viewCurrent isKindOfClass:[SettingsView class]]) {
             [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
+        } else if ([viewCurrent isKindOfClass:[DHResourcesView class]]) {
+            [self.dockView selectItemWithDocViewItem:DockViewItemResources];
         }
     }
 }
 
 - (void) didClickDockViewResources:(DockView*)dockView_ {
-    [self.dockView clearDockViewMessagesBackgroundColor:NO];
+    
+//    ResourcesViewController *resourceViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"DHResources"];
+//
+    self.providersView.hidden = YES;
+    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
+    viewCurrent.hidden = YES;
+    //viewCurrent = (BackgroundedView*)resourceViewController.view;
+    viewCurrent = (BackgroundedView*)self.dhResourcesView;
+    viewCurrent.hidden = NO;
+    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+
+    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
+    [self.dockView selectItemWithDocViewItem:DockViewItemResources];
+    
 }
 
 - (void) didClickDockViewSettings:(DockView*)dockView_ {

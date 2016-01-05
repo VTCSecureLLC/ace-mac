@@ -76,7 +76,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
-                                               object:nil];    
+                                               object:nil];
+    [self.buttonAnswer setKeyEquivalent:@"\r"];
 }
 
 -(void)dealloc{

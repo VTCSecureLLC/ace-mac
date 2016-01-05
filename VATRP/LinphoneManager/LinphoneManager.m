@@ -710,15 +710,14 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 	const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
 	char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
 	const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
-	NSString* callID                     = [NSString stringWithUTF8String:call_id];
+//	NSString* callID                     = [NSString stringWithUTF8String:call_id];
 
 	ms_free(c_address);
 
 	// Post event
 	NSDictionary* dict = @{@"room"        :[NSValue valueWithPointer:room],
 						   @"from_address":[NSValue valueWithPointer:linphone_chat_message_get_from_address(msg)],
-						   @"message"     :[NSValue valueWithPointer:msg],
-						   @"call-id"     : callID};
+                           @"message"     :[NSValue valueWithPointer:msg]};
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneTextReceived object:self userInfo:dict];
 }

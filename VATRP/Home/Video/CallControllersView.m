@@ -72,7 +72,7 @@
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
     
     self.wantsLayer = YES;
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
@@ -115,12 +115,14 @@
 - (IBAction)onButtonMute:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
     linphone_core_enable_mic(lc, !linphone_core_mic_enabled(lc));
-    if (linphone_core_mic_enabled(lc)) {
+    if (!linphone_core_mic_enabled(lc)) {
         [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];
-      //  [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
+        [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     } else {
         [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
-        //[self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+        [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+
+
     }
 }
 

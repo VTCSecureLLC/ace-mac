@@ -44,7 +44,7 @@
     selectedDocViewItem = self.buttonDialpad;
     [selectedDocViewItem setWantsLayer:YES];
     [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
-    dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, self.buttonSettings, nil];
+    dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, self.buttonResources, self.buttonSettings, nil];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -85,16 +85,18 @@
 }
 
 - (IBAction)onButtonResources:(id)sender {
-//    BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
-//    if (isOpenedChatWindow) {
-//        if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
-//            [_delegate didClickDockViewResources:self];
-//        }
-//    }
+   // BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
+   // if (isOpenedChatWindow) {
+        if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
+            [_delegate didClickDockViewResources:self];
+        }
+    //}
     
     
-    self.resourcesWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Resources"];
-    [self.resourcesWindowController showWindow:self];
+//    self.resourcesWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Resources"];
+//   [self.resourcesWindowController showWindow:self];
+    
+
 }
 
 - (IBAction)onButtonSettings:(id)sender {

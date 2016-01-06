@@ -370,6 +370,7 @@
 		CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */; };
 		CE0D5D581C0D898D00214C47 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D571C0D898D00214C47 /* male.png */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
+		CE3D2ECF1C3BD93F00B0BF29 /* DHResourcesView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3D2ECE1C3BD93F00B0BF29 /* DHResourcesView.m */; };
 		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
 		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
 		CE6A7A841C1AFC46002AEB5D /* rtt_on_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */; };
@@ -794,6 +795,8 @@
 		CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_outgoing.png; sourceTree = "<group>"; };
 		CE0D5D571C0D898D00214C47 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
 		CE34B2B41BD1014C0010A2B0 /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
+		CE3D2ECD1C3BD93F00B0BF29 /* DHResourcesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHResourcesView.h; sourceTree = "<group>"; };
+		CE3D2ECE1C3BD93F00B0BF29 /* DHResourcesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHResourcesView.m; sourceTree = "<group>"; };
 		CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCellView.h; sourceTree = "<group>"; };
 		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
 		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
@@ -1493,6 +1496,8 @@
 				5EC9D30C1C288D8000BFAAEC /* ResourcesWindowController.m */,
 				5EC9D30E1C288D9900BFAAEC /* ResourcesViewController.h */,
 				5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */,
+				CE3D2ECD1C3BD93F00B0BF29 /* DHResourcesView.h */,
+				CE3D2ECE1C3BD93F00B0BF29 /* DHResourcesView.m */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1860,6 +1865,7 @@
 				2BA68DD71B98617000145575 /* LoginViewController.m in Sources */,
 				4A5DD1F11BD909FB003BE9A2 /* ChatItemTableCellView.m in Sources */,
 				4AB2A2DD1BF241CD006AC5C6 /* DialPadView.m in Sources */,
+				CE3D2ECF1C3BD93F00B0BF29 /* DHResourcesView.m in Sources */,
 				5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */,
 				2B463F0A1B984E49008E8333 /* RecentsWindowController.m in Sources */,
 				4AB2A2E11BF32C79006AC5C6 /* ProfileView.m in Sources */,

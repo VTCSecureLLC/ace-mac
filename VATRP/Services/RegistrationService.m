@@ -151,6 +151,7 @@
     transport = [transport lowercaseString];
     LinphoneCore* lc = [LinphoneManager getLc];
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
+    linphone_proxy_config_set_expires (proxyCfg, 280);
     NSString* server_address = domain;
     
     NSLog(@"addProxyConfig transport=%@",transport);

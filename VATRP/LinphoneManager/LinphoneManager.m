@@ -1137,18 +1137,21 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 
 	/*DETECT cameras*/
 	char** camlist = (char**)linphone_core_get_video_devices(theLinphoneCore);
-    NSString* captureDevice = [[NSUserDefaults standardUserDefaults] objectForKey:@"SETTINGS_SELECTED_CAPTURE_DEVICE"];
-    for (char* cam = *camlist; *camlist!=NULL; cam=*++camlist)
+    NSString* captureDevice = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_CAPTURE_DEVICE"];
+    if ((captureDevice != nil) && (captureDevice.length > 0))
     {
-        NSString* currentCam = [NSString stringWithCString:cam];
-        if ((captureDevice != nil) && [captureDevice isEqualToString:currentCam])
+        for (char* cam = *camlist; *camlist!=NULL; cam=*++camlist)
         {
-            linphone_core_set_video_device(theLinphoneCore, cam);
+            NSString* currentCam = [NSString stringWithCString:cam];
+            if ((currentCam != nil) && [captureDevice isEqualToString:currentCam])
+            {
+                linphone_core_set_video_device(theLinphoneCore, cam);
+            }
         }
-	}
+    }
     
-    NSString* speaker = [[NSUserDefaults standardUserDefaults] objectForKey:@"SETTINGS_SELECTED_SPEAKER"];
-    NSString* microphone = [[NSUserDefaults standardUserDefaults] objectForKey:@"SETTINGS_SELECTED_MICROPHONE"];
+    NSString* speaker = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_SPEAKER"];
+    NSString* microphone = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_MICROPHONE"];
     char** soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
     for (char* device = *soundlist; *soundlist!=NULL; device=*++soundlist)
     {

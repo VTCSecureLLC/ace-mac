@@ -249,6 +249,9 @@ static void chatTable_free_chatrooms(void *data) {
             uint32_t rttCode = linphone_chat_room_get_char(room);
             NSString *text = [NSString stringWithFormat:@"%c", rttCode];
             
+            if (rttCode == 0)
+                return;
+
             if(rttCode == 8232) {
                 incomingChatMessage = nil;
                 incomingCellView = nil;
@@ -310,7 +313,7 @@ static void chatTable_free_chatrooms(void *data) {
             if (strcasecmp(cr_from_string, fromStr) == 0) {
                 linphone_chat_room_mark_as_read(room);
                 
-                [self updateContentData];
+//                [self updateContentData];
                 [self.tableViewContent reloadData];
                 
                 NSInteger count = ms_list_size(messageList);

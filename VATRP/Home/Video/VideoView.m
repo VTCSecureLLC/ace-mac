@@ -212,12 +212,24 @@
 }
 
 - (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message {
-    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(call_));
-    NSString *lUserName =
-    lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
     NSString *lMessage;
     NSString *lTitle;
-    
+    const LinphoneAddress *address;
+    NSString* lUserName = NSLocalizedString(@"Unknown", nil);
+    if (call_ == nil)
+    {
+        lMessage = @"There was an unknown error during the call.";
+    }
+    else
+    {
+        address = linphone_call_get_remote_address(call_);
+        if (address != nil)
+        {
+            const char *lUserNameChars = linphone_address_get_username(address);
+            lUserName =
+                lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
+        }
+    }
     // get default proxy
     LinphoneProxyConfig *proxyCfg;
     linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);

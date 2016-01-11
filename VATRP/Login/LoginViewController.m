@@ -27,6 +27,8 @@
 @property (weak) IBOutlet NSTextField *textFieldPort;
 @property (weak) IBOutlet NSButton *loginButton;
 
+@property (weak) IBOutlet NSButton *buttonToggleAutoLogin;
+
 @end
 
 @implementation LoginViewController
@@ -54,6 +56,9 @@
         self.textFieldDomain.stringValue = accountModel.domain;
         self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
     }
+    
+    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    [self.buttonToggleAutoLogin setState:shouldAutoLogin];
 }
 
 //-(void)dealloc{
@@ -180,6 +185,10 @@
     //    [self changeView:provisionedAccountView back:FALSE animation:TRUE];
     
     linphone_proxy_config_destroy(default_conf);
+}
+- (IBAction)onCheckAutoLogin:(id)sender {
+    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    [[NSUserDefaults standardUserDefaults] setBool:!shouldAutoLogin forKey:@"auto_login"];
 }
 
 #pragma mark -

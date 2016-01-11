@@ -77,7 +77,6 @@
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
-    [self.buttonAnswer setKeyEquivalent:@"\r"];
 }
 
 -(void)dealloc{
@@ -249,10 +248,12 @@
         return;
     }
     [self.rttStatusButton.layer setBackgroundColor:[NSColor redColor].CGColor];
+    [self.buttonAnswer setKeyEquivalent:@""];
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.hidden = NO;
             self.labelCallState.stringValue = @"Incoming Call...";
+            [self.buttonAnswer setKeyEquivalent:@"\r"];
         }
         case LinphoneCallIncomingEarlyMedia: {
             break;

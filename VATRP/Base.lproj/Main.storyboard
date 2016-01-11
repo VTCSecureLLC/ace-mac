@@ -8495,27 +8495,6 @@ Cg
                                     <outlet property="nextKeyView" destination="Req-x3-Xup" id="5Ps-uZ-fuU"/>
                                 </connections>
                             </secureTextField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVi-K9-fBt">
-                                <rect key="frame" x="157" y="69" width="167" height="36"/>
-                                <buttonCell key="cell" type="smallSquare" title="Login" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="npb-ie-HiX">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onButtonLogin:" target="taJ-cA-vAy" id="uVM-bY-rE7"/>
-                                    <outlet property="nextKeyView" destination="hfr-Le-Bvd" id="hxq-Ba-H4s"/>
-                                </connections>
-                            </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQI-Kw-hFm">
-                                <rect key="frame" x="159" y="51" width="163" height="11"/>
-                                <buttonCell key="cell" type="check" title="Remember Password" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1ij-uP-mz3">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7c-vP-sOG">
                                 <rect key="frame" x="56" y="349" width="338" height="37"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="ACE" id="6of-9s-sK2">
@@ -8600,19 +8579,37 @@ DQ
                                     <outlet property="nextKeyView" destination="IVi-K9-fBt" id="1aD-1j-caL"/>
                                 </connections>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVi-K9-fBt">
+                                <rect key="frame" x="157" y="71" width="167" height="36"/>
+                                <buttonCell key="cell" type="smallSquare" title="Login" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="npb-ie-HiX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onButtonLogin:" target="taJ-cA-vAy" id="uVM-bY-rE7"/>
+                                    <outlet property="nextKeyView" destination="hfr-Le-Bvd" id="hxq-Ba-H4s"/>
+                                </connections>
+                            </button>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="JnY-ow-InH">
-                                <rect key="frame" x="232" y="79" width="16" height="16"/>
+                                <rect key="frame" x="232" y="81" width="16" height="16"/>
                             </progressIndicator>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iXO-La-iVb">
-                                <rect key="frame" x="159" y="18" width="171" height="18"/>
+                                <rect key="frame" x="155" y="48" width="171" height="18"/>
                                 <buttonCell key="cell" type="check" title="Auto-Login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GDq-LI-37t">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onCheckAutoLogin:" target="taJ-cA-vAy" id="tzG-iT-QMF"/>
+                                </connections>
                             </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="buttonToggleAutoLogin" destination="iXO-La-iVb" id="8ex-hy-1yV"/>
                         <outlet property="loginButton" destination="IVi-K9-fBt" id="G3K-bI-y1w"/>
                         <outlet property="prog_Signin" destination="JnY-ow-InH" id="MPo-Ge-FaJ"/>
                         <outlet property="textFieldDomain" destination="Req-x3-Xup" id="Yoa-9U-Zj8"/>

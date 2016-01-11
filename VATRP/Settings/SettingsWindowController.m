@@ -9,6 +9,7 @@
 #import "SettingsWindowController.h"
 #import "SettingsViewController.h"
 #import "AVViewController.h"
+#import "ThemeMenuViewController.h"
 #import "AccountsViewController.h"
 #import "CodecsViewController.h"
 #import "MediaViewController.h"
@@ -18,6 +19,7 @@
 
 @interface SettingsWindowController () <SettingsViewControllerDelegate> {
     AVViewController *avViewController;
+    ThemeMenuViewController *themeMenuViewController;
     AccountsViewController *accountsViewController;
     CodecsViewController *codecsViewController;
     MediaViewController *mediaViewController;
@@ -42,6 +44,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
     
     avViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AVViewController"];
+    themeMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ThemeMenuViewController"];
     accountsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AccountsViewController"];
     codecsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CodecsViewController"];
     mediaViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MediaViewController"];
@@ -62,6 +65,10 @@
 
 - (IBAction)onToolbarItemAudioVideo:(id)sender {
     [self changeViewTo:avViewController.view];
+}
+
+- (IBAction)onToolbarItemThemeMenu:(id)sender {
+    [self changeViewTo:themeMenuViewController.view];
 }
 
 - (IBAction)onToolbarItemAccount:(id)sender {
@@ -93,6 +100,7 @@
     }
     
     [avViewController save];
+    [themeMenuViewController save];
     [codecsViewController save];
     [mediaViewController save];
     [testingViewController save];

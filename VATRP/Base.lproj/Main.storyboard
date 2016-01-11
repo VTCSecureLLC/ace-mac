@@ -1876,9 +1876,14 @@
                                         <action selector="onToolbarItemAudioVideo:" target="San-o0-UCl" id="f2J-KJ-dcY"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" label="Account" paletteLabel="Account" tag="-1" image="accounts_icon" id="NQH-aU-ele">
+                                <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" label="Theme" paletteLabel="Theme" tag="-1" id="NQH-aU-ele">
                                     <connections>
-                                        <action selector="onToolbarItemAccount:" target="San-o0-UCl" id="MAQ-En-fxf"/>
+                                        <action selector="onToolbarItemThemeMenu:" target="San-o0-UCl" id="qg6-Aw-Z0j"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="0F9704DA-AAAC-432B-A310-2326165A3E53" label="Account" paletteLabel="Account" tag="-1" image="accounts_icon" id="tP7-oP-703">
+                                    <connections>
+                                        <action selector="onToolbarItemAccount:" target="San-o0-UCl" id="wQj-Rd-fC0"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="00623CA0-7636-4C50-AB85-B328D70A57C7" label="Codecs" paletteLabel="Codecs" tag="-1" id="ve4-Sd-mxC">
@@ -8124,6 +8129,66 @@ Cg
                 <customObject id="7FI-2w-EyN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-881" y="1550"/>
+        </scene>
+        <!--Theme Menu View Controller-->
+        <scene sceneID="66u-oZ-A2i">
+            <objects>
+                <viewController storyboardIdentifier="ThemeMenuViewController" id="fR2-3w-TmO" customClass="ThemeMenuViewController" sceneMemberID="viewController">
+                    <view key="view" id="qec-sB-hr4">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n9R-gI-prO">
+                                <rect key="frame" x="48" y="363" width="185" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Foreground Color:" id="Wr8-Gd-LLd">
+                                    <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pUo-aV-6dK">
+                                <rect key="frame" x="239" y="359" width="155" height="27"/>
+                                <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="onColorForeground:" target="fR2-3w-TmO" id="IRo-oX-JqP"/>
+                                </connections>
+                            </colorWell>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aQ9-9z-1Mc">
+                                <rect key="frame" x="48" y="332" width="185" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background Color:" id="sHY-b2-6Pl">
+                                    <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F6A-t5-vKp">
+                                <rect key="frame" x="239" y="328" width="155" height="27"/>
+                                <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="onColorBackground:" target="fR2-3w-TmO" id="igI-Bw-cY0"/>
+                                </connections>
+                            </colorWell>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TU8-Tp-Tok">
+                                <rect key="frame" x="237" y="294" width="159" height="28"/>
+                                <buttonCell key="cell" type="check" title="Force 508" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="sGY-b3-6Du">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxForce508:" target="fR2-3w-TmO" id="6ub-Gh-9c5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="buttonForce508" destination="TU8-Tp-Tok" id="7fx-KE-vUc"/>
+                        <outlet property="colorWellBackground" destination="F6A-t5-vKp" id="qUh-RR-SSf"/>
+                        <outlet property="colorWellForeground" destination="pUo-aV-6dK" id="hUX-ws-Qmq"/>
+                    </connections>
+                </viewController>
+                <customObject id="UMS-Jk-zST" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-379" y="1550"/>
         </scene>
         <!--Codecs View Controller-->
         <scene sceneID="7Xs-Xf-eyW">

@@ -127,6 +127,7 @@
 		697840851C089B55000ED450 /* call hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840841C089B55000ED450 /* call hold.png */; };
 		697840871C089CB9000ED450 /* call resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840861C089CB9000ED450 /* call resume.png */; };
 		6983EB281C43A169004CCD74 /* AVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6983EB271C43A169004CCD74 /* AVViewController.m */; };
+		6983EB2B1C43B265004CCD74 /* ThemeMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6983EB2A1C43B265004CCD74 /* ThemeMenuViewController.m */; };
 		69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A01BFB5C83005C62FA /* chat_active.png */; };
 		69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A11BFB5C83005C62FA /* chat_disabled.png */; };
 		69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A21BFB5C83005C62FA /* chat_inactive.png */; };
@@ -700,6 +701,8 @@
 		697840861C089CB9000ED450 /* call resume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call resume.png"; sourceTree = "<group>"; };
 		6983EB261C43A169004CCD74 /* AVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVViewController.h; sourceTree = "<group>"; };
 		6983EB271C43A169004CCD74 /* AVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVViewController.m; sourceTree = "<group>"; };
+		6983EB291C43B265004CCD74 /* ThemeMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeMenuViewController.h; sourceTree = "<group>"; };
+		6983EB2A1C43B265004CCD74 /* ThemeMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeMenuViewController.m; sourceTree = "<group>"; };
 		69A025A01BFB5C83005C62FA /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
 		69A025A11BFB5C83005C62FA /* chat_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_disabled.png; sourceTree = "<group>"; };
 		69A025A21BFB5C83005C62FA /* chat_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_inactive.png; sourceTree = "<group>"; };
@@ -1056,6 +1059,8 @@
 				6973591A1C1721EF00A24D09 /* SettingsView.m */,
 				6983EB261C43A169004CCD74 /* AVViewController.h */,
 				6983EB271C43A169004CCD74 /* AVViewController.m */,
+				6983EB291C43B265004CCD74 /* ThemeMenuViewController.h */,
+				6983EB2A1C43B265004CCD74 /* ThemeMenuViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1893,6 +1898,7 @@
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
 				4A5DD1DB1BD8DADB003BE9A2 /* NSImage+Merge.m in Sources */,
 				6973592A1C17393400A24D09 /* SettingsItemModel.m in Sources */,
+				6983EB2B1C43B265004CCD74 /* ThemeMenuViewController.m in Sources */,
 				4AB5564B1BDE765E003382B2 /* NewMessageCellView.m in Sources */,
 				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,

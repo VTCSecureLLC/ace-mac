@@ -18,12 +18,14 @@
 @interface LoginViewController () {
     AccountModel *loginAccount;
 }
+@property (weak) IBOutlet NSProgressIndicator *prog_Signin;
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
 @property (weak) IBOutlet NSTextField *textFieldUserID;
 @property (weak) IBOutlet NSTextField *textFieldPassword;
 @property (weak) IBOutlet NSTextField *textFieldDomain;
 @property (weak) IBOutlet NSTextField *textFieldPort;
+@property (weak) IBOutlet NSButton *loginButton;
 
 @end
 
@@ -32,6 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    [self.prog_Signin setHidden:YES];
+    [self.loginButton setEnabled:YES];
 }
 
 - (void)loadView {
@@ -77,6 +81,9 @@
                                                         domain:loginAccount.domain
                                                      transport:loginAccount.transport
                                                           port:loginAccount.port];
+    [self.prog_Signin setHidden:NO];
+    [self.prog_Signin startAnimation:self];
+    [self.loginButton setEnabled:NO];
 }
 
 - (void) viewDidDisappear {
@@ -199,6 +206,9 @@
             break;
         }
         case LinphoneRegistrationFailed: {
+            [self.loginButton setEnabled:YES];
+            [self.prog_Signin setHidden:YES];
+            [self.prog_Signin stopAnimation:self];
             NSAlert *alert = [[NSAlert alloc]init];
             [alert addButtonWithTitle:@"OK"];
             if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])

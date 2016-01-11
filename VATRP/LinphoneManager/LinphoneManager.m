@@ -1136,19 +1136,41 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 	}
 
 	/*DETECT cameras*/
-	frontCamId= backCamId=nil;
 	char** camlist = (char**)linphone_core_get_video_devices(theLinphoneCore);
-	for (char* cam = *camlist;*camlist!=NULL;cam=*++camlist) {
-		if (strcmp(FRONT_CAM_NAME, cam)==0) {
-			frontCamId = cam;
-			//great set default cam to front
-			linphone_core_set_video_device(theLinphoneCore, cam);
-		}
-		if (strcmp(BACK_CAM_NAME, cam)==0) {
-			backCamId = cam;
-		}
-
-	}
+    NSString* captureDevice = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_CAPTURE_DEVICE"];
+    if ((captureDevice != nil) && (captureDevice.length > 0))
+    {
+        for (char* cam = *camlist; *camlist!=NULL; cam=*++camlist)
+        {
+            NSString* currentCam = [NSString stringWithCString:cam];
+            if ((currentCam != nil) && [captureDevice isEqualToString:currentCam])
+            {
+                linphone_core_set_video_device(theLinphoneCore, cam);
+            }
+        }
+    }
+    
+    NSString* speaker = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_SPEAKER"];
+    NSString* microphone = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_MICROPHONE"];
+    char** soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
+    for (char* device = *soundlist; *soundlist!=NULL; device=*++soundlist)
+    {
+        NSString* currentDevice = [NSString stringWithCString:device];
+        if (linphone_core_sound_device_can_capture([LinphoneManager getLc], device))
+        {
+            if ((microphone != nil) && [microphone isEqualToString:currentDevice])
+            {
+                linphone_core_set_capture_device(theLinphoneCore, [microphone UTF8String]);
+            }
+        }
+        else
+        {
+            if ((speaker != nil) && [speaker isEqualToString:currentDevice])
+            {
+                linphone_core_set_playback_device(theLinphoneCore, [speaker UTF8String]);
+            }
+        }
+    }
 
 	if (![LinphoneManager isNotIphone3G]){
 		PayloadType *pt=linphone_core_find_payload_type(theLinphoneCore,"SILK",24000,-1);

@@ -154,15 +154,22 @@ char **soundlist;
     else
         retval = linphone_core_set_media_encryption([LinphoneManager getLc], LinphoneMediaEncryptionNone);
 
+    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxCaptureDevices.stringValue forKey:@"SETTINGS_SELECTED_CAPTURE_DEVICE"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxMicrophone.stringValue forKey:@"SETTINGS_SELECTED_MICROPHONE"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxSpeaker.stringValue forKey:@"SETTINGS_SELECTED_SPEAKER"];
+    // force the save rather than wait for auto sync.
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 - (IBAction)onComboBoxCaptureDevice:(id)sender {
     [self displaySelectedVideoDevice];
+    isChanged = YES;
 }
 
 - (IBAction)onComboBoxMicrophone:(id)sender {
-        const char *mic = [self.comboBoxMicrophone.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
-        linphone_core_set_capture_device([LinphoneManager getLc], mic);
+    const char *mic = [self.comboBoxMicrophone.stringValue cStringUsingEncoding:NSUTF8StringEncoding];
+    linphone_core_set_capture_device([LinphoneManager getLc], mic);
+    isChanged = YES;
 }
 
 - (IBAction)onComboBoxSpeaker:(id)sender {
@@ -171,6 +178,7 @@ char **soundlist;
 	
     const char* lPlay = [[LinphoneManager bundleFile:@"msg.wav"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
     linphone_core_play_local([LinphoneManager getLc], lPlay);
+    isChanged = YES;
 }
 
 - (IBAction)onComboboxMediaEncription:(id)sender {

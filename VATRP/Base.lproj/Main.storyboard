@@ -1871,9 +1871,14 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
                         <toolbar key="toolbar" implicitIdentifier="AA47FE5A-5045-4EDE-A972-420640CC1A96" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="1yN-he-lh8">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="1E7942C9-75F5-4340-9A13-CB07AB781858" label="Account" paletteLabel="Account" tag="-1" image="accounts_icon" id="nVf-KC-pl6">
+                                <toolbarItem implicitItemIdentifier="1E7942C9-75F5-4340-9A13-CB07AB781858" label="Audio/Video" paletteLabel="Audio/Video" tag="-1" id="nVf-KC-pl6">
                                     <connections>
-                                        <action selector="onToolbarItemAccount:" target="San-o0-UCl" id="C2c-V7-yhi"/>
+                                        <action selector="onToolbarItemAudioVideo:" target="San-o0-UCl" id="f2J-KJ-dcY"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" label="Account" paletteLabel="Account" tag="-1" image="accounts_icon" id="NQH-aU-ele">
+                                    <connections>
+                                        <action selector="onToolbarItemAccount:" target="San-o0-UCl" id="MAQ-En-fxf"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="00623CA0-7636-4C50-AB85-B328D70A57C7" label="Codecs" paletteLabel="Codecs" tag="-1" id="ve4-Sd-mxC">
@@ -1894,6 +1899,7 @@
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nVf-KC-pl6"/>
+                                <toolbarItem reference="NQH-aU-ele"/>
                                 <toolbarItem reference="ve4-Sd-mxC"/>
                                 <toolbarItem reference="Rrn-YL-CAr"/>
                                 <toolbarItem reference="55f-vN-x5K"/>
@@ -3607,7 +3613,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" baseWritingDirection="leftToRight" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="Hcn-Pf-fDW">
-                                            <rect key="frame" x="0.0" y="0.0" width="408" height="4172"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="408" height="5004"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="minSize" width="408" height="312"/>
@@ -8046,6 +8052,78 @@ Cg
                 <customObject id="WLK-9q-LMt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-881" y="1049"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Uaa-Mx-Cpk">
+            <objects>
+                <viewController storyboardIdentifier="AVViewController" id="Vio-Ua-8bG" customClass="AVViewController" sceneMemberID="viewController">
+                    <view key="view" id="Axp-VY-yWT">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TEm-c8-kp0">
+                                <rect key="frame" x="70" y="354" width="304" height="28"/>
+                                <buttonCell key="cell" type="check" title="Speaker Mute" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VlQ-Nd-eg7">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxSpeakerMute:" target="Vio-Ua-8bG" id="3Mi-jV-zTj"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BZi-0r-GbN">
+                                <rect key="frame" x="70" y="324" width="304" height="28"/>
+                                <buttonCell key="cell" type="check" title="Mic Mute" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nwK-O1-7IX">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxMicMute:" target="Vio-Ua-8bG" id="o5I-wd-KVc"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="paR-QH-m85">
+                                <rect key="frame" x="70" y="294" width="304" height="28"/>
+                                <buttonCell key="cell" type="check" title="Echo Cancel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dQ6-AW-U0R">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxEchoCancel:" target="Vio-Ua-8bG" id="FK2-cE-JKJ"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z0f-1T-LdF">
+                                <rect key="frame" x="70" y="264" width="304" height="28"/>
+                                <buttonCell key="cell" type="check" title="Show Self-View" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nGF-9F-9wN">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxShowSelfView:" target="Vio-Ua-8bG" id="QBE-EY-Ci3"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V37-UX-TXH">
+                                <rect key="frame" x="70" y="234" width="304" height="28"/>
+                                <buttonCell key="cell" type="check" title="Show Preview" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4Wh-tQ-PXN">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxShowPreview:" target="Vio-Ua-8bG" id="EKI-Mj-a9W"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="buttonEchoCancel" destination="paR-QH-m85" id="xRc-5A-X1X"/>
+                        <outlet property="buttonMicMute" destination="BZi-0r-GbN" id="pHb-Ib-RQW"/>
+                        <outlet property="buttonShowPreview" destination="V37-UX-TXH" id="Roa-nN-2Sb"/>
+                        <outlet property="buttonShowSelfView" destination="z0f-1T-LdF" id="rPi-FD-8xJ"/>
+                        <outlet property="buttonSpeakerMute" destination="TEm-c8-kp0" id="eVD-Vq-mrY"/>
+                    </connections>
+                </viewController>
+                <customObject id="7FI-2w-EyN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-881" y="1550"/>
         </scene>
         <!--Codecs View Controller-->
         <scene sceneID="7Xs-Xf-eyW">

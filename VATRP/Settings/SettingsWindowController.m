@@ -8,6 +8,7 @@
 
 #import "SettingsWindowController.h"
 #import "SettingsViewController.h"
+#import "AVViewController.h"
 #import "AccountsViewController.h"
 #import "CodecsViewController.h"
 #import "MediaViewController.h"
@@ -16,6 +17,7 @@
 #import "LinphoneManager.h"
 
 @interface SettingsWindowController () <SettingsViewControllerDelegate> {
+    AVViewController *avViewController;
     AccountsViewController *accountsViewController;
     CodecsViewController *codecsViewController;
     MediaViewController *mediaViewController;
@@ -39,12 +41,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
     
+    avViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AVViewController"];
     accountsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AccountsViewController"];
     codecsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CodecsViewController"];
     mediaViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MediaViewController"];
     testingViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TestingViewController"];
     
-    [self changeViewTo:accountsViewController.view];
+    [self changeViewTo:avViewController.view];
     
     SettingsViewController *settingsViewController = (SettingsViewController*)self.contentViewController;
     settingsViewController.delegate = self;
@@ -55,6 +58,10 @@
     self.isShow = NO;
     [AppDelegate sharedInstance].viewController.settingsWindowController = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didClosedSettingsWindow" object:nil];
+}
+
+- (IBAction)onToolbarItemAudioVideo:(id)sender {
+    [self changeViewTo:avViewController.view];
 }
 
 - (IBAction)onToolbarItemAccount:(id)sender {
@@ -84,6 +91,8 @@
     if (![accountsViewController save]) {
         return;
     }
+    
+    [avViewController save];
     [codecsViewController save];
     [mediaViewController save];
     [testingViewController save];

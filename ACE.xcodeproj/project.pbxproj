@@ -126,6 +126,7 @@
 		697840811C087F28000ED450 /* SecondIncomingCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 697840801C087F28000ED450 /* SecondIncomingCallView.m */; };
 		697840851C089B55000ED450 /* call hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840841C089B55000ED450 /* call hold.png */; };
 		697840871C089CB9000ED450 /* call resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 697840861C089CB9000ED450 /* call resume.png */; };
+		6983EB281C43A169004CCD74 /* AVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6983EB271C43A169004CCD74 /* AVViewController.m */; };
 		69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A01BFB5C83005C62FA /* chat_active.png */; };
 		69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A11BFB5C83005C62FA /* chat_disabled.png */; };
 		69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A025A21BFB5C83005C62FA /* chat_inactive.png */; };
@@ -697,6 +698,8 @@
 		697840821C087F33000ED450 /* NumpadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumpadView.m; sourceTree = "<group>"; };
 		697840841C089B55000ED450 /* call hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call hold.png"; sourceTree = "<group>"; };
 		697840861C089CB9000ED450 /* call resume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call resume.png"; sourceTree = "<group>"; };
+		6983EB261C43A169004CCD74 /* AVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVViewController.h; sourceTree = "<group>"; };
+		6983EB271C43A169004CCD74 /* AVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVViewController.m; sourceTree = "<group>"; };
 		69A025A01BFB5C83005C62FA /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
 		69A025A11BFB5C83005C62FA /* chat_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_disabled.png; sourceTree = "<group>"; };
 		69A025A21BFB5C83005C62FA /* chat_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_inactive.png; sourceTree = "<group>"; };
@@ -1051,6 +1054,8 @@
 				4A13AA161BC6A5B9000C9358 /* TestingViewController.m */,
 				697359191C1721EF00A24D09 /* SettingsView.h */,
 				6973591A1C1721EF00A24D09 /* SettingsView.m */,
+				6983EB261C43A169004CCD74 /* AVViewController.h */,
+				6983EB271C43A169004CCD74 /* AVViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1847,6 +1852,7 @@
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
 				4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
+				6983EB281C43A169004CCD74 /* AVViewController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
 				4AA203C01BD4CAF500DD9A4D /* BackgroundedView.m in Sources */,
 				4A13AA171BC6A5B9000C9358 /* TestingViewController.m in Sources */,

@@ -47,6 +47,8 @@ class DesktopTarget(prepare.Target):
         if platform.system() == 'Windows':
             current_path = current_path.replace('\\', '/')
         self.config_file = 'configs/config-desktop.cmake'
+        if platform.system() == 'Windows':
+            self.generator = 'Visual Studio 12 2013'
         self.additional_args = [
             '-DCMAKE_INSTALL_MESSAGE=LAZY',
             '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
@@ -162,7 +164,7 @@ def main(argv=None):
     argparser.add_argument(
         '-f', '--force', help="Force preparation, even if working directory already exist.", action='store_true')
     argparser.add_argument(
-        '-G', '--generator', help="CMake build system generator (default: Unix Makefiles, use cmake -h to get the complete list).", default='Unix Makefiles', dest='generator')
+        '-G', '--generator', help="CMake build system generator (default: let CMake choose, use cmake -h to get the complete list).", default=None, dest='generator')
     argparser.add_argument(
         '-L', '--list-cmake-variables', help="List non-advanced CMake cache variables.", action='store_true', dest='list_cmake_variables')
     argparser.add_argument(
@@ -178,7 +180,6 @@ def main(argv=None):
 
     args, additional_args = argparser.parse_known_args()
 
-    additional_args += ["-G", args.generator]
     additional_args += ["-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES"]
 
     if args.only_submodules:
@@ -193,14 +194,14 @@ def main(argv=None):
                             "-DENABLE_H263P=YES",
                             "-DENABLE_ILBC=YES",
                             "-DENABLE_ISAC=YES",
-                            "-DENABLE_MKV=YES",
                             "-DENABLE_MPEG4=YES",
-                            "-DENABLE_OPENH264=YES"
+                            "-DENABLE_OPENH264=YES",
                             "-DENABLE_SILK=YES"]
 
     if args.package:
-        additional_args += ["-DENABLE_PACKAGING=YES"
-                            "-DENABLE_RELATIVE_PREFIX=YES"]
+        additional_args += ["-DENABLE_PACKAGING=YES"]
+        if platform.system() != 'Windows':
+            additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"] # Already forced in all cases on Windows platform
     if check_tools() != 0:
         return 1
 
@@ -225,6 +226,9 @@ def main(argv=None):
         target = PythonRaspberryTarget()
     else:
         target = DesktopTarget()
+    if args.generator is not None:
+        target.generator = args.generator
+
     if args.clean or args.veryclean:
         if args.veryclean:
             target.veryclean()

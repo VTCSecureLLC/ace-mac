@@ -18,12 +18,16 @@
 @interface LoginViewController () {
     AccountModel *loginAccount;
 }
+@property (weak) IBOutlet NSProgressIndicator *prog_Signin;
 
 @property (weak) IBOutlet NSTextField *textFieldUsername;
 @property (weak) IBOutlet NSTextField *textFieldUserID;
 @property (weak) IBOutlet NSTextField *textFieldPassword;
 @property (weak) IBOutlet NSTextField *textFieldDomain;
 @property (weak) IBOutlet NSTextField *textFieldPort;
+@property (weak) IBOutlet NSButton *loginButton;
+
+@property (weak) IBOutlet NSButton *buttonToggleAutoLogin;
 
 @end
 
@@ -32,6 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    [self.prog_Signin setHidden:YES];
+    [self.loginButton setEnabled:YES];
 }
 
 - (void)loadView {
@@ -50,6 +56,9 @@
         self.textFieldDomain.stringValue = accountModel.domain;
         self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
     }
+    
+    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    [self.buttonToggleAutoLogin setState:shouldAutoLogin];
 }
 
 //-(void)dealloc{
@@ -77,6 +86,9 @@
                                                         domain:loginAccount.domain
                                                      transport:loginAccount.transport
                                                           port:loginAccount.port];
+    [self.prog_Signin setHidden:NO];
+    [self.prog_Signin startAnimation:self];
+    [self.loginButton setEnabled:NO];
 }
 
 - (void) viewDidDisappear {
@@ -174,6 +186,10 @@
     
     linphone_proxy_config_destroy(default_conf);
 }
+- (IBAction)onCheckAutoLogin:(id)sender {
+    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    [[NSUserDefaults standardUserDefaults] setBool:!shouldAutoLogin forKey:@"auto_login"];
+}
 
 #pragma mark -
 
@@ -199,6 +215,9 @@
             break;
         }
         case LinphoneRegistrationFailed: {
+            [self.loginButton setEnabled:YES];
+            [self.prog_Signin setHidden:YES];
+            [self.prog_Signin stopAnimation:self];
             NSAlert *alert = [[NSAlert alloc]init];
             [alert addButtonWithTitle:@"OK"];
             if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])

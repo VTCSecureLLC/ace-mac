@@ -361,7 +361,7 @@ static void chatTable_free_chatrooms(void *data) {
     if (![[ChatService sharedInstance] sendMessagt:lastSimbol]) {
         NSAlert *alert = [[NSAlert alloc]init];
         [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
-        [alert setMessageText:NSLocalizedString(@"Problem sending RTT text.", nil)];
+        [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
         [alert runModal];
     }
 }

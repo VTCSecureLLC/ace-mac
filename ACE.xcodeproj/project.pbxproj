@@ -145,6 +145,7 @@
 		69B315951C2414540091534B /* SettingsAdvancedUI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69B315941C2414540091534B /* SettingsAdvancedUI.plist */; };
 		69D8B2EE1C076E1F0034576B /* RTTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D8B2ED1C076E1F0034576B /* RTTView.m */; };
 		73048F651C4598E500375345 /* libopenh264.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		73048F661C45B40F00375345 /* libopenh264.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; };
 		738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; };
 		739C3F111BFCE6D800F9EFCE /* libmsamr.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2B81BFA9F4B00EC7039 /* libmsamr.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -216,7 +217,6 @@
 		73EDA25D1BFA9F2D00EC7039 /* libcunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20E1BFA9F2C00EC7039 /* libcunit.dylib */; };
 		73EDA25E1BFA9F2D00EC7039 /* libgsm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */; };
 		73EDA25F1BFA9F2D00EC7039 /* libgsm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */; };
-		73EDA2651BFA9F2D00EC7039 /* libilbcrfc3951.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2121BFA9F2C00EC7039 /* libilbcrfc3951.a */; };
 		73EDA26A1BFA9F2D00EC7039 /* liblinphone.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */; };
 		73EDA26B1BFA9F2D00EC7039 /* liblinphone.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */; };
 		73EDA26C1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */; };
@@ -233,7 +233,6 @@
 		73EDA2771BFA9F2D00EC7039 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21B1BFA9F2C00EC7039 /* libopencore-amrnb.a */; };
 		73EDA2781BFA9F2D00EC7039 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21C1BFA9F2C00EC7039 /* libopencore-amrwb.a */; };
 		73EDA2791BFA9F2D00EC7039 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21C1BFA9F2C00EC7039 /* libopencore-amrwb.a */; };
-		73EDA27B1BFA9F2D00EC7039 /* libopenh264.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21D1BFA9F2C00EC7039 /* libopenh264.0.dylib */; };
 		73EDA27C1BFA9F2D00EC7039 /* libopenh264.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21E1BFA9F2C00EC7039 /* libopenh264.dylib */; };
 		73EDA27D1BFA9F2D00EC7039 /* libopenh264.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21E1BFA9F2C00EC7039 /* libopenh264.dylib */; };
 		73EDA27E1BFA9F2D00EC7039 /* libopus.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21F1BFA9F2C00EC7039 /* libopus.5.dylib */; };
@@ -299,8 +298,6 @@
 		73EDA2CA1BFA9F4B00EC7039 /* libmsbcg729.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2BA1BFA9F4B00EC7039 /* libmsbcg729.0.dylib */; };
 		73EDA2CC1BFA9F4B00EC7039 /* libmsbcg729.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2BB1BFA9F4B00EC7039 /* libmsbcg729.1.0.1.dylib */; };
 		73EDA2CE1BFA9F4B00EC7039 /* libmsbcg729.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2BC1BFA9F4B00EC7039 /* libmsbcg729.dylib */; };
-		73EDA2D01BFA9F4B00EC7039 /* libmsilbc.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2BD1BFA9F4B00EC7039 /* libmsilbc.0.dylib */; };
-		73EDA2D21BFA9F4B00EC7039 /* libmsilbc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2BE1BFA9F4B00EC7039 /* libmsilbc.dylib */; };
 		73EDA2D41BFA9F4B00EC7039 /* libmsopenh264.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2BF1BFA9F4B00EC7039 /* libmsopenh264.0.dylib */; };
 		73EDA2D61BFA9F4B00EC7039 /* libmsopenh264.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2C01BFA9F4B00EC7039 /* libmsopenh264.dylib */; };
 		73EDA2D81BFA9F4B00EC7039 /* libmssilk.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2C11BFA9F4B00EC7039 /* libmssilk.0.dylib */; };
@@ -895,9 +892,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73EDA27B1BFA9F2D00EC7039 /* libopenh264.0.dylib in Frameworks */,
 				73EDA2A71BFA9F2D00EC7039 /* libswscale.dylib in Frameworks */,
-				73EDA2D21BFA9F4B00EC7039 /* libmsilbc.dylib in Frameworks */,
+				73048F661C45B40F00375345 /* libopenh264.1.dylib in Frameworks */,
 				73EDA2D81BFA9F4B00EC7039 /* libmssilk.0.dylib in Frameworks */,
 				73EDA2871BFA9F2D00EC7039 /* libpolarssl.1.4.0.dylib in Frameworks */,
 				73EDA25D1BFA9F2D00EC7039 /* libcunit.dylib in Frameworks */,
@@ -939,7 +935,6 @@
 				73EDA26D1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */,
 				73EDA2C81BFA9F4B00EC7039 /* libmsamr.dylib in Frameworks */,
 				73EDA2491BFA9F2D00EC7039 /* libavutil.51.dylib in Frameworks */,
-				73EDA2651BFA9F2D00EC7039 /* libilbcrfc3951.a in Frameworks */,
 				73EDA26B1BFA9F2D00EC7039 /* liblinphone.8.dylib in Frameworks */,
 				73EDA27D1BFA9F2D00EC7039 /* libopenh264.dylib in Frameworks */,
 				73EDA2DC1BFA9F4B00EC7039 /* libmswebrtc.0.dylib in Frameworks */,
@@ -948,7 +943,6 @@
 				73EDA29B1BFA9F2D00EC7039 /* libsrtp.dylib in Frameworks */,
 				73EDA2851BFA9F2D00EC7039 /* libortp.dylib in Frameworks */,
 				73EDA2B51BFA9F2D00EC7039 /* libz.a in Frameworks */,
-				73EDA2D01BFA9F4B00EC7039 /* libmsilbc.0.dylib in Frameworks */,
 				73EDA2551BFA9F2D00EC7039 /* libbellesip.dylib in Frameworks */,
 				73EDA24B1BFA9F2D00EC7039 /* libavutil.dylib in Frameworks */,
 				73EDA26F1BFA9F2D00EC7039 /* libmediastreamer_base.6.dylib in Frameworks */,

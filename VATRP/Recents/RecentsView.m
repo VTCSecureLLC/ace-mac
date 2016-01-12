@@ -1,4 +1,4 @@
-//
+  //
 //  RecentsView.m
 //  ACE
 //
@@ -78,6 +78,8 @@
         default:
             break;
     }
+    
+    [self resignFirstResponder];
 }
 
 - (void)dialpadTextUpdate:(NSNotification*)notif {
@@ -168,9 +170,13 @@
     return 55;
 }
 
+
+
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
     //    selectedRow = marrayLoad[row];
-    
+    if(tableView.clickedRow != row){
+        return NO;
+    }
     LinphoneCallLog *callLog = [[callLogs objectAtIndex:row] pointerValue];
     LinphoneAddress *addr;
     if (linphone_call_log_get_dir(callLog) == LinphoneCallIncoming) {

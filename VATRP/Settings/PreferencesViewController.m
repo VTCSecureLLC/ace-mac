@@ -1,0 +1,702 @@
+//
+//  PreferencesViewController.m
+//  ACE
+//
+//  Created by Norayr Harutyunyan on 1/11/16.
+//  Copyright © 2016 VTCSecure. All rights reserved.
+//
+
+#import "PreferencesViewController.h"
+#import "LinphoneManager.h"
+#import "SettingsService.h"
+#import "AccountsService.h"
+#import "SDPNegotiationService.h"
+#import "CodecModel.h"
+
+@interface PreferencesViewController () <NSTextFieldDelegate> {
+    NSMutableArray *audioCodecList;
+    NSMutableArray *videoCodecList;
+    
+    BOOL isChanged;
+
+    NSButton *checkboxEnableVideo;
+    NSButton *checkboxEnableRTT;
+    NSButton *checkboxAdaptiveRate;
+    NSButton *checkboxAlwaysInititate;
+    NSButton *checkboxAlwaysAccept;
+    NSButton *checkboxVideoPreset;
+    NSButton *checkboxPreferredSize;
+    NSComboBox *comboBoxPreferredSize;
+    NSButton *checkboxMWIURL;
+    NSButton *checkboxStun;
+    NSButton *checkboxEnableICE;
+    NSButton *checkboxEnableUPNP;
+    NSButton *checkboxRandomPorts;
+    NSComboBox *comboBoxMediaEncription;
+    NSButton *checkboxPushNotifications;
+    NSButton *checkboxIPv6;
+    NSButton *checkboxDebugMode;
+    NSButton *checkboxPersistentNotifier;
+    NSButton *checkboxSharingServerURL;
+    NSButton *checkboxRemoteProvisioning;
+    NSButton *checkboxSendLogs;
+    NSButton *checkboxClearLogs;
+    
+    NSTextField *textFieldPreferredFPS;
+    NSTextField *textFieldSTUNURL;
+    NSTextField *textFieldSIPPort;
+    NSTextField *textFieldAudioPorts;
+    NSTextField *textFieldVideoPorts;
+}
+
+@property (weak) IBOutlet NSScrollView *scrollView;
+
+@end
+
+@implementation PreferencesViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do view setup here.
+    
+    isChanged = NO;
+    
+    LinphoneCore *lc = [LinphoneManager getLc];
+    PayloadType *pt;
+    const MSList *elem;
+    
+    audioCodecList = [[NSMutableArray alloc] init];
+    videoCodecList = [[NSMutableArray alloc] init];
+    
+    NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
+    NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
+    
+    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
+    
+    for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            bool_t value = linphone_core_payload_type_enabled(lc, pt);
+            
+            CodecModel *codecModel = [[CodecModel alloc] init];
+            
+            codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
+            codecModel.preference = pref;
+            codecModel.rate = pt->clock_rate;
+            codecModel.channels = pt->channels;
+            
+            if ([dictAudioCodec objectForKey:pref]) {
+                codecModel.status = [[dictAudioCodec objectForKey:pref] boolValue];
+            } else {
+                codecModel.status = value;
+            }
+            
+            [audioCodecList addObject:codecModel];
+        }
+    }
+    
+    const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
+    
+    for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            bool_t value = linphone_core_payload_type_enabled(lc, pt);
+            
+            CodecModel *codecModel = [[CodecModel alloc] init];
+            
+            codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
+            codecModel.preference = pref;
+            codecModel.rate = pt->clock_rate;
+            codecModel.channels = pt->channels;
+            
+            if ([dictVideoCodec objectForKey:pref]) {
+                codecModel.status = [[dictVideoCodec objectForKey:pref] boolValue];
+            } else {
+                codecModel.status = value;
+            }
+            
+            [videoCodecList addObject:codecModel];
+        }
+    }
+    
+    int scrollContentHeight = 1440;
+    int originY = scrollContentHeight - 30;
+    
+    NSView *docView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 425, scrollContentHeight)];
+    [self.scrollView setDocumentView:docView];
+    
+    
+    checkboxEnableVideo = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)];
+    [checkboxEnableVideo setButtonType:NSSwitchButton];
+    [checkboxEnableVideo setBezelStyle:0];
+    [checkboxEnableVideo setTitle:@"Enable Video"];
+    [checkboxEnableVideo setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"start_video_preference"]];
+    [checkboxEnableVideo setAction:@selector(onCheckBoxEnableVideo:)];
+    [checkboxEnableVideo setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxEnableVideo];
+
+    originY -= 30;
+    checkboxEnableRTT = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)];
+    [checkboxEnableRTT setButtonType:NSSwitchButton];
+    [checkboxEnableRTT setBezelStyle:0];
+    [checkboxEnableRTT setTitle:@"Enable RTT"];
+    [checkboxEnableRTT setState:[SettingsService getRTTEnabled]];
+    [checkboxEnableRTT setAction:@selector(onCheckBoxEnableRTT:)];
+    [checkboxEnableRTT setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxEnableRTT];
+
+    originY -= 25;
+    NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Audio";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+
+    originY -= 25;
+    checkboxAdaptiveRate = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+    [checkboxAdaptiveRate setButtonType:NSSwitchButton];
+    [checkboxAdaptiveRate setBezelStyle:0];
+    [checkboxAdaptiveRate setTitle:@"Adaptive Rate"];
+    [checkboxAdaptiveRate setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"enable_adaptive_rate_control"]];
+    [checkboxAdaptiveRate setAction:@selector(onCheckBoxAdaptiveRate:)];
+    [checkboxAdaptiveRate setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxAdaptiveRate];
+
+    originY -= 25;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Audio Codecs";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    for (int i = 0; i <audioCodecList.count; i++) {
+        CodecModel *codecModel = [audioCodecList objectAtIndex:i];
+
+        originY -= 30;
+        NSButton *checkboxACodec = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+        [checkboxACodec setButtonType:NSSwitchButton];
+        [checkboxACodec setBezelStyle:0];
+        [checkboxACodec setTitle:codecModel.name];
+        [checkboxACodec setState:codecModel.status];
+        [checkboxACodec setAction:@selector(onCheckBoxAdaptiveRate:)];
+        [checkboxACodec setTarget:self];
+        [self.scrollView.documentView addSubview:checkboxACodec];
+    }
+    
+    originY -= 30;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Video";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+
+    originY -= 30;
+    checkboxAlwaysInititate = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+    [checkboxAlwaysInititate setButtonType:NSSwitchButton];
+    [checkboxAlwaysInititate setBezelStyle:0];
+    [checkboxAlwaysInititate setTitle:@"Always Inititate"];
+    [checkboxAlwaysInititate setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"enable_video_preference"]];
+    [checkboxAlwaysInititate setAction:@selector(onCheckBoxAlwaysInititate:)];
+    [checkboxAlwaysInititate setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxAlwaysInititate];
+
+    originY -= 30;
+    checkboxAlwaysAccept = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+    [checkboxAlwaysAccept setButtonType:NSSwitchButton];
+    [checkboxAlwaysAccept setBezelStyle:0];
+    [checkboxAlwaysAccept setTitle:@"Always accept"];
+    [checkboxAlwaysAccept setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"accept_video_preference"]];
+    [checkboxAlwaysAccept setAction:@selector(onCheckBoxAlwaysAccept:)];
+    [checkboxAlwaysAccept setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxAlwaysAccept];
+
+//    const char *video_preset = linphone_core_get_video_preset([LinphoneManager getLc]);
+    
+    originY -= 30;
+    checkboxVideoPreset = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+    [checkboxVideoPreset setButtonType:NSSwitchButton];
+    [checkboxVideoPreset setBezelStyle:0];
+    [checkboxVideoPreset setTitle:@"Video Preset"];
+    [checkboxVideoPreset setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"video_preset_preference"]];
+    [checkboxVideoPreset setAction:@selector(onCheckBoxVideoPreset:)];
+    [checkboxVideoPreset setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxVideoPreset];
+
+    originY -= 30;
+    
+    comboBoxPreferredSize = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)];
+    [comboBoxPreferredSize addItemsWithObjectValues:@[@"1080p (1920x1080)", @"720p (1280x720)", @"svga (800x600)", @"4cif (704x576)", @"vga (640x480)", @"cif (352x288)", @"qcif (176x144)"]];
+    
+    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_preferred_size_preference"];
+    
+    if (video_resolution) {
+        comboBoxPreferredSize.stringValue = video_resolution;
+    } else {
+        MSVideoSize vsize = linphone_core_get_preferred_video_size([LinphoneManager getLc]);
+        
+        if ((vsize.width == MS_VIDEO_SIZE_1080P_W) && (vsize.height == MS_VIDEO_SIZE_1080P_H)) {
+            comboBoxPreferredSize.stringValue = @"1080p (1920x1080)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_720P_W) && (vsize.height == MS_VIDEO_SIZE_720P_H)) {
+            comboBoxPreferredSize.stringValue = @"720p (1280x720)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_SVGA_W) && (vsize.height == MS_VIDEO_SIZE_SVGA_H)) {
+            comboBoxPreferredSize.stringValue = @"svga (800x600)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_4CIF_W) && (vsize.height == MS_VIDEO_SIZE_4CIF_H)) {
+            comboBoxPreferredSize.stringValue = @"4cif (704x576)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_VGA_W) && (vsize.height == MS_VIDEO_SIZE_VGA_H)) {
+            comboBoxPreferredSize.stringValue = @"vga (640x480)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_CIF_W) && (vsize.height == MS_VIDEO_SIZE_CIF_H)) {
+            comboBoxPreferredSize.stringValue = @"cif (352x288)";
+        } else if ((vsize.width == MS_VIDEO_SIZE_QCIF_W) && (vsize.height == MS_VIDEO_SIZE_QCIF_H)) {
+            comboBoxPreferredSize.stringValue = @"qcif (176x144)";
+        }  else {
+            comboBoxPreferredSize.stringValue = @"None";
+        }
+    }
+
+    [self.scrollView.documentView addSubview:comboBoxPreferredSize];
+    
+    
+//    checkboxPreferredSize = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+//    [checkboxPreferredSize setButtonType:NSSwitchButton];
+//    [checkboxPreferredSize setBezelStyle:0];
+//    [checkboxPreferredSize setTitle:@"Preferred Size"];
+//    [checkboxPreferredSize setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"video_preferred_size_preference"]];
+//    [checkboxPreferredSize setAction:@selector(onCheckBoxPreferredSize:)];
+//    [checkboxPreferredSize setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxPreferredSize];
+
+    originY -= 30;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Preferred FPS";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    NSString *textfieldValue = [self textFieldValueWithUserDefaultsKey:@"video_preferred_fps_preference"];
+    
+    float fps = linphone_core_get_preferred_framerate([LinphoneManager getLc]);
+    
+    textFieldPreferredFPS = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 100, 20)];
+    textFieldPreferredFPS.delegate = self;
+    textFieldPreferredFPS.floatValue = fps ? fps : 15.0;
+    textFieldPreferredFPS.editable = YES;
+    [self.scrollView.documentView addSubview:textFieldPreferredFPS];
+
+    originY -= 25;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Video Codecs";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    for (int i = 0; i <videoCodecList.count; i++) {
+        CodecModel *codecModel = [videoCodecList objectAtIndex:i];
+        
+        originY -= 30;
+        NSButton *checkboxVCodec = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+        [checkboxVCodec setButtonType:NSSwitchButton];
+        [checkboxVCodec setBezelStyle:0];
+        [checkboxVCodec setTitle:codecModel.name];
+        [checkboxVCodec setState:codecModel.status];
+        [checkboxVCodec setAction:@selector(onCheckBoxAdaptiveRate:)];
+        [checkboxVCodec setTarget:self];
+        [self.scrollView.documentView addSubview:checkboxVCodec];
+    }
+
+    originY -= 25;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Call Control";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+
+    originY -= 25;
+    checkboxMWIURL = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxMWIURL setButtonType:NSSwitchButton];
+    [checkboxMWIURL setBezelStyle:0];
+    [checkboxMWIURL setTitle:@"MWI URL"];
+    [checkboxMWIURL setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_MWI_URL"]];
+    [checkboxMWIURL setAction:@selector(onCheckBoxAdaptiveRate:)];
+    [checkboxMWIURL setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxMWIURL];
+
+    originY -= 25;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Network";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    originY -= 25;
+    checkboxStun = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxStun setButtonType:NSSwitchButton];
+    [checkboxStun setBezelStyle:0];
+    [checkboxStun setTitle:@"STUN"];
+    [checkboxStun setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
+    [checkboxStun setAction:@selector(onCheckBoxAdaptiveRate:)];
+    [checkboxStun setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxStun];
+
+    originY -= 30;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"STUN URL";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"stun_url_preference"];
+    
+    textFieldSTUNURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
+    textFieldSTUNURL.delegate = self;
+    textFieldSTUNURL.stringValue = textfieldValue ? textfieldValue : @"stun.linphone.org";
+    textFieldSTUNURL.editable = YES;
+    [self.scrollView.documentView addSubview:textFieldSTUNURL];
+
+    originY -= 30;
+    checkboxEnableICE = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxEnableICE setButtonType:NSSwitchButton];
+    [checkboxEnableICE setBezelStyle:0];
+    [checkboxEnableICE setTitle:@"Enable ICE"];
+    [checkboxEnableICE setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
+    [checkboxEnableICE setAction:@selector(onCheckBoxEnableICE:)];
+    [checkboxEnableICE setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxEnableICE];
+    
+    originY -= 30;
+    checkboxEnableUPNP = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxEnableUPNP setButtonType:NSSwitchButton];
+    [checkboxEnableUPNP setBezelStyle:0];
+    [checkboxEnableUPNP setTitle:@"Enable UPNP"];
+    [checkboxEnableUPNP setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_ENABLE_UPNP"]];
+    [checkboxEnableUPNP setAction:@selector(onCheckBoxEnableUPNP:)];
+    [checkboxEnableUPNP setTarget:self];
+    [checkboxEnableUPNP setEnabled:linphone_core_upnp_available()];
+    [self.scrollView.documentView addSubview:checkboxEnableUPNP];
+
+    originY -= 30;
+    checkboxRandomPorts = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxRandomPorts setButtonType:NSSwitchButton];
+    [checkboxRandomPorts setBezelStyle:0];
+    [checkboxRandomPorts setTitle:@"Random Ports"];
+    [checkboxRandomPorts setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"random_port_preference"]];
+    [checkboxRandomPorts setAction:@selector(onCheckBoxRandomPorts:)];
+    [checkboxRandomPorts setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxRandomPorts];
+
+    originY -= 30;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"SIP Port";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"ACE_SIP_PORT"];
+    
+    textFieldSIPPort = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
+    textFieldSIPPort.delegate = self;
+    textFieldSIPPort.stringValue = textfieldValue ? textfieldValue : @"5060";
+    textFieldSIPPort.editable = YES;
+    [self.scrollView.documentView addSubview:textFieldSIPPort];
+    
+    originY -= 30;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Audio ports";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"AVE_AUDIO_PORTS"];
+    
+    textFieldAudioPorts = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
+    textFieldAudioPorts.delegate = self;
+    textFieldAudioPorts.stringValue = textfieldValue ? textfieldValue : @"7200-7299";
+    textFieldAudioPorts.editable = YES;
+    [self.scrollView.documentView addSubview:textFieldAudioPorts];
+    
+    originY -= 30;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Video ports";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"AVE_AUDIO_PORTS"];
+    
+    textFieldVideoPorts = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
+    textFieldVideoPorts.delegate = self;
+    textFieldVideoPorts.stringValue = textfieldValue ? textfieldValue : @"9200-9299";
+    textFieldVideoPorts.editable = YES;
+    [self.scrollView.documentView addSubview:textFieldVideoPorts];
+ 
+    originY -= 30;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Media Encrypt.";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    comboBoxMediaEncription = [[NSComboBox alloc] initWithFrame:NSMakeRect(130, originY, 170, 26)];
+    [comboBoxMediaEncription addItemsWithObjectValues:@[@"Encrypted (SRTP)", @"Encrypted (ZRTP)", @"Encrypted (DTLS)", @"Unencrypted"]];
+    [self.scrollView.documentView addSubview:comboBoxMediaEncription];
+
+    LinphoneMediaEncryption menc = linphone_core_get_media_encryption([LinphoneManager getLc]);
+    
+    switch (menc) {
+        case LinphoneMediaEncryptionSRTP:
+            comboBoxMediaEncription.stringValue = @"Encrypted (SRTP)";
+            break;
+        case LinphoneMediaEncryptionZRTP:
+            comboBoxMediaEncription.stringValue = @"Encrypted (ZRTP)";
+            break;
+        case LinphoneMediaEncryptionDTLS:
+            comboBoxMediaEncription.stringValue = @"Encrypted (DTLS)";
+            break;
+        case LinphoneMediaEncryptionNone:
+            comboBoxMediaEncription.stringValue = @"Unencrypted";
+            break;
+    }
+    
+    originY -= 30;
+    checkboxPushNotifications = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxPushNotifications setButtonType:NSSwitchButton];
+    [checkboxPushNotifications setBezelStyle:0];
+    [checkboxPushNotifications setTitle:@"Push Notifications"];
+    [checkboxPushNotifications setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PUSH_NOTIFICATIONS"]];
+    [checkboxPushNotifications setAction:@selector(onCheckBoxPushNotifications:)];
+    [checkboxPushNotifications setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxPushNotifications];
+
+    originY -= 30;
+    checkboxIPv6 = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxIPv6 setButtonType:NSSwitchButton];
+    [checkboxIPv6 setBezelStyle:0];
+    [checkboxIPv6 setTitle:@"IPv6"];
+    [checkboxIPv6 setState:linphone_core_ipv6_enabled([LinphoneManager getLc])];
+    [checkboxIPv6 setAction:@selector(onCheckBoxIPv6:)];
+    [checkboxIPv6 setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxIPv6];
+
+    originY -= 25;
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"Advanced";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    originY -= 30;
+    checkboxDebugMode = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxDebugMode setButtonType:NSSwitchButton];
+    [checkboxDebugMode setBezelStyle:0];
+    [checkboxDebugMode setTitle:@"Debug Mode"];
+    [checkboxDebugMode setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_DEBUG_MODE"]];
+    [checkboxDebugMode setAction:@selector(onCheckBoxDebugMode:)];
+    [checkboxDebugMode setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxDebugMode];
+    
+    originY -= 30;
+    checkboxPersistentNotifier = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxPersistentNotifier setButtonType:NSSwitchButton];
+    [checkboxPersistentNotifier setBezelStyle:0];
+    [checkboxPersistentNotifier setTitle:@"Persistent Notifier"];
+    [checkboxPersistentNotifier setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PERSISTENT_NOTIFIER"]];
+    [checkboxPersistentNotifier setAction:@selector(onCheckBoxPersistentNotifier:)];
+    [checkboxPersistentNotifier setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxPersistentNotifier];
+    
+    originY -= 30;
+    checkboxSharingServerURL = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxSharingServerURL setButtonType:NSSwitchButton];
+    [checkboxSharingServerURL setBezelStyle:0];
+    [checkboxSharingServerURL setTitle:@"Sharing Server URL"];
+    [checkboxSharingServerURL setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_SHARING_SERVER_URL"]];
+    [checkboxSharingServerURL setAction:@selector(onCheckBoxPersistentNotifier:)];
+    [checkboxSharingServerURL setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxSharingServerURL];
+    
+    originY -= 30;
+    checkboxRemoteProvisioning = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxRemoteProvisioning setButtonType:NSSwitchButton];
+    [checkboxRemoteProvisioning setBezelStyle:0];
+    [checkboxRemoteProvisioning setTitle:@"Remote Provisioning"];
+    [checkboxRemoteProvisioning setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"Remote Provisioning"]];
+    [checkboxRemoteProvisioning setAction:@selector(onCheckBoxRemoteProvisioning:)];
+    [checkboxRemoteProvisioning setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxRemoteProvisioning];
+    
+    originY -= 30;
+    checkboxSendLogs = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxSendLogs setButtonType:NSSwitchButton];
+    [checkboxSendLogs setBezelStyle:0];
+    [checkboxSendLogs setTitle:@"Send Logs"];
+    [checkboxSendLogs setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_SEND_LOGS"]];
+    [checkboxSendLogs setAction:@selector(onCheckBoxSendLogs:)];
+    [checkboxSendLogs setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxSendLogs];
+
+    originY -= 30;
+    checkboxClearLogs = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    [checkboxClearLogs setButtonType:NSSwitchButton];
+    [checkboxClearLogs setBezelStyle:0];
+    [checkboxClearLogs setTitle:@"Clear Logs"];
+    [checkboxClearLogs setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_CLEAR_LOGS"]];
+    [checkboxClearLogs setAction:@selector(onCheckBoxClearLogs:)];
+    [checkboxClearLogs setTarget:self];
+    [self.scrollView.documentView addSubview:checkboxClearLogs];
+
+    NSPoint newOrigin = NSMakePoint(0, NSMaxY(((NSView*)self.scrollView.documentView).frame) - 400);
+    [self.scrollView.contentView scrollToPoint:newOrigin];
+}
+
+- (NSString*) textFieldValueWithUserDefaultsKey:(NSString*)key {
+    if ([key isEqualToString:@"ACE_USERNAME"]) {
+        AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+        return accountModel.username;
+    } else if ([key isEqualToString:@"ACE_AUTH_ID"]) {
+        AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+        return accountModel.userID;
+    } else if ([key isEqualToString:@"ACE_DOMAIN"]) {
+        AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+        return accountModel.domain;
+    } else {
+        return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
+    
+    return nil;
+}
+
+- (void)onCheckBoxEnableVideo:(id)sender {
+}
+
+- (void)onCheckBoxEnableRTT:(id)sender {
+}
+
+- (void)onCheckBoxAdaptiveRate:(id)sender {
+}
+
+- (void)onCheckBoxAlwaysInititate:(id)sender {
+}
+
+- (void)onCheckBoxAlwaysAccept:(id)sender {
+}
+
+- (void)onCheckBoxVideoPreset:(id)sender {
+}
+
+- (void)onCheckBoxPreferredSize:(id)sender {
+}
+
+- (void)onCheckBoxEnableICE:(id)sender {
+}
+
+- (void)onCheckBoxEnableUPNP:(id)sender {
+}
+
+- (void)onCheckBoxRandomPorts:(id)sender {
+}
+
+- (void)onCheckBoxMediaEncryption:(id)sender {
+}
+
+- (void)onCheckBoxPushNotifications:(id)sender {
+}
+
+- (void)onCheckBoxIPv6:(id)sender {
+}
+
+- (void)onCheckBoxDebugMode:(id)sender {
+}
+
+- (void)onCheckBoxPersistentNotifier:(id)sender {
+}
+
+- (void)onCheckBoxSharingServerURL:(id)sender {
+}
+
+- (void)onCheckBoxRemoteProvisioning:(id)sender {
+}
+
+- (void)onCheckBoxSendLogs:(id)sender {
+}
+
+- (void)onCheckBoxClearLogs:(id)sender {
+}
+
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
+    isChanged = YES;
+    
+    return YES;
+}
+
+- (void) save {
+    if (!isChanged) {
+        return;
+    }
+    
+    LinphoneCore *lc = [LinphoneManager getLc];
+
+    linphone_core_enable_adaptive_rate_control(lc, checkboxAdaptiveRate.state);
+    linphone_core_enable_video(lc, checkboxAlwaysInititate.state, checkboxAlwaysInititate.state);
+
+    LinphoneVideoPolicy policy;
+    policy.automatically_accept = (BOOL)checkboxAlwaysAccept.state;
+    linphone_core_set_video_policy(lc, &policy);
+
+    MSVideoSize vsize;
+    
+    if ([comboBoxPreferredSize.stringValue isEqualToString:@"1080p (1920x1080)"]) {
+        MS_VIDEO_SIZE_ASSIGN(vsize, 1080P);
+    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"720p (1280x720)"]) {
+        MS_VIDEO_SIZE_ASSIGN(vsize, 720P);
+    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"svga (800x600)"]) {
+        MS_VIDEO_SIZE_ASSIGN(vsize, SVGA);
+    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"4cif (704x576)"]) {
+        MS_VIDEO_SIZE_ASSIGN(vsize, 4CIF);
+    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"vga (640x480)"]) {
+        MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
+    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"cif (352x288)"]) {
+        MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
+    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"qcif (176x144)"]) {
+        MS_VIDEO_SIZE_ASSIGN(vsize, QCIF);
+    }
+    
+    linphone_core_set_preferred_video_size(lc, vsize);
+    [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:@"video_preferred_size_preference"];
+
+    linphone_core_set_preferred_framerate(lc, textFieldPreferredFPS.floatValue);
+    
+    [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:@"stun_url_preference"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [SettingsService setStun:checkboxStun.state];
+    [SettingsService setICE:checkboxEnableICE.state];
+    [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableICE.state forKey:@"ice_preference"];
+
+    if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (SRTP)"] == NSOrderedSame)
+        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionSRTP);
+    else if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (ZRTP)"] == NSOrderedSame)
+        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionZRTP);
+    else if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (DTLS)"] == NSOrderedSame)
+        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionDTLS);
+    else
+        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionNone);
+
+    linphone_core_enable_ipv6(lc, checkboxIPv6.state);
+}
+
+@end

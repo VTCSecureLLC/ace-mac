@@ -1869,34 +1869,44 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="294" y="313" width="480" height="470"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-                        <toolbar key="toolbar" implicitIdentifier="AA47FE5A-5045-4EDE-A972-420640CC1A96" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="1yN-he-lh8">
+                        <toolbar key="toolbar" implicitIdentifier="AA47FE5A-5045-4EDE-A972-420640CC1A96" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="1yN-he-lh8">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="1E7942C9-75F5-4340-9A13-CB07AB781858" label="Audio/Video" paletteLabel="Audio/Video" tag="-1" id="nVf-KC-pl6">
+                                <toolbarItem implicitItemIdentifier="1E7942C9-75F5-4340-9A13-CB07AB781858" explicitItemIdentifier="audiovideo" label="Audio/Video" paletteLabel="Audio/Video" tag="-1" id="nVf-KC-pl6">
                                     <connections>
                                         <action selector="onToolbarItemAudioVideo:" target="San-o0-UCl" id="f2J-KJ-dcY"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" label="Theme" paletteLabel="Theme" tag="-1" id="NQH-aU-ele">
+                                <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" explicitItemIdentifier="theme" label="Theme" paletteLabel="Theme" tag="-1" id="NQH-aU-ele">
                                     <connections>
                                         <action selector="onToolbarItemThemeMenu:" target="San-o0-UCl" id="qg6-Aw-Z0j"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="0F9704DA-AAAC-432B-A310-2326165A3E53" label="Account" paletteLabel="Account" tag="-1" image="accounts_icon" id="tP7-oP-703">
+                                <toolbarItem implicitItemIdentifier="69BF9171-9D8D-4195-8E1B-7710354E054C" explicitItemIdentifier="summarymenu" label="Summary Menu" paletteLabel="Summary Menu" tag="-1" id="drf-T5-qNB">
+                                    <connections>
+                                        <action selector="onToolbarItemSummaryMenu:" target="San-o0-UCl" id="tTR-hd-ljn"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="0F9704DA-AAAC-432B-A310-2326165A3E53" explicitItemIdentifier="account" label="Account" paletteLabel="Account" tag="-1" image="accounts_icon" id="tP7-oP-703">
                                     <connections>
                                         <action selector="onToolbarItemAccount:" target="San-o0-UCl" id="wQj-Rd-fC0"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="00623CA0-7636-4C50-AB85-B328D70A57C7" label="Codecs" paletteLabel="Codecs" tag="-1" id="ve4-Sd-mxC">
+                                <toolbarItem implicitItemIdentifier="00623CA0-7636-4C50-AB85-B328D70A57C7" explicitItemIdentifier="preferences" label="Preferences" paletteLabel="Preferences" tag="-1" id="ve4-Sd-mxC">
                                     <connections>
-                                        <action selector="onToolbarItemCodecs:" target="San-o0-UCl" id="qMh-VC-mpG"/>
+                                        <action selector="onToolbarItemPreferences:" target="San-o0-UCl" id="K6a-CD-bdq"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="8FE6954C-74B7-452F-AA88-76258B8CDCD0" label="Media" paletteLabel="Media" tag="-1" id="Rrn-YL-CAr">
+                                <toolbarItem implicitItemIdentifier="FF52FFAD-ECA5-4282-A075-897DDA0CF736" explicitItemIdentifier="codecs" label="Codecs" paletteLabel="Codecs" tag="-1" id="nck-ej-WIl">
+                                    <connections>
+                                        <action selector="onToolbarItemCodecs:" target="San-o0-UCl" id="baY-v0-OtM"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="8FE6954C-74B7-452F-AA88-76258B8CDCD0" explicitItemIdentifier="media" label="Media" paletteLabel="Media" tag="-1" id="Rrn-YL-CAr">
                                     <connections>
                                         <action selector="onToolbarItemMedia:" target="San-o0-UCl" id="fX1-5n-fjy"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="A0797B28-B465-4A1A-A779-69A7B112BD06" label="Testing" paletteLabel="Testing" tag="-1" id="55f-vN-x5K">
+                                <toolbarItem implicitItemIdentifier="A0797B28-B465-4A1A-A779-69A7B112BD06" explicitItemIdentifier="testing" label="Testing" paletteLabel="Testing" tag="-1" id="55f-vN-x5K">
                                     <connections>
                                         <action selector="onToolbarItemTesting:" target="San-o0-UCl" id="WGy-CN-Tcd"/>
                                     </connections>
@@ -1905,13 +1915,16 @@
                             <defaultToolbarItems>
                                 <toolbarItem reference="nVf-KC-pl6"/>
                                 <toolbarItem reference="NQH-aU-ele"/>
-                                <toolbarItem reference="ve4-Sd-mxC"/>
+                                <toolbarItem reference="drf-T5-qNB"/>
+                                <toolbarItem reference="tP7-oP-703"/>
                                 <toolbarItem reference="Rrn-YL-CAr"/>
                                 <toolbarItem reference="55f-vN-x5K"/>
                             </defaultToolbarItems>
                         </toolbar>
                     </window>
                     <connections>
+                        <outlet property="toolbar" destination="1yN-he-lh8" id="1mv-eq-iBI"/>
+                        <outlet property="toolbarItemPreferences" destination="ve4-Sd-mxC" id="idn-9F-TAh"/>
                         <segue destination="ZYa-uw-mjH" kind="relationship" relationship="window.shadowedContentViewController" id="XDn-uF-xur"/>
                     </connections>
                 </windowController>
@@ -3543,6 +3556,45 @@ DQ
                 <customObject id="hoe-fM-kjo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="643" y="1049"/>
+        </scene>
+        <!--Preferences View Controller-->
+        <scene sceneID="Qqi-2B-bFy">
+            <objects>
+                <viewController storyboardIdentifier="PreferencesViewController" id="yqe-Zp-niF" customClass="PreferencesViewController" sceneMemberID="viewController">
+                    <view key="view" id="ExK-nO-Lpy">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6Q-Lh-knX">
+                                <rect key="frame" x="55" y="0.0" width="425" height="400"/>
+                                <clipView key="contentView" ambiguous="YES" id="xQF-Ql-7AI">
+                                    <rect key="frame" x="0.0" y="0.0" width="425" height="400"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUO-qG-DZo">
+                                            <rect key="frame" x="0.0" y="306" width="440" height="360"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.90980392156862744" green="0.9137254901960784" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="HqX-xo-aRy">
+                                    <rect key="frame" x="0.0" y="384" width="425" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
+                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="S6Q-Lh-knX" id="8KW-Et-zUd"/>
+                    </connections>
+                </viewController>
+                <customObject id="UJC-lG-lMM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="643" y="1550"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="aiA-JG-AW8">
@@ -8893,6 +8945,75 @@ DQ
                 <customObject id="4GJ-27-Ttc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131" y="1049"/>
+        </scene>
+        <!--Summary Menu View Controller-->
+        <scene sceneID="bvf-ml-5ID">
+            <objects>
+                <viewController storyboardIdentifier="SummaryMenuViewController" id="rlz-Jh-8AF" customClass="SummaryMenuViewController" sceneMemberID="viewController">
+                    <view key="view" id="4eY-Nw-yY0">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gD2-z5-DSP">
+                                <rect key="frame" x="239" y="353" width="177" height="36"/>
+                                <buttonCell key="cell" type="smallSquare" title="View TSS" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4Fs-ue-rVz">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="onButtonViewTSS:" target="rlz-Jh-8AF" id="QqN-gf-UCI"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LkP-Jd-w83">
+                                <rect key="frame" x="48" y="363" width="185" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="View TSS:" id="LCC-W2-Bbb">
+                                    <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7sf-sW-14b">
+                                <rect key="frame" x="239" y="311" width="177" height="36"/>
+                                <buttonCell key="cell" type="smallSquare" title="Send TSS" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Job-KB-idH">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onButtonSendTSS:" target="rlz-Jh-8AF" id="btf-Jn-iku"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TEc-gW-FV2">
+                                <rect key="frame" x="48" y="321" width="185" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Send TSS:" id="BAc-YO-5EF">
+                                    <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q3s-t4-d7c">
+                                <rect key="frame" x="239" y="269" width="177" height="36"/>
+                                <buttonCell key="cell" type="smallSquare" title="Show Advanced" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iZH-Eb-Eb3">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onButtonShowAdvanced:" target="rlz-Jh-8AF" id="Hwa-vl-PeV"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IGw-nA-3aL">
+                                <rect key="frame" x="48" y="279" width="185" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Show Advanced:" id="hhJ-nO-Fc0">
+                                    <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="jwE-1M-E9S" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131" y="1550"/>
         </scene>
         <!--Keypad View Controller-->
         <scene sceneID="PMg-Pt-jlW">

@@ -12,5 +12,6 @@
 
 @property (nonatomic, assign) BOOL isShow;
 
+- (void) addPreferencesToolbarItem;
 
 @end

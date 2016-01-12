@@ -10,6 +10,7 @@
 #import "ChatService.h"
 #import "ViewManager.h"
 #import "AppDelegate.h"
+#import "SettingsService.h"
 
 
 @interface CallService () {
@@ -54,21 +55,15 @@
 }
 
 + (void) callTo:(NSString*)number {
-    [[LinphoneManager instance] call:number displayName:number transfer:NO];
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
     
-//    if ((number == nil) || [number isEqualToString:@""]) {
-//        return;
-//    }
-//    LinphoneCore *lc = [LinphoneManager getLc];
-//    
-//    LinphoneCall *thiscall;
-//    thiscall = linphone_core_get_current_call(lc);
-//    LinphoneCallParams *params = linphone_core_create_call_params(lc, thiscall);
-//    LinphoneAddress* linphoneAddress = linphone_core_interpret_url(lc, [number cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-//    linphone_call_params_enable_realtime_text(params, [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
-//    linphone_core_invite_address_with_params(lc, linphoneAddress, params);
+    [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
 }
 
+- (void) callUsingLinphoneManager:(NSString*)number {
+    [[LinphoneManager instance] call:number displayName:number transfer:NO];
+}
+    
 - (int) decline:(LinphoneCall *)aCall {
     return linphone_core_terminate_call([LinphoneManager getLc], aCall);
 }
@@ -149,6 +144,8 @@
             
             currentCall = aCall;
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:currentCall];
+            
+            linphone_call_enable_echo_cancellation(aCall, [SettingsService getEchoCancel]);
         }
             break;
         case LinphoneCallPausedByRemote:

@@ -38,6 +38,7 @@
 #include "linphone/lpconfig.h"
 #include "mediastreamer2/mscommon.h"
 #import "SDPNegotiationService.h"
+#import "SettingsService.h"
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -226,9 +227,16 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
 //		photoLibrary = [[ALAssetsLibrary alloc] init];
 		self->_isTesting = [LinphoneManager isRunningTests];
 
-		[self renameDefaultSettings];
-		[self copyDefaultSettings];
-		[self overrideDefaultSettings];
+        [self setLinphoneDBFilePath];
+        
+        
+//        if ([fileManager fileExistsAtPath:dst]) {
+//            [self overrideDefaultSettings];
+//        } else {
+//            [self renameDefaultSettings];
+//            [self copyDefaultSettings];
+//            [self overrideDefaultSettings];
+//        }
 
 		//set default values for first boot
 		if ([self lpConfigStringForKey:@"debugenable_preference"] == nil) {
@@ -249,7 +257,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
 //	if (lStatus) {
 //		LOGE(@"cannot un register route change handler [%ld]", lStatus);
 //	}
-
+  //  [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: kLinphoneCallUpdate];
 	[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneGlobalStateUpdate];
 	[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneConfiguringStateUpdate];
 
@@ -702,15 +710,14 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 	const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
 	char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
 	const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
-	NSString* callID                     = [NSString stringWithUTF8String:call_id];
+//	NSString* callID                     = [NSString stringWithUTF8String:call_id];
 
 	ms_free(c_address);
 
 	// Post event
 	NSDictionary* dict = @{@"room"        :[NSValue valueWithPointer:room],
 						   @"from_address":[NSValue valueWithPointer:linphone_chat_message_get_from_address(msg)],
-						   @"message"     :[NSValue valueWithPointer:msg],
-						   @"call-id"     : callID};
+                           @"message"     :[NSValue valueWithPointer:msg]};
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneTextReceived object:self userInfo:dict];
 }
@@ -1129,19 +1136,41 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 	}
 
 	/*DETECT cameras*/
-	frontCamId= backCamId=nil;
 	char** camlist = (char**)linphone_core_get_video_devices(theLinphoneCore);
-	for (char* cam = *camlist;*camlist!=NULL;cam=*++camlist) {
-		if (strcmp(FRONT_CAM_NAME, cam)==0) {
-			frontCamId = cam;
-			//great set default cam to front
-			linphone_core_set_video_device(theLinphoneCore, cam);
-		}
-		if (strcmp(BACK_CAM_NAME, cam)==0) {
-			backCamId = cam;
-		}
-
-	}
+    NSString* captureDevice = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_CAPTURE_DEVICE"];
+    if ((captureDevice != nil) && (captureDevice.length > 0))
+    {
+        for (char* cam = *camlist; *camlist!=NULL; cam=*++camlist)
+        {
+            NSString* currentCam = [NSString stringWithCString:cam];
+            if ((currentCam != nil) && [captureDevice isEqualToString:currentCam])
+            {
+                linphone_core_set_video_device(theLinphoneCore, cam);
+            }
+        }
+    }
+    
+    NSString* speaker = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_SPEAKER"];
+    NSString* microphone = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_MICROPHONE"];
+    char** soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
+    for (char* device = *soundlist; *soundlist!=NULL; device=*++soundlist)
+    {
+        NSString* currentDevice = [NSString stringWithCString:device];
+        if (linphone_core_sound_device_can_capture([LinphoneManager getLc], device))
+        {
+            if ((microphone != nil) && [microphone isEqualToString:currentDevice])
+            {
+                linphone_core_set_capture_device(theLinphoneCore, [microphone UTF8String]);
+            }
+        }
+        else
+        {
+            if ((speaker != nil) && [speaker isEqualToString:currentDevice])
+            {
+                linphone_core_set_playback_device(theLinphoneCore, [speaker UTF8String]);
+            }
+        }
+    }
 
 	if (![LinphoneManager isNotIphone3G]){
 		PayloadType *pt=linphone_core_find_payload_type(theLinphoneCore,"SILK",24000,-1);
@@ -1551,6 +1580,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
 										, [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 }
+
+- (void)setLinphoneDBFilePath {
+    NSString* factory = [LinphoneManager bundleFile:@"linphonerc-factory"];
+    NSString *confiFileName = [self applicationDirectoryFile:@"linphonerc"];
+    configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
+                                        , [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+}
+
 #pragma mark - Audio route Functions
 
 - (bool)allowSpeaker {
@@ -1655,7 +1692,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     }
 
     const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
-    linphone_call_params_enable_realtime_text(calleeParams,[[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+    linphone_call_params_enable_realtime_text(calleeParams, [SettingsService getRTTEnabled]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
 
 }
@@ -1724,7 +1761,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 
 	}
     
-        linphone_call_params_enable_realtime_text(lcallParams, [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]);
+        linphone_call_params_enable_realtime_text(lcallParams, [SettingsService getRTTEnabled]);
     
 	LinphoneAddress* linphoneAddress = linphone_core_interpret_url(theLinphoneCore, [address cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 
@@ -1830,6 +1867,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0];
 	return [documentsPath stringByAppendingPathComponent:file];
+}
+
+- (NSString*)applicationDirectoryFile:(NSString*)file {
+    NSString* bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *makePath = [[[[documentsPath stringByAppendingString:@"/"] stringByAppendingString:bundleID] stringByAppendingString:@"/"] stringByAppendingString:file];
+    return makePath;
 }
 
 + (NSString*)cacheDirectory {

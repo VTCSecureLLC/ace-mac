@@ -9,6 +9,7 @@
 #import "RegistrationService.h"
 #import "SDPNegotiationService.h"
 #import "LinphoneManager.h"
+#import "AppDelegate.h"
 #import "Utils.h"
 
 @implementation RegistrationService
@@ -38,6 +39,12 @@
     }
     
     return self;
+}
+
+-(void)dealloc{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:kLinphoneRegistrationUpdate
+//                                                  object:nil];
 }
 
 - (void) registerWithAccountModel:(AccountModel*)accountModel {
@@ -83,7 +90,7 @@
     if([transport isEqualToString:@"Unencrypted (TCP)"]){
         transport = @"TCP";
     }
-    else if([transport isEqualToString:@"Encrypted (TLS)"]){
+    else if([transport isEqualToString:@"Encrypted (TLS)"] || [[transport lowercaseString] isEqualToString:@"tls"]){
         transport = @"TLS";
     } else {
         transport = @"TCP";
@@ -144,6 +151,7 @@
     transport = [transport lowercaseString];
     LinphoneCore* lc = [LinphoneManager getLc];
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
+    linphone_proxy_config_set_expires (proxyCfg, 280);
     NSString* server_address = domain;
     
     NSLog(@"addProxyConfig transport=%@",transport);
@@ -267,7 +275,8 @@
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
-    
+    NSString* message = [notif.userInfo objectForKey:@"message"];
+
     if (state == LinphoneRegistrationOk) {
         NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
         NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
@@ -297,6 +306,10 @@
                 linphone_core_enable_payload_type(lc, pt, [[dictVideoCodec objectForKey:pref] boolValue]);
             }
         }
+    }
+
+    if ([AppDelegate sharedInstance].loginViewController) {
+        [[AppDelegate sharedInstance].loginViewController registrationUpdate:state message:message];
     }
 }
 

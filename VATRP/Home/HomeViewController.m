@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "ViewManager.h"
+#import "CallService.h"
 #import "DockView.h"
 #import "DialPadView.h"
 #import "RecentsView.h"
@@ -16,6 +17,8 @@
 #import "NumpadView.h"
 #import "SettingsView.h"
 #import "ProviderTableCellView.h"
+#import "DHResourcesView.h"
+#import "ResourcesViewController.h"
 
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
@@ -30,10 +33,12 @@
 @property (weak) IBOutlet RecentsView *recentsView;
 @property (weak) IBOutlet ContactsView *contactsView;
 @property (weak) IBOutlet SettingsView *settingsView;
+@property (weak) IBOutlet DHResourcesView *dhResourcesView;
 
 @property (weak) IBOutlet NSTableView *providerTableView;
 @property (weak) IBOutlet NSView *providersView;
 
+@property bool hasProviderAlertBeenShown;
 @end
 
 @implementation HomeViewController
@@ -61,6 +66,8 @@
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
     [self setObservers];
+    
+    self.hasProviderAlertBeenShown = false;
 }
 
 #pragma mark - Observers and related functions
@@ -115,7 +122,7 @@
     viewCurrent.hidden = NO;
     [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
-     [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
+    [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
 }
 
 - (void) didClickDockViewDialpad:(DockView*)dockView_ {
@@ -134,12 +141,27 @@
             [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
         } else if ([viewCurrent isKindOfClass:[SettingsView class]]) {
             [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
+        } else if ([viewCurrent isKindOfClass:[DHResourcesView class]]) {
+            [self.dockView selectItemWithDocViewItem:DockViewItemResources];
         }
     }
 }
 
 - (void) didClickDockViewResources:(DockView*)dockView_ {
-    [self.dockView clearDockViewMessagesBackgroundColor:NO];
+    
+//    ResourcesViewController *resourceViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"DHResources"];
+//
+    self.providersView.hidden = YES;
+    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
+    viewCurrent.hidden = YES;
+    //viewCurrent = (BackgroundedView*)resourceViewController.view;
+    viewCurrent = (BackgroundedView*)self.dhResourcesView;
+    viewCurrent.hidden = NO;
+    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+
+    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
+    [self.dockView selectItemWithDocViewItem:DockViewItemResources];
+    
 }
 
 - (void) didClickDockViewSettings:(DockView*)dockView_ {
@@ -189,13 +211,26 @@
 }
 
 - (IBAction)didSelectedTableRow:(id)sender {
-    NSInteger selectedRow = [self.providerTableView selectedRow];
-    if (selectedRow >= 0 && selectedRow < providersArray.count) {
-        NSString *imageStrname = [providersArray objectAtIndex:selectedRow];
-        [self.dialPadView setProvButtonImage:[NSImage imageNamed:imageStrname]];
-        self.providersView.hidden = YES;
-
+    // VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
+    // show this once so that the user can look to see the options but not make a selection.
+    if (!self.hasProviderAlertBeenShown)
+    {
+        NSAlert *alert = [[NSAlert alloc]init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Provider Selection will be available in General Release"];
+        [alert runModal];
+        self.hasProviderAlertBeenShown = true;
     }
+    self.providersView.hidden = YES;
+    
+// VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
+//    NSInteger selectedRow = [self.providerTableView selectedRow];
+//    if (selectedRow >= 0 && selectedRow < providersArray.count) {
+//        NSString *imageStrname = [providersArray objectAtIndex:selectedRow];
+//        [self.dialPadView setProvButtonImage:[NSImage imageNamed:imageStrname]];
+//        self.providersView.hidden = YES;
+
+//    }
 }
 
 - (IBAction)onButtonProv:(id)sender {
@@ -204,6 +239,18 @@
 
 - (ProfileView*) getProfileView {
     return self.profileView;
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent {
+    NSPoint mousePosition = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
+    
+    if ([[CallService sharedInstance] getCurrentCall]) {
+        LinphoneCallState call_state = linphone_call_get_state([[CallService sharedInstance] getCurrentCall]);
+        
+        if ((call_state != LinphoneCallDeclined && call_state != LinphoneCallEnd && call_state != LinphoneCallError) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700) {
+            [self.videoView setMouseInCallWindow];
+        }
+    }
 }
 
 @end

@@ -1,4 +1,4 @@
-//
+  //
 //  RecentsView.m
 //  ACE
 //
@@ -9,6 +9,7 @@
 #import "RecentsView.h"
 #import "HistoryTableCellView.h"
 #import "LinphoneManager.h"
+#import "CallService.h"
 #import "ViewManager.h"
 #import "LinphoneContactService.h"
 #import "AppDelegate.h"
@@ -77,6 +78,8 @@
         default:
             break;
     }
+    
+    [self resignFirstResponder];
 }
 
 - (void)dialpadTextUpdate:(NSNotification*)notif {
@@ -167,9 +170,13 @@
     return 55;
 }
 
+
+
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
     //    selectedRow = marrayLoad[row];
-    
+    if(tableView.clickedRow != row){
+        return NO;
+    }
     LinphoneCallLog *callLog = [[callLogs objectAtIndex:row] pointerValue];
     LinphoneAddress *addr;
     if (linphone_call_log_get_dir(callLog) == LinphoneCallIncoming) {
@@ -194,7 +201,7 @@
     
     if (address != nil) {
         // Go to dialer view
-        [[LinphoneManager instance] call:address displayName:address transfer:NO];
+        [CallService callTo:address];
     }
     
     return YES;
@@ -238,6 +245,7 @@
 }
 
 - (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLinphoneCallUpdate object:nil];
 }
 

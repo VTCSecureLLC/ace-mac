@@ -9,6 +9,7 @@
 #import "TestingViewController.h"
 #import "LinphoneManager.h"
 #import "CallService.h"
+#import "SettingsService.h"
 #import "AppDelegate.h"
 
 @interface TestingViewController () {
@@ -42,7 +43,7 @@
     }
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
-    self.buttonEnableRealTimeText.state = [[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED];
+    self.buttonEnableRealTimeText.state = [SettingsService getRTTEnabled];
     
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
@@ -55,6 +56,7 @@
     
     [self.textFieldMaxUpload setDelegate:self];
     [self.textFieldMaxDownload setDelegate:self];
+    [self.buttonEnableAVPF setEnabled:NO];
 }
 
 - (void) save {
@@ -95,6 +97,25 @@
 
 - (void)controlTextDidChange:(NSNotification *)notification {
     isChanged = YES;
+}
+- (IBAction)onRTCPFeedbackSelected:(id)sender {
+    NSString *rtcpFeedback = ((NSComboBox*)sender).stringValue;
+    int rtcpFB;
+        if([rtcpFeedback isEqualToString:@"Implicit"]){
+                rtcpFB = 1;
+                linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
+                lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
+            }
+        else if([rtcpFeedback isEqualToString:@"Explicit"]){
+                rtcpFB = 1;
+                linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFEnabled);
+                lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
+            }
+        else{
+                rtcpFB = 0;
+                linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
+                lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
+            }
 }
 
 - (IBAction)onButtonCleareUserData:(id)sender {

@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "AddContactDialogBox.h"
 #import "Utils.h"
+#import "CallService.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
@@ -46,9 +47,9 @@
         [self.addContactButton becomeFirstResponder];
         [self setObservers];
         self.contactInfos = [NSMutableArray new];
-        [self refreshContactList];
         firstTime = NO;
     }
+    [self refreshContactList];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -119,6 +120,7 @@
 - (void)removeObservers {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoFilled" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"contactInfoEditDone" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
 }
 
 - (void) setFrame:(NSRect)frame {
@@ -221,7 +223,7 @@
 #pragma mark - Functions related to the call
 
 - (void)callTo:(NSString*)name {
-    [[LinphoneManager instance] call:name displayName:name transfer:NO];
+    [CallService callTo:name];
 }
 
 #pragma mark - Helper functions

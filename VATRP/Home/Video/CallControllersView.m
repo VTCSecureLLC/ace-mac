@@ -10,6 +10,7 @@
 #import "CallInfoWindowController.h"
 #import "ChatService.h"
 #import "ViewManager.h"
+#import "SettingsService.h"
 #import "Utils.h"
 
 
@@ -71,11 +72,15 @@
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
     
     self.wantsLayer = YES;
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
-                                               object:nil];    
+                                               object:nil];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)onButtonHold:(id)sender {
@@ -109,21 +114,28 @@
 
 - (IBAction)onButtonMute:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
-
-    linphone_core_mute_mic(lc, !linphone_core_is_mic_muted(lc));
-    
-    if (linphone_core_is_mic_muted(lc)) {
+    linphone_core_enable_mic(lc, !linphone_core_mic_enabled(lc));
+    if (!linphone_core_mic_enabled(lc)) {
+        [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];
         [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     } else {
+        [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
         [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+
+
     }
 }
 
 - (IBAction)onButtonSpeaker:(id)sender {
-    if (linphone_call_get_speaker_volume_gain(call)) {
-        linphone_call_set_speaker_volume_gain(call, 0.0f);
+    const float mute_db = -1000.0f;
+    if (linphone_core_get_playback_gain_db([LinphoneManager getLc]) == mute_db) {
+        linphone_core_set_playback_gain_db([LinphoneManager getLc], 0.0f);
+        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
+        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     } else {
-        linphone_call_set_speaker_volume_gain(call, 1.0f);
+        linphone_core_set_playback_gain_db([LinphoneManager getLc], mute_db);
+        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_inactive"]];
+        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     }
 }
 
@@ -188,7 +200,6 @@
 #pragma mark - Property Functions
 - (void)setCall:(LinphoneCall*)acall {
     call = acall;
-    
     if (call) {
         LinphoneCallState call_state = linphone_call_get_state(call);
         [self callUpdate:call state:call_state];
@@ -238,10 +249,12 @@
         return;
     }
     [self.rttStatusButton.layer setBackgroundColor:[NSColor redColor].CGColor];
+    [self.buttonAnswer setKeyEquivalent:@""];
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.hidden = NO;
             self.labelCallState.stringValue = @"Incoming Call...";
+            [self.buttonAnswer setKeyEquivalent:@"\r"];
         }
         case LinphoneCallIncomingEarlyMedia: {
             break;
@@ -259,6 +272,10 @@
                                                   self.buttonDecline.frame.size.height);
             
             [self enableDisableButtons:YES];
+
+            if ([SettingsService getMicMute]) {
+                [self onButtonMute:self.buttonMute];
+            }
         }
             break;
         case LinphoneCallOutgoingInit: {

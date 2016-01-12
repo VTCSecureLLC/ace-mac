@@ -11,14 +11,18 @@
 			<string>Start On Boot</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>START_ON_BOOT</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<real>0</real>
+			<integer>0</integer>
 			<key>title</key>
 			<string>SIP Encryption</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>SIP_ENCRYPTION</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -27,6 +31,8 @@
 			<string>Wifi Only</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>WIFI_ONLY</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -35,6 +41,8 @@
 			<string>Auto Answer</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_AUTO_ANSWER_CALL</string>
 		</dict>
 	</array>
 	<array>
@@ -54,6 +62,8 @@
 			<string>Mic Mute</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>MICROPHONE_MUTE</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -62,6 +72,8 @@
 			<string>Echo Cancel</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ECHO_CANCEL</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -70,14 +82,18 @@
 			<string>Show Self-View</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>VIDEO_SHOW_SELF_VIEW</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<real>0</real>
+			<integer>0</integer>
 			<key>title</key>
 			<string>Show Preview</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>VIDEO_SHOW_PREVIEW</string>
 		</dict>
 	</array>
 	<array>
@@ -89,6 +105,8 @@
 			<string>Foreground Color</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>APP_FOREGROUND_COLOR</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -97,6 +115,8 @@
 			<string>Background Color</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>APP_BACKGROUND_COLOR</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
@@ -105,6 +125,8 @@
 			<string>Force 508</string>
 			<key>defaultValue</key>
 			<true/>
+			<key>UserDefaultsKey</key>
+			<string>APP_FORCE_508</string>
 		</dict>
 	</array>
 	<array>
@@ -116,41 +138,74 @@
 			<string>label</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>label</string>
 		</dict>
 	</array>
 	<array>
 		<string>Summary Menu</string>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>title</key>
 			<string>View TSS</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_VIEW_TSS</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>title</key>
 			<string>Send TSS</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_SEND_TSS</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>title</key>
 			<string>Show Advanced</string>
 			<key>defaultValue</key>
 			<false/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_SHOW_ADVANCED</string>
+		</dict>
+	</array>
+	<array>
+		<string>Account</string>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Username</string>
+			<key>defaultValue</key>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_USERNAME</string>
 		</dict>
 		<dict>
 			<key>controllerType</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>title</key>
-			<string>Show Debug</string>
+			<string>Auth ID</string>
 			<key>defaultValue</key>
-			<false/>
+			<true/>
+			<key>UserDefaultsKey</key>
+			<string>ACE_AUTH_ID</string>
+		</dict>
+		<dict>
+			<key>controllerType</key>
+			<integer>1</integer>
+			<key>title</key>
+			<string>Domain</string>
+			<key>defaultValue</key>
+			<string>bc1.vatrp.net</string>
+			<key>UserDefaultsKey</key>
+			<string>ACE_DOMAIN</string>
 		</dict>
 	</array>
 </array>

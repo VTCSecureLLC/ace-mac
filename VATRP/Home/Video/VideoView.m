@@ -17,6 +17,7 @@
 #import "SecondCallView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CallService.h"
+#import "SettingsService.h"
 #import "ChatService.h"
 #import "AppDelegate.h"
 #import "Utils.h"
@@ -34,6 +35,7 @@
 @property (weak) IBOutlet NSTextField *labelDisplayName;
 @property (weak) IBOutlet NSTextField *labelCallState;
 
+@property (weak) IBOutlet BackgroundedView *callControllsConteinerView;
 @property (weak) IBOutlet CallControllersView *callControllersView;
 @property (weak) IBOutlet NumpadView *numpadView;
 @property (weak) IBOutlet SecondIncomingCallView *secondIncomingCallView;
@@ -65,6 +67,7 @@
     self.remoteVideoView.wantsLayer = YES;
     self.labelDisplayName.wantsLayer = YES;
     self.labelCallState.wantsLayer = YES;
+    [self.callControllsConteinerView setBackgroundColor:[NSColor clearColor]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
@@ -81,11 +84,8 @@
     
     // Drawing code here.
 }
-
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kLinphoneCallUpdate
-                                                  object:nil];
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
@@ -116,6 +116,8 @@
             [self startRingCountTimerWithTimeInterval:3.75];
             
             [self startCallFlashingAnimation];
+            
+            [self.callControllsConteinerView setHidden:NO];
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -131,8 +133,14 @@
             linphone_core_set_native_video_window_id(lc, (__bridge void *)(self));
             
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
-            linphone_core_use_preview_window(lc, YES);
-            linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
+            
+            if ([SettingsService getShowPreview]) {
+                self.localVideo.hidden = NO;
+                linphone_core_use_preview_window(lc, YES);
+                linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
+            } else {
+                self.localVideo.hidden = YES;
+            }
             
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                                  target:self
@@ -141,10 +149,17 @@
                                                                 repeats:YES];
             
             self.labelCallState.stringValue = @"Connected 00:00";
+            
+            [self.localVideo setFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
+            [[self.localVideo animator] setFrame:NSMakeRect(524, 580, 176, 99)];
+
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
+            [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
         }
             break;
         case LinphoneCallOutgoingInit: {
             self.labelCallState.stringValue = @"Calling 00:00";
+            [self.callControllsConteinerView setHidden:NO];
         }
             break;
         case LinphoneCallOutgoingRinging: {
@@ -165,25 +180,6 @@
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }
-        case LinphoneCallUpdatedByRemote:
-        {
-            const LinphoneCallParams* current = linphone_call_get_current_params(call);
-            const LinphoneCallParams* remote = linphone_call_get_remote_params(call);
-            
-            /* remote wants to add video, check if video is supported */
-            if (linphone_core_video_supported(lc) && !linphone_call_params_video_enabled(current) && linphone_call_params_video_enabled(remote)) {
-                
-                linphone_core_defer_call_update(lc, call);
-                LinphoneCallParams* paramsCopy = linphone_call_params_copy(linphone_call_get_current_params(call));
-                linphone_call_params_enable_video(paramsCopy, TRUE);
-                linphone_core_accept_call_update(lc, call, paramsCopy);
-                linphone_call_params_destroy(paramsCopy);
-                
-            } else if (linphone_call_params_video_enabled(current) && !linphone_call_params_video_enabled(remote)) {
-                //                [self displayTableCall:animated];
-            }
-            break;
-        }
         case LinphoneCallError:
         {
             [self stopRingCountTimer];
@@ -196,6 +192,10 @@
         }
         case LinphoneCallEnd:
         {
+            linphone_core_enable_video_preview(lc, FALSE);
+            linphone_core_use_preview_window(lc, FALSE);
+            linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
+
             self.call = nil;
             self.numpadView.hidden = YES;
             [self stopRingCountTimer];
@@ -212,12 +212,24 @@
 }
 
 - (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message {
-    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(call_));
-    NSString *lUserName =
-    lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
     NSString *lMessage;
     NSString *lTitle;
-    
+    const LinphoneAddress *address;
+    NSString* lUserName = NSLocalizedString(@"Unknown", nil);
+    if (call_ == nil)
+    {
+        lMessage = @"There was an unknown error during the call.";
+    }
+    else
+    {
+        address = linphone_call_get_remote_address(call_);
+        if (address != nil)
+        {
+            const char *lUserNameChars = linphone_address_get_username(address);
+            lUserName =
+                lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
+        }
+    }
     // get default proxy
     LinphoneProxyConfig *proxyCfg;
     linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
@@ -318,10 +330,15 @@
 }
 
 - (void)setOutgoingCall:(LinphoneCall*)acall {
-    call = acall;
-    [self update];
+    if(acall != NULL){
+        call = acall;
+        [self update];
     
-    [self.callControllersView setOutgoingCall:acall];
+        [self.callControllersView setOutgoingCall:acall];
+    }
+    else{
+        
+    }
 }
 
 - (void)showSecondIncomingCallView:(LinphoneCall *)aCall {
@@ -415,6 +432,30 @@
     NSView *content = self;
     CALayer *layer = [content layer];
     [layer removeAllAnimations];
+}
+
+- (void)setMouseInCallWindow {
+    [self.callControllsConteinerView setHidden:NO];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
+    [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+}
+
+- (void) hideAllCallControllers {
+    [self.callControllsConteinerView setHidden:YES];
+}
+
+- (void)showVideoPreview {
+    if ([SettingsService getShowPreview]) {
+        LinphoneCore *lc = [LinphoneManager getLc];
+        const char *cam = linphone_core_get_video_device(lc);
+        linphone_core_set_video_device(lc, cam);
+        linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
+        linphone_core_use_preview_window(lc, YES);
+        linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self));
+        linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
+     } else {
+        self.localVideo.hidden = YES;
+    }
 }
 
 @end

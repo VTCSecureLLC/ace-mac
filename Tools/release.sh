@@ -99,6 +99,38 @@ if [ -d "$XCARCHIVE" ]; then
 fi
 
 if [ -d "$XCARCHIVE" ]; then
+
+  # Override all of the signing
+  find "${PKG_FILE}".app -name '*.dylib' -exec codesign -f -s "${CODE_SIGN_APPLICATION}" {} \;
+  codesign -f -s "${CODE_SIGN_APPLICATION}" "${PKG_FILE}".app/Contents/Frameworks/HockeySDK.framework
+  codesign -f -s "${CODE_SIGN_APPLICATION}" "${PKG_FILE}".app
+
+  # Show the codesigning of the generated app
+  codesign -vvvv -R="anchor apple" "${PKG_FILE}".app || true
+
+  # Show the Designated Requirements of the generated app
+  echo "Designated Requirements:"
+  codesign -d -r- "${PKG_FILE}".app || true
+
+  # Set the Designated Requirements
+  # codesign -vv -R '=identifier "com.vtcsecure.ace.mac"' "${PKG_FILE}".app || true
+
+  # Verify the libraries are runnable
+  for library in $(find "${PKG_FILE}".app -name '*.dylib'); do
+    # Find all libraries that are not assessed as runnable
+    if ! spctl --assess --type execute $library > /dev/null 2>&1; then
+      # Show the codesigning of the library
+      codesign -vvvv -R="anchor apple" $library || true
+       # Show the Designated Requirements of the library
+      codesign -d -r- $library || true
+    fi
+  done
+
+  # Assess an application or tool. Die now if the app is not runnable.
+  #spctl --assess --type execute "${PKG_FILE}".app || true
+
+  echo "Packaging and uploading"
+
   # Create an application zip file from the archive build
 
   APP_DIR="${PKG_FILE}".app
@@ -106,7 +138,7 @@ if [ -d "$XCARCHIVE" ]; then
   if [ -f $APP_ZIP_FILE ]; then
     rm -f $APP_ZIP_FILE
   fi
-  (cd $(dirname $APP_DIR) ; zip -r $APP_ZIP_FILE $(basename $APP_DIR))
+  (cd $(dirname $APP_DIR) ; zip -r --symlinks $APP_ZIP_FILE $(basename $APP_DIR))
 
   # Create a dSYM zip file from the archive build
 
@@ -115,7 +147,7 @@ if [ -d "$XCARCHIVE" ]; then
   if [ -f $DSYM_ZIP_FILE ]; then
     rm -f $DSYM_ZIP_FILE
   fi
-  (cd $(dirname $DSYM_DIR) ; zip -r $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
+  (cd $(dirname $DSYM_DIR) ; zip -r --symlinks $DSYM_ZIP_FILE $(basename $DSYM_DIR) )
 fi
 
 # Release via HockeyApp if credentials are available
@@ -212,6 +244,15 @@ else
     config=$(basename $(dirname "$app"))
     dmg=$(basename "$app" | sed -e 's/.app$//')
     hdiutil create $dmg-$config-$tag.dmg -srcfolder ACE/ -ov
+    rm -fr ACE/
+  done
+
+  for app in "${PKG_FILE}".app; do
+    mkdir -p ACE/
+    cp -a "$app" ACE/
+    #[ -d "$app".dSYM ] && cp -a "$app".dSYM ACE/
+    dmg=$(basename "$app" | sed -e 's/.app$//')
+    hdiutil create ${dmg}-HockeyApp-${tag}.dmg -srcfolder ACE/ -ov
     rm -fr ACE/
   done
 

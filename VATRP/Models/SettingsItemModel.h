@@ -12,6 +12,7 @@ typedef enum : NSUInteger {
     controllerType_checkbox,
     controllerType_textfield,
     controllerType_color,
+    controllerType_button,
 } controllerType;
 
 @interface SettingsItemModel : NSObject
@@ -21,5 +22,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) controllerType controller_Type;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *defaultValue;
+@property (nonatomic, retain) NSString *userDefaultsKey;
+@property (nonatomic, assign) int position;
 
 @end

@@ -59,8 +59,10 @@
     [[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 
-    linphone_core_set_log_level(ORTP_MESSAGE);
+    linphone_core_set_log_level(ORTP_DEBUG);
     linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
+    
+    [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
 }
 
 //- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
@@ -136,7 +138,7 @@
     return videoCallWindowController;
 }
 
-- (void)onMenuItemPreferences:(id)sender {
+- (IBAction)onMenuItemPreferences:(id)sender {
     if (!self.settingsWindowController) {
         self.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
         [self.settingsWindowController showWindow:self];
@@ -165,11 +167,11 @@
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
         [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
-                                                          UserID:@""
+                                                          UserID:accountModel.userID
                                                         Password:@""
-                                                          Domain:@""
-                                                       Transport:@""
-                                                            Port:0
+                                                          Domain:accountModel.domain
+                                                       Transport:accountModel.transport
+                                                            Port:accountModel.port
                                                        isDefault:YES];
     }
     
@@ -184,18 +186,10 @@
     linphone_proxy_config_edit(proxyCfg);
     linphone_proxy_config_enable_register(proxyCfg, false);
     linphone_proxy_config_done(proxyCfg);
-    
+
     self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
     [self.loginWindowController showWindow:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self.loginViewController
-                                             selector:@selector(configuringUpdate:)
-                                                 name:kLinphoneConfiguringStateUpdate
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self.loginViewController
-                                             selector:@selector(registrationUpdateEvent:)
-                                                 name:kLinphoneRegistrationUpdate
-                                               object:nil];
+  
 }
 
 - (IBAction)onMenuItemACEFeedBack:(id)sender {
@@ -209,13 +203,11 @@
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
     
-    if (state == LinphoneRegistrationOk) {
-        [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
-        [self.menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
-    } else {
-        [self.menuItemSignOut setAction:nil];
-        [self.menuItemPreferences setAction:nil];
-    }
+//    if (state == LinphoneRegistrationOk) {
+//        [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+//    } else {
+//        [self.menuItemSignOut setAction:nil];
+//    }
 }
 
 void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {

@@ -100,30 +100,30 @@
 }
 
 - (IBAction)onButtonSettings:(id)sender {
-//    AppDelegate *app = [AppDelegate sharedInstance];
-//    if (!app.settingsWindowController) {
-//        app.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
-//        [app.settingsWindowController showWindow:self];
-////        if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-////            [_delegate didClickDockViewSettings:self];
-////        }
-//    } else {
-//        if (app.settingsWindowController.isShow) {
-//            [app.settingsWindowController close];
-//            app.settingsWindowController = nil;
-//        } else {
-//            [app.settingsWindowController showWindow:self];
-//            app.settingsWindowController.isShow = YES;
-////            if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-////                [_delegate didClickDockViewSettings:self];
-////            }
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.settingsWindowController) {
+        app.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+        [app.settingsWindowController showWindow:self];
+//        if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+//            [_delegate didClickDockViewSettings:self];
 //        }
-//    }
-
-
-    if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-        [_delegate didClickDockViewSettings:self];
+    } else {
+        if (app.settingsWindowController.isShow) {
+            [app.settingsWindowController close];
+            app.settingsWindowController = nil;
+        } else {
+            [app.settingsWindowController showWindow:self];
+            app.settingsWindowController.isShow = YES;
+//            if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+//                [_delegate didClickDockViewSettings:self];
+//            }
+        }
     }
+
+
+//    if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
+//        [_delegate didClickDockViewSettings:self];
+//    }
 }
 
 #pragma mark - Functions for buttons background color chnages

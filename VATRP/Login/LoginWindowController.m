@@ -19,6 +19,7 @@
     BFNavigationController *navigationController;
     LoginViewController *loginViewController;
     TermsOfUseViewController *termsOfUseViewController;
+    BOOL shouldAutoLogin;
 }
 
 @end
@@ -29,8 +30,9 @@
     [super windowDidLoad];
     [AppDelegate sharedInstance].loginWindowController = self;
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
 
-    if (accountModel &&
+    if (shouldAutoLogin && accountModel &&
         accountModel.username && accountModel.username.length &&
         accountModel.userID && accountModel.userID.length &&
         accountModel.password && accountModel.password.length &&

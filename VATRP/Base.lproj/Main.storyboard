@@ -596,7 +596,7 @@
                                     </textField>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="wCq-uv-vTI">
                                         <rect key="frame" x="0.0" y="44" width="103" height="44"/>
-                                        <buttonCell key="cell" type="smallSquare" title="*" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="GE3-kN-Z9o">
+                                        <buttonCell key="cell" type="smallSquare" alternateTitle="Asterisk" bezelStyle="smallSquare" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="GE3-kN-Z9o">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="45"/>
                                         </buttonCell>
@@ -604,6 +604,14 @@
                                             <action selector="onButtonNumber:" target="e4g-m7-al7" id="0DN-Og-DMB"/>
                                         </connections>
                                     </button>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ALy-0k-jSB">
+                                        <rect key="frame" x="40" y="44" width="22" height="41"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="*" id="u9R-Z7-Ctt">
+                                            <font key="font" size="50" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAj-a1-RPH">
                                         <rect key="frame" x="103" y="44" width="104" height="44"/>
                                         <subviews>
@@ -3108,17 +3116,25 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="MXz-WY-Ggc">
-                                <rect key="frame" x="9" y="84" width="80" height="70"/>
-                                <buttonCell key="cell" type="smallSquare" title="*" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xm2-uC-Dau">
+                                <rect key="frame" x="9" y="83" width="80" height="70"/>
+                                <buttonCell key="cell" type="smallSquare" alternateTitle="Asterisk" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xm2-uC-Dau">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system" size="45"/>
+                                    <font key="font" size="74" name=".HelveticaNeueDeskInterface-Regular"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onButtonNumber:" target="g8I-tz-yIp" id="OrC-55-tzv"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nID-V6-3a5">
+                                <rect key="frame" x="36" y="94" width="27" height="49"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="*" id="wTy-cD-XQq">
+                                    <font key="font" size="64" name="HelveticaNeue"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="krF-WD-ngp">
-                                <rect key="frame" x="89" y="84" width="80" height="70"/>
+                                <rect key="frame" x="89" y="83" width="80" height="70"/>
                                 <buttonCell key="cell" type="smallSquare" title="0" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="T1n-g9-N9g">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="30"/>
@@ -3136,7 +3152,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="N9p-uj-9Ch">
-                                <rect key="frame" x="169" y="84" width="80" height="70"/>
+                                <rect key="frame" x="169" y="83" width="80" height="70"/>
                                 <buttonCell key="cell" type="smallSquare" title="#" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wNV-yy-IOZ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="30"/>
@@ -3582,7 +3598,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
+                                    <rect key="frame" x="410" y="0.0" width="15" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -3670,7 +3686,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" baseWritingDirection="leftToRight" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="Hcn-Pf-fDW">
-                                            <rect key="frame" x="0.0" y="0.0" width="408" height="5004"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="408" height="4592"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="minSize" width="408" height="312"/>
@@ -8674,27 +8690,6 @@ Cg
                                     <outlet property="nextKeyView" destination="Req-x3-Xup" id="5Ps-uZ-fuU"/>
                                 </connections>
                             </secureTextField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVi-K9-fBt">
-                                <rect key="frame" x="157" y="69" width="167" height="36"/>
-                                <buttonCell key="cell" type="smallSquare" title="Login" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="npb-ie-HiX">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onButtonLogin:" target="taJ-cA-vAy" id="uVM-bY-rE7"/>
-                                    <outlet property="nextKeyView" destination="hfr-Le-Bvd" id="hxq-Ba-H4s"/>
-                                </connections>
-                            </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQI-Kw-hFm">
-                                <rect key="frame" x="159" y="51" width="163" height="11"/>
-                                <buttonCell key="cell" type="check" title="Remember Password" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1ij-uP-mz3">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7c-vP-sOG">
                                 <rect key="frame" x="56" y="349" width="338" height="37"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="ACE" id="6of-9s-sK2">
@@ -8779,19 +8774,37 @@ DQ
                                     <outlet property="nextKeyView" destination="IVi-K9-fBt" id="1aD-1j-caL"/>
                                 </connections>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVi-K9-fBt">
+                                <rect key="frame" x="157" y="71" width="167" height="36"/>
+                                <buttonCell key="cell" type="smallSquare" title="Login" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="npb-ie-HiX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onButtonLogin:" target="taJ-cA-vAy" id="uVM-bY-rE7"/>
+                                    <outlet property="nextKeyView" destination="hfr-Le-Bvd" id="hxq-Ba-H4s"/>
+                                </connections>
+                            </button>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="JnY-ow-InH">
-                                <rect key="frame" x="232" y="79" width="16" height="16"/>
+                                <rect key="frame" x="232" y="81" width="16" height="16"/>
                             </progressIndicator>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iXO-La-iVb">
-                                <rect key="frame" x="159" y="18" width="171" height="18"/>
+                                <rect key="frame" x="155" y="48" width="171" height="18"/>
                                 <buttonCell key="cell" type="check" title="Auto-Login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GDq-LI-37t">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onCheckAutoLogin:" target="taJ-cA-vAy" id="tzG-iT-QMF"/>
+                                </connections>
                             </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="buttonToggleAutoLogin" destination="iXO-La-iVb" id="8ex-hy-1yV"/>
                         <outlet property="loginButton" destination="IVi-K9-fBt" id="G3K-bI-y1w"/>
                         <outlet property="prog_Signin" destination="JnY-ow-InH" id="MPo-Ge-FaJ"/>
                         <outlet property="textFieldDomain" destination="Req-x3-Xup" id="Yoa-9U-Zj8"/>
@@ -8860,7 +8873,7 @@ DQ
                             </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mnr-3t-jnk">
                                 <rect key="frame" x="1" y="251" width="191" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Media Encription" id="2iO-2c-Hgj">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Media Encryption" id="2iO-2c-Hgj">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -9179,7 +9192,7 @@ DQ
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="CYg-uL-H8S">
                                 <rect key="frame" x="0.0" y="-1" width="80" height="70"/>
-                                <buttonCell key="cell" type="smallSquare" title="*" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SiE-DJ-qhH">
+                                <buttonCell key="cell" type="smallSquare" alternateTitle="Asterisk" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SiE-DJ-qhH">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="45"/>
                                 </buttonCell>
@@ -9187,6 +9200,14 @@ DQ
                                     <action selector="onButtonNumber:" target="aXx-RD-doO" id="Iqr-Ub-Mwo"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sQw-pt-qw2">
+                                <rect key="frame" x="26" y="7" width="29" height="52"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="*" id="xvp-0Z-IZA">
+                                    <font key="font" size="64" name=".HelveticaNeueDeskInterface-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X3a-zl-k4m">
                                 <rect key="frame" x="80" y="-1" width="80" height="70"/>
                                 <buttonCell key="cell" type="smallSquare" title="0" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wG2-rS-17f">

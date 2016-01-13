@@ -123,7 +123,7 @@
         }
     }
     
-    int scrollContentHeight = 1440;
+    int scrollContentHeight = 1340;
     int originY = scrollContentHeight - 30;
     
     NSView *docView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 425, scrollContentHeight)];

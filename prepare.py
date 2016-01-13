@@ -228,6 +228,9 @@ def main(argv=None):
         target = DesktopTarget()
     if args.generator is not None:
         target.generator = args.generator
+    if target.generator is None:
+        # Default to "Unix Makefiles" if no target specific generator is set and the user has not defined one
+        target.generator = "Unix Makefiles"
 
     if args.clean or args.veryclean:
         if args.veryclean:
@@ -244,18 +247,18 @@ def main(argv=None):
                 retcode = 0
             return retcode
         # only generated makefile if we are using Ninja or Makefile
-        if args.generator.endswith('Ninja'):
+        if target.generator.endswith('Ninja'):
             if not check_is_installed("ninja", "it"):
                 return 1
             generate_makefile('ninja -C')
             info("You can now run 'make' to build.")
-        elif args.generator.endswith("Unix Makefiles"):
+        elif target.generator.endswith("Unix Makefiles"):
             generate_makefile('$(MAKE) -C')
             info("You can now run 'make' to build.")
-        elif args.generator == "Xcode":
+        elif target.generator == "Xcode":
             info("You can now open Xcode project with: open WORK/cmake/Project.xcodeproj")
         else:
-            warning("Not generating meta-makefile for generator {}.".format(args.generator))
+            warning("Not generating meta-makefile for generator {}.".format(target.generator))
 
     return 0
 

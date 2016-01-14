@@ -13,7 +13,7 @@
 #import "SDPNegotiationService.h"
 #import "CodecModel.h"
 
-@interface PreferencesViewController () <NSTextFieldDelegate> {
+@interface PreferencesViewController () <NSTextFieldDelegate, NSComboBoxDelegate> {
     NSMutableArray *audioCodecList;
     NSMutableArray *videoCodecList;
     
@@ -24,10 +24,9 @@
     NSButton *checkboxAdaptiveRate;
     NSButton *checkboxAlwaysInititate;
     NSButton *checkboxAlwaysAccept;
-    NSButton *checkboxVideoPreset;
-    NSButton *checkboxPreferredSize;
+    NSComboBox *comboBoxVideoPreset;
     NSComboBox *comboBoxPreferredSize;
-    NSButton *checkboxMWIURL;
+    NSTextField *textFieldMWIURL;
     NSButton *checkboxStun;
     NSButton *checkboxEnableICE;
     NSButton *checkboxEnableUPNP;
@@ -62,6 +61,9 @@
     isChanged = NO;
     
     LinphoneCore *lc = [LinphoneManager getLc];
+    
+    const char *preset = linphone_core_get_video_preset(lc);
+    
     PayloadType *pt;
     const MSList *elem;
     
@@ -130,22 +132,22 @@
     [self.scrollView setDocumentView:docView];
     
     
-    checkboxEnableVideo = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)];
+    checkboxEnableVideo = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)]; // YES
     [checkboxEnableVideo setButtonType:NSSwitchButton];
     [checkboxEnableVideo setBezelStyle:0];
     [checkboxEnableVideo setTitle:@"Enable Video"];
     [checkboxEnableVideo setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"start_video_preference"]];
-    [checkboxEnableVideo setAction:@selector(onCheckBoxEnableVideo:)];
+    [checkboxEnableVideo setAction:@selector(onCheckBoxHandler:)];
     [checkboxEnableVideo setTarget:self];
     [self.scrollView.documentView addSubview:checkboxEnableVideo];
 
     originY -= 30;
-    checkboxEnableRTT = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)];
+    checkboxEnableRTT = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)]; // YES
     [checkboxEnableRTT setButtonType:NSSwitchButton];
     [checkboxEnableRTT setBezelStyle:0];
     [checkboxEnableRTT setTitle:@"Enable RTT"];
     [checkboxEnableRTT setState:[SettingsService getRTTEnabled]];
-    [checkboxEnableRTT setAction:@selector(onCheckBoxEnableRTT:)];
+    [checkboxEnableRTT setAction:@selector(onCheckBoxHandler:)];
     [checkboxEnableRTT setTarget:self];
     [self.scrollView.documentView addSubview:checkboxEnableRTT];
 
@@ -158,17 +160,17 @@
     [self.scrollView.documentView addSubview:labelTitle];
 
     originY -= 25;
-    checkboxAdaptiveRate = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+    checkboxAdaptiveRate = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)]; // YES
     [checkboxAdaptiveRate setButtonType:NSSwitchButton];
     [checkboxAdaptiveRate setBezelStyle:0];
     [checkboxAdaptiveRate setTitle:@"Adaptive Rate"];
     [checkboxAdaptiveRate setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"enable_adaptive_rate_control"]];
-    [checkboxAdaptiveRate setAction:@selector(onCheckBoxAdaptiveRate:)];
+    [checkboxAdaptiveRate setAction:@selector(onCheckBoxHandler:)];
     [checkboxAdaptiveRate setTarget:self];
     [self.scrollView.documentView addSubview:checkboxAdaptiveRate];
 
     originY -= 25;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)]; // YES
     labelTitle.editable = NO;
     labelTitle.stringValue = @"Audio Codecs";
     [labelTitle.cell setBordered:NO];
@@ -180,11 +182,12 @@
 
         originY -= 30;
         NSButton *checkboxACodec = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+        checkboxACodec.tag = i;
         [checkboxACodec setButtonType:NSSwitchButton];
         [checkboxACodec setBezelStyle:0];
         [checkboxACodec setTitle:codecModel.name];
         [checkboxACodec setState:codecModel.status];
-        [checkboxACodec setAction:@selector(onCheckBoxAdaptiveRate:)];
+        [checkboxACodec setAction:@selector(onCheckboxAudioStatus:)];
         [checkboxACodec setTarget:self];
         [self.scrollView.documentView addSubview:checkboxACodec];
     }
@@ -198,40 +201,43 @@
     [self.scrollView.documentView addSubview:labelTitle];
 
     originY -= 30;
-    checkboxAlwaysInititate = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+    checkboxAlwaysInititate = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)]; // YES
     [checkboxAlwaysInititate setButtonType:NSSwitchButton];
     [checkboxAlwaysInititate setBezelStyle:0];
     [checkboxAlwaysInititate setTitle:@"Always Inititate"];
     [checkboxAlwaysInititate setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"enable_video_preference"]];
-    [checkboxAlwaysInititate setAction:@selector(onCheckBoxAlwaysInititate:)];
+    [checkboxAlwaysInititate setAction:@selector(onCheckBoxHandler:)];
     [checkboxAlwaysInititate setTarget:self];
     [self.scrollView.documentView addSubview:checkboxAlwaysInititate];
 
     originY -= 30;
-    checkboxAlwaysAccept = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
+    checkboxAlwaysAccept = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)]; // YES
     [checkboxAlwaysAccept setButtonType:NSSwitchButton];
     [checkboxAlwaysAccept setBezelStyle:0];
     [checkboxAlwaysAccept setTitle:@"Always accept"];
     [checkboxAlwaysAccept setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"accept_video_preference"]];
-    [checkboxAlwaysAccept setAction:@selector(onCheckBoxAlwaysAccept:)];
+    [checkboxAlwaysAccept setAction:@selector(onCheckBoxHandler:)];
     [checkboxAlwaysAccept setTarget:self];
     [self.scrollView.documentView addSubview:checkboxAlwaysAccept];
 
-//    const char *video_preset = linphone_core_get_video_preset([LinphoneManager getLc]);
-    
     originY -= 30;
-    checkboxVideoPreset = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
-    [checkboxVideoPreset setButtonType:NSSwitchButton];
-    [checkboxVideoPreset setBezelStyle:0];
-    [checkboxVideoPreset setTitle:@"Video Preset"];
-    [checkboxVideoPreset setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"video_preset_preference"]];
-    [checkboxVideoPreset setAction:@selector(onCheckBoxVideoPreset:)];
-    [checkboxVideoPreset setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxVideoPreset];
+    comboBoxVideoPreset = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)]; // YES
+    [comboBoxVideoPreset addItemsWithObjectValues:@[@"default", @"high-fps", @"custom"]];
+    [comboBoxVideoPreset setDelegate:self];
+    
+    const char *video_preset = linphone_core_get_video_preset([LinphoneManager getLc]);
+    if (!video_preset || strcmp(video_preset, "default") == 0) {
+        comboBoxVideoPreset.stringValue = @"default";
+    } else if (strcmp(video_preset, "high-fps") == 0) {
+        comboBoxVideoPreset.stringValue = @"high-fps";
+    } else if (strcmp(video_preset, "custom") == 0) {
+        comboBoxVideoPreset.stringValue = @"custom";
+    }
+    [self.scrollView.documentView addSubview:comboBoxVideoPreset];
 
     originY -= 30;
     
-    comboBoxPreferredSize = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)];
+    comboBoxPreferredSize = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)]; // YES
     [comboBoxPreferredSize addItemsWithObjectValues:@[@"1080p (1920x1080)", @"720p (1280x720)", @"svga (800x600)", @"4cif (704x576)", @"vga (640x480)", @"cif (352x288)", @"qcif (176x144)"]];
     
     NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_preferred_size_preference"];
@@ -262,18 +268,8 @@
 
     [self.scrollView.documentView addSubview:comboBoxPreferredSize];
     
-    
-//    checkboxPreferredSize = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)];
-//    [checkboxPreferredSize setButtonType:NSSwitchButton];
-//    [checkboxPreferredSize setBezelStyle:0];
-//    [checkboxPreferredSize setTitle:@"Preferred Size"];
-//    [checkboxPreferredSize setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"video_preferred_size_preference"]];
-//    [checkboxPreferredSize setAction:@selector(onCheckBoxPreferredSize:)];
-//    [checkboxPreferredSize setTarget:self];
-//    [self.scrollView.documentView addSubview:checkboxPreferredSize];
-
     originY -= 30;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)]; // YES
     labelTitle.editable = NO;
     labelTitle.stringValue = @"Preferred FPS";
     [labelTitle.cell setBordered:NO];
@@ -291,7 +287,7 @@
     [self.scrollView.documentView addSubview:textFieldPreferredFPS];
 
     originY -= 25;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)]; // YES
     labelTitle.editable = NO;
     labelTitle.stringValue = @"Video Codecs";
     [labelTitle.cell setBordered:NO];
@@ -303,11 +299,12 @@
         
         originY -= 30;
         NSButton *checkboxVCodec = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+        checkboxVCodec.tag = i;
         [checkboxVCodec setButtonType:NSSwitchButton];
         [checkboxVCodec setBezelStyle:0];
         [checkboxVCodec setTitle:codecModel.name];
         [checkboxVCodec setState:codecModel.status];
-        [checkboxVCodec setAction:@selector(onCheckBoxAdaptiveRate:)];
+        [checkboxVCodec setAction:@selector(onCheckboxVideoStatus:)];
         [checkboxVCodec setTarget:self];
         [self.scrollView.documentView addSubview:checkboxVCodec];
     }
@@ -321,14 +318,20 @@
     [self.scrollView.documentView addSubview:labelTitle];
 
     originY -= 25;
-    checkboxMWIURL = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
-    [checkboxMWIURL setButtonType:NSSwitchButton];
-    [checkboxMWIURL setBezelStyle:0];
-    [checkboxMWIURL setTitle:@"MWI URL"];
-    [checkboxMWIURL setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_MWI_URL"]];
-    [checkboxMWIURL setAction:@selector(onCheckBoxAdaptiveRate:)];
-    [checkboxMWIURL setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxMWIURL];
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)]; // YES
+    labelTitle.editable = NO;
+    labelTitle.stringValue = @"MWI URL";
+    [labelTitle.cell setBordered:NO];
+    [labelTitle setBackgroundColor:[NSColor clearColor]];
+    [self.scrollView.documentView addSubview:labelTitle];
+    
+    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"ACE_MWI_URL"];
+    
+    textFieldMWIURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
+    textFieldMWIURL.delegate = self;
+    textFieldMWIURL.stringValue = textfieldValue ? textfieldValue : @"mwi.linphone.org";
+    textFieldMWIURL.editable = YES;
+    [self.scrollView.documentView addSubview:textFieldMWIURL];
 
     originY -= 25;
     labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
@@ -339,17 +342,17 @@
     [self.scrollView.documentView addSubview:labelTitle];
     
     originY -= 25;
-    checkboxStun = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxStun = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // YES
     [checkboxStun setButtonType:NSSwitchButton];
     [checkboxStun setBezelStyle:0];
     [checkboxStun setTitle:@"STUN"];
     [checkboxStun setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
-    [checkboxStun setAction:@selector(onCheckBoxAdaptiveRate:)];
+    [checkboxStun setAction:@selector(onCheckBoxHandler:)];
     [checkboxStun setTarget:self];
     [self.scrollView.documentView addSubview:checkboxStun];
 
     originY -= 30;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)]; // YES
     labelTitle.editable = NO;
     labelTitle.stringValue = @"STUN URL";
     [labelTitle.cell setBordered:NO];
@@ -365,22 +368,22 @@
     [self.scrollView.documentView addSubview:textFieldSTUNURL];
 
     originY -= 30;
-    checkboxEnableICE = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxEnableICE = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // YES
     [checkboxEnableICE setButtonType:NSSwitchButton];
     [checkboxEnableICE setBezelStyle:0];
     [checkboxEnableICE setTitle:@"Enable ICE"];
     [checkboxEnableICE setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
-    [checkboxEnableICE setAction:@selector(onCheckBoxEnableICE:)];
+    [checkboxEnableICE setAction:@selector(onCheckBoxHandler:)];
     [checkboxEnableICE setTarget:self];
     [self.scrollView.documentView addSubview:checkboxEnableICE];
     
     originY -= 30;
-    checkboxEnableUPNP = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxEnableUPNP = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // YES
     [checkboxEnableUPNP setButtonType:NSSwitchButton];
     [checkboxEnableUPNP setBezelStyle:0];
     [checkboxEnableUPNP setTitle:@"Enable UPNP"];
     [checkboxEnableUPNP setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_ENABLE_UPNP"]];
-    [checkboxEnableUPNP setAction:@selector(onCheckBoxEnableUPNP:)];
+    [checkboxEnableUPNP setAction:@selector(onCheckBoxHandler:)];
     [checkboxEnableUPNP setTarget:self];
     [checkboxEnableUPNP setEnabled:linphone_core_upnp_available()];
     [self.scrollView.documentView addSubview:checkboxEnableUPNP];
@@ -391,7 +394,7 @@
     [checkboxRandomPorts setBezelStyle:0];
     [checkboxRandomPorts setTitle:@"Random Ports"];
     [checkboxRandomPorts setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"random_port_preference"]];
-    [checkboxRandomPorts setAction:@selector(onCheckBoxRandomPorts:)];
+    [checkboxRandomPorts setAction:@selector(onCheckBoxHandler:)];
     [checkboxRandomPorts setTarget:self];
     [self.scrollView.documentView addSubview:checkboxRandomPorts];
 
@@ -444,7 +447,7 @@
     [self.scrollView.documentView addSubview:textFieldVideoPorts];
  
     originY -= 30;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)]; // YES
     labelTitle.editable = NO;
     labelTitle.stringValue = @"Media Encrypt.";
     [labelTitle.cell setBordered:NO];
@@ -473,22 +476,22 @@
     }
     
     originY -= 30;
-    checkboxPushNotifications = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxPushNotifications = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
     [checkboxPushNotifications setButtonType:NSSwitchButton];
     [checkboxPushNotifications setBezelStyle:0];
     [checkboxPushNotifications setTitle:@"Push Notifications"];
     [checkboxPushNotifications setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PUSH_NOTIFICATIONS"]];
-    [checkboxPushNotifications setAction:@selector(onCheckBoxPushNotifications:)];
+    [checkboxPushNotifications setAction:@selector(onCheckBoxHandler:)];
     [checkboxPushNotifications setTarget:self];
     [self.scrollView.documentView addSubview:checkboxPushNotifications];
 
     originY -= 30;
-    checkboxIPv6 = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxIPv6 = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // YES
     [checkboxIPv6 setButtonType:NSSwitchButton];
     [checkboxIPv6 setBezelStyle:0];
     [checkboxIPv6 setTitle:@"IPv6"];
     [checkboxIPv6 setState:linphone_core_ipv6_enabled([LinphoneManager getLc])];
-    [checkboxIPv6 setAction:@selector(onCheckBoxIPv6:)];
+    [checkboxIPv6 setAction:@selector(onCheckBoxHandler:)];
     [checkboxIPv6 setTarget:self];
     [self.scrollView.documentView addSubview:checkboxIPv6];
 
@@ -501,62 +504,62 @@
     [self.scrollView.documentView addSubview:labelTitle];
     
     originY -= 30;
-    checkboxDebugMode = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxDebugMode = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
     [checkboxDebugMode setButtonType:NSSwitchButton];
     [checkboxDebugMode setBezelStyle:0];
     [checkboxDebugMode setTitle:@"Debug Mode"];
     [checkboxDebugMode setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_DEBUG_MODE"]];
-    [checkboxDebugMode setAction:@selector(onCheckBoxDebugMode:)];
+    [checkboxDebugMode setAction:@selector(onCheckBoxHandler:)];
     [checkboxDebugMode setTarget:self];
     [self.scrollView.documentView addSubview:checkboxDebugMode];
     
     originY -= 30;
-    checkboxPersistentNotifier = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxPersistentNotifier = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
     [checkboxPersistentNotifier setButtonType:NSSwitchButton];
     [checkboxPersistentNotifier setBezelStyle:0];
     [checkboxPersistentNotifier setTitle:@"Persistent Notifier"];
     [checkboxPersistentNotifier setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PERSISTENT_NOTIFIER"]];
-    [checkboxPersistentNotifier setAction:@selector(onCheckBoxPersistentNotifier:)];
+    [checkboxPersistentNotifier setAction:@selector(onCheckBoxHandler:)];
     [checkboxPersistentNotifier setTarget:self];
     [self.scrollView.documentView addSubview:checkboxPersistentNotifier];
     
     originY -= 30;
-    checkboxSharingServerURL = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxSharingServerURL = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
     [checkboxSharingServerURL setButtonType:NSSwitchButton];
     [checkboxSharingServerURL setBezelStyle:0];
     [checkboxSharingServerURL setTitle:@"Sharing Server URL"];
     [checkboxSharingServerURL setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_SHARING_SERVER_URL"]];
-    [checkboxSharingServerURL setAction:@selector(onCheckBoxPersistentNotifier:)];
+    [checkboxSharingServerURL setAction:@selector(onCheckBoxHandler:)];
     [checkboxSharingServerURL setTarget:self];
     [self.scrollView.documentView addSubview:checkboxSharingServerURL];
     
     originY -= 30;
-    checkboxRemoteProvisioning = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxRemoteProvisioning = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
     [checkboxRemoteProvisioning setButtonType:NSSwitchButton];
     [checkboxRemoteProvisioning setBezelStyle:0];
     [checkboxRemoteProvisioning setTitle:@"Remote Provisioning"];
     [checkboxRemoteProvisioning setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"Remote Provisioning"]];
-    [checkboxRemoteProvisioning setAction:@selector(onCheckBoxRemoteProvisioning:)];
+    [checkboxRemoteProvisioning setAction:@selector(onCheckBoxHandler:)];
     [checkboxRemoteProvisioning setTarget:self];
     [self.scrollView.documentView addSubview:checkboxRemoteProvisioning];
     
     originY -= 30;
-    checkboxSendLogs = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxSendLogs = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
     [checkboxSendLogs setButtonType:NSSwitchButton];
     [checkboxSendLogs setBezelStyle:0];
     [checkboxSendLogs setTitle:@"Send Logs"];
     [checkboxSendLogs setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_SEND_LOGS"]];
-    [checkboxSendLogs setAction:@selector(onCheckBoxSendLogs:)];
+    [checkboxSendLogs setAction:@selector(onCheckBoxHandler:)];
     [checkboxSendLogs setTarget:self];
     [self.scrollView.documentView addSubview:checkboxSendLogs];
 
     originY -= 30;
-    checkboxClearLogs = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+    checkboxClearLogs = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
     [checkboxClearLogs setButtonType:NSSwitchButton];
     [checkboxClearLogs setBezelStyle:0];
     [checkboxClearLogs setTitle:@"Clear Logs"];
     [checkboxClearLogs setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_CLEAR_LOGS"]];
-    [checkboxClearLogs setAction:@selector(onCheckBoxClearLogs:)];
+    [checkboxClearLogs setAction:@selector(onCheckBoxHandler:)];
     [checkboxClearLogs setTarget:self];
     [self.scrollView.documentView addSubview:checkboxClearLogs];
 
@@ -581,61 +584,37 @@
     return nil;
 }
 
-- (void)onCheckBoxEnableVideo:(id)sender {
+- (void)comboBoxSelectionDidChange:(NSNotification *)notification {
+    NSLog(@"comboBoxSelectionDidChange");
+    
+    NSComboBox *comboBox = (NSComboBox *)[notification object];
+    
+    if (comboBox == comboBoxMediaEncription || comboBox == comboBoxPreferredSize || comboBox == comboBoxVideoPreset) {
+        isChanged = YES;
+    }
 }
 
-- (void)onCheckBoxEnableRTT:(id)sender {
+- (void)onCheckBoxHandler:(id)sender {
+    isChanged = YES;
 }
 
-- (void)onCheckBoxAdaptiveRate:(id)sender {
+- (void)onCheckboxAudioStatus:(id)sender {
+    NSButton *button = (NSButton*)sender;
+    
+    CodecModel *codecModel = [audioCodecList objectAtIndex:button.tag];
+    codecModel.status = button.state;
+    
+    isChanged = YES;
 }
 
-- (void)onCheckBoxAlwaysInititate:(id)sender {
-}
-
-- (void)onCheckBoxAlwaysAccept:(id)sender {
-}
-
-- (void)onCheckBoxVideoPreset:(id)sender {
-}
-
-- (void)onCheckBoxPreferredSize:(id)sender {
-}
-
-- (void)onCheckBoxEnableICE:(id)sender {
-}
-
-- (void)onCheckBoxEnableUPNP:(id)sender {
-}
-
-- (void)onCheckBoxRandomPorts:(id)sender {
-}
-
-- (void)onCheckBoxMediaEncryption:(id)sender {
-}
-
-- (void)onCheckBoxPushNotifications:(id)sender {
-}
-
-- (void)onCheckBoxIPv6:(id)sender {
-}
-
-- (void)onCheckBoxDebugMode:(id)sender {
-}
-
-- (void)onCheckBoxPersistentNotifier:(id)sender {
-}
-
-- (void)onCheckBoxSharingServerURL:(id)sender {
-}
-
-- (void)onCheckBoxRemoteProvisioning:(id)sender {
-}
-
-- (void)onCheckBoxSendLogs:(id)sender {
-}
-
-- (void)onCheckBoxClearLogs:(id)sender {
+- (void)onCheckboxVideoStatus:(id)sender {
+    NSButton *button = (NSButton*)sender;
+    
+    CodecModel *codecModel = [videoCodecList objectAtIndex:button.tag];
+    codecModel.status = button.state;
+    
+    
+    isChanged = YES;
 }
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
@@ -649,15 +628,25 @@
         return;
     }
     
+    [self saveAudioCodecs];
+    [self saveVideoCodecs];
+
     LinphoneCore *lc = [LinphoneManager getLc];
 
+    [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableRTT.state forKey:kREAL_TIME_TEXT_ENABLED];
+    
     linphone_core_enable_adaptive_rate_control(lc, checkboxAdaptiveRate.state);
-    linphone_core_enable_video(lc, checkboxAlwaysInititate.state, checkboxAlwaysInititate.state);
+    
+    linphone_core_enable_video_capture(lc, checkboxAlwaysInititate.state);
+    linphone_core_enable_video_display(lc, checkboxAlwaysInititate.state);
 
     LinphoneVideoPolicy policy;
+    policy.automatically_initiate = (BOOL)checkboxEnableVideo.state;
     policy.automatically_accept = (BOOL)checkboxAlwaysAccept.state;
     linphone_core_set_video_policy(lc, &policy);
 
+    linphone_core_set_video_preset(lc, [comboBoxVideoPreset.stringValue UTF8String]);
+    
     MSVideoSize vsize;
     
     if ([comboBoxPreferredSize.stringValue isEqualToString:@"1080p (1920x1080)"]) {
@@ -699,4 +688,82 @@
     linphone_core_enable_ipv6(lc, checkboxIPv6.state);
 }
 
+- (void) saveAudioCodecs {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    PayloadType *pt;
+    const MSList *elem;
+    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
+    NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
+    
+    for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            CodecModel *codecModel = [self getAudioCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                            Rate:pt->clock_rate
+                                                        Channels:pt->channels];
+            
+            if (codecModel) {
+                linphone_core_enable_payload_type(lc, pt, codecModel.status);
+                
+                [mdictForSave setObject:[NSNumber numberWithBool:codecModel.status] forKey:codecModel.preference];
+            }
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_AUDIO_CODECS_MAP];
+}
+
+- (void) saveVideoCodecs {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    PayloadType *pt;
+    const MSList *elem;
+    const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
+    NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
+    
+    for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                            Rate:pt->clock_rate
+                                                        Channels:pt->channels];
+            
+            if (codecModel) {
+                linphone_core_enable_payload_type(lc, pt, codecModel.status);
+                
+                [mdictForSave setObject:[NSNumber numberWithBool:codecModel.status] forKey:codecModel.preference];
+            }
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:kUSER_DEFAULTS_VIDEO_CODECS_MAP];
+}
+
+- (CodecModel*) getAudioCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {
+    for (CodecModel *codecModel in audioCodecList) {
+        if ([codecModel.name isEqualToString:name] &&
+            codecModel.rate == rate &&
+            codecModel.channels == channels) {
+            return codecModel;
+        }
+    }
+    
+    return nil;
+}
+
+- (CodecModel*) getVideoCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {
+    for (CodecModel *codecModel in videoCodecList) {
+        if ([codecModel.name isEqualToString:name] &&
+            codecModel.rate == rate &&
+            codecModel.channels == channels) {
+            return codecModel;
+        }
+    }
+    
+    return nil;
+}
+//audio, video codecs save
 @end

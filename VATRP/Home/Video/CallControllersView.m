@@ -77,7 +77,6 @@
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
-    [self.buttonAnswer setKeyEquivalent:@"\r"];
 }
 
 -(void)dealloc{
@@ -132,10 +131,11 @@
     if (linphone_core_get_playback_gain_db([LinphoneManager getLc]) == mute_db) {
         linphone_core_set_playback_gain_db([LinphoneManager getLc], 0.0f);
         [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
+        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     } else {
         linphone_core_set_playback_gain_db([LinphoneManager getLc], mute_db);
         [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_inactive"]];
-        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     }
 }
 
@@ -249,10 +249,12 @@
         return;
     }
     [self.rttStatusButton.layer setBackgroundColor:[NSColor redColor].CGColor];
+    [self.buttonAnswer setKeyEquivalent:@""];
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.hidden = NO;
             self.labelCallState.stringValue = @"Incoming Call...";
+            [self.buttonAnswer setKeyEquivalent:@"\r"];
         }
         case LinphoneCallIncomingEarlyMedia: {
             break;

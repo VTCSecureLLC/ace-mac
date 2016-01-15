@@ -1583,8 +1583,9 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 
 - (void)setLinphoneDBFilePath {
     NSString* factory = [LinphoneManager bundleFile:@"linphonerc-factory"];
-    NSString *confiFileName = [self applicationDirectoryFile:@"linphonerc"];
-    configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
+    [self createBundleFolderInAppSupportDirectory];
+    NSString *configFilePath = [self applicationDirectoryFile:@"linphonerc"];
+    configDb=lp_config_new_with_factory([configFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]
                                         , [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 }
 
@@ -1875,6 +1876,36 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *makePath = [[[[documentsPath stringByAppendingString:@"/"] stringByAppendingString:bundleID] stringByAppendingString:@"/"] stringByAppendingString:file];
     return makePath;
+}
+
+- (NSURL*)createBundleFolderInAppSupportDirectory
+{
+    NSString* bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSFileManager*fm = [NSFileManager defaultManager];
+    NSURL*    dirPath = nil;
+    
+    // Find the application support directory in the home directory.
+    NSArray* appSupportDir = [fm URLsForDirectory:NSApplicationSupportDirectory
+                                        inDomains:NSUserDomainMask];
+    if ([appSupportDir count] > 0)
+    {
+        // Append the bundle ID to the URL for the
+        // Application Support directory
+        dirPath = [[appSupportDir objectAtIndex:0] URLByAppendingPathComponent:bundleID];
+        
+        // If the directory does not exist, this method creates it.
+        // This method is only available in OS X v10.7 and iOS 5.0 or later.
+        NSError*    theError = nil;
+        if (![fm createDirectoryAtURL:dirPath withIntermediateDirectories:YES
+                           attributes:nil error:&theError])
+        {
+            // Handle the error.
+            
+            return nil;
+        }
+    }
+    
+    return dirPath;
 }
 
 + (NSString*)cacheDirectory {

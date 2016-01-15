@@ -72,6 +72,8 @@
 
 - (void) asyncRegisterWithAccountModel:(AccountModel*)accountModel {
     [NSThread detachNewThreadSelector:@selector(registerThread:) toTarget:self withObject:accountModel];
+    
+    [self sortAudioCodecs];
 }
 
 - (void) registerThread:(AccountModel*)accountModel {
@@ -311,6 +313,61 @@
     if ([AppDelegate sharedInstance].loginViewController) {
         [[AppDelegate sharedInstance].loginViewController registrationUpdate:state message:message];
     }
+}
+
+- (void) sortAudioCodecs {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    MSList *audioCodecs;
+    PayloadType *pt = [self findAudioCodec:@"g722_preference"];
+    if (pt) {
+        audioCodecs = ms_list_append(audioCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+    
+    pt = [self findAudioCodec:@"pcmu_preference"];
+    if (pt) {
+        audioCodecs = ms_list_append(audioCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+    
+    pt = [self findAudioCodec:@"pcma_preference"];
+    if (pt) {
+        audioCodecs = ms_list_append(audioCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+
+    pt = [self findAudioCodec:@"speex_8k_preference"];
+    if (pt) {
+        audioCodecs = ms_list_append(audioCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+
+    pt = [self findAudioCodec:@"speex_16k_preference"];
+    if (pt) {
+        audioCodecs = ms_list_append(audioCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+    
+    linphone_core_set_audio_codecs(lc, audioCodecs);
+}
+
+- (PayloadType*)findAudioCodec:(NSString*)codec {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    PayloadType *pt;
+    const MSList *elem;
+    
+    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
+    
+    for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if ([pref isEqualToString:codec]) {
+            return pt;
+        }
+    }
+    
+    return nil;
 }
 
 @end

@@ -74,6 +74,7 @@
     [NSThread detachNewThreadSelector:@selector(registerThread:) toTarget:self withObject:accountModel];
     
     [self sortAudioCodecs];
+    [self sortVideoCodecs];
 }
 
 - (void) registerThread:(AccountModel*)accountModel {
@@ -318,31 +319,31 @@
 - (void) sortAudioCodecs {
     LinphoneCore *lc = [LinphoneManager getLc];
     MSList *audioCodecs;
-    PayloadType *pt = [self findAudioCodec:@"g722_preference"];
+    PayloadType *pt = [self findCodec:@"g722_preference"];
     if (pt) {
         audioCodecs = ms_list_append(audioCodecs, pt);
         linphone_core_enable_payload_type(lc, pt, YES);
     }
     
-    pt = [self findAudioCodec:@"pcmu_preference"];
+    pt = [self findCodec:@"pcmu_preference"];
     if (pt) {
         audioCodecs = ms_list_append(audioCodecs, pt);
         linphone_core_enable_payload_type(lc, pt, YES);
     }
     
-    pt = [self findAudioCodec:@"pcma_preference"];
+    pt = [self findCodec:@"pcma_preference"];
     if (pt) {
         audioCodecs = ms_list_append(audioCodecs, pt);
         linphone_core_enable_payload_type(lc, pt, YES);
     }
 
-    pt = [self findAudioCodec:@"speex_8k_preference"];
+    pt = [self findCodec:@"speex_8k_preference"];
     if (pt) {
         audioCodecs = ms_list_append(audioCodecs, pt);
         linphone_core_enable_payload_type(lc, pt, YES);
     }
 
-    pt = [self findAudioCodec:@"speex_16k_preference"];
+    pt = [self findCodec:@"speex_16k_preference"];
     if (pt) {
         audioCodecs = ms_list_append(audioCodecs, pt);
         linphone_core_enable_payload_type(lc, pt, YES);
@@ -351,7 +352,31 @@
     linphone_core_set_audio_codecs(lc, audioCodecs);
 }
 
-- (PayloadType*)findAudioCodec:(NSString*)codec {
+- (void) sortVideoCodecs {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    MSList *videoCodecs;
+    PayloadType *pt = [self findCodec:@"h264_preference"];
+    if (pt) {
+        videoCodecs = ms_list_append(videoCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+    
+    pt = [self findCodec:@"h263_preference"];
+    if (pt) {
+        videoCodecs = ms_list_append(videoCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+    
+    pt = [self findCodec:@"vp8_preference"];
+    if (pt) {
+        videoCodecs = ms_list_append(videoCodecs, pt);
+        linphone_core_enable_payload_type(lc, pt, YES);
+    }
+    
+    linphone_core_set_video_codecs(lc, videoCodecs);
+}
+
+- (PayloadType*)findCodec:(NSString*)codec {
     LinphoneCore *lc = [LinphoneManager getLc];
     PayloadType *pt;
     const MSList *elem;
@@ -367,6 +392,17 @@
         }
     }
     
+    const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
+    
+    for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if ([pref isEqualToString:codec]) {
+            return pt;
+        }
+    }
+
     return nil;
 }
 

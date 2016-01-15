@@ -253,4 +253,8 @@
     }
 }
 
+- (BOOL) isCurrentTabRecents {
+    return [viewCurrent isKindOfClass:[RecentsView class]];
+}
+
 @end

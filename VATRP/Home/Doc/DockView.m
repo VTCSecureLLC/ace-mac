@@ -15,6 +15,8 @@
 @interface DockView () {
     NSButton *selectedDocViewItem;
     NSArray *dockViewButtons;
+    
+    NSTextField *labelMessedCalls;
 }
 
 @property (weak) IBOutlet NSButton *buttonRecents;
@@ -45,6 +47,25 @@
     [selectedDocViewItem setWantsLayer:YES];
     [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
     dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, self.buttonResources, self.buttonSettings, nil];
+    
+    labelMessedCalls = [[NSTextField alloc] initWithFrame:NSMakeRect(41, 59, 20, 20)];
+    labelMessedCalls.editable = NO;
+    labelMessedCalls.stringValue = @"";
+    [labelMessedCalls.cell setBordered:NO];
+    [labelMessedCalls setBackgroundColor:[NSColor redColor]];
+    [labelMessedCalls setTextColor:[NSColor whiteColor]];
+    [labelMessedCalls setFont:[NSFont systemFontOfSize:14]];
+    [labelMessedCalls.cell setAlignment:NSTextAlignmentCenter];
+    [labelMessedCalls setWantsLayer:YES];
+    [labelMessedCalls.layer setCornerRadius:9.0];
+    [labelMessedCalls setHidden:YES];
+    [self addSubview:labelMessedCalls];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(callUpdateEvent:)
+                                                 name:kLinphoneCallUpdate
+                                               object:nil];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -56,7 +77,11 @@
 - (IBAction)onButtonRecents:(id)sender {
     if ([_delegate respondsToSelector:@selector(didClickDockViewRecents:)]) {
         [_delegate didClickDockViewRecents:self];
-    }    
+    }
+    
+    labelMessedCalls.stringValue = @"";
+    [labelMessedCalls setHidden:YES];
+    linphone_core_reset_missed_calls_count([LinphoneManager getLc]);
 }
 
 - (IBAction)onButtonContacts:(id)sender {
@@ -191,6 +216,42 @@
 
     [selectedDocViewItem setWantsLayer:YES];
     [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+}
+
+#pragma mark - Event Functions
+
+- (void)callUpdateEvent:(NSNotification*)notif {
+    LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
+    LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
+    [self callUpdate:acall state:astate];
+}
+
+#pragma mark -
+
+- (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
+    switch (astate) {
+        case LinphoneCallError:
+        case LinphoneCallEnd:
+        {
+            if (![[[AppDelegate sharedInstance].homeWindowController getHomeViewController] isCurrentTabRecents]) {
+                int missedCount = linphone_core_get_missed_calls_count([LinphoneManager getLc]);
+                
+                if (missedCount < 10) {
+                    labelMessedCalls.frame = NSMakeRect(41, 59, 20, 20);
+                } else {
+                    labelMessedCalls.frame = NSMakeRect(35, 59, 26, 20);
+                }
+                
+                labelMessedCalls.intValue = missedCount;
+                [labelMessedCalls setHidden:NO];
+            } else {
+                linphone_core_reset_missed_calls_count([LinphoneManager getLc]);
+            }
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 @end

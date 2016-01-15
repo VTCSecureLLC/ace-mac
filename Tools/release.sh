@@ -171,6 +171,7 @@ else
     echo ' -F "notes='"$(git log -1 --pretty=format:%B)"'" \'
     echo ' -F "notes_type=1" \'
     echo ' -F "mandatory=0" \'
+    echo ' -F "teams=${HOCKEYAPP_TEAM_IDS}" \'
     echo ' -F "ipa=@'"$APP_ZIP_FILE"'" \'
     echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
     echo ' -H "X-HockeyAppToken: REDACTED" \'
@@ -186,6 +187,7 @@ else
       -F "notes=$(git log -1 --pretty=format:%B)" \
       -F "notes_type=1" \
       -F "mandatory=0" \
+      -F "teams=${HOCKEYAPP_TEAM_IDS}" \
       -F "ipa=@$APP_ZIP_FILE" \
       -F "dsym=@$DSYM_ZIP_FILE" \
       -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \

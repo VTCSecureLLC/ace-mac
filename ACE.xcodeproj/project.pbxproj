@@ -366,6 +366,9 @@
 		CE3D2ECF1C3BD93F00B0BF29 /* DHResourcesView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3D2ECE1C3BD93F00B0BF29 /* DHResourcesView.m */; };
 		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
 		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
+		CE5C3F7A1C4CF213005E24A5 /* DefaultSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C3F791C4CF213005E24A5 /* DefaultSettingsManager.m */; };
+		CE5C3F7D1C4CF7B2005E24A5 /* SRVResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C3F7C1C4CF7B2005E24A5 /* SRVResolver.m */; };
+		CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */; };
 		CE6A7A841C1AFC46002AEB5D /* rtt_on_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */; };
 		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
 		CEA6DE751C1088AA0013CB76 /* plus icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA6DE741C1088AA0013CB76 /* plus icon.png */; };
@@ -799,6 +802,11 @@
 		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
 		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
 		CE48DF931C04B5110046E727 /* AddContactDialogBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactDialogBox.m; sourceTree = "<group>"; };
+		CE5C3F781C4CF213005E24A5 /* DefaultSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSettingsManager.h; sourceTree = "<group>"; };
+		CE5C3F791C4CF213005E24A5 /* DefaultSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultSettingsManager.m; sourceTree = "<group>"; };
+		CE5C3F7B1C4CF7B2005E24A5 /* SRVResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRVResolver.h; sourceTree = "<group>"; };
+		CE5C3F7C1C4CF7B2005E24A5 /* SRVResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRVResolver.m; sourceTree = "<group>"; };
+		CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rtt_on_off.png; sourceTree = "<group>"; };
 		CE7005FD1C048F0000E667F8 /* ContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsView.h; sourceTree = "<group>"; };
 		CE7005FE1C048F0000E667F8 /* ContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsView.m; sourceTree = "<group>"; };
@@ -827,6 +835,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */,
 				73ED2AF31BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF41BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF51BFCE7CE00C182F2 /* libmsbcg729.1.0.1.dylib in Frameworks */,
@@ -981,6 +990,7 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */,
 				20A993391BB5B9F6008612F9 /* HockeySDK.framework */,
 			);
 			name = Frameworks;
@@ -1152,6 +1162,7 @@
 		4A902DDA1BB9486800ECFD86 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CE5C3F771C4CEEAD005E24A5 /* DefaultConfigurationSettigns */,
 				5EEC291F1C03701700BA43FB /* vCard */,
 				4A902DE71BB95A7000ECFD86 /* Utils.h */,
 				4A902DE81BB95A7000ECFD86 /* Utils.m */,
@@ -1545,6 +1556,17 @@
 			path = RTT;
 			sourceTree = "<group>";
 		};
+		CE5C3F771C4CEEAD005E24A5 /* DefaultConfigurationSettigns */ = {
+			isa = PBXGroup;
+			children = (
+				CE5C3F7B1C4CF7B2005E24A5 /* SRVResolver.h */,
+				CE5C3F7C1C4CF7B2005E24A5 /* SRVResolver.m */,
+				CE5C3F781C4CF213005E24A5 /* DefaultSettingsManager.h */,
+				CE5C3F791C4CF213005E24A5 /* DefaultSettingsManager.m */,
+			);
+			path = DefaultConfigurationSettigns;
+			sourceTree = "<group>";
+		};
 		CE6758B11BA8C9BF005396EF /* linphonesdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1822,6 +1844,7 @@
 				5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */,
 				69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */,
 				CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */,
+				CE5C3F7A1C4CF213005E24A5 /* DefaultSettingsManager.m in Sources */,
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */,
 				CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */,
@@ -1895,6 +1918,7 @@
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				6983EB311C43DC8C004CCD74 /* PreferencesViewController.m in Sources */,
+				CE5C3F7D1C4CF7B2005E24A5 /* SRVResolver.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */,
 				5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */,

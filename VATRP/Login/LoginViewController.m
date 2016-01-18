@@ -13,9 +13,10 @@
 #import "AccountsService.h"
 #import "RegistrationService.h"
 #import "Utils.h"
+#import "DefaultSettingsManager.h"
 
 
-@interface LoginViewController () {
+@interface LoginViewController ()<DefaultSettingsManagerDelegate> {
     AccountModel *loginAccount;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
@@ -72,6 +73,30 @@
 //}
 
 - (IBAction)onButtonLogin:(id)sender {
+    
+    [self.prog_Signin setHidden:NO];
+    [self.prog_Signin startAnimation:self];
+    [self.loginButton setEnabled:NO];
+    
+    [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:@"_rueconfig._tcp.vatrp.net"
+                                                           withUsername:self.textFieldUsername.stringValue
+                                                            andPassword:self.textFieldPassword.stringValue];
+    [DefaultSettingsManager sharedInstance].delegate = self;
+}
+
+- (void)didFinishLoadingConfigData {
+    [self userLogin];
+}
+
+- (void)didFinishWithError {
+    NSLog(@"Error loading config data");
+    [self userLogin];
+//    [self.prog_Signin setHidden:YES];
+//    [self.prog_Signin stopAnimation:self];
+//    [self.loginButton setEnabled:YES];
+}
+
+- (void)userLogin {
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;
     loginAccount.userID = self.textFieldUserID.stringValue;
@@ -86,9 +111,9 @@
                                                         domain:loginAccount.domain
                                                      transport:loginAccount.transport
                                                           port:loginAccount.port];
-    [self.prog_Signin setHidden:NO];
-    [self.prog_Signin startAnimation:self];
-    [self.loginButton setEnabled:NO];
+    [self.prog_Signin setHidden:YES];
+    [self.prog_Signin stopAnimation:self];
+    [self.loginButton setEnabled:YES];
 }
 
 - (void) viewDidDisappear {

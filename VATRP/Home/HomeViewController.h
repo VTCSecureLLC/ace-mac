@@ -16,5 +16,6 @@
 @property (weak) IBOutlet NSView *callView;
 
 - (ProfileView*) getProfileView;
+- (BOOL) isCurrentTabRecents;
 
 @end

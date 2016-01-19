@@ -116,11 +116,11 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_echo_cancellation"] != [NSNull null])? [dict objectForKey:@"enable_echo_cancellation"]:@"" forKey:@"enable_echo_cancellation"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_video"] != [NSNull null])?[dict objectForKey:@"enable_video"]:@"" forKey:@"enable_video"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_video"] != [NSNull null])?[dict objectForKey:@"enable_video"]:@"" forKey:@"enable_video_preference"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_rtt"] != [NSNull null])?[dict objectForKey:@"enable_rtt"]:@"" forKey:@"enable_rtt"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_rtt"] != [NSNull null])?[dict objectForKey:@"enable_rtt"]:@"" forKey:@"kREAL_TIME_TEXT_ENABLED"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_adaptive_rate"] != [NSNull null])?[dict objectForKey:@"enable_adaptive_rate"]:@"" forKey:@"enable_adaptive_rate"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_adaptive_rate"] != [NSNull null])?[dict objectForKey:@"enable_adaptive_rate"]:@"" forKey:@"enable_adaptive_rate_control"];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enabled_codecs"] != [NSNull null])?[dict objectForKey:@"enabled_codecs"]:@"" forKey:@"enabled_codecs"];
     
@@ -142,7 +142,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_videomail_uri"] != [NSNull null])?[dict objectForKey:@"sip_videomail_uri"]:@"" forKey:@"sip_videomail_uri"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"video_resolution_maximum"] != [NSNull null])? [dict objectForKey:@"video_resolution_maximum"]:@"" forKey:@"video_resolution_maximum"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"video_resolution_maximum"] != [NSNull null])? [dict objectForKey:@"video_resolution_maximum"]:@"" forKey:@"video_preferred_size_preference"];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -240,15 +240,15 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (BOOL)enableVideo {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"enable_video"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"enable_video_preference"];
 }
 
 - (BOOL)enableRtt {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"enable_rtt"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"kREAL_TIME_TEXT_ENABLED"];
 }
 
 - (BOOL)enableAdaptiveRate {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"enable_adaptive_rate"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"enable_adaptive_rate_control"];
 }
 
 - (NSArray*)enabledCodecs {
@@ -276,7 +276,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (BOOL)enableIce {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"enable_ice"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"];
 }
 
 - (NSString*)logging {

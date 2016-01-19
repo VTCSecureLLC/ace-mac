@@ -11,6 +11,8 @@
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
 #import "Utils.h"
+#import "DefaultSettingsManager.h"
+#import "CodecModel.h"
 
 @implementation RegistrationService
 
@@ -154,7 +156,6 @@
     transport = [transport lowercaseString];
     LinphoneCore* lc = [LinphoneManager getLc];
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
-    linphone_proxy_config_set_expires (proxyCfg, 280);
     NSString* server_address = domain;
     
     NSLog(@"addProxyConfig transport=%@",transport);
@@ -238,8 +239,6 @@
 
         NSLog(@"enable: %d", enable);
     }
-
-    linphone_core_enable_video(lc, YES, YES);
 
     LpConfig *config = linphone_core_get_config(lc);
     LinphoneVideoPolicy policy;

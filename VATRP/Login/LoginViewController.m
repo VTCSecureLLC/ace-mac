@@ -11,6 +11,7 @@
 #import "NSViewController+BFNavigationController.h"
 #import "AppDelegate.h"
 #import "AccountsService.h"
+#import "SettingsService.h"
 #import "RegistrationService.h"
 #import "Utils.h"
 #import "DefaultSettingsManager.h"
@@ -85,6 +86,7 @@
 }
 
 - (void)didFinishLoadingConfigData {
+    [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
     [self userLogin];
 }
 

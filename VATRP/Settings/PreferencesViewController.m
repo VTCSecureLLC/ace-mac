@@ -12,6 +12,7 @@
 #import "AccountsService.h"
 #import "SDPNegotiationService.h"
 #import "CodecModel.h"
+#import "DefaultSettingsManager.h"
 
 @interface PreferencesViewController () <NSTextFieldDelegate, NSComboBoxDelegate> {
     NSMutableArray *audioCodecList;
@@ -325,7 +326,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"ACE_MWI_URL"];
+    textfieldValue = [DefaultSettingsManager sharedInstance].sipMwiUri;
     
     textFieldMWIURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldMWIURL.delegate = self;
@@ -359,7 +360,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"stun_url_preference"];
+    textfieldValue = [DefaultSettingsManager sharedInstance].stunServer;
     
     textFieldSTUNURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldSTUNURL.delegate = self;
@@ -406,7 +407,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"ACE_SIP_PORT"];
+    textfieldValue = [NSString stringWithFormat:@"%d", [DefaultSettingsManager sharedInstance].sipRegisterPort];
     
     textFieldSIPPort = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldSIPPort.delegate = self;

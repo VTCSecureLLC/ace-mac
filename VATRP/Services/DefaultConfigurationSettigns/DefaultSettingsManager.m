@@ -130,11 +130,11 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"download_bandwidth"] != [NSNull null])?[[dict objectForKey:@"download_bandwidth"] integerValue]:0 forKey:@"download_bandwidth" ];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"" forKey:@"enable_stun"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"" forKey:@"stun_preference"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"stun_server"] != [NSNull null])?[dict objectForKey:@"stun_server"]:@"" forKey:@"stun_server"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"stun_server"] != [NSNull null])?[dict objectForKey:@"stun_server"]:@"" forKey:@"stun_url_preference"];
 
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_ice"] != [NSNull null])? [dict objectForKey:@"enable_ice"]:@"" forKey:@"enable_ice"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_ice"] != [NSNull null])? [dict objectForKey:@"enable_ice"]:@"" forKey:@"ice_preference"];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"logging"] != [NSNull null])? [dict objectForKey:@"logging"]:@"" forKey:@"logging"];
     
@@ -272,7 +272,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSString*)stunServer {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"stun_server"];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:@"stun_url_preference"];
 }
 
 - (BOOL)enableIce {

@@ -150,6 +150,7 @@
         [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
                       display:YES
                       animate:YES];
+        //Chat open
     } else {
         if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
             [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
@@ -159,6 +160,7 @@
             [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
                           display:YES
                           animate:YES];
+            //Chat closed
         }
     }
 }

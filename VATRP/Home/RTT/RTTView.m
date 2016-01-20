@@ -390,20 +390,26 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
-    if (commandSelector == @selector(insertNewline:)) {
-        return [self eventENTER];
-    } else if (commandSelector == @selector(deleteForward:)) {
-        //Do something against DELETE key
-        return NO;
-    } else if (commandSelector == @selector(deleteBackward:)) {
-        //Do something against BACKSPACE keyxc vbxcv 
+    int TEXT_MODE=[self getTextMode];
+    if(TEXT_MODE==RTT){
+        if (commandSelector == @selector(insertNewline:)) {
+            return [self eventENTER];
+        } else if (commandSelector == @selector(deleteForward:)) {
+            //Do something against DELETE key
+            return NO;
+        } else if (commandSelector == @selector(deleteBackward:)) {
+            //Do something against BACKSPACE keyxc vbxcv
         
-        return [self eventBackward];
-    } else if (commandSelector == @selector(insertTab:)) {
-        //Do something against TAB key
-        return [self eventTab];
+            return [self eventBackward];
+        } else if (commandSelector == @selector(insertTab:)) {
+            //Do something against TAB key
+            return [self eventTab];
+        }
+    }else if(TEXT_MODE==SIP_SIMPLE){
+        if (commandSelector == @selector(insertNewline:)) {
+            return [self eventENTER];
+        }
     }
-    
     // return YES if the action was handled; otherwise NO
     
     return NO;
@@ -424,10 +430,10 @@ static void chatTable_free_chatrooms(void *data) {
             [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
             [alert runModal];
         }
-        
-    }else{
-        [[ChatService sharedInstance] sendEnter];
     }
+   
+        [[ChatService sharedInstance] sendEnter];
+    
     
         
             

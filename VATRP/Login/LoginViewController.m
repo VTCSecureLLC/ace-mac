@@ -87,15 +87,16 @@
 
 - (void)didFinishLoadingConfigData {
     [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
+    // Later - need to set username, userID, password, domain transport and port.
     [self userLogin];
 }
 
 - (void)didFinishWithError {
     NSLog(@"Error loading config data");
     [self userLogin];
-//    [self.prog_Signin setHidden:YES];
-//    [self.prog_Signin stopAnimation:self];
-//    [self.loginButton setEnabled:YES];
+    [self.prog_Signin setHidden:YES];
+    [self.prog_Signin stopAnimation:self];
+    [self.loginButton setEnabled:YES];
 }
 
 - (void)userLogin {

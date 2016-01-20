@@ -310,7 +310,6 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     LinphoneManager *lm = [LinphoneManager instance];
     LinphoneCore *lc = [LinphoneManager getLc];
     
-    
     // version - ?
     
     // expiration_time - set
@@ -326,15 +325,15 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     
     // sip_register_usernames - ?
     
-    // sip_auth_username - set
+    // sip_auth_username - will be later
     
-    // sip_auth_password - set
+    // sip_auth_password - will be later
     
-    // sip_register_domain - set
+    // sip_register_domain - will be later
     
-    // sip_register_port - set
+    // sip_register_port - will be later
     
-    // sip_register_transport - set
+    // sip_register_transport - will be later
     
     // enable_echo_cancellation
     linphone_core_enable_echo_cancellation(lc, [DefaultSettingsManager sharedInstance].enableEchoCancellation);

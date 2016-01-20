@@ -14,6 +14,12 @@
 #import "ChatService.h"
 #import "ChatItemTableCellView.h"
 
+//integers duplicate format as Android
+//const NSInteger TEXT_MODE;
+const NSInteger NO_TEXT=-1;
+const NSInteger RTT=0;
+const NSInteger SIP_SIMPLE=1;
+
 @interface RTTView () {
     MSList *contacts;
     
@@ -358,11 +364,26 @@ static void chatTable_free_chatrooms(void *data) {
     NSUInteger lastSimbolIndex = self.textFieldMessage.stringValue.length - 1;
     NSString *lastSimbol = [self.textFieldMessage.stringValue substringFromIndex:lastSimbolIndex];
     
-    if (![[ChatService sharedInstance] sendMessagt:lastSimbol]) {
-        NSAlert *alert = [[NSAlert alloc]init];
-        [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
-        [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
-        [alert runModal];
+    //This is where the message is sent.
+    NSLog(@"theText %@",lastSimbol);
+    NSLog(@"Add characters. %@ Core %s", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"],
+          linphone_core_get_version());
+    
+    //this is the full text, not just the last character
+    NSLog(@"insertText %@",self.textFieldMessage.stringValue);
+    
+    int TEXT_MODE=[self getTextMode];
+    
+    if(TEXT_MODE==RTT){
+        NSLog(@"TEXT_MODE=RTT");
+        if (![[ChatService sharedInstance] sendMessagt:lastSimbol]) {
+            NSAlert *alert = [[NSAlert alloc]init];
+            [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+            [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
+            [alert runModal];
+        }
+    }else if(TEXT_MODE==SIP_SIMPLE){
+        NSLog(@"TEXT_MODE=SIP_SIMPLE");
     }
 }
 
@@ -473,5 +494,36 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     selectedChatRoom = linphone_call_get_chat_room([[CallService sharedInstance] getCurrentCall]);
     return selectedChatRoom;
 }
+
+/* Text Mode RTT or SIP SIMPLE duplicate with Android*/
+-(int) getTextMode{
+    //SET TO RTT BY DEFAULT, THIS WILL CHANGE IN GLOBAL SETTINGS.
+    int TEXT_MODE=RTT;
+    
+    //prefs = PreferenceManager.getDefaultSharedPreferences(LinphoneActivity.instance());
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    //String text_mode=prefs.getString(getString(R.string.pref_text_settings_send_mode_key), "RTT");
+    NSString* text_mode_string=[defaults stringForKey:@"TEXT_SEND_MODE"];
+    
+    //Log.d("Text Send Mode" + prefs.getString(getString(R.string.pref_text_settings_send_mode_key), "RTT"));
+    NSLog(@"Text mode is %@",text_mode_string);
+    //    if(text_mode.equals("SIP_SIMPLE")) {
+    //        TEXT_MODE=SIP_SIMPLE;
+    //    }else if(text_mode.equals("RTT")) {
+    //        TEXT_MODE=RTT;
+    //
+    //    }
+    
+    if([text_mode_string isEqualToString:@"SIP SIMPLE"]) {
+        TEXT_MODE=SIP_SIMPLE;
+    }else if([text_mode_string isEqualToString:@"Real Time Text (RTT)"]) {
+        TEXT_MODE=RTT;
+    }
+    NSLog(@"Text mode is %d",TEXT_MODE);
+    //Log.d("TEXT_MODE ", TEXT_MODE);
+    return TEXT_MODE;
+}
+
 
 @end

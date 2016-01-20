@@ -358,6 +358,7 @@
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */; };
 		CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */; };
 		CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */; };
 		CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */; };
@@ -788,6 +789,8 @@
 		73EDA2C21BFA9F4B00EC7039 /* libmssilk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmssilk.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmssilk.dylib"; sourceTree = "<group>"; };
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
+		CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMenuViewController.h; sourceTree = "<group>"; };
+		CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMenuViewController.m; sourceTree = "<group>"; };
 		CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_incoming.png; sourceTree = "<group>"; };
 		CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_missed.png; sourceTree = "<group>"; };
 		CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_outgoing.png; sourceTree = "<group>"; };
@@ -1028,6 +1031,8 @@
 		2B463F001B984E49008E8333 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */,
+				CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */,
 				2B463F011B984E49008E8333 /* SettingsWindowController.h */,
 				2B463F021B984E49008E8333 /* SettingsWindowController.m */,
 				4AC13F9C1BBC0769008305CD /* SettingsViewController.h */,
@@ -1847,6 +1852,7 @@
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
 				4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
+				CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */,
 				6983EB281C43A169004CCD74 /* AVViewController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
 				4AA203C01BD4CAF500DD9A4D /* BackgroundedView.m in Sources */,

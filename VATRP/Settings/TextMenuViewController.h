@@ -1,5 +1,5 @@
 //
-//  textMenuViewController.h
+//  TextMenuViewController.h
 //  ACE
 //
 //  Created by Norayr Harutyunyan on 1/11/16.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface textMenuViewController : NSViewController
+@interface TextMenuViewController : NSViewController
 
 - (void) save;
 

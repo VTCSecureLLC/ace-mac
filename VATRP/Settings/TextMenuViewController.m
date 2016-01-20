@@ -1,62 +1,44 @@
 //
-//  textMenuViewController
+//  TextMenuViewController
 //  ACE
 //
-//  Created by Norayr Harutyunyan on 1/11/16.
+//  Created by Patrick Watson on 1/11/16.
 //  Copyright © 2016 VTCSecure. All rights reserved.
 //
 
-#import "textMenuViewController.h"
+#import "TextMenuViewController.h"
+#import "SettingsService.h"
+#import "LinphoneManager.h"
 
-@interface textMenuViewController () {
+@interface TextMenuViewController () {
     BOOL isChanged;
 }
 
-@property (weak) IBOutlet NSButton *buttonSpeakerMute;
-@property (weak) IBOutlet NSButton *buttonMicMute;
-@property (weak) IBOutlet NSButton *buttonEchoCancel;
-@property (weak) IBOutlet NSButton *buttonShowSelfView;
-@property (weak) IBOutlet NSButton *buttonShowPreview;
+@property (weak) IBOutlet NSButton *enable_text;
+@property (weak) IBOutlet NSComboBox *text_send_mode;
 
 @end
 
-@implementation textMenuViewController
+@implementation TextMenuViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do view setup here.
-
+    self.enable_text.state = [SettingsService getRTTEnabled];
+    self.text_send_mode.stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"TEXT_SEND_MODE"];
+    
     isChanged = NO;
 }
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
-
-    self.buttonSpeakerMute.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"SPEAKER_MUTE"];
-    self.buttonMicMute.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"MICROPHONE_MUTE"];
-    self.buttonEchoCancel.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"ECHO_CANCEL"];
-    self.buttonShowSelfView.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"VIDEO_SHOW_SELF_VIEW"];
-    self.buttonShowPreview.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"VIDEO_SHOW_PREVIEW"];
+- (IBAction)onCheckBoxEnableText:(id)sender {
+    isChanged = YES;
+    NSLog(@"CHECKED");
 }
 
-- (IBAction)onCheckBoxSpeakerMute:(id)sender {
+- (IBAction)onComboBoxTextSendMode:(id)sender {
     isChanged = YES;
-}
-
-- (IBAction)onCheckBoxMicMute:(id)sender {
-    isChanged = YES;
-}
-
-- (IBAction)onCheckBoxEchoCancel:(id)sender {
-    isChanged = YES;
-}
-
-- (IBAction)onCheckBoxShowSelfView:(id)sender {
-    isChanged = YES;
-}
-
-- (IBAction)onCheckBoxShowPreview:(id)sender {
-    isChanged = YES;
+     NSLog(@"SEND MODE");
 }
 
 - (void) save {
@@ -64,12 +46,16 @@
         return;
     }
     
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonSpeakerMute.state forKey:@"SPEAKER_MUTE"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonMicMute.state forKey:@"MICROPHONE_MUTE"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonEchoCancel.state forKey:@"ECHO_CANCEL"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonShowSelfView.state forKey:@"VIDEO_SHOW_SELF_VIEW"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonShowPreview.state forKey:@"VIDEO_SHOW_PREVIEW"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.enable_text.state forKey:kREAL_TIME_TEXT_ENABLED];
+    //[[NSUserDefaults standardUserDefaults] setBool:self.enable_text.state forKey:@"ENABLE_TEXT"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.text_send_mode.stringValue forKey:@"TEXT_SEND_MODE"];
+   
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString* text_mode_string=[defaults stringForKey:@"TEXT_SEND_MODE"];
+    NSLog(@"SEND MODE %@",text_mode_string);
+    
 }
 
 @end

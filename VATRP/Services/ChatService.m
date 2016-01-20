@@ -99,7 +99,7 @@
         LinphoneChatMessage* rtt_message = linphone_chat_room_create_message(chat_room, NULL);
         
         const char* character = [message UTF8String];
-    
+        
         for (int i = 0; i < strlen(character); i++) {
             if (linphone_chat_message_put_char(rtt_message, character[i]))
                 return NO;

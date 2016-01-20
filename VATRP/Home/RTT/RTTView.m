@@ -383,7 +383,9 @@ static void chatTable_free_chatrooms(void *data) {
             [alert runModal];
         }
     }else if(TEXT_MODE==SIP_SIMPLE){
-        NSLog(@"TEXT_MODE=SIP_SIMPLE");
+        
+       //handle on enter press
+
     }
 }
 
@@ -409,24 +411,38 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (BOOL) eventENTER {
     //Do something against ENTER key
-    
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
     
     if (currentCall_) {
+    
+    int TEXT_MODE=[self getTextMode];
+    if(TEXT_MODE==SIP_SIMPLE){
+        NSLog(@"TEXT_MODE=SIP_SIMPLE");
+        if (![[ChatService sharedInstance] sendMessagt:self.textFieldMessage.stringValue]) {
+            NSAlert *alert = [[NSAlert alloc]init];
+            [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+            [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
+            [alert runModal];
+        }
+        
+    }else{
         [[ChatService sharedInstance] sendEnter];
-        
-        
-        outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
-
-        self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
-
-        [self.tableViewContent reloadData];
-        
-        NSInteger count = ms_list_size(messageList);
-        [self.tableViewContent scrollRowToVisible:count-1];
     }
     
-    self.textFieldMessage.stringValue = @"";
+        
+            
+            
+            outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
+            
+            self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
+            
+            [self.tableViewContent reloadData];
+            
+            NSInteger count = ms_list_size(messageList);
+            [self.tableViewContent scrollRowToVisible:count-1];
+        }
+        
+        self.textFieldMessage.stringValue = @"";
     
     return YES;
 }

@@ -111,7 +111,7 @@ const NSInteger SIP_SIMPLE=1;
     stateNewMessage = NO;
     
     [self updateContentData];
-
+    
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
@@ -231,7 +231,7 @@ static void chatTable_free_chatrooms(void *data) {
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
     switch (astate) {
         case LinphoneCallStreamsRunning: {
-//            [self updateContentData];
+            //            [self updateContentData];
         }
             break;
         default:
@@ -242,7 +242,7 @@ static void chatTable_free_chatrooms(void *data) {
 - (void)textComposeEvent:(NSNotification *)notif {
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == [self getCurrentChatRoom]) {
-//        BOOL composing = linphone_chat_room_is_remote_composing(room);
+        //        BOOL composing = linphone_chat_room_is_remote_composing(room);
         //        [self setComposingVisible:composing withDelay:0.3];
     }
     
@@ -257,7 +257,7 @@ static void chatTable_free_chatrooms(void *data) {
             
             if (rttCode == 0)
                 return;
-
+            
             if(rttCode == 8232) {
                 incomingChatMessage = nil;
                 incomingCellView = nil;
@@ -319,7 +319,7 @@ static void chatTable_free_chatrooms(void *data) {
             if (strcasecmp(cr_from_string, fromStr) == 0) {
                 linphone_chat_room_mark_as_read(room);
                 
-//                [self updateContentData];
+                //                [self updateContentData];
                 [self.tableViewContent reloadData];
                 
                 NSInteger count = ms_list_size(messageList);
@@ -384,8 +384,8 @@ static void chatTable_free_chatrooms(void *data) {
         }
     }else if(TEXT_MODE==SIP_SIMPLE){
         
-       //handle on enter press
-
+        //handle on enter press
+        
     }
 }
 
@@ -399,7 +399,7 @@ static void chatTable_free_chatrooms(void *data) {
             return NO;
         } else if (commandSelector == @selector(deleteBackward:)) {
             //Do something against BACKSPACE keyxc vbxcv
-        
+            
             return [self eventBackward];
         } else if (commandSelector == @selector(insertTab:)) {
             //Do something against TAB key
@@ -420,35 +420,35 @@ static void chatTable_free_chatrooms(void *data) {
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
     
     if (currentCall_) {
-    
-    int TEXT_MODE=[self getTextMode];
-    if(TEXT_MODE==SIP_SIMPLE){
-        NSLog(@"TEXT_MODE=SIP_SIMPLE");
-        if (![[ChatService sharedInstance] sendMessagt:self.textFieldMessage.stringValue]) {
-            NSAlert *alert = [[NSAlert alloc]init];
-            [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
-            [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
-            [alert runModal];
+        
+        int TEXT_MODE=[self getTextMode];
+        if(TEXT_MODE==SIP_SIMPLE){
+            NSLog(@"TEXT_MODE=SIP_SIMPLE");
+            if (![[ChatService sharedInstance] sendMessagt:self.textFieldMessage.stringValue]) {
+                NSAlert *alert = [[NSAlert alloc]init];
+                [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+                [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
+                [alert runModal];
+            }
         }
-    }
-   
+        
         [[ChatService sharedInstance] sendEnter];
-    
-    
         
-            
-            
-            outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
-            
-            self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
-            
-            [self.tableViewContent reloadData];
-            
-            NSInteger count = ms_list_size(messageList);
-            [self.tableViewContent scrollRowToVisible:count-1];
-        }
         
-        self.textFieldMessage.stringValue = @"";
+        
+        
+        
+        outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
+        
+        self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
+        
+        [self.tableViewContent reloadData];
+        
+        NSInteger count = ms_list_size(messageList);
+        [self.tableViewContent scrollRowToVisible:count-1];
+    }
+    
+    self.textFieldMessage.stringValue = @"";
     
     return YES;
 }
@@ -503,7 +503,7 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     ? "photo transfer"
     : linphone_chat_message_get_text(msg);
     NSLog(@"Delivery status for [%s] is [%s]", text, linphone_chat_message_state_to_string(state));
-//    ChatViewController *thiz = (__bridge ChatViewController *)ud;
+    //    ChatViewController *thiz = (__bridge ChatViewController *)ud;
     
     
     //    [thiz.tableController updateChatEntry:msg];

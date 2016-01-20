@@ -3593,7 +3593,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-                                    <rect key="frame" x="410" y="0.0" width="15" height="385"/>
+                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -3681,7 +3681,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" baseWritingDirection="leftToRight" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="Hcn-Pf-fDW">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="4816"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="408" height="4172"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="minSize" width="393" height="312"/>
@@ -8696,6 +8696,8 @@ Cg
                                     </objectValues>
                                 </comboBoxCell>
                                 <connections>
+                                    <action selector="onComboBoxProviderSelect:" target="taJ-cA-vAy" id="B4T-af-rRg"/>
+                                    <outlet property="delegate" destination="taJ-cA-vAy" id="Bup-If-4iq"/>
                                     <outlet property="nextKeyView" destination="yt7-aL-AyJ" id="5yU-Bk-gLX"/>
                                 </connections>
                             </comboBox>
@@ -8852,6 +8854,7 @@ DQ
                     </view>
                     <connections>
                         <outlet property="buttonToggleAutoLogin" destination="iXO-La-iVb" id="8ex-hy-1yV"/>
+                        <outlet property="comboBoxProviderSelect" destination="sEp-6A-Uvx" id="hnY-6e-h91"/>
                         <outlet property="loginButton" destination="IVi-K9-fBt" id="G3K-bI-y1w"/>
                         <outlet property="prog_Signin" destination="JnY-ow-InH" id="MPo-Ge-FaJ"/>
                         <outlet property="textFieldDomain" destination="Req-x3-Xup" id="Yoa-9U-Zj8"/>

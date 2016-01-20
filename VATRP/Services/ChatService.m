@@ -55,14 +55,14 @@
 
 - (BOOL) openChatWindowWithUser:(NSString*)user {
     unread_messages = 0;
-
+    
     if (!chatWindowController) {
         chatWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ChatWindowController"];
         if (user) {
             ChatViewController *chatViewController = [chatWindowController getChatViewController];
             chatViewController.selectUser = user;
         }
-
+        
         [chatWindowController showWindow:self];
         return YES;
     } else {
@@ -92,7 +92,7 @@
     
     if (!call)
         return NO;
-        
+    
     LinphoneChatRoom *chat_room = linphone_call_get_chat_room(call);
     
     if (chat_room) {
@@ -102,7 +102,7 @@
         
         for (int i = 0; i < strlen(character); i++) {
             if(i % 29 == 0 && i != 0){
-                                    [NSThread sleepForTimeInterval:1];
+                [NSThread sleepForTimeInterval:1];
             }
             if (linphone_chat_message_put_char(rtt_message, character[i]))
                 return NO;
@@ -153,34 +153,34 @@
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
-//    LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
-//    if (room) {
-//        BOOL composing = linphone_chat_room_is_remote_composing(room);
-//        NSLog(@"composing: %d", composing);
-//        BOOL composing = linphone_chat_room_is_remote_composing(room);
-//        NSLog(@"composing: %d.", composing);
-//
-//        uint32_t rttCode = linphone_chat_room_get_char(room);
-//        NSString *string = [NSString stringWithFormat:@"%c", rttCode];
-//
-//        if (!string || !string.length) {
-//            return;
-//        }
-//        
-//        if (!chatWindowController || !chatWindowController.isShow) {
-//            unread_messages++;
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
-//                                                                object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
-//                                                              userInfo:nil];
-//        }
-//
-//        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:composing], @"composing",
-//                                                                        string, @"text", nil];
-//        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_RECEIVE_MESSAGE
-//                                                            object:dict
-//                                                          userInfo:nil];
-//    }
+    //    LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
+    //    if (room) {
+    //        BOOL composing = linphone_chat_room_is_remote_composing(room);
+    //        NSLog(@"composing: %d", composing);
+    //        BOOL composing = linphone_chat_room_is_remote_composing(room);
+    //        NSLog(@"composing: %d.", composing);
+    //
+    //        uint32_t rttCode = linphone_chat_room_get_char(room);
+    //        NSString *string = [NSString stringWithFormat:@"%c", rttCode];
+    //
+    //        if (!string || !string.length) {
+    //            return;
+    //        }
+    //
+    //        if (!chatWindowController || !chatWindowController.isShow) {
+    //            unread_messages++;
+    //            [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
+    //                                                                object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
+    //                                                              userInfo:nil];
+    //        }
+    //
+    //        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:composing], @"composing",
+    //                                                                        string, @"text", nil];
+    //
+    //        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_RECEIVE_MESSAGE
+    //                                                            object:dict
+    //                                                          userInfo:nil];
+    //    }
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {

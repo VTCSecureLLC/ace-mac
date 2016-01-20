@@ -318,7 +318,7 @@
 
 - (void) sortAudioCodecs {
     LinphoneCore *lc = [LinphoneManager getLc];
-    MSList *audioCodecs;
+    MSList *audioCodecs = NULL;
     PayloadType *pt = [self findCodec:@"g722_preference"];
     if (pt) {
         audioCodecs = ms_list_append(audioCodecs, pt);
@@ -354,7 +354,7 @@
 
 - (void) sortVideoCodecs {
     LinphoneCore *lc = [LinphoneManager getLc];
-    MSList *videoCodecs;
+    MSList *videoCodecs = NULL;
     PayloadType *pt = [self findCodec:@"h264_preference"];
     if (pt) {
         videoCodecs = ms_list_append(videoCodecs, pt);

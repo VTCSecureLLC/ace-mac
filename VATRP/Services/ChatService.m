@@ -100,14 +100,15 @@
         
         const char* character = [message UTF8String];
         
-        for (int i = 0; i < strlen(character); i++) {
-            if(i % 29 == 0 && i != 0){
-                [NSThread sleepForTimeInterval:1];
+        if (character) {
+            for (int i = 0; i < strlen(character); i++) {
+                if(i % 29 == 0 && i != 0){
+                    [NSThread sleepForTimeInterval:1];
+                }
+                if (linphone_chat_message_put_char(rtt_message, character[i]))
+                    return NO;
             }
-            if (linphone_chat_message_put_char(rtt_message, character[i]))
-                return NO;
         }
-        
     }
     
     return YES;

@@ -240,6 +240,14 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
+    //New message is received rtt or sip simple
+
+    //VATRP-1292 open chat window immediately when a new message is recieved.
+    if(![ViewManager sharedInstance].callControllersView_delegate.bool_chat_window_open){
+        [ViewManager sharedInstance].callControllersView_delegate.performChatButtonClick;
+    }
+    
+    
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == [self getCurrentChatRoom]) {
         //        BOOL composing = linphone_chat_room_is_remote_composing(room);

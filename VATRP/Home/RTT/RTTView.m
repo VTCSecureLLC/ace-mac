@@ -241,11 +241,11 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (void)textComposeEvent:(NSNotification *)notif {
     //New message is received rtt or sip simple
-    //check if chat window is open
-    //if(!chat_window_open){
-    //  call CallControllersView.buttonChat click
-    //  [buttonChat sendActionsForControlEvents: UIControlEventTouchUpInside];
-    //}
+
+    //VATRP-1292 open chat window immediately when a new message is recieved.
+    if(![ViewManager sharedInstance].callControllersView_delegate.bool_chat_window_open){
+        [ViewManager sharedInstance].callControllersView_delegate.performChatButtonClick;
+    }
     
     
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];

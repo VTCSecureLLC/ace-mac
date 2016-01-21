@@ -339,7 +339,7 @@
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="pkp-xH-Pdd"/>
                                     </imageView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wrO-Ba-GyZ">
-                                        <rect key="frame" x="76" y="20" width="199" height="26"/>
+                                        <rect key="frame" x="76" y="27" width="199" height="19"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="CHe-4B-lpC">
                                             <font key="font" metaFont="system" size="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -350,6 +350,18 @@
                                         <rect key="frame" x="286" y="27" width="15" height="15"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="YHV-9E-uMg"/>
                                     </imageView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="guW-0R-zTJ">
+                                        <rect key="frame" x="217" y="6" width="48" height="36"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="video_mail" id="GiE-VA-z4c"/>
+                                    </imageView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iwe-Zk-M2g">
+                                        <rect key="frame" x="223" y="0.0" width="37" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="LwM-CE-uPq">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" red="0.9319168244949495" green="0.051781192030659125" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <connections>
                                     <outlet property="imageViewProfile" destination="wE2-XI-nka" id="9Y1-PJ-wI7"/>
@@ -1693,11 +1705,13 @@
                         <outlet property="dhResourcesView" destination="c7h-kT-FAh" id="gmT-Yg-e08"/>
                         <outlet property="dialPadView" destination="e4g-m7-al7" id="HO8-m1-MVM"/>
                         <outlet property="dockView" destination="ZCP-sF-zhB" id="VQn-IW-MAn"/>
+                        <outlet property="imageViewVoiceMail" destination="guW-0R-zTJ" id="eIR-z9-Mnk"/>
                         <outlet property="profileView" destination="sNe-CT-gua" id="o2B-uz-hEI"/>
                         <outlet property="providerTableView" destination="xe3-H4-JmS" id="dnm-o4-leR"/>
                         <outlet property="providersView" destination="wMR-Jk-waL" id="wly-ar-eTl"/>
                         <outlet property="recentsView" destination="1VK-jT-7Ad" id="tCI-nJ-aah"/>
                         <outlet property="settingsView" destination="gvt-Fm-S7x" id="m5K-Sc-a1m"/>
+                        <outlet property="textFieldVoiceMailCount" destination="Iwe-Zk-M2g" id="hSB-BY-5Ez"/>
                         <outlet property="videoView" destination="APm-Qq-3qG" id="GQk-Uk-EPe"/>
                         <outlet property="viewContainer" destination="EEV-Wa-LvY" id="ntR-15-kWr"/>
                     </connections>
@@ -9367,5 +9381,6 @@ DQ
         <image name="speaker_active" width="41" height="34"/>
         <image name="trash_32x32" width="20.756755828857422" height="20.756755828857422"/>
         <image name="video_active" width="58" height="30"/>
+        <image name="video_mail" width="28" height="12"/>
     </resources>
 </document>

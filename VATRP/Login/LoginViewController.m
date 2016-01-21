@@ -130,8 +130,8 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
     [self.prog_Signin setHidden:NO];
     [self.prog_Signin startAnimation:self];
     [self.loginButton setEnabled:NO];
-    
-    [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:@"_rueconfig._tcp.vatrp.net"
+    NSString *dnsSRVName = [@"_rueconfig._tcp." stringByAppendingString:self.textFieldDomain.stringValue];
+    [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
                                                            withUsername:self.textFieldUsername.stringValue
                                                             andPassword:self.textFieldPassword.stringValue];
     [DefaultSettingsManager sharedInstance].delegate = self;

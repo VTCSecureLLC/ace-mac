@@ -9,8 +9,6 @@
 #import "DefaultSettingsManager.h"
 #import "SRVResolver.h"
 
-#define CONFIG_SETTINGS_URL @"http://cdn.vatrp.net/numbers.json"
-
 @interface DefaultSettingsManager () <SRVResolverDelegate, NSURLConnectionDelegate>
 //{
 //    UIActivityIndicatorView *aiv;
@@ -74,7 +72,6 @@ static DefaultSettingsManager *sharedInstance = nil;
     [self storeToUserDefaults:jsonDict];
 }
 
-
 - (void)parseDefaultConfigSettings:(NSString*)configAddress withUsername:(NSString*)userName andPassword:(NSString*)password {
     self.userName = userName;
     self.password = password;
@@ -82,7 +79,6 @@ static DefaultSettingsManager *sharedInstance = nil;
     self.resolver = [[SRVResolver alloc] initWithSRVName:configAddress];
     self.resolver.delegate = self;
     [self.resolver start];
-   // [self parseDefaultConfigSettingsFromFile];
 }
 
 - (void)clearDefaultConfigSettings {

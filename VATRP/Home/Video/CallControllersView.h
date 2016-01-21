@@ -19,7 +19,8 @@
 - (void)setIncomingCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;
 - (void)dismisCallInfoWindow;
-
+- (void)performChatButtonClick;
+- (BOOL)bool_chat_window_open;
 @end
 
 @protocol CallControllersViewDelegate <NSObject>

@@ -19,7 +19,9 @@
     
     BOOL last_update_state;
     BOOL isSendingVideo;
-
+    BOOL chat_window_open;
+    
+    
     CallInfoWindowController *callInfoWindowController;
 }
 
@@ -46,6 +48,8 @@
 - (void) awakeFromNib {
     [super awakeFromNib];
 
+    [ViewManager sharedInstance].callControllersView_delegate = self;
+    
     isSendingVideo = YES;
     self.buttonHold.wantsLayer = YES;
     self.buttonVideo.wantsLayer = YES;
@@ -144,12 +148,12 @@
         [_delegate didClickCallControllersViewNumpad:self];
     }
 }
-
-- (IBAction)onButtonChat:(id)sender {
+- (void)performChatButtonClick{
     if (self.window.frame.size.width == 1328) {
         [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
                       display:YES
                       animate:YES];
+        chat_window_open=NO;
     } else {
         if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
             [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
@@ -159,8 +163,17 @@
             [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
                           display:YES
                           animate:YES];
-        }
+            chat_window_open=YES;
+          }
     }
+
+}
+- (BOOL)bool_chat_window_open{
+    return chat_window_open;
+}
+
+- (IBAction)onButtonChat:(id)sender {
+    self.performChatButtonClick;
 }
 
 

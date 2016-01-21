@@ -16,6 +16,7 @@
 @synthesize recentsView;
 @synthesize callView;
 @synthesize rttView;
+@synthesize callControllersView_delegate;
 
 + (ViewManager *)sharedInstance
 {

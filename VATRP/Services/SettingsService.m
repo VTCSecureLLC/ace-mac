@@ -315,7 +315,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     // expiration_time - set
     
     LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
-    linphone_proxy_config_set_expires (proxyCfg, [DefaultSettingsManager sharedInstance].exparitionTime); // should be 280
+    linphone_proxy_config_set_expires (proxyCfg, [DefaultSettingsManager sharedInstance].exparitionTime); // expiration time by default is 280
 
     // configuration_auth_password - ?
     

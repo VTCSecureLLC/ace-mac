@@ -44,6 +44,7 @@
 -(NSPoint) getTabWindowOrigin;
 -(void) setTabWindowPos:(NSPoint) pos;
 -(void) SignOut;
+void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
 
 @end
 

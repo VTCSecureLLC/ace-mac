@@ -11,11 +11,13 @@
 #import "NSViewController+BFNavigationController.h"
 #import "AppDelegate.h"
 #import "AccountsService.h"
+#import "SettingsService.h"
 #import "RegistrationService.h"
 #import "Utils.h"
+#import "DefaultSettingsManager.h"
 
 
-@interface LoginViewController () {
+@interface LoginViewController ()<DefaultSettingsManagerDelegate> {
     AccountModel *loginAccount;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
@@ -124,6 +126,32 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
 //}
 
 - (IBAction)onButtonLogin:(id)sender {
+    
+    [self.prog_Signin setHidden:NO];
+    [self.prog_Signin startAnimation:self];
+    [self.loginButton setEnabled:NO];
+    
+    [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:@"_rueconfig._tcp.vatrp.net"
+                                                           withUsername:self.textFieldUsername.stringValue
+                                                            andPassword:self.textFieldPassword.stringValue];
+    [DefaultSettingsManager sharedInstance].delegate = self;
+}
+
+- (void)didFinishLoadingConfigData {
+    [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
+    // Later - need to set username, userID, password, domain transport and port.
+    [self userLogin];
+}
+
+- (void)didFinishWithError {
+    NSLog(@"Error loading config data");
+    [self userLogin];
+    [self.prog_Signin setHidden:YES];
+    [self.prog_Signin stopAnimation:self];
+    [self.loginButton setEnabled:YES];
+}
+
+- (void)userLogin {
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;
     loginAccount.userID = self.textFieldUserID.stringValue;
@@ -138,9 +166,9 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
                                                         domain:loginAccount.domain
                                                      transport:loginAccount.transport
                                                           port:loginAccount.port];
-    [self.prog_Signin setHidden:NO];
-    [self.prog_Signin startAnimation:self];
-    [self.loginButton setEnabled:NO];
+    [self.prog_Signin setHidden:YES];
+    [self.prog_Signin stopAnimation:self];
+    [self.loginButton setEnabled:YES];
 }
 
 

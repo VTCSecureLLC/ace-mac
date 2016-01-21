@@ -409,6 +409,9 @@
 - (void) setControllersToDefaultState {
     [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
     [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+
+    [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
+    [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
 }
 
 @end

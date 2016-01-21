@@ -240,6 +240,14 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
+    //New message is received rtt or sip simple
+    //check if chat window is open
+    //if(!chat_window_open){
+    //  call CallControllersView.buttonChat click
+    //  [buttonChat sendActionsForControlEvents: UIControlEventTouchUpInside];
+    //}
+    
+    
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == [self getCurrentChatRoom]) {
         //        BOOL composing = linphone_chat_room_is_remote_composing(room);

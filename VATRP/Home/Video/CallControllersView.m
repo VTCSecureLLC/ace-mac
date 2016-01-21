@@ -252,6 +252,8 @@
     [self.buttonAnswer setKeyEquivalent:@""];
     switch (astate) {
         case LinphoneCallIncomingReceived: {
+            [self setControllersToDefaultState];
+            
             self.labelCallState.hidden = NO;
             self.labelCallState.stringValue = @"Incoming Call...";
             [self.buttonAnswer setKeyEquivalent:@"\r"];
@@ -279,6 +281,8 @@
         }
             break;
         case LinphoneCallOutgoingInit: {
+            [self setControllersToDefaultState];
+
             self.labelCallState.hidden = NO;
             self.labelCallState.stringValue = @"Calling...";
         }
@@ -400,6 +404,11 @@
     [self.buttonSpeaker setEnabled:enable];
     [self.buttonKeypad setEnabled:enable];
     [self.buttonChat setEnabled:enable];
+}
+
+- (void) setControllersToDefaultState {
+    [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
+    [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
 }
 
 @end

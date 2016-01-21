@@ -11,11 +11,13 @@
 #import "NSViewController+BFNavigationController.h"
 #import "AppDelegate.h"
 #import "AccountsService.h"
+#import "SettingsService.h"
 #import "RegistrationService.h"
 #import "Utils.h"
+#import "DefaultSettingsManager.h"
 
 
-@interface LoginViewController () {
+@interface LoginViewController ()<DefaultSettingsManagerDelegate> {
     AccountModel *loginAccount;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
@@ -28,7 +30,9 @@
 @property (weak) IBOutlet NSButton *loginButton;
 
 @property (weak) IBOutlet NSButton *buttonToggleAutoLogin;
-
+@property (weak) IBOutlet NSComboBox *comboBoxProviderSelect;
+@property (weak) NSURLSession *urlSession;
+@property NSMutableArray *cdnResources;
 @end
 
 @implementation LoginViewController
@@ -59,6 +63,56 @@
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
+                    [self.comboBoxProviderSelect removeAllItems];
+    [self reloadProviderDomains];
+}
+
+const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
+-(void) reloadProviderDomains{
+    _urlSession = [NSURLSession sharedSession];
+    [[_urlSession dataTaskWithURL:[NSURL URLWithString:(NSString*)cdnProviderList] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSError *jsonParsingError = nil;
+        if(data){
+            NSArray *resources = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:0 error:&jsonParsingError];
+            if(!jsonParsingError){
+                NSDictionary *resource;
+                _cdnResources = [[NSMutableArray alloc] init];
+                for(int i=0; i < [resources count];i++){
+                    resource= [resources objectAtIndex:i];
+                    [_cdnResources addObject:[resource objectForKey:@"name"]];
+                    NSLog(@"Loaded CDN Resource: %@", [resource objectForKey:@"name"]);
+                    [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"name"] forKey:[NSString stringWithFormat:@"provider%d", i]];
+                    
+                    [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"domain"] forKey:[NSString stringWithFormat:@"provider%d_domain", i]];
+                    
+                }
+                [self.comboBoxProviderSelect addItemsWithObjectValues:_cdnResources];
+                [self.comboBoxProviderSelect selectItemAtIndex:0];
+            }
+        }
+    }] resume];
+}
+
+-(void) loadProviderDomainsFromCache{
+    NSString *name;
+    _cdnResources = [[NSMutableArray alloc] init];
+    name = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provder%d", 1]];
+    
+    for(int i = 1; name; i++){
+        [_cdnResources addObject:name];
+        name = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provder%d", i]];
+    }
+}
+
+- (IBAction)onComboBoxProviderSelect:(id)sender {
+    NSComboBox *comboBox = (NSComboBox*)sender;
+    if(comboBox){
+        NSInteger indexSelected = [comboBox indexOfSelectedItem];
+        NSString *domain = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%ld_domain", (long)indexSelected]];
+        self.textFieldDomain.stringValue = domain;
+    }
+    
 }
 
 //-(void)dealloc{
@@ -72,6 +126,32 @@
 //}
 
 - (IBAction)onButtonLogin:(id)sender {
+    
+    [self.prog_Signin setHidden:NO];
+    [self.prog_Signin startAnimation:self];
+    [self.loginButton setEnabled:NO];
+    
+    [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:@"_rueconfig._tcp.vatrp.net"
+                                                           withUsername:self.textFieldUsername.stringValue
+                                                            andPassword:self.textFieldPassword.stringValue];
+    [DefaultSettingsManager sharedInstance].delegate = self;
+}
+
+- (void)didFinishLoadingConfigData {
+    [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
+    // Later - need to set username, userID, password, domain transport and port.
+    [self userLogin];
+}
+
+- (void)didFinishWithError {
+    NSLog(@"Error loading config data");
+    [self userLogin];
+    [self.prog_Signin setHidden:YES];
+    [self.prog_Signin stopAnimation:self];
+    [self.loginButton setEnabled:YES];
+}
+
+- (void)userLogin {
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;
     loginAccount.userID = self.textFieldUserID.stringValue;
@@ -86,10 +166,12 @@
                                                         domain:loginAccount.domain
                                                      transport:loginAccount.transport
                                                           port:loginAccount.port];
-    [self.prog_Signin setHidden:NO];
-    [self.prog_Signin startAnimation:self];
-    [self.loginButton setEnabled:NO];
+    [self.prog_Signin setHidden:YES];
+    [self.prog_Signin stopAnimation:self];
+    [self.loginButton setEnabled:YES];
 }
+
+
 
 - (void) viewDidDisappear {
     [super viewDidDisappear];

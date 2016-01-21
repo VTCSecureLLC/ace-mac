@@ -109,6 +109,7 @@
 		4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C6771BB2E9D000B4E208 /* CallWindowController.m */; };
 		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; };
+		5E1140251C4FDED800C9A6C5 /* video_mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E1140241C4FDED800C9A6C5 /* video_mail.png */; };
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
 		5EC9D30D1C288D8000BFAAEC /* ResourcesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30C1C288D8000BFAAEC /* ResourcesWindowController.m */; };
 		5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */; };
@@ -358,6 +359,7 @@
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */; };
 		CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */; };
 		CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */; };
 		CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */; };
@@ -366,6 +368,9 @@
 		CE3D2ECF1C3BD93F00B0BF29 /* DHResourcesView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3D2ECE1C3BD93F00B0BF29 /* DHResourcesView.m */; };
 		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
 		CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF931C04B5110046E727 /* AddContactDialogBox.m */; };
+		CE5C3F7A1C4CF213005E24A5 /* DefaultSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C3F791C4CF213005E24A5 /* DefaultSettingsManager.m */; };
+		CE5C3F7D1C4CF7B2005E24A5 /* SRVResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C3F7C1C4CF7B2005E24A5 /* SRVResolver.m */; };
+		CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */; };
 		CE6A7A841C1AFC46002AEB5D /* rtt_on_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */; };
 		CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7005FE1C048F0000E667F8 /* ContactsView.m */; };
 		CEA6DE751C1088AA0013CB76 /* plus icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA6DE741C1088AA0013CB76 /* plus icon.png */; };
@@ -658,6 +663,7 @@
 		4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CallViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5E02C8E31BBEF161003EA32B /* SelfVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfVideoViewController.h; sourceTree = "<group>"; };
 		5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfVideoViewController.m; sourceTree = "<group>"; };
+		5E1140241C4FDED800C9A6C5 /* video_mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_mail.png; sourceTree = "<group>"; };
 		5E3CA6411BF0F9B700D9913F /* SDPNegotiationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPNegotiationService.h; sourceTree = "<group>"; };
 		5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPNegotiationService.m; sourceTree = "<group>"; };
 		5EC9D30B1C288D8000BFAAEC /* ResourcesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesWindowController.h; sourceTree = "<group>"; };
@@ -788,6 +794,8 @@
 		73EDA2C21BFA9F4B00EC7039 /* libmssilk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmssilk.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmssilk.dylib"; sourceTree = "<group>"; };
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
+		CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMenuViewController.h; sourceTree = "<group>"; };
+		CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMenuViewController.m; sourceTree = "<group>"; };
 		CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_incoming.png; sourceTree = "<group>"; };
 		CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_missed.png; sourceTree = "<group>"; };
 		CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_outgoing.png; sourceTree = "<group>"; };
@@ -799,6 +807,11 @@
 		CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCellView.m; sourceTree = "<group>"; };
 		CE48DF921C04B5110046E727 /* AddContactDialogBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactDialogBox.h; sourceTree = "<group>"; };
 		CE48DF931C04B5110046E727 /* AddContactDialogBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactDialogBox.m; sourceTree = "<group>"; };
+		CE5C3F781C4CF213005E24A5 /* DefaultSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSettingsManager.h; sourceTree = "<group>"; };
+		CE5C3F791C4CF213005E24A5 /* DefaultSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultSettingsManager.m; sourceTree = "<group>"; };
+		CE5C3F7B1C4CF7B2005E24A5 /* SRVResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRVResolver.h; sourceTree = "<group>"; };
+		CE5C3F7C1C4CF7B2005E24A5 /* SRVResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRVResolver.m; sourceTree = "<group>"; };
+		CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rtt_on_off.png; sourceTree = "<group>"; };
 		CE7005FD1C048F0000E667F8 /* ContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsView.h; sourceTree = "<group>"; };
 		CE7005FE1C048F0000E667F8 /* ContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsView.m; sourceTree = "<group>"; };
@@ -827,6 +840,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */,
 				73ED2AF31BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF41BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF51BFCE7CE00C182F2 /* libmsbcg729.1.0.1.dylib in Frameworks */,
@@ -981,6 +995,7 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */,
 				20A993391BB5B9F6008612F9 /* HockeySDK.framework */,
 			);
 			name = Frameworks;
@@ -1028,6 +1043,8 @@
 		2B463F001B984E49008E8333 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */,
+				CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */,
 				2B463F011B984E49008E8333 /* SettingsWindowController.h */,
 				2B463F021B984E49008E8333 /* SettingsWindowController.m */,
 				4AC13F9C1BBC0769008305CD /* SettingsViewController.h */,
@@ -1152,6 +1169,7 @@
 		4A902DDA1BB9486800ECFD86 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CE5C3F771C4CEEAD005E24A5 /* DefaultConfigurationSettigns */,
 				5EEC291F1C03701700BA43FB /* vCard */,
 				4A902DE71BB95A7000ECFD86 /* Utils.h */,
 				4A902DE81BB95A7000ECFD86 /* Utils.m */,
@@ -1270,6 +1288,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5E1140241C4FDED800C9A6C5 /* video_mail.png */,
 				CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */,
 				CEA6DE741C1088AA0013CB76 /* plus icon.png */,
 				CE0D5D571C0D898D00214C47 /* male.png */,
@@ -1545,6 +1564,17 @@
 			path = RTT;
 			sourceTree = "<group>";
 		};
+		CE5C3F771C4CEEAD005E24A5 /* DefaultConfigurationSettigns */ = {
+			isa = PBXGroup;
+			children = (
+				CE5C3F7B1C4CF7B2005E24A5 /* SRVResolver.h */,
+				CE5C3F7C1C4CF7B2005E24A5 /* SRVResolver.m */,
+				CE5C3F781C4CF213005E24A5 /* DefaultSettingsManager.h */,
+				CE5C3F791C4CF213005E24A5 /* DefaultSettingsManager.m */,
+			);
+			path = DefaultConfigurationSettigns;
+			sourceTree = "<group>";
+		};
 		CE6758B11BA8C9BF005396EF /* linphonesdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1747,6 +1777,7 @@
 				69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */,
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
 				69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */,
+				5E1140251C4FDED800C9A6C5 /* video_mail.png in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
 				CEC6411C1C0C9EE600BA927F /* provider_logo_zvrs.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
@@ -1822,6 +1853,7 @@
 				5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */,
 				69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */,
 				CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */,
+				CE5C3F7A1C4CF213005E24A5 /* DefaultSettingsManager.m in Sources */,
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
 				4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */,
 				CE48DF941C04B5110046E727 /* AddContactDialogBox.m in Sources */,
@@ -1847,6 +1879,7 @@
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
 				4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
+				CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */,
 				6983EB281C43A169004CCD74 /* AVViewController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
 				4AA203C01BD4CAF500DD9A4D /* BackgroundedView.m in Sources */,
@@ -1895,6 +1928,7 @@
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				6983EB311C43DC8C004CCD74 /* PreferencesViewController.m in Sources */,
+				CE5C3F7D1C4CF7B2005E24A5 /* SRVResolver.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */,
 				5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */,

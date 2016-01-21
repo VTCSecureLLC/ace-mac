@@ -9,7 +9,6 @@
 #import "BackgroundedView.h"
 
 @interface RTTView : BackgroundedView
-
 - (void) viewWillAppear;
 - (void) viewWillDisappear;
 

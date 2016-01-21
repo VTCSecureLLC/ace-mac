@@ -25,6 +25,8 @@
     BackgroundedView *viewCurrent;
     NSArray *providersArray;
 }
+@property (weak) IBOutlet NSImageView *imageViewVoiceMail;
+@property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
 
 @property (weak) IBOutlet BackgroundedView *viewContainer;
 @property (weak) IBOutlet DockView *dockView;
@@ -81,6 +83,7 @@
                                              selector:@selector(didClosedMessagesWindow:)
                                                  name:@"didClosedMessagesWindow"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifyReceived:) name:kLinphoneNotifyReceived object:nil];
 }
 
 - (void)removeObservers {
@@ -90,6 +93,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"didClosedMessagesWindow"
                                                   object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kLinphoneNotifyReceived
+                                                  object:nil];
 }
 
 - (void)didClosedMessagesWindow:(NSNotification*)not {
@@ -98,6 +104,31 @@
 
 - (void)didClosedSettingsWindow:(NSNotification*)not {
     [self.dockView clearDockViewSettingsBackgroundColor:YES];
+}
+
+- (void)notifyReceived:(NSNotification *)notif {
+    const LinphoneContent *content = [[notif.userInfo objectForKey:@"content"] pointerValue];
+    if ((content == NULL) || (strcmp("application", linphone_content_get_type(content)) != 0) ||
+        (strcmp("simple-message-summary", linphone_content_get_subtype(content)) != 0) ||
+        (linphone_content_get_buffer(content) == NULL)) {
+        return;
+    }
+    
+    NSInteger mwiCount;
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_count"]){
+        mwiCount = 0;
+    }
+    else{
+        mwiCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"mwi_count"];
+    }
+    mwiCount++;
+    [[NSUserDefaults standardUserDefaults] setInteger:mwiCount forKey:@"mwi_count"];
+    self.textFieldVoiceMailCount.stringValue = [NSString stringWithFormat:@"( %ld )", mwiCount];
+    
+    const char *body = linphone_content_get_buffer(content);
+    if ((body = strstr(body, "voice-message: ")) == NULL) {
+        return;
+    }
 }
 
 #pragma mark DocView Delegate
@@ -256,5 +287,7 @@
 - (BOOL) isCurrentTabRecents {
     return [viewCurrent isKindOfClass:[RecentsView class]];
 }
+
+
 
 @end

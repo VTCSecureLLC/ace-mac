@@ -10,6 +10,7 @@
 #import "SettingsViewController.h"
 #import "AVViewController.h"
 #import "ThemeMenuViewController.h"
+#import "TextMenuViewController.h"
 #import "SummaryMenuViewController.h"
 #import "AccountsViewController.h"
 #import "PreferencesViewController.h"
@@ -22,6 +23,7 @@
 @interface SettingsWindowController () <SettingsViewControllerDelegate> {
     AVViewController *avViewController;
     ThemeMenuViewController *themeMenuViewController;
+    TextMenuViewController *textMenuViewController;
     SummaryMenuViewController *summaryMenuViewController;
     AccountsViewController *accountsViewController;
     PreferencesViewController *preferencesViewController;
@@ -52,6 +54,7 @@
     
     avViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AVViewController"];
     themeMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ThemeMenuViewController"];
+    textMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TextMenuViewController"];
     summaryMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"SummaryMenuViewController"];
     accountsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AccountsViewController"];
     preferencesViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"PreferencesViewController"];
@@ -78,6 +81,9 @@
 
 - (IBAction)onToolbarItemThemeMenu:(id)sender {
     [self changeViewTo:themeMenuViewController.view];
+}
+- (IBAction)onToolbarItemTextMenu:(id)sender {
+     [self changeViewTo:textMenuViewController.view];
 }
 
 - (IBAction)onToolbarItemSummaryMenu:(id)sender {
@@ -118,6 +124,7 @@
     
     [avViewController save];
     [themeMenuViewController save];
+    [textMenuViewController save];
     [codecsViewController save];
     [mediaViewController save];
     [testingViewController save];

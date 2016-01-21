@@ -97,10 +97,11 @@ const NSInteger SIP_SIMPLE=1;
                                              selector:@selector(textDidChange:)
                                                  name:NSControlTextDidChangeNotification
                                                object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self
-    //                                             selector:@selector(didReceiveMessage:)
-    //                                                 name:kCHAT_RECEIVE_MESSAGE
-    //                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                  selector:@selector(textDidBeginEditing:)
+                                                      name:NSTextDidBeginEditingNotification
+                                                    object:nil];
     
     contacts = nil;
     selectedChatRoom = nil;
@@ -367,30 +368,68 @@ static void chatTable_free_chatrooms(void *data) {
     }
     
 }
+long msgSize; //message length buffer
+
+-(void) pasteText:(NSString*) pastedMsg{
+        LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
+    
+        if (!call)
+                return;
+    
+       LinphoneChatRoom *chat_room = linphone_call_get_chat_room(call);
+    
+        if (chat_room) {
+                const char* character = [pastedMsg UTF8String];
+                LinphoneChatMessage* rtt_message = linphone_chat_room_create_message(chat_room, character);
+                //RTT limited to 30 cps
+                for (int i = 0; i < strlen(character); i++) {
+                            if(i % 14 == 0 && i != 0){
+                                    [NSThread sleepForTimeInterval:0.5];
+                                }
+                            if (linphone_chat_message_put_char(rtt_message, character[i]))
+                                    return;
+                        }
+            }
+    }
+- (void)textDidBeginEditing:(NSNotification *)notification{ //Get length of message string
+        msgSize = self.textFieldMessage.stringValue.length-1;
+        if(msgSize < 0) msgSize = 0;
+    }
 
 - (void)textDidChange:(NSNotification *)aNotification {
-    NSUInteger lastSimbolIndex = self.textFieldMessage.stringValue.length - 1;
-    NSString *lastSimbol = [self.textFieldMessage.stringValue substringFromIndex:lastSimbolIndex];
-    
-    //This is where the message is sent.
-    NSLog(@"theText %@",lastSimbol);
-    NSLog(@"Add characters. %@ Core %s", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"],
-          linphone_core_get_version());
-    
-    //this is the full text, not just the last character
-    NSLog(@"insertText %@",self.textFieldMessage.stringValue);
+    NSUInteger lastSymbolIndex = self.textFieldMessage.stringValue.length - 1;
+    NSString *lastSymbol = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
     
     int TEXT_MODE=[self getTextMode];
     
     if(TEXT_MODE==RTT){
-        NSLog(@"TEXT_MODE=RTT");
-        if (![[ChatService sharedInstance] sendMessagt:lastSimbol]) {
-            NSAlert *alert = [[NSAlert alloc]init];
-            [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
-            [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
-            [alert runModal];
+
+            if((self.textFieldMessage.stringValue.length-1) - msgSize  > 1){
+                    /** Text was pasted **/         /** Difference of length
+                                                                                               buffer and current text is
+                                                                                               greater than one.User entered
+                                                                                               more than one character,
+                                                                                               so now parse the pasted string **/
+            
+                    lastSymbolIndex = msgSize;
+                    NSString *pastedMsg = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
+                    
+                    pastedMsg = [pastedMsg stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                    [self performSelectorInBackground:@selector(pasteText:) withObject:pastedMsg];
+                    
+            
         }
-    }else if(TEXT_MODE==SIP_SIMPLE){
+        else{
+            if (![[ChatService sharedInstance] sendMessagt:lastSymbol]) {
+                NSAlert *alert = [[NSAlert alloc]init];
+                [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+                [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
+                [alert runModal];
+            }
+        }
+        msgSize = self.textFieldMessage.stringValue.length-1;
+    }
+    else if(TEXT_MODE==SIP_SIMPLE){
         
         //handle on enter press
         
@@ -443,9 +482,6 @@ static void chatTable_free_chatrooms(void *data) {
         [[ChatService sharedInstance] sendEnter];
         
         
-        
-        
-        
         outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
         
         self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
@@ -457,13 +493,16 @@ static void chatTable_free_chatrooms(void *data) {
     }
     
     self.textFieldMessage.stringValue = @"";
-    
+     msgSize = 0;
     return YES;
 }
 
 - (BOOL) eventBackward {
     if ([[ChatService sharedInstance] sendBackward] && self.textFieldMessage.stringValue && self.textFieldMessage.stringValue.length) {
         self.textFieldMessage.stringValue = [self.textFieldMessage.stringValue substringToIndex:self.textFieldMessage.stringValue.length - 1];
+        
+                msgSize = self.textFieldMessage.stringValue.length-1;
+                if(msgSize < 0) { msgSize = 0; }
     }
     
     return YES;
@@ -471,7 +510,7 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (BOOL) eventTab {
     [[ChatService sharedInstance] sendTab];
-    
+    msgSize = self.textFieldMessage.stringValue.length -1;
     return YES;
 }
 

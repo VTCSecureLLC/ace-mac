@@ -14,6 +14,12 @@
 #import "ChatService.h"
 #import "ChatItemTableCellView.h"
 
+//integers duplicate format as Android
+//const NSInteger TEXT_MODE;
+const NSInteger NO_TEXT=-1;
+const NSInteger RTT=0;
+const NSInteger SIP_SIMPLE=1;
+
 @interface RTTView () {
     MSList *contacts;
     
@@ -91,11 +97,6 @@
                                              selector:@selector(textDidChange:)
                                                  name:NSControlTextDidChangeNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textDidBeginEditing:)
-                                                 name:NSTextDidBeginEditingNotification
-                                               object:nil];
-
     //    [[NSNotificationCenter defaultCenter] addObserver:self
     //                                             selector:@selector(didReceiveMessage:)
     //                                                 name:kCHAT_RECEIVE_MESSAGE
@@ -110,7 +111,7 @@
     stateNewMessage = NO;
     
     [self updateContentData];
-
+    
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
@@ -230,7 +231,7 @@ static void chatTable_free_chatrooms(void *data) {
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
     switch (astate) {
         case LinphoneCallStreamsRunning: {
-//            [self updateContentData];
+            //            [self updateContentData];
         }
             break;
         default:
@@ -241,7 +242,7 @@ static void chatTable_free_chatrooms(void *data) {
 - (void)textComposeEvent:(NSNotification *)notif {
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == [self getCurrentChatRoom]) {
-//        BOOL composing = linphone_chat_room_is_remote_composing(room);
+        //        BOOL composing = linphone_chat_room_is_remote_composing(room);
         //        [self setComposingVisible:composing withDelay:0.3];
     }
     
@@ -256,7 +257,7 @@ static void chatTable_free_chatrooms(void *data) {
             
             if (rttCode == 0)
                 return;
-
+            
             if(rttCode == 8232) {
                 incomingChatMessage = nil;
                 incomingCellView = nil;
@@ -318,7 +319,7 @@ static void chatTable_free_chatrooms(void *data) {
             if (strcasecmp(cr_from_string, fromStr) == 0) {
                 linphone_chat_room_mark_as_read(room);
                 
-//                [self updateContentData];
+                //                [self updateContentData];
                 [self.tableViewContent reloadData];
                 
                 NSInteger count = ms_list_size(messageList);
@@ -358,79 +359,57 @@ static void chatTable_free_chatrooms(void *data) {
     }
     
 }
-long msgSize; //message length buffer
 
--(void) pasteText:(NSString*) pastedMsg{
-    LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
-    
-    if (!call)
-        return;
-    
-   LinphoneChatRoom *chat_room = linphone_call_get_chat_room(call);
-
-    if (chat_room) {
-        const char* character = [pastedMsg UTF8String];
-        LinphoneChatMessage* rtt_message = linphone_chat_room_create_message(chat_room, character);
-        //RTT limited to 30 cps
-        for (int i = 0; i < strlen(character); i++) {
-                if(i % 29 == 0 && i != 0){
-                    [NSThread sleepForTimeInterval:1];
-                }
-                if (linphone_chat_message_put_char(rtt_message, character[i]))
-                    return;
-            }
-    }
-}
-- (void)textDidBeginEditing:(NSNotification *)notification{ //Get length of message string
-    msgSize = self.textFieldMessage.stringValue.length-1;
-    if(msgSize < 0) msgSize = 0;
-}
 - (void)textDidChange:(NSNotification *)aNotification {
-    NSUInteger lastSymbolIndex;
-    if((self.textFieldMessage.stringValue.length-1) - msgSize  > 1){
-        /** Text was pasted **/         /** Difference of length
-                                         buffer and current text is
-                                         greater than one.User entered
-                                         more than one character,
-                                         so now parse the pasted string **/
-
-        lastSymbolIndex = msgSize;
-        NSString *pastedMsg = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
-        
-        pastedMsg = [pastedMsg stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-        [self performSelectorInBackground:@selector(pasteText:) withObject:pastedMsg];
-        
-
-    }
-    else{ //User entered one character
-        lastSymbolIndex = self.textFieldMessage.stringValue.length-1;
-        NSString *lastSymbol = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
-        if (![[ChatService sharedInstance] sendMessagt:lastSymbol]) {
+    NSUInteger lastSimbolIndex = self.textFieldMessage.stringValue.length - 1;
+    NSString *lastSimbol = [self.textFieldMessage.stringValue substringFromIndex:lastSimbolIndex];
+    
+    //This is where the message is sent.
+    NSLog(@"theText %@",lastSimbol);
+    NSLog(@"Add characters. %@ Core %s", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"],
+          linphone_core_get_version());
+    
+    //this is the full text, not just the last character
+    NSLog(@"insertText %@",self.textFieldMessage.stringValue);
+    
+    int TEXT_MODE=[self getTextMode];
+    
+    if(TEXT_MODE==RTT){
+        NSLog(@"TEXT_MODE=RTT");
+        if (![[ChatService sharedInstance] sendMessagt:lastSimbol]) {
             NSAlert *alert = [[NSAlert alloc]init];
             [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
             [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
             [alert runModal];
         }
+    }else if(TEXT_MODE==SIP_SIMPLE){
+        
+        //handle on enter press
+        
     }
-    
-    msgSize = self.textFieldMessage.stringValue.length-1;
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
-    if (commandSelector == @selector(insertNewline:)) {
-        return [self eventENTER];
-    } else if (commandSelector == @selector(deleteForward:)) {
-        //Do something against DELETE key
-        return NO;
-    } else if (commandSelector == @selector(deleteBackward:)) {
-        //Do something against BACKSPACE keyxc vbxcv 
-        
-        return [self eventBackward];
-    } else if (commandSelector == @selector(insertTab:)) {
-        //Do something against TAB key
-        return [self eventTab];
+    int TEXT_MODE=[self getTextMode];
+    if(TEXT_MODE==RTT){
+        if (commandSelector == @selector(insertNewline:)) {
+            return [self eventENTER];
+        } else if (commandSelector == @selector(deleteForward:)) {
+            //Do something against DELETE key
+            return NO;
+        } else if (commandSelector == @selector(deleteBackward:)) {
+            //Do something against BACKSPACE keyxc vbxcv
+            
+            return [self eventBackward];
+        } else if (commandSelector == @selector(insertTab:)) {
+            //Do something against TAB key
+            return [self eventTab];
+        }
+    }else if(TEXT_MODE==SIP_SIMPLE){
+        if (commandSelector == @selector(insertNewline:)) {
+            return [self eventENTER];
+        }
     }
-    
     // return YES if the action was handled; otherwise NO
     
     return NO;
@@ -438,17 +417,31 @@ long msgSize; //message length buffer
 
 - (BOOL) eventENTER {
     //Do something against ENTER key
-    
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
     
     if (currentCall_) {
+        
+        int TEXT_MODE=[self getTextMode];
+        if(TEXT_MODE==SIP_SIMPLE){
+            NSLog(@"TEXT_MODE=SIP_SIMPLE");
+            if (![[ChatService sharedInstance] sendMessagt:self.textFieldMessage.stringValue]) {
+                NSAlert *alert = [[NSAlert alloc]init];
+                [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+                [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
+                [alert runModal];
+            }
+        }
+        
         [[ChatService sharedInstance] sendEnter];
         
         
+        
+        
+        
         outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
-
+        
         self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
-
+        
         [self.tableViewContent reloadData];
         
         NSInteger count = ms_list_size(messageList);
@@ -456,7 +449,6 @@ long msgSize; //message length buffer
     }
     
     self.textFieldMessage.stringValue = @"";
-    msgSize = 0;
     
     return YES;
 }
@@ -464,9 +456,6 @@ long msgSize; //message length buffer
 - (BOOL) eventBackward {
     if ([[ChatService sharedInstance] sendBackward] && self.textFieldMessage.stringValue && self.textFieldMessage.stringValue.length) {
         self.textFieldMessage.stringValue = [self.textFieldMessage.stringValue substringToIndex:self.textFieldMessage.stringValue.length - 1];
-        msgSize = self.textFieldMessage.stringValue.length-1;
-
-        if(msgSize < 0) { msgSize = 0; }
     }
     
     return YES;
@@ -474,7 +463,7 @@ long msgSize; //message length buffer
 
 - (BOOL) eventTab {
     [[ChatService sharedInstance] sendTab];
-    msgSize = self.textFieldMessage.stringValue.length -1;
+    
     return YES;
 }
 
@@ -514,7 +503,7 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     ? "photo transfer"
     : linphone_chat_message_get_text(msg);
     NSLog(@"Delivery status for [%s] is [%s]", text, linphone_chat_message_state_to_string(state));
-//    ChatViewController *thiz = (__bridge ChatViewController *)ud;
+    //    ChatViewController *thiz = (__bridge ChatViewController *)ud;
     
     
     //    [thiz.tableController updateChatEntry:msg];
@@ -527,5 +516,36 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     selectedChatRoom = linphone_call_get_chat_room([[CallService sharedInstance] getCurrentCall]);
     return selectedChatRoom;
 }
+
+/* Text Mode RTT or SIP SIMPLE duplicate with Android*/
+-(int) getTextMode{
+    //SET TO RTT BY DEFAULT, THIS WILL CHANGE IN GLOBAL SETTINGS.
+    int TEXT_MODE=RTT;
+    
+    //prefs = PreferenceManager.getDefaultSharedPreferences(LinphoneActivity.instance());
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    //String text_mode=prefs.getString(getString(R.string.pref_text_settings_send_mode_key), "RTT");
+    NSString* text_mode_string=[defaults stringForKey:@"TEXT_SEND_MODE"];
+    
+    //Log.d("Text Send Mode" + prefs.getString(getString(R.string.pref_text_settings_send_mode_key), "RTT"));
+    NSLog(@"Text mode is %@",text_mode_string);
+    //    if(text_mode.equals("SIP_SIMPLE")) {
+    //        TEXT_MODE=SIP_SIMPLE;
+    //    }else if(text_mode.equals("RTT")) {
+    //        TEXT_MODE=RTT;
+    //
+    //    }
+    
+    if([text_mode_string isEqualToString:@"SIP SIMPLE"]) {
+        TEXT_MODE=SIP_SIMPLE;
+    }else if([text_mode_string isEqualToString:@"Real Time Text (RTT)"]) {
+        TEXT_MODE=RTT;
+    }
+    NSLog(@"Text mode is %d",TEXT_MODE);
+    //Log.d("TEXT_MODE ", TEXT_MODE);
+    return TEXT_MODE;
+}
+
 
 @end

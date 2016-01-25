@@ -10,11 +10,16 @@
 #import "LinphoneManager.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
+#import "DefaultSettingsManager.h"
+#import "SDPNegotiationService.h"
 #import "AccountModel.h"
 #import "SettingsHeaderModel.h"
 #import "SettingsItemModel.h"
+#import "CodecModel.h"
 
 static NSMutableArray *settingsList;
+
+extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
 
 @implementation SettingsService
 
@@ -192,8 +197,6 @@ static NSMutableArray *settingsList;
         BOOL ice_preference = [[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"];
         if (ice_preference) {
             linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
-        } else {
-            linphone_core_set_firewall_policy(lc, LinphonePolicyUseStun);
         }
     } else {
         linphone_core_set_stun_server(lc, NULL);
@@ -301,6 +304,176 @@ static NSMutableArray *settingsList;
             position--;
         }
     }
+}
+
+- (void)setConfigurationSettingsInitialValues {
+    LinphoneManager *lm = [LinphoneManager instance];
+    LinphoneCore *lc = [LinphoneManager getLc];
+    
+    // version - ?
+    
+    // expiration_time - set
+    
+    LinphoneProxyConfig* proxyCfg = linphone_core_create_proxy_config(lc);
+    linphone_proxy_config_set_expires (proxyCfg, [DefaultSettingsManager sharedInstance].exparitionTime); // expiration time by default is 280
+
+    // configuration_auth_password - ?
+    
+    // configuration_auth_expiration - ?
+    
+    // sip_registration_maximum_threshold - ?
+    
+    // sip_register_usernames - ?
+    
+    // sip_auth_username - will be later
+    
+    // sip_auth_password - will be later
+    
+    // sip_register_domain - will be later
+    
+    // sip_register_port - will be later
+    
+    // sip_register_transport - will be later
+    
+    // enable_echo_cancellation
+    linphone_core_enable_echo_cancellation(lc, [DefaultSettingsManager sharedInstance].enableEchoCancellation);
+    
+    // enable_video - set
+    linphone_core_enable_video_capture(lc, [DefaultSettingsManager sharedInstance].enableVideo);
+    linphone_core_enable_video_display(lc, [DefaultSettingsManager sharedInstance].enableVideo);
+
+    // enable_rtt
+    [lm lpConfigSetBool:[DefaultSettingsManager sharedInstance].enableRtt forKey:@"rtt"];
+    
+    // enable_adaptive_rate
+    linphone_core_enable_adaptive_rate_control(lc, [DefaultSettingsManager sharedInstance].enableAdaptiveRate);
+    
+    // enabled_codecs
+    [self enableVideoCodecs];
+    
+    // bwLimit - ? the name bwlimit is confusing
+    linphone_core_set_video_preset(lc, [DefaultSettingsManager sharedInstance].bwLimit.UTF8String);
+    
+    // upload_bandwidth
+    linphone_core_set_upload_bandwidth(lc, [DefaultSettingsManager sharedInstance].uploadBandwidth);
+    
+    // download_bandwidth
+    linphone_core_set_download_bandwidth(lc, [DefaultSettingsManager sharedInstance].downloadBandwidth);
+    
+    // enable_stun
+    if ([DefaultSettingsManager sharedInstance].enableStun) {
+        linphone_core_set_firewall_policy(lc, LinphonePolicyUseStun);
+    }
+    
+    //stun_server
+    linphone_core_set_stun_server(lc, [DefaultSettingsManager sharedInstance].stunServer.UTF8String);
+    
+    // enable_ice
+    if ([DefaultSettingsManager sharedInstance].enableIce) {
+        linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
+    }
+    
+    // logging
+    linphone_core_set_log_level([self logLevel:[DefaultSettingsManager sharedInstance].logging]);
+    linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
+    
+    // sip_mwi_uri - set
+    
+    // sip_videomail_uri - ?
+    
+    // video_resolution_maximum - set
+}
+
+- (void)enableVideoCodecs {
+    
+    LinphoneCore *lc = [LinphoneManager getLc];
+    const MSList *codecs = linphone_core_get_video_codecs(lc);
+    
+    PayloadType *pt;
+    const MSList *elem;
+    
+    NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
+    
+    for (elem = codecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                            Rate:pt->clock_rate
+                                                        Channels:pt->channels];
+            BOOL enableVideoCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
+            
+            [mdictForSave setObject:[NSNumber numberWithBool:enableVideoCodec] forKey:codecModel.preference];
+            
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
+    
+}
+
+- (CodecModel*) getVideoCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {
+    PayloadType *pt;
+    const MSList *elem;
+    NSMutableArray *videoCodecList = [[NSMutableArray alloc] init];
+    LinphoneCore *lc = [LinphoneManager getLc];
+    const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
+    
+    NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
+    
+    for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            bool_t value = linphone_core_payload_type_enabled(lc, pt);
+            
+            CodecModel *codecModel = [[CodecModel alloc] init];
+            
+            codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
+            codecModel.preference = pref;
+            codecModel.rate = pt->clock_rate;
+            codecModel.channels = pt->channels;
+            
+            if ([dictVideoCodec objectForKey:pref]) {
+                codecModel.status = [[dictVideoCodec objectForKey:pref] boolValue];
+            } else {
+                codecModel.status = value;
+            }
+            
+            [videoCodecList addObject:codecModel];
+        }
+    }
+    
+    for (CodecModel *codecModel in videoCodecList) {
+        if ([codecModel.name isEqualToString:name] &&
+            codecModel.rate == rate &&
+            codecModel.channels == channels) {
+            return codecModel;
+        }
+    }
+    
+    return nil;
+}
+
+- (OrtpLogLevel)logLevel:(NSString*)logInfo {
+    
+    if ([logInfo isEqualToString:@"info"]) {
+        return ORTP_MESSAGE;
+    }
+    
+    if ([logInfo isEqualToString:@"debug"]) {
+        [[LinphoneManager instance] lpConfigSetInt:1 forKey:@"debugenable_preference"];
+        return ORTP_DEBUG;
+    }
+    
+    if ([logInfo isEqualToString:@"all"]) {
+        return ORTP_TRACE;
+    }
+    
+    
+    return ORTP_DEBUG;
 }
 
 @end

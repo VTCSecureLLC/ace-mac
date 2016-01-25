@@ -12,7 +12,7 @@
 #import "ProfileView.h"
 #import "RecentsView.h"
 #import "RTTView.h"
-
+#import "CallControllersView.h"
 
 #define DIALPAD_TEXT_CHANGED @"DIALPAD_TEXT_CHANGED"
 
@@ -26,5 +26,6 @@
 @property (nonatomic, retain) RecentsView *recentsView;
 @property (nonatomic, retain) NSView *callView;
 @property (nonatomic, retain) RTTView *rttView;
+@property (nonatomic, retain) CallControllersView *callControllersView_delegate;
 
 @end

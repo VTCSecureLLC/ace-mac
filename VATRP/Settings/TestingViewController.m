@@ -20,7 +20,7 @@
 @property (weak) IBOutlet NSButton *buttonEnableAVPF;
 @property (weak) IBOutlet NSButton *buttonSendDTMF;
 @property (weak) IBOutlet NSButton *buttonEnableAdaptiveRateControl;
-@property (weak) IBOutlet NSButton *buttonEnableRealTimeText;
+
 @property (weak) IBOutlet NSTextField *textFieldMaxUpload;
 @property (weak) IBOutlet NSTextField *textFieldMaxDownload;
 
@@ -43,7 +43,6 @@
     }
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
-    self.buttonEnableRealTimeText.state = [SettingsService getRTTEnabled];
     
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
@@ -64,7 +63,7 @@
         return;
     }
     
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonEnableRealTimeText.state forKey:kREAL_TIME_TEXT_ENABLED];
+    
     [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

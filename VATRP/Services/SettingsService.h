@@ -27,5 +27,6 @@
 + (void) setICE:(BOOL)enable;
 + (void) setUPNP:(BOOL)enable;
 + (void) setRandomPorts:(BOOL)enable;
+- (void)setConfigurationSettingsInitialValues;
 
 @end

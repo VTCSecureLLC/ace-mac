@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045E09A41C56594D00EF792B /* export_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 045E09A21C56594D00EF792B /* export_button.png */; };
+		045E09A51C56594D00EF792B /* import_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 045E09A31C56594D00EF792B /* import_button.png */; };
 		20A9933A1BB5B9F6008612F9 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; };
 		2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF51B984E49008E8333 /* ContactsWindowController.m */; };
 		2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF81B984E49008E8333 /* DialpadViewController.m */; };
@@ -498,6 +500,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		045E09A21C56594D00EF792B /* export_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = export_button.png; sourceTree = "<group>"; };
+		045E09A31C56594D00EF792B /* import_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import_button.png; sourceTree = "<group>"; };
 		20A993391BB5B9F6008612F9 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		2B463EF41B984E49008E8333 /* ContactsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsWindowController.h; sourceTree = "<group>"; };
 		2B463EF51B984E49008E8333 /* ContactsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsWindowController.m; sourceTree = "<group>"; };
@@ -1288,6 +1292,8 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				045E09A21C56594D00EF792B /* export_button.png */,
+				045E09A31C56594D00EF792B /* import_button.png */,
 				5E1140241C4FDED800C9A6C5 /* video_mail.png */,
 				CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */,
 				CEA6DE741C1088AA0013CB76 /* plus icon.png */,
@@ -1739,6 +1745,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */,
+				045E09A41C56594D00EF792B /* export_button.png in Resources */,
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
 				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
@@ -1787,6 +1794,7 @@
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
+				045E09A51C56594D00EF792B /* import_button.png in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,

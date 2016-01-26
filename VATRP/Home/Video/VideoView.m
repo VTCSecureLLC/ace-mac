@@ -19,6 +19,7 @@
 #import "CallService.h"
 #import "SettingsService.h"
 #import "ChatService.h"
+#import "ViewManager.h"
 #import "AppDelegate.h"
 #import "Utils.h"
 
@@ -34,6 +35,7 @@
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
 @property (weak) IBOutlet NSTextField *labelCallState;
+@property (weak) IBOutlet NSTextField *labelCallDuration;
 
 @property (weak) IBOutlet BackgroundedView *callControllsConteinerView;
 @property (weak) IBOutlet CallControllersView *callControllersView;
@@ -45,6 +47,7 @@
 
 @property (weak) IBOutlet NSImageView *callAlertImageView;
 @property (weak) IBOutlet NSView *localVideo;
+@property (weak) IBOutlet NSButton *buttonFullScreen;
 
 
 - (void) inCallTick:(NSTimer*)timer;
@@ -67,11 +70,19 @@
     self.remoteVideoView.wantsLayer = YES;
     self.labelDisplayName.wantsLayer = YES;
     self.labelCallState.wantsLayer = YES;
+    self.buttonFullScreen.wantsLayer = YES;
     [self.callControllsConteinerView setBackgroundColor:[NSColor clearColor]];
+    
+    [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonFullScreen];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(callViewFrameChange:)
+                                                 name:@"CallViewFrameChange"
                                                object:nil];
     
 //    self.labelDisplayName.hidden = YES;
@@ -151,8 +162,13 @@
             self.labelCallState.stringValue = @"Connected 00:00";
             
             [self.localVideo setFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
-            [[self.localVideo animator] setFrame:NSMakeRect(524, 580, 176, 99)];
 
+            if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+                [[self.localVideo animator] setFrame:NSMakeRect([NSScreen mainScreen].frame.size.width - 234, [NSScreen mainScreen].frame.size.height - 120, 176, 99)];
+            } else {
+                [[self.localVideo animator] setFrame:NSMakeRect(507, 580, 176, 99)];
+            }
+            
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
             [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
         }
@@ -456,6 +472,102 @@
      } else {
         self.localVideo.hidden = YES;
     }
+}
+
+- (IBAction)onButtonFullScreen:(id)sender {
+    [self hideAppMainBody:YES];
+    
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    [window setStyleMask:[window styleMask] | NSResizableWindowMask]; // resizable
+    [window toggleFullScreen:self];
+}
+
+- (void)windowWillEnterFullScreen {
+}
+
+- (void)windowDidEnterFullScreen {
+    
+    if ([self.callControllersView bool_chat_window_open]) {
+        [[[ViewManager sharedInstance].callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height)];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height))];
+        HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
+        homeViewController.rttView.hidden = NO;
+    } else {
+        [[[ViewManager sharedInstance].callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height))];
+    }
+    
+    [self.buttonFullScreen.cell setImage:[NSImage imageNamed:@"icon_fullscreen_close"]];
+}
+
+- (void)windowWillExitFullScreen {
+    [self hideAppMainBody:NO];
+}
+
+- (void)windowDidExitFullScreen {
+    [self hideAppMainBody:NO];
+
+    if ([[CallService sharedInstance] getCurrentCall]) {
+        if ([self.callControllersView bool_chat_window_open]) {
+            if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+                [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                              display:YES
+                              animate:YES];
+            } else {
+                [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                              display:YES
+                              animate:YES];
+            }
+            
+            [self.callControllersView set_bool_chat_window_open:YES];
+        } else {
+            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+            [self.callControllersView set_bool_chat_window_open:NO];
+        }
+    }
+
+    [self.callControllersView dismisCallInfoWindow];
+    
+    [self.buttonFullScreen.cell setImage:[NSImage imageNamed:@"icon_fullscreen_open"]];
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+}
+
+- (void) hideAppMainBody:(BOOL)hide {
+    HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
+    homeViewController.dockView.hidden = hide;
+    homeViewController.profileView.hidden = hide;
+    homeViewController.dialPadView.hidden = hide;
+    homeViewController.viewContainer.hidden = hide;
+    homeViewController.rttView.hidden = hide;
+}
+
+- (void)callViewFrameChange:(NSNotification*)notif {
+    NSString *callViewFrameStr = (NSString*)notif.object;
+    NSRect callViewFrame = NSRectFromString(callViewFrameStr);
+
+    [[self animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+
+    [[self.callControllsConteinerView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
+    [[homeViewController.rttView animator] setFrame:NSMakeRect(callViewFrame.size.width, 0, homeViewController.rttView.frame.size.width, callViewFrame.size.height)];
+    [homeViewController.rttView setCustomFrame:NSMakeRect(callViewFrame.size.width, 0, homeViewController.rttView.frame.size.width, callViewFrame.size.height)];
+     
+    [[self.localVideo animator] setFrame:NSMakeRect(callViewFrame.size.width - 240, callViewFrame.size.height - 120, self.localVideo.frame.size.width, self.localVideo.frame.size.height)];
+    [[self.buttonFullScreen animator] setFrame:NSMakeRect(callViewFrame.size.width - 35, callViewFrame.size.height - 52, self.buttonFullScreen.frame.size.width, self.buttonFullScreen.frame.size.height)];
+    [[self.labelDisplayName animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelDisplayName.frame.size.width/2, callViewFrame.size.height - 101, self.labelDisplayName.frame.size.width, self.labelDisplayName.frame.size.height)];
+    [[self.labelCallState animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallState.frame.size.width/2, callViewFrame.size.height - 146, self.labelCallState.frame.size.width, self.labelCallState.frame.size.height)];
+    [[self.labelCallDuration animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallDuration.frame.size.width/2, callViewFrame.size.height - 170, self.labelCallDuration.frame.size.width, self.labelCallDuration.frame.size.height)];
+    [[self.labelRingCount animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallDuration.frame.size.width/2, callViewFrame.size.height/2 - self.labelCallDuration.frame.size.height/2, self.labelRingCount.frame.size.width, self.labelRingCount.frame.size.height)];
+    [[self.callControllersView animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.callControllersView.frame.size.width/2, 12, self.callControllersView.frame.size.width, self.callControllersView.frame.size.height)];
+    [[self.secondIncomingCallView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    [self.secondIncomingCallView reorderControllersForFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    [[self.secondCallView animator] setFrame:NSMakeRect(6, callViewFrame.size.height - 190, self.secondCallView.frame.size.width, self.secondCallView.frame.size.height)];
+    [[self.numpadView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+//    [self.numpadView setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    [self.numpadView setCustomFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
 }
 
 @end

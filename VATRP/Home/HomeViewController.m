@@ -9,8 +9,6 @@
 #import "HomeViewController.h"
 #import "ViewManager.h"
 #import "CallService.h"
-#import "DockView.h"
-#import "DialPadView.h"
 #import "RecentsView.h"
 #import "VideoView.h"
 #import "ContactsView.h"
@@ -19,19 +17,16 @@
 #import "ProviderTableCellView.h"
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
-
+#import "AppDelegate.h"
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     BackgroundedView *viewCurrent;
     NSArray *providersArray;
+    NSColor *windowDefaultColor;
 }
 @property (weak) IBOutlet NSImageView *imageViewVoiceMail;
 @property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
 
-@property (weak) IBOutlet BackgroundedView *viewContainer;
-@property (weak) IBOutlet DockView *dockView;
-@property (weak) IBOutlet DialPadView *dialPadView;
-@property (weak) IBOutlet ProfileView *profileView;
 @property (weak) IBOutlet RecentsView *recentsView;
 @property (weak) IBOutlet ContactsView *contactsView;
 @property (weak) IBOutlet SettingsView *settingsView;
@@ -45,12 +40,15 @@
 
 @implementation HomeViewController
 
+@synthesize isAppFullScreen;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
     
+    windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
-    [v setBackgroundColor:[NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+    [v setBackgroundColor:windowDefaultColor];
     self.dockView.delegate = self;
     
     [self.viewContainer setBackgroundColor:[NSColor whiteColor]];
@@ -81,6 +79,12 @@
             NSLog(@"Invalid MWI uri");
         }
     }
+    self.isAppFullScreen = false;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
 }
 
 #pragma mark - Observers and related functions
@@ -284,7 +288,11 @@
 
 
 - (IBAction)onButtonProv:(id)sender {
-    self.providersView.hidden = !self.providersView.hidden;
+//    self.providersView.hidden = !self.providersView.hidden;
+    
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+//    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
+    [window toggleFullScreen:self];
 }
 
 - (ProfileView*) getProfileView {
@@ -293,11 +301,14 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent {
     NSPoint mousePosition = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
-    
+    [self mouseMovedWithPoint:mousePosition];
+}
+
+- (void)mouseMovedWithPoint:(NSPoint)mousePosition {
     if ([[CallService sharedInstance] getCurrentCall]) {
         LinphoneCallState call_state = linphone_call_get_state([[CallService sharedInstance] getCurrentCall]);
         
-        if ((call_state != LinphoneCallDeclined && call_state != LinphoneCallEnd && call_state != LinphoneCallError) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700) {
+        if (self.isAppFullScreen || ((call_state != LinphoneCallDeclined && call_state != LinphoneCallEnd && call_state != LinphoneCallError) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700)) {
             [self.videoView setMouseInCallWindow];
         }
     }
@@ -307,6 +318,30 @@
     return [viewCurrent isKindOfClass:[RecentsView class]];
 }
 
+- (void)windowWillEnterFullScreen:(NSNotification*)notif {
+    NSLog(@"windowWillEnterFullScreen");
+    
+    [self.videoView windowWillEnterFullScreen];
+    [(BackgroundedView*)self.view setBackgroundColor:[NSColor blackColor]];
+}
+
+- (void)windowDidEnterFullScreen:(NSNotification*)notif {
+    NSLog(@"windowDidEnterFullScreen");
+    
+    [self.videoView windowDidEnterFullScreen];
+    self.isAppFullScreen = YES;
+}
+
+- (void)windowWillExitFullScreen:(NSNotification*)notif {
+    [self.videoView windowWillExitFullScreen];
+    [(BackgroundedView*)self.view setBackgroundColor:windowDefaultColor];
+}
+
+- (void)windowDidExitFullScreen:(NSNotification*)notif {
+    [self.videoView windowDidExitFullScreen];
+
+    self.isAppFullScreen = NO;
+}
 
 
 @end

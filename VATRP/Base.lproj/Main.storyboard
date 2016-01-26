@@ -241,7 +241,7 @@
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1404" y="-741"/>
+            <point key="canvasLocation" x="-1413" y="-806"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -1265,15 +1265,16 @@
                                     <outlet property="textFieldMessage" destination="V46-I4-rdM" id="Evi-Dx-AZ7"/>
                                 </connections>
                             </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQQ-OR-7S5">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQQ-OR-7S5" customClass="BackgroundedView">
                                 <rect key="frame" x="310" y="0.0" width="720" height="700"/>
                                 <subviews>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="APm-Qq-3qG" customClass="VideoView">
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <connections>
+                                            <outlet property="buttonFullScreen" destination="5GQ-IM-ddo" id="BYI-jU-CSm"/>
                                             <outlet property="callControllersView" destination="A7N-2c-iqT" id="u2X-vy-6di"/>
                                             <outlet property="callControllsConteinerView" destination="YoF-eP-9ll" id="rES-m5-QUk"/>
-                                            <outlet property="labelCallDuration" destination="BCE-oT-0Kc" id="EOj-lM-Kau"/>
+                                            <outlet property="labelCallDuration" destination="BCE-oT-0Kc" id="sfq-hP-pbB"/>
                                             <outlet property="labelCallState" destination="bRW-5L-eQn" id="CZ7-Bb-Yj6"/>
                                             <outlet property="labelDisplayName" destination="V5s-GS-ax9" id="QCs-Jl-119"/>
                                             <outlet property="labelRingCount" destination="mXa-6n-h0e" id="Gw7-w4-Qlc"/>
@@ -1284,7 +1285,7 @@
                                         </connections>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tyK-Cn-OT4">
-                                        <rect key="frame" x="524" y="580" width="176" height="99"/>
+                                        <rect key="frame" x="486" y="580" width="176" height="99"/>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YoF-eP-9ll" customClass="BackgroundedView">
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
@@ -1701,29 +1702,43 @@
                                             <outlet property="viewAlphed" destination="BFD-JW-NCd" id="ekh-Ep-drb"/>
                                         </connections>
                                     </customView>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="5GQ-IM-ddo">
+                                        <rect key="frame" x="681" y="647" width="32" height="32"/>
+                                        <shadow key="shadow">
+                                            <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </shadow>
+                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="icon_fullscreen_open" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="l4W-QA-2FB">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system" size="30"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onButtonFullScreen:" target="APm-Qq-3qG" id="zc6-pg-CQj"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </customView>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="callView" destination="dQQ-OR-7S5" id="Z0F-1e-I4q"/>
+                        <outlet property="callView" destination="dQQ-OR-7S5" id="Wea-M8-wmc"/>
                         <outlet property="contactsView" destination="rAt-4g-nXf" id="pTo-16-9dq"/>
                         <outlet property="dhResourcesView" destination="c7h-kT-FAh" id="gmT-Yg-e08"/>
-                        <outlet property="dialPadView" destination="e4g-m7-al7" id="HO8-m1-MVM"/>
-                        <outlet property="dockView" destination="ZCP-sF-zhB" id="VQn-IW-MAn"/>
-                        <outlet property="profileView" destination="sNe-CT-gua" id="o2B-uz-hEI"/>
+                        <outlet property="dialPadView" destination="e4g-m7-al7" id="U7g-DO-K9B"/>
+                        <outlet property="dockView" destination="ZCP-sF-zhB" id="BcM-x0-PoF"/>
+                        <outlet property="profileView" destination="sNe-CT-gua" id="KC9-Ve-za7"/>
                         <outlet property="providerTableView" destination="xe3-H4-JmS" id="dnm-o4-leR"/>
                         <outlet property="providersView" destination="wMR-Jk-waL" id="wly-ar-eTl"/>
                         <outlet property="recentsView" destination="1VK-jT-7Ad" id="tCI-nJ-aah"/>
+                        <outlet property="rttView" destination="7Fx-Rj-KVU" id="xF2-VS-INN"/>
                         <outlet property="settingsView" destination="gvt-Fm-S7x" id="m5K-Sc-a1m"/>
                         <outlet property="textFieldVoiceMailCount" destination="Iwe-Zk-M2g" id="hSB-BY-5Ez"/>
                         <outlet property="videoView" destination="APm-Qq-3qG" id="GQk-Uk-EPe"/>
-                        <outlet property="viewContainer" destination="EEV-Wa-LvY" id="ntR-15-kWr"/>
+                        <outlet property="viewContainer" destination="EEV-Wa-LvY" id="wIO-rN-PF9"/>
                     </connections>
                 </viewController>
                 <customObject id="nie-3i-IYX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-278" y="-182"/>
+            <point key="canvasLocation" x="-248" y="-151"/>
         </scene>
         <!--Add Contact Dialog Box-->
         <scene sceneID="X16-Wt-nwY">
@@ -2557,7 +2572,7 @@
         <!--Call Info View Controller-->
         <scene sceneID="WU1-bC-6RC">
             <objects>
-                <viewController id="xSj-qj-XbH" customClass="CallInfoViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CallInfoViewController" id="xSj-qj-XbH" customClass="CallInfoViewController" sceneMemberID="viewController">
                     <view key="view" id="vrX-ER-xM2">
                         <rect key="frame" x="0.0" y="0.0" width="520" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -9410,6 +9425,7 @@ DQ
         <image name="dialpad" width="26" height="40"/>
         <image name="dialpadDelete" width="38" height="25"/>
         <image name="edit_32x32" width="20.756755828857422" height="20.756755828857422"/>
+        <image name="icon_fullscreen_open" width="30" height="30"/>
         <image name="import_export" width="128" height="128"/>
         <image name="info-icon" width="48" height="48"/>
         <image name="keypad" width="48" height="48"/>

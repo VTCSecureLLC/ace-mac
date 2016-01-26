@@ -8,6 +8,7 @@
 
 #import "NumpadView.h"
 #import "LinphoneManager.h"
+#import "AppDelegate.h"
 
 @interface NumpadView () {
     
@@ -40,18 +41,19 @@
     [self.viewBG setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:1.0]];
     [self setBackgroundColor:[NSColor clearColor]];
     
-    [self.buttonOne.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonTwo.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonThree.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonFour.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonFive.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonSix.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonSeven.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonEight.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonNine.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonZero.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonStar.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
-    [self.buttonSharp.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
+    CGColorRef CGColor = [NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor;
+    [self.buttonOne.layer setBackgroundColor:CGColor];
+    [self.buttonTwo.layer setBackgroundColor:CGColor];
+    [self.buttonThree.layer setBackgroundColor:CGColor];
+    [self.buttonFour.layer setBackgroundColor:CGColor];
+    [self.buttonFive.layer setBackgroundColor:CGColor];
+    [self.buttonSix.layer setBackgroundColor:CGColor];
+    [self.buttonSeven.layer setBackgroundColor:CGColor];
+    [self.buttonEight.layer setBackgroundColor:CGColor];
+    [self.buttonNine.layer setBackgroundColor:CGColor];
+    [self.buttonZero.layer setBackgroundColor:CGColor];
+    [self.buttonStar.layer setBackgroundColor:CGColor];
+    [self.buttonSharp.layer setBackgroundColor:CGColor];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent {
@@ -102,6 +104,16 @@
 
 - (void) resetBackgroundColorOfButton:(NSButton*)button {
     [button.layer setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0].CGColor];
+}
+
+- (void) setCustomFrame:(NSRect)frame {
+//    [[self.viewBG animator] setFrame:NSMakeRect(frame.size.width/2 - self.viewBG.frame.size.width/2 + 400, 217, self.viewBG.frame.size.width, self.viewBG.frame.size.height)];
+    
+    if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+        [self.viewBG setFrame:NSMakeRect([NSScreen mainScreen].frame.size.width/2 - self.viewBG.frame.size.width/2, 217, self.viewBG.frame.size.width, self.viewBG.frame.size.height)];
+    } else {
+        [self.viewBG setFrame:NSMakeRect(frame.size.width/2 - self.viewBG.frame.size.width/2, 217, self.viewBG.frame.size.width, self.viewBG.frame.size.height)];
+    }
 }
 
 @end

@@ -10,4 +10,6 @@
 
 @interface NumpadView : BackgroundedView
 
+- (void) setCustomFrame:(NSRect)frame;
+
 @end

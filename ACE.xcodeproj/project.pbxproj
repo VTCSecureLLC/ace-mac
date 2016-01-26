@@ -110,6 +110,7 @@
 		4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE0C67A1BB2E9E900B4E208 /* CallViewController.m */; };
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; };
 		5E1140251C4FDED800C9A6C5 /* video_mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E1140241C4FDED800C9A6C5 /* video_mail.png */; };
+		5E11404A1C57E2D900C9A6C5 /* SystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1140491C57E2D900C9A6C5 /* SystemInfo.m */; };
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
 		5EC9D30D1C288D8000BFAAEC /* ResourcesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30C1C288D8000BFAAEC /* ResourcesWindowController.m */; };
 		5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */; };
@@ -149,6 +150,8 @@
 		69AA7EFB1C33E3F7002CB323 /* TermsOfUseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AA7EFA1C33E3F7002CB323 /* TermsOfUseViewController.m */; };
 		69B315951C2414540091534B /* SettingsAdvancedUI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69B315941C2414540091534B /* SettingsAdvancedUI.plist */; };
 		69D8B2EE1C076E1F0034576B /* RTTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D8B2ED1C076E1F0034576B /* RTTView.m */; };
+		69E42FAE1C5765A6003EF534 /* icon_fullscreen_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E42FAD1C5765A6003EF534 /* icon_fullscreen_close.png */; };
+		69E42FB01C5769B5003EF534 /* icon_fullscreen_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E42FAF1C5769B5003EF534 /* icon_fullscreen_open.png */; };
 		73048F651C4598E500375345 /* libopenh264.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73048F661C45B40F00375345 /* libopenh264.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; };
 		738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -665,6 +668,8 @@
 		5E02C8E31BBEF161003EA32B /* SelfVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfVideoViewController.h; sourceTree = "<group>"; };
 		5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfVideoViewController.m; sourceTree = "<group>"; };
 		5E1140241C4FDED800C9A6C5 /* video_mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_mail.png; sourceTree = "<group>"; };
+		5E1140481C57E2D900C9A6C5 /* SystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInfo.h; sourceTree = "<group>"; };
+		5E1140491C57E2D900C9A6C5 /* SystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemInfo.m; sourceTree = "<group>"; };
 		5E3CA6411BF0F9B700D9913F /* SDPNegotiationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPNegotiationService.h; sourceTree = "<group>"; };
 		5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPNegotiationService.m; sourceTree = "<group>"; };
 		5EC9D30B1C288D8000BFAAEC /* ResourcesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesWindowController.h; sourceTree = "<group>"; };
@@ -722,6 +727,8 @@
 		69C726731BFC6DF6002198A7 /* NumpadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumpadView.h; sourceTree = "<group>"; };
 		69D8B2EC1C076E1F0034576B /* RTTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTView.h; sourceTree = "<group>"; };
 		69D8B2ED1C076E1F0034576B /* RTTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTView.m; sourceTree = "<group>"; };
+		69E42FAD1C5765A6003EF534 /* icon_fullscreen_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_fullscreen_close.png; sourceTree = "<group>"; };
+		69E42FAF1C5769B5003EF534 /* icon_fullscreen_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_fullscreen_open.png; sourceTree = "<group>"; };
 		73048F641C4598E500375345 /* libopenh264.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopenh264.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libopenh264.1.dylib"; sourceTree = "<group>"; };
 		73EDA1FE1BFA9F2C00EC7039 /* libantlr3c.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.1.dylib"; sourceTree = "<group>"; };
 		73EDA1FF1BFA9F2C00EC7039 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.dylib"; sourceTree = "<group>"; };
@@ -1175,6 +1182,8 @@
 				5EEC291F1C03701700BA43FB /* vCard */,
 				4A902DE71BB95A7000ECFD86 /* Utils.h */,
 				4A902DE81BB95A7000ECFD86 /* Utils.m */,
+				5E1140481C57E2D900C9A6C5 /* SystemInfo.h */,
+				5E1140491C57E2D900C9A6C5 /* SystemInfo.m */,
 				4A902DDB1BB9489B00ECFD86 /* AccountsService.h */,
 				4A902DDC1BB9489B00ECFD86 /* AccountsService.m */,
 				4AC13F931BBBFD21008305CD /* CallLogService.h */,
@@ -1298,6 +1307,8 @@
 				CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */,
 				CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */,
 				CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */,
+				69E42FAD1C5765A6003EF534 /* icon_fullscreen_close.png */,
+				69E42FAF1C5769B5003EF534 /* icon_fullscreen_open.png */,
 				CEC641111C0C9EE600BA927F /* provider_logo_caag.png */,
 				CEC641121C0C9EE600BA927F /* provider_logo_convorelay.png */,
 				CEC641131C0C9EE600BA927F /* provider_logo_globalvrs.png */,
@@ -1788,6 +1799,7 @@
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */,
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
+				69E42FB01C5769B5003EF534 /* icon_fullscreen_open.png in Resources */,
 				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
 				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
@@ -1806,6 +1818,7 @@
 				CEC641191C0C9EE600BA927F /* provider_logo_globalvrs.png in Resources */,
 				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
 				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
+				69E42FAE1C5765A6003EF534 /* icon_fullscreen_close.png in Resources */,
 				69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */,
 				69A025B21BFB5C83005C62FA /* mute_active.png in Resources */,
 				69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */,
@@ -1878,6 +1891,7 @@
 				4AB556691BE27085003382B2 /* HistoryTableCellView.m in Sources */,
 				4A902DDD1BB9489B00ECFD86 /* AccountsService.m in Sources */,
 				4AAF56161BB157AC00241DC2 /* AccountsViewController.m in Sources */,
+				5E11404A1C57E2D900C9A6C5 /* SystemInfo.m in Sources */,
 				691611E81C1AD6AC00E37D79 /* SettingsService.m in Sources */,
 				4AC389CE1B8E87530063298F /* main.m in Sources */,
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,

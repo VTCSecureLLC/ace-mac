@@ -350,10 +350,6 @@
                                         <rect key="frame" x="286" y="27" width="15" height="15"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="YHV-9E-uMg"/>
                                     </imageView>
-                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="guW-0R-zTJ">
-                                        <rect key="frame" x="217" y="6" width="48" height="36"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="video_mail" id="GiE-VA-z4c"/>
-                                    </imageView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iwe-Zk-M2g">
                                         <rect key="frame" x="223" y="0.0" width="37" height="17"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="LwM-CE-uPq">
@@ -362,6 +358,16 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wja-Gy-aTg">
+                                        <rect key="frame" x="217" y="14" width="48" height="32"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="video_mail" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="FPY-0L-mNG">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onVideoMailClicked:" target="f5W-XC-ZdQ" id="YsE-4I-vBU"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <connections>
                                     <outlet property="imageViewProfile" destination="wE2-XI-nka" id="9Y1-PJ-wI7"/>
@@ -1719,7 +1725,6 @@
                         <outlet property="dhResourcesView" destination="c7h-kT-FAh" id="gmT-Yg-e08"/>
                         <outlet property="dialPadView" destination="e4g-m7-al7" id="U7g-DO-K9B"/>
                         <outlet property="dockView" destination="ZCP-sF-zhB" id="BcM-x0-PoF"/>
-                        <outlet property="imageViewVoiceMail" destination="guW-0R-zTJ" id="eIR-z9-Mnk"/>
                         <outlet property="profileView" destination="sNe-CT-gua" id="KC9-Ve-za7"/>
                         <outlet property="providerTableView" destination="xe3-H4-JmS" id="dnm-o4-leR"/>
                         <outlet property="providersView" destination="wMR-Jk-waL" id="wly-ar-eTl"/>
@@ -8135,15 +8140,55 @@ Cg
                                     <outlet property="nextKeyView" destination="MCD-n6-8D8" id="GIK-KF-koK"/>
                                 </connections>
                             </comboBox>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-7J-uWY">
+                                <rect key="frame" x="48" y="189" width="185" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mail Waiting Indicator URI" id="nax-kh-xby">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zi8-Se-fGL">
+                                <rect key="frame" x="245" y="189" width="184" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="b8Y-8n-J76">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="kdm-MC-IU1" id="akB-nI-ycV"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KFF-M7-itq">
+                                <rect key="frame" x="48" y="159" width="185" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Video Mail URI" id="jCX-sj-6jU">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lGW-GG-d2a">
+                                <rect key="frame" x="245" y="159" width="184" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="XTe-Y5-JXO">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="kdm-MC-IU1" id="Vex-m1-GY4"/>
+                                </connections>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="comboBoxTransport" destination="sL8-fC-hfK" id="i2O-hg-x5l"/>
                         <outlet property="secureTextFieldPassword" destination="2Xu-1K-KKV" id="AbG-4j-TrG"/>
                         <outlet property="textFieldDomain" destination="k0N-cs-rYc" id="eia-xB-7rZ"/>
+                        <outlet property="textFieldMailWaitingIndicatorURI" destination="zi8-Se-fGL" id="2x4-mU-ZCZ"/>
                         <outlet property="textFieldPort" destination="Q3Q-9s-Rkw" id="dcY-xk-9Bd"/>
                         <outlet property="textFieldUserID" destination="RwF-G4-ymG" id="VAV-KU-IFQ"/>
                         <outlet property="textFieldUsername" destination="MCD-n6-8D8" id="BlG-NC-x5F"/>
+                        <outlet property="textFieldVideoMailWaitingURI" destination="lGW-GG-d2a" id="mm7-g3-FfV"/>
                     </connections>
                 </viewController>
                 <customObject id="WLK-9q-LMt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

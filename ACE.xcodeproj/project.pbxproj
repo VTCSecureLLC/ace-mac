@@ -154,6 +154,10 @@
 		69E42FB01C5769B5003EF534 /* icon_fullscreen_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E42FAF1C5769B5003EF534 /* icon_fullscreen_open.png */; };
 		73048F651C4598E500375345 /* libopenh264.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73048F661C45B40F00375345 /* libopenh264.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; };
+		73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F671C46BE6F00375345 /* libbelcard.1.dylib */; };
+		73048F6A1C46BE7600375345 /* libbelr.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F691C46BE7600375345 /* libbelr.1.dylib */; };
+		73048F6C1C46C00100375345 /* libbelr.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F6B1C46C00100375345 /* libbelr.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		73048F6E1C46C01300375345 /* libbelcard.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F6D1C46C01300375345 /* libbelcard.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; };
 		739C3F111BFCE6D800F9EFCE /* libmsamr.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2B81BFA9F4B00EC7039 /* libmsamr.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -432,7 +436,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				73ED2B001BFCE9AF00C182F2 /* libmsamr.0.dylib in Copy Files */,
+				73048F6E1C46C01300375345 /* libbelcard.1.dylib in Copy Files */,
 				738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */,
+				73048F6C1C46C00100375345 /* libbelr.1.dylib in Copy Files */,
 				73ED2B011BFCE9AF00C182F2 /* libmsamr.dylib in Copy Files */,
 				73ED2B021BFCE9AF00C182F2 /* libmsbcg729.0.dylib in Copy Files */,
 				73ED2B031BFCE9AF00C182F2 /* libmsbcg729.1.0.1.dylib in Copy Files */,
@@ -730,6 +736,10 @@
 		69E42FAD1C5765A6003EF534 /* icon_fullscreen_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_fullscreen_close.png; sourceTree = "<group>"; };
 		69E42FAF1C5769B5003EF534 /* icon_fullscreen_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_fullscreen_open.png; sourceTree = "<group>"; };
 		73048F641C4598E500375345 /* libopenh264.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopenh264.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libopenh264.1.dylib"; sourceTree = "<group>"; };
+		73048F671C46BE6F00375345 /* libbelcard.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelcard.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelcard.1.dylib"; sourceTree = "<group>"; };
+		73048F691C46BE7600375345 /* libbelr.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelr.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelr.1.dylib"; sourceTree = "<group>"; };
+		73048F6B1C46C00100375345 /* libbelr.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelr.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelr.1.dylib"; sourceTree = "<group>"; };
+		73048F6D1C46C01300375345 /* libbelcard.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelcard.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelcard.1.dylib"; sourceTree = "<group>"; };
 		73EDA1FE1BFA9F2C00EC7039 /* libantlr3c.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.1.dylib"; sourceTree = "<group>"; };
 		73EDA1FF1BFA9F2C00EC7039 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.dylib"; sourceTree = "<group>"; };
 		73EDA2001BFA9F2C00EC7039 /* libavcodec.53.61.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.53.61.100.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libavcodec.53.61.100.dylib"; sourceTree = "<group>"; };
@@ -849,7 +859,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73048F6A1C46BE7600375345 /* libbelr.1.dylib in Frameworks */,
+				73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */,
 				CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */,
+
 				73ED2AF31BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF41BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF51BFCE7CE00C182F2 /* libmsbcg729.1.0.1.dylib in Frameworks */,
@@ -1004,6 +1017,8 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+                73048F691C46BE7600375345 /* libbelr.1.dylib */,
+				73048F671C46BE6F00375345 /* libbelcard.1.dylib */,
 				CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */,
 				20A993391BB5B9F6008612F9 /* HockeySDK.framework */,
 			);
@@ -1422,6 +1437,8 @@
 		4AC389BC1B8E87520063298F = {
 			isa = PBXGroup;
 			children = (
+				73048F6D1C46C01300375345 /* libbelcard.1.dylib */,
+				73048F6B1C46C00100375345 /* libbelr.1.dylib */,
 				73048F641C4598E500375345 /* libopenh264.1.dylib */,
 				20A993351BB5B978008612F9 /* Frameworks */,
 				4A5170761BACC61F00880FFD /* SystemConfiguration.framework */,

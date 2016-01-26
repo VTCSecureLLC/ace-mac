@@ -70,6 +70,17 @@
     [self setObservers];
     
     self.hasProviderAlertBeenShown = false;
+    
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_uri"]){
+        @try{
+            NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"mwi_uri"];
+            LinphoneAddress *sipAddress = linphone_proxy_config_normalize_sip_uri(linphone_core_get_default_proxy_config([LinphoneManager getLc]), [videoMailUri UTF8String]);
+            linphone_core_subscribe([LinphoneManager getLc], sipAddress, "message-summary", 1800, NULL);
+        }
+        @catch(NSError *e){
+            NSLog(@"Invalid MWI uri");
+        }
+    }
 }
 
 #pragma mark - Observers and related functions
@@ -263,6 +274,14 @@
 
 //    }
 }
+
+- (IBAction)onVideoMailClicked:(id)sender {
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"video_mail_uri"]){
+        NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_mail_uri"];
+        [[LinphoneManager instance] call:videoMailUri displayName:@"Videomail" transfer:NO];
+    }
+}
+
 
 - (IBAction)onButtonProv:(id)sender {
     self.providersView.hidden = !self.providersView.hidden;

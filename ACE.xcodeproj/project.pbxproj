@@ -361,6 +361,7 @@
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6EDC8A1C56D948003CB599 /* logo_about_frg.png */; };
 		CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */; };
 		CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */; };
 		CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */; };
@@ -798,6 +799,7 @@
 		73EDA2C21BFA9F4B00EC7039 /* libmssilk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmssilk.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmssilk.dylib"; sourceTree = "<group>"; };
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
+		CD6EDC8A1C56D948003CB599 /* logo_about_frg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_about_frg.png; sourceTree = "<group>"; };
 		CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMenuViewController.h; sourceTree = "<group>"; };
 		CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMenuViewController.m; sourceTree = "<group>"; };
 		CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_call_dir_incoming.png; sourceTree = "<group>"; };
@@ -1292,6 +1294,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CD6EDC8A1C56D948003CB599 /* logo_about_frg.png */,
 				5E1140241C4FDED800C9A6C5 /* video_mail.png */,
 				CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */,
 				CEA6DE741C1088AA0013CB76 /* plus icon.png */,
@@ -1824,6 +1827,7 @@
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
 				697840871C089CB9000ED450 /* call resume.png in Resources */,
 				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
+				CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */,
 				4A5DD1EE1BD904B3003BE9A2 /* messageOutgoingBubbleTop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

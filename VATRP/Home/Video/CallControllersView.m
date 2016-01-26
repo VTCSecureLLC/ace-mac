@@ -8,9 +8,11 @@
 
 #import "CallControllersView.h"
 #import "CallInfoWindowController.h"
+#import "CallInfoViewController.h"
 #import "ChatService.h"
 #import "ViewManager.h"
 #import "SettingsService.h"
+#import "AppDelegate.h"
 #import "Utils.h"
 
 
@@ -23,6 +25,7 @@
     
     
     CallInfoWindowController *callInfoWindowController;
+    CallInfoViewController *callInfoViewController;
 }
 
 @property (weak) IBOutlet NSTextField *labelCallState;
@@ -48,6 +51,7 @@
 - (void) awakeFromNib {
     [super awakeFromNib];
 
+    callInfoViewController = nil;
     [ViewManager sharedInstance].callControllersView_delegate = self;
     
     isSendingVideo = YES;
@@ -148,32 +152,53 @@
         [_delegate didClickCallControllersViewNumpad:self];
     }
 }
-- (void)performChatButtonClick{
-    if (self.window.frame.size.width == 1328) {
-        [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
-                      display:YES
-                      animate:YES];
-        chat_window_open=NO;
-    } else {
-        if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
-            [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
-                          display:YES
-                          animate:YES];
-        } else {
-            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
-                          display:YES
-                          animate:YES];
-            chat_window_open=YES;
-          }
-    }
+- (void)performChatButtonClick {
+    
+    HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
 
+    if (homeViewController.isAppFullScreen) {
+        if (homeViewController.rttView.hidden) {
+//            [[homeViewController.callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height)];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height))];
+            [self set_bool_chat_window_open:YES];
+        } else {
+            [[homeViewController.callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height))];
+            [self set_bool_chat_window_open:NO];
+        }
+    } else {
+        if (self.window.frame.size.width == 1328) {
+            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+            [self set_bool_chat_window_open:NO];
+        } else {
+            if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+                [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                              display:YES
+                              animate:YES];
+            } else {
+                [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                              display:YES
+                              animate:YES];
+                [self set_bool_chat_window_open:YES];
+            }
+        }
+    }
 }
+
 - (BOOL)bool_chat_window_open{
     return chat_window_open;
 }
 
+- (void)set_bool_chat_window_open:(BOOL)open {
+    chat_window_open = open;
+    HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
+    homeViewController.rttView.hidden = !open;
+}
+
 - (IBAction)onButtonChat:(id)sender {
-    self.performChatButtonClick;
+    [self performChatButtonClick];
 }
 
 
@@ -187,13 +212,37 @@
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
-    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
-    [callInfoWindowController showWindow:self];
+    if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+        if (callInfoViewController) {
+            [callInfoViewController dismissController:self];
+            callInfoViewController = nil;
+        } else {
+            callInfoViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfoViewController"];
+            
+            [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewController:callInfoViewController
+                                                                                    asPopoverRelativeToRect:((NSButton*)sender).frame
+                                                                                                     ofView:self
+                                                                                              preferredEdge:NSRectEdgeMinX
+                                                                                                   behavior:NSPopoverBehaviorApplicationDefined];
+        }
+    } else {
+        callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+        [callInfoWindowController showWindow:self];
+    }
+    
+    
 }
 
 - (void)dismisCallInfoWindow {
-    [callInfoWindowController close];
-    callInfoWindowController = nil;
+    if (callInfoWindowController) {
+        [callInfoWindowController close];
+        callInfoWindowController = nil;
+    }
+    
+    if (callInfoViewController) {
+        [callInfoViewController dismissController:self];
+        callInfoViewController = nil;
+    }
 }
 
 //- (IBAction)onButtonOpenMessage:(id)sender {
@@ -336,6 +385,12 @@
         }
         case LinphoneCallEnd: {
             self.labelCallState.stringValue = @"Call End";
+            
+            if (callInfoViewController) {
+                [callInfoViewController dismissController:self];
+                callInfoViewController = nil;
+            }
+            
             break;
         }
         default:

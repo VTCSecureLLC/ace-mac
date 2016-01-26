@@ -11,5 +11,5 @@
 @interface RTTView : BackgroundedView
 - (void) viewWillAppear;
 - (void) viewWillDisappear;
-
+- (void) setCustomFrame:(NSRect)frame;
 @end

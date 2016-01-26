@@ -158,40 +158,47 @@
 
 - (IBAction)onExportButton:(id)sender {
     
-    NSOpenPanel *panel = [NSOpenPanel openPanel];
-    [panel setCanChooseFiles:NO];
-    [panel setCanChooseDirectories:YES];
-    [panel setAllowsMultipleSelection:NO];
-    
-    NSInteger clicked = [panel runModal];
-    
-    if (clicked == NSFileHandlingPanelOKButton) {
-        
-        NSString *path = panel.directoryURL.path;
-        path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
-        [ContactsService exportContact: @"Gurgen" :@"Karasian" :@"sip:Gugson@kuku": path];
-        
+    if (self.contactInfos.count > 0) {
+        NSOpenPanel *panel = [NSOpenPanel openPanel];
+        [panel setCanChooseFiles:NO];
+        [panel setCanChooseDirectories:YES];
+        [panel setAllowsMultipleSelection:NO];
+        NSInteger clicked = [panel runModal];
+        if (clicked == NSFileHandlingPanelOKButton) {
+            NSString *path = panel.directoryURL.path;
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
+            [ContactsService exportContactsByPath:path];
+        }
+    } else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Your contacts list is empty"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
     }
-    
 }
 
 - (IBAction)onImportButton:(id)sender {
-    
     
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     [panel setCanChooseFiles:YES];
     [panel setCanChooseDirectories:NO];
     [panel setAllowsMultipleSelection:NO];
-    
     NSInteger clicked = [panel runModal];
-    
+    BOOL success;
     if (clicked == NSFileHandlingPanelOKButton) {
         NSString *path = panel.directoryURL.path;
         path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
-        [ContactsService importContact:path];
+        success = [ContactsService importContacts:path];
     }
-    
-   
+    [self refreshContactList];
+    if (success) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Contacts have been succefully imported"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    }
 }
 
 - (void)refreshContactList {

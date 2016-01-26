@@ -12,6 +12,7 @@
 #import "AccountsService.h"
 #import "SDPNegotiationService.h"
 #import "CodecModel.h"
+#import "DefaultSettingsManager.h"
 
 @interface PreferencesViewController () <NSTextFieldDelegate, NSComboBoxDelegate> {
     NSMutableArray *audioCodecList;
@@ -46,6 +47,8 @@
     NSTextField *textFieldSIPPort;
     NSTextField *textFieldAudioPorts;
     NSTextField *textFieldVideoPorts;
+    
+    NSDictionary *supportedCodecsMap;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollView;
@@ -58,6 +61,14 @@
     [super viewDidLoad];
     // Do view setup here.
     
+    supportedCodecsMap = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"g722_preference",
+                                                                      @"1", @"pcmu_preference",
+                                                                      @"1", @"pcma_preference",
+                                                                      @"1", @"speex_8k_preference",
+                                                                      @"1", @"speex_16k_preference",
+                                                                      @"1", @"h264_preference",
+                                                                      @"1", @"h263_preference",
+                                                                      @"1", @"vp8_preference",  nil];
     isChanged = NO;
     
     LinphoneCore *lc = [LinphoneManager getLc];
@@ -79,7 +90,7 @@
         pt = (PayloadType *)elem->data;
         NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
-        if (pref) {
+        if (pref && [self isCodecSupported:pref]) {
             bool_t value = linphone_core_payload_type_enabled(lc, pt);
             
             CodecModel *codecModel = [[CodecModel alloc] init];
@@ -105,7 +116,7 @@
         pt = (PayloadType *)elem->data;
         NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
-        if (pref) {
+        if (pref && [self isCodecSupported:pref]) {
             bool_t value = linphone_core_payload_type_enabled(lc, pt);
             
             CodecModel *codecModel = [[CodecModel alloc] init];
@@ -325,7 +336,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"ACE_MWI_URL"];
+    textfieldValue = [DefaultSettingsManager sharedInstance].sipMwiUri;
     
     textFieldMWIURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldMWIURL.delegate = self;
@@ -359,7 +370,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"stun_url_preference"];
+    textfieldValue = [DefaultSettingsManager sharedInstance].stunServer;
     
     textFieldSTUNURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldSTUNURL.delegate = self;
@@ -406,7 +417,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [self textFieldValueWithUserDefaultsKey:@"ACE_SIP_PORT"];
+    textfieldValue = [NSString stringWithFormat:@"%d", [DefaultSettingsManager sharedInstance].sipRegisterPort];
     
     textFieldSIPPort = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldSIPPort.delegate = self;
@@ -765,5 +776,9 @@
     
     return nil;
 }
-//audio, video codecs save
+
+- (BOOL) isCodecSupported:(NSString*)codec {
+    return [[supportedCodecsMap objectForKey:codec] boolValue];
+}
+
 @end

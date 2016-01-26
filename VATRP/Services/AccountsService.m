@@ -79,8 +79,15 @@
     if (isDefault) {
         [self applyAccountsDefault:NO];
     }
-
-    [accountsMap setObject:accountModel forKeyedSubscript:accountModel.username];
+    
+   
+    
+   
+    if(username!=nil){
+        [accountsMap setObject:accountModel forKeyedSubscript:accountModel.username];
+    }else{
+        NSLog(@"Blank User Name!!");
+    }
 
     [self save];
 }

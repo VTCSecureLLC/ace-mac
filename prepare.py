@@ -231,7 +231,9 @@ def main(argv=None):
     if target.generator is None:
         # Default to "Unix Makefiles" if no target specific generator is set and the user has not defined one
         target.generator = "Unix Makefiles"
-
+    if args.generator is None:
+        # Default to "Unix Makefiles" if no target specific generator is set and the user has not defined one
+        args.generator = "Unix Makefiles"
     if args.clean or args.veryclean:
         if args.veryclean:
             target.veryclean()

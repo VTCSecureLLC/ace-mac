@@ -13,6 +13,7 @@
 
 @property (nonatomic, assign) LinphoneCall* call;
 
+- (void)createNumpadView;
 - (void)setIncomingCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;
 - (void)showSecondIncomingCallView:(LinphoneCall*)aCall;

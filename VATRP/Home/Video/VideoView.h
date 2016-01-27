@@ -21,6 +21,10 @@
 - (void)hideSecondCallView;
 - (void)setMouseInCallWindow;
 - (void)showVideoPreview;
+- (void)windowWillEnterFullScreen;
+- (void)windowDidEnterFullScreen;
+- (void)windowWillExitFullScreen;
+- (void)windowDidExitFullScreen;
 
 @property (weak) IBOutlet NSView *remoteVideoView;
 

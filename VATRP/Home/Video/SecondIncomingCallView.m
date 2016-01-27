@@ -128,4 +128,12 @@
     [self shakeWindow];
 }
 
+- (void) reorderControllersForFrame:(NSRect)frame {
+    [[self.viewAlphed animator] setFrame:NSMakeRect(frame.size.width/2 - self.viewAlphed.frame.size.width/2, 302, self.viewAlphed.frame.size.width, self.viewAlphed.frame.size.height)];
+    [[self.labelDisplayName animator] setFrame:NSMakeRect(frame.size.width/2 - self.labelDisplayName.frame.size.width/2, 488, self.labelDisplayName.frame.size.width, self.labelDisplayName.frame.size.height)];
+    [[self.buttonEndAnswer animator] setFrame:NSMakeRect(frame.size.width/2 - 244, 394, self.buttonEndAnswer.frame.size.width, self.buttonEndAnswer.frame.size.height)];
+    [[self.buttonHoldAnswer animator] setFrame:NSMakeRect(frame.size.width/2 + 14, 394, self.buttonHoldAnswer.frame.size.width, self.buttonHoldAnswer.frame.size.height)];
+    [[self.buttonDecline animator] setFrame:NSMakeRect(frame.size.width/2 - self.buttonDecline.frame.size.width/2, 317, self.buttonDecline.frame.size.width, self.buttonDecline.frame.size.height)];
+}
+
 @end

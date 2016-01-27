@@ -13,6 +13,7 @@
 
 @property (nonatomic, assign) LinphoneCall* call;
 
+- (void)createNumpadView;
 - (void)setIncomingCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;
 - (void)showSecondIncomingCallView:(LinphoneCall*)aCall;
@@ -21,6 +22,10 @@
 - (void)hideSecondCallView;
 - (void)setMouseInCallWindow;
 - (void)showVideoPreview;
+- (void)windowWillEnterFullScreen;
+- (void)windowDidEnterFullScreen;
+- (void)windowWillExitFullScreen;
+- (void)windowDidExitFullScreen;
 
 @property (weak) IBOutlet NSView *remoteVideoView;
 

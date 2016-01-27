@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C33DEB1C58CED600BF1432 /* ProviderNumberTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C33DEA1C58CED600BF1432 /* ProviderNumberTableCellView.m */; };
 		20A9933A1BB5B9F6008612F9 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; };
 		2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF51B984E49008E8333 /* ContactsWindowController.m */; };
 		2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF81B984E49008E8333 /* DialpadViewController.m */; };
@@ -508,6 +509,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04C33DE91C58CED600BF1432 /* ProviderNumberTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProviderNumberTableCellView.h; sourceTree = "<group>"; };
+		04C33DEA1C58CED600BF1432 /* ProviderNumberTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProviderNumberTableCellView.m; sourceTree = "<group>"; };
 		20A993391BB5B9F6008612F9 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		2B463EF41B984E49008E8333 /* ContactsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsWindowController.h; sourceTree = "<group>"; };
 		2B463EF51B984E49008E8333 /* ContactsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsWindowController.m; sourceTree = "<group>"; };
@@ -862,7 +865,6 @@
 				73048F6A1C46BE7600375345 /* libbelr.1.dylib in Frameworks */,
 				73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */,
 				CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */,
-
 				73ED2AF31BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF41BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF51BFCE7CE00C182F2 /* libmsbcg729.1.0.1.dylib in Frameworks */,
@@ -1017,7 +1019,7 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-                73048F691C46BE7600375345 /* libbelr.1.dylib */,
+				73048F691C46BE7600375345 /* libbelr.1.dylib */,
 				73048F671C46BE6F00375345 /* libbelcard.1.dylib */,
 				CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */,
 				20A993391BB5B9F6008612F9 /* HockeySDK.framework */,
@@ -1275,6 +1277,8 @@
 				CEC641061C0C86F500BA927F /* ProviderTableCellView.m */,
 				CE48DF8F1C04ABEB0046E727 /* ContactTableCellView.h */,
 				CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */,
+				04C33DE91C58CED600BF1432 /* ProviderNumberTableCellView.h */,
+				04C33DEA1C58CED600BF1432 /* ProviderNumberTableCellView.m */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -1922,6 +1926,7 @@
 				4A13AA171BC6A5B9000C9358 /* TestingViewController.m in Sources */,
 				4AB2A2E61BF34469006AC5C6 /* RecentsView.m in Sources */,
 				4AB2A2F51BF4768D006AC5C6 /* VideoView.m in Sources */,
+				04C33DEB1C58CED600BF1432 /* ProviderNumberTableCellView.m in Sources */,
 				2BA68DD41B98615500145575 /* ServiceSelectionViewController.m in Sources */,
 				2BA68DDB1B98733E00145575 /* HomeWindowController.m in Sources */,
 				5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */,

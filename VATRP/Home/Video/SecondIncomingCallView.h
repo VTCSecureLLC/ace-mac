@@ -13,4 +13,6 @@
 
 @property (nonatomic, assign) LinphoneCall* call;
 
+- (void) reorderControllersForFrame:(NSRect)frame;
+
 @end

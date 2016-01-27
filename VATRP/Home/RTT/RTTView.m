@@ -56,6 +56,15 @@ const NSInteger SIP_SIMPLE=1;
     [ViewManager sharedInstance].rttView = self;
 }
 
+- (void) setCustomFrame:(NSRect)frame {
+    self.frame = frame;
+    [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
+}
+
+- (void) setFrame:(NSRect)frame {
+    [super setFrame:frame];
+}
+
 - (void) viewWillAppear {
     
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];

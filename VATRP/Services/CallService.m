@@ -263,12 +263,12 @@
 
 - (void) openCallWindow {
     NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
-        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
+    if (window.frame.origin.x + 1030 > [[NSScreen mainScreen] frame].size.width) {
+        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1030 - 5, window.frame.origin.y, 1030, window.frame.size.height)
                  display:YES
                  animate:YES];
     } else {
-        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1030, window.frame.size.height)
                  display:YES
                  animate:YES];
     }
@@ -278,6 +278,13 @@
     LinphoneCore *lc = [LinphoneManager getLc];
 
     if (!linphone_core_get_calls(lc)) {
+        
+        if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+            [window toggleFullScreen:self];
+            [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+        }
+        
         NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
                  display:YES

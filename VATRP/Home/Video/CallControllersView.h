@@ -21,6 +21,7 @@
 - (void)dismisCallInfoWindow;
 - (void)performChatButtonClick;
 - (BOOL)bool_chat_window_open;
+- (void)set_bool_chat_window_open:(BOOL)open;
 @end
 
 @protocol CallControllersViewDelegate <NSObject>

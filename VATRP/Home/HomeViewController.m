@@ -18,12 +18,10 @@
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
 #import "AppDelegate.h"
-#import "ProviderNumberTableCellView.h"
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     BackgroundedView *viewCurrent;
     NSArray *providersArray;
-    NSArray *providerNumbersArray;
     NSColor *windowDefaultColor;
 }
 @property (weak) IBOutlet NSImageView *imageViewVoiceMail;
@@ -37,10 +35,6 @@
 @property (weak) IBOutlet NSTableView *providerTableView;
 @property (weak) IBOutlet NSView *providersView;
 
-@property (weak) IBOutlet NSTableView *providerNumbersTableView;
-@property (weak) IBOutlet NSView *providerNumbersView;
-@property (weak) IBOutlet BackgroundedView *providerNumbersBackgroundView;
-
 @property bool hasProviderAlertBeenShown;
 @end
 
@@ -51,6 +45,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    [self activateMenuItems];
     
     windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
@@ -67,7 +62,6 @@
     
     viewCurrent = (BackgroundedView*)self.recentsView;
     [self initProvidersArray];
-    [self initProviderNumbersArray];
     [self.dialPadView setProvButtonImage:[NSImage imageNamed:@"provider_logo_zvrs"]];
     [self.providerTableView reloadData];
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
@@ -159,7 +153,6 @@
 
 - (void) didClickDockViewRecents:(DockView*)docView_ {
     self.providersView.hidden = YES;
-    _providerNumbersBackgroundView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     self.recentsView.callsSegmentControll.hidden = NO;
@@ -172,7 +165,6 @@
 
 - (void) didClickDockViewContacts:(DockView*)docView_ {
     self.providersView.hidden = YES;
-    _providerNumbersBackgroundView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     viewCurrent = (BackgroundedView*)self.contactsView;
@@ -209,7 +201,6 @@
 //    ResourcesViewController *resourceViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"DHResources"];
 //
     self.providersView.hidden = YES;
-    _providerNumbersBackgroundView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     //viewCurrent = (BackgroundedView*)resourceViewController.view;
@@ -224,7 +215,6 @@
 
 - (void) didClickDockViewSettings:(DockView*)dockView_ {
     self.providersView.hidden = YES;
-    _providerNumbersBackgroundView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     viewCurrent = (BackgroundedView*)self.settingsView;
@@ -250,49 +240,19 @@
     self.providerTableView.dataSource = self;
 }
 
-- (void)initProviderNumbersArray {
-    providerNumbersArray = @[@{@"name" : @"FEDVRS",
-                               @"phone": @"877-709-5797"},
-                             @{@"name" : @"ZVRS",
-                               @"phone": @"888-888-1116"},
-                             @{@"name" : @"Purple",
-                               @"phone": @"877-467-4877"},
-                             @{@"name" : @"Sorenson",
-                               @"phone": @"866-327-8877"},
-                             @{@"name" : @"Convo",
-                               @"phone": @"877-363-7575"},
-                             @{@"name" : @"Global EN.us",
-                               @"phone": @"888-472-6778"},
-                             @{@"name" : @"Global EN.es",
-                               @"phone": @"888-472-6768"},
-                             @{@"name" : @"CAAG",
-                               @"phone": @"855-877-2224"}];
-    self.providerNumbersTableView.delegate = self;
-    self.providerNumbersTableView.dataSource = self;
-}
-
 #pragma mark - TableView delegate methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    if (tableView == self.providerNumbersTableView) {
-        return providerNumbersArray.count;
-    } else {
-        return providersArray.count;
-    }
+    return providersArray.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
-    if (tableView == self.providerNumbersTableView) {
-        ProviderNumberTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerNumberCell" owner:self];
-        NSDictionary *providerInfo = [providerNumbersArray objectAtIndex:row];
-        [cellView setupCellWithProviderInfo:providerInfo];
-        return cellView;
-    } else {
-        ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
-        NSString *imageName = [providersArray objectAtIndex:row];
-        [cellView.providerImageView setImage:[NSImage imageNamed:imageName]];
-        return cellView;
-    }
+    ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
+    
+    NSString *imageName = [providersArray objectAtIndex:row];
+    [cellView.providerImageView setImage:[NSImage imageNamed:imageName]];
+    
+    return cellView;
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
@@ -322,16 +282,6 @@
 //    }
 }
 
-- (IBAction)didSelectProviderNumber:(id)sender {
-    NSInteger selectedRow = [self.providerNumbersTableView selectedRow];
-        if (selectedRow >= 0 && selectedRow < providerNumbersArray.count) {
-            _providerNumbersBackgroundView.hidden = YES;
-            NSDictionary *providerInfo = [providerNumbersArray objectAtIndex:selectedRow];
-            NSString *providerPhoneNumber = [providerInfo objectForKey:@"phone"];
-            NSString *providerName = [providerInfo objectForKey:@"name"];
-            [[LinphoneManager instance] call:providerPhoneNumber displayName:providerName transfer:NO];
-        }
-}
 
 - (IBAction)onVideoMailClicked:(id)sender {
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"video_mail_uri"]){
@@ -350,7 +300,6 @@
 }
 
 - (IBAction)onButtonProfileImage:(id)sender {
-    _providerNumbersBackgroundView.hidden = !_providerNumbersBackgroundView.hidden;
 }
 
 - (ProfileView*) getProfileView {
@@ -401,5 +350,51 @@
     self.isAppFullScreen = NO;
 }
 
+- (void)activateMenuItems {
+    [[[[NSApplication sharedApplication] delegate] menuItemFEDVRS] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemZVRS] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemPurple] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemSorenson] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemConvo] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemGlobalENus] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemGlobalENes] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemCAAG] setAction:@selector(callToProvider:)];
+}
+
+- (void)callToProvider:(NSMenuItem*)sender {
+    
+    NSString *phoneNumber = [[sender title] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [[LinphoneManager instance] call:phoneNumber displayName:[self providerNameByPhoneNumber:phoneNumber] transfer:NO];
+}
+
+- (NSString*)providerNameByPhoneNumber:(NSString*)phoneNumber {
+    
+    if ([phoneNumber isEqualToString:@"877-709-5797"]) {
+        return @"FEDVRS";
+    }
+    if ([phoneNumber isEqualToString:@"888-888-1116"]) {
+        return @"ZVRS";
+    }
+    if ([phoneNumber isEqualToString:@"877-467-4877"]) {
+        return @"Purple";
+    }
+    if ([phoneNumber isEqualToString:@"866-327-8877"]) {
+        return @"Sorenson";
+    }
+    if ([phoneNumber isEqualToString:@"877-363-7575"]) {
+        return @"Convo";
+    }
+    if ([phoneNumber isEqualToString:@"888-472-6778"]) {
+        return @"Global EN.us";
+    }
+    if ([phoneNumber isEqualToString:@"888-472-6768"]) {
+        return @"Global EN.es";
+    }
+    if ([phoneNumber isEqualToString:@"855-877-2224"]) {
+        return @"CAAG";
+    }
+    
+    return @"N/A";
+}
 
 @end

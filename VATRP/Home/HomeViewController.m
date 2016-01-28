@@ -45,6 +45,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    [self activateMenuItems];
     
     windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
@@ -281,6 +282,7 @@
 //    }
 }
 
+
 - (IBAction)onVideoMailClicked:(id)sender {
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"video_mail_uri"]){
         NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_mail_uri"];
@@ -295,6 +297,9 @@
     NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
 //    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
     [window toggleFullScreen:self];
+}
+
+- (IBAction)onButtonProfileImage:(id)sender {
 }
 
 - (ProfileView*) getProfileView {
@@ -345,5 +350,51 @@
     self.isAppFullScreen = NO;
 }
 
+- (void)activateMenuItems {
+    [[[[NSApplication sharedApplication] delegate] menuItemFEDVRS] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemZVRS] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemPurple] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemSorenson] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemConvo] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemGlobalENus] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemGlobalENes] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemCAAG] setAction:@selector(callToProvider:)];
+}
+
+- (void)callToProvider:(NSMenuItem*)sender {
+    
+    NSString *phoneNumber = [[sender title] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [[LinphoneManager instance] call:phoneNumber displayName:[self providerNameByPhoneNumber:phoneNumber] transfer:NO];
+}
+
+- (NSString*)providerNameByPhoneNumber:(NSString*)phoneNumber {
+    
+    if ([phoneNumber isEqualToString:@"877-709-5797"]) {
+        return @"FEDVRS";
+    }
+    if ([phoneNumber isEqualToString:@"888-888-1116"]) {
+        return @"ZVRS";
+    }
+    if ([phoneNumber isEqualToString:@"877-467-4877"]) {
+        return @"Purple";
+    }
+    if ([phoneNumber isEqualToString:@"866-327-8877"]) {
+        return @"Sorenson";
+    }
+    if ([phoneNumber isEqualToString:@"877-363-7575"]) {
+        return @"Convo";
+    }
+    if ([phoneNumber isEqualToString:@"888-472-6778"]) {
+        return @"Global EN.us";
+    }
+    if ([phoneNumber isEqualToString:@"888-472-6768"]) {
+        return @"Global EN.es";
+    }
+    if ([phoneNumber isEqualToString:@"855-877-2224"]) {
+        return @"CAAG";
+    }
+    
+    return @"N/A";
+}
 
 @end

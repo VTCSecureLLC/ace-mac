@@ -293,7 +293,7 @@
     
     textFieldPreferredFPS = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 100, 20)];
     textFieldPreferredFPS.delegate = self;
-    textFieldPreferredFPS.floatValue = fps ? fps : 15.0;
+    textFieldPreferredFPS.floatValue = fps ? fps : 30.0;
     textFieldPreferredFPS.editable = YES;
     [self.scrollView.documentView addSubview:textFieldPreferredFPS];
 

@@ -18,6 +18,7 @@
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
 #import "AppDelegate.h"
+#import "NSImageView+WebCache.h"
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     BackgroundedView *viewCurrent;
@@ -67,6 +68,10 @@
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
     [self setObservers];
+    NSImageView *imgView;
+    
+    NSImage *img;
+    [imgView setImage:img];
     
     self.hasProviderAlertBeenShown = false;
     
@@ -248,9 +253,9 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
     ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
-    
-    NSString *imageName = [providersArray objectAtIndex:row];
-    [cellView.providerImageView setImage:[NSImage imageNamed:imageName]];
+    NSString *imageName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%ld_logo", (long)row]];
+    NSURL *imageURL = [NSURL URLWithString:imageName];
+    [cellView.providerImageView setImageURL:imageURL];
     
     return cellView;
 }
@@ -292,11 +297,11 @@
 
 
 - (IBAction)onButtonProv:(id)sender {
-//    self.providersView.hidden = !self.providersView.hidden;
+    self.providersView.hidden = !self.providersView.hidden;
     
-    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-//    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
-    [window toggleFullScreen:self];
+//    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+////    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
+//    [window toggleFullScreen:self];
 }
 
 - (IBAction)onButtonProfileImage:(id)sender {

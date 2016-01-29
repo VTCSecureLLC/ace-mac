@@ -86,6 +86,8 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
                     
                     [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"domain"] forKey:[NSString stringWithFormat:@"provider%d_domain", i]];
                     
+                    [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"icon2x"] forKey:[NSString stringWithFormat:@"provider%d_logo", i]];
+                    
                 }
                 [self.comboBoxProviderSelect addItemsWithObjectValues:_cdnResources];
                 [self.comboBoxProviderSelect selectItemAtIndex:0];

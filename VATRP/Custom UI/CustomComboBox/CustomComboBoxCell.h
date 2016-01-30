@@ -13,4 +13,6 @@
 @property (weak, nonatomic) IBOutlet NSImageView *imgView;
 @property (weak, nonatomic) IBOutlet NSTextField *txtLabel;
 
+- (void) setBackgroundColor:(NSColor*)color;
+
 @end

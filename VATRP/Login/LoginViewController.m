@@ -126,6 +126,8 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
     
 }
 
+#pragma mark - CustomComboBox delegate methods
+
 - (void)customComboBox:(CustomComboBox *)sender didSelectedItem:(NSDictionary *)selectedItem {
     self.textFieldDomain.stringValue = [selectedItem objectForKey:@"domain"];
 }

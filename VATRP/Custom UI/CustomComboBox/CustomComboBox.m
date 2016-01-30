@@ -38,6 +38,7 @@
     _backgroundColor = [NSColor whiteColor];
     [self setWantsLayer: YES];
     [self.layer setBorderWidth:0.2];
+    [_itemsTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 }
 
 #pragma mark - TableView delegate methods
@@ -52,10 +53,16 @@
     NSDictionary *dict = [_dataSource objectAtIndex:row];
     NSString *imageName = [dict objectForKey:@"providerLogo"];
     NSURL *imageURL = [NSURL URLWithString:imageName];
+    NSString *providerName = [dict objectForKey:@"name"];
     
     [cellView.imgView setImageURL:imageURL];
-    [cellView.txtLabel setStringValue:[dict objectForKey:@"name"]];
+    [cellView.txtLabel setStringValue:providerName];
     
+    if ([providerName isEqualToString:[_selectedItemTextField stringValue]]) {
+        [cellView setBackgroundColor:[NSColor colorWithCalibratedRed:236.0f/255.0f green:236.0f/255.0f blue:236.0f/255.0f alpha:1.0f]];
+    } else {
+        [cellView setBackgroundColor:[NSColor whiteColor]];
+    }
     return cellView;
 }
 
@@ -68,6 +75,9 @@
     if (selectedRow >= 0 && selectedRow < _dataSource.count) {
         [self selectItemAtIndex:selectedRow];
         self.backgroundView.hidden = YES;
+        if ([self.delegate respondsToSelector:@selector(customComboBox:didOpenedComboTable:)]) {
+            [self.delegate customComboBox:self didOpenedComboTable:NO];
+        }
         if ([self.delegate respondsToSelector:@selector(customComboBox:didSelectedItem:)]) {
             [self.delegate customComboBox:self didSelectedItem:[_dataSource objectAtIndex:selectedRow]];
         }
@@ -77,8 +87,14 @@
 - (IBAction)onExpandButton:(id)sender {
     _backgroundView.hidden = !_backgroundView.hidden;
     if (_backgroundView.hidden == NO) {
-        //[NSTableView selectRowIndexes:byExendingSelection:]
+        if ([self.delegate respondsToSelector:@selector(customComboBox:didOpenedComboTable:)]) {
+            [self.delegate customComboBox:self didOpenedComboTable:YES];
+        }
         [self.itemsTableView reloadData];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(customComboBox:didOpenedComboTable:)]) {
+            [self.delegate customComboBox:self didOpenedComboTable:NO];
+        }
     }
 }
 
@@ -88,6 +104,17 @@
     NSURL *imageURL = [NSURL URLWithString:imageName];
     [_itemImageView setImageURL:imageURL];
     [_selectedItemTextField setStringValue:[dict objectForKey:@"name"]];
+}
+
+- (void)selectItemByName:(NSString*)selectItemName {
+    NSUInteger index = [_dataSource indexOfObjectPassingTest:^BOOL(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+                            return [[dict objectForKey:@"name"] isEqual:selectItemName];
+                        }];
+    if (index != NSNotFound) {
+        [self selectItemAtIndex:(int)index];
+    } else {
+        [self selectItemAtIndex:0];
+    }
 }
 
 @end

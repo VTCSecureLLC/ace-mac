@@ -9,8 +9,9 @@
 #import "AddContactDialogBox.h"
 #import "LinphoneManager.h"
 #import "Utils.h"
+#import "CustomComboBox.h"
 
-@interface AddContactDialogBox ()<NSComboBoxDelegate> {
+@interface AddContactDialogBox ()<NSComboBoxDelegate, CustomComboBoxDelegate> {
     NSMutableArray *providerNames;
     NSString *providerAddress;
     NSDictionary *providers;
@@ -19,6 +20,8 @@
 @property (weak) IBOutlet NSTextField *nameTextField;
 @property (weak) IBOutlet NSTextField *phoneTextField;
 @property (weak) IBOutlet NSComboBox *providerComboBox;
+@property (weak) IBOutlet NSButton *doneButton;
+@property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
 
 @end
 
@@ -37,6 +40,7 @@
     } else {
         [self setTitle:@"Add contact"];
     }
+    [self initCustomComboBox];
     [self.providerComboBox reloadData];
 }
 
@@ -49,6 +53,12 @@
                   @"Purple VRS" : @"prpl.net",
                   @"Global VRS": @"glbl.net",
                   @"Convo Relay": @"cnvr.net"};
+}
+
+- (void)initCustomComboBox {
+    _customComboBox.delegate = self;
+    _customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+    [_customComboBox selectItemByName:self.oldProviderName];
 }
 
 #pragma mark - Buttons action functions
@@ -122,6 +132,16 @@
     }
     
     return sipUri;
+}
+
+#pragma mark - CustomComboBox delegate methods
+
+- (void)customComboBox:(CustomComboBox *)sender didSelectedItem:(NSDictionary *)selectedItem {
+    providerAddress = [selectedItem objectForKey:@"domain"];
+}
+
+- (void)customComboBox:(CustomComboBox *)sender didOpenedComboTable:(BOOL)isOpened {
+    [_doneButton setEnabled:!isOpened];
 }
 
 @end

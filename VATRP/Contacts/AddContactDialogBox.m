@@ -32,7 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initProvider];
+    //[self initProvider];
     if (self.isEditing) {
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
@@ -44,21 +44,17 @@
     [self.providerComboBox reloadData];
 }
 
-- (void)initProvider {
-    providerNames = [NSMutableArray arrayWithObjects:@"Sorenson VRS", @"ZVRS", @"CAAG", @"Purple VRS", @"Global VRS", @"Convo Relay", nil];
-    //TODO: Change this implementation after definitely decided the providers issue.
-    providers = @{@"Sorenson VRS" : @"vrs.net",
-                  @"ZVRS": @"zvrs.net",
-                  @"CAAG": @"caag.net",
-                  @"Purple VRS" : @"prpl.net",
-                  @"Global VRS": @"glbl.net",
-                  @"Convo Relay": @"cnvr.net"};
-}
-
 - (void)initCustomComboBox {
     _customComboBox.delegate = self;
     _customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
-    [_customComboBox selectItemByName:self.oldProviderName];
+    if (self.isEditing) {
+        [_customComboBox selectItemByDomain:self.oldProviderName];
+        providerAddress = self.oldProviderName;
+    } else {
+        [_customComboBox selectItemAtIndex:0];
+        NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
+        providerAddress = [dict objectForKey:@"domain"];
+    }
 }
 
 #pragma mark - Buttons action functions
@@ -69,7 +65,7 @@
         [self dismissController:nil];
         return;
     }
-    [self makeProviderName];
+   // [self makeProviderName];
     if (self.isEditing) {
         if ([self.oldName isEqualToString:[self.nameTextField stringValue]] &&
             [self.oldPhone isEqualToString:[self.phoneTextField stringValue]]) {
@@ -127,7 +123,7 @@
     if ([Utils nsStringIsValidSip:sipUri]) {
         sipUri = [@"sip:" stringByAppendingString:sipUri];
     } else {
-        [self makeProviderName];
+        //[self makeProviderName];
         sipUri = [Utils makeSipURIWithAccountName:str andProviderAddress:providerAddress];
     }
     

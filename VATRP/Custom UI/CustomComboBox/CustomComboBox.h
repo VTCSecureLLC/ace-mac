@@ -24,5 +24,7 @@
 
 - (void)selectItemAtIndex:(int)selectedItemIndex;
 - (void)selectItemByName:(NSString*)selectItemName;
+- (void)selectItemByDomain:(NSString*)selectItemDomain;
+- (NSUInteger)indexOfSelectedItem;
 
 @end

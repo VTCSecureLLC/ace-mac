@@ -297,7 +297,7 @@
 
 
 - (IBAction)onButtonProv:(id)sender {
-    self.providersView.hidden = !self.providersView.hidden;
+ //   self.providersView.hidden = !self.providersView.hidden;
     
 //    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
 ////    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;

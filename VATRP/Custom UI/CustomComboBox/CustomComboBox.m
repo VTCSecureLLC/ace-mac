@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet NSButton *comboButton;
 @property (weak, nonatomic) IBOutlet NSTextField *selectedItemTextField;
 @property (weak, nonatomic) IBOutlet BackgroundedView *backgroundView;
+@property  NSUInteger selectedItemIndex;
 
 @end
 
@@ -39,6 +40,7 @@
     [self setWantsLayer: YES];
     [self.layer setBorderWidth:0.2];
     [_itemsTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+    _selectedItemIndex = 0;
 }
 
 #pragma mark - TableView delegate methods
@@ -98,12 +100,17 @@
     }
 }
 
+- (NSUInteger)indexOfSelectedItem {
+    return _selectedItemIndex;
+}
+
 - (void)selectItemAtIndex:(int)selectedItemIndex {
     NSDictionary *dict = [_dataSource objectAtIndex:selectedItemIndex];
     NSString *imageName = [dict objectForKey:@"providerLogo"];
     NSURL *imageURL = [NSURL URLWithString:imageName];
     [_itemImageView setImageURL:imageURL];
     [_selectedItemTextField setStringValue:[dict objectForKey:@"name"]];
+    _selectedItemIndex = selectedItemIndex;
 }
 
 - (void)selectItemByName:(NSString*)selectItemName {
@@ -112,8 +119,23 @@
                         }];
     if (index != NSNotFound) {
         [self selectItemAtIndex:(int)index];
+        _selectedItemIndex = index;
     } else {
         [self selectItemAtIndex:0];
+        _selectedItemIndex = 0;
+    }
+}
+
+- (void)selectItemByDomain:(NSString*)selectItemDomain {
+    NSUInteger index = [_dataSource indexOfObjectPassingTest:^BOOL(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+        return [[dict objectForKey:@"domain"] isEqual:selectItemDomain];
+    }];
+    if (index != NSNotFound) {
+        [self selectItemAtIndex:(int)index];
+        _selectedItemIndex = index;
+    } else {
+        [self selectItemAtIndex:0];
+        _selectedItemIndex = 0;
     }
 }
 

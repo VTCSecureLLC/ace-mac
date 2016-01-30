@@ -157,7 +157,7 @@ BOOL isRTTLocallyEnabled;
 }
 - (void)performChatButtonClick {
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:kREAL_TIME_TEXT_ENABLED]){
-        if([[NSUserDefaults standardUserDefaults] objectForKey:kREAL_TIME_TEXT_ENABLED]){
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]){
             isRTTLocallyEnabled = YES;
         }
     }

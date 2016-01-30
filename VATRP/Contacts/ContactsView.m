@@ -167,7 +167,15 @@
 - (void)refreshContactList {
     [self.contactInfos removeAllObjects];
     self.contactInfos = [[LinphoneContactService sharedInstance] contactList];
+    self.contactInfos = [self sortListAlphabetically:self.contactInfos];
     [self.tableViewContacts reloadData];
+}
+
+-(NSMutableArray*) sortListAlphabetically:(NSMutableArray*) list{
+    NSSortDescriptor *firstNameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sortDescripters = @[firstNameDescriptor];
+    NSArray *sortedContacts = [list sortedArrayUsingDescriptors:sortDescripters];
+    return [sortedContacts mutableCopy];
 }
 
 - (void)refreshContactListWithBySearchText:(NSString*)searchedText {

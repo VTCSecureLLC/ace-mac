@@ -15,9 +15,10 @@
 #import "RegistrationService.h"
 #import "Utils.h"
 #import "DefaultSettingsManager.h"
+#import "CustomComboBox.h"
 
 
-@interface LoginViewController ()<DefaultSettingsManagerDelegate> {
+@interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
@@ -33,6 +34,7 @@
 @property (weak) IBOutlet NSComboBox *comboBoxProviderSelect;
 @property (weak) NSURLSession *urlSession;
 @property NSMutableArray *cdnResources;
+@property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
 @end
 
 @implementation LoginViewController
@@ -42,6 +44,7 @@
     // Do view setup here.
     [self.prog_Signin setHidden:YES];
     [self.loginButton setEnabled:YES];
+    _customComboBox.delegate = self;
 }
 
 - (void)loadView {
@@ -78,6 +81,7 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
             if(!jsonParsingError){
                 NSDictionary *resource;
                 _cdnResources = [[NSMutableArray alloc] init];
+                [[NSUserDefaults standardUserDefaults] setInteger:[resources count] forKey:@"cdnResourcesCapacity"];
                 for(int i=0; i < [resources count];i++){
                     resource= [resources objectAtIndex:i];
                     [_cdnResources addObject:[resource objectForKey:@"name"]];
@@ -89,6 +93,11 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
                     [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"icon2x"] forKey:[NSString stringWithFormat:@"provider%d_logo", i]];
                     
                 }
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+                [self.customComboBox selectItemAtIndex:0];
+                
                 [self.comboBoxProviderSelect addItemsWithObjectValues:_cdnResources];
                 [self.comboBoxProviderSelect selectItemAtIndex:0];
             }
@@ -115,6 +124,10 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
         self.textFieldDomain.stringValue = domain;
     }
     
+}
+
+- (void)customComboBox:(CustomComboBox *)sender didSelectedItem:(NSDictionary *)selectedItem {
+    self.textFieldDomain.stringValue = [selectedItem objectForKey:@"domain"];
 }
 
 //-(void)dealloc{

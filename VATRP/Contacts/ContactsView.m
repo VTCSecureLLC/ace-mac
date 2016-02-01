@@ -167,7 +167,7 @@
         if (clicked == NSFileHandlingPanelOKButton) {
             NSString *path = panel.directoryURL.path;
             path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
-            [ContactsService exportContactsByPath:path];
+            linphone_core_export_friends_as_vcard4_file([LinphoneManager getLc], [path UTF8String]);
         }
     } else {
         NSAlert *alert = [[NSAlert alloc] init];
@@ -185,17 +185,24 @@
     [panel setCanChooseDirectories:NO];
     [panel setAllowsMultipleSelection:NO];
     NSInteger clicked = [panel runModal];
-    BOOL success;
+    int contactsCount;
     if (clicked == NSFileHandlingPanelOKButton) {
-        NSString *path = panel.directoryURL.path;
-        path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
-        success = [ContactsService importContacts:path];
+        NSString *filePath = [[[panel URLs] objectAtIndex:0] absoluteString];
+        NSArray* tmpStr = [filePath componentsSeparatedByString:@"file://"];
+        NSString *pureFilePath = [tmpStr objectAtIndex:1];
+        contactsCount = linphone_core_import_friends_from_vcard4_file([LinphoneManager getLc], [pureFilePath UTF8String]);
     }
-    [self refreshContactList];
-    if (success) {
+    if (contactsCount > 0) {
+        [self refreshContactList];
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"OK"];
         [alert setMessageText:@"Contacts have been succefully imported"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    } else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"The file doesn't consist any vcard contact"];
         [alert setAlertStyle:NSWarningAlertStyle];
         [alert runModal];
     }
@@ -204,7 +211,15 @@
 - (void)refreshContactList {
     [self.contactInfos removeAllObjects];
     self.contactInfos = [[LinphoneContactService sharedInstance] contactList];
+    self.contactInfos = [self sortListAlphabetically:self.contactInfos];
     [self.tableViewContacts reloadData];
+}
+
+-(NSMutableArray*) sortListAlphabetically:(NSMutableArray*) list{
+    NSSortDescriptor *firstNameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sortDescripters = @[firstNameDescriptor];
+    NSArray *sortedContacts = [list sortedArrayUsingDescriptors:sortDescripters];
+    return [sortedContacts mutableCopy];
 }
 
 - (void)refreshContactListWithBySearchText:(NSString*)searchedText {

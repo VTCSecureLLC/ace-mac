@@ -31,6 +31,8 @@
     KeypadWindowController *keypadWindowController;
     
     NSString *windowTitle, *address;
+
+    NumpadView *numpadView;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -39,7 +41,6 @@
 
 @property (weak) IBOutlet BackgroundedView *callControllsConteinerView;
 @property (weak) IBOutlet CallControllersView *callControllersView;
-@property (weak) IBOutlet NumpadView *numpadView;
 @property (weak) IBOutlet SecondIncomingCallView *secondIncomingCallView;
 @property (weak) IBOutlet SecondCallView *secondCallView;
 
@@ -88,6 +89,12 @@
 //    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
+}
+
+- (void)createNumpadView {
+    numpadView = [[NumpadView alloc] initWithFrame:NSMakeRect(0, 0, 720, 700)];
+    numpadView.hidden = YES;
+    [self.callControllsConteinerView addSubview:numpadView positioned:NSWindowAbove relativeTo:nil];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -201,7 +208,7 @@
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             [self displayCallError:call message:@"Call Error"];
-            self.numpadView.hidden = YES;
+            numpadView.hidden = YES;
             self.call = nil;
 
             break;
@@ -213,7 +220,7 @@
             linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
 
             self.call = nil;
-            self.numpadView.hidden = YES;
+            numpadView.hidden = YES;
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             
@@ -322,7 +329,7 @@
 #pragma mark - CallControllersView Delegate
 
 - (void) didClickCallControllersViewNumpad:(CallControllersView*)callControllersView_ {
-    self.numpadView.hidden = !self.numpadView.hidden;
+    numpadView.hidden = !numpadView.hidden;
 }
 
 
@@ -502,6 +509,9 @@
 
 - (void)windowWillExitFullScreen {
     [self hideAppMainBody:NO];
+    
+    [[numpadView animator] setFrame:NSMakeRect(0, 0, 720, 700)];
+    [numpadView setCustomFrame:NSMakeRect(0, 0, 720, 700)];
 }
 
 - (void)windowDidExitFullScreen {
@@ -565,9 +575,8 @@
     [[self.secondIncomingCallView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [self.secondIncomingCallView reorderControllersForFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [[self.secondCallView animator] setFrame:NSMakeRect(6, callViewFrame.size.height - 190, self.secondCallView.frame.size.width, self.secondCallView.frame.size.height)];
-    [[self.numpadView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
-//    [self.numpadView setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
-    [self.numpadView setCustomFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    [[numpadView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    [numpadView setCustomFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
 }
 
 @end

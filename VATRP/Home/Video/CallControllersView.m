@@ -48,6 +48,9 @@
 
 @synthesize delegate = _delegate;
 
+
+BOOL isRTTEnabled;
+BOOL isRTTLocallyEnabled;
 - (void) awakeFromNib {
     [super awakeFromNib];
 
@@ -153,6 +156,36 @@
     }
 }
 - (void)performChatButtonClick {
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:kREAL_TIME_TEXT_ENABLED]){
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]){
+            isRTTLocallyEnabled = YES;
+        }
+    }
+    
+    if(isRTTLocallyEnabled){
+        if(call){
+            if(linphone_call_get_state(call) == LinphoneCallStreamsRunning){
+                if(linphone_call_params_realtime_text_enabled(linphone_call_get_remote_params(call))){
+                    isRTTEnabled = YES;
+                }
+                else{
+                    isRTTEnabled = NO;
+                }
+            }
+            else{
+                isRTTEnabled = YES;
+            }
+        }
+    }
+    
+    if(!isRTTEnabled){
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"RTT has been disabled for this session"];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+        return;
+    }
     
     HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
 

@@ -42,6 +42,10 @@
     _selectedItemIndex = 0;
 }
 
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+    return YES;
+}
+
 #pragma mark - TableView delegate methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
@@ -105,9 +109,7 @@
 - (void)selectItemAtIndex:(int)selectedItemIndex {
     NSDictionary *dict = [_dataSource objectAtIndex:selectedItemIndex];
     NSString *imageName = [dict objectForKey:@"providerLogo"];
-    //NSURL *imageURL = [NSURL URLWithString:imageName];
     [_itemImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
-    // [_itemImageView setImageURL:imageURL];
     [_selectedItemTextField setStringValue:[dict objectForKey:@"name"]];
     _selectedItemIndex = selectedItemIndex;
 }

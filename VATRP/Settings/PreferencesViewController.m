@@ -638,6 +638,11 @@
     isChanged = YES;
 }
 
+-(void)controlTextDidChange:(NSNotification *)obj{
+    
+    isChanged = YES;
+}
+
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
     isChanged = YES;
     
@@ -690,7 +695,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:@"video_preferred_size_preference"];
 
     linphone_core_set_preferred_framerate(lc, textFieldPreferredFPS.floatValue);
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:@"stun_url_preference"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [SettingsService setStun:checkboxStun.state];

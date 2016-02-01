@@ -25,6 +25,7 @@
     NSArray *providersArray;
     NSColor *windowDefaultColor;
 }
+
 @property (weak) IBOutlet NSImageView *imageViewVoiceMail;
 @property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
 

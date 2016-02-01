@@ -18,6 +18,7 @@
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
 #import "AppDelegate.h"
+#import "Utils.h"
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     BackgroundedView *viewCurrent;
@@ -62,11 +63,15 @@
     
     viewCurrent = (BackgroundedView*)self.recentsView;
     [self initProvidersArray];
-    [self.dialPadView setProvButtonImage:[NSImage imageNamed:@"provider_logo_zvrs"]];
+    [self setProviderInitialLogo];
     [self.providerTableView reloadData];
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
     [self setObservers];
+    NSImageView *imgView;
+    
+    NSImage *img;
+    [imgView setImage:img];
     
     self.hasProviderAlertBeenShown = false;
     
@@ -234,10 +239,16 @@
 }
 
 - (void)initProvidersArray {
-    providersArray = @[@"provider_logo_caag", @"provider_logo_convorelay", @"provider_logo_globalvrs",
-                       @"provider_logo_purplevrs", @"provider_logo_sorenson", @"provider_logo_zvrs"];
+    providersArray = [[Utils cdnResources] mutableCopy];
     self.providerTableView.delegate = self;
     self.providerTableView.dataSource = self;
+}
+
+- (void)setProviderInitialLogo {
+    NSDictionary *dict = [providersArray objectAtIndex:0];
+    NSString *imageName = [dict objectForKey:@"providerLogo"];
+    NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
+    [self.dialPadView setProvButtonImage:providerLogo];
 }
 
 #pragma mark - TableView delegate methods
@@ -248,9 +259,9 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
     ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
-    
-    NSString *imageName = [providersArray objectAtIndex:row];
-    [cellView.providerImageView setImage:[NSImage imageNamed:imageName]];
+    NSDictionary *dict = [providersArray objectAtIndex:row];
+    NSString *imageName = [dict objectForKey:@"providerLogo"];
+    [cellView.providerImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
     
     return cellView;
 }
@@ -260,28 +271,15 @@
 }
 
 - (IBAction)didSelectedTableRow:(id)sender {
-    // VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
-    // show this once so that the user can look to see the options but not make a selection.
-    if (!self.hasProviderAlertBeenShown)
-    {
-        NSAlert *alert = [[NSAlert alloc]init];
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Provider Selection will be available in General Release"];
-        [alert runModal];
-        self.hasProviderAlertBeenShown = true;
+    NSInteger selectedRow = [self.providerTableView selectedRow];
+    if (selectedRow >= 0 && selectedRow < providersArray.count) {
+        NSDictionary *dict = [providersArray objectAtIndex:selectedRow];
+        NSString *imageName = [dict objectForKey:@"providerLogo"];
+        NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
+        [self.dialPadView setProvButtonImage:providerLogo];
+        self.providersView.hidden = YES;
     }
-    self.providersView.hidden = YES;
-    
-// VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
-//    NSInteger selectedRow = [self.providerTableView selectedRow];
-//    if (selectedRow >= 0 && selectedRow < providersArray.count) {
-//        NSString *imageStrname = [providersArray objectAtIndex:selectedRow];
-//        [self.dialPadView setProvButtonImage:[NSImage imageNamed:imageStrname]];
-//        self.providersView.hidden = YES;
-
-//    }
 }
-
 
 - (IBAction)onVideoMailClicked:(id)sender {
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"video_mail_uri"]){
@@ -290,13 +288,12 @@
     }
 }
 
-
 - (IBAction)onButtonProv:(id)sender {
-//    self.providersView.hidden = !self.providersView.hidden;
+    self.providersView.hidden = !self.providersView.hidden;
     
-    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-//    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
-    [window toggleFullScreen:self];
+//    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+////    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
+//    [window toggleFullScreen:self];
 }
 
 - (IBAction)onButtonProfileImage:(id)sender {

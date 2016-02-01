@@ -100,7 +100,7 @@
     for(int i = 0; i < cdnResourcesCount; ++i) {
         NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d", i]];
         NSString *domain = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d_domain", i]];
-        NSString *providerLogoURL = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d_logo", i]];
+        NSString *providerLogoURL = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d_logo.png", i]];
         NSDictionary *dict = @{@"name" : name,
                                @"domain" : domain,
                                @"providerLogo" : providerLogoURL

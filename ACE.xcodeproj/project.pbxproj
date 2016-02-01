@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		046DB8241C5B9083004C0CDC /* NSImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 046DB81B1C5B9083004C0CDC /* NSImageView+WebCache.m */; };
-		046DB8251C5B9083004C0CDC /* OTFileCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 046DB81E1C5B9083004C0CDC /* OTFileCacheManager.m */; };
-		046DB8261C5B9083004C0CDC /* OTHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046DB8211C5B9083004C0CDC /* OTHTTPRequest.m */; };
-		046DB8271C5B9083004C0CDC /* OTWebImageDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046DB8231C5B9083004C0CDC /* OTWebImageDownloadRequest.m */; };
 		04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BBE1C5A22D70089FEB6 /* csdvrs.png */; };
 		04C75BC71C5A22F00089FEB6 /* acetest.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC01C5A22F00089FEB6 /* acetest.png */; };
 		04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC11C5A22F00089FEB6 /* belledonne.png */; };
@@ -524,14 +520,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		046DB81A1C5B9083004C0CDC /* NSImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImageView+WebCache.h"; sourceTree = "<group>"; };
-		046DB81B1C5B9083004C0CDC /* NSImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImageView+WebCache.m"; sourceTree = "<group>"; };
-		046DB81D1C5B9083004C0CDC /* OTFileCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTFileCacheManager.h; sourceTree = "<group>"; };
-		046DB81E1C5B9083004C0CDC /* OTFileCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTFileCacheManager.m; sourceTree = "<group>"; };
-		046DB8201C5B9083004C0CDC /* OTHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTHTTPRequest.h; sourceTree = "<group>"; };
-		046DB8211C5B9083004C0CDC /* OTHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTHTTPRequest.m; sourceTree = "<group>"; };
-		046DB8221C5B9083004C0CDC /* OTWebImageDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTWebImageDownloadRequest.h; sourceTree = "<group>"; };
-		046DB8231C5B9083004C0CDC /* OTWebImageDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTWebImageDownloadRequest.m; sourceTree = "<group>"; };
 		04C75BBE1C5A22D70089FEB6 /* csdvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = csdvrs.png; path = providersLogos/csdvrs.png; sourceTree = "<group>"; };
 		04C75BC01C5A22F00089FEB6 /* acetest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = acetest.png; path = providersLogos/acetest.png; sourceTree = "<group>"; };
 		04C75BC11C5A22F00089FEB6 /* belledonne.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = belledonne.png; path = providersLogos/belledonne.png; sourceTree = "<group>"; };
@@ -1051,37 +1039,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		046DB8191C5B9083004C0CDC /* OTWebImage */ = {
-			isa = PBXGroup;
-			children = (
-				046DB81A1C5B9083004C0CDC /* NSImageView+WebCache.h */,
-				046DB81B1C5B9083004C0CDC /* NSImageView+WebCache.m */,
-				046DB81C1C5B9083004C0CDC /* OTFileCacheManager */,
-				046DB81F1C5B9083004C0CDC /* OTHTTPRequest */,
-				046DB8221C5B9083004C0CDC /* OTWebImageDownloadRequest.h */,
-				046DB8231C5B9083004C0CDC /* OTWebImageDownloadRequest.m */,
-			);
-			path = OTWebImage;
-			sourceTree = "<group>";
-		};
-		046DB81C1C5B9083004C0CDC /* OTFileCacheManager */ = {
-			isa = PBXGroup;
-			children = (
-				046DB81D1C5B9083004C0CDC /* OTFileCacheManager.h */,
-				046DB81E1C5B9083004C0CDC /* OTFileCacheManager.m */,
-			);
-			path = OTFileCacheManager;
-			sourceTree = "<group>";
-		};
-		046DB81F1C5B9083004C0CDC /* OTHTTPRequest */ = {
-			isa = PBXGroup;
-			children = (
-				046DB8201C5B9083004C0CDC /* OTHTTPRequest.h */,
-				046DB8211C5B9083004C0CDC /* OTHTTPRequest.m */,
-			);
-			path = OTHTTPRequest;
-			sourceTree = "<group>";
-		};
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1222,7 +1179,6 @@
 		4A5DD1D51BD8DA9D003BE9A2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				046DB8191C5B9083004C0CDC /* OTWebImage */,
 				4A5DD1D61BD8DADB003BE9A2 /* NSArray+Reversing.h */,
 				4A5DD1D71BD8DADB003BE9A2 /* NSArray+Reversing.m */,
 				4A5DD1D81BD8DADB003BE9A2 /* NSImage+Merge.h */,
@@ -2014,7 +1970,6 @@
 				4AC389CE1B8E87530063298F /* main.m in Sources */,
 				2BA68DD01B985EE300145575 /* NSView+BFUtilities.m in Sources */,
 				4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */,
-				046DB8251C5B9083004C0CDC /* OTFileCacheManager.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
 				CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */,
 				6983EB281C43A169004CCD74 /* AVViewController.m in Sources */,
@@ -2045,7 +2000,6 @@
 				CEF4A2FE1C0C253E00B41CDC /* LinphoneContactService.m in Sources */,
 				4AC389CC1B8E87530063298F /* AppDelegate.m in Sources */,
 				4A902DE61BB949E700ECFD86 /* AccountModel.m in Sources */,
-				046DB8271C5B9083004C0CDC /* OTWebImageDownloadRequest.m in Sources */,
 				4AA203BA1BD4CAA200DD9A4D /* CallService.m in Sources */,
 				4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */,
 				2BA68DC61B98540C00145575 /* LoginWindowController.m in Sources */,
@@ -2066,13 +2020,11 @@
 				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
-				046DB8261C5B9083004C0CDC /* OTHTTPRequest.m in Sources */,
 				6983EB311C43DC8C004CCD74 /* PreferencesViewController.m in Sources */,
 				D97D1FC51C5D1052008A7EAC /* CustomComboBoxCell.m in Sources */,
 				CE5C3F7D1C4CF7B2005E24A5 /* SRVResolver.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */,
-				046DB8241C5B9083004C0CDC /* NSImageView+WebCache.m in Sources */,
 				5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */,
 				2BA68DD11B985EE300145575 /* NSViewController+BFNavigationController.m in Sources */,
 				CEE25E941C18531700D7E082 /* LinphoneLocationManager.m in Sources */,

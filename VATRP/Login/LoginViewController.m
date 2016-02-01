@@ -45,10 +45,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
     [self.prog_Signin setHidden:YES];
     [self.loginButton setEnabled:YES];
-    _customComboBox.delegate = self;
+    [self checkProvidersInfo];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear];
+    [self checkProvidersInfo];
 }
 
 - (void)loadView {
@@ -71,13 +75,6 @@
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     [self.comboBoxProviderSelect removeAllItems];
-   // [self reloadProviderDomains];
-    [_tmpProgressIndicator startAnimation:self];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:CDN_PROVIDER_LIST_URL]
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:60.0];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    #pragma unused(connection)
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -88,6 +85,7 @@
         if(!jsonParsingError){
             NSDictionary *resource;
             _cdnResources = [[NSMutableArray alloc] init];
+            NSMutableArray *logosPaths = [NSMutableArray new];
             [[NSUserDefaults standardUserDefaults] setInteger:[resources count] forKey:@"cdnResourcesCapacity"];
             for(int i=0; i < [resources count];i++){
                 resource= [resources objectAtIndex:i];
@@ -97,18 +95,21 @@
                 
                 [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"domain"] forKey:[NSString stringWithFormat:@"provider%d_domain", i]];
                 
-                [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"icon2x"] forKey:[NSString stringWithFormat:@"provider%d_logo", i]];
+                [logosPaths addObject:[resource objectForKey:@"icon2x"]];
                 
             }
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                [self downloadAndSaveProviderLogos:logosPaths];
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [self initCustomComboBox];
+                });
+            });
+            
         }
     }
-    self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
-    [self.customComboBox selectItemAtIndex:0];
-    NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
-    self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
-    [_tmpTextField removeFromSuperview];
-    [_tmpProgressIndicator removeFromSuperview];
+    
 }
 
 -(void) reloadProviderDomains{
@@ -377,6 +378,90 @@
         default:
             break;
     }
+}
+
+#pragma mark - Providers info checking methods
+
+- (void)checkProvidersInfo {
+    
+    if ([self isProvidersInfoExist]) {
+        [self initCustomComboBox];
+    } else {
+        [self requestToProvidersInfo];
+    }
+    
+}
+
+- (BOOL)isProvidersInfoExist {
+        //Provider logo
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"provider0_logo.png"] &&
+        //Provider name
+        [[NSUserDefaults standardUserDefaults] objectForKey:@"provider0"] &&
+        //Provider domain
+        [[NSUserDefaults standardUserDefaults] objectForKey:@"provider0_domain"]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)initCustomComboBox {
+    _customComboBox.delegate = self;
+    self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+    [self.customComboBox selectItemAtIndex:0];
+    NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
+    self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
+    [_tmpTextField removeFromSuperview];
+    [_tmpProgressIndicator removeFromSuperview];
+}
+
+- (void)requestToProvidersInfo {
+    [_tmpProgressIndicator startAnimation:self];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:CDN_PROVIDER_LIST_URL]
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    #pragma unused(connection)
+}
+
+- (void)downloadAndSaveProviderLogos:(NSMutableArray*)logosPaths {
+    int i = 0;
+    for (NSString *path in logosPaths) {
+        NSURL *imageURL = [NSURL URLWithString:path];
+        NSError *downloadError = nil;
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL
+                                                  options:kNilOptions
+                                                    error:&downloadError];
+        
+        if (downloadError) {
+            NSLog(@"%@",[downloadError localizedDescription]);
+        } else {
+            
+            NSString *filename = [NSString stringWithFormat:@"provider%d_logo.png", i];
+            NSString *filePath = [self applicationDirectoryFile:filename];
+            NSURL *url = [NSURL fileURLWithPath:filePath];
+            
+            NSError *saveError = nil;
+            BOOL writeWasSuccessful = [imageData writeToURL:url
+                                                    options:kNilOptions
+                                                      error:&saveError];
+            if (!writeWasSuccessful) {
+                NSLog(@"%@",[saveError localizedDescription]);
+            } else {
+                [[NSUserDefaults standardUserDefaults] setObject:filePath forKey:[NSString stringWithFormat:@"provider%d_logo.png", i]];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+
+        }
+        ++i;
+    }
+}
+
+- (NSString*)applicationDirectoryFile:(NSString*)file {
+    NSString* bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *makePath = [[[[documentsPath stringByAppendingString:@"/"] stringByAppendingString:bundleID] stringByAppendingString:@"/"] stringByAppendingString:file];
+    return makePath;
 }
 
 @end

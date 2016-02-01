@@ -32,7 +32,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self initProvider];
     if (self.isEditing) {
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
@@ -65,7 +64,6 @@
         [self dismissController:nil];
         return;
     }
-   // [self makeProviderName];
     if (self.isEditing) {
         if ([self.oldName isEqualToString:[self.nameTextField stringValue]] &&
             [self.oldPhone isEqualToString:[self.phoneTextField stringValue]]) {
@@ -123,7 +121,6 @@
     if ([Utils nsStringIsValidSip:sipUri]) {
         sipUri = [@"sip:" stringByAppendingString:sipUri];
     } else {
-        //[self makeProviderName];
         sipUri = [Utils makeSipURIWithAccountName:str andProviderAddress:providerAddress];
     }
     

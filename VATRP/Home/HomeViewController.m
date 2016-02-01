@@ -18,7 +18,6 @@
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
 #import "AppDelegate.h"
-#import "NSImageView+WebCache.h"
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     BackgroundedView *viewCurrent;
@@ -253,9 +252,10 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
     ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
-    NSString *imageName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%ld_logo", (long)row]];
-    NSURL *imageURL = [NSURL URLWithString:imageName];
-    [cellView.providerImageView setImageURL:imageURL];
+    NSString *imageName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%ld_logo.png", (long)row]];
+    //NSURL *imageURL = [NSURL URLWithString:imageName];
+   // [cellView.providerImageView setImageURL:imageURL];
+    [cellView.providerImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
     
     return cellView;
 }
@@ -297,7 +297,7 @@
 
 
 - (IBAction)onButtonProv:(id)sender {
- //   self.providersView.hidden = !self.providersView.hidden;
+    self.providersView.hidden = !self.providersView.hidden;
     
 //    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
 ////    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;

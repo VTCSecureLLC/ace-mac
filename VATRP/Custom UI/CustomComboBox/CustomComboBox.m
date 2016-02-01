@@ -8,7 +8,6 @@
 
 #import "CustomComboBox.h"
 #import "CustomComboBoxCell.h"
-#import "NSImageView+WebCache.h"
 #import "BackgroundedView.h"
 
 @interface CustomComboBox ()<NSTableViewDataSource, NSTableViewDelegate> {
@@ -54,10 +53,9 @@
    
     NSDictionary *dict = [_dataSource objectAtIndex:row];
     NSString *imageName = [dict objectForKey:@"providerLogo"];
-    NSURL *imageURL = [NSURL URLWithString:imageName];
     NSString *providerName = [dict objectForKey:@"name"];
     
-    [cellView.imgView setImageURL:imageURL];
+    [cellView.imgView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
     [cellView.txtLabel setStringValue:providerName];
     
     if ([providerName isEqualToString:[_selectedItemTextField stringValue]]) {
@@ -107,8 +105,9 @@
 - (void)selectItemAtIndex:(int)selectedItemIndex {
     NSDictionary *dict = [_dataSource objectAtIndex:selectedItemIndex];
     NSString *imageName = [dict objectForKey:@"providerLogo"];
-    NSURL *imageURL = [NSURL URLWithString:imageName];
-    [_itemImageView setImageURL:imageURL];
+    //NSURL *imageURL = [NSURL URLWithString:imageName];
+    [_itemImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
+    // [_itemImageView setImageURL:imageURL];
     [_selectedItemTextField setStringValue:[dict objectForKey:@"name"]];
     _selectedItemIndex = selectedItemIndex;
 }

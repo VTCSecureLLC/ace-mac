@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04C33DE71C58CB9600BF1432 /* import_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE51C58CB9600BF1432 /* import_button.png */; };
-		04C33DE81C58CB9600BF1432 /* export_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE61C58CB9600BF1432 /* export_button.png */; };
+		04C33DE81C58CB9600BF1432 /* export_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE61C58CB9600BF1432 /* export_button.png */; }; 
 		04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BBE1C5A22D70089FEB6 /* csdvrs.png */; };
 		04C75BC71C5A22F00089FEB6 /* acetest.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC01C5A22F00089FEB6 /* acetest.png */; };
 		04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC11C5A22F00089FEB6 /* belledonne.png */; };

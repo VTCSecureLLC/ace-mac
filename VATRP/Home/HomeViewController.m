@@ -309,6 +309,11 @@
     [self mouseMovedWithPoint:mousePosition];
 }
 
+- (void)mouseDown:(NSEvent *)theEvent {
+    NSPoint mousePosition = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
+    [self mouseMovedWithPoint:mousePosition];
+}
+
 - (void)mouseMovedWithPoint:(NSPoint)mousePosition {
     if ([[CallService sharedInstance] getCurrentCall]) {
         LinphoneCallState call_state = linphone_call_get_state([[CallService sharedInstance] getCurrentCall]);

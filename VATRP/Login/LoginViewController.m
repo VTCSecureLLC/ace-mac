@@ -15,9 +15,10 @@
 #import "RegistrationService.h"
 #import "Utils.h"
 #import "DefaultSettingsManager.h"
+#import "CustomComboBox.h"
 
 
-@interface LoginViewController ()<DefaultSettingsManagerDelegate> {
+@interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
@@ -33,7 +34,12 @@
 @property (weak) IBOutlet NSComboBox *comboBoxProviderSelect;
 @property (weak) NSURLSession *urlSession;
 @property NSMutableArray *cdnResources;
+@property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
+@property (weak) IBOutlet NSTextField *tmpTextField;
+@property (weak) IBOutlet NSProgressIndicator *tmpProgressIndicator;
 @end
+
+#define CDN_PROVIDER_LIST_URL @"http://cdn.vatrp.net/domains.json"
 
 @implementation LoginViewController
 
@@ -42,6 +48,7 @@
     // Do view setup here.
     [self.prog_Signin setHidden:YES];
     [self.loginButton setEnabled:YES];
+    _customComboBox.delegate = self;
 }
 
 - (void)loadView {
@@ -63,14 +70,50 @@
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
-                    [self.comboBoxProviderSelect removeAllItems];
-    [self reloadProviderDomains];
+    [self.comboBoxProviderSelect removeAllItems];
+   // [self reloadProviderDomains];
+    [_tmpProgressIndicator startAnimation:self];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:CDN_PROVIDER_LIST_URL]
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    #pragma unused(connection)
 }
 
-const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSError *jsonParsingError = nil;
+    if(data){
+        NSArray *resources = [NSJSONSerialization JSONObjectWithData:data
+                                                             options:0 error:&jsonParsingError];
+        if(!jsonParsingError){
+            NSDictionary *resource;
+            _cdnResources = [[NSMutableArray alloc] init];
+            [[NSUserDefaults standardUserDefaults] setInteger:[resources count] forKey:@"cdnResourcesCapacity"];
+            for(int i=0; i < [resources count];i++){
+                resource= [resources objectAtIndex:i];
+                [_cdnResources addObject:[resource objectForKey:@"name"]];
+                NSLog(@"Loaded CDN Resource: %@", [resource objectForKey:@"name"]);
+                [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"name"] forKey:[NSString stringWithFormat:@"provider%d", i]];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"domain"] forKey:[NSString stringWithFormat:@"provider%d_domain", i]];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"icon2x"] forKey:[NSString stringWithFormat:@"provider%d_logo", i]];
+                
+            }
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
+    self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+    [self.customComboBox selectItemAtIndex:0];
+    NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
+    self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
+    [_tmpTextField removeFromSuperview];
+    [_tmpProgressIndicator removeFromSuperview];
+}
+
 -(void) reloadProviderDomains{
     _urlSession = [NSURLSession sharedSession];
-    [[_urlSession dataTaskWithURL:[NSURL URLWithString:(NSString*)cdnProviderList] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[_urlSession dataTaskWithURL:[NSURL URLWithString:CDN_PROVIDER_LIST_URL] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSError *jsonParsingError = nil;
         if(data){
             NSArray *resources = [NSJSONSerialization JSONObjectWithData:data
@@ -78,6 +121,7 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
             if(!jsonParsingError){
                 NSDictionary *resource;
                 _cdnResources = [[NSMutableArray alloc] init];
+                [[NSUserDefaults standardUserDefaults] setInteger:[resources count] forKey:@"cdnResourcesCapacity"];
                 for(int i=0; i < [resources count];i++){
                     resource= [resources objectAtIndex:i];
                     [_cdnResources addObject:[resource objectForKey:@"name"]];
@@ -89,6 +133,11 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
                     [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"icon2x"] forKey:[NSString stringWithFormat:@"provider%d_logo", i]];
                     
                 }
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+                [self.customComboBox selectItemAtIndex:0];
+                
                 [self.comboBoxProviderSelect addItemsWithObjectValues:_cdnResources];
                 [self.comboBoxProviderSelect selectItemAtIndex:0];
             }
@@ -115,6 +164,12 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
         self.textFieldDomain.stringValue = domain;
     }
     
+}
+
+#pragma mark - CustomComboBox delegate methods
+
+- (void)customComboBox:(CustomComboBox *)sender didSelectedItem:(NSDictionary *)selectedItem {
+    self.textFieldDomain.stringValue = [selectedItem objectForKey:@"domain"];
 }
 
 //-(void)dealloc{

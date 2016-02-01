@@ -3600,7 +3600,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-                                    <rect key="frame" x="410" y="0.0" width="15" height="400"/>
+                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -3688,7 +3688,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" baseWritingDirection="leftToRight" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="Hcn-Pf-fDW">
-                                            <rect key="frame" x="0.0" y="0.0" width="423" height="4196"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="423" height="4172"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="minSize" width="408" height="312"/>
@@ -9402,6 +9402,7 @@ DQ
         <image name="dialpadDelete" width="38" height="25"/>
         <image name="edit_32x32" width="20.756755828857422" height="20.756755828857422"/>
         <image name="export_button" width="12" height="18"/>
+        <image name="global" width="25" height="25"/>
         <image name="icon_fullscreen_open" width="30" height="30"/>
         <image name="import_button" width="12" height="18"/>
         <image name="info-icon" width="48" height="48"/>

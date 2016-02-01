@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BBE1C5A22D70089FEB6 /* csdvrs.png */; };
+		04C75BC71C5A22F00089FEB6 /* acetest.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC01C5A22F00089FEB6 /* acetest.png */; };
+		04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC11C5A22F00089FEB6 /* belledonne.png */; };
+		04C75BC91C5A22F00089FEB6 /* convo.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC21C5A22F00089FEB6 /* convo.png */; };
+		04C75BCA1C5A22F00089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC31C5A22F00089FEB6 /* csdvrs.png */; };
+		04C75BCB1C5A22F00089FEB6 /* global.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC41C5A22F00089FEB6 /* global.png */; };
+		04C75BCC1C5A22F00089FEB6 /* purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC51C5A22F00089FEB6 /* purple.png */; };
+		04C75BCD1C5A22F00089FEB6 /* sorenson.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC61C5A22F00089FEB6 /* sorenson.png */; };
+		04C75BCF1C5A24B50089FEB6 /* caag.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BCE1C5A24B50089FEB6 /* caag.png */; };
 		20A9933A1BB5B9F6008612F9 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; };
 		2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF51B984E49008E8333 /* ContactsWindowController.m */; };
 		2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF81B984E49008E8333 /* DialpadViewController.m */; };
@@ -508,6 +517,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04C75BBE1C5A22D70089FEB6 /* csdvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = csdvrs.png; path = providersLogos/csdvrs.png; sourceTree = "<group>"; };
+		04C75BC01C5A22F00089FEB6 /* acetest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = acetest.png; path = providersLogos/acetest.png; sourceTree = "<group>"; };
+		04C75BC11C5A22F00089FEB6 /* belledonne.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = belledonne.png; path = providersLogos/belledonne.png; sourceTree = "<group>"; };
+		04C75BC21C5A22F00089FEB6 /* convo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = convo.png; path = providersLogos/convo.png; sourceTree = "<group>"; };
+		04C75BC31C5A22F00089FEB6 /* csdvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = csdvrs.png; path = providersLogos/csdvrs.png; sourceTree = "<group>"; };
+		04C75BC41C5A22F00089FEB6 /* global.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = global.png; path = providersLogos/global.png; sourceTree = "<group>"; };
+		04C75BC51C5A22F00089FEB6 /* purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = purple.png; path = providersLogos/purple.png; sourceTree = "<group>"; };
+		04C75BC61C5A22F00089FEB6 /* sorenson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sorenson.png; path = providersLogos/sorenson.png; sourceTree = "<group>"; };
+		04C75BCE1C5A24B50089FEB6 /* caag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caag.png; sourceTree = "<group>"; };
 		20A993391BB5B9F6008612F9 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		2B463EF41B984E49008E8333 /* ContactsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsWindowController.h; sourceTree = "<group>"; };
 		2B463EF51B984E49008E8333 /* ContactsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsWindowController.m; sourceTree = "<group>"; };
@@ -862,7 +880,6 @@
 				73048F6A1C46BE7600375345 /* libbelr.1.dylib in Frameworks */,
 				73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */,
 				CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */,
-
 				73ED2AF31BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF41BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */,
 				73ED2AF51BFCE7CE00C182F2 /* libmsbcg729.1.0.1.dylib in Frameworks */,
@@ -1017,7 +1034,7 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-                73048F691C46BE7600375345 /* libbelr.1.dylib */,
+				73048F691C46BE7600375345 /* libbelr.1.dylib */,
 				73048F671C46BE6F00375345 /* libbelcard.1.dylib */,
 				CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */,
 				20A993391BB5B9F6008612F9 /* HockeySDK.framework */,
@@ -1314,6 +1331,15 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				04C75BCE1C5A24B50089FEB6 /* caag.png */,
+				04C75BC01C5A22F00089FEB6 /* acetest.png */,
+				04C75BC11C5A22F00089FEB6 /* belledonne.png */,
+				04C75BC21C5A22F00089FEB6 /* convo.png */,
+				04C75BC31C5A22F00089FEB6 /* csdvrs.png */,
+				04C75BC41C5A22F00089FEB6 /* global.png */,
+				04C75BC51C5A22F00089FEB6 /* purple.png */,
+				04C75BC61C5A22F00089FEB6 /* sorenson.png */,
+				04C75BBE1C5A22D70089FEB6 /* csdvrs.png */,
 				CD6EDC8A1C56D948003CB599 /* logo_about_frg.png */,
 				5E1140241C4FDED800C9A6C5 /* video_mail.png */,
 				CE6A7A831C1AFC46002AEB5D /* rtt_on_off.png */,
@@ -1787,6 +1813,7 @@
 				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
 				69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */,
 				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
+				04C75BCA1C5A22F00089FEB6 /* csdvrs.png in Resources */,
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
 				69B315951C2414540091534B /* SettingsAdvancedUI.plist in Resources */,
 				69A025B31BFB5C83005C62FA /* mute_disabled.png in Resources */,
@@ -1794,7 +1821,9 @@
 				692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */,
 				69A025B91BFB5C83005C62FA /* speaker_disabled.png in Resources */,
 				CEF3B8111C0897BB00F35757 /* male.png in Resources */,
+				04C75BC71C5A22F00089FEB6 /* acetest.png in Resources */,
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
+				04C75BC91C5A22F00089FEB6 /* convo.png in Resources */,
 				4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */,
 				4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */,
 				CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */,
@@ -1805,6 +1834,7 @@
 				4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */,
 				69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */,
 				4AB2A2E31BF33F74006AC5C6 /* cameraview2.png in Resources */,
+				04C75BCD1C5A22F00089FEB6 /* sorenson.png in Resources */,
 				69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */,
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
 				69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */,
@@ -1813,8 +1843,10 @@
 				CEC6411C1C0C9EE600BA927F /* provider_logo_zvrs.png in Resources */,
 				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				CEC641181C0C9EE600BA927F /* provider_logo_convorelay.png in Resources */,
+				04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
 				CEC6411A1C0C9EE600BA927F /* provider_logo_purplevrs.png in Resources */,
+				04C75BCB1C5A22F00089FEB6 /* global.png in Resources */,
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				69E42FB01C5769B5003EF534 /* icon_fullscreen_open.png in Resources */,
 				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
@@ -1840,6 +1872,7 @@
 				69A025B21BFB5C83005C62FA /* mute_active.png in Resources */,
 				69A025B01BFB5C83005C62FA /* chat_disabled.png in Resources */,
 				CE6A7A841C1AFC46002AEB5D /* rtt_on_off.png in Resources */,
+				04C75BCC1C5A22F00089FEB6 /* purple.png in Resources */,
 				69A025B41BFB5C83005C62FA /* mute_inactive.png in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				69557C781C0EE85A004A40ED /* call swap.png in Resources */,
@@ -1850,7 +1883,9 @@
 				697840871C089CB9000ED450 /* call resume.png in Resources */,
 				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
 				CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */,
+				04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */,
 				4A5DD1EE1BD904B3003BE9A2 /* messageOutgoingBubbleTop.png in Resources */,
+				04C75BCF1C5A24B50089FEB6 /* caag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

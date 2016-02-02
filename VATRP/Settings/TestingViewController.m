@@ -16,7 +16,6 @@
     BOOL isChanged;
 }
 
-@property (weak) IBOutlet NSButton *buttonAutoAnswer;
 @property (weak) IBOutlet NSButton *buttonEnableAVPF;
 @property (weak) IBOutlet NSButton *buttonSendDTMF;
 @property (weak) IBOutlet NSButton *buttonEnableAdaptiveRateControl;
@@ -31,13 +30,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    
+    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
 
-    NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
-    self.buttonAutoAnswer.state = auto_answer;
-    
-    LinphoneProxyConfig* proxyCfg = NULL;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
-    
     if (proxyCfg) {
         self.buttonEnableAVPF.state = linphone_proxy_config_avpf_enabled(proxyCfg);
     }
@@ -63,12 +58,7 @@
         return;
     }
     
-    
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonAutoAnswer.state forKey:@"ACE_AUTO_ANSWER_CALL"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    LinphoneProxyConfig* proxyCfg = NULL;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
 
     LinphoneAVPFMode mode;
     if(self.buttonEnableAVPF.state == 1){

@@ -20,6 +20,7 @@
 
 @interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
+    bool loginClicked;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
 
@@ -53,6 +54,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear];
     [self checkProvidersInfo];
+    loginClicked = false;
 }
 
 - (void)loadView {
@@ -210,6 +212,7 @@
 }
 
 - (void)userLogin {
+    loginClicked = true;
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;
     loginAccount.userID = self.textFieldUserID.stringValue;
@@ -226,7 +229,7 @@
                                                           port:loginAccount.port];
     [self.prog_Signin setHidden:YES];
     [self.prog_Signin stopAnimation:self];
-    [self.loginButton setEnabled:YES];
+    [self.loginButton setEnabled:NO];
 }
 
 
@@ -355,21 +358,24 @@
             break;
         }
         case LinphoneRegistrationFailed: {
-            [self.loginButton setEnabled:YES];
-            [self.prog_Signin setHidden:YES];
-            [self.prog_Signin stopAnimation:self];
-            NSAlert *alert = [[NSAlert alloc]init];
-            [alert addButtonWithTitle:@"OK"];
-            if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
+            // VATRP-2202: we do not need to show this message if the user has not yet clicked login.
+            if (![self.loginButton isEnabled])
             {
-                [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                [self.loginButton setEnabled:YES];
+                [self.prog_Signin setHidden:YES];
+                [self.prog_Signin stopAnimation:self];
+                NSAlert *alert = [[NSAlert alloc]init];
+                [alert addButtonWithTitle:@"OK"];
+                if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
+                {
+                    [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                }
+                else
+                {
+                    [alert setMessageText:message];
+                }
+                [alert runModal];
             }
-            else
-            {
-                [alert setMessageText:message];
-            }
-            [alert runModal];
-
             break;
         }
         case LinphoneRegistrationProgress: {

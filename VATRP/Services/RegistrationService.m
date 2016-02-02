@@ -251,14 +251,15 @@
 
     NSString *first = [[NSUserDefaults standardUserDefaults] objectForKey:@"ACE_FIRST_OPEN"];
 
-    if (!first) {
+    // ToDo: Hardcoded on 2-2 per request - force cif
+//    if (!first) {
         MSVideoSize vsize;
         MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
         linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
 
         [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ACE_FIRST_OPEN"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+//    }
 
     return TRUE;
 }

@@ -153,7 +153,7 @@ typedef struct _LinphoneManagerSounds {
 
 - (void)refreshRegisters;
 
-- (bool)allowSpeaker;
+- (void)muteSpeakerInCall:(bool)mute;
 
 - (void)configureVbrCodecs;
 - (void)setLogsEnabled:(BOOL)enabled;

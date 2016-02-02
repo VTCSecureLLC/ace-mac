@@ -28,6 +28,8 @@
     CallInfoViewController *callInfoViewController;
 }
 
+@property (strong,nonatomic)SettingsHandler* settingsHandler;
+
 @property (weak) IBOutlet NSTextField *labelCallState;
 
 @property (weak) IBOutlet NSButton *buttonAnswer;
@@ -53,6 +55,9 @@ BOOL isRTTEnabled;
 BOOL isRTTLocallyEnabled;
 - (void) awakeFromNib {
     [super awakeFromNib];
+
+    self.settingsHandler = [SettingsHandler settingsHandler];
+    self.settingsHandler.settingsHandlerDelegate = self;
 
     callInfoViewController = nil;
     [ViewManager sharedInstance].callControllersView_delegate = self;
@@ -88,6 +93,14 @@ BOOL isRTTLocallyEnabled;
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+    [self initializeButtonsFromSettings];
+}
+
+-(void)initializeButtonsFromSettings
+{
+    [self updateUIForSpeakerMute:[self.settingsHandler isSpeakerMuted]];
+    [self updateUIForMicrophoneMute:[self.settingsHandler isMicrophoneMuted]];
+
 }
 
 -(void)dealloc{
@@ -123,30 +136,65 @@ BOOL isRTTLocallyEnabled;
     [self.videoProgressIndicator stopAnimation:self];
 }
 
+// microphone hanlder
 - (IBAction)onButtonMute:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
-    linphone_core_enable_mic(lc, !linphone_core_mic_enabled(lc));
-    if (!linphone_core_mic_enabled(lc)) {
+    bool currentlyMuted = !linphone_core_mic_enabled(lc);
+    // being verbose for explicit readable logic
+    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
+    if (currentlyMuted) {
+        [self updateUIForMicrophoneMute:false];
+        [settingsHandler inCallMicrophoneWasMuted:false];
+    } else {
+        [self updateUIForMicrophoneMute:true];
+        [settingsHandler inCallMicrophoneWasMuted:true];
+    }
+
+}
+
+-(void)updateUIForMicrophoneMute:(bool)mute
+{
+    LinphoneCore *lc = [LinphoneManager getLc];
+    linphone_core_enable_mic(lc, !mute);
+    if (mute) {
         [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];
         [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     } else {
         [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
         [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
-
-
     }
+
 }
 
 - (IBAction)onButtonSpeaker:(id)sender {
+    // ToDo: Make a constants class for items like this. Note this is also in updateUIForSpeakerMute
     const float mute_db = -1000.0f;
-    if (linphone_core_get_playback_gain_db([LinphoneManager getLc]) == mute_db) {
-        linphone_core_set_playback_gain_db([LinphoneManager getLc], 0.0f);
-        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
-        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
-    } else {
-        linphone_core_set_playback_gain_db([LinphoneManager getLc], mute_db);
+    bool muteSpeaker = false;
+    if (linphone_core_get_playback_gain_db([LinphoneManager getLc]) == mute_db)
+    {
+        muteSpeaker = false;
+    }
+    else
+    {
+        muteSpeaker = true;
+    }
+    [self updateUIForSpeakerMute:muteSpeaker];
+    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
+    [settingsHandler inCallSpeakerWasMuted:muteSpeaker];
+}
+
+-(void)updateUIForSpeakerMute:(bool)mute
+{
+    [LinphoneManager.instance muteSpeakerInCall:mute];
+    if (mute)
+    {
         [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_inactive"]];
         [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
+    }
+    else
+    {
+        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
+        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     }
 }
 
@@ -514,5 +562,17 @@ BOOL isRTTLocallyEnabled;
     [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
     [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
 }
+
+#pragma mark settings handler selectors
+-(void)muteSpeaker:(bool)mute
+{
+    [self updateUIForSpeakerMute:mute];
+}
+
+-(void)muteMicrophone:(bool)mute
+{
+    [self updateUIForMicrophoneMute:mute];
+}
+
 
 @end

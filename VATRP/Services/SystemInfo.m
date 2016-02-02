@@ -12,6 +12,9 @@
 #import "LinphoneManager.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
+
+#import "SettingsHandler.h"
+
 @interface SystemInfo()
 +(NSString*) configSettingsAsString;
 +(NSString *) platformType;
@@ -195,9 +198,12 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
         NSString *isVideoEnabled = [NSString stringWithFormat:@"video_enabled = %hhu", linphone_core_video_enabled(lc)];
         [values addObject:isVideoEnabled];
         /**Mute**/
-            NSString *isMicMuted = [NSString stringWithFormat:@"mic_mute = %@", NSStringFromBOOL([[NSUserDefaults standardUserDefaults] boolForKey:@"mute_mic_preference"])];
+        SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+        bool muteMicrophone = settingsHandler.isMicrophoneMuted;
+        bool muteSpeaker = settingsHandler.isSpeakerMuted;
+        NSString *isMicMuted = [NSString stringWithFormat:@"mic_mute = %@", NSStringFromBOOL(muteMicrophone)];
         [values addObject:isMicMuted];
-        NSString *isSpeakerMuted = [NSString stringWithFormat:@"speaker_mute = %@", NSStringFromBOOL([[NSUserDefaults standardUserDefaults] boolForKey:@"mute_speaker_preference"])];
+        NSString *isSpeakerMuted = [NSString stringWithFormat:@"speaker_mute = %@", NSStringFromBOOL(muteSpeaker)];
         [values addObject:isSpeakerMuted];
 
         //Echo cancellation

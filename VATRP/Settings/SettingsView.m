@@ -368,7 +368,8 @@
         
         [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
     } else if ([item.userDefaultsKey isEqualToString:@"video_preferred_fps_preference"]) {
-        linphone_core_set_preferred_framerate(lc, textField.floatValue);
+        // ToDo: Hardcoding on 2-2 per request
+        linphone_core_set_preferred_framerate(lc, 30.0f);//textField.floatValue);
     }
     
     return YES;

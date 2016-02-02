@@ -206,7 +206,6 @@ static void chatTable_free_chatrooms(void *data) {
         incomingCellView = cellView;
     }
     
-    
     return cellView;
 }
 
@@ -337,7 +336,7 @@ static void chatTable_free_chatrooms(void *data) {
             if (strcasecmp(cr_from_string, fromStr) == 0) {
                 linphone_chat_room_mark_as_read(room);
                 
-                //                [self updateContentData];
+                [self updateContentData];
                 [self.tableViewContent reloadData];
                 
                 NSInteger count = ms_list_size(messageList);
@@ -472,33 +471,32 @@ long msgSize; //message length buffer
 }
 
 - (BOOL) eventENTER {
+    if (!self.textFieldMessage.stringValue.length || ![self.textFieldMessage.stringValue stringByReplacingOccurrencesOfString:@" " withString:@""].length) {
+        return NO;
+    }
+    
     //Do something against ENTER key
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
     
     if (currentCall_) {
         
-        int TEXT_MODE=[self getTextMode];
-        if(TEXT_MODE==SIP_SIMPLE){
-            NSLog(@"TEXT_MODE=SIP_SIMPLE");
-            if (![[ChatService sharedInstance] sendMessagt:self.textFieldMessage.stringValue]) {
-                NSAlert *alert = [[NSAlert alloc]init];
-                [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
-                [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
-                [alert runModal];
-            }
+        int TEXT_MODE = [self getTextMode];
+        if (TEXT_MODE == SIP_SIMPLE) {
+            [self sendMessage:self.textFieldMessage.stringValue withExterlBodyUrl:nil withInternalURL:nil LinphoneChatRoom:[self getCurrentChatRoom]];
+        } else {
+        
+            [[ChatService sharedInstance] sendEnter];
+            
+            
+            outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
+            
+            self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
+            
+            [self.tableViewContent reloadData];
+            
+            NSInteger count = ms_list_size(messageList);
+            [self.tableViewContent scrollRowToVisible:count-1];
         }
-        
-        [[ChatService sharedInstance] sendEnter];
-        
-        
-        outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
-        
-        self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
-        
-        [self.tableViewContent reloadData];
-        
-        NSInteger count = ms_list_size(messageList);
-        [self.tableViewContent scrollRowToVisible:count-1];
     }
     
     self.textFieldMessage.stringValue = @"";
@@ -545,7 +543,7 @@ long msgSize; //message length buffer
     [self updateContentData];
     [self.tableViewContent reloadData];
     
-    NSInteger count = ms_list_size(messageList);
+    int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
     
     //    [tableController addChatEntry:msg];
@@ -569,7 +567,17 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     if (selectedChatRoom)
         return selectedChatRoom;
     
-    selectedChatRoom = linphone_call_get_chat_room([[CallService sharedInstance] getCurrentCall]);
+    LinphoneCore *lc = [LinphoneManager getLc];
+    LinphoneProxyConfig *cfg = linphone_core_get_default_proxy_config(lc);
+    
+    if (!cfg)
+        return nil;
+    
+    const LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
+    const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+
+    selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+
     return selectedChatRoom;
 }
 

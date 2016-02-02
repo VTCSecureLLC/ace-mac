@@ -126,6 +126,7 @@
 		5EEC29081C024CCA00BA43FB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29071C024CCA00BA43FB /* ContactsViewController.m */; };
 		5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC29311C0373DD00BA43FB /* ContactsService.m */; };
 		691611E81C1AD6AC00E37D79 /* SettingsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 691611E71C1AD6AC00E37D79 /* SettingsService.m */; };
+		692447591C611B8C00350CAD /* GeneralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 692447581C611B8C00350CAD /* GeneralViewController.m */; };
 		692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 692EDEEB1C05AC7E006073E2 /* send_message.png */; };
 		69557C761C0EE6E9004A40ED /* SecondCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69557C751C0EE6E9004A40ED /* SecondCallView.m */; };
 		69557C781C0EE85A004A40ED /* call swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 69557C771C0EE85A004A40ED /* call swap.png */; };
@@ -705,6 +706,8 @@
 		5EEC29311C0373DD00BA43FB /* ContactsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsService.m; sourceTree = "<group>"; };
 		691611E61C1AD6AC00E37D79 /* SettingsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsService.h; sourceTree = "<group>"; };
 		691611E71C1AD6AC00E37D79 /* SettingsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsService.m; sourceTree = "<group>"; };
+		692447571C611B8C00350CAD /* GeneralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralViewController.h; sourceTree = "<group>"; };
+		692447581C611B8C00350CAD /* GeneralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralViewController.m; sourceTree = "<group>"; };
 		692EDEEB1C05AC7E006073E2 /* send_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_message.png; sourceTree = "<group>"; };
 		69557C741C0EE6E9004A40ED /* SecondCallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondCallView.h; sourceTree = "<group>"; };
 		69557C751C0EE6E9004A40ED /* SecondCallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondCallView.m; sourceTree = "<group>"; };
@@ -1086,10 +1089,12 @@
 		2B463F001B984E49008E8333 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */,
-				CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */,
 				2B463F011B984E49008E8333 /* SettingsWindowController.h */,
 				2B463F021B984E49008E8333 /* SettingsWindowController.m */,
+				692447571C611B8C00350CAD /* GeneralViewController.h */,
+				692447581C611B8C00350CAD /* GeneralViewController.m */,
+				CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */,
+				CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */,
 				4AC13F9C1BBC0769008305CD /* SettingsViewController.h */,
 				4AC13F9D1BBC0769008305CD /* SettingsViewController.m */,
 				4AAF56141BB157AC00241DC2 /* AccountsViewController.h */,
@@ -1927,6 +1932,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				692447591C611B8C00350CAD /* GeneralViewController.m in Sources */,
 				5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */,
 				69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */,
 				CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */,

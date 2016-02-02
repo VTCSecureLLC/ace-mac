@@ -122,8 +122,8 @@
         [self selectItemAtIndex:(int)index];
         _selectedItemIndex = index;
     } else {
-        [self selectItemAtIndex:0];
-        _selectedItemIndex = 0;
+        [self selectItemAtIndex:(int)(_dataSource.count - 1)];
+        _selectedItemIndex = (int)(_dataSource.count - 1);
     }
 }
 
@@ -135,9 +135,17 @@
         [self selectItemAtIndex:(int)index];
         _selectedItemIndex = index;
     } else {
-        [self selectItemAtIndex:0];
-        _selectedItemIndex = 0;
+        [self selectItemAtIndex:(int)(_dataSource.count - 1)];
+        _selectedItemIndex = (int)(_dataSource.count - 1);
     }
+}
+
+- (void)addEmptyProviderInDataSource {
+    NSDictionary *dict = @{@"name" : @"No Provider",
+                           @"domain" : @"No Provider",
+                           @"providerLogo" : @"whiteIcon"
+                           };
+    [_dataSource addObject:dict];
 }
 
 @end

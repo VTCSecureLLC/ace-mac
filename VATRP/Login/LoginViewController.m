@@ -412,6 +412,14 @@
     self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
     [_tmpTextField removeFromSuperview];
     [_tmpProgressIndicator removeFromSuperview];
+
+    // use this opportunity to initialize port if it is not already.
+    NSString* port = self.textFieldPort.stringValue;
+    if ((port == nil) || (port.length == 0))
+    {
+        self.textFieldPort.stringValue = @"5060";
+    }
+
 }
 
 - (void)requestToProvidersInfo {

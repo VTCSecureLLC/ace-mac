@@ -31,22 +31,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-<<<<<<< HEAD
     
     LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
 
     if (proxyCfg) {
         self.buttonEnableAVPF.state = linphone_proxy_config_avpf_enabled(proxyCfg);
     }
-=======
-
-    NSInteger auto_answer = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
-    self.buttonAutoAnswer.state = auto_answer;
-    
-    LinphoneProxyConfig* proxyCfg = NULL;
-    proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
-    
->>>>>>> VTCSecureLLC/master
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
     

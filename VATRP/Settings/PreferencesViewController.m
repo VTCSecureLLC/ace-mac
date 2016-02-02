@@ -694,9 +694,6 @@
     linphone_core_set_preferred_video_size(lc, vsize);
     [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:@"video_preferred_size_preference"];
 
-    // ToDo: Hardcoding on 2-2 per request
-    linphone_core_set_preferred_framerate(lc, 30.0f);//textFieldPreferredFPS.floatValue);
-
     [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:@"stun_url_preference"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [SettingsService setStun:checkboxStun.state];

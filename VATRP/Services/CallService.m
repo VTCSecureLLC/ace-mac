@@ -164,7 +164,7 @@
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
             SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
             bool microphoneMuted = [settingsHandler isMicrophoneMuted];
-            linphone_core_enable_mic(lc, microphoneMuted);
+            linphone_core_enable_mic(lc, !microphoneMuted);
             bool speakerMuted = [settingsHandler isSpeakerMuted];
             [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
             bool micIsEnabled = linphone_core_mic_enabled(lc);

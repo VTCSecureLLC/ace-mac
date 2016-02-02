@@ -330,8 +330,9 @@
     linphone_proxy_config_destroy(default_conf);
 }
 - (IBAction)onCheckAutoLogin:(id)sender {
-    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
-    [[NSUserDefaults standardUserDefaults] setBool:!shouldAutoLogin forKey:@"auto_login"];
+    // be explicit in setting this to the correct value.
+    bool shouldAutoLogin = (bool)self.buttonToggleAutoLogin.state;
+    [[NSUserDefaults standardUserDefaults] setBool:shouldAutoLogin forKey:@"auto_login"];
 }
 
 #pragma mark -
@@ -418,6 +419,14 @@
     self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
     [_tmpTextField removeFromSuperview];
     [_tmpProgressIndicator removeFromSuperview];
+
+    // use this opportunity to initialize port if it is not already.
+    NSString* port = self.textFieldPort.stringValue;
+    if ((port == nil) || (port.length == 0))
+    {
+        self.textFieldPort.stringValue = @"25060";
+    }
+
 }
 
 - (void)requestToProvidersInfo {

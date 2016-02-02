@@ -20,6 +20,7 @@
 
 @interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
+    bool loginClicked;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
 
@@ -53,6 +54,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear];
     [self checkProvidersInfo];
+    loginClicked = false;
 }
 
 - (void)loadView {
@@ -210,6 +212,7 @@
 }
 
 - (void)userLogin {
+    loginClicked = true;
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;
     loginAccount.userID = self.textFieldUserID.stringValue;
@@ -226,7 +229,7 @@
                                                           port:loginAccount.port];
     [self.prog_Signin setHidden:YES];
     [self.prog_Signin stopAnimation:self];
-    [self.loginButton setEnabled:YES];
+    [self.loginButton setEnabled:NO];
 }
 
 
@@ -327,8 +330,9 @@
     linphone_proxy_config_destroy(default_conf);
 }
 - (IBAction)onCheckAutoLogin:(id)sender {
-    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
-    [[NSUserDefaults standardUserDefaults] setBool:!shouldAutoLogin forKey:@"auto_login"];
+    // be explicit in setting this to the correct value.
+    bool shouldAutoLogin = (bool)self.buttonToggleAutoLogin.state;
+    [[NSUserDefaults standardUserDefaults] setBool:shouldAutoLogin forKey:@"auto_login"];
 }
 
 #pragma mark -
@@ -355,21 +359,24 @@
             break;
         }
         case LinphoneRegistrationFailed: {
-            [self.loginButton setEnabled:YES];
-            [self.prog_Signin setHidden:YES];
-            [self.prog_Signin stopAnimation:self];
-            NSAlert *alert = [[NSAlert alloc]init];
-            [alert addButtonWithTitle:@"OK"];
-            if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
+            // VATRP-2202: we do not need to show this message if the user has not yet clicked login.
+            if (![self.loginButton isEnabled])
             {
-                [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                [self.loginButton setEnabled:YES];
+                [self.prog_Signin setHidden:YES];
+                [self.prog_Signin stopAnimation:self];
+                NSAlert *alert = [[NSAlert alloc]init];
+                [alert addButtonWithTitle:@"OK"];
+                if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
+                {
+                    [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                }
+                else
+                {
+                    [alert setMessageText:message];
+                }
+                [alert runModal];
             }
-            else
-            {
-                [alert setMessageText:message];
-            }
-            [alert runModal];
-
             break;
         }
         case LinphoneRegistrationProgress: {
@@ -412,6 +419,14 @@
     self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
     [_tmpTextField removeFromSuperview];
     [_tmpProgressIndicator removeFromSuperview];
+
+    // use this opportunity to initialize port if it is not already.
+    NSString* port = self.textFieldPort.stringValue;
+    if ((port == nil) || (port.length == 0))
+    {
+        self.textFieldPort.stringValue = @"25060";
+    }
+
 }
 
 - (void)requestToProvidersInfo {

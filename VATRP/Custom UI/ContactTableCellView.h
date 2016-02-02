@@ -14,6 +14,7 @@
 
 @property (weak) IBOutlet NSTextField *nameTextField;
 @property (weak) IBOutlet NSTextField *phoneTextField;
+@property (strong, nonatomic) NSString *providerName;
 @property (weak) IBOutlet NSButton *deleteButton;
 @property (weak) IBOutlet NSButton *editButton;
 @property (nonatomic, assign) id<ContactTableCellViewDelegate> delegate;

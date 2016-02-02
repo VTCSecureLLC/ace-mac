@@ -1061,7 +1061,7 @@
                                                 </scroller>
                                             </scrollView>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aA9-62-0dk">
-                                                <rect key="frame" x="135" y="256" width="40" height="37"/>
+                                                <rect key="frame" x="260" y="256" width="40" height="37"/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ukx-om-fhO">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1081,21 +1081,32 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qtn-X6-U14">
-                                                <rect key="frame" x="250" y="256" width="40" height="37"/>
-                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="import_export" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JZt-Zt-9w7">
+                                                <rect key="frame" x="166" y="256" width="40" height="37"/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="export_button" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JZt-Zt-9w7">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="onSyncButton:" target="rAt-4g-nXf" id="gZX-q0-OTo"/>
+                                                    <action selector="onExportButton:" target="rAt-4g-nXf" id="vn0-Df-Uwc"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A2k-bR-wFC">
+                                                <rect key="frame" x="213" y="256" width="40" height="37"/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="import_button" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3z7-sv-Eay">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onImportButton:" target="rAt-4g-nXf" id="1hM-NA-c2A"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <connections>
                                             <outlet property="addContactButton" destination="aA9-62-0dk" id="C4I-YN-uAB"/>
                                             <outlet property="clearListButton" destination="cH6-T9-SqM" id="KO2-d8-OsY"/>
+                                            <outlet property="exportButton" destination="qtn-X6-U14" id="zAv-JF-msn"/>
+                                            <outlet property="importButton" destination="A2k-bR-wFC" id="Hf5-yf-sOv"/>
                                             <outlet property="scrollViewContacts" destination="ChY-B5-BDB" id="zT2-Jw-Te3"/>
-                                            <outlet property="syncButton" destination="qtn-X6-U14" id="LTh-2k-tHc"/>
                                             <outlet property="tableViewContacts" destination="cAY-t8-48s" id="oRj-cs-WLW"/>
                                         </connections>
                                     </customView>
@@ -9641,9 +9652,10 @@ DQ
         <image name="dialpad" width="26" height="40"/>
         <image name="dialpadDelete" width="38" height="25"/>
         <image name="edit_32x32" width="20.756755828857422" height="20.756755828857422"/>
+        <image name="export_button" width="12" height="18"/>
         <image name="global" width="25" height="25"/>
         <image name="icon_fullscreen_open" width="30" height="30"/>
-        <image name="import_export" width="128" height="128"/>
+        <image name="import_button" width="12" height="18"/>
         <image name="info-icon" width="48" height="48"/>
         <image name="keypad" width="48" height="48"/>
         <image name="logo_about_frg" width="204" height="84"/>

@@ -251,6 +251,7 @@
 
     NSString *first = [[NSUserDefaults standardUserDefaults] objectForKey:@"ACE_FIRST_OPEN"];
 
+    // ToDo: Hardcoded on 2-2 per request - force cif
     if (!first) {
         MSVideoSize vsize;
         MS_VIDEO_SIZE_ASSIGN(vsize, CIF);

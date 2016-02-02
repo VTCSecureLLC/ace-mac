@@ -9,6 +9,7 @@
 #import "MediaViewController.h"
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
+#import "SettingsHandler.h"
 @import AVFoundation;
 #define kPREFERED_VIDEO_RESOLUTION @"kPREFERED_VIDEO_RESOLUTION"
 
@@ -139,6 +140,8 @@ char **soundlist;
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"qcif (176x144)"]) {    
         MS_VIDEO_SIZE_ASSIGN(vsize, QCIF);
     }
+    // ToDo - force this for now
+    MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
 
     linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
     [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxVideoSize.stringValue forKey:kPREFERED_VIDEO_RESOLUTION];
@@ -154,9 +157,10 @@ char **soundlist;
     else
         retval = linphone_core_set_media_encryption([LinphoneManager getLc], LinphoneMediaEncryptionNone);
 
-    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxCaptureDevices.stringValue forKey:@"SETTINGS_SELECTED_CAPTURE_DEVICE"];
-    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxMicrophone.stringValue forKey:@"SETTINGS_SELECTED_MICROPHONE"];
-    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxSpeaker.stringValue forKey:@"SETTINGS_SELECTED_SPEAKER"];
+    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+    [settingsHandler setSelectedCamera:self.comboBoxCaptureDevices.stringValue];
+    [settingsHandler setSelectedMicrophone:self.comboBoxMicrophone.stringValue];
+    [settingsHandler setSelectedSpeaker:self.comboBoxSpeaker.stringValue];
     // force the save rather than wait for auto sync.
     [[NSUserDefaults standardUserDefaults]synchronize];
 }

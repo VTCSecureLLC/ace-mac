@@ -101,11 +101,18 @@
         NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d", i]];
         NSString *domain = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d_domain", i]];
         NSString *providerLogoURL = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d_logo.png", i]];
-        NSDictionary *dict = @{@"name" : name,
-                               @"domain" : domain,
-                               @"providerLogo" : providerLogoURL
-                               };
-        [resources addObject:dict];
+        if ((name != nil) && (domain != nil))
+        {
+            if (providerLogoURL == nil)
+            {
+                providerLogoURL = @"";
+            }
+            NSDictionary *dict = @{@"name" : name,
+                                   @"domain" : domain,
+                                   @"providerLogo" : providerLogoURL
+                                   };
+            [resources addObject:dict];
+        }
     }
     return resources;
 }

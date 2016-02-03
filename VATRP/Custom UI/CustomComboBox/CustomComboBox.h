@@ -19,12 +19,14 @@
 
 @interface CustomComboBox : NSView
 
-@property (strong, nonatomic) NSArray *dataSource;
+@property (strong, nonatomic) NSMutableArray *dataSource;
 @property (weak, nonatomic) id <CustomComboBoxDelegate> delegate;
 
 - (void)selectItemAtIndex:(int)selectedItemIndex;
 - (void)selectItemByName:(NSString*)selectItemName;
 - (void)selectItemByDomain:(NSString*)selectItemDomain;
 - (NSUInteger)indexOfSelectedItem;
+
+- (void)addEmptyProviderInDataSource;
 
 @end

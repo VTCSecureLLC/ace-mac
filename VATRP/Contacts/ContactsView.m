@@ -19,6 +19,7 @@
 #import "AddContactDialogBox.h"
 #import "Utils.h"
 #import "CallService.h"
+#import "ContactPictureManager.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
@@ -94,7 +95,7 @@
 }
 
 - (void)contactEditDone:(NSNotification*)notif {
-    
+    [self refreshContactList];
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
     if (![self isChnagedContactFields:contactInfo]) {
         return;
@@ -216,6 +217,12 @@
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
     [cellView.phoneTextField setStringValue:[dict objectForKey:@"phone"]];
     cellView.providerName = [dict objectForKey:@"provider"];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByContactName:[dict objectForKey:@"name"] andSipURI:[dict objectForKey:@"provider"]]];
+    if (contactImage) {
+        [cellView.imgView setImage:contactImage];
+    } else {
+        [cellView.imgView setImage:[NSImage imageNamed:@"male"]];
+    }
     cellView.delegate = self;
     return cellView;
 }

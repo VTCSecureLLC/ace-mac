@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04B5DA531C6215A20049CD6B /* ContactPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA521C6215A20049CD6B /* ContactPictureManager.m */; };
+		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
 		04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BBE1C5A22D70089FEB6 /* csdvrs.png */; };
 		04C75BC71C5A22F00089FEB6 /* acetest.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC01C5A22F00089FEB6 /* acetest.png */; };
 		04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC11C5A22F00089FEB6 /* belledonne.png */; };
@@ -517,6 +519,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04B5DA511C6215A20049CD6B /* ContactPictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPictureManager.h; sourceTree = "<group>"; };
+		04B5DA521C6215A20049CD6B /* ContactPictureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactPictureManager.m; sourceTree = "<group>"; };
+		04B5DA571C6224B70049CD6B /* NSImage+SaveInFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+SaveInFile.h"; sourceTree = "<group>"; };
+		04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+SaveInFile.m"; sourceTree = "<group>"; };
 		04C75BBE1C5A22D70089FEB6 /* csdvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = csdvrs.png; path = providersLogos/csdvrs.png; sourceTree = "<group>"; };
 		04C75BC01C5A22F00089FEB6 /* acetest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = acetest.png; path = providersLogos/acetest.png; sourceTree = "<group>"; };
 		04C75BC11C5A22F00089FEB6 /* belledonne.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = belledonne.png; path = providersLogos/belledonne.png; sourceTree = "<group>"; };
@@ -1036,6 +1042,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04B5DA501C6215140049CD6B /* ContactPictureManager */ = {
+			isa = PBXGroup;
+			children = (
+				04B5DA511C6215A20049CD6B /* ContactPictureManager.h */,
+				04B5DA521C6215A20049CD6B /* ContactPictureManager.m */,
+			);
+			path = ContactPictureManager;
+			sourceTree = "<group>";
+		};
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1186,6 +1201,8 @@
 				4A5DD1D71BD8DADB003BE9A2 /* NSArray+Reversing.m */,
 				4A5DD1D81BD8DADB003BE9A2 /* NSImage+Merge.h */,
 				4A5DD1D91BD8DADB003BE9A2 /* NSImage+Merge.m */,
+				04B5DA571C6224B70049CD6B /* NSImage+SaveInFile.h */,
+				04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1221,6 +1238,7 @@
 		4A902DDA1BB9486800ECFD86 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				04B5DA501C6215140049CD6B /* ContactPictureManager */,
 				CE5C3F771C4CEEAD005E24A5 /* DefaultConfigurationSettigns */,
 				5EEC291F1C03701700BA43FB /* vCard */,
 				4A902DE71BB95A7000ECFD86 /* Utils.h */,
@@ -1935,6 +1953,7 @@
 				692447591C611B8C00350CAD /* GeneralViewController.m in Sources */,
 				5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */,
 				69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */,
+				04B5DA531C6215A20049CD6B /* ContactPictureManager.m in Sources */,
 				CE7005FF1C048F0000E667F8 /* ContactsView.m in Sources */,
 				CE5C3F7A1C4CF213005E24A5 /* DefaultSettingsManager.m in Sources */,
 				4AC344851BB9A777000C4909 /* MediaViewController.m in Sources */,
@@ -2014,6 +2033,7 @@
 				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
+				04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */,
 				6983EB311C43DC8C004CCD74 /* PreferencesViewController.m in Sources */,
 				D97D1FC51C5D1052008A7EAC /* CustomComboBoxCell.m in Sources */,
 				CE5C3F7D1C4CF7B2005E24A5 /* SRVResolver.m in Sources */,

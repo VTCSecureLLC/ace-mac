@@ -10,6 +10,8 @@
 #import "LinphoneManager.h"
 #import "Utils.h"
 #import "CustomComboBox.h"
+#import "ContactPictureManager.h"
+#import <Quartz/Quartz.h>
 
 @interface AddContactDialogBox () <CustomComboBoxDelegate>
 {
@@ -17,11 +19,13 @@
     NSString *nameField;
     NSString *numberField;
     NSString *customcomboboxField;
+    NSImage *selectedImage;
 }
 
 @property (weak) IBOutlet NSTextField *nameTextField;
 @property (weak) IBOutlet NSTextField *phoneTextField;
 @property (weak) IBOutlet NSButton *doneButton;
+@property (weak) IBOutlet NSImageView *contactImageView;
 @property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
 
 @end
@@ -34,6 +38,7 @@
     [super viewDidLoad];
     [self initCustomComboBox];
     if (self.isEditing) {
+        [self initContactPicture];
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
         [self setNumberTextField];
@@ -54,6 +59,19 @@
         [_customComboBox selectItemAtIndex:0];
         NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
         providerAddress = [dict objectForKey:@"domain"];
+    }
+}
+
+- (void)initContactPicture {
+    selectedImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByContactName:self.oldName andSipURI:providerAddress]];
+    if (selectedImage) {
+        [_contactImageView setWantsLayer: YES];
+        _contactImageView.layer.borderWidth = 1.0;
+        _contactImageView.layer.cornerRadius = _contactImageView.frame.size.height / 2 ;
+        _contactImageView.layer.masksToBounds = YES;
+        [self.contactImageView setImage:selectedImage];
+    } else {
+        [self.contactImageView setImage:[NSImage imageNamed:@"male"]];
     }
 }
 
@@ -86,16 +104,9 @@
 #pragma mark - Buttons action functions
 
 - (IBAction)onButtonDone:(id)sender {
-    
-    if ([[self.nameTextField stringValue] isEqualToString:@""] || [[self.phoneTextField stringValue] isEqualToString:@""]) {
-        [self dismissController:nil];
-        return;
-    }
+    [[ContactPictureManager sharedInstance] saveImage:selectedImage withName:[self.nameTextField stringValue]
+                                            andSipURI:[self createFullSipUriFromString:[self.phoneTextField stringValue]]];
     if (self.isEditing) {
-        if (![self isChangedFields]) {
-            [self dismissController:nil];
-            return;
-        }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
                                                             object:@{@"name" : [self.nameTextField stringValue],
                                                                      @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
@@ -149,6 +160,42 @@
 
 - (void)customComboBox:(CustomComboBox *)sender didOpenedComboTable:(BOOL)isOpened {
     [_doneButton setEnabled:!isOpened];
+}
+
+#pragma mark - Chaning profile picture methods
+
+- (IBAction)onButtonChangePicture:(id)sender {
+    
+    IKPictureTaker *pictureTaker = [IKPictureTaker pictureTaker];
+    
+    [pictureTaker setValue:[NSNumber numberWithBool:YES]
+                    forKey:IKPictureTakerShowEffectsKey];
+    
+    [pictureTaker popUpRecentsMenuForView:self.contactImageView
+                             withDelegate:self
+                           didEndSelector:@selector(pictureTakerDidEnd:code:contextInfo:)
+                              contextInfo:nil];
+
+}
+
+- (void)pictureTakerDidEnd:(IKPictureTaker*) pictureTaker code:(int) returnCode contextInfo:(void*) ctxInf
+{
+    if(returnCode == NSOKButton) {
+        NSImage *outputImage = [pictureTaker outputImage];
+        selectedImage = outputImage;
+        if (selectedImage) {
+            [_contactImageView setWantsLayer: YES];
+            _contactImageView.layer.borderWidth = 1.0;
+            _contactImageView.layer.cornerRadius = _contactImageView.frame.size.height / 2 ;
+            _contactImageView.layer.masksToBounds = YES;
+            [self.contactImageView setImage:selectedImage];
+        } else {
+            [self.contactImageView setImage:[NSImage imageNamed:@"male"]];
+        }
+    }
+    else{
+        // The user canceled, so there is nothing to do.
+    }
 }
 
 @end

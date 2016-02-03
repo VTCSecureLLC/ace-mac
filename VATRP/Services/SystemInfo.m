@@ -12,7 +12,6 @@
 #import "LinphoneManager.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
-
 #import "SettingsHandler.h"
 
 @interface SystemInfo()

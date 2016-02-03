@@ -28,4 +28,4 @@ printf "/* LinphoneMACVersion.h
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #define LINPHONE_MAC_VERSION \"$linphone_mac_version\"
-" > $(dirname $0)/../Classes/LinphoneMACVersion.h
+" > $(dirname $0)/../VATRP/LinphoneMACVersion.h

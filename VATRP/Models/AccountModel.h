@@ -21,4 +21,11 @@
 @property (nonatomic, assign) int port;
 @property (nonatomic, assign) BOOL isDefault;
 
+
+// items that will need to be added to the account model:
+// enableVideo
+// muteSpeaker
+// muteMicrophone
+// enableEchoCancellation
+
 @end

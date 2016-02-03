@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SettingsHandler.h"
 #import "SettingsConstants.h"
+#import "LinphoneManager.h"
 
 @implementation SettingsHandler
 
@@ -24,6 +25,7 @@
     return sharedSettingsHandler;
 }
 
+//==========================================================================================
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
 -(void)inCallSpeakerWasMuted:(bool)mute
 {
@@ -39,16 +41,21 @@
         [self.inCallSettingsDelegate microphoneWasMuted:mute];
     }
 }
--(void)inCallShowSelfPreview:(bool)shown
+-(void)inCallShowSelfView:(bool)shown
 {
     [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:shown];
-    if ([self.inCallSettingsDelegate respondsToSelector:@selector(selfPreviewShown::)]) {
-        [self.inCallSettingsDelegate selfPreviewShown:shown];
-    }
+//    if ([self.inCallSettingsDelegate respondsToSelector:@selector(selfViewShown:)]) {
+//        [self.inCallSettingsDelegate selfViewShown:shown];
+//    }
+}
+
+-(void)inCallVideoEnabled:(bool)enable
+{
+    [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:enable];
 }
 
 
-
+//==========================================================================================
 #pragma mark items for settingsHandlerDelegate - setting from settings dialog to responders
 
 -(void)setMuteSpeaker:(bool)mute
@@ -66,24 +73,46 @@
     }
 }
 
+
+-(void)setEnableVideo:(bool)enable
+{
+    [self setUserSettingBool:ENABLE_VIDEO withValue:enable];
+}
+
+
+// TODO: not sure these need delegate methods - we may be able to just handle the settings here directly?
 -(void)setShowSelfPreview:(bool)show
 {
     // does call window respond to this, or do we just show/hide?
     [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:show];
-    if ([self.settingsHandlerDelegate respondsToSelector:@selector(showSelfView::)]) {
-        [self.settingsHandlerDelegate muteMicrophone:show];
+    
+    LinphoneCore* lc = [LinphoneManager getLc];
+    if (lc != nil)
+    {
+        linphone_core_enable_self_view(lc, show);
     }
+    
+    //    if ([self.settingsHandlerDelegate respondsToSelector:@selector(showSelfView:)]) {
+    //        [self.settingsHandlerDelegate showSelfView:show];
+    //    }
 }
 
-// TODO: not sure these need deelgate methods - we may be able to just handle the settings here directly?
 -(void)setEnableEchoCancellation:(bool)enable
 {
     [self setUserSettingBool:ENABLE_ECHO_CANCELLATION withValue:enable];
+    LinphoneCore* lc = [LinphoneManager getLc];
+    if (lc != nil)
+    {
+        linphone_core_enable_echo_cancellation(lc, enable);
+    }
+
 //    if ([self.settingsHandlerDelegate respondsToSelector:@selector(enableEchoCancellation::)]) {
 //        [self.settingsHandlerDelegate enableEchoCancellation:enable];
 //    }
 }
 
+//==========================================================================================
+// Accessors
 #pragma mark settings accessors
 -(bool)isSpeakerMuted
 {
@@ -104,6 +133,11 @@
 -(bool)isShowPreviewEnabled
 {
     return [self getUserSettingBool:VIDEO_SHOW_PREVIEW];
+}
+
+-(bool)isVideoEnabled
+{
+    return [self getUserSettingBool:ENABLE_VIDEO];
 }
 
 #pragma mark Media Settings
@@ -138,8 +172,8 @@
 //=================================================================================================================
 // Generic Settings Accessors
 #pragma mark - this will give the singular place to changeover from app level settings to user level settings.
-// ToDo: these settings are currently all stored at the app level. initially get everything hooked up to the app level settings, then here we can manage
-//   changing over to user level settings.
+// ToDo: these settings are currently all stored at the app level. I am initially getting everything hooked up
+//   to the app level settings, then here we can manage changing over to user level settings.
 -(bool)getUserSettingBool:(NSString*)settingName
 {
     return [[NSUserDefaults standardUserDefaults]boolForKey:settingName];
@@ -158,6 +192,24 @@
     [[NSUserDefaults standardUserDefaults]setValue:value forKey:settingName];
 }
                          
-                         
-                         
+// App Level Settings - Generic accessors
+-(bool)getAppSettingBool:(NSString*)settingName
+{
+    return [[NSUserDefaults standardUserDefaults]boolForKey:settingName];
+}
+-(void)setAppSettingBool:(NSString*)settingName withValue:(bool)value
+{
+    [[NSUserDefaults standardUserDefaults]setBool:value forKey:settingName];
+}
+
+-(NSString*)getAppSettingString:(NSString*)settingName
+{
+    return [[NSUserDefaults standardUserDefaults]stringForKey:settingName];
+}
+-(void)setAppSettingString:(NSString*)settingName withValue:(NSString*)value
+{
+    [[NSUserDefaults standardUserDefaults]setValue:value forKey:settingName];
+}
+
+
 @end

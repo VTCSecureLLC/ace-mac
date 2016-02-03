@@ -13,8 +13,9 @@
 #import "SDPNegotiationService.h"
 #import "CodecModel.h"
 #import "DefaultSettingsManager.h"
+#import "SettingsHandler.h"
 
-@interface PreferencesViewController () <NSTextFieldDelegate, NSComboBoxDelegate> {
+@interface PreferencesViewController () <NSTextFieldDelegate, NSComboBoxDelegate, InCallPreferencesHandlerDelegate> {
     NSMutableArray *audioCodecList;
     NSMutableArray *videoCodecList;
     
@@ -52,6 +53,7 @@
 }
 
 @property (weak) IBOutlet NSScrollView *scrollView;
+@property (strong,nonatomic)SettingsHandler* settingsHandler;
 
 @end
 
@@ -59,10 +61,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
+    self.settingsHandler = [SettingsHandler settingsHandler];
+    self.settingsHandler.inCallPreferencessHandlerDelegate = self;
+
 }
 
 - (NSString*) textFieldValueWithUserDefaultsKey:(NSString*)key {
+    
     if ([key isEqualToString:@"ACE_USERNAME"]) {
         AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
         return accountModel.username;
@@ -617,6 +622,10 @@
 
 - (void)onCheckBoxHandler:(id)sender {
     isChanged = YES;
+    if (sender == checkboxEnableVideo)
+    {
+        [self.settingsHandler setEnableVideo:(bool)checkboxEnableVideo.state];
+    }
 }
 
 - (void)onCheckboxAudioStatus:(id)sender {
@@ -793,5 +802,6 @@
 - (BOOL) isCodecSupported:(NSString*)codec {
     return [[supportedCodecsMap objectForKey:codec] boolValue];
 }
+
 
 @end

@@ -56,7 +56,7 @@
 
 + (void) callTo:(NSString*)number {
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
-    
+    linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
     [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
 }
 
@@ -69,6 +69,7 @@
 }
 
 - (void) accept:(LinphoneCall *)aCall {
+    linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
     [[LinphoneManager instance] acceptCall:aCall];
 }
 

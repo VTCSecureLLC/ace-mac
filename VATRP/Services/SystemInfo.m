@@ -117,7 +117,7 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
         // Load hardware.
         NSString* hardware = [self platformType];
         // Load app version.
-        NSString* appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        NSString* appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
         // Load SIP settings.
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg = nil;

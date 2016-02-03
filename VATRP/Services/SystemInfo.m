@@ -12,8 +12,8 @@
 #import "LinphoneManager.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
+
 #import "SettingsHandler.h"
-#include "LinphoneMACVersion.h"
 
 @interface SystemInfo()
 +(NSString*) configSettingsAsString;
@@ -117,7 +117,7 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
         // Load hardware.
         NSString* hardware = [self platformType];
         // Load app version.
-    NSString *appVersionString = [NSString stringWithUTF8String:LINPHONE_MAC_VERSION];
+        NSString* appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         // Load SIP settings.
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg = nil;

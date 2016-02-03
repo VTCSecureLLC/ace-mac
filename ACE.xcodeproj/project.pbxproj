@@ -120,7 +120,6 @@
 		5E02C8E51BBEF161003EA32B /* SelfVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02C8E41BBEF161003EA32B /* SelfVideoViewController.m */; };
 		5E1140251C4FDED800C9A6C5 /* video_mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E1140241C4FDED800C9A6C5 /* video_mail.png */; };
 		5E11404A1C57E2D900C9A6C5 /* SystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1140491C57E2D900C9A6C5 /* SystemInfo.m */; };
-		5E171D111C6259BC007E5DAB /* LinphoneMACVersion.h in Sources */ = {isa = PBXBuildFile; fileRef = 5E171D101C62599E007E5DAB /* LinphoneMACVersion.h */; };
 		5E3CA6431BF0F9B700D9913F /* SDPNegotiationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */; };
 		5EC9D30D1C288D8000BFAAEC /* ResourcesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30C1C288D8000BFAAEC /* ResourcesWindowController.m */; };
 		5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */; };
@@ -695,7 +694,6 @@
 		5E1140241C4FDED800C9A6C5 /* video_mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_mail.png; sourceTree = "<group>"; };
 		5E1140481C57E2D900C9A6C5 /* SystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInfo.h; sourceTree = "<group>"; };
 		5E1140491C57E2D900C9A6C5 /* SystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemInfo.m; sourceTree = "<group>"; };
-		5E171D101C62599E007E5DAB /* LinphoneMACVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinphoneMACVersion.h; sourceTree = "<group>"; };
 		5E3CA6411BF0F9B700D9913F /* SDPNegotiationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPNegotiationService.h; sourceTree = "<group>"; };
 		5E3CA6421BF0F9B700D9913F /* SDPNegotiationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPNegotiationService.m; sourceTree = "<group>"; };
 		5EC9D30B1C288D8000BFAAEC /* ResourcesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesWindowController.h; sourceTree = "<group>"; };
@@ -1493,7 +1491,6 @@
 		4AC389C71B8E87530063298F /* VATRP */ = {
 			isa = PBXGroup;
 			children = (
-				5E171D101C62599E007E5DAB /* LinphoneMACVersion.h */,
 				5EC9D30A1C288D5600BFAAEC /* Resources */,
 				4AAFD9FC1BA610F100C35A74 /* LinphoneManager */,
 				4A902DDA1BB9486800ECFD86 /* Services */,
@@ -1747,11 +1744,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AC389E51B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRP" */;
 			buildPhases = (
-				4AC389C31B8E87530063298F /* Resources */,
-				CE67587A1BA88A5A005396EF /* Copy Files */,
-				5E171D121C625B77007E5DAB /* ShellScript */,
 				4AC389C11B8E87530063298F /* Sources */,
 				4AC389C21B8E87530063298F /* Frameworks */,
+				4AC389C31B8E87530063298F /* Resources */,
+				CE67587A1BA88A5A005396EF /* Copy Files */,
 				20A9932F1BB5B8A8008612F9 /* ShellScript */,
 				31458E0F1BC2DEAF002CA54D /* CopyFiles */,
 			);
@@ -1937,19 +1933,6 @@
 			shellPath = /bin/sh;
 			shellScript = "FILE=\"${SRCROOT}/HockeySDK-Mac/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi\n";
 		};
-		5E171D121C625B77007E5DAB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = $SRCROOT/Tools/git_version.sh;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1957,7 +1940,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E171D111C6259BC007E5DAB /* LinphoneMACVersion.h in Sources */,
 				692447591C611B8C00350CAD /* GeneralViewController.m in Sources */,
 				5EC9D3101C288D9900BFAAEC /* ResourcesViewController.m in Sources */,
 				69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */,

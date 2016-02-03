@@ -1,15 +1,4 @@
-#!/bin/bash
-
-short_sha1=$(git rev-parse --short HEAD)
-major_minor_patch=$(bundle exec semver format '%M.%m.%p')
-special_build=$(bundle exec semver format '%M.%m.%p')
-
-/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $major_minor_patch" ./VATRP/Info.plist
-/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${TRAVIS_BUILD_NUMBER:-1}" ./VATRP/Info.plist
-
-linphone_mac_version="$(bundle exec semver format '%M.%m.%p')-${TRAVIS_BUILD_NUMBER:-1}-${short_sha1}"
-
-printf "/* LinphoneMACVersion.h
+/* LinphoneMACVersion.h
  *
  * Copyright (C) 2012  Belledonne Comunications, Grenoble, France
  *
@@ -27,5 +16,4 @@ printf "/* LinphoneMACVersion.h
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#define LINPHONE_MAC_VERSION \"$linphone_mac_version\"
-" > $(dirname $0)/../VATRP/LinphoneMACVersion.h
+#define LINPHONE_MAC_VERSION \"$linphone_mac_version\""

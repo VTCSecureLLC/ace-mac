@@ -137,7 +137,7 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"video_preferred_size_preference"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"cif" forKey:@"video_preferred_size_preference"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"cif (352x288)" forKey:@"video_preferred_size_preference"];
     }
 
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
@@ -173,6 +173,13 @@
         [self.inCallSettingsDelegate microphoneWasMuted:mute];
     }
 }
+-(void)inCallCameraWasMuted:(bool)mute
+{
+    [self setUserSettingBool:MUTE_CAMERA withValue:mute];
+    if ([self.inCallPreferencessHandlerDelegate respondsToSelector:@selector(cameraWasMuted:)]) {
+        [self.inCallPreferencessHandlerDelegate cameraWasMuted:mute];
+    }
+}
 -(void)inCallShowSelfView:(bool)shown
 {
     [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:shown];
@@ -205,11 +212,20 @@
     }
 }
 
+-(void)setMuteCamera:(bool)mute
+{
+    [self setUserSettingBool:MUTE_SPEAKER withValue:mute];
+    if ([self.preferencessHandlerDelegate respondsToSelector:@selector(muteCamera:)]) {
+        [self.preferencessHandlerDelegate muteCamera:mute];
+    }
+}
+
 
 -(void)setEnableVideo:(bool)enable
 {
     [self setUserSettingBool:ENABLE_VIDEO withValue:enable];
 }
+
 
 
 // TODO: not sure these need delegate methods - we may be able to just handle the settings here directly?

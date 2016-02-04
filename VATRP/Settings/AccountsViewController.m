@@ -39,6 +39,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    self.textFieldUserID.enabled = false;
+    self.textFieldUsername.enabled = false;
+    self.secureTextFieldPassword.enabled = false;
+    self.textFieldDomain.enabled = false;
+    self.textFieldPort.enabled = false;
+    
 }
 
 - (void)viewWillAppear {

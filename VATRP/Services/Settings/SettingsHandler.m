@@ -142,11 +142,11 @@
 
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
     {
-        [self setUserSettingBool:MUTE_MICROPHONE withValue:true];
+        [self setUserSettingBool:MUTE_MICROPHONE withValue:false];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_SPEAKER] == nil)
     {
-        [self setUserSettingBool:MUTE_SPEAKER withValue:true];
+        [self setUserSettingBool:MUTE_SPEAKER withValue:false];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
     {

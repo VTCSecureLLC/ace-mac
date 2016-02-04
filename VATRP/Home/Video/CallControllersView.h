@@ -8,10 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CallService.h"
+#import "SettingsHandler.h"
 
 @protocol CallControllersViewDelegate;
 
-@interface CallControllersView : NSView
+@interface CallControllersView : NSView<SettingsHandlerDelegate, PreferencesHandlerDelegate>
 
 @property (nonatomic, assign) id<CallControllersViewDelegate> delegate;
 
@@ -21,6 +22,7 @@
 - (void)dismisCallInfoWindow;
 - (void)performChatButtonClick;
 - (BOOL)bool_chat_window_open;
+- (void)set_bool_chat_window_open:(BOOL)open;
 @end
 
 @protocol CallControllersViewDelegate <NSObject>

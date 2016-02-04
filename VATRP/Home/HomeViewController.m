@@ -9,8 +9,6 @@
 #import "HomeViewController.h"
 #import "ViewManager.h"
 #import "CallService.h"
-#import "DockView.h"
-#import "DialPadView.h"
 #import "RecentsView.h"
 #import "VideoView.h"
 #import "ContactsView.h"
@@ -19,19 +17,18 @@
 #import "ProviderTableCellView.h"
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
-
+#import "AppDelegate.h"
+#import "Utils.h"
 
 @interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     BackgroundedView *viewCurrent;
     NSArray *providersArray;
+    NSColor *windowDefaultColor;
 }
+
 @property (weak) IBOutlet NSImageView *imageViewVoiceMail;
 @property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
 
-@property (weak) IBOutlet BackgroundedView *viewContainer;
-@property (weak) IBOutlet DockView *dockView;
-@property (weak) IBOutlet DialPadView *dialPadView;
-@property (weak) IBOutlet ProfileView *profileView;
 @property (weak) IBOutlet RecentsView *recentsView;
 @property (weak) IBOutlet ContactsView *contactsView;
 @property (weak) IBOutlet SettingsView *settingsView;
@@ -45,12 +42,16 @@
 
 @implementation HomeViewController
 
+@synthesize isAppFullScreen;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    [self activateMenuItems];
     
+    windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
-    [v setBackgroundColor:[NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+    [v setBackgroundColor:windowDefaultColor];
     self.dockView.delegate = self;
     
     [self.viewContainer setBackgroundColor:[NSColor whiteColor]];
@@ -63,13 +64,36 @@
     
     viewCurrent = (BackgroundedView*)self.recentsView;
     [self initProvidersArray];
-    [self.dialPadView setProvButtonImage:[NSImage imageNamed:@"provider_logo_zvrs"]];
+    [self setProviderInitialLogo];
     [self.providerTableView reloadData];
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
     [self setObservers];
+    NSImageView *imgView;
+    
+    NSImage *img;
+    [imgView setImage:img];
     
     self.hasProviderAlertBeenShown = false;
+    
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_uri"]){
+        @try{
+            NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"mwi_uri"];
+            LinphoneAddress *sipAddress = linphone_proxy_config_normalize_sip_uri(linphone_core_get_default_proxy_config([LinphoneManager getLc]), [videoMailUri UTF8String]);
+            linphone_core_subscribe([LinphoneManager getLc], sipAddress, "message-summary", 1800, NULL);
+        }
+        @catch(NSError *e){
+            NSLog(@"Invalid MWI uri");
+        }
+    }
+    self.isAppFullScreen = false;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
+    
+    [self.videoView createNumpadView];
 }
 
 #pragma mark - Observers and related functions
@@ -216,10 +240,16 @@
 }
 
 - (void)initProvidersArray {
-    providersArray = @[@"provider_logo_caag", @"provider_logo_convorelay", @"provider_logo_globalvrs",
-                       @"provider_logo_purplevrs", @"provider_logo_sorenson", @"provider_logo_zvrs"];
+    providersArray = [[Utils cdnResources] mutableCopy];
     self.providerTableView.delegate = self;
     self.providerTableView.dataSource = self;
+}
+
+- (void)setProviderInitialLogo {
+    NSDictionary *dict = [providersArray objectAtIndex:0];
+    NSString *imageName = [dict objectForKey:@"providerLogo"];
+    NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
+    [self.dialPadView setProvButtonImage:providerLogo];
 }
 
 #pragma mark - TableView delegate methods
@@ -230,9 +260,9 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
     ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
-    
-    NSString *imageName = [providersArray objectAtIndex:row];
-    [cellView.providerImageView setImage:[NSImage imageNamed:imageName]];
+    NSDictionary *dict = [providersArray objectAtIndex:row];
+    NSString *imageName = [dict objectForKey:@"providerLogo"];
+    [cellView.providerImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
     
     return cellView;
 }
@@ -242,30 +272,32 @@
 }
 
 - (IBAction)didSelectedTableRow:(id)sender {
-    // VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
-    // show this once so that the user can look to see the options but not make a selection.
-    if (!self.hasProviderAlertBeenShown)
-    {
-        NSAlert *alert = [[NSAlert alloc]init];
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Provider Selection will be available in General Release"];
-        [alert runModal];
-        self.hasProviderAlertBeenShown = true;
+    NSInteger selectedRow = [self.providerTableView selectedRow];
+    if (selectedRow >= 0 && selectedRow < providersArray.count) {
+        NSDictionary *dict = [providersArray objectAtIndex:selectedRow];
+        NSString *imageName = [dict objectForKey:@"providerLogo"];
+        NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
+        [self.dialPadView setProvButtonImage:providerLogo];
+        self.providersView.hidden = YES;
     }
-    self.providersView.hidden = YES;
-    
-// VATRP-1514 - show the items, but do not actually select. Show a message letting the user know that this is for general release.
-//    NSInteger selectedRow = [self.providerTableView selectedRow];
-//    if (selectedRow >= 0 && selectedRow < providersArray.count) {
-//        NSString *imageStrname = [providersArray objectAtIndex:selectedRow];
-//        [self.dialPadView setProvButtonImage:[NSImage imageNamed:imageStrname]];
-//        self.providersView.hidden = YES;
+}
 
-//    }
+- (IBAction)onVideoMailClicked:(id)sender {
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"video_mail_uri"]){
+        NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_mail_uri"];
+        [[LinphoneManager instance] call:videoMailUri displayName:@"Videomail" transfer:NO];
+    }
 }
 
 - (IBAction)onButtonProv:(id)sender {
     self.providersView.hidden = !self.providersView.hidden;
+    
+//    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+////    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
+//    [window toggleFullScreen:self];
+}
+
+- (IBAction)onButtonProfileImage:(id)sender {
 }
 
 - (ProfileView*) getProfileView {
@@ -274,11 +306,19 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent {
     NSPoint mousePosition = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
-    
+    [self mouseMovedWithPoint:mousePosition];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent {
+    NSPoint mousePosition = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
+    [self mouseMovedWithPoint:mousePosition];
+}
+
+- (void)mouseMovedWithPoint:(NSPoint)mousePosition {
     if ([[CallService sharedInstance] getCurrentCall]) {
         LinphoneCallState call_state = linphone_call_get_state([[CallService sharedInstance] getCurrentCall]);
         
-        if ((call_state != LinphoneCallDeclined && call_state != LinphoneCallEnd && call_state != LinphoneCallError) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700) {
+        if (self.isAppFullScreen || ((call_state != LinphoneCallDeclined && call_state != LinphoneCallEnd && call_state != LinphoneCallError) && mousePosition.x > 300 && mousePosition.x < 1030 && mousePosition.y > 0 && mousePosition.y < 700)) {
             [self.videoView setMouseInCallWindow];
         }
     }
@@ -288,6 +328,76 @@
     return [viewCurrent isKindOfClass:[RecentsView class]];
 }
 
+- (void)windowWillEnterFullScreen:(NSNotification*)notif {
+    NSLog(@"windowWillEnterFullScreen");
+    
+    [self.videoView windowWillEnterFullScreen];
+    [(BackgroundedView*)self.view setBackgroundColor:[NSColor blackColor]];
+}
 
+- (void)windowDidEnterFullScreen:(NSNotification*)notif {
+    NSLog(@"windowDidEnterFullScreen");
+    
+    [self.videoView windowDidEnterFullScreen];
+    self.isAppFullScreen = YES;
+}
+
+- (void)windowWillExitFullScreen:(NSNotification*)notif {
+    [self.videoView windowWillExitFullScreen];
+    [(BackgroundedView*)self.view setBackgroundColor:windowDefaultColor];
+}
+
+- (void)windowDidExitFullScreen:(NSNotification*)notif {
+    [self.videoView windowDidExitFullScreen];
+
+    self.isAppFullScreen = NO;
+}
+
+- (void)activateMenuItems {
+    [[[[NSApplication sharedApplication] delegate] menuItemFEDVRS] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemZVRS] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemPurple] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemSorenson] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemConvo] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemGlobalENus] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemGlobalENes] setAction:@selector(callToProvider:)];
+    [[[[NSApplication sharedApplication] delegate] menuItemCAAG] setAction:@selector(callToProvider:)];
+}
+
+- (void)callToProvider:(NSMenuItem*)sender {
+    
+    NSString *phoneNumber = [[sender title] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [[LinphoneManager instance] call:phoneNumber displayName:[self providerNameByPhoneNumber:phoneNumber] transfer:NO];
+}
+
+- (NSString*)providerNameByPhoneNumber:(NSString*)phoneNumber {
+    
+    if ([phoneNumber isEqualToString:@"877-709-5797"]) {
+        return @"FEDVRS";
+    }
+    if ([phoneNumber isEqualToString:@"888-888-1116"]) {
+        return @"ZVRS";
+    }
+    if ([phoneNumber isEqualToString:@"877-467-4877"]) {
+        return @"Purple";
+    }
+    if ([phoneNumber isEqualToString:@"866-327-8877"]) {
+        return @"Sorenson";
+    }
+    if ([phoneNumber isEqualToString:@"877-363-7575"]) {
+        return @"Convo";
+    }
+    if ([phoneNumber isEqualToString:@"888-472-6778"]) {
+        return @"Global EN.us";
+    }
+    if ([phoneNumber isEqualToString:@"888-472-6768"]) {
+        return @"Global EN.es";
+    }
+    if ([phoneNumber isEqualToString:@"855-877-2224"]) {
+        return @"CAAG";
+    }
+    
+    return @"N/A";
+}
 
 @end

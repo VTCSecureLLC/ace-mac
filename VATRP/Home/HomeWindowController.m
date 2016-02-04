@@ -56,4 +56,19 @@
 -(CGSize) getWindowSize{
     return [self.window frame].size;
 }
+
+- (void)mouseMoved:(NSEvent *)theEvent {
+    HomeViewController *homeViewController = [self getHomeViewController];
+    
+    NSPoint mousePosition = [homeViewController.view convertPoint:[theEvent locationInWindow] fromView:nil];
+    [homeViewController mouseMovedWithPoint:mousePosition];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent {
+    HomeViewController *homeViewController = [self getHomeViewController];
+    
+    NSPoint mousePosition = [homeViewController.view convertPoint:[theEvent locationInWindow] fromView:nil];
+    [homeViewController mouseMovedWithPoint:mousePosition];
+}
+
 @end

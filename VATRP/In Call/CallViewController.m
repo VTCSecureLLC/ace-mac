@@ -16,7 +16,7 @@
 #import "CallService.h"
 #import "ChatService.h"
 #import "AppDelegate.h"
-
+#import "SettingsHandler.h"
 
 @interface CallViewController () {
     NSTimer *timerCallDuration;
@@ -133,7 +133,6 @@ static const float callAlertStepInterval = 0.5;
     }
 
     LinphoneCore *lc = [LinphoneManager getLc];
-    
     switch (astate) {
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call...";
@@ -193,6 +192,12 @@ static const float callAlertStepInterval = 0.5;
         case LinphoneCallPausedByRemote:
         case LinphoneCallStreamsRunning:
         {
+            // The streams are set up. Make sure that the initial call settings are handled on call set up here.
+            SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+            bool microphoneMuted = [settingsHandler isMicrophoneMuted];
+            linphone_core_enable_mic(lc, microphoneMuted);
+            bool speakerMuted = [settingsHandler isSpeakerMuted];
+            [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }

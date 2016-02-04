@@ -93,4 +93,28 @@
     return [subStrings objectAtIndex:0];
 }
 
++ (NSMutableArray*)cdnResources {
+    NSMutableArray *resources = [NSMutableArray new];
+    int cdnResourcesCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"cdnResourcesCapacity"];
+    
+    for(int i = 0; i < cdnResourcesCount; ++i) {
+        NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d", i]];
+        NSString *domain = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d_domain", i]];
+        NSString *providerLogoURL = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"provider%d_logo.png", i]];
+        if ((name != nil) && (domain != nil))
+        {
+            if (providerLogoURL == nil)
+            {
+                providerLogoURL = @"";
+            }
+            NSDictionary *dict = @{@"name" : name,
+                                   @"domain" : domain,
+                                   @"providerLogo" : providerLogoURL
+                                   };
+            [resources addObject:dict];
+        }
+    }
+    return resources;
+}
+
 @end

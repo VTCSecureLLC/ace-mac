@@ -56,7 +56,7 @@
 
 + (void) callTo:(NSString*)number {
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
-    
+    linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
     [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
 }
 
@@ -69,6 +69,7 @@
 }
 
 - (void) accept:(LinphoneCall *)aCall {
+    linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
     [[LinphoneManager instance] acceptCall:aCall];
 }
 
@@ -100,10 +101,13 @@
 
     LinphoneCore *lc = [LinphoneManager getLc];
     
+    NSLog(@"****** callupdate");
     switch (state) {
         case LinphoneCallIncomingReceived:
+            NSLog(@"****** LinphoneCallIncomingReceived");
         case LinphoneCallIncomingEarlyMedia:
         {
+            NSLog(@"****** LinphoneCallIncomingEarlyMedia");
             int call_count = [CallService callsCount];
             
             if (call_count == 3) {
@@ -128,6 +132,7 @@
             break;
         }
         case LinphoneCallOutgoingInit: {
+            NSLog(@"****** LinphoneCallOutgoingInit");
             const LinphoneCallParams* current = linphone_call_get_current_params(aCall);
 
             if (!linphone_call_params_realtime_text_enabled(current)) {
@@ -136,6 +141,7 @@
         }
             break;
         case LinphoneCallConnected: {
+            NSLog(@"****** LinphoneCallConnected");
             int call_count = [CallService callsCount];
             
             if (currentCall && aCall != currentCall && call_count > 1) {
@@ -144,17 +150,46 @@
             
             currentCall = aCall;
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:currentCall];
-            
+            //const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
+            //NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
+            //NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
+            //bool echoCancellation = [SettingsService getEchoCancel];
             linphone_call_enable_echo_cancellation(aCall, [SettingsService getEchoCancel]);
         }
             break;
         case LinphoneCallPausedByRemote:
+            NSLog(@"****** LinphoneCallPausedByRemote");
         case LinphoneCallStreamsRunning:
         {
+            NSLog(@"****** LinphoneCallStreamsRunning");
+            // The streams are set up. Make sure that the initial call settings are handled on call set up here.
+            SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+            bool microphoneMuted = [settingsHandler isMicrophoneMuted];
+            linphone_core_enable_mic(lc, !microphoneMuted);
+            bool speakerMuted = [settingsHandler isSpeakerMuted];
+            [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
+            bool micIsEnabled = linphone_core_mic_enabled(lc);
+            linphone_core_set_play_level(lc, 100);
+            int playLevel = linphone_core_get_play_level(lc);
+            int playbackGain = linphone_core_get_playback_gain_db(lc);
+            NSLog([NSString stringWithFormat:@"   play level IS %d, playback gain is %d ********************************", playLevel, playbackGain ]);
+            const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
+            NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
+            NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
+            bool speakerCanPlayback = linphone_core_sound_device_can_playback(lc, speakerString);
+            if (speakerCanPlayback)
+            {
+                NSLog(@"    speaker can playback");
+            }
+            else
+            {
+                NSLog(@"    speaker can NOT playback");
+            }
             break;
         }
         case LinphoneCallUpdatedByRemote:
         {
+            NSLog(@"****** LinphoneCallUpdatedByRemote");
             const LinphoneCallParams* current = linphone_call_get_current_params(currentCall);
             const LinphoneCallParams* remote = linphone_call_get_remote_params(currentCall);
             
@@ -173,7 +208,9 @@
         }
             break;
         case LinphoneCallError:
+            NSLog(@"****** LinphoneCallError");
         case LinphoneCallEnd: {
+            NSLog(@"****** LinphoneCallEnd");
             int call_count = [CallService callsCount];
 
             if (call_count == 1) {
@@ -195,6 +232,7 @@
         }
             break;
         case LinphoneCallReleased: {
+            NSLog(@"****** LinphoneCallReleased");
             if (currentCall && aCall != currentCall) {
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondIncomingCallView];
             }
@@ -263,12 +301,12 @@
 
 - (void) openCallWindow {
     NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    if (window.frame.origin.x + 1013 > [[NSScreen mainScreen] frame].size.width) {
-        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1013 - 5, window.frame.origin.y, 1013, window.frame.size.height)
+    if (window.frame.origin.x + 1030 > [[NSScreen mainScreen] frame].size.width) {
+        [window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1030 - 5, window.frame.origin.y, 1030, window.frame.size.height)
                  display:YES
                  animate:YES];
     } else {
-        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1013, window.frame.size.height)
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 1030, window.frame.size.height)
                  display:YES
                  animate:YES];
     }
@@ -278,6 +316,13 @@
     LinphoneCore *lc = [LinphoneManager getLc];
 
     if (!linphone_core_get_calls(lc)) {
+        
+        if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+            [window toggleFullScreen:self];
+            [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+        }
+        
         NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
                  display:YES

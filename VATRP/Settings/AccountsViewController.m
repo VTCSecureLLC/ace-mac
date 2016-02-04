@@ -24,6 +24,7 @@
 @property (weak) IBOutlet NSTextField *textFieldPort;
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
 @property (weak) IBOutlet NSTextField *settingsFeedbackText;
+@property (weak) IBOutlet NSTextField *textFieldMailWaitingIndicatorURI;
 
 @end
 
@@ -101,6 +102,10 @@
         self.textFieldPort.stringValue = @"25060";
         [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
     }
+    
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_uri"]){
+        self.textFieldMailWaitingIndicatorURI.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"mwi_uri"];
+    }
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {
@@ -148,6 +153,10 @@
     self.settingsFeedbackText.stringValue = @"Settings saved";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"closeAccountsViewController" object:nil];
     
+    if(![self.textFieldMailWaitingIndicatorURI.stringValue isEqualToString:@""]){
+        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldMailWaitingIndicatorURI.stringValue forKey:@"mwi_uri"];
+    }
+
     return YES;
 }
 

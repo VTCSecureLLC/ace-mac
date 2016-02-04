@@ -15,10 +15,12 @@
 #import "RegistrationService.h"
 #import "Utils.h"
 #import "DefaultSettingsManager.h"
+#import "CustomComboBox.h"
 
 
-@interface LoginViewController ()<DefaultSettingsManagerDelegate> {
+@interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
+    bool loginClicked;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
 
@@ -33,15 +35,26 @@
 @property (weak) IBOutlet NSComboBox *comboBoxProviderSelect;
 @property (weak) NSURLSession *urlSession;
 @property NSMutableArray *cdnResources;
+@property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
+@property (weak) IBOutlet NSTextField *tmpTextField;
+@property (weak) IBOutlet NSProgressIndicator *tmpProgressIndicator;
 @end
+
+#define CDN_PROVIDER_LIST_URL @"http://cdn.vatrp.net/domains.json"
 
 @implementation LoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
     [self.prog_Signin setHidden:YES];
     [self.loginButton setEnabled:YES];
+    [self checkProvidersInfo];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear];
+    [self checkProvidersInfo];
+    loginClicked = false;
 }
 
 - (void)loadView {
@@ -63,14 +76,48 @@
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
-                    [self.comboBoxProviderSelect removeAllItems];
-    [self reloadProviderDomains];
+    [self.comboBoxProviderSelect removeAllItems];
 }
 
-const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSError *jsonParsingError = nil;
+    if(data){
+        NSArray *resources = [NSJSONSerialization JSONObjectWithData:data
+                                                             options:0 error:&jsonParsingError];
+        if(!jsonParsingError){
+            NSDictionary *resource;
+            _cdnResources = [[NSMutableArray alloc] init];
+            NSMutableArray *logosPaths = [NSMutableArray new];
+            [[NSUserDefaults standardUserDefaults] setInteger:[resources count] forKey:@"cdnResourcesCapacity"];
+            for(int i=0; i < [resources count];i++){
+                resource= [resources objectAtIndex:i];
+                [_cdnResources addObject:[resource objectForKey:@"name"]];
+                NSLog(@"Loaded CDN Resource: %@", [resource objectForKey:@"name"]);
+                [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"name"] forKey:[NSString stringWithFormat:@"provider%d", i]];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"domain"] forKey:[NSString stringWithFormat:@"provider%d_domain", i]];
+                
+                [logosPaths addObject:[resource objectForKey:@"icon2x"]];
+                
+            }
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                [self downloadAndSaveProviderLogos:logosPaths];
+                
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [self initCustomComboBox];
+                });
+            });
+            
+        }
+    }
+    
+}
+
 -(void) reloadProviderDomains{
     _urlSession = [NSURLSession sharedSession];
-    [[_urlSession dataTaskWithURL:[NSURL URLWithString:(NSString*)cdnProviderList] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[_urlSession dataTaskWithURL:[NSURL URLWithString:CDN_PROVIDER_LIST_URL] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSError *jsonParsingError = nil;
         if(data){
             NSArray *resources = [NSJSONSerialization JSONObjectWithData:data
@@ -78,6 +125,7 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
             if(!jsonParsingError){
                 NSDictionary *resource;
                 _cdnResources = [[NSMutableArray alloc] init];
+                [[NSUserDefaults standardUserDefaults] setInteger:[resources count] forKey:@"cdnResourcesCapacity"];
                 for(int i=0; i < [resources count];i++){
                     resource= [resources objectAtIndex:i];
                     [_cdnResources addObject:[resource objectForKey:@"name"]];
@@ -86,7 +134,14 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
                     
                     [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"domain"] forKey:[NSString stringWithFormat:@"provider%d_domain", i]];
                     
+                    [[NSUserDefaults standardUserDefaults] setObject:[resource objectForKey:@"icon2x"] forKey:[NSString stringWithFormat:@"provider%d_logo", i]];
+                    
                 }
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+                [self.customComboBox selectItemAtIndex:0];
+                
                 [self.comboBoxProviderSelect addItemsWithObjectValues:_cdnResources];
                 [self.comboBoxProviderSelect selectItemAtIndex:0];
             }
@@ -113,6 +168,12 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
         self.textFieldDomain.stringValue = domain;
     }
     
+}
+
+#pragma mark - CustomComboBox delegate methods
+
+- (void)customComboBox:(CustomComboBox *)sender didSelectedItem:(NSDictionary *)selectedItem {
+    self.textFieldDomain.stringValue = [selectedItem objectForKey:@"domain"];
 }
 
 //-(void)dealloc{
@@ -152,6 +213,7 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
 }
 
 - (void)userLogin {
+    loginClicked = true;
     loginAccount = [[AccountModel alloc] init];
     loginAccount.username = self.textFieldUsername.stringValue;
     loginAccount.userID = self.textFieldUserID.stringValue;
@@ -168,7 +230,7 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
                                                           port:loginAccount.port];
     [self.prog_Signin setHidden:YES];
     [self.prog_Signin stopAnimation:self];
-    [self.loginButton setEnabled:YES];
+    [self.loginButton setEnabled:NO];
 }
 
 
@@ -269,8 +331,9 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
     linphone_proxy_config_destroy(default_conf);
 }
 - (IBAction)onCheckAutoLogin:(id)sender {
-    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
-    [[NSUserDefaults standardUserDefaults] setBool:!shouldAutoLogin forKey:@"auto_login"];
+    // be explicit in setting this to the correct value.
+    bool shouldAutoLogin = (bool)self.buttonToggleAutoLogin.state;
+    [[NSUserDefaults standardUserDefaults] setBool:shouldAutoLogin forKey:@"auto_login"];
 }
 
 #pragma mark -
@@ -278,18 +341,26 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message {
     switch (state) {
         case LinphoneRegistrationOk: {
-            [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
-                                                              UserID:loginAccount.userID
-                                                            Password:loginAccount.password
-                                                              Domain:loginAccount.domain
-                                                           Transport:loginAccount.transport
-                                                                Port:loginAccount.port
-                                                           isDefault:YES];
+//            if (loginAccount == nil)
+//            {
+                // ToDo - this needs a better fix. On launch, even auto-login is off, the last user is still being registered.
+                //   need to figure out where this is happening and prevent it.
+                //  for now, if the loginAccount is nil, then we need to figure out what account was just registered.
+            // NOTE - deal with this after 2-4 push
+//                const char* userName = linphone_core_get_identity([LinphoneManager getLc]);
+                
+//            }
+                [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
+                                                                  UserID:loginAccount.userID
+                                                                Password:loginAccount.password
+                                                                  Domain:loginAccount.domain
+                                                               Transport:loginAccount.transport
+                                                                    Port:loginAccount.port
+                                                               isDefault:YES];
             
-            [[AppDelegate sharedInstance] showTabWindow];
-            [[AppDelegate sharedInstance].loginWindowController close];
-            [AppDelegate sharedInstance].loginWindowController = nil;
-            
+                [[AppDelegate sharedInstance] showTabWindow];
+                [[AppDelegate sharedInstance].loginWindowController close];
+                [AppDelegate sharedInstance].loginWindowController = nil;
             break;
         }
         case LinphoneRegistrationNone:
@@ -297,21 +368,24 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
             break;
         }
         case LinphoneRegistrationFailed: {
-            [self.loginButton setEnabled:YES];
-            [self.prog_Signin setHidden:YES];
-            [self.prog_Signin stopAnimation:self];
-            NSAlert *alert = [[NSAlert alloc]init];
-            [alert addButtonWithTitle:@"OK"];
-            if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
+            // VATRP-2202: we do not need to show this message if the user has not yet clicked login.
+            if (![self.loginButton isEnabled])
             {
-                [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                [self.loginButton setEnabled:YES];
+                [self.prog_Signin setHidden:YES];
+                [self.prog_Signin stopAnimation:self];
+                NSAlert *alert = [[NSAlert alloc]init];
+                [alert addButtonWithTitle:@"OK"];
+                if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
+                {
+                    [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                }
+                else
+                {
+                    [alert setMessageText:message];
+                }
+                [alert runModal];
             }
-            else
-            {
-                [alert setMessageText:message];
-            }
-            [alert runModal];
-
             break;
         }
         case LinphoneRegistrationProgress: {
@@ -320,6 +394,112 @@ const NSString *cdnProviderList = @"http://cdn.vatrp.net/domains.json";
         default:
             break;
     }
+}
+
+#pragma mark - Providers info checking methods
+
+- (void)checkProvidersInfo {
+    
+    if ([self isProvidersInfoExist]) {
+        [self initCustomComboBox];
+    } else {
+        [self requestToProvidersInfo];
+    }
+    
+}
+
+- (BOOL)isProvidersInfoExist {
+        //Provider logo
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"provider0_logo.png"] &&
+        //Provider name
+        [[NSUserDefaults standardUserDefaults] objectForKey:@"provider0"] &&
+        //Provider domain
+        [[NSUserDefaults standardUserDefaults] objectForKey:@"provider0_domain"]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)initCustomComboBox {
+    _customComboBox.delegate = self;
+    if([Utils cdnResources] && [Utils cdnResources].count > 0){
+        self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+        [self.customComboBox selectItemAtIndex:0];
+        NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
+        self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
+        [_tmpTextField removeFromSuperview];
+        [_tmpProgressIndicator removeFromSuperview];
+
+        // use this opportunity to initialize port if it is not already.
+        NSString* port = self.textFieldPort.stringValue;
+        if ((port == nil) || (port.length == 0))
+        {
+            self.textFieldPort.stringValue = @"25060";
+        }
+    }
+}
+
+- (void)requestToProvidersInfo {
+    [_tmpProgressIndicator startAnimation:self];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:CDN_PROVIDER_LIST_URL]
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    #pragma unused(connection)
+}
+
+- (void)downloadAndSaveProviderLogos:(NSMutableArray*)logosPaths {
+    int i = 0;
+    for (NSString *path in logosPaths) {
+        NSURL *imageURL = [NSURL URLWithString:path];
+        NSError *downloadError = nil;
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL
+                                                  options:kNilOptions
+                                                    error:&downloadError];
+        
+        if (downloadError) {
+            NSLog(@"%@",[downloadError localizedDescription]);
+        } else {
+            
+            NSString *filename = [NSString stringWithFormat:@"provider%d_logo.png", i];
+            NSString *filePath = [self applicationDirectoryFile:filename];
+            NSURL *url = [NSURL fileURLWithPath:filePath];
+            
+            NSError *saveError = nil;
+            BOOL writeWasSuccessful = [imageData writeToURL:url
+                                                    options:kNilOptions
+                                                      error:&saveError];
+            if (!writeWasSuccessful) {
+                NSLog(@"%@",[saveError localizedDescription]);
+            } else {
+                [[NSUserDefaults standardUserDefaults] setObject:filePath forKey:[NSString stringWithFormat:@"provider%d_logo.png", i]];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+
+        }
+        ++i;
+    }
+}
+
+- (NSString*)applicationDirectoryFile:(NSString*)file {
+    NSString* bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *makePath = [[[[documentsPath stringByAppendingString:@"/"] stringByAppendingString:bundleID] stringByAppendingString:@"/"] stringByAppendingString:file];
+    return makePath;
+}
+
+- (void)changeEditBoxesStates:(BOOL)state {
+    [self.textFieldUsername setEnabled:!state];
+    [self.textFieldUserID setEnabled:!state];
+    [self.textFieldPassword setEnabled:!state];
+    [self.textFieldDomain setEnabled:!state];
+}
+
+#pragma mark - CustomComboBox delegate methods
+
+- (void)customComboBox:(CustomComboBox*)sender didOpenedComboTable:(BOOL)isOpened {
+    [self changeEditBoxesStates:isOpened];
 }
 
 @end

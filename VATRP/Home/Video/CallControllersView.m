@@ -8,9 +8,11 @@
 
 #import "CallControllersView.h"
 #import "CallInfoWindowController.h"
+#import "CallInfoViewController.h"
 #import "ChatService.h"
 #import "ViewManager.h"
 #import "SettingsService.h"
+#import "AppDelegate.h"
 #import "Utils.h"
 
 
@@ -23,7 +25,10 @@
     
     
     CallInfoWindowController *callInfoWindowController;
+    CallInfoViewController *callInfoViewController;
 }
+
+@property (strong,nonatomic)SettingsHandler* settingsHandler;
 
 @property (weak) IBOutlet NSTextField *labelCallState;
 
@@ -45,9 +50,17 @@
 
 @synthesize delegate = _delegate;
 
+
+BOOL isRTTEnabled;
+BOOL isRTTLocallyEnabled;
 - (void) awakeFromNib {
     [super awakeFromNib];
 
+    self.settingsHandler = [SettingsHandler settingsHandler];
+    self.settingsHandler.settingsHandlerDelegate = self;
+    self.settingsHandler.preferencessHandlerDelegate = self;
+
+    callInfoViewController = nil;
     [ViewManager sharedInstance].callControllersView_delegate = self;
     
     isSendingVideo = YES;
@@ -81,6 +94,15 @@
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
+    [self initializeButtonsFromSettings];
+}
+
+-(void)initializeButtonsFromSettings
+{
+    [self updateUIForSpeakerMute:[self.settingsHandler isSpeakerMuted]];
+    [self updateUIForMicrophoneMute:[self.settingsHandler isMicrophoneMuted]];
+    [self updateUIForEnableVideo:[self.settingsHandler isVideoEnabled]];
+
 }
 
 -(void)dealloc{
@@ -102,11 +124,32 @@
 }
 
 - (IBAction)onButtonVideo:(id)sender {
-    [self.videoProgressIndicator startAnimation:self];
-    
+    LinphoneCore *lc = [LinphoneManager getLc];
+    bool videoCurrentlyEnabled = true;
+    if (call)
+    {
+        videoCurrentlyEnabled = linphone_call_camera_enabled(call);
+    }
+    else
+    {
+        videoCurrentlyEnabled = [self.settingsHandler isVideoEnabled];
+    }
+    // ToDo - leave for the moment, not sure where else this is used.
     isSendingVideo = !isSendingVideo;
-    
-    if (isSendingVideo) {
+    if (videoCurrentlyEnabled)
+    {
+        [self updateUIForEnableVideo:false];
+    }
+    else
+    {
+        [self updateUIForEnableVideo:true];
+    }
+}
+
+-(void)updateUIForEnableVideo:(bool)enable
+{
+    [self.videoProgressIndicator startAnimation:self];
+    if (enable) {
         [self onVideoOn];
         [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     } else {
@@ -114,32 +157,68 @@
         [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     }
     [self.videoProgressIndicator stopAnimation:self];
+    
 }
 
+// microphone hanlder
 - (IBAction)onButtonMute:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
-    linphone_core_enable_mic(lc, !linphone_core_mic_enabled(lc));
-    if (!linphone_core_mic_enabled(lc)) {
+    bool currentlyMuted = !linphone_core_mic_enabled(lc);
+    // being verbose for explicit readable logic
+    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
+    if (currentlyMuted) {
+        [self updateUIForMicrophoneMute:false];
+        [settingsHandler inCallMicrophoneWasMuted:false];
+    } else {
+        [self updateUIForMicrophoneMute:true];
+        [settingsHandler inCallMicrophoneWasMuted:true];
+    }
+
+}
+
+-(void)updateUIForMicrophoneMute:(bool)mute
+{
+    LinphoneCore *lc = [LinphoneManager getLc];
+    linphone_core_enable_mic(lc, !mute);
+    if (mute) {
         [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];
         [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     } else {
         [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
         [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
-
-
     }
+
 }
 
 - (IBAction)onButtonSpeaker:(id)sender {
+    // ToDo: Make a constants class for items like this. Note this is also in updateUIForSpeakerMute
     const float mute_db = -1000.0f;
-    if (linphone_core_get_playback_gain_db([LinphoneManager getLc]) == mute_db) {
-        linphone_core_set_playback_gain_db([LinphoneManager getLc], 0.0f);
-        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
-        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
-    } else {
-        linphone_core_set_playback_gain_db([LinphoneManager getLc], mute_db);
+    bool muteSpeaker = false;
+    if (linphone_core_get_playback_gain_db([LinphoneManager getLc]) == mute_db)
+    {
+        muteSpeaker = false;
+    }
+    else
+    {
+        muteSpeaker = true;
+    }
+    [self updateUIForSpeakerMute:muteSpeaker];
+    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
+    [settingsHandler inCallSpeakerWasMuted:muteSpeaker];
+}
+
+-(void)updateUIForSpeakerMute:(bool)mute
+{
+    [LinphoneManager.instance muteSpeakerInCall:mute];
+    if (mute)
+    {
         [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_inactive"]];
         [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
+    }
+    else
+    {
+        [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
+        [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     }
 }
 
@@ -148,32 +227,83 @@
         [_delegate didClickCallControllersViewNumpad:self];
     }
 }
-- (void)performChatButtonClick{
-    if (self.window.frame.size.width == 1328) {
-        [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
-                      display:YES
-                      animate:YES];
-        chat_window_open=NO;
-    } else {
-        if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
-            [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
-                          display:YES
-                          animate:YES];
-        } else {
-            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
-                          display:YES
-                          animate:YES];
-            chat_window_open=YES;
-          }
+- (void)performChatButtonClick {
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:kREAL_TIME_TEXT_ENABLED]){
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kREAL_TIME_TEXT_ENABLED]){
+            isRTTLocallyEnabled = YES;
+        }
     }
+    
+    if(isRTTLocallyEnabled){
+        if(call){
+            if(linphone_call_get_state(call) == LinphoneCallStreamsRunning){
+                if(linphone_call_params_realtime_text_enabled(linphone_call_get_remote_params(call))){
+                    isRTTEnabled = YES;
+                }
+                else{
+                    isRTTEnabled = NO;
+                }
+            }
+            else{
+                isRTTEnabled = YES;
+            }
+        }
+    }
+    
+    if(!isRTTEnabled){
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"RTT has been disabled for this session"];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+        return;
+    }
+    
+    HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
 
+    if (homeViewController.isAppFullScreen) {
+        if (homeViewController.rttView.hidden) {
+//            [[homeViewController.callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height)];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height))];
+            [self set_bool_chat_window_open:YES];
+        } else {
+            [[homeViewController.callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height))];
+            [self set_bool_chat_window_open:NO];
+        }
+    } else {
+        if (self.window.frame.size.width == 1328) {
+            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+                          display:YES
+                          animate:YES];
+            [self set_bool_chat_window_open:NO];
+        } else {
+            if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+                [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                              display:YES
+                              animate:YES];
+            } else {
+                [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                              display:YES
+                              animate:YES];
+                [self set_bool_chat_window_open:YES];
+            }
+        }
+    }
 }
+
 - (BOOL)bool_chat_window_open{
     return chat_window_open;
 }
 
+- (void)set_bool_chat_window_open:(BOOL)open {
+    chat_window_open = open;
+    HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
+    homeViewController.rttView.hidden = !open;
+}
+
 - (IBAction)onButtonChat:(id)sender {
-    self.performChatButtonClick;
+    [self performChatButtonClick];
 }
 
 
@@ -187,13 +317,37 @@
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
-    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
-    [callInfoWindowController showWindow:self];
+    if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+        if (callInfoViewController) {
+            [callInfoViewController dismissController:self];
+            callInfoViewController = nil;
+        } else {
+            callInfoViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfoViewController"];
+            
+            [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewController:callInfoViewController
+                                                                                    asPopoverRelativeToRect:((NSButton*)sender).frame
+                                                                                                     ofView:self
+                                                                                              preferredEdge:NSRectEdgeMinX
+                                                                                                   behavior:NSPopoverBehaviorApplicationDefined];
+        }
+    } else {
+        callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+        [callInfoWindowController showWindow:self];
+    }
+    
+    
 }
 
 - (void)dismisCallInfoWindow {
-    [callInfoWindowController close];
-    callInfoWindowController = nil;
+    if (callInfoWindowController) {
+        [callInfoWindowController close];
+        callInfoWindowController = nil;
+    }
+    
+    if (callInfoViewController) {
+        [callInfoViewController dismissController:self];
+        callInfoViewController = nil;
+    }
 }
 
 //- (IBAction)onButtonOpenMessage:(id)sender {
@@ -336,6 +490,12 @@
         }
         case LinphoneCallEnd: {
             self.labelCallState.stringValue = @"Call End";
+            
+            if (callInfoViewController) {
+                [callInfoViewController dismissController:self];
+                callInfoViewController = nil;
+            }
+            
             break;
         }
         default:
@@ -374,6 +534,7 @@
 //        const char *pathToImage = [pathToImageString UTF8String];
 //        linphone_core_set_static_picture(lc, pathToImage);
         linphone_call_enable_camera(call, FALSE);
+//        linphone_core_enable_video(call, FALSE);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
@@ -426,5 +587,18 @@
     [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
     [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
 }
+
+#pragma mark settings handler selectors
+-(void)muteSpeaker:(bool)mute
+{
+    [self updateUIForSpeakerMute:mute];
+}
+
+-(void)muteMicrophone:(bool)mute
+{
+    [self updateUIForMicrophoneMute:mute];
+}
+
+#pragma mark preferences handler selectors
 
 @end

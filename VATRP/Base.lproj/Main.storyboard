@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
@@ -1387,6 +1387,7 @@
                                             <outlet property="buttonFullScreen" destination="5GQ-IM-ddo" id="BYI-jU-CSm"/>
                                             <outlet property="callControllersView" destination="A7N-2c-iqT" id="u2X-vy-6di"/>
                                             <outlet property="callControllsConteinerView" destination="YoF-eP-9ll" id="rES-m5-QUk"/>
+                                            <outlet property="callerImageView" destination="lSc-P8-rZy" id="qjs-uu-tBL"/>
                                             <outlet property="labelCallDuration" destination="BCE-oT-0Kc" id="sfq-hP-pbB"/>
                                             <outlet property="labelCallState" destination="bRW-5L-eQn" id="CZ7-Bb-Yj6"/>
                                             <outlet property="labelDisplayName" destination="V5s-GS-ax9" id="QCs-Jl-119"/>
@@ -1403,7 +1404,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V5s-GS-ax9">
-                                                <rect key="frame" x="10" y="619" width="700" height="40"/>
+                                                <rect key="frame" x="10" y="469" width="700" height="40"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="qOo-dp-1m1">
                                                     <font key="font" metaFont="system" size="36"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1411,7 +1412,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bRW-5L-eQn">
-                                                <rect key="frame" x="10" y="574" width="700" height="27"/>
+                                                <rect key="frame" x="10" y="424" width="700" height="27"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Call status" id="37I-aq-yzM">
                                                     <font key="font" metaFont="system" size="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1419,7 +1420,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-oT-0Kc">
-                                                <rect key="frame" x="10" y="550" width="700" height="27"/>
+                                                <rect key="frame" x="10" y="400" width="700" height="27"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="0:00:05" id="fFR-vd-WOI">
                                                     <font key="font" metaFont="system" size="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1551,6 +1552,10 @@
                                                     <outlet property="videoProgressIndicator" destination="A60-of-7KD" id="czg-Q4-FAC"/>
                                                 </connections>
                                             </customView>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSc-P8-rZy">
+                                                <rect key="frame" x="284" y="517" width="150" height="150"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="6H8-D2-vck"/>
+                                            </imageView>
                                         </subviews>
                                     </customView>
                                     <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaC-yt-d1Z" customClass="SecondCallView">
@@ -1616,10 +1621,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <subviews>
                                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BFD-JW-NCd" customClass="BackgroundedView">
-                                                <rect key="frame" x="90" y="302" width="538" height="244"/>
+                                                <rect key="frame" x="90" y="208" width="538" height="346"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cho-jO-fQc">
+                                                        <rect key="frame" x="219" y="246" width="100" height="100"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="ZGH-93-68f"/>
+                                                    </imageView>
+                                                </subviews>
                                             </customView>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-Th-Msu">
-                                                <rect key="frame" x="184" y="488" width="350" height="40"/>
+                                                <rect key="frame" x="184" y="396" width="350" height="40"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="3bZ-AN-8nA">
                                                     <font key="font" metaFont="system" size="32"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1627,7 +1638,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="igR-DH-5Pb">
-                                                <rect key="frame" x="116" y="394" width="230" height="60"/>
+                                                <rect key="frame" x="116" y="324" width="230" height="60"/>
                                                 <buttonCell key="cell" type="square" title="End &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="sKk-Di-irY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="32" name="HelveticaNeue"/>
@@ -1637,7 +1648,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wdK-1T-ThT">
-                                                <rect key="frame" x="374" y="394" width="230" height="60"/>
+                                                <rect key="frame" x="374" y="324" width="230" height="60"/>
                                                 <buttonCell key="cell" type="square" title="Hold &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="LuZ-3o-PmI">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="32" name="HelveticaNeue"/>
@@ -1647,7 +1658,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dpq-8B-5BM">
-                                                <rect key="frame" x="245" y="317" width="230" height="60"/>
+                                                <rect key="frame" x="245" y="230" width="230" height="60"/>
                                                 <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="Yt5-vL-kiW">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="32" name="HelveticaNeue"/>
@@ -1661,6 +1672,7 @@
                                             <outlet property="buttonDecline" destination="dpq-8B-5BM" id="vKc-c6-tSE"/>
                                             <outlet property="buttonEndAnswer" destination="igR-DH-5Pb" id="USM-tK-V4X"/>
                                             <outlet property="buttonHoldAnswer" destination="wdK-1T-ThT" id="Xmh-6J-LJ7"/>
+                                            <outlet property="callerImageView" destination="Cho-jO-fQc" id="pMu-EO-wHn"/>
                                             <outlet property="labelDisplayName" destination="N0z-Th-Msu" id="6UO-0V-12t"/>
                                             <outlet property="viewAlphed" destination="BFD-JW-NCd" id="ekh-Ep-drb"/>
                                         </connections>
@@ -3708,11 +3720,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-<<<<<<< HEAD
                                     <rect key="frame" x="410" y="0.0" width="15" height="400"/>
-=======
-                                    <rect key="frame" x="410" y="0.0" width="15" height="385"/>
->>>>>>> VTCSecureLLC/master
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

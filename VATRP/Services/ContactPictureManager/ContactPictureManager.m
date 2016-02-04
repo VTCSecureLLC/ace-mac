@@ -30,9 +30,18 @@
     [image saveAsPNGWithName:pictureFilePath];
 }
 
-- (NSString*)imagePathByContactName:(NSString*)name andSipURI:(NSString*)sipURI {
-   // NSString *pictureFileName = [[[name stringByAppendingString:@"_"] stringByAppendingString:sipURI] stringByAppendingString:@".png"];
-    
+- (void)deleteImageWithName:(NSString*)name andSipURI:(NSString*)sipURI {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *filePath = [self imagePathByName:name andSipURI:sipURI];
+    NSError* anError;
+    if ([fm fileExistsAtPath:filePath]) {
+        if ([fm removeItemAtPath:filePath error:&anError]) {
+            NSLog(@"Unexpected Error occured = %@", anError);
+        }
+    }
+}
+
+- (NSString*)imagePathByName:(NSString*)name andSipURI:(NSString*)sipURI {
     NSString *pictureFileName = [[[name stringByAppendingString:@"_"] stringByAppendingString:[Utils makeSipURIWithAccountName:name andProviderAddress:sipURI]] stringByAppendingString:@".png"];
     NSString *pictureFilePath = [self applicationDirectoryFile:pictureFileName];
     return pictureFilePath;

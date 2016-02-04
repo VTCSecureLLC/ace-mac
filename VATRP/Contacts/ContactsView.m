@@ -217,7 +217,7 @@
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
     [cellView.phoneTextField setStringValue:[dict objectForKey:@"phone"]];
     cellView.providerName = [dict objectForKey:@"provider"];
-    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByContactName:[dict objectForKey:@"name"] andSipURI:[dict objectForKey:@"provider"]]];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:[dict objectForKey:@"name"] andSipURI:[dict objectForKey:@"provider"]]];
     if (contactImage) {
         [cellView.imgView setImage:contactImage];
     } else {
@@ -239,7 +239,8 @@
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
     [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
-    
+    NSString *provider  = [Utils providerNameFromSipURI:[contactCellView.phoneTextField stringValue]];
+    [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:provider];
     [self refreshContactList];
 }
 

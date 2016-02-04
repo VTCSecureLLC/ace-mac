@@ -63,7 +63,12 @@
 }
 
 - (void)initContactPicture {
-    selectedImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByContactName:self.oldName andSipURI:providerAddress]];
+    
+    if ([self.oldName isEqualToString:@""]) {
+        selectedImage = nil;
+    } else {
+        selectedImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:self.oldName andSipURI:providerAddress]];
+    }
     if (selectedImage) {
         [_contactImageView setWantsLayer: YES];
         _contactImageView.layer.borderWidth = 1.0;

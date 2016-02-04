@@ -13,6 +13,7 @@
 + (ContactPictureManager *)sharedInstance;
 
 - (void)saveImage:(NSImage*)image withName:(NSString*)name andSipURI:(NSString*)sipURI;
-- (NSString*)imagePathByContactName:(NSString*)name andSipURI:(NSString*)sipURI;
+- (void)deleteImageWithName:(NSString*)name andSipURI:(NSString*)sipURI;
+- (NSString*)imagePathByName:(NSString*)name andSipURI:(NSString*)sipURI;
 
 @end

@@ -213,7 +213,7 @@
 
 
 // TODO: not sure these need delegate methods - we may be able to just handle the settings here directly?
--(void)setShowSelfPreview:(bool)show
+-(void)setShowSelfView:(bool)show
 {
     // does call window respond to this, or do we just show/hide?
     [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:show];

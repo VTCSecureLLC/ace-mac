@@ -8,6 +8,7 @@
 
 #import "AVViewController.h"
 #import "SettingsHandler.h"
+#import "LinphoneManager.h"
 
 @interface AVViewController () {
     BOOL isChanged;
@@ -78,11 +79,9 @@
     if (!isChanged) {
         return;
     }
-    
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonSpeakerMute.state forKey:@"SPEAKER_MUTE"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonMicMute.state forKey:@"MICROPHONE_MUTE"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonEchoCancel.state forKey:@"ECHO_CANCEL"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.buttonShowSelfView.state forKey:@"VIDEO_SHOW_SELF_VIEW"];
+    // VATRP-2204: making it so that the interaction between the app and the settings occurs through the SettingsHandler.
+    // also - so that the ui and the settings can be enforced while the settings dialog is open, where applicable, removing the need for a save button.
+    // most items will be set when the button is toggled.
     [[NSUserDefaults standardUserDefaults] setBool:self.buttonShowPreview.state forKey:@"VIDEO_SHOW_PREVIEW"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

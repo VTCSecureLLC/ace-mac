@@ -48,7 +48,8 @@
 @property(weak,nonatomic)id<InCallPreferencesHandlerDelegate> inCallPreferencessHandlerDelegate;
 @property(weak,nonatomic)id<PreferencesHandlerDelegate> preferencessHandlerDelegate;
 
--(void)initializeUserDefaults;
+// Bool force provided for debugging, and to reset settings when needed.
+-(void)initializeUserDefaults:(bool)force;
 
 
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog

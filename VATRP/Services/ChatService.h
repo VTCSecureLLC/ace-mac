@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CallService.h"
 
 #define kCHAT_UNREAD_MESSAGE @"kCHAT_UNREAD_MESSAGE"
 #define kCHAT_CLEARE_UNREAD_MESSAGES @"kCHAT_CLEARE_UNREAD_MESSAGES"
@@ -18,7 +19,7 @@
 - (BOOL) openChatWindowWithUser:(NSString*)user;
 - (void) closeChatWindow;
 - (BOOL) sendMessagt:(NSString*)message;
-- (BOOL) sendEnter;
+- (BOOL) sendEnter:(LinphoneChatMessage*)messagePtr ChatRoom:(LinphoneChatRoom*)chatroom_ptr;
 - (BOOL) sendBackward;
 - (BOOL) sendTab;
 

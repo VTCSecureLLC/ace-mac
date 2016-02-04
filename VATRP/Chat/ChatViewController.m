@@ -757,7 +757,7 @@ static void chatTable_free_chatrooms(void *data) {
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
     
     if (currentCall_) {
-        [[ChatService sharedInstance] sendEnter];
+        [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:selectedChatRoom];
         
         
         outgoingChatMessage = linphone_chat_room_create_message_2(selectedChatRoom, [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);

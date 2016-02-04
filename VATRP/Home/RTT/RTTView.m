@@ -253,7 +253,7 @@ static void chatTable_free_chatrooms(void *data) {
 
     //VATRP-1292 open chat window immediately when a new message is recieved.
     if(![ViewManager sharedInstance].callControllersView_delegate.bool_chat_window_open){
-        [ViewManager sharedInstance].callControllersView_delegate.performChatButtonClick;
+        [[ViewManager sharedInstance].callControllersView_delegate performChatButtonClick];
     }
     
     
@@ -281,17 +281,22 @@ static void chatTable_free_chatrooms(void *data) {
             } else {
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
-                    self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
-                    NSString *str_msg = [NSString stringWithUTF8String:text_char];
-                    if ([text isEqualToString:@"\b"]) {
-                        if (str_msg && str_msg.length > 0) {
-                            str_msg = [str_msg substringToIndex:str_msg.length - 1];
-                        }
-                    } else {
-                        str_msg = [str_msg stringByAppendingString:text];
-                    }
                     
-                    incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [str_msg UTF8String]);
+                    if (strlen(text_char)) {
+                        self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
+                        NSString *str_msg = [NSString stringWithUTF8String:text_char];
+                        if ([text isEqualToString:@"\b"]) {
+                            if (str_msg && str_msg.length > 0) {
+                                str_msg = [str_msg substringToIndex:str_msg.length - 1];
+                            }
+                        } else {
+                            str_msg = [str_msg stringByAppendingString:text];
+                        }
+                        
+                        incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [str_msg UTF8String]);
+                    } else {
+                        incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
+                    }
                 } else {
                     incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
                 }
@@ -453,7 +458,7 @@ long msgSize; //message length buffer
             //Do something against DELETE key
             return NO;
         } else if (commandSelector == @selector(deleteBackward:)) {
-            //Do something against BACKSPACE keyxc vbxcv
+            //Do something against BACKSPACE key
             
             return [self eventBackward];
         } else if (commandSelector == @selector(insertTab:)) {
@@ -485,11 +490,10 @@ long msgSize; //message length buffer
             [self sendMessage:self.textFieldMessage.stringValue withExterlBodyUrl:nil withInternalURL:nil LinphoneChatRoom:[self getCurrentChatRoom]];
         } else {
         
-            [[ChatService sharedInstance] sendEnter];
-            
-            
             outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
-            
+
+            [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:[self getCurrentChatRoom]];
+
             self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
             
             [self.tableViewContent reloadData];

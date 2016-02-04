@@ -190,6 +190,7 @@
             self.labelCallState.stringValue = @"Ringing 00:00";
             
             [self startRingCountTimerWithTimeInterval:3.6];
+            [self.labelRingCount setTextColor:[NSColor redColor]];
         }
             break;
         case LinphoneCallPaused: {

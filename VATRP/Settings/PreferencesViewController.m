@@ -26,7 +26,7 @@
     NSButton *checkboxAdaptiveRate;
     NSButton *checkboxAlwaysInititate;
     NSButton *checkboxAlwaysAccept;
-    NSComboBox *comboBoxVideoPreset;
+    //NSComboBox *comboBoxVideoPreset;
     NSComboBox *comboBoxPreferredSize;
     NSTextField *textFieldMWIURL;
     NSButton *checkboxStun;
@@ -263,20 +263,20 @@
     [checkboxAlwaysAccept setTarget:self];
     [self.scrollView.documentView addSubview:checkboxAlwaysAccept];
     
-    originY -= 30;
-    comboBoxVideoPreset = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)]; // YES
-    [comboBoxVideoPreset addItemsWithObjectValues:@[@"default", @"high-fps", @"custom"]];
-    [comboBoxVideoPreset setDelegate:self];
+//    originY -= 30;
+//    comboBoxVideoPreset = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)]; // YES
+//    [comboBoxVideoPreset addItemsWithObjectValues:@[@"default", @"high-fps", @"custom"]];
+//    [comboBoxVideoPreset setDelegate:self];
     
-    const char *video_preset = linphone_core_get_video_preset([LinphoneManager getLc]);
-    if (!video_preset || strcmp(video_preset, "default") == 0) {
-        comboBoxVideoPreset.stringValue = @"default";
-    } else if (strcmp(video_preset, "high-fps") == 0) {
-        comboBoxVideoPreset.stringValue = @"high-fps";
-    } else if (strcmp(video_preset, "custom") == 0) {
-        comboBoxVideoPreset.stringValue = @"custom";
-    }
-    [self.scrollView.documentView addSubview:comboBoxVideoPreset];
+//    const char *video_preset = linphone_core_get_video_preset([LinphoneManager getLc]);
+//    if (!video_preset || strcmp(video_preset, "default") == 0) {
+//        comboBoxVideoPreset.stringValue = @"default";
+//    } else if (strcmp(video_preset, "high-fps") == 0) {
+//        comboBoxVideoPreset.stringValue = @"high-fps";
+//    } else if (strcmp(video_preset, "custom") == 0) {
+//        comboBoxVideoPreset.stringValue = @"custom";
+//    }
+//    [self.scrollView.documentView addSubview:comboBoxVideoPreset];
     
     originY -= 30;
     
@@ -388,7 +388,7 @@
     checkboxStun = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // YES
     [checkboxStun setButtonType:NSSwitchButton];
     [checkboxStun setBezelStyle:0];
-    [checkboxStun setTitle:@"STUN"];
+    [checkboxStun setTitle:@"Use STUN"];
     [checkboxStun setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
     [checkboxStun setAction:@selector(onCheckBoxHandler:)];
     [checkboxStun setTarget:self];
@@ -397,7 +397,7 @@
     originY -= 30;
     labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)]; // YES
     labelTitle.editable = NO;
-    labelTitle.stringValue = @"STUN URL";
+    labelTitle.stringValue = @"STUN Server";
     [labelTitle.cell setBordered:NO];
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
@@ -414,7 +414,7 @@
     checkboxEnableICE = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // YES
     [checkboxEnableICE setButtonType:NSSwitchButton];
     [checkboxEnableICE setBezelStyle:0];
-    [checkboxEnableICE setTitle:@"Enable ICE"];
+    [checkboxEnableICE setTitle:@"Use ICE"];
     [checkboxEnableICE setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
     [checkboxEnableICE setAction:@selector(onCheckBoxHandler:)];
     [checkboxEnableICE setTarget:self];
@@ -431,31 +431,31 @@
     [checkboxEnableUPNP setEnabled:linphone_core_upnp_available()];
     [self.scrollView.documentView addSubview:checkboxEnableUPNP];
     
-    originY -= 30;
-    checkboxRandomPorts = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
-    [checkboxRandomPorts setButtonType:NSSwitchButton];
-    [checkboxRandomPorts setBezelStyle:0];
-    [checkboxRandomPorts setTitle:@"Random Ports"];
-    [checkboxRandomPorts setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"random_port_preference"]];
-    [checkboxRandomPorts setAction:@selector(onCheckBoxHandler:)];
-    [checkboxRandomPorts setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxRandomPorts];
+//    originY -= 30;
+//    checkboxRandomPorts = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)];
+//    [checkboxRandomPorts setButtonType:NSSwitchButton];
+//    [checkboxRandomPorts setBezelStyle:0];
+//    [checkboxRandomPorts setTitle:@"Random Ports"];
+//    [checkboxRandomPorts setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"random_port_preference"]];
+//    [checkboxRandomPorts setAction:@selector(onCheckBoxHandler:)];
+//    [checkboxRandomPorts setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxRandomPorts];
     
-    originY -= 30;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
-    labelTitle.editable = NO;
-    labelTitle.stringValue = @"SIP Port";
-    [labelTitle.cell setBordered:NO];
-    [labelTitle setBackgroundColor:[NSColor clearColor]];
-    [self.scrollView.documentView addSubview:labelTitle];
+//    originY -= 30;
+//    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
+//    labelTitle.editable = NO;
+//    labelTitle.stringValue = @"SIP Port";
+//    [labelTitle.cell setBordered:NO];
+//    [labelTitle setBackgroundColor:[NSColor clearColor]];
+//    [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [NSString stringWithFormat:@"%d", [DefaultSettingsManager sharedInstance].sipRegisterPort];
+//    textfieldValue = [NSString stringWithFormat:@"%d", [DefaultSettingsManager sharedInstance].sipRegisterPort];
     
-    textFieldSIPPort = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
-    textFieldSIPPort.delegate = self;
-    textFieldSIPPort.stringValue = textfieldValue ? textfieldValue : @"5060";
-    textFieldSIPPort.editable = YES;
-    [self.scrollView.documentView addSubview:textFieldSIPPort];
+//    textFieldSIPPort = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
+//    textFieldSIPPort.delegate = self;
+//    textFieldSIPPort.stringValue = textfieldValue ? textfieldValue : @"5060";
+//    textFieldSIPPort.editable = YES;
+//    [self.scrollView.documentView addSubview:textFieldSIPPort];
     
     originY -= 30;
     labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)];
@@ -556,35 +556,35 @@
     [checkboxDebugMode setTarget:self];
     [self.scrollView.documentView addSubview:checkboxDebugMode];
     
-    originY -= 30;
-    checkboxPersistentNotifier = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
-    [checkboxPersistentNotifier setButtonType:NSSwitchButton];
-    [checkboxPersistentNotifier setBezelStyle:0];
-    [checkboxPersistentNotifier setTitle:@"Persistent Notifier"];
-    [checkboxPersistentNotifier setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PERSISTENT_NOTIFIER"]];
-    [checkboxPersistentNotifier setAction:@selector(onCheckBoxHandler:)];
-    [checkboxPersistentNotifier setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxPersistentNotifier];
+//    originY -= 30;
+//    checkboxPersistentNotifier = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
+//    [checkboxPersistentNotifier setButtonType:NSSwitchButton];
+//    [checkboxPersistentNotifier setBezelStyle:0];
+//    [checkboxPersistentNotifier setTitle:@"Persistent Notifier"];
+//    [checkboxPersistentNotifier setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PERSISTENT_NOTIFIER"]];
+//    [checkboxPersistentNotifier setAction:@selector(onCheckBoxHandler:)];
+//    [checkboxPersistentNotifier setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxPersistentNotifier];
     
-    originY -= 30;
-    checkboxSharingServerURL = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
-    [checkboxSharingServerURL setButtonType:NSSwitchButton];
-    [checkboxSharingServerURL setBezelStyle:0];
-    [checkboxSharingServerURL setTitle:@"Sharing Server URL"];
-    [checkboxSharingServerURL setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_SHARING_SERVER_URL"]];
-    [checkboxSharingServerURL setAction:@selector(onCheckBoxHandler:)];
-    [checkboxSharingServerURL setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxSharingServerURL];
+//    originY -= 30;
+//    checkboxSharingServerURL = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
+//    [checkboxSharingServerURL setButtonType:NSSwitchButton];
+//    [checkboxSharingServerURL setBezelStyle:0];
+//    [checkboxSharingServerURL setTitle:@"Sharing Server URL"];
+//    [checkboxSharingServerURL setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_SHARING_SERVER_URL"]];
+//    [checkboxSharingServerURL setAction:@selector(onCheckBoxHandler:)];
+//    [checkboxSharingServerURL setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxSharingServerURL];
     
-    originY -= 30;
-    checkboxRemoteProvisioning = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
-    [checkboxRemoteProvisioning setButtonType:NSSwitchButton];
-    [checkboxRemoteProvisioning setBezelStyle:0];
-    [checkboxRemoteProvisioning setTitle:@"Remote Provisioning"];
-    [checkboxRemoteProvisioning setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"Remote Provisioning"]];
-    [checkboxRemoteProvisioning setAction:@selector(onCheckBoxHandler:)];
-    [checkboxRemoteProvisioning setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxRemoteProvisioning];
+//    originY -= 30;
+//    checkboxRemoteProvisioning = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
+//    [checkboxRemoteProvisioning setButtonType:NSSwitchButton];
+//    [checkboxRemoteProvisioning setBezelStyle:0];
+//    [checkboxRemoteProvisioning setTitle:@"Remote Provisioning"];
+//    [checkboxRemoteProvisioning setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"Remote Provisioning"]];
+//    [checkboxRemoteProvisioning setAction:@selector(onCheckBoxHandler:)];
+//    [checkboxRemoteProvisioning setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxRemoteProvisioning];
     
     originY -= 30;
     checkboxSendLogs = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
@@ -615,7 +615,8 @@
     
     NSComboBox *comboBox = (NSComboBox *)[notification object];
     
-    if (comboBox == comboBoxMediaEncription || comboBox == comboBoxPreferredSize || comboBox == comboBoxVideoPreset) {
+    if (comboBox == comboBoxMediaEncription || comboBox == comboBoxPreferredSize)// || comboBox == comboBoxVideoPreset)
+    {
         isChanged = YES;
     }
 }
@@ -680,7 +681,7 @@
     policy.automatically_accept = (BOOL)checkboxAlwaysAccept.state;
     linphone_core_set_video_policy(lc, &policy);
 
-    linphone_core_set_video_preset(lc, [comboBoxVideoPreset.stringValue UTF8String]);
+    //linphone_core_set_video_preset(lc, [comboBoxVideoPreset.stringValue UTF8String]);
     
     MSVideoSize vsize;
     
@@ -803,5 +804,10 @@
     return [[supportedCodecsMap objectForKey:codec] boolValue];
 }
 
+//#pragma mark settings handler
+//-(void)cameraWasMuted:(bool)mutes
+//{
+//
+//}
 
 @end

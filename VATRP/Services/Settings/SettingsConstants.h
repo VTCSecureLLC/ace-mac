@@ -28,5 +28,8 @@ FOUNDATION_EXPORT NSString *const SELECTED_SPEAKER;
 FOUNDATION_EXPORT NSString *const ENABLE_VIDEO;
 
 
+// Preferences
+FOUNDATION_EXPORT NSString *const MUTE_CAMERA;
+
 
 #endif /* SettingsConstants_h */

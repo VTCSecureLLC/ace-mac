@@ -399,13 +399,7 @@
 #pragma mark - Providers info checking methods
 
 - (void)checkProvidersInfo {
-    
-    if ([self isProvidersInfoExist]) {
-        [self initCustomComboBox];
-    } else {
-        [self requestToProvidersInfo];
-    }
-    
+    [self requestToProvidersInfo];
 }
 
 - (BOOL)isProvidersInfoExist {

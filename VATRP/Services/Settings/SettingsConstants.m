@@ -25,6 +25,6 @@ NSString *const SELECTED_MICROPHONE = @"SETTINGS_SELECTED_MICROPHONE";
 NSString *const SELECTED_SPEAKER = @"SETTINGS_SELECTED_SPEAKER";
 
 // Video Settings
-NSString *const ENABLE_VIDEO = @"VIDEO_ENABLE";
+NSString *const ENABLE_VIDEO = @"enable_video_preference";
 
 #endif /* SettingsConstants_h */

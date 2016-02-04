@@ -14,7 +14,7 @@
 // AV Settings
 NSString *const MUTE_SPEAKER = @"SPEAKER_MUTE";
 NSString *const MUTE_MICROPHONE = @"MICROPHONE_MUTE";
-NSString *const ENABLE_ECHO_CANCELLATION = @"ECHO_CANCEL";
+NSString *const ENABLE_ECHO_CANCELLATION = @"enable_echo_cancellation";
 NSString *const VIDEO_SHOW_SELF_VIEW = @"VIDEO_SHOW_SELF_VIEW";
 NSString *const VIDEO_SHOW_PREVIEW = @"VIDEO_SHOW_PREVIEW";
 

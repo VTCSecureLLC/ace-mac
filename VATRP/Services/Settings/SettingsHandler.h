@@ -48,6 +48,9 @@
 @property(weak,nonatomic)id<InCallPreferencesHandlerDelegate> inCallPreferencessHandlerDelegate;
 @property(weak,nonatomic)id<PreferencesHandlerDelegate> preferencessHandlerDelegate;
 
+-(void)initializeUserDefaults;
+
+
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
 -(void) inCallSpeakerWasMuted:(bool)mute;
 -(void) inCallMicrophoneWasMuted:(bool)mute;

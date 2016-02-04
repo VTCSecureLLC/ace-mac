@@ -12,7 +12,7 @@
 
 @protocol CallControllersViewDelegate;
 
-@interface CallControllersView : NSView<SettingsHandlerDelegate>
+@interface CallControllersView : NSView<SettingsHandlerDelegate, PreferencesHandlerDelegate>
 
 @property (nonatomic, assign) id<CallControllersViewDelegate> delegate;
 

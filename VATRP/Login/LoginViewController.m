@@ -104,6 +104,7 @@
             
             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
                 [self downloadAndSaveProviderLogos:logosPaths];
+                
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [self initCustomComboBox];
                 });
@@ -413,20 +414,21 @@
 
 - (void)initCustomComboBox {
     _customComboBox.delegate = self;
-    self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
-    [self.customComboBox selectItemAtIndex:0];
-    NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
-    self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
-    [_tmpTextField removeFromSuperview];
-    [_tmpProgressIndicator removeFromSuperview];
+    if([Utils cdnResources] && [Utils cdnResources].count > 0){
+        self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+        [self.customComboBox selectItemAtIndex:0];
+        NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
+        self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
+        [_tmpTextField removeFromSuperview];
+        [_tmpProgressIndicator removeFromSuperview];
 
-    // use this opportunity to initialize port if it is not already.
-    NSString* port = self.textFieldPort.stringValue;
-    if ((port == nil) || (port.length == 0))
-    {
-        self.textFieldPort.stringValue = @"25060";
+        // use this opportunity to initialize port if it is not already.
+        NSString* port = self.textFieldPort.stringValue;
+        if ((port == nil) || (port.length == 0))
+        {
+            self.textFieldPort.stringValue = @"25060";
+        }
     }
-
 }
 
 - (void)requestToProvidersInfo {

@@ -152,7 +152,7 @@ typedef struct _LinphoneManagerSounds {
 - (void)setupNetworkReachabilityCallback;
 
 - (void)refreshRegisters;
-
+// settings items that can be updated in or out of call
 - (void)muteSpeakerInCall:(bool)mute;
 
 - (void)configureVbrCodecs;

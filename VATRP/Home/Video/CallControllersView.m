@@ -125,7 +125,7 @@ BOOL isRTTLocallyEnabled;
 
 - (IBAction)onButtonVideo:(id)sender {
     LinphoneCore *lc = [LinphoneManager getLc];
-    bool videoCurrentlyEnabled = false;
+    bool videoCurrentlyEnabled = true;
     if (call)
     {
         videoCurrentlyEnabled = linphone_call_camera_enabled(call);

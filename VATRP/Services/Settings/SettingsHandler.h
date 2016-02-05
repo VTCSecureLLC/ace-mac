@@ -33,10 +33,12 @@
 
 @protocol InCallPreferencesHandlerDelegate<NSObject>
 #pragma mark items for preferencesHandlerDelegate - setting from settings dialog to responders
+-(void)cameraWasMuted:(bool)enabled;
 @end
 
 @protocol PreferencesHandlerDelegate<NSObject>
 #pragma mark items for preferencesHandlerDelegate - setting from settings dialog to responders
+-(void)muteCamera:(bool)enable;
 @end
 
 
@@ -48,14 +50,15 @@
 @property(weak,nonatomic)id<InCallPreferencesHandlerDelegate> inCallPreferencessHandlerDelegate;
 @property(weak,nonatomic)id<PreferencesHandlerDelegate> preferencessHandlerDelegate;
 
--(void)initializeUserDefaults;
+// Bool force provided for debugging, and to reset settings when needed.
+-(void)initializeUserDefaults:(bool)force;
 
 
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
 -(void) inCallSpeakerWasMuted:(bool)mute;
 -(void) inCallMicrophoneWasMuted:(bool)mute;
 -(void) inCallShowSelfView:(bool)shown;
-
+-(void) inCallMuteCamera:(bool)enable;
 
 
 #pragma mark items for settingsHandlerDelegate - setting from settings dialog to responders
@@ -63,6 +66,7 @@
 -(void) setMuteMicrophone:(bool)mute;
 -(void) setShowSelfView:(bool)show;
 -(void) setEnableEchoCancellation:(bool)show;
+-(void) setMuteCamera:(bool)enable;
 
 -(void) setEnableVideo:(bool)enable;
 
@@ -74,6 +78,7 @@
 -(bool)isEchoCancellationEnabled;
 -(bool)isShowSelfViewEnabled;
 -(bool)isShowPreviewEnabled;
+-(bool)isMuteCamera;
 
 -(bool)isVideoEnabled;
 

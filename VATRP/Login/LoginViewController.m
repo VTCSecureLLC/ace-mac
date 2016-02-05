@@ -341,18 +341,26 @@
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message {
     switch (state) {
         case LinphoneRegistrationOk: {
-            [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
-                                                              UserID:loginAccount.userID
-                                                            Password:loginAccount.password
-                                                              Domain:loginAccount.domain
-                                                           Transport:loginAccount.transport
-                                                                Port:loginAccount.port
-                                                           isDefault:YES];
+//            if (loginAccount == nil)
+//            {
+                // ToDo - this needs a better fix. On launch, even auto-login is off, the last user is still being registered.
+                //   need to figure out where this is happening and prevent it.
+                //  for now, if the loginAccount is nil, then we need to figure out what account was just registered.
+            // NOTE - deal with this after 2-4 push
+//                const char* userName = linphone_core_get_identity([LinphoneManager getLc]);
+                
+//            }
+                [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
+                                                                  UserID:loginAccount.userID
+                                                                Password:loginAccount.password
+                                                                  Domain:loginAccount.domain
+                                                               Transport:loginAccount.transport
+                                                                    Port:loginAccount.port
+                                                               isDefault:YES];
             
-            [[AppDelegate sharedInstance] showTabWindow];
-            [[AppDelegate sharedInstance].loginWindowController close];
-            [AppDelegate sharedInstance].loginWindowController = nil;
-            
+                [[AppDelegate sharedInstance] showTabWindow];
+                [[AppDelegate sharedInstance].loginWindowController close];
+                [AppDelegate sharedInstance].loginWindowController = nil;
             break;
         }
         case LinphoneRegistrationNone:
@@ -391,13 +399,7 @@
 #pragma mark - Providers info checking methods
 
 - (void)checkProvidersInfo {
-    
-    if ([self isProvidersInfoExist]) {
-        [self initCustomComboBox];
-    } else {
-        [self requestToProvidersInfo];
-    }
-    
+    [self requestToProvidersInfo];
 }
 
 - (BOOL)isProvidersInfoExist {

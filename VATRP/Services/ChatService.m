@@ -7,7 +7,6 @@
 //
 
 #import "ChatService.h"
-#import "CallService.h"
 #import "ChatWindowController.h"
 
 
@@ -114,25 +113,32 @@
     return YES;
 }
 
-- (BOOL) sendEnter {
-    [self sendChar:(char)10];
+- (BOOL) sendEnter:(LinphoneChatMessage*)messagePtr ChatRoom:(LinphoneChatRoom*)chatroom_ptr {
+    
+    linphone_chat_message_ref((LinphoneChatMessage*)messagePtr);
+    linphone_chat_message_set_user_data((LinphoneChatMessage*)messagePtr, (void*)0x2028);
+    linphone_chat_room_send_chat_message((LinphoneChatRoom*)chatroom_ptr, (LinphoneChatMessage*)messagePtr);
+    
+    
+    
+    [self sendChar:(uint32_t)0x2028];
     
     return YES;
 }
 
 - (BOOL) sendBackward {
-    [self sendChar:(char)8];
+    [self sendChar:(uint32_t)8];
     
     return YES;
 }
 
 - (BOOL) sendTab {
-    [self sendChar:(char)9];
+    [self sendChar:(uint32_t)9];
     
     return YES;
 }
 
-- (BOOL) sendChar:(char)char_simbol {
+- (BOOL) sendChar:(uint32_t)char_simbol {
     LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
     
     if (!call) {

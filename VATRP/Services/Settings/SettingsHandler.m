@@ -26,119 +26,133 @@
 }
 
 // initialization of user settings
--(void)initializeUserDefaults
+-(void)initializeUserDefaults:(bool)force
 {
     // "{\"version\":1,\"expiration_time\":3600,\"configuration_auth_password\":\"\",\"configuration_auth_expiration\":-1,\"sip_registration_maximum_threshold\":10,\"sip_register_usernames\":[],\"sip_auth_username\":\"\",\"sip_auth_password\":\"\",\"sip_register_domain\":\"acetest-registrar.vatrp.net\",\"sip_register_port\":25060,\"sip_register_transport\":\"tcp\",\"enable_echo_cancellation\":true,\"enable_video\":true,\"enable_rtt\":true,\"enable_adaptive_rate\":true,\"enabled_codecs\":[\"H.264\",\"H.263\",\"VP8\",\"G.722\",\"G.711\"],\"bwLimit\":\"high-fps\",\"upload_bandwidth\":660,\"download_bandwidth\":660,\"enable_stun\":false,\"stun_server\":\"\",\"enable_ice\":false,\"logging\":\"info\",\"sip_mwi_uri\":\"\",\"sip_videomail_uri\":\"\",\"video_resolution_maximum\":\"cif\"}"
 
     
     // convert these over to use the generic methods for app versus user settings when there is a chance
     
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"version"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"version"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"version"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"expiration_time"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"expiration_time"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:3600 forKey:@"expiration_time" ];
+        [[NSUserDefaults standardUserDefaults] setInteger:280 forKey:@"expiration_time" ];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"version"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"configuration_auth_password"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"configuration_auth_password"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"version"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"configuration_auth_expiration"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:-1 forKey:@"configuration_auth_expiration"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_registration_maximum_threshold"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_registration_maximum_threshold"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:10 forKey:@"sip_registration_maximum_threshold"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_usernames"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_usernames"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:[[NSArray alloc]init ] forKey:@"sip_register_usernames"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_auth_username"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_auth_username"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_auth_username"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_auth_password"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_auth_password"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_auth_password"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_domain"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_domain"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"acetest-registrar.vatrp.net" forKey:@"sip_register_domain"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_port"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_port"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:5060 forKey:@"sip_register_port"];
+        [[NSUserDefaults standardUserDefaults] setInteger:25060 forKey:@"sip_register_port"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_transport"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_transport"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"tcp" forKey:@"sip_register_transport"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"enable_echo_cancellation"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_echo_cancellation"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_echo_cancellation"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"enable_video_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_video_preference"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_video_preference"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"kREAL_TIME_TEXT_ENABLED"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"kREAL_TIME_TEXT_ENABLED"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"kREAL_TIME_TEXT_ENABLED"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"enable_adaptive_rate_control"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_adaptive_rate_control"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_adaptive_rate_control"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"enabled_codecs"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enabled_codecs"] == nil)
     {
         // enabled_codecs\":[\"H.264\",\"H.263\",\"VP8\",\"G.722\",\"G.711\"]
         NSArray *enabledCodecs = @[@"H.264", @"H.263", @"VP8", @"G.722", @"G.711"];
         [[NSUserDefaults standardUserDefaults] setObject:enabledCodecs forKey:@"enabled_codecs"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"bwLimit"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"bwLimit"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"high-fps" forKey:@"bwLimit"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
+    if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:660 forKey:@"upload_bandwidth" ];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:660 forKey:@"download_bandwidth" ];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"false" forKey:@"stun_preference"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"stun_url_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_url_preference"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"acetest-regstrar.vatrp.net" forKey:@"stun_url_preference"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"ice_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"ice_preference"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"false" forKey:@"ice_preference"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"logging"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"logging"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"info" forKey:@"logging"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_mwi_uri"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_mwi_uri"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_mwi_uri"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sip_videomail_uri"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_videomail_uri"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_videomail_uri"];
     }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"video_preferred_size_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"video_preferred_size_preference"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"cif" forKey:@"video_preferred_size_preference"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"cif (352x288)" forKey:@"video_preferred_size_preference"];
     }
+
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
+    {
+        [self setUserSettingBool:MUTE_MICROPHONE withValue:false];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_SPEAKER] == nil)
+    {
+        [self setUserSettingBool:MUTE_SPEAKER withValue:false];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
+    {
+        [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true];
+    }
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -157,6 +171,13 @@
     [self setUserSettingBool:MUTE_MICROPHONE withValue:mute];
     if ([self.inCallSettingsDelegate respondsToSelector:@selector(microphoneWasMuted:)]) {
         [self.inCallSettingsDelegate microphoneWasMuted:mute];
+    }
+}
+-(void)inCallCameraWasMuted:(bool)mute
+{
+    [self setUserSettingBool:MUTE_CAMERA withValue:mute];
+    if ([self.inCallPreferencessHandlerDelegate respondsToSelector:@selector(cameraWasMuted:)]) {
+        [self.inCallPreferencessHandlerDelegate cameraWasMuted:mute];
     }
 }
 -(void)inCallShowSelfView:(bool)shown
@@ -191,6 +212,14 @@
     }
 }
 
+-(void)setMuteCamera:(bool)mute
+{
+    [self setUserSettingBool:MUTE_SPEAKER withValue:mute];
+    if ([self.preferencessHandlerDelegate respondsToSelector:@selector(muteCamera:)]) {
+        [self.preferencessHandlerDelegate muteCamera:mute];
+    }
+}
+
 
 -(void)setEnableVideo:(bool)enable
 {
@@ -198,8 +227,9 @@
 }
 
 
+
 // TODO: not sure these need delegate methods - we may be able to just handle the settings here directly?
--(void)setShowSelfPreview:(bool)show
+-(void)setShowSelfView:(bool)show
 {
     // does call window respond to this, or do we just show/hide?
     [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:show];

@@ -212,7 +212,8 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     if (enable) {
         linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
     } else {
-        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
+        linphone_core_set_firewall_policy(lc, LinphonePolicyNoFirewall);
+        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
     }
 }
 
@@ -222,7 +223,8 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     if (enable) {
         linphone_core_set_firewall_policy(lc, LinphonePolicyUseUpnp);
     } else {
-        [self setICE:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
+        linphone_core_set_firewall_policy(lc, LinphonePolicyNoFirewall);
+        [self setICE:[[NSUserDefaults standardUserDefaults] boolForKey:@"upnp_preference"]];
     }
 }
 

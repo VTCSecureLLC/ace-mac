@@ -11,20 +11,20 @@
 #import "Utils.h"
 #import "CustomComboBox.h"
 
-@interface AddContactDialogBox ()<NSComboBoxDelegate, CustomComboBoxDelegate> {
-    NSMutableArray *providerNames;
+@interface AddContactDialogBox () <CustomComboBoxDelegate>
+{
     NSString *providerAddress;
-    NSDictionary *providers;
+    NSString *nameField;
+    NSString *numberField;
+    NSString *customcomboboxField;
 }
 
 @property (weak) IBOutlet NSTextField *nameTextField;
 @property (weak) IBOutlet NSTextField *phoneTextField;
-@property (weak) IBOutlet NSComboBox *providerComboBox;
 @property (weak) IBOutlet NSButton *doneButton;
 @property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
 
 @end
-
 
 @implementation AddContactDialogBox
 
@@ -32,20 +32,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initCustomComboBox];
     if (self.isEditing) {
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
-        [self.phoneTextField setStringValue:[Utils makeAccountNumberFromSipURI:self.oldPhone]];
+        [self setNumberTextField];
     } else {
         [self setTitle:@"Add contact"];
     }
-    [self initCustomComboBox];
-    [self.providerComboBox reloadData];
+    [self fixInitialState];
 }
 
 - (void)initCustomComboBox {
     _customComboBox.delegate = self;
     _customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+    [_customComboBox addEmptyProviderInDataSource];
     if (self.isEditing) {
         [_customComboBox selectItemByDomain:self.oldProviderName];
         providerAddress = self.oldProviderName;
@@ -54,6 +55,32 @@
         NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
         providerAddress = [dict objectForKey:@"domain"];
     }
+}
+
+- (void)setNumberTextField {
+     NSDictionary *dict = [_customComboBox.dataSource objectAtIndex:[_customComboBox indexOfSelectedItem]];
+     if ([[dict objectForKey:@"domain"] isEqualToString:@"No Provider"]) {
+         NSArray *tmpPhone = [self.oldPhone componentsSeparatedByString:@"sip:"];
+         [self.phoneTextField setStringValue:[tmpPhone lastObject]];
+     } else {
+         [self.phoneTextField setStringValue:[Utils makeAccountNumberFromSipURI:self.oldPhone]];
+     }
+}
+
+- (void)fixInitialState {
+    nameField = [self.nameTextField stringValue];
+    numberField = [self.phoneTextField stringValue];
+    customcomboboxField = providerAddress;
+}
+
+- (BOOL)isChangedFields {
+    NSDictionary *dict = [_customComboBox.dataSource objectAtIndex:[_customComboBox indexOfSelectedItem]];
+    if ([nameField isEqualToString:[self.nameTextField stringValue]] &&
+        [numberField isEqualToString:[self.phoneTextField stringValue]] &&
+        [customcomboboxField isEqualToString:[dict objectForKey:@"domain"]]) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - Buttons action functions
@@ -65,8 +92,7 @@
         return;
     }
     if (self.isEditing) {
-        if ([self.oldName isEqualToString:[self.nameTextField stringValue]] &&
-            [self.oldPhone isEqualToString:[self.phoneTextField stringValue]]) {
+        if (![self isChangedFields]) {
             [self dismissController:nil];
             return;
         }
@@ -87,24 +113,6 @@
     [self dismissController:nil];
 }
 
-#pragma mark - Combobox delegate methods
-
-- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox {
-    return [providerNames count];
-}
-
-- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
-    if (self.providerComboBox == aComboBox) {
-        return [providerNames objectAtIndex:index];
-    }
-    return nil;
-}
-
-- (void)comboBoxSelectionDidChange:(NSNotification *)notification {
-    NSString *providerDisplayName = [providerNames objectAtIndex:[(NSComboBox *)[notification object] indexOfSelectedItem]];
-    providerAddress = [providers objectForKey:providerDisplayName];
-}
-
 #pragma mark - helper functions
 
 - (void)makeProviderName {
@@ -121,7 +129,13 @@
     if ([Utils nsStringIsValidSip:sipUri]) {
         sipUri = [@"sip:" stringByAppendingString:sipUri];
     } else {
-        sipUri = [Utils makeSipURIWithAccountName:str andProviderAddress:providerAddress];
+        if ([providerAddress isEqualToString:@"No Provider"]) {
+            NSDictionary *dict = [[Utils cdnResources] objectAtIndex:0];
+            providerAddress = [dict objectForKey:@"domain"];
+            sipUri = [Utils makeSipURIWithAccountName:str andProviderAddress:providerAddress];
+        } else {
+            sipUri = [Utils makeSipURIWithAccountName:str andProviderAddress:providerAddress];
+        }
     }
     
     return sipUri;

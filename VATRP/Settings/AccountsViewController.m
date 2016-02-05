@@ -25,7 +25,6 @@
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
 @property (weak) IBOutlet NSTextField *settingsFeedbackText;
 @property (weak) IBOutlet NSTextField *textFieldMailWaitingIndicatorURI;
-@property (weak) IBOutlet NSTextField *textFieldVideoMailWaitingURI;
 
 @end
 
@@ -40,6 +39,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    self.textFieldUserID.enabled = false;
+    self.textFieldUsername.enabled = false;
+    self.secureTextFieldPassword.enabled = false;
+    self.textFieldDomain.enabled = false;
+    self.textFieldPort.enabled = false;
+    
 }
 
 - (void)viewWillAppear {
@@ -107,11 +112,6 @@
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_uri"]){
         self.textFieldMailWaitingIndicatorURI.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"mwi_uri"];
     }
-    
-    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"video_mail_uri"]){
-        self.textFieldVideoMailWaitingURI.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_mail_uri"];
-    }
-    
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {
@@ -162,10 +162,7 @@
     if(![self.textFieldMailWaitingIndicatorURI.stringValue isEqualToString:@""]){
         [[NSUserDefaults standardUserDefaults] setObject:self.textFieldMailWaitingIndicatorURI.stringValue forKey:@"mwi_uri"];
     }
-    if(![self.textFieldVideoMailWaitingURI.stringValue isEqualToString:@""]){
-        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailWaitingURI.stringValue forKey:@"video_mail_uri"];
-        NSLog(@"%@", self.textFieldVideoMailWaitingURI.stringValue);
-    }
+
     return YES;
 }
 

@@ -132,7 +132,7 @@
         case LinphoneCallIncomingReceived: {
             self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimerWithTimeInterval:3.75];
-            
+            [self.labelRingCount setTextColor:[NSColor whiteColor]];
             [self startCallFlashingAnimation];
             
             [self.callControllsConteinerView setHidden:NO];
@@ -190,6 +190,7 @@
             self.labelCallState.stringValue = @"Ringing 00:00";
             
             [self startRingCountTimerWithTimeInterval:3.6];
+            [self.labelRingCount setTextColor:[NSColor redColor]];
         }
             break;
         case LinphoneCallPaused: {
@@ -421,6 +422,7 @@
                                                     selector:@selector(ringCountTimer)
                                                     userInfo:nil
                                                      repeats:YES];
+    [self addSubview:self.labelRingCount positioned:NSWindowAbove relativeTo:nil];
 }
 
 - (void)stopRingCountTimer {

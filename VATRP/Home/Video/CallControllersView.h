@@ -8,10 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CallService.h"
+#import "SettingsHandler.h"
 
 @protocol CallControllersViewDelegate;
 
-@interface CallControllersView : NSView
+@interface CallControllersView : NSView<SettingsHandlerDelegate, PreferencesHandlerDelegate>
 
 @property (nonatomic, assign) id<CallControllersViewDelegate> delegate;
 

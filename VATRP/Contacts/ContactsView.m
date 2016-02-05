@@ -96,6 +96,9 @@
 - (void)contactEditDone:(NSNotification*)notif {
     
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
+    if (![self isChnagedContactFields:contactInfo]) {
+        return;
+    }
     selectedProviderName = [contactInfo objectForKey:@"provider"];
 
     NSString *newDisplayName = [contactInfo objectForKey:@"name"];
@@ -115,6 +118,19 @@
         }];
     }
     
+}
+
+- (BOOL)isChnagedContactFields:(NSDictionary*)contactInfo {
+    NSString *newDisplayName = [contactInfo objectForKey:@"name"];
+    NSString *newSipURI = [contactInfo objectForKey:@"phone"];
+    NSString *oldDisplayName = [contactInfo objectForKey:@"oldName"];
+    NSString *oldSipURI = [contactInfo objectForKey:@"oldPhone"];
+    if ([newDisplayName isEqualToString:oldDisplayName] &&
+        [newSipURI isEqualToString:oldSipURI]) {
+        return NO;
+    }
+
+    return YES;
 }
 
 - (void)removeObservers {
@@ -199,6 +215,7 @@
     NSDictionary *dict = [self.contactInfos objectAtIndex:row];
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
     [cellView.phoneTextField setStringValue:[dict objectForKey:@"phone"]];
+    cellView.providerName = [dict objectForKey:@"provider"];
     cellView.delegate = self;
     return cellView;
 }
@@ -224,7 +241,7 @@
     editContactDialogBox.isEditing = YES;
     editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
     editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];
-    editContactDialogBox.oldProviderName = selectedProviderName;
+    editContactDialogBox.oldProviderName = contactCellView.providerName;
     [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
 }
 

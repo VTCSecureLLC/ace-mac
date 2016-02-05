@@ -11,6 +11,7 @@
 #import "SystemInfo.h"
 @interface SummaryMenuViewController () {
     BOOL isChanged;
+    bool advancedShown;
 }
 
 @end
@@ -42,7 +43,11 @@
 }
 
 - (IBAction)onButtonShowAdvanced:(id)sender {
+    if (!advancedShown)
+    {
     [[AppDelegate sharedInstance].settingsWindowController addPreferencesToolbarItem];
+        advancedShown = true;
+    }
 }
 
 - (void) save {

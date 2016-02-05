@@ -39,6 +39,7 @@
 #include "mediastreamer2/mscommon.h"
 #import "SDPNegotiationService.h"
 #import "SettingsService.h"
+#import "SettingsHandler.h"
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -1136,8 +1137,9 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
     }
     
     /*DETECT cameras*/
+    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
     char** camlist = (char**)linphone_core_get_video_devices(theLinphoneCore);
-    NSString* captureDevice = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_CAPTURE_DEVICE"];
+    NSString* captureDevice = [settingsHandler getSelectedCamera];
     if ((captureDevice != nil) && (captureDevice.length > 0))
     {
         for (char* cam = *camlist; *camlist!=NULL; cam=*++camlist)
@@ -1150,8 +1152,8 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
         }
     }
     
-    NSString* speaker = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_SPEAKER"];
-    NSString* microphone = [[NSUserDefaults standardUserDefaults] stringForKey:@"SETTINGS_SELECTED_MICROPHONE"];
+    NSString* speaker = [settingsHandler getSelectedSpeaker];
+    NSString* microphone = [settingsHandler getSelectedMicrophone];
     char** soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
     for (char* device = *soundlist; *soundlist!=NULL; device=*++soundlist)
     {
@@ -1296,6 +1298,10 @@ static BOOL libStarted = FALSE;
     
     /*call iterate once immediately in order to initiate background connections with sip server or remote provisioning grab, if any */
     linphone_core_iterate(theLinphoneCore);
+    
+    NSString *friendListFilePath = [self applicationDirectoryFile:@"linphoneFriendList"];
+    linphone_core_set_friends_database_path(theLinphoneCore, [friendListFilePath UTF8String]);
+    
     // start scheduler
     mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.02
                                                      target:self
@@ -1590,9 +1596,20 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 }
 
 #pragma mark - Audio route Functions
-
-- (bool)allowSpeaker {
-    bool notallow = false;
+- (void)muteSpeakerInCall:(bool)mute
+{
+    const float mute_db = -1000.0f;
+    if (mute)
+    {
+        linphone_core_set_playback_gain_db([LinphoneManager getLc], mute_db);
+    }
+    else
+    {
+        linphone_core_set_playback_gain_db([LinphoneManager getLc], 0.0f);
+    }
+}
+//- (bool)allowSpeaker {
+//    bool notallow = false;
     //	CFStringRef lNewRoute = CFSTR("Unknown");
     //	UInt32 lNewRouteSize = sizeof(lNewRoute);
     //	OSStatus lStatus = AudioSessionGetProperty(kAudioSessionProperty_AudioRoute, &lNewRouteSize, &lNewRoute);
@@ -1606,8 +1623,8 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     //			[LinphoneManager runningOnIpad];
     //		CFRelease(lNewRoute);
     //	}
-    return !notallow;
-}
+//    return !notallow;
+//}
 
 //static void audioRouteChangeListenerCallback (
 //											  void                   *inUserData,                                 // 1
@@ -1691,7 +1708,8 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
         }
         linphone_call_params_enable_low_bandwidth(calleeParams, low_bandwidth);
     }
-    
+    // ToDo: Hardcoding on 2-2 per request
+    linphone_core_set_preferred_framerate(theLinphoneCore, 30.0f);
     const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
     linphone_call_params_enable_realtime_text(calleeParams, [SettingsService getRTTEnabled]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
@@ -1721,6 +1739,9 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     //		return;
     //	}
     
+    // ToDo: Hardcoding on 2-2 per request
+    linphone_core_set_preferred_framerate(theLinphoneCore, 30.0f);
+
     LinphoneProxyConfig* proxyCfg;
     //get default proxy
     linphone_core_get_default_proxy(theLinphoneCore,&proxyCfg);

@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SettingsHandler.h"
 
-@interface AVViewController : NSViewController
+@interface AVViewController : NSViewController<InCallSettingsDelegate>
 
 - (void) save;
 

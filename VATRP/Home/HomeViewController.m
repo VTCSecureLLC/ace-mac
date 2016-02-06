@@ -96,6 +96,14 @@
     [self.videoView createNumpadView];
 }
 
+- (void) viewDidAppear {
+    [super viewDidAppear];
+    
+    [self.callQualityIndicator setWantsLayer:YES];
+    [self.callQualityIndicator.layer setBackgroundColor:[NSColor clearColor].CGColor];
+    [self.callQualityIndicator setBackgroundColor:[NSColor clearColor]];
+}
+
 #pragma mark - Observers and related functions
 
 - (void)setObservers {

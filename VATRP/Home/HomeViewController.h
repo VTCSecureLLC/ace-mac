@@ -12,6 +12,7 @@
 #import "DockView.h"
 #import "DialPadView.h"
 #import "RTTView.h"
+#import "CallQualityIndicator.h"
 
 @interface HomeViewController : NSViewController
 
@@ -22,6 +23,8 @@
 @property (weak) IBOutlet RTTView *rttView;
 @property (weak) IBOutlet VideoView *videoView;
 @property (weak) IBOutlet BackgroundedView *callView;
+@property (weak) IBOutlet CallQualityIndicator *callQualityIndicator;
+
 @property (nonatomic, assign) BOOL isAppFullScreen;
 
 - (ProfileView*) getProfileView;

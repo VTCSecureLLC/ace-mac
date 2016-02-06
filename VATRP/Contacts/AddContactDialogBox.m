@@ -14,6 +14,9 @@
 @interface AddContactDialogBox () <CustomComboBoxDelegate>
 {
     NSString *providerAddress;
+    NSDictionary *providers;
+    NSString *name;
+    NSString *phone;
     NSString *nameField;
     NSString *numberField;
     NSString *customcomboboxField;
@@ -36,6 +39,9 @@
     if (self.isEditing) {
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
+        [self.phoneTextField setStringValue:[Utils makeAccountNumberFromSipURI:self.oldPhone]];
+        name = [self.nameTextField stringValue];
+        phone = [self.phoneTextField stringValue];
         [self setNumberTextField];
     } else {
         [self setTitle:@"Add contact"];
@@ -96,13 +102,15 @@
             [self dismissController:nil];
             return;
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
-                                                            object:@{@"name" : [self.nameTextField stringValue],
-                                                                     @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
-                                                                     @"oldName": self.oldName,
-                                                                     @"oldPhone" : self.oldPhone,
-                                                                     @"provider" : providerAddress}
-                                                          userInfo:nil];
+        if ([self isDoneEditions]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
+                                                                object:@{@"name" : [self.nameTextField stringValue],
+                                                                         @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
+                                                                         @"oldName": self.oldName,
+                                                                         @"oldPhone" : self.oldPhone,
+                                                                         @"provider" : providerAddress}
+                                                              userInfo:nil];
+        }
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoFilled"
                                                             object:@{@"name" : [self.nameTextField stringValue],
@@ -139,6 +147,15 @@
     }
     
     return sipUri;
+}
+
+- (BOOL)isDoneEditions {
+    
+    if (![name isEqualToString:[self.nameTextField stringValue]] || ![phone isEqualToString:[self.phoneTextField stringValue]]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - CustomComboBox delegate methods

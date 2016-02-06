@@ -26,6 +26,10 @@
     
     // Do view setup here.
     self.enable_text.state = [SettingsService getRTTEnabled];
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"TEXT_SEND_MODE"]){
+        [[NSUserDefaults standardUserDefaults] setObject:@"Real Time Text (RTT)" forKey:@"TEXT_SEND_MODE"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     self.text_send_mode.stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"TEXT_SEND_MODE"];
     
     isChanged = NO;

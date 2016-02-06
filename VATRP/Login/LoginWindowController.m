@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
-
+#import "SettingsHandler.h"
 
 @interface LoginWindowController () {
     BFNavigationController *navigationController;
@@ -31,7 +31,9 @@
     [AppDelegate sharedInstance].loginWindowController = self;
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
-
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"auto_login"]){
+        shouldAutoLogin = NO;
+    }
     if (shouldAutoLogin && accountModel &&
         accountModel.username && accountModel.username.length &&
         accountModel.userID && accountModel.userID.length &&
@@ -58,6 +60,7 @@
             // Init navigation controller and add to window
             navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
                                                               rootViewController:termsOfUseViewController];
+            //[SettingsHandler.settingsHandler initializeUserDefaults:true];
         }
         
         [self.window.contentView addSubview:navigationController.view];

@@ -106,10 +106,12 @@
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:660 forKey:@"upload_bandwidth" ];
+        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 660);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:660 forKey:@"download_bandwidth" ];
+                linphone_core_set_download_bandwidth([LinphoneManager getLc], 660);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {

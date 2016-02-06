@@ -75,6 +75,9 @@
     }
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"auto_login"]){
+        shouldAutoLogin = NO;
+    }
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     [self.comboBoxProviderSelect removeAllItems];
 }
@@ -191,7 +194,7 @@
     [self.prog_Signin setHidden:NO];
     [self.prog_Signin startAnimation:self];
     [self.loginButton setEnabled:NO];
-    NSString *dnsSRVName = [@"_rueconfig._tcp." stringByAppendingString:self.textFieldDomain.stringValue];
+    NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
     [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
                                                            withUsername:self.textFieldUsername.stringValue
                                                             andPassword:self.textFieldPassword.stringValue];

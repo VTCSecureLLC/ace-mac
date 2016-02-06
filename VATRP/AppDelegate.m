@@ -176,6 +176,7 @@
                                                        Transport:accountModel.transport
                                                             Port:accountModel.port
                                                        isDefault:YES];
+        [SettingsHandler.settingsHandler initializeUserDefaults:true];
     }
     
     [self closeTabWindow];

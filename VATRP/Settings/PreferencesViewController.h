@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SettingsHandler.h"
 
 @interface PreferencesViewController : NSViewController
 

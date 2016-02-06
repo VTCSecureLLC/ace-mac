@@ -29,7 +29,8 @@
 
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
-    self.labelVersion.stringValue = [NSString stringWithFormat:@"Version %@", version];
+    NSString* buildNumber = [infoDict objectForKey:@"CFBundleVersion"];
+    self.labelVersion.stringValue = [NSString stringWithFormat:@"Version %@, Build %@", version, buildNumber];
 
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     self.labelLinphoneVersion.stringValue = [NSString stringWithFormat:@"Core Version %@", linphoneVersion];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
@@ -1440,7 +1440,7 @@
                                                 <rect key="frame" x="10" y="286" width="700" height="130"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="1" id="hoz-d3-ZYD">
                                                     <font key="font" metaFont="system" size="120"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
@@ -1798,7 +1798,7 @@
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZt-Py-fKh">
                                 <rect key="frame" x="37" y="168" width="129" height="19"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Account number:" id="rsE-x7-l3R">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Number:" id="rsE-x7-l3R">
                                     <font key="font" metaFont="system" size="16"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1846,18 +1846,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <comboBox hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cDN-RC-MnR">
-                                <rect key="frame" x="20" y="65" width="220" height="26"/>
-                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString=" Select provider" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="6" id="k3S-Yo-r7w">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </comboBoxCell>
-                                <connections>
-                                    <outlet property="dataSource" destination="55J-Cw-0Kj" id="tTa-sa-Jup"/>
-                                    <outlet property="delegate" destination="55J-Cw-0Kj" id="uSJ-fx-3JG"/>
-                                </connections>
-                            </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2OY-ih-kfh">
                                 <rect key="frame" x="109" y="205" width="57" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="iUD-5J-DfE">
@@ -1907,7 +1895,6 @@
                         <outlet property="doneButton" destination="HsD-fS-HaZ" id="uiF-Sv-AN0"/>
                         <outlet property="nameTextField" destination="fKp-56-PaS" id="FpZ-sK-B9S"/>
                         <outlet property="phoneTextField" destination="qz9-NP-3mE" id="LqA-km-OKL"/>
-                        <outlet property="providerComboBox" destination="cDN-RC-MnR" id="mnm-pb-PLl"/>
                     </connections>
                 </viewController>
                 <customObject id="yg0-4Q-JPQ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1993,13 +1980,18 @@
                     <window key="window" title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Ufw-j9-enE">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="294" y="313" width="480" height="470"/>
+                        <rect key="contentRect" x="294" y="313" width="520" height="470"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
                         <toolbar key="toolbar" implicitIdentifier="AA47FE5A-5045-4EDE-A972-420640CC1A96" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="1yN-he-lh8">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="1E7942C9-75F5-4340-9A13-CB07AB781858" explicitItemIdentifier="audiovideo" label="Audio/Video" paletteLabel="Audio/Video" tag="-1" id="nVf-KC-pl6">
+                                <toolbarItem implicitItemIdentifier="1E7942C9-75F5-4340-9A13-CB07AB781858" explicitItemIdentifier="general" label="General" paletteLabel="General" tag="-1" id="nVf-KC-pl6">
                                     <connections>
-                                        <action selector="onToolbarItemAudioVideo:" target="San-o0-UCl" id="f2J-KJ-dcY"/>
+                                        <action selector="onToolbarItemGeneral:" target="San-o0-UCl" id="AaC-tP-9dv"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="79CA1116-EE0E-4E02-81A4-FE2782938E75" explicitItemIdentifier="audiovideo" label="Audio/Video" paletteLabel="Audio/Video" tag="-1" id="fHy-Jv-wd9">
+                                    <connections>
+                                        <action selector="onToolbarItemAudioVideo:" target="San-o0-UCl" id="wi5-Db-TbL"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" explicitItemIdentifier="theme" label="Theme" paletteLabel="Theme" tag="-1" id="NQH-aU-ele">
@@ -2045,6 +2037,7 @@
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nVf-KC-pl6"/>
+                                <toolbarItem reference="fHy-Jv-wd9"/>
                                 <toolbarItem reference="NQH-aU-ele"/>
                                 <toolbarItem reference="SyG-WC-oUk"/>
                                 <toolbarItem reference="drf-T5-qNB"/>
@@ -2069,7 +2062,7 @@
             <objects>
                 <viewController id="ZYa-uw-mjH" customClass="SettingsViewController" sceneMemberID="viewController">
                     <view key="view" id="CQ1-LI-tJx">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="470"/>
+                        <rect key="frame" x="0.0" y="0.0" width="520" height="470"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3CM-u9-l4A">
@@ -3565,18 +3558,8 @@ DQ
                         <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UN6-zf-zZj">
-                                <rect key="frame" x="70" y="354" width="187" height="28"/>
-                                <buttonCell key="cell" type="check" title="Auto answer call" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="swd-M0-LBG">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onCheckBox:" target="wId-2F-cAs" id="IPe-7E-kLf"/>
-                                </connections>
-                            </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LEd-Vj-4hY">
-                                <rect key="frame" x="70" y="324" width="187" height="28"/>
+                                <rect key="frame" x="70" y="354" width="187" height="28"/>
                                 <buttonCell key="cell" type="check" title="Enable AVPF" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GwE-OG-t0D">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -3586,7 +3569,7 @@ DQ
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YBS-aD-KiG">
-                                <rect key="frame" x="70" y="294" width="187" height="28"/>
+                                <rect key="frame" x="70" y="324" width="187" height="28"/>
                                 <buttonCell key="cell" type="check" title="Send DTMFs as SIP info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Ee4-HC-ULG">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -3596,7 +3579,7 @@ DQ
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vzY-IM-lKh">
-                                <rect key="frame" x="70" y="262" width="204" height="28"/>
+                                <rect key="frame" x="70" y="292" width="204" height="28"/>
                                 <buttonCell key="cell" type="check" title="Enable Adaptive Rate Control" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="inQ-2d-HsU">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -3606,7 +3589,7 @@ DQ
                                 </connections>
                             </button>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uHz-8i-Yrm">
-                                <rect key="frame" x="185" y="234" width="150" height="26"/>
+                                <rect key="frame" x="185" y="264" width="150" height="26"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="Off" drawsBackground="YES" completes="NO" numberOfVisibleItems="3" id="RRR-ki-NMG">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -3623,7 +3606,7 @@ DQ
                                 </connections>
                             </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jpP-y3-ATE">
-                                <rect key="frame" x="70" y="240" width="109" height="17"/>
+                                <rect key="frame" x="70" y="270" width="109" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="RTCP Feedback:" id="qMb-BX-bXu">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -3641,7 +3624,7 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RKy-z4-eZ0">
-                                <rect key="frame" x="70" y="210" width="83" height="17"/>
+                                <rect key="frame" x="70" y="240" width="83" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Max Upload:" id="xHc-Lz-RkO">
                                     <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -3649,7 +3632,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fgS-Tu-5gJ">
-                                <rect key="frame" x="176" y="208" width="96" height="22"/>
+                                <rect key="frame" x="176" y="238" width="96" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="EBy-JM-xwG">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -3657,7 +3640,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pFW-mf-yUY">
-                                <rect key="frame" x="70" y="180" width="100" height="17"/>
+                                <rect key="frame" x="70" y="210" width="100" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Max Download:" id="42w-8V-Qae">
                                     <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -3665,7 +3648,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uzg-Vx-mD5">
-                                <rect key="frame" x="176" y="178" width="96" height="22"/>
+                                <rect key="frame" x="176" y="208" width="96" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="qey-o7-LPW">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -3675,7 +3658,6 @@ DQ
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="buttonAutoAnswer" destination="UN6-zf-zZj" id="UPy-Qf-ISX"/>
                         <outlet property="buttonEnableAVPF" destination="LEd-Vj-4hY" id="cMi-uD-fTZ"/>
                         <outlet property="buttonEnableAdaptiveRateControl" destination="vzY-IM-lKh" id="aD4-gP-KEy"/>
                         <outlet property="buttonSendDTMF" destination="YBS-aD-KiG" id="zwH-FH-Ia9"/>
@@ -3713,7 +3695,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-                                    <rect key="frame" x="410" y="0.0" width="15" height="400"/>
+                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -3726,6 +3708,85 @@ DQ
                 <customObject id="UJC-lG-lMM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="643" y="1550"/>
+        </scene>
+        <!--General View Controller-->
+        <scene sceneID="H0N-FL-Hqn">
+            <objects>
+                <viewController storyboardIdentifier="GeneralViewController" id="Xzr-Qg-o8r" customClass="GeneralViewController" sceneMemberID="viewController">
+                    <view key="view" id="oif-6L-LZt">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d8m-NI-4TK">
+                                <rect key="frame" x="245" y="354" width="156" height="18"/>
+                                <buttonCell key="cell" type="check" title="Start on boot" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aXL-Np-heE">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBox:" target="Xzr-Qg-o8r" id="z76-Ho-lIo"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vl7-0L-4br">
+                                <rect key="frame" x="245" y="324" width="156" height="18"/>
+                                <buttonCell key="cell" type="check" title="SIP Encryption" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="TZC-sS-CnZ">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxStartOnBoot:" target="Xzr-Qg-o8r" id="ldh-Y6-kJ0"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uPP-PT-fPo">
+                                <rect key="frame" x="245" y="294" width="156" height="18"/>
+                                <buttonCell key="cell" type="check" title="Wifi Only" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="ifR-ym-aih">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBoxStartOnBoot:" target="Xzr-Qg-o8r" id="KlR-0N-QHT"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="swQ-w4-DH7">
+                                <rect key="frame" x="245" y="264" width="187" height="28"/>
+                                <buttonCell key="cell" type="check" title="Auto answer call" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nLs-il-zuF">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckBox:" target="Xzr-Qg-o8r" id="oKR-BB-ge6"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B2E-u1-hMf">
+                                <rect key="frame" x="48" y="236" width="185" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Video Mail URI" id="yX1-lE-S7e">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK8-Ar-7ns">
+                                <rect key="frame" x="245" y="236" width="184" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7XX-p7-9Mt">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="kdm-MC-IU1" id="wfg-yc-bGX"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="checkBoxAutoAnswerCall" destination="swQ-w4-DH7" id="4yP-tg-DfR"/>
+                        <outlet property="checkBoxStartOnBoot" destination="d8m-NI-4TK" id="aLy-n7-6Kj"/>
+                        <outlet property="textFieldVideoMailWaitingURI" destination="kK8-Ar-7ns" id="5fi-Rv-ehr"/>
+                    </connections>
+                </viewController>
+                <customObject id="m6M-cJ-1Vh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1172" y="1550"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="aiA-JG-AW8">
@@ -8245,25 +8306,6 @@ Cg
                                     <outlet property="delegate" destination="kdm-MC-IU1" id="akB-nI-ycV"/>
                                 </connections>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KFF-M7-itq">
-                                <rect key="frame" x="48" y="159" width="185" height="20"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Video Mail URI" id="jCX-sj-6jU">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lGW-GG-d2a">
-                                <rect key="frame" x="245" y="159" width="184" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="XTe-Y5-JXO">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <outlet property="delegate" destination="kdm-MC-IU1" id="Vex-m1-GY4"/>
-                                </connections>
-                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -8274,7 +8316,6 @@ Cg
                         <outlet property="textFieldPort" destination="Q3Q-9s-Rkw" id="dcY-xk-9Bd"/>
                         <outlet property="textFieldUserID" destination="RwF-G4-ymG" id="VAV-KU-IFQ"/>
                         <outlet property="textFieldUsername" destination="MCD-n6-8D8" id="BlG-NC-x5F"/>
-                        <outlet property="textFieldVideoMailWaitingURI" destination="lGW-GG-d2a" id="mm7-g3-FfV"/>
                     </connections>
                 </viewController>
                 <customObject id="WLK-9q-LMt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -9133,7 +9174,7 @@ DQ
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="buttonToggleAutoLogin" destination="iXO-La-iVb" id="8ex-hy-1yV"/>
+                        <outlet property="buttonToggleAutoLogin" destination="iXO-La-iVb" id="QTr-VL-c1g"/>
                         <outlet property="comboBoxProviderSelect" destination="sEp-6A-Uvx" id="hnY-6e-h91"/>
                         <outlet property="customComboBox" destination="J7I-gl-H72" id="AU7-4L-qIf"/>
                         <outlet property="loginButton" destination="IVi-K9-fBt" id="G3K-bI-y1w"/>

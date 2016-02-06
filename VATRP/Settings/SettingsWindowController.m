@@ -8,6 +8,7 @@
 
 #import "SettingsWindowController.h"
 #import "SettingsViewController.h"
+#import "GeneralViewController.h"
 #import "AVViewController.h"
 #import "ThemeMenuViewController.h"
 #import "TextMenuViewController.h"
@@ -21,6 +22,7 @@
 #import "LinphoneManager.h"
 
 @interface SettingsWindowController () <SettingsViewControllerDelegate> {
+    GeneralViewController *generalViewController;
     AVViewController *avViewController;
     ThemeMenuViewController *themeMenuViewController;
     TextMenuViewController *textMenuViewController;
@@ -52,6 +54,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
     
+    generalViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"GeneralViewController"];
     avViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AVViewController"];
     themeMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ThemeMenuViewController"];
     textMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TextMenuViewController"];
@@ -62,7 +65,7 @@
     mediaViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MediaViewController"];
     testingViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TestingViewController"];
     
-    [self changeViewTo:avViewController.view];
+    [self changeViewTo:generalViewController.view];
     
     SettingsViewController *settingsViewController = (SettingsViewController*)self.contentViewController;
     settingsViewController.delegate = self;
@@ -73,6 +76,10 @@
     self.isShow = NO;
     [AppDelegate sharedInstance].viewController.settingsWindowController = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didClosedSettingsWindow" object:nil];
+}
+
+- (IBAction)onToolbarItemGeneral:(id)sender {
+    [self changeViewTo:generalViewController.view];
 }
 
 - (IBAction)onToolbarItemAudioVideo:(id)sender {
@@ -122,6 +129,7 @@
         return;
     }
     
+    [generalViewController save];
     [avViewController save];
     [themeMenuViewController save];
     [textMenuViewController save];

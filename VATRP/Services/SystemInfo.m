@@ -12,6 +12,9 @@
 #import "LinphoneManager.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
+
+#import "SettingsHandler.h"
+
 @interface SystemInfo()
 +(NSString*) configSettingsAsString;
 +(NSString *) platformType;
@@ -115,6 +118,9 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
         NSString* hardware = [self platformType];
         // Load app version.
         NSString* appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        // Load App Build Version
+        NSString* buildNumber = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+
         // Load SIP settings.
     LinphoneCore *lc = [LinphoneManager getLc];
     LinphoneProxyConfig *cfg = nil;
@@ -132,7 +138,7 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
                                         [settingsManager sipRegisterPort]];
         }
         NSString *coreConfigInfo = [SystemInfo configSettingsAsString];
-        NSString* result = [NSString stringWithFormat:@"Hardware: %@\nMac Version: %@\nACE version: %@\nSIP settings:\n%@\n%@\n", hardware, [SystemInfo machineModel], appVersionString,sipSettings,coreConfigInfo];
+        NSString* result = [NSString stringWithFormat:@"Hardware: %@\nMac Version: %@\nACE version: %@, Build %@\nSIP settings:\n%@\n%@\n", hardware, [SystemInfo machineModel], appVersionString, buildNumber, sipSettings,coreConfigInfo];
         return result;
     }
 
@@ -195,9 +201,12 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
         NSString *isVideoEnabled = [NSString stringWithFormat:@"video_enabled = %hhu", linphone_core_video_enabled(lc)];
         [values addObject:isVideoEnabled];
         /**Mute**/
-            NSString *isMicMuted = [NSString stringWithFormat:@"mic_mute = %@", NSStringFromBOOL([[NSUserDefaults standardUserDefaults] boolForKey:@"mute_mic_preference"])];
+        SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+        bool muteMicrophone = settingsHandler.isMicrophoneMuted;
+        bool muteSpeaker = settingsHandler.isSpeakerMuted;
+        NSString *isMicMuted = [NSString stringWithFormat:@"mic_mute = %@", NSStringFromBOOL(muteMicrophone)];
         [values addObject:isMicMuted];
-        NSString *isSpeakerMuted = [NSString stringWithFormat:@"speaker_mute = %@", NSStringFromBOOL([[NSUserDefaults standardUserDefaults] boolForKey:@"mute_speaker_preference"])];
+        NSString *isSpeakerMuted = [NSString stringWithFormat:@"speaker_mute = %@", NSStringFromBOOL(muteSpeaker)];
         [values addObject:isSpeakerMuted];
 
         //Echo cancellation

@@ -224,6 +224,8 @@
     loginAccount.domain = self.textFieldDomain.stringValue;
     loginAccount.transport = @"TCP";
     loginAccount.port = self.textFieldPort.intValue;
+//  
+//    [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue UserID:self.textFieldUserID.stringValue Password:self.textFieldPassword.stringValue Domain:self.textFieldDomain.stringValue Transport:@"TCP" Port:self.textFieldPort.intValue isDefault:YES];
     
     [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
                                                         UserID:loginAccount.userID
@@ -352,7 +354,7 @@
             // NOTE - deal with this after 2-4 push
 //                const char* userName = linphone_core_get_identity([LinphoneManager getLc]);
                 
-//            }
+////            }
                 [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
                                                                   UserID:loginAccount.userID
                                                                 Password:loginAccount.password

@@ -76,11 +76,13 @@
     
     self.hasProviderAlertBeenShown = false;
     
-    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_uri"]){
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_mwi_uri"]){
         @try{
-            NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"mwi_uri"];
-            LinphoneAddress *sipAddress = linphone_proxy_config_normalize_sip_uri(linphone_core_get_default_proxy_config([LinphoneManager getLc]), [videoMailUri UTF8String]);
-            linphone_core_subscribe([LinphoneManager getLc], sipAddress, "message-summary", 1800, NULL);
+            NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_mwi_uri"];
+            if(videoMailUri && ![videoMailUri isEqualToString:@""]){
+                LinphoneAddress *sipAddress = linphone_proxy_config_normalize_sip_uri(linphone_core_get_default_proxy_config([LinphoneManager getLc]), [videoMailUri UTF8String]);
+                linphone_core_subscribe([LinphoneManager getLc], sipAddress, "message-summary", 1800, NULL);
+            }
         }
         @catch(NSError *e){
             NSLog(@"Invalid MWI uri");
@@ -147,14 +149,14 @@
     }
     
     NSInteger mwiCount;
-    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_count"]){
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_mwi_count"]){
         mwiCount = 0;
     }
     else{
-        mwiCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"mwi_count"];
+        mwiCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"sip_mwi_count"];
     }
     mwiCount++;
-    [[NSUserDefaults standardUserDefaults] setInteger:mwiCount forKey:@"mwi_count"];
+    [[NSUserDefaults standardUserDefaults] setInteger:mwiCount forKey:@"sip_mwi_count"];
     self.textFieldVoiceMailCount.stringValue = [NSString stringWithFormat:@"( %ld )", mwiCount];
     
     const char *body = linphone_content_get_buffer(content);
@@ -291,8 +293,8 @@
 }
 
 - (IBAction)onVideoMailClicked:(id)sender {
-    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"video_mail_uri"]){
-        NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_mail_uri"];
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_videomail_uri"]){
+        NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_videomail_uri"];
         [[LinphoneManager instance] call:videoMailUri displayName:@"Videomail" transfer:NO];
     }
 }

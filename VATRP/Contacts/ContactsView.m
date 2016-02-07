@@ -119,7 +119,6 @@
         [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
         }];
     }
-    
 }
 
 - (BOOL)isChnagedContactFields:(NSDictionary*)contactInfo {
@@ -268,7 +267,7 @@
     NSInteger selectedRow = [self.tableViewContacts selectedRow];
     if (selectedRow >= 0 && selectedRow < self.contactInfos.count) {
         NSDictionary *calltoContact = [self.contactInfos objectAtIndex:selectedRow];
-        [self callTo:[Utils makeAccountNameFromSipURI:[calltoContact objectForKey:@"phone"]]];
+        [self callTo:[calltoContact objectForKey:@"phone"]];
     }
 }
 

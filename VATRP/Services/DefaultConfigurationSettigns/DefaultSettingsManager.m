@@ -122,9 +122,9 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"bwLimit"] != [NSNull null])?[dict objectForKey:@"bwLimit"]:@"" forKey:@"bwLimit"];
     
-    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"upload_bandwidth"] != [NSNull null])?[[dict objectForKey:@"upload_bandwidth"] integerValue]:0 forKey:@"upload_bandwidth" ];
+    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"upload_bandwidth"] != [NSNull null])?[[dict objectForKey:@"upload_bandwidth"] integerValue]:500 forKey:@"upload_bandwidth" ];
     
-    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"download_bandwidth"] != [NSNull null])?[[dict objectForKey:@"download_bandwidth"] integerValue]:0 forKey:@"download_bandwidth" ];
+    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"download_bandwidth"] != [NSNull null])?[[dict objectForKey:@"download_bandwidth"] integerValue]:500 forKey:@"download_bandwidth" ];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"" forKey:@"stun_preference"];
     

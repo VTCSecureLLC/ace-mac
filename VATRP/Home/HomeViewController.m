@@ -287,7 +287,13 @@
         NSDictionary *dict = [providersArray objectAtIndex:selectedRow];
         NSString *imageName = [dict objectForKey:@"providerLogo"];
         NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
+      
         [self.dialPadView setProvButtonImage:providerLogo];
+        NSString *currentText = [self.dialPadView getDialerText];
+        currentText = [currentText stringByReplacingOccurrencesOfString:@"sip:" withString:@""];
+        currentText = [currentText componentsSeparatedByString:@"@"][0];
+        [self.dialPadView setDialerText:[NSString stringWithFormat:@"sip:%@@%@", currentText, [dict objectForKey:@"domain"]]];
+
         self.providersView.hidden = YES;
     }
 }

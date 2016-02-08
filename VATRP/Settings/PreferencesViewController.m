@@ -23,7 +23,6 @@
 
     NSButton *checkboxEnableVideo;
     NSButton *checkboxEnableRTT;
-    NSButton *checkboxAdaptiveRate;
     NSButton *checkboxAlwaysInititate;
     NSButton *checkboxAlwaysAccept;
     //NSComboBox *comboBoxVideoPreset;
@@ -201,16 +200,6 @@
     [labelTitle.cell setBordered:NO];
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
-    
-    originY -= 25;
-    checkboxAdaptiveRate = [[NSButton alloc] initWithFrame:NSMakeRect(20, originY, 200, 20)]; // YES
-    [checkboxAdaptiveRate setButtonType:NSSwitchButton];
-    [checkboxAdaptiveRate setBezelStyle:0];
-    [checkboxAdaptiveRate setTitle:@"Adaptive Rate"];
-    [checkboxAdaptiveRate setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"enable_adaptive_rate_control"]];
-    [checkboxAdaptiveRate setAction:@selector(onCheckBoxHandler:)];
-    [checkboxAdaptiveRate setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxAdaptiveRate];
     
     originY -= 25;
     labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)]; // YES
@@ -670,8 +659,6 @@
     LinphoneCore *lc = [LinphoneManager getLc];
 
     [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableRTT.state forKey:kREAL_TIME_TEXT_ENABLED];
-    
-    linphone_core_enable_adaptive_rate_control(lc, checkboxAdaptiveRate.state);
     
     linphone_core_enable_video_capture(lc, checkboxAlwaysInititate.state);
     linphone_core_enable_video_display(lc, checkboxAlwaysInititate.state);

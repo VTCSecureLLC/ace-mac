@@ -126,6 +126,10 @@
                                         <menuItem title="Contact Window" id="aKz-sO-sg5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="a34-We-66z"/>
+                                        <menuItem title="Message Window" id="lWI-We-7VZ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -273,6 +277,7 @@
                         <outlet property="menuItemFEDVRS" destination="ZQx-8x-81q" id="jVj-RE-bqO"/>
                         <outlet property="menuItemGlobalENes" destination="nie-gx-Jyu" id="7jK-oF-X8K"/>
                         <outlet property="menuItemGlobalENus" destination="mbv-Zf-vbX" id="UkY-PS-faK"/>
+                        <outlet property="menuItemMessages" destination="lWI-We-7VZ" id="Xua-dJ-wJc"/>
                         <outlet property="menuItemPreferences" destination="OkD-C0-eW5" id="6bx-LR-mHl"/>
                         <outlet property="menuItemPurple" destination="y2N-bF-6QA" id="O0K-M9-spa"/>
                         <outlet property="menuItemSignOut" destination="CDK-gl-PAo" id="Ysv-9d-rDh"/>
@@ -3699,7 +3704,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-                                    <rect key="frame" x="410" y="0.0" width="15" height="400"/>
+                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

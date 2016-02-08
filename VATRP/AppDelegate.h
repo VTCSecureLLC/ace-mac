@@ -25,6 +25,7 @@
 @property (nonatomic, retain) ViewController *viewController;
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;
 @property (weak) IBOutlet NSMenuItem *menuItemSignOut;
+@property (weak) IBOutlet NSMenuItem *menuItemMessages;
 
 @property (weak) IBOutlet NSMenuItem *menuItemFEDVRS;
 @property (weak) IBOutlet NSMenuItem *menuItemZVRS;

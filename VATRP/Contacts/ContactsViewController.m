@@ -56,25 +56,25 @@
 
 
 -(void) importContactFromVCard{
-    ABPerson *person;
-    NSOpenPanel *panel = [NSOpenPanel openPanel];
-    [panel setCanChooseFiles:YES];
-    [panel setCanChooseDirectories:NO];
-    [panel setAllowsMultipleSelection:NO];
-    
-    NSInteger clicked = [panel runModal];
-    
-    if (clicked == NSFileHandlingPanelOKButton) {
-        
-        NSString *path = panel.URL.relativePath;
-        person = [ContactsService importContact: path];
-    }
-    
-    if(person){
-        _firstNameField.stringValue = [person valueForKey:kABFirstNameProperty];
-        _lastNameField.stringValue = [person valueForKey:kABLastNameProperty];
-        _sipAddressField.stringValue = [person valueForKey:kABJobTitleProperty];
-    }
+//    ABPerson *person;
+//    NSOpenPanel *panel = [NSOpenPanel openPanel];
+//    [panel setCanChooseFiles:YES];
+//    [panel setCanChooseDirectories:NO];
+//    [panel setAllowsMultipleSelection:NO];
+//    
+//    NSInteger clicked = [panel runModal];
+//    
+//    if (clicked == NSFileHandlingPanelOKButton) {
+//        
+//        NSString *path = panel.URL.relativePath;
+//        person = [ContactsService importContact: path];
+//    }
+//    
+//    if(person){
+//        _firstNameField.stringValue = [person valueForKey:kABFirstNameProperty];
+//        _lastNameField.stringValue = [person valueForKey:kABLastNameProperty];
+//        _sipAddressField.stringValue = [person valueForKey:kABJobTitleProperty];
+//    }
 
     
 }
@@ -91,8 +91,7 @@
         
         NSString *path = panel.directoryURL.path;
         path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", _firstNameField.stringValue, _lastNameField.stringValue]];
-        [ContactsService exportContact: _firstNameField.stringValue :_lastNameField.stringValue :_sipAddressField.stringValue : path ];
-        
+        [ContactsService exportContactsByPath:path];
     }
 
    

@@ -19,6 +19,8 @@
 #import "AddContactDialogBox.h"
 #import "Utils.h"
 #import "CallService.h"
+#import "ContactPictureManager.h"
+#import "ContactsService.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
@@ -30,7 +32,8 @@
 @property (weak) IBOutlet NSTableView *tableViewContacts;
 @property (weak) IBOutlet NSButton *addContactButton;
 @property (weak) IBOutlet NSButton *clearListButton;
-@property (weak) IBOutlet NSButton *syncButton;
+@property (weak) IBOutlet NSButton *importButton;
+@property (weak) IBOutlet NSButton *exportButton;
 @property (strong, nonatomic) NSMutableArray *contactInfos;
 
 @end
@@ -94,7 +97,7 @@
 }
 
 - (void)contactEditDone:(NSNotification*)notif {
-    
+    [self refreshContactList];
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
     if (![self isChnagedContactFields:contactInfo]) {
         return;
@@ -117,7 +120,6 @@
         [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
         }];
     }
-    
 }
 
 - (BOOL)isChnagedContactFields:(NSDictionary*)contactInfo {
@@ -142,8 +144,13 @@
 - (void) setFrame:(NSRect)frame {
     [super setFrame:frame];
     [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
-    [self.addContactButton setFrame:NSMakeRect(135, frame.size.height - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
-        [self.syncButton setFrame:NSMakeRect(250, frame.size.height - 40, self.syncButton.frame.size.width, self.syncButton.frame.size.height)];
+    
+    [self.addContactButton setFrame:NSMakeRect(260, frame.size.height - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
+    
+    [self.exportButton setFrame:NSMakeRect(166, frame.size.height - 40, self.exportButton.frame.size.width, self.exportButton.frame.size.height)];
+    
+    [self.importButton setFrame:NSMakeRect(213, frame.size.height - 40, self.importButton.frame.size.width, self.importButton.frame.size.height)];
+    
     [self.clearListButton setFrame:NSMakeRect(20, frame.size.height - 40, self.clearListButton.frame.size.width, self.clearListButton.frame.size.height)];
 }
 
@@ -165,18 +172,55 @@
     }];
 }
 
-- (IBAction)onSyncButton:(id)sender {
-    AppDelegate *app = [AppDelegate sharedInstance];
-    if (!app.contactsWindowController) {
-        app.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
-        [app.contactsWindowController showWindow:self];
-    } else {
-        if (app.contactsWindowController.isShow) {
-            [app.contactsWindowController close];
-        } else {
-            [app.contactsWindowController showWindow:self];
-            app.contactsWindowController.isShow = YES;
+- (IBAction)onExportButton:(id)sender {
+    
+    if (self.contactInfos.count > 0) {
+        NSOpenPanel *panel = [NSOpenPanel openPanel];
+        [panel setCanChooseFiles:NO];
+        [panel setCanChooseDirectories:YES];
+        [panel setAllowsMultipleSelection:NO];
+        NSInteger clicked = [panel runModal];
+        if (clicked == NSFileHandlingPanelOKButton) {
+            NSString *path = panel.directoryURL.path;
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
+            linphone_core_export_friends_as_vcard4_file([LinphoneManager getLc], [path UTF8String]);
         }
+    } else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Your contacts list is empty"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    }
+}
+
+- (IBAction)onImportButton:(id)sender {
+    
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    [panel setCanChooseFiles:YES];
+    [panel setCanChooseDirectories:NO];
+    [panel setAllowsMultipleSelection:NO];
+    NSInteger clicked = [panel runModal];
+    int contactsCount;
+    if (clicked == NSFileHandlingPanelOKButton) {
+        NSString *filePath = [[[panel URLs] objectAtIndex:0] absoluteString];
+        NSArray* tmpStr = [filePath componentsSeparatedByString:@"file://"];
+        NSString *pureFilePath = [tmpStr objectAtIndex:1];
+        contactsCount = linphone_core_import_friends_from_vcard4_file([LinphoneManager getLc], [pureFilePath UTF8String]);
+    }
+    if (contactsCount > 0) {
+        [self refreshContactList];
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Contacts have been succefully imported"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    } else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"The file doesn't consist any vcard contact"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
     }
 }
 
@@ -216,6 +260,12 @@
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
     [cellView.phoneTextField setStringValue:[dict objectForKey:@"phone"]];
     cellView.providerName = [dict objectForKey:@"provider"];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:[dict objectForKey:@"name"] andSipURI:[dict objectForKey:@"phone"]]];
+    if (contactImage) {
+        [cellView.imgView setImage:contactImage];
+    } else {
+        [cellView.imgView setImage:[NSImage imageNamed:@"male"]];
+    }
     cellView.delegate = self;
     return cellView;
 }
@@ -224,7 +274,7 @@
     NSInteger selectedRow = [self.tableViewContacts selectedRow];
     if (selectedRow >= 0 && selectedRow < self.contactInfos.count) {
         NSDictionary *calltoContact = [self.contactInfos objectAtIndex:selectedRow];
-        [self callTo:[Utils makeAccountNameFromSipURI:[calltoContact objectForKey:@"phone"]]];
+        [self callTo:[calltoContact objectForKey:@"phone"]];
     }
 }
 
@@ -232,7 +282,8 @@
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
     [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
-    
+    //NSString *provider  = [Utils providerNameFromSipURI:[contactCellView.phoneTextField stringValue]];
+    [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:[contactCellView.phoneTextField stringValue]];
     [self refreshContactList];
 }
 

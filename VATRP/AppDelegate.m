@@ -169,13 +169,14 @@
     
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
-        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
-                                                          UserID:accountModel.userID
-                                                        Password:@""
-                                                          Domain:accountModel.domain
-                                                       Transport:accountModel.transport
-                                                            Port:accountModel.port
-                                                       isDefault:YES];
+//        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+//                                                          UserID:accountModel.userID
+//                                                        Password:@""
+//                                                          Domain:accountModel.domain
+//                                                       Transport:accountModel.transport
+//                                                            Port:accountModel.port
+//                                                       isDefault:YES];
+        [SettingsHandler.settingsHandler initializeUserDefaults:true];
     }
     
     [self closeTabWindow];

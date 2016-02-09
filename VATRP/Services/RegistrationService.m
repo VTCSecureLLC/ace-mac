@@ -235,6 +235,12 @@
     for (elem=linphone_core_get_video_codecs(lc);elem!=NULL;elem=elem->next){
         pt=(PayloadType*)elem->data;
         NSString *pref=[SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+
+        //Disable MP4V for VRS
+        if(strcmp(pt->mime_type, "MP4V-ES") == 0){
+            linphone_core_enable_payload_type(lc, pt, 0);
+            continue;
+        }
         int enable = linphone_core_enable_payload_type(lc,pt,1);
 
         NSLog(@"enable: %d", enable);

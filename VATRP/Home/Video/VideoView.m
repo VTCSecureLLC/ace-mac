@@ -502,9 +502,19 @@
 }
 
 - (void)setMouseInCallWindow {
-    [self.callControllsConteinerView setHidden:NO];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
-    [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+    LinphoneCallState call_state = linphone_call_get_state(call);
+    
+    if (call_state == LinphoneCallConnected ||
+        call_state == LinphoneCallStreamsRunning ||
+        call_state == LinphoneCallPausing ||
+        call_state == LinphoneCallPaused ||
+        call_state == LinphoneCallPausedByRemote ||
+        call_state == LinphoneCallUpdating ||
+        call_state == LinphoneCallUpdatedByRemote) {
+        [self.callControllsConteinerView setHidden:NO];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
+        [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+    }
 }
 
 - (void) hideAllCallControllers {

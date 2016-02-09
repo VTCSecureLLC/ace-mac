@@ -41,8 +41,9 @@
     }
 }
 
-- (NSString*)imagePathByName:(NSString*)name andSipURI:(NSString*)sipURI {
-    NSString *pictureFileName = [[[name stringByAppendingString:@"_"] stringByAppendingString:[Utils makeSipURIWithAccountName:name andProviderAddress:sipURI]] stringByAppendingString:@".png"];
+- (NSString*)imagePathByName:(NSString*)name andSipURI:(NSString*)andSipURI {
+//    NSString *pictureFileName = [[[name stringByAppendingString:@"_"] stringByAppendingString:[Utils makeSipURIWithAccountName:name andProviderAddress:sipURI]] stringByAppendingString:@".png"];
+    NSString *pictureFileName = [[[name stringByAppendingString:@"_"] stringByAppendingString:andSipURI] stringByAppendingString:@".png"];
     NSString *pictureFilePath = [self applicationDirectoryFile:pictureFileName];
     return pictureFilePath;
 }

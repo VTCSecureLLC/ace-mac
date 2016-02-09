@@ -234,6 +234,13 @@
     [self.buttonOne setFrame:NSMakeRect(0, 176, 103, 44)];
 }
 
+-(void)setDialerText:(NSString *)address{
+    self.textFieldNumber.stringValue = address;
+}
+-(NSString*) getDialerText{
+    return self.textFieldNumber.stringValue;
+}
+
 - (void)setProvButtonImage:(NSImage*)img {
     // VATRP-1514: Gray out option until general release.
 //    NSImage *newImage = [img copy];

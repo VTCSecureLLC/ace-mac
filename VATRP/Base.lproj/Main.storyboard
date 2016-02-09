@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="9rh-hr-rNV">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
@@ -1062,7 +1062,7 @@
                                                 </scroller>
                                             </scrollView>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aA9-62-0dk">
-                                                <rect key="frame" x="135" y="256" width="40" height="37"/>
+                                                <rect key="frame" x="260" y="256" width="40" height="37"/>
                                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ukx-om-fhO">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1082,21 +1082,32 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qtn-X6-U14">
-                                                <rect key="frame" x="250" y="256" width="40" height="37"/>
-                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="import_export" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JZt-Zt-9w7">
+                                                <rect key="frame" x="166" y="256" width="40" height="37"/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="export_button" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JZt-Zt-9w7">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="onSyncButton:" target="rAt-4g-nXf" id="gZX-q0-OTo"/>
+                                                    <action selector="onExportButton:" target="rAt-4g-nXf" id="vn0-Df-Uwc"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A2k-bR-wFC">
+                                                <rect key="frame" x="213" y="256" width="40" height="37"/>
+                                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="import_button" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3z7-sv-Eay">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="onImportButton:" target="rAt-4g-nXf" id="1hM-NA-c2A"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <connections>
                                             <outlet property="addContactButton" destination="aA9-62-0dk" id="C4I-YN-uAB"/>
                                             <outlet property="clearListButton" destination="cH6-T9-SqM" id="KO2-d8-OsY"/>
+                                            <outlet property="exportButton" destination="qtn-X6-U14" id="zAv-JF-msn"/>
+                                            <outlet property="importButton" destination="A2k-bR-wFC" id="Hf5-yf-sOv"/>
                                             <outlet property="scrollViewContacts" destination="ChY-B5-BDB" id="zT2-Jw-Te3"/>
-                                            <outlet property="syncButton" destination="qtn-X6-U14" id="LTh-2k-tHc"/>
                                             <outlet property="tableViewContacts" destination="cAY-t8-48s" id="oRj-cs-WLW"/>
                                         </connections>
                                     </customView>
@@ -1384,7 +1395,7 @@
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="APm-Qq-3qG" customClass="VideoView">
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <connections>
-                                            <outlet property="buttonFullScreen" destination="5GQ-IM-ddo" id="BYI-jU-CSm"/>
+                                            <outlet property="buttonFullScreen" destination="5GQ-IM-ddo" id="crH-RV-vWV"/>
                                             <outlet property="callControllersView" destination="A7N-2c-iqT" id="u2X-vy-6di"/>
                                             <outlet property="callControllsConteinerView" destination="YoF-eP-9ll" id="rES-m5-QUk"/>
                                             <outlet property="callerImageView" destination="lSc-P8-rZy" id="qjs-uu-tBL"/>
@@ -1399,6 +1410,9 @@
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tyK-Cn-OT4">
                                         <rect key="frame" x="486" y="580" width="176" height="99"/>
+                                    </customView>
+                                    <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmU-cR-UXw" customClass="CallQualityIndicator">
+                                        <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YoF-eP-9ll" customClass="BackgroundedView">
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
@@ -1695,6 +1709,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="callQualityIndicator" destination="pmU-cR-UXw" id="riy-wx-Yxo"/>
                         <outlet property="callView" destination="dQQ-OR-7S5" id="Wea-M8-wmc"/>
                         <outlet property="contactsView" destination="rAt-4g-nXf" id="pTo-16-9dq"/>
                         <outlet property="dhResourcesView" destination="c7h-kT-FAh" id="gmT-Yg-e08"/>
@@ -3720,7 +3735,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
+                                    <rect key="frame" x="410" y="0.0" width="15" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -8296,8 +8311,49 @@ Cg
                                     <outlet property="delegate" destination="kdm-MC-IU1" id="SqK-cS-8RD"/>
                                 </connections>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-7J-uWY">
+                                <rect key="frame" x="48" y="192" width="185" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mail Waiting Indicator URI" id="nax-kh-xby">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zi8-Se-fGL">
+                                <rect key="frame" x="245" y="192" width="184" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="b8Y-8n-J76">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="kdm-MC-IU1" id="akB-nI-ycV"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WIh-9G-CQx">
+                                <rect key="frame" x="48" y="162" width="185" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Videomail URI" id="KvP-w2-0j1">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="kdm-MC-IU1" id="DYw-TW-SLp"/>
+                                </connections>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HUI-di-26F">
+                                <rect key="frame" x="245" y="162" width="184" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="sgt-Cj-bdt">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="kdm-MC-IU1" id="Wdy-W0-1kO"/>
+                                </connections>
+                            </textField>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sL8-fC-hfK">
-                                <rect key="frame" x="246" y="218" width="186" height="26"/>
+                                <rect key="frame" x="245" y="215" width="186" height="26"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="2g4-Ze-R1D">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -8312,25 +8368,6 @@ Cg
                                     <outlet property="nextKeyView" destination="MCD-n6-8D8" id="GIK-KF-koK"/>
                                 </connections>
                             </comboBox>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-7J-uWY">
-                                <rect key="frame" x="48" y="189" width="185" height="20"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mail Waiting Indicator URI" id="nax-kh-xby">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zi8-Se-fGL">
-                                <rect key="frame" x="245" y="189" width="184" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="b8Y-8n-J76">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <outlet property="delegate" destination="kdm-MC-IU1" id="akB-nI-ycV"/>
-                                </connections>
-                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -8341,6 +8378,7 @@ Cg
                         <outlet property="textFieldPort" destination="Q3Q-9s-Rkw" id="dcY-xk-9Bd"/>
                         <outlet property="textFieldUserID" destination="RwF-G4-ymG" id="VAV-KU-IFQ"/>
                         <outlet property="textFieldUsername" destination="MCD-n6-8D8" id="BlG-NC-x5F"/>
+                        <outlet property="textFieldVideoMailUri" destination="HUI-di-26F" id="mGb-m0-nfu"/>
                     </connections>
                 </viewController>
                 <customObject id="WLK-9q-LMt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -9718,9 +9756,10 @@ DQ
         <image name="dialpad" width="26" height="40"/>
         <image name="dialpadDelete" width="38" height="25"/>
         <image name="edit_32x32" width="20.756755828857422" height="20.756755828857422"/>
+        <image name="export_button" width="12" height="18"/>
         <image name="global" width="25" height="25"/>
         <image name="icon_fullscreen_open" width="30" height="30"/>
-        <image name="import_export" width="128" height="128"/>
+        <image name="import_button" width="12" height="18"/>
         <image name="info-icon" width="48" height="48"/>
         <image name="keypad" width="48" height="48"/>
         <image name="logo_about_frg" width="204" height="84"/>

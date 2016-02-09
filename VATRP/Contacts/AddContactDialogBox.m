@@ -16,6 +16,9 @@
 @interface AddContactDialogBox () <CustomComboBoxDelegate>
 {
     NSString *providerAddress;
+    NSDictionary *providers;
+    NSString *name;
+    NSString *phone;
     NSString *nameField;
     NSString *numberField;
     NSString *customcomboboxField;
@@ -41,6 +44,9 @@
         [self initContactPicture];
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
+        [self.phoneTextField setStringValue:[Utils makeAccountNumberFromSipURI:self.oldPhone]];
+        name = [self.nameTextField stringValue];
+        phone = [self.phoneTextField stringValue];
         [self setNumberTextField];
     } else {
         [self setTitle:@"Add contact"];
@@ -67,7 +73,7 @@
     if ([self.oldName isEqualToString:@""]) {
         selectedImage = nil;
     } else {
-        selectedImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:self.oldName andSipURI:providerAddress]];
+        selectedImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:self.oldName andSipURI:self.oldPhone]];
     }
     if (selectedImage) {
         [_contactImageView setWantsLayer: YES];
@@ -155,6 +161,15 @@
     }
     
     return sipUri;
+}
+
+- (BOOL)isDoneEditions {
+    
+    if (![name isEqualToString:[self.nameTextField stringValue]] || ![phone isEqualToString:[self.phoneTextField stringValue]]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - CustomComboBox delegate methods

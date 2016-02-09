@@ -100,8 +100,8 @@
         address = @"Unknown";
     }
     
-    NSString *provider  = [Utils providerNameFromSipURI:sipURI];
-    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:address andSipURI:provider]];
+    //NSString *provider  = [Utils providerNameFromSipURI:sipURI];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:address andSipURI:sipURI]];
     if (contactImage) {
         [self.callerImageView setWantsLayer: YES];
         self.callerImageView.layer.borderWidth = 1.0;

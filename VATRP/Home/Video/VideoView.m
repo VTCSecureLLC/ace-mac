@@ -23,6 +23,7 @@
 #import "AppDelegate.h"
 #import "ContactPictureManager.h"
 #import "Utils.h"
+#import "BackgroundedView.h"
 
 
 @interface VideoView () <CallControllersViewDelegate> {
@@ -34,6 +35,8 @@
     NSString *windowTitle, *address;
 
     NumpadView *numpadView;
+    NSImageView *cameraStatusModeImageView;
+    BackgroundedView *blackCurtain;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -88,9 +91,17 @@
                                                  name:@"CallViewFrameChange"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(videoModeUpdate:)
+                                                 name:kLinphoneVideModeUpdate
+                                               object:nil];
+    
 //    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
+    cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.frame];
+    blackCurtain = [[BackgroundedView alloc] initWithFrame:self.frame];
+    [blackCurtain setBackgroundColor:[NSColor blackColor]];
 }
 
 - (void)createNumpadView {
@@ -225,6 +236,7 @@
         }
         case LinphoneCallEnd:
         {
+            [blackCurtain removeFromSuperview];
             linphone_core_enable_video_preview(lc, FALSE);
             linphone_core_use_preview_window(lc, FALSE);
             linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
@@ -612,6 +624,18 @@
     
     
     [[[[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator animator] setFrame:CGRectMake(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+}
+
+- (void)videoModeUpdate:(NSNotification*)notif {
+    NSString *videoMode = [notif.userInfo objectForKey: @"videoModeStatus"];
+    if ([videoMode isEqualToString:@"camera_mute_off"]) {
+        [cameraStatusModeImageView setImage:[NSImage imageNamed:@"camera_mute.png"]];
+        [blackCurtain addSubview:cameraStatusModeImageView];
+        [self addSubview:blackCurtain];
+    }
+    if ([videoMode isEqualToString:@"isCameraMuted"] || [videoMode isEqualToString:@"camera_mute_on"]) {
+        [blackCurtain removeFromSuperview];
+    }
 }
 
 @end

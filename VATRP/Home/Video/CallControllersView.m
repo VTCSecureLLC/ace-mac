@@ -513,8 +513,13 @@ BOOL isRTTLocallyEnabled;
         LinphoneCallAppData *callAppData = (__bridge LinphoneCallAppData *)linphone_call_get_user_pointer(call);
         callAppData->videoRequested =
         TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
-        linphone_call_enable_camera(call, TRUE);
         
+        
+        //linphone_call_enable_camera(call, TRUE);
+        
+        LinphoneInfoMessage *linphoneInfoMessage = linphone_core_create_info_message(lc);
+        linphone_info_message_add_header(linphoneInfoMessage, "action", "camera_mute_on");
+        linphone_call_send_info_message(call, linphoneInfoMessage);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
@@ -533,7 +538,10 @@ BOOL isRTTLocallyEnabled;
 //        NSString *pathToImageString = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"png"];
 //        const char *pathToImage = [pathToImageString UTF8String];
 //        linphone_core_set_static_picture(lc, pathToImage);
-        linphone_call_enable_camera(call, FALSE);
+        //linphone_call_enable_camera(call, FALSE);
+        LinphoneInfoMessage *linphoneInfoMessage = linphone_core_create_info_message(lc);
+        linphone_info_message_add_header(linphoneInfoMessage, "action", "camera_mute_off");
+        linphone_call_send_info_message(call, linphoneInfoMessage);
 //        linphone_core_enable_video(call, FALSE);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];

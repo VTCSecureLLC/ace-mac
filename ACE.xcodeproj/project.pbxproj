@@ -10,7 +10,7 @@
 		04B5DA531C6215A20049CD6B /* ContactPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA521C6215A20049CD6B /* ContactPictureManager.m */; };
 		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
 		04C33DE71C58CB9600BF1432 /* import_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE51C58CB9600BF1432 /* import_button.png */; };
-		04C33DE81C58CB9600BF1432 /* export_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE61C58CB9600BF1432 /* export_button.png */; }; 
+		04C33DE81C58CB9600BF1432 /* export_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE61C58CB9600BF1432 /* export_button.png */; };
 		04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BBE1C5A22D70089FEB6 /* csdvrs.png */; };
 		04C75BC71C5A22F00089FEB6 /* acetest.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC01C5A22F00089FEB6 /* acetest.png */; };
 		04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC11C5A22F00089FEB6 /* belledonne.png */; };
@@ -20,6 +20,7 @@
 		04C75BCC1C5A22F00089FEB6 /* purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC51C5A22F00089FEB6 /* purple.png */; };
 		04C75BCD1C5A22F00089FEB6 /* sorenson.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC61C5A22F00089FEB6 /* sorenson.png */; };
 		04C75BCF1C5A24B50089FEB6 /* caag.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BCE1C5A24B50089FEB6 /* caag.png */; };
+		04FD27921C68E350005659B0 /* camera_mute.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD27911C68E350005659B0 /* camera_mute.png */; };
 		20A9933A1BB5B9F6008612F9 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; };
 		2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF51B984E49008E8333 /* ContactsWindowController.m */; };
 		2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF81B984E49008E8333 /* DialpadViewController.m */; };
@@ -553,6 +554,7 @@
 		04C75BC51C5A22F00089FEB6 /* purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = purple.png; path = providersLogos/purple.png; sourceTree = "<group>"; };
 		04C75BC61C5A22F00089FEB6 /* sorenson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sorenson.png; path = providersLogos/sorenson.png; sourceTree = "<group>"; };
 		04C75BCE1C5A24B50089FEB6 /* caag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caag.png; sourceTree = "<group>"; };
+		04FD27911C68E350005659B0 /* camera_mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_mute.png; sourceTree = "<group>"; };
 		20A993391BB5B9F6008612F9 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		2B463EF41B984E49008E8333 /* ContactsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsWindowController.h; sourceTree = "<group>"; };
 		2B463EF51B984E49008E8333 /* ContactsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsWindowController.m; sourceTree = "<group>"; };
@@ -1397,6 +1399,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				04FD27911C68E350005659B0 /* camera_mute.png */,
 				04C33DE51C58CB9600BF1432 /* import_button.png */,
 				04C33DE61C58CB9600BF1432 /* export_button.png */,
 				69A44E1F1C6496BB00120A19 /* call quality */,
@@ -1931,6 +1934,7 @@
 				69EE9C0A1C64B6E20010EBB3 /* RTPquality_medium_right.png in Resources */,
 				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
 				04C75BCA1C5A22F00089FEB6 /* csdvrs.png in Resources */,
+				04FD27921C68E350005659B0 /* camera_mute.png in Resources */,
 				4A50F9C41BB1BDC900FCD070 /* incoming.png in Resources */,
 				69EE9BF71C649B990010EBB3 /* RTPquality_bad_right.png in Resources */,
 				69B315951C2414540091534B /* SettingsAdvancedUI.plist in Resources */,

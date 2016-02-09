@@ -75,6 +75,9 @@
     }
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"auto_login"]){
+        shouldAutoLogin = NO;
+    }
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     [self.comboBoxProviderSelect removeAllItems];
 }
@@ -104,6 +107,7 @@
             
             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
                 [self downloadAndSaveProviderLogos:logosPaths];
+                
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [self initCustomComboBox];
                 });
@@ -190,7 +194,7 @@
     [self.prog_Signin setHidden:NO];
     [self.prog_Signin startAnimation:self];
     [self.loginButton setEnabled:NO];
-    NSString *dnsSRVName = [@"_rueconfig._tcp." stringByAppendingString:self.textFieldDomain.stringValue];
+    NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
     [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
                                                            withUsername:self.textFieldUsername.stringValue
                                                             andPassword:self.textFieldPassword.stringValue];
@@ -220,6 +224,8 @@
     loginAccount.domain = self.textFieldDomain.stringValue;
     loginAccount.transport = @"TCP";
     loginAccount.port = self.textFieldPort.intValue;
+//  
+//    [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue UserID:self.textFieldUserID.stringValue Password:self.textFieldPassword.stringValue Domain:self.textFieldDomain.stringValue Transport:@"TCP" Port:self.textFieldPort.intValue isDefault:YES];
     
     [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
                                                         UserID:loginAccount.userID
@@ -340,18 +346,26 @@
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message {
     switch (state) {
         case LinphoneRegistrationOk: {
-            [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
-                                                              UserID:loginAccount.userID
-                                                            Password:loginAccount.password
-                                                              Domain:loginAccount.domain
-                                                           Transport:loginAccount.transport
-                                                                Port:loginAccount.port
-                                                           isDefault:YES];
+//            if (loginAccount == nil)
+//            {
+                // ToDo - this needs a better fix. On launch, even auto-login is off, the last user is still being registered.
+                //   need to figure out where this is happening and prevent it.
+                //  for now, if the loginAccount is nil, then we need to figure out what account was just registered.
+            // NOTE - deal with this after 2-4 push
+//                const char* userName = linphone_core_get_identity([LinphoneManager getLc]);
+                
+////            }
+                [[AccountsService sharedInstance] addAccountWithUsername:loginAccount.username
+                                                                  UserID:loginAccount.userID
+                                                                Password:loginAccount.password
+                                                                  Domain:loginAccount.domain
+                                                               Transport:loginAccount.transport
+                                                                    Port:loginAccount.port
+                                                               isDefault:YES];
             
-            [[AppDelegate sharedInstance] showTabWindow];
-            [[AppDelegate sharedInstance].loginWindowController close];
-            [AppDelegate sharedInstance].loginWindowController = nil;
-            
+                [[AppDelegate sharedInstance] showTabWindow];
+                [[AppDelegate sharedInstance].loginWindowController close];
+                [AppDelegate sharedInstance].loginWindowController = nil;
             break;
         }
         case LinphoneRegistrationNone:
@@ -390,13 +404,7 @@
 #pragma mark - Providers info checking methods
 
 - (void)checkProvidersInfo {
-    
-    if ([self isProvidersInfoExist]) {
-        [self initCustomComboBox];
-    } else {
-        [self requestToProvidersInfo];
-    }
-    
+    [self requestToProvidersInfo];
 }
 
 - (BOOL)isProvidersInfoExist {
@@ -413,20 +421,21 @@
 
 - (void)initCustomComboBox {
     _customComboBox.delegate = self;
-    self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
-    [self.customComboBox selectItemAtIndex:0];
-    NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
-    self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
-    [_tmpTextField removeFromSuperview];
-    [_tmpProgressIndicator removeFromSuperview];
+    if([Utils cdnResources] && [Utils cdnResources].count > 0){
+        self.customComboBox.dataSource = [[Utils cdnResources] mutableCopy];
+        [self.customComboBox selectItemAtIndex:0];
+        NSDictionary *dict = [[Utils cdnResources] objectAtIndex:[_customComboBox indexOfSelectedItem]];
+        self.textFieldDomain.stringValue = [dict objectForKey:@"domain"];
+        [_tmpTextField removeFromSuperview];
+        [_tmpProgressIndicator removeFromSuperview];
 
-    // use this opportunity to initialize port if it is not already.
-    NSString* port = self.textFieldPort.stringValue;
-    if ((port == nil) || (port.length == 0))
-    {
-        self.textFieldPort.stringValue = @"25060";
+        // use this opportunity to initialize port if it is not already.
+        NSString* port = self.textFieldPort.stringValue;
+        if ((port == nil) || (port.length == 0))
+        {
+            self.textFieldPort.stringValue = @"25060";
+        }
     }
-
 }
 
 - (void)requestToProvidersInfo {

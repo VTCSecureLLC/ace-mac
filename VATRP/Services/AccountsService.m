@@ -75,14 +75,6 @@
     accountModel.transport = transport;
     accountModel.port = port;
     accountModel.isDefault = isDefault;
-    
-    if (isDefault) {
-        [self applyAccountsDefault:NO];
-    }
-    
-   
-    
-   
     if(username!=nil){
         [accountsMap setObject:accountModel forKeyedSubscript:accountModel.username];
     }else{
@@ -94,6 +86,7 @@
 
 - (void) removeAccountWithUsername:(NSString*)username {
     [accountsMap removeObjectForKey:username];
+    [self save];
 }
 
 - (void) save {
@@ -110,14 +103,18 @@
 }
 
 - (AccountModel*) getDefaultAccount {
-    for (NSString *key in accountsMap) {
-        AccountModel *accountModel = [accountsMap objectForKey:key];
-        
-        if (accountModel.isDefault) {
-            return accountModel;
-        }
+//    for (NSString *key in accountsMap) {
+//        AccountModel *accountModel = [accountsMap objectForKey:key];
+//        
+//        if (accountModel.isDefault) {
+//            return accountModel;
+//        }
+//    }
+    [self load];
+    if(accountsMap.count > 0){
+        NSString *key = [accountsMap allKeys][0];
+        return [accountsMap objectForKey:key];
     }
-    
     return nil;
 }
 

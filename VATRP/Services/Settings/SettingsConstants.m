@@ -14,15 +14,20 @@
 // AV Settings
 NSString *const MUTE_SPEAKER = @"SPEAKER_MUTE";
 NSString *const MUTE_MICROPHONE = @"MICROPHONE_MUTE";
-NSString *const ENABLE_ECHO_CANCELLATION = @"ECHO_CANCEL";
+NSString *const ENABLE_ECHO_CANCELLATION = @"enable_echo_cancellation";
 NSString *const VIDEO_SHOW_SELF_VIEW = @"VIDEO_SHOW_SELF_VIEW";
 NSString *const VIDEO_SHOW_PREVIEW = @"VIDEO_SHOW_PREVIEW";
 
 
-// Medai settings
+// Media settings
 NSString *const SELECTED_CAPTURE_DEVICE = @"SETTINGS_SELECTED_CAPTURE_DEVICE";
 NSString *const SELECTED_MICROPHONE = @"SETTINGS_SELECTED_MICROPHONE";
 NSString *const SELECTED_SPEAKER = @"SETTINGS_SELECTED_SPEAKER";
 
+// Video Settings
+NSString *const ENABLE_VIDEO = @"enable_video_preference";
+
+// Preferences
+NSString *const MUTE_CAMERA = @"mute_camera";
 
 #endif /* SettingsConstants_h */

@@ -11,7 +11,7 @@
 #import "AccountsService.h"
 #import "RegistrationService.h"
 #import "Utils.h"
-
+#import "DefaultSettingsManager.h"
 @interface AccountsViewController () {
     AccountModel *accountModel;
     BOOL isChanged;
@@ -25,6 +25,7 @@
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
 @property (weak) IBOutlet NSTextField *settingsFeedbackText;
 @property (weak) IBOutlet NSTextField *textFieldMailWaitingIndicatorURI;
+@property (weak) IBOutlet NSTextField *textFieldVideoMailUri;
 
 @end
 
@@ -39,6 +40,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    self.textFieldUserID.enabled = false;
+    self.textFieldUsername.enabled = false;
+    self.secureTextFieldPassword.enabled = false;
+    self.textFieldDomain.enabled = false;
+    self.textFieldPort.enabled = false;
+    
 }
 
 - (void)viewWillAppear {
@@ -102,9 +109,12 @@
         self.textFieldPort.stringValue = @"25060";
         [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
     }
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_mwi_uri"]){
+        self.textFieldMailWaitingIndicatorURI.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_mwi_uri"];
+    }
     
-    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"mwi_uri"]){
-        self.textFieldMailWaitingIndicatorURI.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"mwi_uri"];
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_videomail_uri"]){
+        self.textFieldVideoMailUri.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_videomail_uri"];
     }
 }
 
@@ -154,7 +164,12 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"closeAccountsViewController" object:nil];
     
     if(![self.textFieldMailWaitingIndicatorURI.stringValue isEqualToString:@""]){
-        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldMailWaitingIndicatorURI.stringValue forKey:@"mwi_uri"];
+        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldMailWaitingIndicatorURI.stringValue forKey:@"sip_mwi_uri"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    if(![self.textFieldVideoMailUri.stringValue isEqualToString:@""]){
+        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailUri.stringValue forKey:@"sip_videomail_uri"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
     return YES;

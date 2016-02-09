@@ -11,44 +11,64 @@
 
 #import <Foundation/Foundation.h>
 
-// ToDo: move this to coordinate with SettingsService
-
+// This is meant to coordinate with the SettingsService class.
+// Items that are currently handled directly through Settings service but we will need as account settings:
+// RTTEnabled
+// TextMode
 
 @protocol InCallSettingsDelegate<NSObject>
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
--(void)speakerWasMuted:(bool)mute;
--(void)microphoneWasMuted:(bool)mute;
--(void)selfPreviewShown:(bool)shown;
+-(void) speakerWasMuted:(bool)mute;
+-(void) microphoneWasMuted:(bool)mute;
+//-(void)selfViewShown:(bool)shown;
 @end
-
 
 
 @protocol SettingsHandlerDelegate<NSObject>
 #pragma mark items for settingsHandlerDelegate - setting from settings dialog to responders
 -(void)muteSpeaker:(bool)mute;
 -(void)muteMicrophone:(bool)mute;
--(void)showSelfPreview:(bool)mute;
+//-(void)showSelfView:(bool)mute;
 @end
+
+@protocol InCallPreferencesHandlerDelegate<NSObject>
+#pragma mark items for preferencesHandlerDelegate - setting from settings dialog to responders
+-(void)cameraWasMuted:(bool)enabled;
+@end
+
+@protocol PreferencesHandlerDelegate<NSObject>
+#pragma mark items for preferencesHandlerDelegate - setting from settings dialog to responders
+-(void)muteCamera:(bool)enable;
+@end
+
 
 @interface SettingsHandler : NSObject
 + (id)settingsHandler;
 
 @property(weak,nonatomic)id<InCallSettingsDelegate> inCallSettingsDelegate;
 @property(weak,nonatomic)id<SettingsHandlerDelegate> settingsHandlerDelegate;
+@property(weak,nonatomic)id<InCallPreferencesHandlerDelegate> inCallPreferencessHandlerDelegate;
+@property(weak,nonatomic)id<PreferencesHandlerDelegate> preferencessHandlerDelegate;
+
+// Bool force provided for debugging, and to reset settings when needed.
+-(void)initializeUserDefaults:(bool)force;
+
 
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
--(void)inCallSpeakerWasMuted:(bool)mute;
--(void)inCallMicrophoneWasMuted:(bool)mute;
--(void)inCallShowSelfPreview:(bool)shown;
+-(void) inCallSpeakerWasMuted:(bool)mute;
+-(void) inCallMicrophoneWasMuted:(bool)mute;
+-(void) inCallShowSelfView:(bool)shown;
+-(void) inCallMuteCamera:(bool)enable;
 
 
 #pragma mark items for settingsHandlerDelegate - setting from settings dialog to responders
--(void)setMuteSpeaker:(bool)mute;
--(void)setMuteMicrophone:(bool)mute;
+-(void) setMuteSpeaker:(bool)mute;
+-(void) setMuteMicrophone:(bool)mute;
+-(void) setShowSelfView:(bool)show;
+-(void) setEnableEchoCancellation:(bool)show;
+-(void) setMuteCamera:(bool)enable;
 
--(void)setShowSelfView:(bool)show;
--(void)setEnableEchoCancellation:(bool)show;
-
+-(void) setEnableVideo:(bool)enable;
 
 
 #pragma mark settings accessors
@@ -58,7 +78,9 @@
 -(bool)isEchoCancellationEnabled;
 -(bool)isShowSelfViewEnabled;
 -(bool)isShowPreviewEnabled;
+-(bool)isMuteCamera;
 
+-(bool)isVideoEnabled;
 
 #pragma mark Media Settings
 -(NSString*)getSelectedCamera;

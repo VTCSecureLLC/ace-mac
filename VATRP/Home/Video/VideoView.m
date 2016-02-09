@@ -21,6 +21,7 @@
 #import "ChatService.h"
 #import "ViewManager.h"
 #import "AppDelegate.h"
+#import "CallQualityIndicator.h"
 #import "Utils.h"
 
 
@@ -50,6 +51,8 @@
 @property (weak) IBOutlet NSView *localVideo;
 @property (weak) IBOutlet NSButton *buttonFullScreen;
 
+@property (weak) IBOutlet NSImageView *imageViewShadow;
+
 
 - (void) inCallTick:(NSTimer*)timer;
 
@@ -66,7 +69,7 @@
     address = @"";
     
     timerCallDuration = nil;
-    
+
     self.wantsLayer = YES;
     self.remoteVideoView.wantsLayer = YES;
     self.labelDisplayName.wantsLayer = YES;
@@ -130,9 +133,10 @@
     
     switch (astate) {
         case LinphoneCallIncomingReceived: {
+            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimerWithTimeInterval:3.75];
-            
+            [self.labelRingCount setTextColor:[NSColor whiteColor]];
             [self startCallFlashingAnimation];
             
             [self.callControllsConteinerView setHidden:NO];
@@ -170,7 +174,8 @@
             
             [self.localVideo setFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
 
-            if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+            HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
+            if (homeViewController.isAppFullScreen) {
                 [[self.localVideo animator] setFrame:NSMakeRect([NSScreen mainScreen].frame.size.width - 234, [NSScreen mainScreen].frame.size.height - 120, 176, 99)];
             } else {
                 [[self.localVideo animator] setFrame:NSMakeRect(507, 580, 176, 99)];
@@ -178,9 +183,13 @@
             
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
             [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+            
+            homeViewController.callQualityIndicator.hidden = NO;
+            [homeViewController.callQualityIndicator setNeedsDisplayInRect:self.frame];
         }
             break;
         case LinphoneCallOutgoingInit: {
+            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Calling 00:00";
             [self.callControllsConteinerView setHidden:NO];
         }
@@ -190,6 +199,7 @@
             self.labelCallState.stringValue = @"Ringing 00:00";
             
             [self startRingCountTimerWithTimeInterval:3.6];
+            [self.labelRingCount setTextColor:[NSColor redColor]];
         }
             break;
         case LinphoneCallPaused: {
@@ -210,6 +220,7 @@
             [self displayCallError:call message:@"Call Error"];
             numpadView.hidden = YES;
             self.call = nil;
+            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
 
             break;
         }
@@ -227,6 +238,9 @@
             if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
                 [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
             }
+            
+            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
+
             break;
         }
         default:
@@ -407,7 +421,11 @@
                 break;
         }
         
-        [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, string_time]];
+        float quality = linphone_call_get_current_quality(call);
+        NSLog(@"quality quality quality quality quality quality quality quality quality: %f", quality);
+        HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
+        homeViewController.callQualityIndicator.callQuality = quality;
+        [homeViewController.callQualityIndicator setNeedsDisplayInRect:homeViewController.callQualityIndicator.frame];
     }
 }
 
@@ -421,6 +439,7 @@
                                                     selector:@selector(ringCountTimer)
                                                     userInfo:nil
                                                      repeats:YES];
+    [self addSubview:self.labelRingCount positioned:NSWindowAbove relativeTo:nil];
 }
 
 - (void)stopRingCountTimer {
@@ -577,6 +596,9 @@
     [[self.secondCallView animator] setFrame:NSMakeRect(6, callViewFrame.size.height - 190, self.secondCallView.frame.size.width, self.secondCallView.frame.size.height)];
     [[numpadView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [numpadView setCustomFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    
+    
+    [[[[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator animator] setFrame:CGRectMake(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
 }
 
 @end

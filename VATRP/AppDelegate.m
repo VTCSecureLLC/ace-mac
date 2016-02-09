@@ -16,6 +16,7 @@
 #import "ChatService.h"
 #import <HockeySDK/HockeySDK.h>
 #import "LinphoneLocationManager.h"
+#import "SettingsHandler.h"
 
 @interface AppDelegate () {
     VideoCallWindowController *videoCallWindowController;
@@ -33,6 +34,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    // Initialize settings on launch if they have not been. 
+    [SettingsHandler.settingsHandler initializeUserDefaults:false];
     
     [AccountsService sharedInstance];
     [CallLogService sharedInstance];
@@ -166,13 +169,14 @@
     
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
-        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
-                                                          UserID:accountModel.userID
-                                                        Password:@""
-                                                          Domain:accountModel.domain
-                                                       Transport:accountModel.transport
-                                                            Port:accountModel.port
-                                                       isDefault:YES];
+//        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+//                                                          UserID:accountModel.userID
+//                                                        Password:@""
+//                                                          Domain:accountModel.domain
+//                                                       Transport:accountModel.transport
+//                                                            Port:accountModel.port
+//                                                       isDefault:YES];
+        [SettingsHandler.settingsHandler initializeUserDefaults:true];
     }
     
     [self closeTabWindow];

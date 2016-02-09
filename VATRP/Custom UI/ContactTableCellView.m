@@ -23,6 +23,13 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
+    [_imgView setWantsLayer: YES];  // edit: enable the layer for the view.  Thanks omz
+    
+    _imgView.layer.borderWidth = 1.0;
+    
+    _imgView.layer.cornerRadius = _imgView.frame.size.height / 2 ;
+    
+    _imgView.layer.masksToBounds = YES;
 }
 
 #pragma mark - buttons actions

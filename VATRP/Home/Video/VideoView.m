@@ -21,7 +21,7 @@
 #import "ChatService.h"
 #import "ViewManager.h"
 #import "AppDelegate.h"
-#import "CallQualityIndicator.h"
+#import "ContactPictureManager.h"
 #import "Utils.h"
 
 
@@ -51,8 +51,7 @@
 @property (weak) IBOutlet NSView *localVideo;
 @property (weak) IBOutlet NSButton *buttonFullScreen;
 
-@property (weak) IBOutlet NSImageView *imageViewShadow;
-
+@property (weak) IBOutlet NSImageView *callerImageView;
 
 - (void) inCallTick:(NSTimer*)timer;
 
@@ -319,6 +318,8 @@
 
 - (void)update {
     const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    char * remoteAddress = linphone_call_get_remote_address_as_string(call);
+    NSString  *sipURI = [NSString stringWithUTF8String:remoteAddress];
     if (addr != NULL) {
         BOOL useLinphoneAddress = true;
         // contact name
@@ -333,6 +334,18 @@
     // Set Address
     if(address == nil) {
         address = @"Unknown";
+    }
+    
+    //NSString *provider  = [Utils providerNameFromSipURI:sipURI];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:address andSipURI:sipURI]];
+    if (contactImage) {
+        [self.callerImageView setWantsLayer: YES];
+        self.callerImageView.layer.borderWidth = 1.0;
+        self.callerImageView.layer.cornerRadius = self.callerImageView.frame.size.height / 2 ;
+        self.callerImageView.layer.masksToBounds = YES;
+        [self.callerImageView setImage:contactImage];
+    } else {
+        [self.callerImageView setImage:[NSImage imageNamed:@"male"]];
     }
     
     self.labelDisplayName.stringValue = address;

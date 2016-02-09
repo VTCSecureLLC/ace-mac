@@ -183,7 +183,8 @@
         if (clicked == NSFileHandlingPanelOKButton) {
             NSString *path = panel.directoryURL.path;
             path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
-            linphone_core_export_friends_as_vcard4_file([LinphoneManager getLc], [path UTF8String]);
+            ///fixme!!
+            //linphone_friend_list_export_friends_as_vcard4_file([LinphoneManager getLc], [path UTF8String]);
         }
     } else {
         NSAlert *alert = [[NSAlert alloc] init];
@@ -206,7 +207,8 @@
         NSString *filePath = [[[panel URLs] objectAtIndex:0] absoluteString];
         NSArray* tmpStr = [filePath componentsSeparatedByString:@"file://"];
         NSString *pureFilePath = [tmpStr objectAtIndex:1];
-        contactsCount = linphone_core_import_friends_from_vcard4_file([LinphoneManager getLc], [pureFilePath UTF8String]);
+        //fixme !
+        //contactsCount = linphone_friend_list_import_friends_from_vcard4_file([LinphoneManager getLc], [pureFilePath UTF8String]);
     }
     if (contactsCount > 0) {
         [self refreshContactList];

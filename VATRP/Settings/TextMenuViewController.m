@@ -31,6 +31,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     self.text_send_mode.stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"TEXT_SEND_MODE"];
+    self.text_send_mode.enabled = NO;
     
     isChanged = NO;
 }

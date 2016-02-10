@@ -21,8 +21,9 @@
 #import "ChatService.h"
 #import "ViewManager.h"
 #import "AppDelegate.h"
-#import "CallQualityIndicator.h"
+#import "ContactPictureManager.h"
 #import "Utils.h"
+#import "BackgroundedView.h"
 
 
 @interface VideoView () <CallControllersViewDelegate> {
@@ -34,6 +35,8 @@
     NSString *windowTitle, *address;
 
     NumpadView *numpadView;
+    NSImageView *cameraStatusModeImageView;
+    BackgroundedView *blackCurtain;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -51,8 +54,7 @@
 @property (weak) IBOutlet NSView *localVideo;
 @property (weak) IBOutlet NSButton *buttonFullScreen;
 
-@property (weak) IBOutlet NSImageView *imageViewShadow;
-
+@property (weak) IBOutlet NSImageView *callerImageView;
 
 - (void) inCallTick:(NSTimer*)timer;
 
@@ -89,9 +91,17 @@
                                                  name:@"CallViewFrameChange"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(videoModeUpdate:)
+                                                 name:kLinphoneVideModeUpdate
+                                               object:nil];
+    
 //    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
+    cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.frame];
+    blackCurtain = [[BackgroundedView alloc] initWithFrame:self.frame];
+    [blackCurtain setBackgroundColor:[NSColor blackColor]];
 }
 
 - (void)createNumpadView {
@@ -226,6 +236,7 @@
         }
         case LinphoneCallEnd:
         {
+            [blackCurtain removeFromSuperview];
             linphone_core_enable_video_preview(lc, FALSE);
             linphone_core_use_preview_window(lc, FALSE);
             linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
@@ -319,6 +330,8 @@
 
 - (void)update {
     const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    char * remoteAddress = linphone_call_get_remote_address_as_string(call);
+    NSString  *sipURI = [NSString stringWithUTF8String:remoteAddress];
     if (addr != NULL) {
         BOOL useLinphoneAddress = true;
         // contact name
@@ -333,6 +346,18 @@
     // Set Address
     if(address == nil) {
         address = @"Unknown";
+    }
+    
+    //NSString *provider  = [Utils providerNameFromSipURI:sipURI];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:address andSipURI:sipURI]];
+    if (contactImage) {
+        [self.callerImageView setWantsLayer: YES];
+        self.callerImageView.layer.borderWidth = 1.0;
+        self.callerImageView.layer.cornerRadius = self.callerImageView.frame.size.height / 2 ;
+        self.callerImageView.layer.masksToBounds = YES;
+        [self.callerImageView setImage:contactImage];
+    } else {
+        [self.callerImageView setImage:[NSImage imageNamed:@"male"]];
     }
     
     self.labelDisplayName.stringValue = address;
@@ -477,9 +502,19 @@
 }
 
 - (void)setMouseInCallWindow {
-    [self.callControllsConteinerView setHidden:NO];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
-    [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+    LinphoneCallState call_state = linphone_call_get_state(call);
+    
+    if (call_state == LinphoneCallConnected ||
+        call_state == LinphoneCallStreamsRunning ||
+        call_state == LinphoneCallPausing ||
+        call_state == LinphoneCallPaused ||
+        call_state == LinphoneCallPausedByRemote ||
+        call_state == LinphoneCallUpdating ||
+        call_state == LinphoneCallUpdatedByRemote) {
+        [self.callControllsConteinerView setHidden:NO];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
+        [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+    }
 }
 
 - (void) hideAllCallControllers {
@@ -599,6 +634,18 @@
     
     
     [[[[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator animator] setFrame:CGRectMake(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+}
+
+- (void)videoModeUpdate:(NSNotification*)notif {
+    NSString *videoMode = [notif.userInfo objectForKey: @"videoModeStatus"];
+    if ([videoMode isEqualToString:@"camera_mute_off"]) {
+        [cameraStatusModeImageView setImage:[NSImage imageNamed:@"camera_mute.png"]];
+        [blackCurtain addSubview:cameraStatusModeImageView];
+        [self addSubview:blackCurtain];
+    }
+    if ([videoMode isEqualToString:@"isCameraMuted"] || [videoMode isEqualToString:@"camera_mute_on"]) {
+        [blackCurtain removeFromSuperview];
+    }
 }
 
 @end

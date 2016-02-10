@@ -587,6 +587,7 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
 
 /* Text Mode RTT or SIP SIMPLE duplicate with Android*/
 -(int) getTextMode{
+    return RTT;
     //SET TO RTT BY DEFAULT, THIS WILL CHANGE IN GLOBAL SETTINGS.
     int TEXT_MODE=RTT;
     

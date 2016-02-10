@@ -93,6 +93,14 @@
     return [subStrings objectAtIndex:0];
 }
 
++ (NSString*)providerNameFromSipURI:(NSString*)fullSipURI {
+    
+    NSArray *tmpArray = [fullSipURI componentsSeparatedByString:@"@"];
+    NSString *providerNamae = [tmpArray lastObject];
+    
+    return providerNamae;
+}
+
 + (NSMutableArray*)cdnResources {
     NSMutableArray *resources = [NSMutableArray new];
     int cdnResourcesCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"cdnResourcesCapacity"];

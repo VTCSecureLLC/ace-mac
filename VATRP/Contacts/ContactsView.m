@@ -33,6 +33,8 @@
 @property (weak) IBOutlet NSButton *clearListButton;
 @property (weak) IBOutlet NSButton *importButton;
 @property (weak) IBOutlet NSButton *exportButton;
+@property IBOutlet NSButton *allContactsButton;
+@property IBOutlet NSButton *favoriteContactsButton;
 @property (strong, nonatomic) NSMutableArray *contactInfos;
 
 @end
@@ -46,6 +48,28 @@
     [super awakeFromNib];
     static BOOL firstTime = YES;
     if (firstTime) {
+        // ToDo VATRP-2376: defining the allCOntats and favoriteContacts buttons programmatically until the storyboard is managable.
+        //   Once the custom controls are written for each panel, move all control creation to the control definition.
+        _allContactsButton = [[NSButton alloc]init];//[[NSButton alloc]initWithFrame:CGRectMake(0, 50, 75, 38)];
+        
+        [_allContactsButton setTitle:@"All"];
+        [_allContactsButton setButtonType:NSPushOnPushOffButton]; //Set what type button You want
+        [_allContactsButton setBezelStyle:NSShadowlessSquareBezelStyle]; //Set what style You want
+        [_allContactsButton setState:NSOffState];
+//        [_allContactsButton setEnabled:false]; // initialize for toggle being controlled by the two buttons, not by the button itself
+        [_allContactsButton setTarget:self];
+        [_allContactsButton setAction:@selector(allContacts_Click)];
+        [self addSubview:_allContactsButton];
+        
+        _favoriteContactsButton = [[NSButton alloc]init];//[[NSButton alloc] initWithFrame:CGRectMake(100, self.view.frame.origin.y + self.view.frame.size.height -50 , 100, 50 )];
+        [_favoriteContactsButton setTitle:@"Favorites"];
+        [_favoriteContactsButton setButtonType:NSPushOnPushOffButton]; //Set what type button You want
+        [_favoriteContactsButton setBezelStyle:NSShadowlessSquareBezelStyle]; //Set what style You want
+        [_favoriteContactsButton setState:NSOnState];
+        [_favoriteContactsButton setTarget:self];
+        [_favoriteContactsButton setAction:@selector(favoriteContacts_Click)];
+        [self addSubview:_favoriteContactsButton];
+        
         [self.addContactButton becomeFirstResponder];
         [self setObservers];
         self.contactInfos = [NSMutableArray new];
@@ -144,6 +168,9 @@
     [super setFrame:frame];
     [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
     
+    [self.allContactsButton setFrame:NSMakeRect(0, frame.size.height - 41, 75/*self.addContactButton.frame.size.width*/, self.addContactButton.frame.size.height + 1)];
+    [self.favoriteContactsButton setFrame:NSMakeRect(75, frame.size.height - 41, 75/*self.addContactButton.frame.size.width*/, self.addContactButton.frame.size.height + 1)];
+
     [self.addContactButton setFrame:NSMakeRect(260, frame.size.height - 40, self.addContactButton.frame.size.width, self.addContactButton.frame.size.height)];
     
     [self.exportButton setFrame:NSMakeRect(166, frame.size.height - 40, self.exportButton.frame.size.width, self.exportButton.frame.size.height)];
@@ -151,6 +178,7 @@
     [self.importButton setFrame:NSMakeRect(213, frame.size.height - 40, self.importButton.frame.size.width, self.importButton.frame.size.height)];
     
     [self.clearListButton setFrame:NSMakeRect(20, frame.size.height - 40, self.clearListButton.frame.size.width, self.clearListButton.frame.size.height)];
+    
 }
 
 - (void) dealloc {
@@ -158,6 +186,35 @@
 }
 
 #pragma mark - Buttons actions methods
+-(void) allContacts_Click
+{
+    // do not allow toggle for these - we are emulating tabs
+    [_allContactsButton setState:NSOffState];
+    // if not already selected
+    if ([_favoriteContactsButton state] == NSOffState)
+    {
+        // then we need to show all contacts, and fix the tab buttons
+        [_favoriteContactsButton setState:NSOnState];
+//        [_favoriteContactsButton setEnabled:true];
+//        [_allContactsButton setEnabled:false];
+        // then show all contacts
+
+    }
+}
+
+-(void) favoriteContacts_Click
+{
+    [_favoriteContactsButton setState:NSOffState];
+    // if not already selected
+    if ([_allContactsButton state] == NSOffState)
+    {
+        // then we need to show favorite contacts, and fix the tab buttons
+        [_allContactsButton setState:NSOnState];
+//        [_favoriteContactsButton setEnabled:false];
+//        [_allContactsButton setEnabled:true];
+        // show only favorite contacts
+    }
+}
 
 - (IBAction)onButtonClearList:(id)sender {
     NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"

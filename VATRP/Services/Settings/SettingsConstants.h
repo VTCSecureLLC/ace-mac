@@ -27,6 +27,8 @@ FOUNDATION_EXPORT NSString *const SELECTED_SPEAKER;
 // Video Settings
 FOUNDATION_EXPORT NSString *const ENABLE_VIDEO;
 
+// Testing Settings
+FOUNDATION_EXPORT NSString *const RTCP_FB_MODE;
 
 // Preferences
 FOUNDATION_EXPORT NSString *const MUTE_CAMERA;

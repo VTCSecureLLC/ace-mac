@@ -29,5 +29,6 @@ NSString *const ENABLE_VIDEO = @"enable_video_preference";
 
 // Preferences
 NSString *const MUTE_CAMERA = @"mute_camera";
+NSString *const RTCP_FB_MODE = @"RTCP_FB_MODE"; //Off (Default), Implicit, Explicit
 
 #endif /* SettingsConstants_h */

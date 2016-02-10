@@ -11,7 +11,7 @@
 #import "CallService.h"
 #import "SettingsService.h"
 #import "AppDelegate.h"
-
+#import "SettingsHandler.h"
 @interface TestingViewController () {
     BOOL isChanged;
 }
@@ -54,23 +54,9 @@
     [self.buttonEnableAVPF setEnabled:NO];
     [self.buttonEnableAVPF removeFromSuperview];
     
-    int rtcpFBSetting = lp_config_get_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", 0);
-    LinphoneAVPFMode mode = linphone_core_get_avpf_mode([LinphoneManager getLc]);
     [self.comboBoxRTCPFeedBack setEditable:NO];
-    @try{
-        if(rtcpFBSetting == 0 && mode == LinphoneAVPFDisabled){
-            [self.comboBoxRTCPFeedBack selectItemWithObjectValue:@"Off"];
-        }
-        else if(rtcpFBSetting == 1 && mode == LinphoneAVPFDisabled){
-            [self.comboBoxRTCPFeedBack selectItemWithObjectValue:@"Implicit"];
-        }
-        else{
-            [self.comboBoxRTCPFeedBack selectItemWithObjectValue:@"Explicit"];
-        }
-    }
-    @catch(NSError *error){
-        [self.comboBoxRTCPFeedBack setStringValue:@"Off"];
-    }
+    NSString *rtcpFbMode = [SettingsHandler.settingsHandler getRtcpFbMode];
+   [self.comboBoxRTCPFeedBack setStringValue:rtcpFbMode];
 }
 
 - (void) save {
@@ -100,29 +86,41 @@
     NSString *rtcpFeedback = ((NSComboBox*)sender).stringValue;
     int rtcpFB;
     LinphoneProxyConfig *cfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
-        if([rtcpFeedback isEqualToString:@"Implicit"]){
-            rtcpFB = 1;
-            linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
-            if(cfg){ linphone_proxy_config_set_avpf_mode(cfg, LinphoneAVPFDisabled); }
-
-            lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
-            }
-        else if([rtcpFeedback isEqualToString:@"Explicit"]){
-            rtcpFB = 1;
-            linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFEnabled);
-            
-            if(cfg){ linphone_proxy_config_set_avpf_mode(cfg, LinphoneAVPFEnabled); }
-            
-            lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
-            }
-        else{
-            rtcpFB = 0;
-            linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
-            
-            if(cfg){ linphone_proxy_config_set_avpf_mode(cfg, LinphoneAVPFDisabled); }
-            
-            lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_fb_implicit_rtcp_fb", rtcpFB);
-            }
+    if([rtcpFeedback isEqualToString:@"Implicit"]){
+        rtcpFB = 1;
+        if(cfg){
+            linphone_proxy_config_set_avpf_mode(cfg, LinphoneAVPFDisabled);
+            linphone_proxy_config_enable_avpf(cfg, FALSE);
+            linphone_proxy_config_set_avpf_rr_interval(cfg, 3);
+        }
+        linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
+        linphone_core_set_avpf_rr_interval([LinphoneManager getLc], 3);
+        [[LinphoneManager instance] lpConfigSetInt:rtcpFB forKey:@"rtp" forSection:@"rtcp_fb_implicit_rtcp_fb"];
+    }
+    else if([rtcpFeedback isEqualToString:@"Explicit"]){
+        rtcpFB = 1;
+        if(cfg){
+            linphone_proxy_config_set_avpf_mode(cfg, LinphoneAVPFEnabled);
+            linphone_proxy_config_enable_avpf(cfg, TRUE);
+            linphone_proxy_config_set_avpf_rr_interval(cfg, 3);
+        }
+        linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFEnabled);
+        linphone_core_set_avpf_rr_interval([LinphoneManager getLc], 3);
+        [[LinphoneManager instance] lpConfigSetInt:rtcpFB forKey:@"rtp" forSection:@"rtcp_fb_implicit_rtcp_fb"];
+    }
+    else{
+        rtcpFB = 0;
+        if(cfg){
+            linphone_proxy_config_set_avpf_mode(cfg, LinphoneAVPFDisabled);
+            linphone_proxy_config_enable_avpf(cfg, FALSE);
+            linphone_proxy_config_set_avpf_rr_interval(cfg, 3);
+        }
+        linphone_core_set_avpf_mode([LinphoneManager getLc], LinphoneAVPFDisabled);
+        linphone_core_set_avpf_rr_interval([LinphoneManager getLc], 3);
+        [[LinphoneManager instance] lpConfigSetInt:rtcpFB forKey:@"rtp" forSection:@"rtcp_fb_implicit_rtcp_fb"];
+    }
+    
+    [[SettingsHandler settingsHandler] setRtcpFbMode:rtcpFeedback];
 }
 
 - (IBAction)onButtonCleareUserData:(id)sender {

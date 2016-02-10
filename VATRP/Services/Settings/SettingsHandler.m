@@ -154,7 +154,9 @@
     {
         [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true];
     }
-
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
+        [self setUserSettingString:RTCP_FB_MODE withValue:@"Off"];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -304,7 +306,6 @@
     return [self getUserSettingString:SELECTED_SPEAKER];
 }
 
-
 -(void)setSelectedCamera:(NSString*)cameraName
 {
     [self setUserSettingString:SELECTED_CAPTURE_DEVICE withValue:cameraName];
@@ -318,6 +319,14 @@
     [self setUserSettingString:SELECTED_SPEAKER withValue:speakerName];
 }
 
+#pragma mark Preferences Settings
+
+-(void)setRtcpFbMode:(NSString*) rtcpFbMode{
+    [self setUserSettingString:RTCP_FB_MODE withValue:rtcpFbMode];
+}
+-(NSString*)getRtcpFbMode{
+    return [self getUserSettingString:RTCP_FB_MODE];
+}
 
 //=================================================================================================================
 // Generic Settings Accessors

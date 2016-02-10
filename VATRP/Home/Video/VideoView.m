@@ -447,7 +447,6 @@
         }
         
         float quality = linphone_call_get_current_quality(call);
-        NSLog(@"quality quality quality quality quality quality quality quality quality: %f", quality);
         HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
         homeViewController.callQualityIndicator.callQuality = quality;
         [homeViewController.callQualityIndicator setNeedsDisplayInRect:homeViewController.callQualityIndicator.frame];

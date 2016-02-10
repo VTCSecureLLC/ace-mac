@@ -22,4 +22,6 @@
 - (void) swapCallsToCall:(LinphoneCall*)aCall;
 - (LinphoneCall*) getCurrentCall;
 
+//-(void)tempDebugMethodForIncomingCall:(NSString*)message call:(LinphoneCall*)call
+
 @end

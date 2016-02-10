@@ -91,6 +91,9 @@
 -(void)setSelectedMicrophone:(NSString*)microphoneName;
 -(void)setSelectedSpeaker:(NSString*)speakerName;
 
+#pragma mark Testing Settings
+-(void)setRtcpFbMode:(NSString*) rtcpFbMode;
+-(NSString*)getRtcpFbMode;
 
 
 @end

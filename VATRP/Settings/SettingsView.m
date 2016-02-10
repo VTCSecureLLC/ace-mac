@@ -14,6 +14,8 @@
 #import "AccountsService.h"
 #import "RegistrationService.h"
 #import "SDPNegotiationService.h"
+#import "SettingsConstants.h"
+#import "SettingsHandler.h"
 
 @interface SettingsView () <NSTextFieldDelegate> {
     NSArray *settings;
@@ -367,9 +369,9 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
-    } else if ([item.userDefaultsKey isEqualToString:@"video_preferred_fps_preference"]) {
-        // ToDo: Hardcoding on 2-2 per request
-        linphone_core_set_preferred_framerate(lc, 30.0f);//textField.floatValue);
+    } else if ([item.userDefaultsKey isEqualToString:PREFERRED_FPS]) {
+        [SettingsHandler.settingsHandler setPreferredFPS:textField.floatValue];
+        linphone_core_set_preferred_framerate(lc, textField.floatValue);
     }
     
     return YES;

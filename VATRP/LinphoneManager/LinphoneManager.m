@@ -1725,8 +1725,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
         }
         linphone_call_params_enable_low_bandwidth(calleeParams, low_bandwidth);
     }
-    // ToDo: Hardcoding on 2-2 per request
-    linphone_core_set_preferred_framerate(theLinphoneCore, 30.0f);
+    linphone_core_set_preferred_framerate(theLinphoneCore, [SettingsHandler.settingsHandler getPreferredFPS]);
     const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
     linphone_call_params_enable_realtime_text(calleeParams, [SettingsService getRTTEnabled]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
@@ -1756,8 +1755,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     //		return;
     //	}
     
-    // ToDo: Hardcoding on 2-2 per request
-    linphone_core_set_preferred_framerate(theLinphoneCore, 30.0f);
+    linphone_core_set_preferred_framerate(theLinphoneCore, [SettingsHandler.settingsHandler getPreferredFPS]);
 
     LinphoneProxyConfig* proxyCfg;
     //get default proxy

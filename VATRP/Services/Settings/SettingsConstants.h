@@ -26,6 +26,7 @@ FOUNDATION_EXPORT NSString *const SELECTED_SPEAKER;
 
 // Video Settings
 FOUNDATION_EXPORT NSString *const ENABLE_VIDEO;
+FOUNDATION_EXPORT NSString *const PREFERRED_FPS;
 
 
 // Preferences

@@ -30,6 +30,7 @@
 @property (weak) IBOutlet NSButton *doneButton;
 @property (weak) IBOutlet NSImageView *contactImageView;
 @property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
+@property (weak) IBOutlet NSButton* favoritesCheckBox;
 
 @end
 
@@ -39,6 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self initCustomComboBox];
     if (self.isEditing) {
         [self initContactPicture];
@@ -100,6 +102,17 @@
     nameField = [self.nameTextField stringValue];
     numberField = [self.phoneTextField stringValue];
     customcomboboxField = providerAddress;
+    // VATRP-2376: we will need to specify if this is a favorite or not here
+    bool isFavorite = false;
+    if (isFavorite)
+    {
+        [_favoritesCheckBox setState:NSOnState];
+    }
+    else
+    {
+        [_favoritesCheckBox setState:NSOffState];
+    }
+        
 }
 
 - (BOOL)isChangedFields {

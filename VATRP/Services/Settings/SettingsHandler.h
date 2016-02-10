@@ -82,14 +82,17 @@
 
 -(bool)isVideoEnabled;
 
+
 #pragma mark Media Settings
 -(NSString*)getSelectedCamera;
 -(NSString*)getSelectedMicrophone;
 -(NSString*)getSelectedSpeaker;
+-(float)getPreferredFPS;
 
 -(void)setSelectedCamera:(NSString*)cameraName;
 -(void)setSelectedMicrophone:(NSString*)microphoneName;
 -(void)setSelectedSpeaker:(NSString*)speakerName;
+-(void)setPreferredFPS:(float)preferredFPS;
 
 #pragma mark Testing Settings
 -(void)setRtcpFbMode:(NSString*) rtcpFbMode;

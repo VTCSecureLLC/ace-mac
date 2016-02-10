@@ -21,6 +21,7 @@
 + (BOOL) nsStringIsValidSip:(NSString *)checkString;
 + (NSString*)makeSipURIWithAccountName:(NSString*)accountName andProviderAddress:(NSString*)providerAddress;
 + (NSString*)makeAccountNumberFromSipURI:(NSString*)sipURI;
++ (NSString*)providerNameFromSipURI:(NSString*)fullSipURI;
 + (NSMutableArray*)cdnResources;
 
 @end

@@ -162,18 +162,27 @@
         case LinphoneCallStreamsRunning:
         {
             NSLog(@"****** LinphoneCallStreamsRunning");
+            
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
-            SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
-            bool microphoneMuted = [settingsHandler isMicrophoneMuted];
-            linphone_core_enable_mic(lc, !microphoneMuted);
-            bool speakerMuted = [settingsHandler isSpeakerMuted];
-            [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
-            bool micIsEnabled = linphone_core_mic_enabled(lc);
-            linphone_core_set_play_level(lc, 100);
+            
+            // - there is an issue here. As of 2-9-2016 if we cann enable mic when there is more than one call there is a crash -
+            //    linphone is making the settings on each call without checking to see if the audio stream in null. So for now we need
+            //    a notion of whether or not this is the first call on the line
+            if ([CallService callsCount] < 2)
+            {
+                SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+                bool microphoneMuted = [settingsHandler isMicrophoneMuted];
+                linphone_core_enable_mic(lc, !microphoneMuted);
+                bool speakerMuted = [settingsHandler isSpeakerMuted];
+                [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
+                bool micIsEnabled = linphone_core_mic_enabled(lc);
+                linphone_core_set_play_level(lc, 100);
+            }
             int playLevel = linphone_core_get_play_level(lc);
             int playbackGain = linphone_core_get_playback_gain_db(lc);
             NSLog([NSString stringWithFormat:@"   play level IS %d, playback gain is %d ********************************", playLevel, playbackGain ]);
             const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
+            const char *microphoneString = linphone_core_get_playback_device([LinphoneManager getLc]);
             NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
             NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
             bool speakerCanPlayback = linphone_core_sound_device_can_playback(lc, speakerString);

@@ -11,6 +11,8 @@
 
 @interface DialPadView : BackgroundedView <NSTextFieldDelegate>
 
-- (void)setProvButtonImage:(NSImage*)img;
+-(void)setProvButtonImage:(NSImage*)img;
 
+-(void)setDialerText:(NSString*) address;
+-(NSString*)getDialerText;
 @end

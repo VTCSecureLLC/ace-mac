@@ -169,13 +169,14 @@
     
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
-        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
-                                                          UserID:accountModel.userID
-                                                        Password:@""
-                                                          Domain:accountModel.domain
-                                                       Transport:accountModel.transport
-                                                            Port:accountModel.port
-                                                       isDefault:YES];
+//        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
+//                                                          UserID:accountModel.userID
+//                                                        Password:@""
+//                                                          Domain:accountModel.domain
+//                                                       Transport:accountModel.transport
+//                                                            Port:accountModel.port
+//                                                       isDefault:YES];
+        [SettingsHandler.settingsHandler initializeUserDefaults:true];
     }
     
     [self closeTabWindow];
@@ -199,6 +200,10 @@
     [[[BITHockeyManager sharedHockeyManager] feedbackManager] showFeedbackWindow];
 }
 
+- (void)onMenuItemMessages:(id)sender {
+    [[ChatService sharedInstance] openChatWindowWithUser:nil];
+}
+
 -(void) SignOut {
     [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
 }
@@ -211,6 +216,12 @@
 //    } else {
 //        [self.menuItemSignOut setAction:nil];
 //    }
+
+    if (state == LinphoneRegistrationOk) {
+        [self.menuItemMessages setAction:@selector(onMenuItemMessages:)];
+    } else {
+        [self.menuItemMessages setAction:nil];
+    }
 }
 
 void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {

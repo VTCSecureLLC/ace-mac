@@ -8,6 +8,7 @@
 
 #import "SecondIncomingCallView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ContactPictureManager.h"
 #import "Utils.h"
 
 @interface SecondIncomingCallView () {
@@ -20,6 +21,8 @@
 @property (weak) IBOutlet NSButton *buttonEndAnswer;
 @property (weak) IBOutlet NSButton *buttonHoldAnswer;
 @property (weak) IBOutlet NSButton *buttonDecline;
+
+@property (weak) IBOutlet NSImageView *callerImageView;
 
 @end
 
@@ -80,6 +83,8 @@
     NSString *address;
     
     const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    char * remoteAddress = linphone_call_get_remote_address_as_string(call);
+    NSString  *sipURI = [NSString stringWithUTF8String:remoteAddress];
     if (addr != NULL) {
         BOOL useLinphoneAddress = true;
         // contact name
@@ -93,6 +98,18 @@
     // Set Address
     if(address == nil) {
         address = @"Unknown";
+    }
+    
+    //NSString *provider  = [Utils providerNameFromSipURI:sipURI];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:address andSipURI:sipURI]];
+    if (contactImage) {
+        [self.callerImageView setWantsLayer: YES];
+        self.callerImageView.layer.borderWidth = 1.0;
+        self.callerImageView.layer.cornerRadius = self.callerImageView.frame.size.height / 2 ;
+        self.callerImageView.layer.masksToBounds = YES;
+        [self.callerImageView setImage:contactImage];
+    } else {
+        [self.callerImageView setImage:[NSImage imageNamed:@"male"]];
     }
     
     self.labelDisplayName.stringValue = address;
@@ -130,7 +147,7 @@
 
 - (void) reorderControllersForFrame:(NSRect)frame {
     [[self.viewAlphed animator] setFrame:NSMakeRect(frame.size.width/2 - self.viewAlphed.frame.size.width/2, 302, self.viewAlphed.frame.size.width, self.viewAlphed.frame.size.height)];
-    [[self.labelDisplayName animator] setFrame:NSMakeRect(frame.size.width/2 - self.labelDisplayName.frame.size.width/2, 488, self.labelDisplayName.frame.size.width, self.labelDisplayName.frame.size.height)];
+    [[self.labelDisplayName animator] setFrame:NSMakeRect(frame.size.width/2 - self.labelDisplayName.frame.size.width/2, 488, self.labelDisplayName.frame.size.width, self.labelDisplayName.frame.size.height + 50)];
     [[self.buttonEndAnswer animator] setFrame:NSMakeRect(frame.size.width/2 - 244, 394, self.buttonEndAnswer.frame.size.width, self.buttonEndAnswer.frame.size.height)];
     [[self.buttonHoldAnswer animator] setFrame:NSMakeRect(frame.size.width/2 + 14, 394, self.buttonHoldAnswer.frame.size.width, self.buttonHoldAnswer.frame.size.height)];
     [[self.buttonDecline animator] setFrame:NSMakeRect(frame.size.width/2 - self.buttonDecline.frame.size.width/2, 317, self.buttonDecline.frame.size.width, self.buttonDecline.frame.size.height)];

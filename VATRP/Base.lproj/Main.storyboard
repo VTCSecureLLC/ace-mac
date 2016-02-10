@@ -126,6 +126,10 @@
                                         <menuItem title="Contact Window" id="aKz-sO-sg5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="a34-We-66z"/>
+                                        <menuItem title="Message Window" id="lWI-We-7VZ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -273,6 +277,7 @@
                         <outlet property="menuItemFEDVRS" destination="ZQx-8x-81q" id="jVj-RE-bqO"/>
                         <outlet property="menuItemGlobalENes" destination="nie-gx-Jyu" id="7jK-oF-X8K"/>
                         <outlet property="menuItemGlobalENus" destination="mbv-Zf-vbX" id="UkY-PS-faK"/>
+                        <outlet property="menuItemMessages" destination="lWI-We-7VZ" id="Xua-dJ-wJc"/>
                         <outlet property="menuItemPreferences" destination="OkD-C0-eW5" id="6bx-LR-mHl"/>
                         <outlet property="menuItemPurple" destination="y2N-bF-6QA" id="O0K-M9-spa"/>
                         <outlet property="menuItemSignOut" destination="CDK-gl-PAo" id="Ysv-9d-rDh"/>
@@ -1035,6 +1040,7 @@
                                                                             <connections>
                                                                                 <outlet property="deleteButton" destination="YLX-Qk-N2p" id="pHC-i7-NBL"/>
                                                                                 <outlet property="editButton" destination="rwg-sd-00j" id="kRQ-I1-Tou"/>
+                                                                                <outlet property="imgView" destination="yRf-Mu-drO" id="7ks-zm-f6A"/>
                                                                                 <outlet property="nameTextField" destination="00L-jm-923" id="ndG-XZ-bRn"/>
                                                                                 <outlet property="phoneTextField" destination="4px-3m-nXw" id="bwe-VP-O7Y"/>
                                                                             </connections>
@@ -1397,6 +1403,7 @@
                                             <outlet property="buttonFullScreen" destination="5GQ-IM-ddo" id="crH-RV-vWV"/>
                                             <outlet property="callControllersView" destination="A7N-2c-iqT" id="u2X-vy-6di"/>
                                             <outlet property="callControllsConteinerView" destination="YoF-eP-9ll" id="rES-m5-QUk"/>
+                                            <outlet property="callerImageView" destination="lSc-P8-rZy" id="qjs-uu-tBL"/>
                                             <outlet property="labelCallDuration" destination="BCE-oT-0Kc" id="sfq-hP-pbB"/>
                                             <outlet property="labelCallState" destination="bRW-5L-eQn" id="CZ7-Bb-Yj6"/>
                                             <outlet property="labelDisplayName" destination="V5s-GS-ax9" id="QCs-Jl-119"/>
@@ -1416,7 +1423,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V5s-GS-ax9">
-                                                <rect key="frame" x="10" y="619" width="700" height="40"/>
+                                                <rect key="frame" x="10" y="469" width="700" height="40"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="qOo-dp-1m1">
                                                     <font key="font" metaFont="system" size="36"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1424,7 +1431,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bRW-5L-eQn">
-                                                <rect key="frame" x="10" y="574" width="700" height="27"/>
+                                                <rect key="frame" x="10" y="424" width="700" height="27"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Call status" id="37I-aq-yzM">
                                                     <font key="font" metaFont="system" size="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1432,7 +1439,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-oT-0Kc">
-                                                <rect key="frame" x="10" y="550" width="700" height="27"/>
+                                                <rect key="frame" x="10" y="400" width="700" height="27"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="0:00:05" id="fFR-vd-WOI">
                                                     <font key="font" metaFont="system" size="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1564,6 +1571,10 @@
                                                     <outlet property="videoProgressIndicator" destination="A60-of-7KD" id="czg-Q4-FAC"/>
                                                 </connections>
                                             </customView>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSc-P8-rZy">
+                                                <rect key="frame" x="284" y="517" width="150" height="150"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="6H8-D2-vck"/>
+                                            </imageView>
                                         </subviews>
                                     </customView>
                                     <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaC-yt-d1Z" customClass="SecondCallView">
@@ -1629,10 +1640,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                                         <subviews>
                                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BFD-JW-NCd" customClass="BackgroundedView">
-                                                <rect key="frame" x="90" y="302" width="538" height="244"/>
+                                                <rect key="frame" x="90" y="208" width="538" height="346"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cho-jO-fQc">
+                                                        <rect key="frame" x="219" y="246" width="100" height="100"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="ZGH-93-68f"/>
+                                                    </imageView>
+                                                </subviews>
                                             </customView>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-Th-Msu">
-                                                <rect key="frame" x="184" y="488" width="350" height="40"/>
+                                                <rect key="frame" x="184" y="396" width="350" height="40"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="3bZ-AN-8nA">
                                                     <font key="font" metaFont="system" size="32"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1640,7 +1657,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="igR-DH-5Pb">
-                                                <rect key="frame" x="116" y="394" width="230" height="60"/>
+                                                <rect key="frame" x="116" y="324" width="230" height="60"/>
                                                 <buttonCell key="cell" type="square" title="End &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="sKk-Di-irY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="32" name="HelveticaNeue"/>
@@ -1650,7 +1667,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wdK-1T-ThT">
-                                                <rect key="frame" x="374" y="394" width="230" height="60"/>
+                                                <rect key="frame" x="374" y="324" width="230" height="60"/>
                                                 <buttonCell key="cell" type="square" title="Hold &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="LuZ-3o-PmI">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="32" name="HelveticaNeue"/>
@@ -1660,7 +1677,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dpq-8B-5BM">
-                                                <rect key="frame" x="245" y="317" width="230" height="60"/>
+                                                <rect key="frame" x="245" y="230" width="230" height="60"/>
                                                 <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="Yt5-vL-kiW">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="32" name="HelveticaNeue"/>
@@ -1674,6 +1691,7 @@
                                             <outlet property="buttonDecline" destination="dpq-8B-5BM" id="vKc-c6-tSE"/>
                                             <outlet property="buttonEndAnswer" destination="igR-DH-5Pb" id="USM-tK-V4X"/>
                                             <outlet property="buttonHoldAnswer" destination="wdK-1T-ThT" id="Xmh-6J-LJ7"/>
+                                            <outlet property="callerImageView" destination="Cho-jO-fQc" id="pMu-EO-wHn"/>
                                             <outlet property="labelDisplayName" destination="N0z-Th-Msu" id="6UO-0V-12t"/>
                                             <outlet property="viewAlphed" destination="BFD-JW-NCd" id="ekh-Ep-drb"/>
                                         </connections>
@@ -1722,11 +1740,11 @@
             <objects>
                 <viewController storyboardIdentifier="AddContactDialogBox" id="55J-Cw-0Kj" customClass="AddContactDialogBox" sceneMemberID="viewController">
                     <view key="view" id="kyj-j3-yZc">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="263"/>
+                        <rect key="frame" x="0.0" y="0.0" width="489" height="263"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1EI-u7-q2V" customClass="BackgroundedView">
-                                <rect key="frame" x="174" y="15" width="167" height="104"/>
+                                <rect key="frame" x="213" y="15" width="167" height="104"/>
                                 <subviews>
                                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="54" horizontalPageScroll="10" verticalLineScroll="54" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXF-Fb-rHd">
                                         <rect key="frame" x="0.0" y="0.0" width="167" height="104"/>
@@ -1801,7 +1819,7 @@
                                 </subviews>
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZt-Py-fKh">
-                                <rect key="frame" x="37" y="168" width="129" height="19"/>
+                                <rect key="frame" x="76" y="168" width="129" height="19"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Number:" id="rsE-x7-l3R">
                                     <font key="font" metaFont="system" size="16"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1809,7 +1827,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fKp-56-PaS">
-                                <rect key="frame" x="174" y="205" width="217" height="24"/>
+                                <rect key="frame" x="213" y="205" width="217" height="24"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Enter name" drawsBackground="YES" id="rV2-cN-iWY">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1817,7 +1835,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qz9-NP-3mE">
-                                <rect key="frame" x="174" y="168" width="217" height="24"/>
+                                <rect key="frame" x="213" y="168" width="217" height="24"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="Enter account" drawsBackground="YES" id="TtP-ZT-o5z">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1825,7 +1843,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HsD-fS-HaZ">
-                                <rect key="frame" x="136" y="24" width="178" height="32"/>
+                                <rect key="frame" x="175" y="24" width="178" height="32"/>
                                 <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UWZ-D7-GpT">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1835,7 +1853,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHE-hN-SnK">
-                                <rect key="frame" x="174" y="152" width="221" height="17"/>
+                                <rect key="frame" x="213" y="152" width="221" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="exp: peter_3" id="2EP-dN-F4X">
                                     <font key="font" size="11" name="HelveticaNeue-Italic"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1843,7 +1861,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JEO-fG-Fj1">
-                                <rect key="frame" x="64" y="123" width="102" height="17"/>
+                                <rect key="frame" x="103" y="123" width="102" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Provider:" id="ywF-du-OjG">
                                     <font key="font" metaFont="system" size="16"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1851,7 +1869,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2OY-ih-kfh">
-                                <rect key="frame" x="109" y="205" width="57" height="21"/>
+                                <rect key="frame" x="148" y="205" width="57" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="iUD-5J-DfE">
                                     <font key="font" metaFont="system" size="16"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1859,7 +1877,7 @@
                                 </textFieldCell>
                             </textField>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogR-Yg-U0K" customClass="CustomComboBox">
-                                <rect key="frame" x="174" y="118" width="167" height="26"/>
+                                <rect key="frame" x="213" y="118" width="167" height="26"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TQe-eJ-dc2">
                                         <rect key="frame" x="5" y="3" width="20" height="20"/>
@@ -1894,14 +1912,37 @@
                             </customView>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pcH-Qh-h4Z">
                                 <rect key="frame" x="174" y="81" width="216" height="18"/>
-                                <buttonCell key="cell" type="check" title="Favorite" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Zbe-y9-PfR">
+                                <buttonCell key="cell" type="check" title="Favorite" bezelStyle="regularSquare" imagePosition="left" state="off" inset="2" id="Zbe-y9-PfR">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mMS-Zp-DJO">
+                                <rect key="frame" x="20" y="152" width="80" height="80"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="gwj-Lb-d98"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tf6-02-Seq">
+                                <rect key="frame" x="18" y="127" width="90" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Change Picture" id="zAX-OP-aXR">
+                                    <font key="font" size="12" name="HelveticaNeue"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xks-7e-ahT">
+                                <rect key="frame" x="11" y="117" width="105" height="113"/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" transparent="YES" imageScaling="proportionallyDown" inset="2" id="A8C-7o-jZu">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onButtonChangePicture:" target="55J-Cw-0Kj" id="ufJ-ZJ-L7a"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="contactImageView" destination="mMS-Zp-DJO" id="4kh-1j-ocH"/>
                         <outlet property="customComboBox" destination="ogR-Yg-U0K" id="yV1-y6-H7i"/>
                         <outlet property="doneButton" destination="HsD-fS-HaZ" id="uiF-Sv-AN0"/>
                         <outlet property="favoritesCheckBox" destination="pcH-Qh-h4Z" id="xhI-h2-4P0"/>
@@ -1911,7 +1952,7 @@
                 </viewController>
                 <customObject id="yg0-4Q-JPQ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1305" y="-507.5"/>
+            <point key="canvasLocation" x="-1324.5" y="-507.5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="5eQ-RW-85u">
@@ -3707,7 +3748,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8mR-QM-4jl">
-                                    <rect key="frame" x="410" y="0.0" width="15" height="385"/>
+                                    <rect key="frame" x="409" y="0.0" width="16" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

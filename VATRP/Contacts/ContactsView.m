@@ -19,6 +19,7 @@
 #import "AddContactDialogBox.h"
 #import "Utils.h"
 #import "CallService.h"
+#import "ContactPictureManager.h"
 #import "ContactsService.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
@@ -120,7 +121,7 @@
 }
 
 - (void)contactEditDone:(NSNotification*)notif {
-    
+    [self refreshContactList];
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
     if (![self isChnagedContactFields:contactInfo]) {
         return;
@@ -316,6 +317,12 @@
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
     [cellView.phoneTextField setStringValue:[dict objectForKey:@"phone"]];
     cellView.providerName = [dict objectForKey:@"provider"];
+    NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:[dict objectForKey:@"name"] andSipURI:[dict objectForKey:@"phone"]]];
+    if (contactImage) {
+        [cellView.imgView setImage:contactImage];
+    } else {
+        [cellView.imgView setImage:[NSImage imageNamed:@"male"]];
+    }
     cellView.delegate = self;
     return cellView;
 }
@@ -332,7 +339,8 @@
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
     [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
-    
+    //NSString *provider  = [Utils providerNameFromSipURI:[contactCellView.phoneTextField stringValue]];
+    [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:[contactCellView.phoneTextField stringValue]];
     [self refreshContactList];
 }
 

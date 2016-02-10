@@ -94,5 +94,10 @@
 -(void)setSelectedSpeaker:(NSString*)speakerName;
 -(void)setPreferredFPS:(float)preferredFPS;
 
+#pragma mark Testing Settings
+-(void)setRtcpFbMode:(NSString*) rtcpFbMode;
+-(NSString*)getRtcpFbMode;
+
+
 @end
 #endif /* SettingsDelegate_h */

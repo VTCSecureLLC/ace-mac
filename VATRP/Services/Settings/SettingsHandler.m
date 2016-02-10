@@ -158,7 +158,9 @@
     {
         [self setUserSettingFloat:VIDEO_SHOW_SELF_VIEW withValue:30.0f];
     }
-
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
+        [self setUserSettingString:RTCP_FB_MODE withValue:@"Off"];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -330,6 +332,14 @@
 }
 
 
+#pragma mark Preferences Settings
+
+-(void)setRtcpFbMode:(NSString*) rtcpFbMode{
+    [self setUserSettingString:RTCP_FB_MODE withValue:rtcpFbMode];
+}
+-(NSString*)getRtcpFbMode{
+    return [self getUserSettingString:RTCP_FB_MODE];
+}
 
 //=================================================================================================================
 // Generic Settings Accessors

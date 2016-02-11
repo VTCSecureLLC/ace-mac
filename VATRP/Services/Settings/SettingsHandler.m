@@ -154,7 +154,13 @@
     {
         [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true];
     }
-
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_FPS] == nil)
+    {
+        [self setUserSettingFloat:VIDEO_SHOW_SELF_VIEW withValue:30.0f];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
+        [self setUserSettingString:RTCP_FB_MODE withValue:@"Off"];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -303,7 +309,10 @@
 {
     return [self getUserSettingString:SELECTED_SPEAKER];
 }
-
+-(float)getPreferredFPS
+{
+    return [self getUserSettingFloat:PREFERRED_FPS];
+}
 
 -(void)setSelectedCamera:(NSString*)cameraName
 {
@@ -317,7 +326,20 @@
 {
     [self setUserSettingString:SELECTED_SPEAKER withValue:speakerName];
 }
+-(void)setPreferredFPS:(float)preferredFPS
+{
+    [self setUserSettingFloat:PREFERRED_FPS withValue:preferredFPS];
+}
 
+
+#pragma mark Preferences Settings
+
+-(void)setRtcpFbMode:(NSString*) rtcpFbMode{
+    [self setUserSettingString:RTCP_FB_MODE withValue:rtcpFbMode];
+}
+-(NSString*)getRtcpFbMode{
+    return [self getUserSettingString:RTCP_FB_MODE];
+}
 
 //=================================================================================================================
 // Generic Settings Accessors
@@ -359,6 +381,15 @@
 {
     [[NSUserDefaults standardUserDefaults]setObject:value forKey:settingName];
 }
+-(float)getUserSettingFloat:(NSString*)settingName
+{
+    return [[NSUserDefaults standardUserDefaults]floatForKey:settingName];
+}
+-(void)setUserSettingFloat:(NSString*)settingName withValue:(float)value
+{
+    [[NSUserDefaults standardUserDefaults]setFloat:value forKey:settingName];
+}
+
 
 // App Level Settings - Generic accessors
 -(bool)getAppSettingBool:(NSString*)settingName
@@ -378,6 +409,13 @@
 {
     [[NSUserDefaults standardUserDefaults]setValue:value forKey:settingName];
 }
-
+-(float)getAppSettingFloat:(NSString*)settingName
+{
+    return [[NSUserDefaults standardUserDefaults]floatForKey:settingName];
+}
+-(void)setAppSettingFloat:(NSString*)settingName withValue:(float)value
+{
+    [[NSUserDefaults standardUserDefaults]setFloat:value forKey:settingName];
+}
 
 @end

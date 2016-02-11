@@ -50,6 +50,10 @@
     return self;
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (CallWindowController*) getCallWindowController {
     return callWindowController;
 }

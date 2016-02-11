@@ -125,24 +125,24 @@ char **soundlist;
     
     MSVideoSize vsize;
     //Initializing local bandwidth variable to max 1152 found from android this should be pulled from autoconfig
-    int Bandwidth=1152;
+    int Bandwidth=3000;
     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"1080p (1920x1080)"]) {
-        Bandwidth=1152;
+        Bandwidth=3000;
         MS_VIDEO_SIZE_ASSIGN(vsize, 1080P);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"720p (1280x720)"]) {
-        Bandwidth=1152;
+        Bandwidth=2500;
         MS_VIDEO_SIZE_ASSIGN(vsize, 720P);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"svga (800x600)"]) {
-        Bandwidth=1152;
+        Bandwidth=2000;
         MS_VIDEO_SIZE_ASSIGN(vsize, SVGA);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"4cif (704x576)"]) {
-       Bandwidth=1152;
+       Bandwidth=1500;
         MS_VIDEO_SIZE_ASSIGN(vsize, 4CIF);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"vga (640x480)"]) {
-        Bandwidth=660;
+        Bandwidth=1000;
         MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"cif (352x288)"]) {
-        Bandwidth=460;
+        Bandwidth=500;
         MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"qcif (176x144)"]) {    
         Bandwidth=460;

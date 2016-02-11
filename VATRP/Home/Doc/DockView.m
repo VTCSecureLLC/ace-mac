@@ -67,6 +67,9 @@
                                                  name:kLinphoneCallUpdate
                                                object:nil];
 }
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];

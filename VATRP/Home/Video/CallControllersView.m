@@ -22,6 +22,7 @@
     BOOL last_update_state;
     BOOL isSendingVideo;
     BOOL chat_window_open;
+    BOOL videoCurrentlyEnabled;
     
     
     CallInfoWindowController *callInfoWindowController;
@@ -64,6 +65,7 @@ BOOL isRTTLocallyEnabled;
     [ViewManager sharedInstance].callControllersView_delegate = self;
     
     isSendingVideo = YES;
+    videoCurrentlyEnabled = YES;
     self.buttonHold.wantsLayer = YES;
     self.buttonVideo.wantsLayer = YES;
     self.buttonMute.wantsLayer = YES;
@@ -124,26 +126,9 @@ BOOL isRTTLocallyEnabled;
 }
 
 - (IBAction)onButtonVideo:(id)sender {
-    LinphoneCore *lc = [LinphoneManager getLc];
-    bool videoCurrentlyEnabled = true;
-    if (call)
-    {
-        videoCurrentlyEnabled = linphone_call_camera_enabled(call);
-    }
-    else
-    {
-        videoCurrentlyEnabled = [self.settingsHandler isVideoEnabled];
-    }
-    // ToDo - leave for the moment, not sure where else this is used.
     isSendingVideo = !isSendingVideo;
-    if (videoCurrentlyEnabled)
-    {
-        [self updateUIForEnableVideo:false];
-    }
-    else
-    {
-        [self updateUIForEnableVideo:true];
-    }
+    videoCurrentlyEnabled = !videoCurrentlyEnabled;
+    [self updateUIForEnableVideo:videoCurrentlyEnabled];
 }
 
 -(void)updateUIForEnableVideo:(bool)enable
@@ -151,9 +136,11 @@ BOOL isRTTLocallyEnabled;
     [self.videoProgressIndicator startAnimation:self];
     if (enable) {
         [self onVideoOn];
+         [self.buttonVideo setImage:[NSImage imageNamed:@"video_active"]];
         [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
     } else {
         [self onVideoOff];
+        [self.buttonVideo setImage:[NSImage imageNamed:@"video_inactive"]];
         [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
     }
     [self.videoProgressIndicator stopAnimation:self];
@@ -490,7 +477,9 @@ BOOL isRTTLocallyEnabled;
         }
         case LinphoneCallEnd: {
             self.labelCallState.stringValue = @"Call End";
-            
+            videoCurrentlyEnabled = YES;
+            isSendingVideo = YES;
+            [self.buttonVideo.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
             if (callInfoViewController) {
                 [callInfoViewController dismissController:self];
                 callInfoViewController = nil;
@@ -506,17 +495,14 @@ BOOL isRTTLocallyEnabled;
 - (void)onVideoOn {
     LinphoneCore *lc = [LinphoneManager getLc];
     
-    if (!linphone_core_video_enabled(lc))
-        return;
+//    if (!linphone_core_video_enabled(lc))
+//        return;
     
     if (call) {
         LinphoneCallAppData *callAppData = (__bridge LinphoneCallAppData *)linphone_call_get_user_pointer(call);
         callAppData->videoRequested =
         TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
-        
-        
         //linphone_call_enable_camera(call, TRUE);
-        
         LinphoneInfoMessage *linphoneInfoMessage = linphone_core_create_info_message(lc);
         linphone_info_message_add_header(linphoneInfoMessage, "action", "camera_mute_on");
         linphone_call_send_info_message(call, linphoneInfoMessage);
@@ -529,8 +515,8 @@ BOOL isRTTLocallyEnabled;
 - (void)onVideoOff {
     LinphoneCore *lc = [LinphoneManager getLc];
     
-    if (!linphone_core_video_enabled(lc))
-        return;
+//    if (!linphone_core_video_enabled(lc))
+//        return;
     
     if (call) {
         // ToDo VATRP-842: Setting a static image, but until the static image is working in linphone we are currently seeing a black image.

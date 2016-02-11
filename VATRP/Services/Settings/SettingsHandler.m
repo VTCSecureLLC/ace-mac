@@ -105,13 +105,13 @@
     }
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:500 forKey:@"upload_bandwidth" ];
-        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 500);
+        [[NSUserDefaults standardUserDefaults] setInteger:2000 forKey:@"upload_bandwidth" ];
+        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 2000);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:500 forKey:@"download_bandwidth" ];
-                linphone_core_set_download_bandwidth([LinphoneManager getLc], 500);
+        [[NSUserDefaults standardUserDefaults] setInteger:2000 forKey:@"download_bandwidth" ];
+                linphone_core_set_download_bandwidth([LinphoneManager getLc], 2000);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {

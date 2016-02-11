@@ -184,11 +184,16 @@
             NSString *path = panel.directoryURL.path;
             path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
             linphone_core_export_friends_as_vcard4_file([LinphoneManager getLc], [path UTF8String]);
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle:@"OK"];
+            [alert setMessageText:@"Contacts have been succefully exported"];
+            [alert setAlertStyle:NSWarningAlertStyle];
+            [alert runModal];
         }
     } else {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Your contacts list is empty"];
+        [alert setMessageText:@"The contacts list is empty"];
         [alert setAlertStyle:NSWarningAlertStyle];
         [alert runModal];
     }
@@ -201,26 +206,26 @@
     [panel setCanChooseDirectories:NO];
     [panel setAllowsMultipleSelection:NO];
     NSInteger clicked = [panel runModal];
-    int contactsCount;
+    int contactsCount = 0;
     if (clicked == NSFileHandlingPanelOKButton) {
         NSString *filePath = [[[panel URLs] objectAtIndex:0] absoluteString];
         NSArray* tmpStr = [filePath componentsSeparatedByString:@"file://"];
         NSString *pureFilePath = [tmpStr objectAtIndex:1];
         contactsCount = linphone_core_import_friends_from_vcard4_file([LinphoneManager getLc], [pureFilePath UTF8String]);
-    }
-    if (contactsCount > 0) {
-        [self refreshContactList];
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Contacts have been succefully imported"];
-        [alert setAlertStyle:NSWarningAlertStyle];
-        [alert runModal];
-    } else {
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"The file doesn't consist any vcard contact"];
-        [alert setAlertStyle:NSWarningAlertStyle];
-        [alert runModal];
+        if (contactsCount > 0) {
+            [self refreshContactList];
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle:@"OK"];
+            [alert setMessageText:@"Contacts have been succefully imported"];
+            [alert setAlertStyle:NSWarningAlertStyle];
+            [alert runModal];
+        } else {
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle:@"OK"];
+            [alert setMessageText:@"The file doesn't contain any compatible vCard contact"];
+            [alert setAlertStyle:NSWarningAlertStyle];
+            [alert runModal];
+        }
     }
 }
 

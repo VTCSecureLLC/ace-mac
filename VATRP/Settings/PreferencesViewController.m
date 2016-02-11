@@ -27,7 +27,6 @@
     NSButton *checkboxAlwaysAccept;
     //NSComboBox *comboBoxVideoPreset;
     NSComboBox *comboBoxPreferredSize;
-    NSTextField *textFieldMWIURL;
     NSButton *checkboxStun;
     NSButton *checkboxEnableICE;
     NSButton *checkboxEnableUPNP;
@@ -352,22 +351,6 @@
     [self.scrollView.documentView addSubview:labelTitle];
     
     originY -= 25;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)]; // YES
-    labelTitle.editable = NO;
-    labelTitle.stringValue = @"MWI URL";
-    [labelTitle.cell setBordered:NO];
-    [labelTitle setBackgroundColor:[NSColor clearColor]];
-    [self.scrollView.documentView addSubview:labelTitle];
-
-    NSString* textfieldValue = [DefaultSettingsManager sharedInstance].sipMwiUri;
-    
-    textFieldMWIURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
-    textFieldMWIURL.delegate = self;
-    textFieldMWIURL.stringValue = textfieldValue ? textfieldValue : @"mwi.linphone.org";
-    textFieldMWIURL.editable = YES;
-    [self.scrollView.documentView addSubview:textFieldMWIURL];
-    
-    originY -= 25;
     labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
     labelTitle.editable = NO;
     labelTitle.stringValue = @"Network";
@@ -393,7 +376,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [DefaultSettingsManager sharedInstance].stunServer;
+    NSString* textfieldValue = [DefaultSettingsManager sharedInstance].stunServer;
     
     textFieldSTUNURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldSTUNURL.delegate = self;

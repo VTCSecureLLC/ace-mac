@@ -73,6 +73,7 @@
         
         [self.addContactButton becomeFirstResponder];
         [self setObservers];
+        
         self.contactInfos = [NSMutableArray new];
         firstTime = NO;
     }

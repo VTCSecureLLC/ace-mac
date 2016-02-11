@@ -89,6 +89,27 @@
     plusWorked = NO;
 }
 
+- (void)hideDialPad:(BOOL)hidden
+{
+    [self.buttonOne setHidden:hidden];
+    [self.buttonTwo setHidden:hidden];
+    [self.buttonThree setHidden:hidden];
+    [self.buttonFour setHidden:hidden];
+    [self.buttonFive setHidden:hidden];
+    [self.buttonSix setHidden:hidden];
+    [self.buttonSeven setHidden:hidden];
+    [self.buttonEight setHidden:hidden];
+    [self.buttonNine setHidden:hidden];
+    [self.buttonZero setHidden:hidden];
+    [self.buttonSharp setHidden:hidden];
+    [self.buttonStar setHidden:hidden];
+    
+    [self.buttonCall setHidden:hidden];
+    [self.buttonProvider setHidden:hidden];
+    
+    self.hidden = hidden;
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     

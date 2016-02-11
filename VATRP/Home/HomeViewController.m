@@ -41,11 +41,12 @@
 @end
 
 @implementation HomeViewController
-
+bool dialPadIsShown;
 @synthesize isAppFullScreen;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    dialPadIsShown = true;
     // Do view setup here.
     [self activateMenuItems];
     
@@ -67,7 +68,9 @@
     [self setProviderInitialLogo];
     [self.providerTableView reloadData];
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
+    
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
+
     [self setObservers];
     NSImageView *imgView;
     
@@ -94,7 +97,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
-    
+
+    // initially the dialpad is open
+    [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];
+    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
+    // hide all others
+    [self.recentsView setHidden:false];
+    [self.dhResourcesView setHidden:true];
+    [self.contactsView setHidden:true];
+    [self.settingsView setHidden:true];
+
     [self.videoView createNumpadView];
 }
 
@@ -104,6 +116,7 @@
     [self.callQualityIndicator setWantsLayer:YES];
     [self.callQualityIndicator.layer setBackgroundColor:[NSColor clearColor].CGColor];
     [self.callQualityIndicator setBackgroundColor:[NSColor clearColor]];
+
 }
 
 #pragma mark - Observers and related functions
@@ -174,9 +187,17 @@
     self.recentsView.callsSegmentControll.hidden = NO;
     viewCurrent = (BackgroundedView*)self.recentsView;
     viewCurrent.hidden = NO;
-    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
+
+    [self.recentsView setHidden:false];
+    [self.dhResourcesView setHidden:true];
+    [self.contactsView setHidden:true];
+    [self.settingsView setHidden:true];
+    
+    [self hideDialPad:true];
+
 }
 
 - (void) didClickDockViewContacts:(DockView*)docView_ {
@@ -185,19 +206,30 @@
     viewCurrent.hidden = YES;
     viewCurrent = (BackgroundedView*)self.contactsView;
     viewCurrent.hidden = NO;
-    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
+
+    
+    [self.recentsView setHidden:true];
+    [self.dhResourcesView setHidden:true];
+    [self.contactsView setHidden:false];
+    [self.settingsView setHidden:true];
+    
+    [self hideDialPad:true];
 }
 
-- (void) didClickDockViewDialpad:(DockView*)dockView_ {
+- (void) didClickDockViewDialpad:(DockView*)dockView_
+{
+    NSRect rect = self.dialPadView.frame;
+    [self hideDialPad:![self.dialPadView isHidden]];
     if (self.viewContainer.frame.origin.y == 81) {
         [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];
-        [viewCurrent setFrame:NSMakeRect(0, 0, 310, 297)];
+        [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
         [self.dockView selectItemWithDocViewItem:DockViewItemDialpad];
     } else {
         [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
-        [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+        [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
         [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
         
         if ([viewCurrent isKindOfClass:[RecentsView class]]) {
@@ -210,9 +242,15 @@
             [self.dockView selectItemWithDocViewItem:DockViewItemResources];
         }
     }
+    
 }
 
-- (void) didClickDockViewResources:(DockView*)dockView_ {
+- (void) didClickDockViewResources:(DockView*)dockView_
+{
+    [self resourcesClicked];
+}
+-(void)resourcesClicked
+{
     
 //    ResourcesViewController *resourceViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"DHResources"];
 //
@@ -222,11 +260,17 @@
     //viewCurrent = (BackgroundedView*)resourceViewController.view;
     viewCurrent = (BackgroundedView*)self.dhResourcesView;
     viewCurrent.hidden = NO;
-    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
 
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemResources];
     
+    [self.recentsView setHidden:true];
+    [self.dhResourcesView setHidden:false];
+    [self.contactsView setHidden:true];
+    [self.settingsView setHidden:true];
+    
+    [self hideDialPad:true];
 }
 
 - (void) didClickDockViewSettings:(DockView*)dockView_ {
@@ -235,10 +279,23 @@
     viewCurrent.hidden = YES;
     viewCurrent = (BackgroundedView*)self.settingsView;
     viewCurrent.hidden = NO;
-    [viewCurrent setFrame:NSMakeRect(0, 0, 310, 567)];
+    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
+    
+    [self.recentsView setHidden:true];
+    [self.dhResourcesView setHidden:true];
+    [self.contactsView setHidden:true];
+    [self.settingsView setHidden:false];
+    
+    [self hideDialPad:true];
 }
+
+-(void)hideDialPad:(bool)hide
+{
+    [self.dialPadView hideDialPad:hide];
+}
+
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
     NSLog(@"- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector");

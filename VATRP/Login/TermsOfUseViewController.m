@@ -27,6 +27,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    // read the text from thr rtf as a formatted string and add the text to the text field
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"legal_release" ofType:@"rtf"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileManager fileExistsAtPath:filePath])
+    {
+        NSString *contents = [[[NSAttributedString alloc] initWithRTF:[NSData dataWithContentsOfFile:filePath] documentAttributes:NULL] string];
+        if (contents != nil)
+        {
+            [self.textView setString:contents];
+        }
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrolling:) name:NSScrollViewDidLiveScrollNotification object:nil];
 }

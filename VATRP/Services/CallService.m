@@ -59,9 +59,41 @@
 }
 
 + (void) callTo:(NSString*)number {
-    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
-    linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
-    [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
+    // sanity check - make sure that we are not making a call to an address that we already ahve a call out to.
+    const MSList *call_list = linphone_core_get_calls([LinphoneManager getLc]);
+    int count = 0;
+    if (call_list)
+    {
+        count = ms_list_size(call_list);
+    }
+
+    if (count > 0)
+    {
+        LinphoneCall* call = (LinphoneCall*)call_list->data;
+        const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+        if (addr != NULL)
+        {
+            BOOL useLinphoneAddress = true;
+            // contact name
+            if(useLinphoneAddress)
+            {
+                const char* lUserName = linphone_address_get_username(addr);
+                if(lUserName && [number isEqualToString:[NSString stringWithUTF8String:lUserName]])
+                {
+                    return; // do not make a second call to this user
+                }
+            }
+        }
+    }
+
+// ToDo? VATRP-2451: If the above is not sufficient to prevent the second call on a double click, then we can prevent a second call
+// by doing this and not worrying about comparing the adress above.
+//    if (count == 0)
+//    {
+        [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
+        linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
+        [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
+//    }
 }
 
 - (void) callUsingLinphoneManager:(NSString*)number {

@@ -102,6 +102,8 @@
     cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.frame];
     blackCurtain = [[BackgroundedView alloc] initWithFrame:self.frame];
     [blackCurtain setBackgroundColor:[NSColor blackColor]];
+    // ToD0 - temp for VATRP-2489
+    [self.buttonFullScreen setHidden:true];
 }
 
 - (void)createNumpadView {

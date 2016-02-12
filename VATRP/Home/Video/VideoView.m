@@ -102,6 +102,8 @@
     cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.frame];
     blackCurtain = [[BackgroundedView alloc] initWithFrame:self.frame];
     [blackCurtain setBackgroundColor:[NSColor blackColor]];
+    // ToD0 - temp for VATRP-2489
+    [self.buttonFullScreen setHidden:true];
 }
 
 - (void)createNumpadView {
@@ -447,7 +449,6 @@
         }
         
         float quality = linphone_call_get_current_quality(call);
-        NSLog(@"quality quality quality quality quality quality quality quality quality: %f", quality);
         HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
         homeViewController.callQualityIndicator.callQuality = quality;
         [homeViewController.callQualityIndicator setNeedsDisplayInRect:homeViewController.callQualityIndicator.frame];
@@ -502,9 +503,19 @@
 }
 
 - (void)setMouseInCallWindow {
-    [self.callControllsConteinerView setHidden:NO];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
-    [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+    LinphoneCallState call_state = linphone_call_get_state(call);
+    
+    if (call_state == LinphoneCallConnected ||
+        call_state == LinphoneCallStreamsRunning ||
+        call_state == LinphoneCallPausing ||
+        call_state == LinphoneCallPaused ||
+        call_state == LinphoneCallPausedByRemote ||
+        call_state == LinphoneCallUpdating ||
+        call_state == LinphoneCallUpdatedByRemote) {
+        [self.callControllsConteinerView setHidden:NO];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
+        [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+    }
 }
 
 - (void) hideAllCallControllers {

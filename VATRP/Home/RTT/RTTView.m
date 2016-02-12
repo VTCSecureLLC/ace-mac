@@ -131,6 +131,10 @@ const NSInteger SIP_SIMPLE=1;
     selectedChatRoom = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 - (void)updateContentData {
     [self clearMessageList];

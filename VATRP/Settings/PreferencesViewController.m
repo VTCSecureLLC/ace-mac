@@ -27,7 +27,6 @@
     NSButton *checkboxAlwaysAccept;
     //NSComboBox *comboBoxVideoPreset;
     NSComboBox *comboBoxPreferredSize;
-    NSTextField *textFieldMWIURL;
     NSButton *checkboxStun;
     NSButton *checkboxEnableICE;
     NSButton *checkboxEnableUPNP;
@@ -308,13 +307,15 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    NSString *textfieldValue = [self textFieldValueWithUserDefaultsKey:@"video_preferred_fps_preference"];
+    float preferredFPS = [SettingsHandler.settingsHandler getPreferredFPS];
     
-    float fps = linphone_core_get_preferred_framerate([LinphoneManager getLc]);
+//    NSString *textfieldValue = [self textFieldValueWithUserDefaultsKey:@"video_preferred_fps_preference"];
+    
+//    float fps = linphone_core_get_preferred_framerate([LinphoneManager getLc]);
     
     textFieldPreferredFPS = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 100, 20)];
     textFieldPreferredFPS.delegate = self;
-    textFieldPreferredFPS.floatValue = fps ? fps : 30.0;
+    textFieldPreferredFPS.floatValue = preferredFPS ? preferredFPS : 30.0f; // ensure valid initialization.
     textFieldPreferredFPS.editable = YES;
     [self.scrollView.documentView addSubview:textFieldPreferredFPS];
     
@@ -350,22 +351,6 @@
     [self.scrollView.documentView addSubview:labelTitle];
     
     originY -= 25;
-    labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(30, originY, 100, 20)]; // YES
-    labelTitle.editable = NO;
-    labelTitle.stringValue = @"MWI URL";
-    [labelTitle.cell setBordered:NO];
-    [labelTitle setBackgroundColor:[NSColor clearColor]];
-    [self.scrollView.documentView addSubview:labelTitle];
-    
-    textfieldValue = [DefaultSettingsManager sharedInstance].sipMwiUri;
-    
-    textFieldMWIURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
-    textFieldMWIURL.delegate = self;
-    textFieldMWIURL.stringValue = textfieldValue ? textfieldValue : @"mwi.linphone.org";
-    textFieldMWIURL.editable = YES;
-    [self.scrollView.documentView addSubview:textFieldMWIURL];
-    
-    originY -= 25;
     labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)];
     labelTitle.editable = NO;
     labelTitle.stringValue = @"Network";
@@ -391,7 +376,7 @@
     [labelTitle setBackgroundColor:[NSColor clearColor]];
     [self.scrollView.documentView addSubview:labelTitle];
     
-    textfieldValue = [DefaultSettingsManager sharedInstance].stunServer;
+    NSString* textfieldValue = [DefaultSettingsManager sharedInstance].stunServer;
     
     textFieldSTUNURL = [[NSTextField alloc] initWithFrame:NSMakeRect(130, originY, 170, 20)];
     textFieldSTUNURL.delegate = self;
@@ -644,6 +629,12 @@
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
     isChanged = YES;
+    if (control == textFieldPreferredFPS)
+    {
+        [SettingsHandler.settingsHandler setPreferredFPS:textFieldPreferredFPS.floatValue];
+        linphone_core_set_preferred_framerate([LinphoneManager getLc], textFieldPreferredFPS.floatValue);
+        
+    }
     
     return YES;
 }

@@ -50,14 +50,50 @@
     return self;
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (CallWindowController*) getCallWindowController {
     return callWindowController;
 }
 
 + (void) callTo:(NSString*)number {
-    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
-    linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
-    [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
+    // sanity check - make sure that we are not making a call to an address that we already ahve a call out to.
+    const MSList *call_list = linphone_core_get_calls([LinphoneManager getLc]);
+    int count = 0;
+    if (call_list)
+    {
+        count = ms_list_size(call_list);
+    }
+
+    if (count > 0)
+    {
+        LinphoneCall* call = (LinphoneCall*)call_list->data;
+        const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+        if (addr != NULL)
+        {
+            BOOL useLinphoneAddress = true;
+            // contact name
+            if(useLinphoneAddress)
+            {
+                const char* lUserName = linphone_address_get_username(addr);
+                if(lUserName && [number isEqualToString:[NSString stringWithUTF8String:lUserName]])
+                {
+                    return; // do not make a second call to this user
+                }
+            }
+        }
+    }
+
+// ToDo? VATRP-2451: If the above is not sufficient to prevent the second call on a double click, then we can prevent a second call
+// by doing this and not worrying about comparing the adress above.
+//    if (count == 0)
+//    {
+        [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
+        linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
+        [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
+//    }
 }
 
 - (void) callUsingLinphoneManager:(NSString*)number {
@@ -162,18 +198,27 @@
         case LinphoneCallStreamsRunning:
         {
             NSLog(@"****** LinphoneCallStreamsRunning");
+            
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
-            SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
-            bool microphoneMuted = [settingsHandler isMicrophoneMuted];
-            linphone_core_enable_mic(lc, !microphoneMuted);
-            bool speakerMuted = [settingsHandler isSpeakerMuted];
-            [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
-            bool micIsEnabled = linphone_core_mic_enabled(lc);
-            linphone_core_set_play_level(lc, 100);
+            
+            // - there is an issue here. As of 2-9-2016 if we cann enable mic when there is more than one call there is a crash -
+            //    linphone is making the settings on each call without checking to see if the audio stream in null. So for now we need
+            //    a notion of whether or not this is the first call on the line
+            if ([CallService callsCount] < 2)
+            {
+                SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+                bool microphoneMuted = [settingsHandler isMicrophoneMuted];
+                linphone_core_enable_mic(lc, !microphoneMuted);
+                bool speakerMuted = [settingsHandler isSpeakerMuted];
+                [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
+                bool micIsEnabled = linphone_core_mic_enabled(lc);
+                linphone_core_set_play_level(lc, 100);
+            }
             int playLevel = linphone_core_get_play_level(lc);
             int playbackGain = linphone_core_get_playback_gain_db(lc);
             NSLog([NSString stringWithFormat:@"   play level IS %d, playback gain is %d ********************************", playLevel, playbackGain ]);
             const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
+            const char *microphoneString = linphone_core_get_playback_device([LinphoneManager getLc]);
             NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
             NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
             bool speakerCanPlayback = linphone_core_sound_device_can_playback(lc, speakerString);

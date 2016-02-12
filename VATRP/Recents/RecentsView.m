@@ -55,7 +55,7 @@
                                              selector:@selector(contactEditDone:)
                                                  name:@"contactInfoEditDone"
                                                object:nil];
-    
+
     [self loadData];
 }
 

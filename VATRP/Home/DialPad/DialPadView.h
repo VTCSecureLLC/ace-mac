@@ -15,4 +15,6 @@
 
 -(void)setDialerText:(NSString*) address;
 -(NSString*)getDialerText;
+
+-(void)hideDialPad:(bool)hidden;
 @end

@@ -233,6 +233,7 @@
             numpadView.hidden = YES;
             self.call = nil;
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
+            [self.callControllersView set_bool_chat_window_open:NO];
 
             break;
         }
@@ -253,6 +254,7 @@
             }
             
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
+            [self.callControllersView set_bool_chat_window_open:NO];
 
             break;
         }

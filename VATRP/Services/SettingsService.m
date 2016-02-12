@@ -354,7 +354,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     [self enableVideoCodecs];
     
     // bwLimit - ? the name bwlimit is confusing
-    linphone_core_set_video_preset(lc, [DefaultSettingsManager sharedInstance].bwLimit.UTF8String);
+    //linphone_core_set_video_preset(lc, [DefaultSettingsManager sharedInstance].bwLimit.UTF8String);
     
     // upload_bandwidth
     linphone_core_set_upload_bandwidth(lc, [DefaultSettingsManager sharedInstance].uploadBandwidth);

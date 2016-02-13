@@ -60,7 +60,24 @@
     return false;
 }
 
+-(NSString*)linphoneCoreGetAdaptiveRate:(LinphoneCore*)linphoneCore
+{
+    if (linphoneCore != nil)
+    {
+        const char* value = linphone_core_get_adaptive_rate_algorithm(linphoneCore);
+        return [NSString stringWithCString:value encoding:NSUTF8StringEncoding];
+    }
+    return @"Unknown";
+}
 
+
+-(void)linphoneCoreSetAdaptiveRate:(LinphoneCore*)linphoneCore adaptiveRateAlgorithm:(NSString*)adaptiveRateAlgorithm
+{
+    if (linphoneCore != nil)
+    {
+        linphone_core_set_adaptive_rate_algorithm(linphoneCore, [adaptiveRateAlgorithm cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
+}
 #pragma mark accessors for in call diagnostics
 
 -(const LinphoneCallStats*)linphoneCallGetAudioStats:(LinphoneCall*)call

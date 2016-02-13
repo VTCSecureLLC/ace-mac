@@ -22,6 +22,10 @@
 @interface LinphoneAPI : NSObject
 + (id)instance;
 
+
+-(NSString*)linphoneCoreGetAdaptiveRate:(LinphoneCore*)linphoneCore;
+-(void)linphoneCoreSetAdaptiveRate:(LinphoneCore*)linphoneCore adaptiveRateAlgorithm:(NSString*)adaptiveRateAlgorithm;
+
 #pragma mark utility methods to use for validation
 -(bool)callAppearsValid:(LinphoneCall*) call;
 

@@ -131,15 +131,15 @@
                 self.labelIceConnectivity.stringValue = [self iceToString:audio_stats->ice_state];
             }
             LinphoneAPI* linphoneApi = [LinphoneAPI instance];
-            self.videoInterarrivalJitterLbl_sender.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetSenderInterarrivalVideoJitter:video_stats call:call]];
-            self.audioInterarrivalJitterLbl_sender.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetSenderInterarrivalAudioJitter:audio_stats call:call]];
-            self.videoInterarrivalJitterLbl_receiver.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetReceiverInterarrivalVideoJitter:video_stats call:call]];
-            self.audioInterarrivalJitterLbl_receiver.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetReceiverInterarrivalAudioJitter:audio_stats call:call]];
+            self.videoInterarrivalJitterLbl_sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderInterarrivalVideoJitter:video_stats call:call]];
+            self.audioInterarrivalJitterLbl_sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderInterarrivalAudioJitter:audio_stats call:call]];
+            self.videoInterarrivalJitterLbl_receiver.stringValue = [NSString stringWithFormat:@"Recevier %1.1f", [linphoneApi linphoneCallStatsGetReceiverInterarrivalVideoJitter:video_stats call:call]];
+            self.audioInterarrivalJitterLbl_receiver.stringValue = [NSString stringWithFormat:@"Receiver %1.1f", [linphoneApi linphoneCallStatsGetReceiverInterarrivalAudioJitter:audio_stats call:call]];
             
-            self.audioPacketLossLbl_Sender.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetSenderAudioLossRate:audio_stats]];
-            self.videoPacketLossLbl_Sender.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetSenderVideoLossRate:video_stats]];
-            self.audioPacketLossLbl_Receiver.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetReceiverAudioLossRate:audio_stats]];
-            self.videoPacketLossLbl_Receiver.stringValue = [NSString stringWithFormat:@"%1.1f", [linphoneApi linphoneCallStatsGetReceiverVideoLossRate:video_stats]];
+            self.audioPacketLossLbl_Sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderAudioLossRate:audio_stats]];
+            self.videoPacketLossLbl_Sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderVideoLossRate:video_stats]];
+            self.audioPacketLossLbl_Receiver.stringValue = [NSString stringWithFormat:@"Receiver %1.1f", [linphoneApi linphoneCallStatsGetReceiverAudioLossRate:audio_stats]];
+            self.videoPacketLossLbl_Receiver.stringValue = [NSString stringWithFormat:@"Receiver %1.1f", [linphoneApi linphoneCallStatsGetReceiverVideoLossRate:video_stats]];
             
             self.videoPacketLateLbl_Value.stringValue = [NSString stringWithFormat:@"%qu", [linphoneApi linphoneCallStatsGetLateVideoPacketsCumulativeNumber:video_stats call:call]];
             self.audioPacketLateLbl_value.stringValue = [NSString stringWithFormat:@"%qu", [linphoneApi linphoneCallStatsGetLateAudioPacketsCumulativeNumber:video_stats call:call]];

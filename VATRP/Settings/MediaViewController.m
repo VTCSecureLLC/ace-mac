@@ -152,6 +152,7 @@ char **soundlist;
    // MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
 
     //set bandwidth to match change in video size.
+    //   we do not want to force bandwith to a particular size unless the user has the value set to lower than we want.
     // upload_bandwidth
     linphone_core_set_upload_bandwidth([LinphoneManager getLc], Bandwidth);
     

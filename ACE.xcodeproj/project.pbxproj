@@ -399,6 +399,7 @@
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A49CF7EE1C6CD04400493FC3 /* legal_release.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A49CF7ED1C6CD04400493FC3 /* legal_release.rtf */; };
+		A49DEE8E1C6EC2610090BDF9 /* LinphoneAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */; };
 		A4A6020B1C617C1C00812230 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A602091C617C1C00812230 /* SettingsHandler.m */; };
 		A4A6020D1C617CAE00812230 /* SettingsConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A6020C1C617CAE00812230 /* SettingsConstants.m */; };
 		CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6EDC8A1C56D948003CB599 /* logo_about_frg.png */; };
@@ -881,6 +882,8 @@
 		73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.0.dylib"; sourceTree = "<group>"; };
 		73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmswebrtc.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins/libmswebrtc.dylib"; sourceTree = "<group>"; };
 		A49CF7ED1C6CD04400493FC3 /* legal_release.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = legal_release.rtf; sourceTree = "<group>"; };
+		A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinphoneAPI.m; sourceTree = "<group>"; };
+		A49DEE8F1C6EC2760090BDF9 /* LinphoneAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinphoneAPI.h; sourceTree = "<group>"; };
 		A4A602061C617C1C00812230 /* SettingsConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsConstants.h; path = Settings/SettingsConstants.h; sourceTree = "<group>"; };
 		A4A602081C617C1C00812230 /* SettingsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsHandler.h; path = Settings/SettingsHandler.h; sourceTree = "<group>"; };
 		A4A602091C617C1C00812230 /* SettingsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsHandler.m; path = Settings/SettingsHandler.m; sourceTree = "<group>"; };
@@ -1460,6 +1463,8 @@
 				CEE25E931C18531700D7E082 /* LinphoneLocationManager.m */,
 				4AAFDC3C1BA9D78200C35A74 /* LinphoneManager.h */,
 				4AAFDC3D1BA9D78200C35A74 /* LinphoneManager.m */,
+				A49DEE8F1C6EC2760090BDF9 /* LinphoneAPI.h */,
+				A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */,
 			);
 			path = LinphoneManager;
 			sourceTree = "<group>";
@@ -2128,6 +2133,7 @@
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
 				4A5DD1DB1BD8DADB003BE9A2 /* NSImage+Merge.m in Sources */,
 				6973592A1C17393400A24D09 /* SettingsItemModel.m in Sources */,
+				A49DEE8E1C6EC2610090BDF9 /* LinphoneAPI.m in Sources */,
 				6983EB2B1C43B265004CCD74 /* ThemeMenuViewController.m in Sources */,
 				4AB5564B1BDE765E003382B2 /* NewMessageCellView.m in Sources */,
 				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,

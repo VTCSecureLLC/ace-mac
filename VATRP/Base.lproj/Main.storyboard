@@ -2855,7 +2855,7 @@
                     <window key="window" title="Call Info" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HJD-Kg-iJv">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="774" y="70" width="520" height="400"/>
+                        <rect key="contentRect" x="774" y="70" width="520" height="600"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
                     </window>
                     <connections>
@@ -2871,11 +2871,11 @@
             <objects>
                 <viewController storyboardIdentifier="CallInfoViewController" id="xSj-qj-XbH" customClass="CallInfoViewController" sceneMemberID="viewController">
                     <view key="view" id="vrX-ER-xM2">
-                        <rect key="frame" x="0.0" y="0.0" width="520" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="520" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vij-OU-Z5d">
-                                <rect key="frame" x="18" y="363" width="180" height="20"/>
+                                <rect key="frame" x="18" y="563" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Audio Codec:" id="Q81-SN-pY9">
                                     <font key="font" metaFont="system"/>
@@ -2884,7 +2884,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="cyR-ka-G6U">
-                                <rect key="frame" x="208" y="363" width="300" height="20"/>
+                                <rect key="frame" x="208" y="563" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="oGY-Cn-PBn">
                                     <font key="font" metaFont="system"/>
@@ -2893,7 +2893,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="zPO-TO-HXh">
-                                <rect key="frame" x="18" y="335" width="180" height="20"/>
+                                <rect key="frame" x="18" y="535" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Video Codec:" id="bxO-63-dwU">
                                     <font key="font" metaFont="system"/>
@@ -2902,7 +2902,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="srE-Fl-cCX">
-                                <rect key="frame" x="208" y="335" width="300" height="20"/>
+                                <rect key="frame" x="208" y="535" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="egA-is-2OF">
                                     <font key="font" metaFont="system"/>
@@ -2911,7 +2911,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ji9-l4-FSn">
-                                <rect key="frame" x="18" y="307" width="180" height="20"/>
+                                <rect key="frame" x="18" y="507" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="SIP Port:" id="p5p-J0-YhE">
                                     <font key="font" metaFont="system"/>
@@ -2920,7 +2920,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="FY6-gs-U02">
-                                <rect key="frame" x="208" y="307" width="300" height="20"/>
+                                <rect key="frame" x="208" y="507" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="iqY-jO-0z7">
                                     <font key="font" metaFont="system"/>
@@ -2929,7 +2929,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="93S-sy-Z1y">
-                                <rect key="frame" x="18" y="279" width="180" height="20"/>
+                                <rect key="frame" x="18" y="479" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="RTP Port*:" id="Rmq-JB-fsB">
                                     <font key="font" metaFont="system"/>
@@ -2938,7 +2938,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="g4E-gq-kxt">
-                                <rect key="frame" x="208" y="279" width="300" height="20"/>
+                                <rect key="frame" x="208" y="479" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="0rC-7d-ofg">
                                     <font key="font" metaFont="system"/>
@@ -2947,7 +2947,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="sUb-lG-QbZ">
-                                <rect key="frame" x="18" y="248" width="180" height="20"/>
+                                <rect key="frame" x="18" y="448" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sending Video Resolution:" id="6Jl-Of-NLR">
                                     <font key="font" metaFont="system"/>
@@ -2956,7 +2956,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="F9h-MC-8P5">
-                                <rect key="frame" x="18" y="220" width="180" height="20"/>
+                                <rect key="frame" x="18" y="420" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Receiving Video Resolution:" id="4b7-X8-WoA">
                                     <font key="font" metaFont="system"/>
@@ -2965,7 +2965,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="5Ou-wN-W65">
-                                <rect key="frame" x="208" y="220" width="300" height="20"/>
+                                <rect key="frame" x="208" y="420" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="uMg-hg-Nre">
                                     <font key="font" metaFont="system"/>
@@ -2974,7 +2974,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0nV-pZ-k8T">
-                                <rect key="frame" x="208" y="248" width="300" height="20"/>
+                                <rect key="frame" x="208" y="448" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="C6s-ZX-u6P">
                                     <font key="font" metaFont="system"/>
@@ -2983,7 +2983,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EEM-Sy-Wxe">
-                                <rect key="frame" x="18" y="192" width="180" height="20"/>
+                                <rect key="frame" x="18" y="392" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sending FPS:" id="HqJ-PS-9h4">
                                     <font key="font" metaFont="system"/>
@@ -2992,7 +2992,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="bqh-Mm-nfp">
-                                <rect key="frame" x="18" y="164" width="180" height="20"/>
+                                <rect key="frame" x="18" y="364" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Receiving FPS:" id="Dpa-ep-M32">
                                     <font key="font" metaFont="system"/>
@@ -3001,7 +3001,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DIJ-dW-rBC">
-                                <rect key="frame" x="208" y="164" width="300" height="20"/>
+                                <rect key="frame" x="208" y="364" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="iLL-0f-Mbf">
                                     <font key="font" metaFont="system"/>
@@ -3010,7 +3010,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Buu-KE-vjN">
-                                <rect key="frame" x="208" y="192" width="300" height="20"/>
+                                <rect key="frame" x="208" y="392" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="HrP-BO-RnI">
                                     <font key="font" metaFont="system"/>
@@ -3019,7 +3019,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Rqw-qB-Clv">
-                                <rect key="frame" x="18" y="136" width="180" height="20"/>
+                                <rect key="frame" x="18" y="336" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Upload Bandwidth:" id="W2k-9B-Nqo">
                                     <font key="font" metaFont="system"/>
@@ -3028,7 +3028,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="tjR-LF-CHc">
-                                <rect key="frame" x="208" y="136" width="100" height="20"/>
+                                <rect key="frame" x="208" y="336" width="100" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="h8z-gc-ekv">
                                     <font key="font" metaFont="system"/>
@@ -3037,7 +3037,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="jd2-wW-u2s">
-                                <rect key="frame" x="308" y="136" width="100" height="20"/>
+                                <rect key="frame" x="308" y="336" width="100" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="cDH-DI-lwa">
                                     <font key="font" metaFont="system"/>
@@ -3046,7 +3046,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="sty-SR-Fiw">
-                                <rect key="frame" x="408" y="136" width="100" height="20"/>
+                                <rect key="frame" x="408" y="336" width="100" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="3IU-jH-RM2">
                                     <font key="font" metaFont="system"/>
@@ -3055,7 +3055,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="drH-gj-QFZ">
-                                <rect key="frame" x="208" y="108" width="100" height="20"/>
+                                <rect key="frame" x="208" y="308" width="100" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="K4e-lb-RFb">
                                     <font key="font" metaFont="system"/>
@@ -3064,7 +3064,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="O8H-hc-zZk">
-                                <rect key="frame" x="308" y="108" width="100" height="20"/>
+                                <rect key="frame" x="308" y="308" width="100" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="c3d-y2-4lf">
                                     <font key="font" metaFont="system"/>
@@ -3073,7 +3073,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ZiE-wf-GJK">
-                                <rect key="frame" x="408" y="108" width="100" height="20"/>
+                                <rect key="frame" x="408" y="308" width="100" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="pn7-OF-Mhk">
                                     <font key="font" metaFont="system"/>
@@ -3082,7 +3082,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="fuw-sD-vau">
-                                <rect key="frame" x="18" y="108" width="180" height="20"/>
+                                <rect key="frame" x="18" y="308" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Download Bandwidth:" id="I4P-KA-yLO">
                                     <font key="font" metaFont="system"/>
@@ -3091,7 +3091,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="1Ro-8Z-LRz">
-                                <rect key="frame" x="18" y="80" width="180" height="20"/>
+                                <rect key="frame" x="18" y="280" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="ICE setup:" id="CuD-gY-ych">
                                     <font key="font" metaFont="system"/>
@@ -3100,7 +3100,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="cBN-DA-vsY">
-                                <rect key="frame" x="208" y="80" width="300" height="20"/>
+                                <rect key="frame" x="208" y="280" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="W2g-Aa-qjr">
                                     <font key="font" metaFont="system"/>
@@ -3109,7 +3109,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Or3-J8-lJA">
-                                <rect key="frame" x="18" y="52" width="180" height="20"/>
+                                <rect key="frame" x="18" y="252" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Media Encryption:" id="gDl-gN-Llq">
                                     <font key="font" metaFont="system"/>
@@ -3118,7 +3118,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Qk7-5Z-j1A">
-                                <rect key="frame" x="208" y="52" width="300" height="20"/>
+                                <rect key="frame" x="208" y="252" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="None" id="ZMv-Xs-n0x">
                                     <font key="font" metaFont="system"/>
@@ -3127,7 +3127,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Pdc-TM-pTD">
-                                <rect key="frame" x="18" y="24" width="180" height="20"/>
+                                <rect key="frame" x="18" y="224" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="AVPF:" id="ctv-5L-sTk">
                                     <font key="font" metaFont="system"/>
@@ -3136,9 +3136,153 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="HTZ-yF-rom">
-                                <rect key="frame" x="208" y="24" width="300" height="20"/>
+                                <rect key="frame" x="208" y="224" width="300" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="OFF" id="0a5-mJ-sQ3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="GIK-Z0-dFE">
+                                <rect key="frame" x="18" y="196" width="180" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Video Packet Loss:" id="eIB-H0-O6W">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="KLe-Oe-1PX">
+                                <rect key="frame" x="208" y="199" width="100" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sender:" id="rd0-Hw-czj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="g4D-do-6ca">
+                                <rect key="frame" x="320" y="198" width="129" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Receiver:" id="kuf-SY-iZC">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="M45-FM-yU7">
+                                <rect key="frame" x="208" y="171" width="100" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sender:" id="elY-ik-DxT">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="mFk-mI-N3d">
+                                <rect key="frame" x="320" y="170" width="129" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Receiver:" id="evs-B5-qZi">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="k1f-TF-tIl">
+                                <rect key="frame" x="24" y="171" width="174" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Audio Packet Loss:" id="BVo-5c-uZY">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="NFW-gf-Q8p">
+                                <rect key="frame" x="208" y="145" width="71" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" id="fYj-7l-3Xg">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="dZG-7W-oOz">
+                                <rect key="frame" x="24" y="145" width="174" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Video Packet Late (C):" id="u9M-0E-nJi">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="NMN-qv-XqJ">
+                                <rect key="frame" x="208" y="120" width="71" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" id="Na3-x8-wyA">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="npi-6y-hZJ">
+                                <rect key="frame" x="24" y="120" width="174" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Audio Packet Late (C):" id="XyW-wh-Y2I">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="WNR-6h-Y1c">
+                                <rect key="frame" x="208" y="95" width="100" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sender:" id="4KO-rf-eHZ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="uOT-c9-hte">
+                                <rect key="frame" x="320" y="95" width="129" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Receiver:" id="QdO-Bk-axO">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="orz-RM-jaw">
+                                <rect key="frame" x="24" y="95" width="174" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Video Interarrival Jitter:" id="NgO-oa-ny2">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vOD-Xx-u64">
+                                <rect key="frame" x="208" y="70" width="100" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sender:" id="h96-Gc-9Mg">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="xYk-O5-a7e">
+                                <rect key="frame" x="320" y="70" width="129" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Receiver:" id="2Cp-rP-63d">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="51G-96-WMw">
+                                <rect key="frame" x="24" y="70" width="174" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Audio Interarrival Jitter:" id="ICk-Hg-OYQ">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3147,6 +3291,14 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="audioInterarrivalJitterLbl" destination="51G-96-WMw" id="5hN-Es-TrQ"/>
+                        <outlet property="audioInterarrivalJitterLbl_receiver" destination="xYk-O5-a7e" id="Uex-KF-AaR"/>
+                        <outlet property="audioInterarrivalJitterLbl_sender" destination="vOD-Xx-u64" id="oHw-oI-liB"/>
+                        <outlet property="audioPacketLateLbl" destination="npi-6y-hZJ" id="Ug1-Me-8cM"/>
+                        <outlet property="audioPacketLateLbl_value" destination="NMN-qv-XqJ" id="3U9-SM-n2Q"/>
+                        <outlet property="audioPacketLossLbl" destination="k1f-TF-tIl" id="FMz-AD-0tk"/>
+                        <outlet property="audioPacketLossLbl_Receiver" destination="mFk-mI-N3d" id="yQZ-JQ-zjC"/>
+                        <outlet property="audioPacketLossLbl_Sender" destination="M45-FM-yU7" id="XVD-Lw-ud8"/>
                         <outlet property="labelAVPF" destination="HTZ-yF-rom" id="KyZ-4y-2Cd"/>
                         <outlet property="labelAudioCodec" destination="cyR-ka-G6U" id="zbg-EZ-jXO"/>
                         <outlet property="labelAudioDownloadBandwidth" destination="O8H-hc-zZk" id="JF3-fz-gwm"/>
@@ -3165,6 +3317,14 @@
                         <outlet property="labelVideoDownloadBandwidth" destination="ZiE-wf-GJK" id="G7w-g3-QUa"/>
                         <outlet property="labelVideoUploadBandwidth" destination="sty-SR-Fiw" id="COC-L6-aq6"/>
                         <outlet property="textFieldMessage" destination="dtw-vN-xFd" id="Jyt-G3-1d4"/>
+                        <outlet property="videoInterarrivalJitterLbl" destination="orz-RM-jaw" id="LcL-XT-WRO"/>
+                        <outlet property="videoInterarrivalJitterLbl_receiver" destination="uOT-c9-hte" id="rYs-F1-jrs"/>
+                        <outlet property="videoInterarrivalJitterLbl_sender" destination="WNR-6h-Y1c" id="nPX-3g-dmf"/>
+                        <outlet property="videoPacketLateLbl" destination="dZG-7W-oOz" id="7IO-Nc-9eV"/>
+                        <outlet property="videoPacketLateLbl_Value" destination="NFW-gf-Q8p" id="p95-Ue-wIh"/>
+                        <outlet property="videoPacketLossLbl" destination="GIK-Z0-dFE" id="2VC-9d-iFB"/>
+                        <outlet property="videoPacketLossLbl_Receiver" destination="g4D-do-6ca" id="OVg-Tw-FKg"/>
+                        <outlet property="videoPacketLossLbl_Sender" destination="KLe-Oe-1PX" id="QPO-dm-STU"/>
                         <outlet property="viewSeparateLine" destination="qGY-fJ-AdF" id="hW0-gd-g61"/>
                     </connections>
                 </viewController>

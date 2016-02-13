@@ -186,6 +186,7 @@
 		69EE9C0D1C64B6E20010EBB3 /* RTPquality_medium_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EE9C051C64B6E20010EBB3 /* RTPquality_medium_top.png */; };
 		7301AEDF1C6D2B6800B3648D /* libmediastreamer_voip.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEDE1C6D2B6100B3648D /* libmediastreamer_voip.7.dylib */; };
 		7301AEE01C6D2B7100B3648D /* libmediastreamer_base.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */; };
+		7301AEFA1C6FE5CA00B3648D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEF91C6FE5CA00B3648D /* VideoToolbox.framework */; };
 		73048F651C4598E500375345 /* libopenh264.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73048F661C45B40F00375345 /* libopenh264.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; };
 		73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F671C46BE6F00375345 /* libbelcard.1.dylib */; };
@@ -798,6 +799,7 @@
 		69EE9C051C64B6E20010EBB3 /* RTPquality_medium_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RTPquality_medium_top.png; sourceTree = "<group>"; };
 		7301AEDD1C6D2B1C00B3648D /* libortp.11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.11.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libortp.11.dylib"; sourceTree = "<group>"; };
 		7301AEDE1C6D2B6100B3648D /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.7.dylib"; sourceTree = "<group>"; };
+		7301AEF91C6FE5CA00B3648D /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		73048F641C4598E500375345 /* libopenh264.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopenh264.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libopenh264.1.dylib"; sourceTree = "<group>"; };
 		73048F671C46BE6F00375345 /* libbelcard.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelcard.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelcard.1.dylib"; sourceTree = "<group>"; };
 		73048F691C46BE7600375345 /* libbelr.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelr.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelr.1.dylib"; sourceTree = "<group>"; };
@@ -929,6 +931,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7301AEFA1C6FE5CA00B3648D /* VideoToolbox.framework in Frameworks */,
 				73048F6A1C46BE7600375345 /* libbelr.1.dylib in Frameworks */,
 				73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */,
 				CE5C3F821C4D15B4005E24A5 /* libresolv.tbd in Frameworks */,
@@ -1092,6 +1095,7 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7301AEF91C6FE5CA00B3648D /* VideoToolbox.framework */,
 				73048F691C46BE7600375345 /* libbelr.1.dylib */,
 				73048F671C46BE6F00375345 /* libbelcard.1.dylib */,
 				CE5C3F811C4D15B4005E24A5 /* libresolv.tbd */,

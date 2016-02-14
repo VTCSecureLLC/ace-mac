@@ -27,6 +27,7 @@ NSString *const SELECTED_SPEAKER = @"SETTINGS_SELECTED_SPEAKER";
 // Video Settings
 NSString *const ENABLE_VIDEO = @"enable_video_preference";
 NSString *const PREFERRED_FPS = @"video_preferred_fps_preference";
+NSString *const PREFERRED_VIDEO_RESOLUTION = @"video_preferred_size_preference";
 
 // Preferences
 NSString *const MUTE_CAMERA = @"mute_camera";

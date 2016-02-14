@@ -137,9 +137,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_videomail_uri"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"video_preferred_size_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_VIDEO_RESOLUTION] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"cif (352x288)" forKey:@"video_preferred_size_preference"];
+        [self setUserSettingString:PREFERRED_VIDEO_RESOLUTION withValue:@"cif (352x288)"];
     }
 
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
@@ -160,6 +160,10 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
         [self setUserSettingString:RTCP_FB_MODE withValue:@"Implicit"];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
+    {
+        [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true] ;
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -248,9 +252,10 @@
         linphone_core_enable_self_view(lc, show);
     }
     
-    //    if ([self.settingsHandlerDelegate respondsToSelector:@selector(showSelfView:)]) {
-    //        [self.settingsHandlerDelegate showSelfView:show];
-    //    }
+        if ([self.settingsSelfViewDelegate respondsToSelector:@selector(showSelfViewFromSettings:)])
+        {
+            [self.settingsSelfViewDelegate showSelfViewFromSettings:show];
+        }
 }
 
 -(void)setEnableEchoCancellation:(bool)enable

@@ -95,31 +95,31 @@ struct codec_name_pref_table codec_pref_table[]={
 }
 
 -(void) initializeSDP: (LinphoneCore*) lc{
-    if(linphone_core_video_enabled(lc)){
-        PayloadType *pt=linphone_core_find_payload_type(lc,"H264", 90000, -1);
-        
-//         ***** KEEP FOR FUTURE AVPF FIXES *******
-        
-//        if(pt && linphone_core_get_avpf_mode(lc) == LinphoneAVPFEnabled){
-//            PayloadTypeAvpfParams params;
-//            params.features = PAYLOAD_TYPE_AVPF_FIR | PAYLOAD_TYPE_AVPF_PLI  | PAYLOAD_TYPE_AVPF_RPSI | PAYLOAD_TYPE_AVPF_SLI;
-//            params.rpsi_compatibility = TRUE;
-//            params.trr_interval = 3;
-//            payload_type_set_avpf_params(pt, params);
-//            
+//    if(linphone_core_video_enabled(lc)){
+//        PayloadType *pt=linphone_core_find_payload_type(lc,"H264", 90000, -1);
+//        
+////         ***** KEEP FOR FUTURE AVPF FIXES *******
+//        
+////        if(pt && linphone_core_get_avpf_mode(lc) == LinphoneAVPFEnabled){
+////            PayloadTypeAvpfParams params;
+////            params.features = PAYLOAD_TYPE_AVPF_FIR | PAYLOAD_TYPE_AVPF_PLI  | PAYLOAD_TYPE_AVPF_RPSI | PAYLOAD_TYPE_AVPF_SLI;
+////            params.rpsi_compatibility = TRUE;
+////            params.trr_interval = 3;
+////            payload_type_set_avpf_params(pt, params);
+////            
+////            payload_type_set_recv_fmtp(pt, "CIF=1;QCIF=1");
+////            payload_type_set_send_fmtp(pt, "CIF=1;QCIF=1");
+////            
+////            linphone_core_enable_payload_type([LinphoneManager getLc],pt,TRUE);
+////        }
+//        
+//        pt=linphone_core_find_payload_type(lc,"H263", 90000, -1);
+//        if (pt) {
 //            payload_type_set_recv_fmtp(pt, "CIF=1;QCIF=1");
 //            payload_type_set_send_fmtp(pt, "CIF=1;QCIF=1");
-//            
 //            linphone_core_enable_payload_type([LinphoneManager getLc],pt,TRUE);
 //        }
-        
-        pt=linphone_core_find_payload_type(lc,"H263", 90000, -1);
-        if (pt) {
-            payload_type_set_recv_fmtp(pt, "CIF=1;QCIF=1");
-            payload_type_set_send_fmtp(pt, "CIF=1;QCIF=1");
-            linphone_core_enable_payload_type([LinphoneManager getLc],pt,TRUE);
-        }
-    }
+//    }
 }
 
 @end

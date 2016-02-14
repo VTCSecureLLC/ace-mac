@@ -69,7 +69,7 @@ static NSFont *CELL_FONT = nil;
         BOOL outgoing = linphone_chat_message_is_outgoing(chat);
 
         NSString *str_outgoing = [NSString stringWithFormat:@"%@", outgoing ? @"Outgoing" : @"Incoming"];
-        NSLog(@"setChatMessage message:%@",str_outgoing);
+//        NSLog(@"setChatMessage message:%@",str_outgoing);
        
         NSImage *image1 = [NSImage imageNamed:[NSString stringWithFormat:@"message%@BubbleTop.png", str_outgoing]];
         NSImage *image2 = [NSImage imageNamed:[NSString stringWithFormat:@"message%@BubbleMiddle.png", str_outgoing]];

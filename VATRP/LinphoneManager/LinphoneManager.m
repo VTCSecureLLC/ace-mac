@@ -1765,7 +1765,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
         bool low_bandwidth = self.network == network_2g;
         if(low_bandwidth) {
-            //			LOGI(@"Low bandwidth mode");
+            			NSLog(@"Low bandwidth mode");
         }
         linphone_call_params_enable_low_bandwidth(calleeParams, low_bandwidth);
     }

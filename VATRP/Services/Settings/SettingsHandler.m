@@ -105,25 +105,25 @@
     }
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:2000 forKey:@"upload_bandwidth" ];
-        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 2000);
+        [[NSUserDefaults standardUserDefaults] setInteger:1000 forKey:@"upload_bandwidth" ];
+        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 1000);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:2000 forKey:@"download_bandwidth" ];
-                linphone_core_set_download_bandwidth([LinphoneManager getLc], 2000);
+        [[NSUserDefaults standardUserDefaults] setInteger:1000 forKey:@"download_bandwidth" ];
+                linphone_core_set_download_bandwidth([LinphoneManager getLc], 1000);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"false" forKey:@"stun_preference"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"stun_preference"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_url_preference"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"acetest-regstrar.vatrp.net" forKey:@"stun_url_preference"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"bc1.vatrp.net" forKey:@"stun_url_preference"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"ice_preference"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"false" forKey:@"ice_preference"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"ice_preference"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"logging"] == nil)
     {
@@ -159,7 +159,7 @@
         [self setUserSettingFloat:VIDEO_SHOW_SELF_VIEW withValue:30.0f];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
-        [self setUserSettingString:RTCP_FB_MODE withValue:@"Off"];
+        [self setUserSettingString:RTCP_FB_MODE withValue:@"Implicit"];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

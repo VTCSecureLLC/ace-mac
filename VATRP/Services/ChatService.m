@@ -114,12 +114,9 @@
 }
 
 - (BOOL) sendEnter:(LinphoneChatMessage*)messagePtr ChatRoom:(LinphoneChatRoom*)chatroom_ptr {
-    
-    linphone_chat_message_ref((LinphoneChatMessage*)messagePtr);
-    linphone_chat_message_set_user_data((LinphoneChatMessage*)messagePtr, (void*)0x2028);
-    linphone_chat_room_send_chat_message((LinphoneChatRoom*)chatroom_ptr, (LinphoneChatMessage*)messagePtr);
-    
-    
+//    linphone_chat_message_ref((LinphoneChatMessage*)messagePtr);
+//    linphone_chat_message_set_user_data((LinphoneChatMessage*)messagePtr, (void*)0x2028);
+//    linphone_chat_room_send_chat_message((LinphoneChatRoom*)chatroom_ptr, (LinphoneChatMessage*)messagePtr);
     
     [self sendChar:(uint32_t)0x2028];
     

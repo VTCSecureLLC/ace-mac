@@ -11,7 +11,7 @@
 #import "ViewManager.h"
 #import "AppDelegate.h"
 #import "SettingsService.h"
-
+#import "LinphoneAPI.h"
 
 @interface CallService () {
     CallWindowController *callWindowController;
@@ -88,12 +88,12 @@
 
 // ToDo? VATRP-2451: If the above is not sufficient to prevent the second call on a double click, then we can prevent a second call
 // by doing this and not worrying about comparing the adress above.
-//    if (count == 0)
-//    {
+    if (count == 0)
+    {
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
         linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
         [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
-//    }
+    }
 }
 
 - (void) callUsingLinphoneManager:(NSString*)number {

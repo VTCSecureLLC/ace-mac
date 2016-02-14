@@ -137,9 +137,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_videomail_uri"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"video_preferred_size_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_VIDEO_RESOLUTION] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"cif (352x288)" forKey:@"video_preferred_size_preference"];
+        [self setUserSettingString:PREFERRED_VIDEO_RESOLUTION withValue:@"cif (352x288)"];
     }
 
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)

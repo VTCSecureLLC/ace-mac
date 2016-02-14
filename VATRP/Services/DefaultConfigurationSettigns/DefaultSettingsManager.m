@@ -8,6 +8,7 @@
 
 #import "DefaultSettingsManager.h"
 #import "SRVResolver.h"
+#import "SettingsConstants.h"
 
 @interface DefaultSettingsManager () <SRVResolverDelegate, NSURLConnectionDelegate>
 //{
@@ -138,7 +139,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_videomail_uri"] != [NSNull null])?[dict objectForKey:@"sip_videomail_uri"]:@"" forKey:@"sip_videomail_uri"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"video_resolution_maximum"] != [NSNull null])? [dict objectForKey:@"video_resolution_maximum"]:@"" forKey:@"video_preferred_size_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"video_resolution_maximum"] != [NSNull null])? [dict objectForKey:@"video_resolution_maximum"]:@"" forKey:PREFERRED_VIDEO_RESOLUTION];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -288,7 +289,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSString*)videoResolutionMaximum {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"video_preferred_size_preference"];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:PREFERRED_VIDEO_RESOLUTION];
 }
 
 #pragma mark - helper functions

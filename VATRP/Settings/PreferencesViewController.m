@@ -14,6 +14,7 @@
 #import "CodecModel.h"
 #import "DefaultSettingsManager.h"
 #import "SettingsHandler.h"
+#import "SettingsConstants.h"
 
 @interface PreferencesViewController () <NSTextFieldDelegate, NSComboBoxDelegate, InCallPreferencesHandlerDelegate> {
     NSMutableArray *audioCodecList;
@@ -271,7 +272,7 @@
     comboBoxPreferredSize = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)]; // YES
     [comboBoxPreferredSize addItemsWithObjectValues:@[@"1080p (1920x1080)", @"720p (1280x720)", @"svga (800x600)", @"4cif (704x576)", @"vga (640x480)", @"cif (352x288)", @"qcif (176x144)"]];
     
-    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_preferred_size_preference"];
+    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:PREFERRED_VIDEO_RESOLUTION];
     
     if (video_resolution) {
         comboBoxPreferredSize.stringValue = video_resolution;
@@ -640,9 +641,10 @@
 }
 
 - (void) save {
-    if (!isChanged) {
-        return;
-    }
+    // this dialog is not responding to at least the combo box changes. let's at least make it save by default.
+//    if (!isChanged) {
+//        return;
+//    }
     
     [self saveAudioCodecs];
     [self saveVideoCodecs];
@@ -680,7 +682,7 @@
     }
     
     linphone_core_set_preferred_video_size(lc, vsize);
-    [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:@"video_preferred_size_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:PREFERRED_VIDEO_RESOLUTION];
 
     [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:@"stun_url_preference"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -698,6 +700,9 @@
         linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionNone);
 
     linphone_core_enable_ipv6(lc, checkboxIPv6.state);
+    
+    // force the save to sync.
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) saveAudioCodecs {

@@ -226,6 +226,8 @@
             break;
         case LinphoneCallStreamsRunning:
         {
+            SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
+            [self showSelfViewFromSettings:[settingsHandlerInstance isShowSelfViewEnabled]];
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }

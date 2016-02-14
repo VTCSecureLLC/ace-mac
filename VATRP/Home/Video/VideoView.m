@@ -24,7 +24,7 @@
 #import "ContactPictureManager.h"
 #import "Utils.h"
 #import "BackgroundedView.h"
-
+#import "SettingsHandler.h"
 
 @interface VideoView () <CallControllersViewDelegate> {
     NSTimer *timerCallDuration;
@@ -55,6 +55,7 @@
 @property (weak) IBOutlet NSButton *buttonFullScreen;
 
 @property (weak) IBOutlet NSImageView *callerImageView;
+@property (strong,nonatomic)SettingsHandler* settingsHandler;
 
 - (void) inCallTick:(NSTimer*)timer;
 
@@ -72,6 +73,9 @@
     
     timerCallDuration = nil;
 
+    self.settingsHandler = [SettingsHandler settingsHandler];
+    self.settingsHandler.settingsSelfViewDelegate = self;
+    
     self.wantsLayer = YES;
     self.remoteVideoView.wantsLayer = YES;
     self.labelDisplayName.wantsLayer = YES;
@@ -649,6 +653,14 @@
     if ([videoMode isEqualToString:@"isCameraMuted"] || [videoMode isEqualToString:@"camera_mute_on"]) {
         [blackCurtain removeFromSuperview];
     }
+}
+
+#pragma mark Settings delegates
+-(void)showSelfViewFromSettings:(bool)show
+{
+    linphone_core_enable_self_view([LinphoneManager getLc], show);
+    self.localVideo.hidden = !show;
+    
 }
 
 @end

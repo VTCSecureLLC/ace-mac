@@ -161,6 +161,10 @@
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
         [self setUserSettingString:RTCP_FB_MODE withValue:@"Implicit"];
     }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
+    {
+        [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true] ;
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -248,9 +252,10 @@
         linphone_core_enable_self_view(lc, show);
     }
     
-    //    if ([self.settingsHandlerDelegate respondsToSelector:@selector(showSelfView:)]) {
-    //        [self.settingsHandlerDelegate showSelfView:show];
-    //    }
+        if ([self.settingsSelfViewDelegate respondsToSelector:@selector(showSelfViewFromSettings:)])
+        {
+            [self.settingsSelfViewDelegate showSelfViewFromSettings:show];
+        }
 }
 
 -(void)setEnableEchoCancellation:(bool)enable

@@ -1,4 +1,8 @@
 #!/bin/bash
+set -ex
+
+which brew || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
 if [ -n "$TRAVIS" ]; then
   export HOMEBREW_PREFIX=$HOME/.homebrew
   if [[ -d $HOMEBREW_PREFIX ]]; then echo "HOMEBREW_PREFIX=$HOMEBREW_PREFIX"; else rsync -aq /usr/local/ $HOMEBREW_PREFIX; fi

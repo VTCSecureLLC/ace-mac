@@ -105,15 +105,23 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"high-fps" forKey:@"bwLimit"];
     }
-    if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
+    if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:UPLOAD_BANDWIDTH] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:1500 forKey:@"upload_bandwidth" ];
-        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 1500);
+        [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:1500];
+        LinphoneCore* linphoneCore = [LinphoneManager getLc];
+        if (linphoneCore != nil)
+        {
+            linphone_core_set_upload_bandwidth(linphoneCore, 1500);
+        }
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:DOWNLOAD_BANDWIDTH] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:1500 forKey:@"download_bandwidth" ];
-                linphone_core_set_download_bandwidth([LinphoneManager getLc], 1500);
+        [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:1500];
+        LinphoneCore* linphoneCore = [LinphoneManager getLc];
+        if (linphoneCore != nil)
+        {
+            linphone_core_set_download_bandwidth(linphoneCore, 1500);
+        }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {
@@ -356,11 +364,42 @@
     return [self getUserSettingString:RTCP_FB_MODE];
 }
 
+-(int)getUploadBandwidth
+{
+    return (int)[[NSUserDefaults standardUserDefaults]integerForKey:UPLOAD_BANDWIDTH];
+}
+-(void)setUploadBandwidth:(int)bandwidth
+{
+    [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:bandwidth];
+    int test = [[NSUserDefaults standardUserDefaults] integerForKey:UPLOAD_BANDWIDTH];
+    LinphoneCore* linphoneCore = [LinphoneManager getLc];
+    if (linphoneCore != nil)
+    {
+        linphone_core_set_upload_bandwidth([LinphoneManager getLc], bandwidth);
+    }
+}
+
+-(int)getDownloadBandwidth
+{
+    return (int)[[NSUserDefaults standardUserDefaults]integerForKey:DOWNLOAD_BANDWIDTH];
+}
+-(void)setDownloadBandwidth:(int)bandwidth
+{
+    [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:bandwidth];
+    LinphoneCore* linphoneCore = [LinphoneManager getLc];
+    if (linphoneCore != nil)
+    {
+        linphone_core_set_download_bandwidth([LinphoneManager getLc], bandwidth);
+    }
+}
+
+
 //=================================================================================================================
 // Generic Settings Accessors
 #pragma mark - this will give the singular place to changeover from app level settings to user level settings.
 // ToDo: these settings are currently all stored at the app level. I am initially getting everything hooked up
 //   to the app level settings, then here we can manage changing over to user level settings.
+// ToDO: add getters as well.
 -(bool)getUserSettingBool:(NSString*)settingName
 {
     return [[NSUserDefaults standardUserDefaults]boolForKey:settingName];

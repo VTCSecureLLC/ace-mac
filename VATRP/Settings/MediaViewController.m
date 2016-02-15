@@ -41,6 +41,26 @@ char **soundlist;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    [self initializeValues];
+}
+
+-(void)viewWillAppear
+{
+    [super viewWillAppear];
+    // ensure that the view is refreshed on the second launch.
+    [self initializeValues];
+    // TODO ASAP: make sure that the camera is displayed properly in viewWillAppear and released in viewWillDisappear!!!
+    [self displaySelectedVideoDevice];
+
+    
+}
+-(void)viewWillDisappear
+{
+    
+}
+
+-(void)initializeValues
+{
     NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:kPREFERED_VIDEO_RESOLUTION];
     
     if (video_resolution) {
@@ -68,7 +88,7 @@ char **soundlist;
     }
     
     LinphoneMediaEncryption menc = linphone_core_get_media_encryption([LinphoneManager getLc]);
-
+    
     switch (menc) {
         case LinphoneMediaEncryptionSRTP:
             self.comboBoxMediaEncription.stringValue = @"Encrypted (SRTP)";
@@ -91,14 +111,14 @@ char **soundlist;
     
     const char * cam = linphone_core_get_video_device([LinphoneManager getLc]);
     [self.comboBoxCaptureDevices selectItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
-
+    
     soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
     for (char* device = *soundlist;*soundlist!=NULL;device=*++soundlist) {
         if(linphone_core_sound_device_can_capture([LinphoneManager getLc], device)){
             [self.comboBoxMicrophone addItemWithObjectValue:[NSString stringWithCString:device encoding:NSUTF8StringEncoding]];
         }
         else if(linphone_core_sound_device_can_playback([LinphoneManager getLc], device)){
-                [self.comboBoxSpeaker addItemWithObjectValue:[NSString stringWithCString:device encoding:NSUTF8StringEncoding]];
+            [self.comboBoxSpeaker addItemWithObjectValue:[NSString stringWithCString:device encoding:NSUTF8StringEncoding]];
         }
     }
     
@@ -111,7 +131,7 @@ char **soundlist;
     [self initializeRecorder];
     [self initializeLevelTimer];
     
-    [self displaySelectedVideoDevice];
+
 }
 
 - (IBAction)onComboboxPreferedVideoResolution:(id)sender {
@@ -119,18 +139,24 @@ char **soundlist;
 }
 
 - (void) save {
+    // just force this to recognize the change.
     if (!isChanged) {
         return;
     }
     
     MSVideoSize vsize;
     //Initializing local bandwidth variable to max 1152 found from android this should be pulled from autoconfig
+    // Note: these settings d not match the ones provided for Windows. I am going to make them match, and also do two things:
+    //   1. make sure that any auto adjustment is shown in the UI and saved to the settings.
+    //   2. make sure that the bandwidth is not changed if the user has set a higher resolution than the
+    //      minimum that we want. If the user intentionally sets it lower, that is on themm but we should not force this if they
+    //      have it set higher.
     int Bandwidth=3000;
     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"1080p (1920x1080)"]) {
         Bandwidth=3000;
         MS_VIDEO_SIZE_ASSIGN(vsize, 1080P);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"720p (1280x720)"]) {
-        Bandwidth=2500;
+        Bandwidth=2000;
         MS_VIDEO_SIZE_ASSIGN(vsize, 720P);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"svga (800x600)"]) {
         Bandwidth=2000;
@@ -139,13 +165,13 @@ char **soundlist;
        Bandwidth=1500;
         MS_VIDEO_SIZE_ASSIGN(vsize, 4CIF);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"vga (640x480)"]) {
-        Bandwidth=1000;
+        Bandwidth=1500;
         MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"cif (352x288)"]) {
-        Bandwidth=500;
+        Bandwidth=660;
         MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
     } else     if ([self.comboBoxVideoSize.stringValue isEqualToString:@"qcif (176x144)"]) {    
-        Bandwidth=460;
+        Bandwidth=256;
         MS_VIDEO_SIZE_ASSIGN(vsize, QCIF);
     }
     // ToDo - force this for now
@@ -154,10 +180,19 @@ char **soundlist;
     //set bandwidth to match change in video size.
     //   we do not want to force bandwith to a particular size unless the user has the value set to lower than we want.
     // upload_bandwidth
-    linphone_core_set_upload_bandwidth([LinphoneManager getLc], Bandwidth);
+    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+    if (Bandwidth > [settingsHandler getUploadBandwidth])
+    {
+        [settingsHandler setUploadBandwidth:Bandwidth]; // sets in the linphone core
+    }
     
-    // download_bandwidth
-    linphone_core_set_download_bandwidth([LinphoneManager getLc], Bandwidth);
+    //set bandwidth to match change in video size.
+    //   we do not want to force bandwith to a particular size unless the user has the value set to lower than we want.
+    // upload_bandwidth
+    if (Bandwidth > [settingsHandler getDownloadBandwidth])
+    {
+        [settingsHandler setDownloadBandwidth:Bandwidth]; // sets in the linphone core
+    }
     
     
     linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
@@ -174,7 +209,6 @@ char **soundlist;
     else
         retval = linphone_core_set_media_encryption([LinphoneManager getLc], LinphoneMediaEncryptionNone);
 
-    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
     [settingsHandler setSelectedCamera:self.comboBoxCaptureDevices.stringValue];
     [settingsHandler setSelectedMicrophone:self.comboBoxMicrophone.stringValue];
     [settingsHandler setSelectedSpeaker:self.comboBoxSpeaker.stringValue];
@@ -251,8 +285,18 @@ char **soundlist;
 
 - (void)levelTimerCallback:(NSTimer *)timer
 {
-    [self.recorder updateMeters];
-    [self.levelIndicatorMicrophone setDoubleValue:[self.recorder peakPowerForChannel:0]];
+    if ([self isViewLoaded] && (self.view.window != nil))
+    {
+        [self.recorder updateMeters];
+        [self.levelIndicatorMicrophone setDoubleValue:[self.recorder peakPowerForChannel:0]];
+    }
+    else
+    {
+        [self.timerRecordingLevelsUpdate invalidate];
+        self.timerRecordingLevelsUpdate = nil;
+        self.recorder.stop;
+        self.recorder = nil;
+    }
 }
 
 @end

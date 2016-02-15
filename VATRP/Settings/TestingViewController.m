@@ -31,17 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    // note: when we open the dialog for teh second time, this method will nto be called, so items will not be refreshed.
+    // moving initialization into a separate emthod that will e call from this as well as the viewWillAppear method.
     
-    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
-
-    if (proxyCfg) {
-        self.buttonEnableAVPF.state = linphone_proxy_config_avpf_enabled(proxyCfg);
-    }
+    // this method is a good place for items that are permanent changes to the presentation of the dialog or delegates, not for values.
     
-    self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
-    
-    self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
-    self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
     
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
@@ -55,9 +49,35 @@
     [self.buttonEnableAVPF removeFromSuperview];
     
     [self.comboBoxRTCPFeedBack setEditable:NO];
-    NSString *rtcpFbMode = [SettingsHandler.settingsHandler getRtcpFbMode];
-   [self.comboBoxRTCPFeedBack setStringValue:rtcpFbMode];
+    
+    [self initializeValues];
 }
+
+-(void)viewWillAppear
+{
+    [super viewWillAppear];
+    [self initializeValues];
+    
+}
+
+-(void)initializeValues
+{
+    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+    
+    if (proxyCfg) {
+        self.buttonEnableAVPF.state = linphone_proxy_config_avpf_enabled(proxyCfg);
+    }
+    
+    self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
+    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+    int upBand = [settingsHandler getUploadBandwidth];
+    self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
+    self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
+    NSString *rtcpFbMode = [SettingsHandler.settingsHandler getRtcpFbMode];
+    [self.comboBoxRTCPFeedBack setStringValue:rtcpFbMode];
+
+}
+
 
 - (void) save {
     if (!isChanged) {
@@ -71,8 +91,19 @@
     linphone_core_set_use_info_for_dtmf([LinphoneManager getLc], self.buttonSendDTMF.state);
     linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], self.buttonEnableAdaptiveRateControl.state);
     
-    linphone_core_set_upload_bandwidth([LinphoneManager getLc], self.textFieldMaxUpload.intValue);
-    linphone_core_set_download_bandwidth([LinphoneManager getLc], self.textFieldMaxDownload.intValue);
+    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+    int uploadBandwidth = self.textFieldMaxUpload.intValue;
+    if (uploadBandwidth > 0)
+    {
+        // sets the value int he linphone core if the core exists.
+        [settingsHandler setUploadBandwidth:uploadBandwidth];
+    }
+    int downloadBandwidth = self.textFieldMaxDownload.intValue;
+    if (downloadBandwidth > 0)
+    {
+        // sets the value int he linphone core if the core exists.
+        [settingsHandler setDownloadBandwidth:downloadBandwidth];
+    }
 }
 
 - (IBAction)onCheckBox:(id)sender {

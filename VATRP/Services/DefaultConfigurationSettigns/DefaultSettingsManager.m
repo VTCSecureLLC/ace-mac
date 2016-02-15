@@ -123,9 +123,9 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"bwLimit"] != [NSNull null])?[dict objectForKey:@"bwLimit"]:@"" forKey:@"bwLimit"];
     
-    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"upload_bandwidth"] != [NSNull null])?[[dict objectForKey:@"upload_bandwidth"] integerValue]:500 forKey:@"upload_bandwidth" ];
+    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:UPLOAD_BANDWIDTH] != [NSNull null])?[[dict objectForKey:UPLOAD_BANDWIDTH] integerValue]:1500 forKey:UPLOAD_BANDWIDTH ];
     
-    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"download_bandwidth"] != [NSNull null])?[[dict objectForKey:@"download_bandwidth"] integerValue]:500 forKey:@"download_bandwidth" ];
+    [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:DOWNLOAD_BANDWIDTH] != [NSNull null])?[[dict objectForKey:DOWNLOAD_BANDWIDTH] integerValue]:1500 forKey:DOWNLOAD_BANDWIDTH ];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"" forKey:@"stun_preference"];
     
@@ -257,11 +257,11 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (int)uploadBandwidth {
-    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"upload_bandwidth"];
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:UPLOAD_BANDWIDTH];
 }
 
 - (int)downloadBandwidth {
-    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"download_bandwidth"];
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:DOWNLOAD_BANDWIDTH];
 }
 
 - (BOOL)enableStun {

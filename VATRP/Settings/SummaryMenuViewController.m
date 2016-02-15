@@ -51,9 +51,9 @@
 }
 
 - (void) save {
-    if (!isChanged) {
-        return;
-    }
+//    if (!isChanged) {
+//        return;
+//    }
     
 }
 

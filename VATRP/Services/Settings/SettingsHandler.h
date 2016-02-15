@@ -105,6 +105,12 @@
 -(void)setRtcpFbMode:(NSString*) rtcpFbMode;
 -(NSString*)getRtcpFbMode;
 
+-(int)getUploadBandwidth;
+-(void)setUploadBandwidth:(int)bandwidth;
+
+-(int)getDownloadBandwidth;
+-(void)setDownloadBandwidth:(int)bandwidth;
+
 
 @end
 #endif /* SettingsDelegate_h */

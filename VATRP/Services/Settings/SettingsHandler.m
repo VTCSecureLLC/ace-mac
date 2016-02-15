@@ -81,9 +81,11 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_echo_cancellation"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_video_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:ENABLE_VIDEO] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_video_preference"];
+        [self setUserSettingBool:ENABLE_VIDEO withValue:true];
+        [self setUserSettingBool:ENABLE_VIDEO_ACCEPT withValue:true];
+        [self setUserSettingBool:ENABLE_VIDEO_START withValue:true];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"kREAL_TIME_TEXT_ENABLED"] == nil)
     {
@@ -105,13 +107,13 @@
     }
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:1000 forKey:@"upload_bandwidth" ];
-        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 1000);
+        [[NSUserDefaults standardUserDefaults] setInteger:1500 forKey:@"upload_bandwidth" ];
+        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 1500);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:1000 forKey:@"download_bandwidth" ];
-                linphone_core_set_download_bandwidth([LinphoneManager getLc], 1000);
+        [[NSUserDefaults standardUserDefaults] setInteger:1500 forKey:@"download_bandwidth" ];
+                linphone_core_set_download_bandwidth([LinphoneManager getLc], 1500);
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {
@@ -236,6 +238,14 @@
 -(void)setEnableVideo:(bool)enable
 {
     [self setUserSettingBool:ENABLE_VIDEO withValue:enable];
+}
+-(void)setVideoInitiate:(bool)enable
+{
+    [self setUserSettingBool:ENABLE_VIDEO_START withValue:enable];
+}
+-(void)setVideoAccept:(bool)enable
+{
+    [self setUserSettingBool:ENABLE_VIDEO_ACCEPT withValue:enable];
 }
 
 

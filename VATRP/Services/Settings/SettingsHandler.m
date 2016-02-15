@@ -98,7 +98,7 @@
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enabled_codecs"] == nil)
     {
         // enabled_codecs\":[\"H.264\",\"H.263\",\"VP8\",\"G.722\",\"G.711\"]
-        NSArray *enabledCodecs = @[@"H.264", @"H.263", @"VP8", @"G.722", @"G.711"];
+        NSArray *enabledCodecs = @[@"H.263", @"VP8", @"G.722", @"G.711"];
         [[NSUserDefaults standardUserDefaults] setObject:enabledCodecs forKey:@"enabled_codecs"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"bwLimit"] == nil)

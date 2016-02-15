@@ -63,7 +63,17 @@
     [super viewDidLoad];
     // Do view setup here.
     
+}
+
+-(void)viewWillAppear
+{
+    [super viewWillAppear];
     [self callInfoUpdateTimer];
+    if (timerCallInfoUpdate && [timerCallInfoUpdate isValid])
+    {
+        [timerCallInfoUpdate invalidate];
+        timerCallInfoUpdate = nil;
+    }
     timerCallInfoUpdate = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                            target:self
                                                          selector:@selector(callInfoUpdateTimer)
@@ -72,6 +82,15 @@
 }
 
 - (void) callInfoUpdateTimer {
+    if (timerCallInfoUpdate && [timerCallInfoUpdate isValid] &&
+        !([self isViewLoaded] || (self.view.window == nil)))
+    {
+        [timerCallInfoUpdate invalidate];
+        timerCallInfoUpdate = nil;
+        return;
+    }
+
+    
     LinphoneCall *call = linphone_core_get_current_call([LinphoneManager getLc]);
     
     if (call) {
@@ -191,11 +210,5 @@
     }
 }
 
-- (void) dealloc {
-    if (timerCallInfoUpdate && [timerCallInfoUpdate isValid]) {
-        [timerCallInfoUpdate invalidate];
-        timerCallInfoUpdate = nil;
-    }
-}
 
 @end

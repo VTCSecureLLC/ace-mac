@@ -278,7 +278,7 @@
 					<key>controllerType</key>
 					<integer>0</integer>
 					<key>title</key>
-					<string>Opus</string>
+					<string>G722</string>
 					<key>defaultValue</key>
 					<true/>
 					<key>UserDefaultsKey</key>
@@ -469,16 +469,6 @@
 					<true/>
 					<key>UserDefaultsKey</key>
 					<string>h264_preference</string>
-				</dict>
-				<dict>
-					<key>controllerType</key>
-					<integer>0</integer>
-					<key>title</key>
-					<string>MP4V-ES</string>
-					<key>defaultValue</key>
-					<true/>
-					<key>UserDefaultsKey</key>
-					<string>mp4v-es_preference</string>
 				</dict>
 				<dict>
 					<key>controllerType</key>

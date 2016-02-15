@@ -161,7 +161,7 @@ static const float callAlertStepInterval = 0.5;
             linphone_core_set_native_preview_window_id(lc, (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
 
             
-            timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
+            timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                                  target:self
                                                                selector:@selector(inCallTick:)
                                                                userInfo:nil

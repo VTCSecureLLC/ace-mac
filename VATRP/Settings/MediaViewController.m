@@ -49,14 +49,14 @@ char **soundlist;
     [super viewWillAppear];
     // ensure that the view is refreshed on the second launch.
     [self initializeValues];
-    // TODO ASAP: make sure that the camera is displayed properly in viewWillAppear and released in viewWillDisappear!!!
-    [self displaySelectedVideoDevice];
 
     
 }
 -(void)viewWillDisappear
 {
-    
+    linphone_core_enable_video_preview([LinphoneManager getLc], false);
+    linphone_core_enable_self_view([LinphoneManager getLc], false);
+
 }
 
 -(void)initializeValues
@@ -128,9 +128,13 @@ char **soundlist;
     const char *speaker = linphone_core_get_playback_device([LinphoneManager getLc]);
     [self.comboBoxSpeaker selectItemWithObjectValue:[NSString stringWithCString:speaker encoding:NSUTF8StringEncoding]];
     
-    [self initializeRecorder];
-    [self initializeLevelTimer];
-    
+    if (self.timerRecordingLevelsUpdate == nil)
+    {
+        [self initializeRecorder];
+        [self initializeLevelTimer];
+        // TODO ASAP: make sure that the camera is displayed properly in viewWillAppear and released in viewWillDisappear!!!
+        [self displaySelectedVideoDevice];
+    }
 
 }
 

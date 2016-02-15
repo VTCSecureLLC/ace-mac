@@ -1330,8 +1330,6 @@ static BOOL libStarted = FALSE;
 #if HAVE_G729
     libmsbcg729_init(); // load g729 plugin
 #endif
-    configH264HardwareAcell(true, true);
-    
     linphone_core_set_log_collection_path([[LinphoneManager cacheDirectory] UTF8String]);
     [self setLogsEnabled:[self lpConfigBoolForKey:@"debugenable_preference"]];
     
@@ -1341,6 +1339,8 @@ static BOOL libStarted = FALSE;
                                                      ,configDb
                                                      ,(__bridge void *)(self) /* user_data */);
     
+    configH264HardwareAcell(true, true);
+
     linphone_core_enable_video_preview(theLinphoneCore, FALSE);
     linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
     

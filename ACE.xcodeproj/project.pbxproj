@@ -185,8 +185,15 @@
 		69EE9C0C1C64B6E20010EBB3 /* RTPquality_medium_rightTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EE9C041C64B6E20010EBB3 /* RTPquality_medium_rightTop.png */; };
 		69EE9C0D1C64B6E20010EBB3 /* RTPquality_medium_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EE9C051C64B6E20010EBB3 /* RTPquality_medium_top.png */; };
 		7301AEDF1C6D2B6800B3648D /* libmediastreamer_voip.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEDE1C6D2B6100B3648D /* libmediastreamer_voip.7.dylib */; };
-		7301AEE01C6D2B7100B3648D /* libmediastreamer_base.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */; };
+		7301AEE01C6D2B7100B3648D /* libmediastreamer_base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */; };
 		7301AEFA1C6FE5CA00B3648D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEF91C6FE5CA00B3648D /* VideoToolbox.framework */; };
+		7301AEFB1C72174F00B3648D /* libmediastreamer_voip.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEDE1C6D2B6100B3648D /* libmediastreamer_voip.7.dylib */; };
+		7301AEFC1C72174F00B3648D /* libmediastreamer_base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */; };
+		7301AEFE1C72186B00B3648D /* libmediastreamer_voip.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEFD1C72186B00B3648D /* libmediastreamer_voip.7.dylib */; };
+		7301AF001C72188A00B3648D /* libmediastreamer_voip.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 7301AEFF1C72188A00B3648D /* libmediastreamer_voip.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7301AF021C7218A900B3648D /* libmediastreamer_base.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 7301AF011C7218A900B3648D /* libmediastreamer_base.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7301AF031C7218B600B3648D /* libmediastreamer_base.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AF011C7218A900B3648D /* libmediastreamer_base.7.dylib */; };
+		7301AF051C72198E00B3648D /* libortp.11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AF041C72198E00B3648D /* libortp.11.dylib */; };
 		73048F651C4598E500375345 /* libopenh264.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73048F661C45B40F00375345 /* libopenh264.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F641C4598E500375345 /* libopenh264.1.dylib */; };
 		73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F671C46BE6F00375345 /* libbelcard.1.dylib */; };
@@ -206,8 +213,8 @@
 		739C3F1B1BFCE6D800F9EFCE /* libmssilk.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2C21BFA9F4B00EC7039 /* libmssilk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		739C3F1C1BFCE6D800F9EFCE /* libmswebrtc.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2C31BFA9F4B00EC7039 /* libmswebrtc.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		739C3F1D1BFCE6D800F9EFCE /* libmswebrtc.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73EDA2C41BFA9F4B00EC7039 /* libmswebrtc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73AEC38E1C6BE94500908DE0 /* libmediastreamer_base.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73AEC3901C6BE99800908DE0 /* libmediastreamer_voip.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		73AEC38E1C6BE94500908DE0 /* libmediastreamer_base.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		73AEC3901C6BE99800908DE0 /* libmediastreamer_voip.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73AEC3921C6BEA0100908DE0 /* libortp.11.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73AEC3911C6BEA0100908DE0 /* libortp.11.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73ED2AF31BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2B81BFA9F4B00EC7039 /* libmsamr.0.dylib */; };
 		73ED2AF41BFCE7CE00C182F2 /* libmsamr.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2B81BFA9F4B00EC7039 /* libmsamr.0.dylib */; };
@@ -271,10 +278,6 @@
 		73EDA26B1BFA9F2D00EC7039 /* liblinphone.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */; };
 		73EDA26C1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */; };
 		73EDA26D1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */; };
-		7301AEE01C6D2B7100B3648D /* libmediastreamer_base.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */; };
-		7301AEE01C6D2B7100B3648D /* libmediastreamer_base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */; };
-		7301AEDF1C6D2B6800B3648D /* libmediastreamer_voip.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEDE1C6D2B6100B3648D /* libmediastreamer_voip.7.dylib */; };
-		7301AEDF1C6D2B6800B3648D /* libmediastreamer_voip.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7301AEDE1C6D2B6100B3648D /* libmediastreamer_voip.dylib */; };
 		73EDA2761BFA9F2D00EC7039 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21B1BFA9F2C00EC7039 /* libopencore-amrnb.a */; };
 		73EDA2771BFA9F2D00EC7039 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21B1BFA9F2C00EC7039 /* libopencore-amrnb.a */; };
 		73EDA2781BFA9F2D00EC7039 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21C1BFA9F2C00EC7039 /* libopencore-amrwb.a */; };
@@ -285,7 +288,6 @@
 		73EDA27F1BFA9F2D00EC7039 /* libopus.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA21F1BFA9F2C00EC7039 /* libopus.5.dylib */; };
 		73EDA2801BFA9F2D00EC7039 /* libopus.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2201BFA9F2C00EC7039 /* libopus.dylib */; };
 		73EDA2811BFA9F2D00EC7039 /* libopus.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2201BFA9F2C00EC7039 /* libopus.dylib */; };
-		73EDA2831BFA9F2D00EC7039 /* libortp.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2211BFA9F2C00EC7039 /* libortp.10.dylib */; };
 		73EDA2841BFA9F2D00EC7039 /* libortp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2221BFA9F2C00EC7039 /* libortp.dylib */; };
 		73EDA2851BFA9F2D00EC7039 /* libortp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2221BFA9F2C00EC7039 /* libortp.dylib */; };
 		73EDA2861BFA9F2D00EC7039 /* libpolarssl.1.4.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2231BFA9F2C00EC7039 /* libpolarssl.1.4.0.dylib */; };
@@ -464,13 +466,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7301AF021C7218A900B3648D /* libmediastreamer_base.7.dylib in Copy Files */,
+				7301AF001C72188A00B3648D /* libmediastreamer_voip.7.dylib in Copy Files */,
 				73ED2B001BFCE9AF00C182F2 /* libmsamr.0.dylib in Copy Files */,
-				73AEC3901C6BE99800908DE0 /* libmediastreamer_voip.7.dylib in Copy Files */,
+				73AEC3901C6BE99800908DE0 /* libmediastreamer_voip.dylib in Copy Files */,
 				73048F6E1C46C01300375345 /* libbelcard.1.dylib in Copy Files */,
 				738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */,
 				73048F6C1C46C00100375345 /* libbelr.1.dylib in Copy Files */,
 				73ED2B011BFCE9AF00C182F2 /* libmsamr.dylib in Copy Files */,
-				73AEC38E1C6BE94500908DE0 /* libmediastreamer_base.7.dylib in Copy Files */,
+				73AEC38E1C6BE94500908DE0 /* libmediastreamer_base.dylib in Copy Files */,
 				73ED2B021BFCE9AF00C182F2 /* libmsbcg729.0.dylib in Copy Files */,
 				73ED2B031BFCE9AF00C182F2 /* libmsbcg729.1.0.1.dylib in Copy Files */,
 				73ED2B041BFCE9AF00C182F2 /* libmsbcg729.dylib in Copy Files */,
@@ -798,16 +802,19 @@
 		69EE9C031C64B6E20010EBB3 /* RTPquality_medium_rightBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RTPquality_medium_rightBottom.png; sourceTree = "<group>"; };
 		69EE9C041C64B6E20010EBB3 /* RTPquality_medium_rightTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RTPquality_medium_rightTop.png; sourceTree = "<group>"; };
 		69EE9C051C64B6E20010EBB3 /* RTPquality_medium_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RTPquality_medium_top.png; sourceTree = "<group>"; };
-		7301AEDD1C6D2B1C00B3648D /* libortp.11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.11.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libortp.11.dylib"; sourceTree = "<group>"; };
 		7301AEDE1C6D2B6100B3648D /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.7.dylib"; sourceTree = "<group>"; };
 		7301AEF91C6FE5CA00B3648D /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		7301AEFD1C72186B00B3648D /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = OUTPUT/lib/libmediastreamer_voip.7.dylib; sourceTree = "<group>"; };
+		7301AEFF1C72188A00B3648D /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = OUTPUT/lib/libmediastreamer_voip.7.dylib; sourceTree = "<group>"; };
+		7301AF011C7218A900B3648D /* libmediastreamer_base.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.7.dylib; path = OUTPUT/lib/libmediastreamer_base.7.dylib; sourceTree = "<group>"; };
+		7301AF041C72198E00B3648D /* libortp.11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.11.dylib; path = OUTPUT/lib/libortp.11.dylib; sourceTree = "<group>"; };
 		73048F641C4598E500375345 /* libopenh264.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopenh264.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libopenh264.1.dylib"; sourceTree = "<group>"; };
 		73048F671C46BE6F00375345 /* libbelcard.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelcard.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelcard.1.dylib"; sourceTree = "<group>"; };
 		73048F691C46BE7600375345 /* libbelr.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelr.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelr.1.dylib"; sourceTree = "<group>"; };
 		73048F6B1C46C00100375345 /* libbelr.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelr.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelr.1.dylib"; sourceTree = "<group>"; };
 		73048F6D1C46C01300375345 /* libbelcard.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbelcard.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbelcard.1.dylib"; sourceTree = "<group>"; };
-		73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.7.dylib"; sourceTree = "<group>"; };
-		73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.7.dylib"; sourceTree = "<group>"; };
+		73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.dylib"; sourceTree = "<group>"; };
+		73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.dylib"; sourceTree = "<group>"; };
 		73AEC3911C6BEA0100908DE0 /* libortp.11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.11.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libortp.11.dylib"; sourceTree = "<group>"; };
 		73EDA1FE1BFA9F2C00EC7039 /* libantlr3c.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.1.dylib"; sourceTree = "<group>"; };
 		73EDA1FF1BFA9F2C00EC7039 /* libantlr3c.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libantlr3c.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libantlr3c.dylib"; sourceTree = "<group>"; };
@@ -831,10 +838,6 @@
 		73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libintl.8.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libintl.8.dylib"; sourceTree = "<group>"; };
 		73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.8.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/liblinphone.8.dylib"; sourceTree = "<group>"; };
 		73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/liblinphone.dylib"; sourceTree = "<group>"; };
-		73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.7.dylib"; sourceTree = "<group>"; };
-		73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.dylib"; sourceTree = "<group>"; };
-		73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.7.dylib"; sourceTree = "<group>"; };
-		73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.dylib"; sourceTree = "<group>"; };
 		73EDA21B1BFA9F2C00EC7039 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		73EDA21C1BFA9F2C00EC7039 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrwb.a"; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libopencore-amrwb.a"; sourceTree = "<group>"; };
 		73EDA21D1BFA9F2C00EC7039 /* libopenh264.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopenh264.0.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libopenh264.0.dylib"; sourceTree = "<group>"; };
@@ -948,6 +951,7 @@
 				73ED2AFB1BFCE7CE00C182F2 /* libmsopenh264.0.dylib in Frameworks */,
 				73ED2AFC1BFCE7CE00C182F2 /* libmssilk.0.dylib in Frameworks */,
 				73ED2AFD1BFCE7CE00C182F2 /* libmssilk.0.dylib in Frameworks */,
+				7301AF031C7218B600B3648D /* libmediastreamer_base.7.dylib in Frameworks */,
 				73ED2AFE1BFCE7CE00C182F2 /* libmswebrtc.0.dylib in Frameworks */,
 				73ED2AFF1BFCE7CE00C182F2 /* libmswebrtc.0.dylib in Frameworks */,
 				73EDA23C1BFA9F2C00EC7039 /* libantlr3c.1.dylib in Frameworks */,
@@ -980,13 +984,14 @@
 				73EDA2881BFA9F2D00EC7039 /* libpolarssl.8.dylib in Frameworks */,
 				73EDA28A1BFA9F2D00EC7039 /* libpolarssl.a in Frameworks */,
 				7301AEDF1C6D2B6800B3648D /* libmediastreamer_voip.7.dylib in Frameworks */,
-				7301AEE01C6D2B7100B3648D /* libmediastreamer_base.7.dylib in Frameworks */,
+				7301AEE01C6D2B7100B3648D /* libmediastreamer_base.dylib in Frameworks */,
 				73EDA28C1BFA9F2D00EC7039 /* libpolarssl.dylib in Frameworks */,
 				73EDA28E1BFA9F2D00EC7039 /* libspeex.6.dylib in Frameworks */,
 				73EDA2901BFA9F2D00EC7039 /* libspeex.dylib in Frameworks */,
 				73EDA2921BFA9F2D00EC7039 /* libspeexdsp.6.dylib in Frameworks */,
 				73EDA2941BFA9F2D00EC7039 /* libspeexdsp.dylib in Frameworks */,
 				73EDA2961BFA9F2D00EC7039 /* libsqlite3.dylib in Frameworks */,
+				7301AEFE1C72186B00B3648D /* libmediastreamer_voip.7.dylib in Frameworks */,
 				73EDA2981BFA9F2D00EC7039 /* libsrtp.1.dylib in Frameworks */,
 				73EDA29A1BFA9F2D00EC7039 /* libsrtp.dylib in Frameworks */,
 				73EDA29C1BFA9F2D00EC7039 /* libswresample.0.6.100.dylib in Frameworks */,
@@ -1013,12 +1018,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				73EDA2A71BFA9F2D00EC7039 /* libswscale.dylib in Frameworks */,
+				7301AF051C72198E00B3648D /* libortp.11.dylib in Frameworks */,
 				73048F661C45B40F00375345 /* libopenh264.1.dylib in Frameworks */,
 				73EDA2D81BFA9F4B00EC7039 /* libmssilk.0.dylib in Frameworks */,
 				73EDA2871BFA9F2D00EC7039 /* libpolarssl.1.4.0.dylib in Frameworks */,
 				73EDA25D1BFA9F2D00EC7039 /* libcunit.dylib in Frameworks */,
 				73EDA28B1BFA9F2D00EC7039 /* libpolarssl.a in Frameworks */,
-				7301AEDF1C6D2B6800B3648D /* libmediastreamer_voip.7.dylib in Frameworks */,
+				7301AEFB1C72174F00B3648D /* libmediastreamer_voip.7.dylib in Frameworks */,
 				73EDA2591BFA9F2D00EC7039 /* libbzrtp.dylib in Frameworks */,
 				73EDA24F1BFA9F2D00EC7039 /* libbcg729.dylib in Frameworks */,
 				73EDA2931BFA9F2D00EC7039 /* libspeexdsp.6.dylib in Frameworks */,
@@ -1040,7 +1046,6 @@
 				73EDA2A51BFA9F2D00EC7039 /* libswscale.2.dylib in Frameworks */,
 				73EDA2CA1BFA9F4B00EC7039 /* libmsbcg729.0.dylib in Frameworks */,
 				73EDA2DE1BFA9F4B00EC7039 /* libmswebrtc.dylib in Frameworks */,
-				73EDA2751BFA9F2D00EC7039 /* libmediastreamer_voip.dylib in Frameworks */,
 				73EDA2AD1BFA9F2D00EC7039 /* libxml2.2.dylib in Frameworks */,
 				73EDA2451BFA9F2C00EC7039 /* libavcodec.dylib in Frameworks */,
 				73EDA2A91BFA9F2D00EC7039 /* libvo-amrwbenc.a in Frameworks */,
@@ -1050,7 +1055,6 @@
 				73EDA2891BFA9F2D00EC7039 /* libpolarssl.8.dylib in Frameworks */,
 				73EDA2511BFA9F2D00EC7039 /* libbellesip.0.0.0.dylib in Frameworks */,
 				73EDA2971BFA9F2D00EC7039 /* libsqlite3.dylib in Frameworks */,
-				73EDA2831BFA9F2D00EC7039 /* libortp.10.dylib in Frameworks */,
 				73EDA29D1BFA9F2D00EC7039 /* libswresample.0.6.100.dylib in Frameworks */,
 				73EDA26D1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */,
 				73EDA2C81BFA9F4B00EC7039 /* libmsamr.dylib in Frameworks */,
@@ -1065,7 +1069,7 @@
 				73EDA2B51BFA9F2D00EC7039 /* libz.a in Frameworks */,
 				73EDA2551BFA9F2D00EC7039 /* libbellesip.dylib in Frameworks */,
 				73EDA24B1BFA9F2D00EC7039 /* libavutil.dylib in Frameworks */,
-				7301AEE01C6D2B7100B3648D /* libmediastreamer_base.7.dylib in Frameworks */,
+				7301AEFC1C72174F00B3648D /* libmediastreamer_base.dylib in Frameworks */,
 				73EDA25B1BFA9F2D00EC7039 /* libcunit.1.0.1.dylib in Frameworks */,
 				73EDA2791BFA9F2D00EC7039 /* libopencore-amrwb.a in Frameworks */,
 				73EDA28D1BFA9F2D00EC7039 /* libpolarssl.dylib in Frameworks */,
@@ -1073,7 +1077,6 @@
 				73EDA2991BFA9F2D00EC7039 /* libsrtp.1.dylib in Frameworks */,
 				73EDA2DA1BFA9F4B00EC7039 /* libmssilk.dylib in Frameworks */,
 				73EDA25F1BFA9F2D00EC7039 /* libgsm.dylib in Frameworks */,
-				73EDA2711BFA9F2D00EC7039 /* libmediastreamer_base.dylib in Frameworks */,
 				73EDA2471BFA9F2D00EC7039 /* libavutil.51.35.100.dylib in Frameworks */,
 				73EDA2AB1BFA9F2D00EC7039 /* libvpx.a in Frameworks */,
 				73EDA2CC1BFA9F4B00EC7039 /* libmsbcg729.1.0.1.dylib in Frameworks */,
@@ -1098,6 +1101,8 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7301AF041C72198E00B3648D /* libortp.11.dylib */,
+				7301AEFD1C72186B00B3648D /* libmediastreamer_voip.7.dylib */,
 				7301AEF91C6FE5CA00B3648D /* VideoToolbox.framework */,
 				73048F691C46BE7600375345 /* libbelr.1.dylib */,
 				73048F671C46BE6F00375345 /* libbelcard.1.dylib */,
@@ -1538,9 +1543,11 @@
 		4AC389BC1B8E87520063298F = {
 			isa = PBXGroup;
 			children = (
+				7301AF011C7218A900B3648D /* libmediastreamer_base.7.dylib */,
+				7301AEFF1C72188A00B3648D /* libmediastreamer_voip.7.dylib */,
 				73AEC3911C6BEA0100908DE0 /* libortp.11.dylib */,
-				73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.7.dylib */,
-				73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */,
+				73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.dylib */,
+				73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */,
 				73048F6D1C46C01300375345 /* libbelcard.1.dylib */,
 				73048F6B1C46C00100375345 /* libbelr.1.dylib */,
 				73048F641C4598E500375345 /* libopenh264.1.dylib */,
@@ -1782,10 +1789,6 @@
 				73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */,
 				73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */,
 				73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */,
-				73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.7.dylib */,
-				73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.7.dylib */,
-				73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.dylib */,
-				73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */,
 				73EDA21B1BFA9F2C00EC7039 /* libopencore-amrnb.a */,
 				73EDA21C1BFA9F2C00EC7039 /* libopencore-amrwb.a */,
 				73EDA21D1BFA9F2C00EC7039 /* libopenh264.0.dylib */,
@@ -1843,8 +1846,8 @@
 			buildConfigurationList = 4AC389E51B8E87530063298F /* Build configuration list for PBXNativeTarget "VATRP" */;
 			buildPhases = (
 				4AC389C11B8E87530063298F /* Sources */,
-				4AC389C21B8E87530063298F /* Frameworks */,
 				4AC389C31B8E87530063298F /* Resources */,
+				4AC389C21B8E87530063298F /* Frameworks */,
 				CE67587A1BA88A5A005396EF /* Copy Files */,
 				20A9932F1BB5B8A8008612F9 /* ShellScript */,
 				31458E0F1BC2DEAF002CA54D /* CopyFiles */,
@@ -2291,6 +2294,7 @@
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/OUTPUT/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
@@ -2324,6 +2328,7 @@
 					"$(PROJECT_DIR)/VATRP/linphonesdk/libs",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/OUTPUT/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
@@ -2352,6 +2357,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/OUTPUT/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACE.app/Contents/MacOS/ACE";
@@ -2373,6 +2379,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/OUTPUT/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACE.app/Contents/MacOS/ACE";

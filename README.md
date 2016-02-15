@@ -13,26 +13,26 @@ The `.travis.yml` file is what directs these Travis automated builds. This inclu
 These are the steps you can follow to build ace-ios locally.
 
 1. Ensure you have Xcode installed
-2. Prepare your build environment:
-```
-    ./Tools/prepare.sh
-```
-3. Pull the ace-mac repo and init the submodules recursively:
-```
-    git clone git@github.com:VTCSecureLLC/ace-mac.git
-    cd ace-mac
-    git submodule update --init --recursive
-```
-4. (re)Build the SDK:
-```
-    ./prepare.py -C
-    ./prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_VCARD=ON -p --all-codecs
-    make -j 8
-```
-5. Open the ACE.xcodeproj in Xcode and run the project:
-```
-    open ACE.xcodeproj
-```
+2. Prepare your build environment
+
+        ./Tools/prepare.sh
+
+3. Pull the ace-mac repo and init the submodules recursively
+
+        git clone git@github.com:VTCSecureLLC/ace-mac.git
+        cd ace-mac
+        git submodule update --init --recursive
+
+4. (re)Build the SDK
+
+        ./prepare.py -C
+        ./prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_VCARD=ON -p --all-codecs
+        make -j 8
+
+5. Open the ACE.xcodeproj in Xcode and run the project
+
+        open ACE.xcodeproj
+
 
 ## Customizing your build
 

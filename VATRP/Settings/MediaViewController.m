@@ -105,6 +105,7 @@ char **soundlist;
     }
     
     camlist = (char**)linphone_core_get_video_devices([LinphoneManager getLc]);
+    [self.comboBoxCaptureDevices removeAllItems];
     for (char* cam = *camlist;*camlist!=NULL;cam=*++camlist) {
         [self.comboBoxCaptureDevices addItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
     }
@@ -113,6 +114,9 @@ char **soundlist;
     [self.comboBoxCaptureDevices selectItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
     
     soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
+
+    [self.comboBoxMicrophone removeAllItems];
+    [self.comboBoxSpeaker removeAllItems];
     for (char* device = *soundlist;*soundlist!=NULL;device=*++soundlist) {
         if(linphone_core_sound_device_can_capture([LinphoneManager getLc], device)){
             [self.comboBoxMicrophone addItemWithObjectValue:[NSString stringWithCString:device encoding:NSUTF8StringEncoding]];

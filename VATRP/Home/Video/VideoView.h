@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "LinphoneManager.h"
+#import "SettingsHandler.h"
 
-@interface VideoView : NSView
+@interface VideoView : NSView<SettingsSelfViewDelegate>
 
 @property (nonatomic, assign) LinphoneCall* call;
 

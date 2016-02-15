@@ -26,10 +26,17 @@ NSString *const SELECTED_SPEAKER = @"SETTINGS_SELECTED_SPEAKER";
 
 // Video Settings
 NSString *const ENABLE_VIDEO = @"enable_video_preference";
+NSString *const ENABLE_VIDEO_START = @"start_video_preference";
+NSString *const ENABLE_VIDEO_ACCEPT = @"accept_video_preference";
 NSString *const PREFERRED_FPS = @"video_preferred_fps_preference";
+NSString *const PREFERRED_VIDEO_RESOLUTION = @"video_preferred_size_preference";
 
 // Preferences
 NSString *const MUTE_CAMERA = @"mute_camera";
 NSString *const RTCP_FB_MODE = @"RTCP_FB_MODE"; //Off (Default), Implicit, Explicit
+
+// testing
+NSString *const UPLOAD_BANDWIDTH = @"upload_bandwidth";
+NSString *const DOWNLOAD_BANDWIDTH = @"download_bandwidth";
 
 #endif /* SettingsConstants_h */

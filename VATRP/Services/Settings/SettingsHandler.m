@@ -81,9 +81,11 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_echo_cancellation"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_video_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:ENABLE_VIDEO] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_video_preference"];
+        [self setUserSettingBool:ENABLE_VIDEO withValue:true];
+        [self setUserSettingBool:ENABLE_VIDEO_ACCEPT withValue:true];
+        [self setUserSettingBool:ENABLE_VIDEO_START withValue:true];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"kREAL_TIME_TEXT_ENABLED"] == nil)
     {
@@ -103,15 +105,23 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"high-fps" forKey:@"bwLimit"];
     }
-    if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:@"upload_bandwidth"] == nil)
+    if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:UPLOAD_BANDWIDTH] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:1000 forKey:@"upload_bandwidth" ];
-        linphone_core_set_upload_bandwidth([LinphoneManager getLc], 1000);
+        [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:1500];
+        LinphoneCore* linphoneCore = [LinphoneManager getLc];
+        if (linphoneCore != nil)
+        {
+            linphone_core_set_upload_bandwidth(linphoneCore, 1500);
+        }
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"download_bandwidth"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:DOWNLOAD_BANDWIDTH] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:1000 forKey:@"download_bandwidth" ];
-                linphone_core_set_download_bandwidth([LinphoneManager getLc], 1000);
+        [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:1500];
+        LinphoneCore* linphoneCore = [LinphoneManager getLc];
+        if (linphoneCore != nil)
+        {
+            linphone_core_set_download_bandwidth(linphoneCore, 1500);
+        }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {
@@ -137,9 +147,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_videomail_uri"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"video_preferred_size_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_VIDEO_RESOLUTION] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"cif (352x288)" forKey:@"video_preferred_size_preference"];
+        [self setUserSettingString:PREFERRED_VIDEO_RESOLUTION withValue:@"cif (352x288)"];
     }
 
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
@@ -160,6 +170,10 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
         [self setUserSettingString:RTCP_FB_MODE withValue:@"Implicit"];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
+    {
+        [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true] ;
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -233,6 +247,14 @@
 {
     [self setUserSettingBool:ENABLE_VIDEO withValue:enable];
 }
+-(void)setVideoInitiate:(bool)enable
+{
+    [self setUserSettingBool:ENABLE_VIDEO_START withValue:enable];
+}
+-(void)setVideoAccept:(bool)enable
+{
+    [self setUserSettingBool:ENABLE_VIDEO_ACCEPT withValue:enable];
+}
 
 
 
@@ -248,9 +270,10 @@
         linphone_core_enable_self_view(lc, show);
     }
     
-    //    if ([self.settingsHandlerDelegate respondsToSelector:@selector(showSelfView:)]) {
-    //        [self.settingsHandlerDelegate showSelfView:show];
-    //    }
+        if ([self.settingsSelfViewDelegate respondsToSelector:@selector(showSelfViewFromSettings:)])
+        {
+            [self.settingsSelfViewDelegate showSelfViewFromSettings:show];
+        }
 }
 
 -(void)setEnableEchoCancellation:(bool)enable
@@ -341,11 +364,42 @@
     return [self getUserSettingString:RTCP_FB_MODE];
 }
 
+-(int)getUploadBandwidth
+{
+    return (int)[[NSUserDefaults standardUserDefaults]integerForKey:UPLOAD_BANDWIDTH];
+}
+-(void)setUploadBandwidth:(int)bandwidth
+{
+    [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:bandwidth];
+    int test = [[NSUserDefaults standardUserDefaults] integerForKey:UPLOAD_BANDWIDTH];
+    LinphoneCore* linphoneCore = [LinphoneManager getLc];
+    if (linphoneCore != nil)
+    {
+        linphone_core_set_upload_bandwidth([LinphoneManager getLc], bandwidth);
+    }
+}
+
+-(int)getDownloadBandwidth
+{
+    return (int)[[NSUserDefaults standardUserDefaults]integerForKey:DOWNLOAD_BANDWIDTH];
+}
+-(void)setDownloadBandwidth:(int)bandwidth
+{
+    [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:bandwidth];
+    LinphoneCore* linphoneCore = [LinphoneManager getLc];
+    if (linphoneCore != nil)
+    {
+        linphone_core_set_download_bandwidth([LinphoneManager getLc], bandwidth);
+    }
+}
+
+
 //=================================================================================================================
 // Generic Settings Accessors
 #pragma mark - this will give the singular place to changeover from app level settings to user level settings.
 // ToDo: these settings are currently all stored at the app level. I am initially getting everything hooked up
 //   to the app level settings, then here we can manage changing over to user level settings.
+// ToDO: add getters as well.
 -(bool)getUserSettingBool:(NSString*)settingName
 {
     return [[NSUserDefaults standardUserDefaults]boolForKey:settingName];

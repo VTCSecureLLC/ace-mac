@@ -31,6 +31,11 @@
 //-(void)showSelfView:(bool)mute;
 @end
 
+@protocol SettingsSelfViewDelegate<NSObject>
+#pragma mark items for settingsSelfViewDelegate - setting from settings dialog to responders
+-(void)showSelfViewFromSettings:(bool)mute;
+@end
+
 @protocol InCallPreferencesHandlerDelegate<NSObject>
 #pragma mark items for preferencesHandlerDelegate - setting from settings dialog to responders
 -(void)cameraWasMuted:(bool)enabled;
@@ -49,6 +54,7 @@
 @property(weak,nonatomic)id<SettingsHandlerDelegate> settingsHandlerDelegate;
 @property(weak,nonatomic)id<InCallPreferencesHandlerDelegate> inCallPreferencessHandlerDelegate;
 @property(weak,nonatomic)id<PreferencesHandlerDelegate> preferencessHandlerDelegate;
+@property(weak,nonatomic)id<SettingsSelfViewDelegate> settingsSelfViewDelegate;
 
 // Bool force provided for debugging, and to reset settings when needed.
 -(void)initializeUserDefaults:(bool)force;
@@ -69,7 +75,8 @@
 -(void) setMuteCamera:(bool)enable;
 
 -(void) setEnableVideo:(bool)enable;
-
+-(void) setVideoInitiate:(bool)enable;
+-(void) setVideoAccept:(bool)enable;
 
 #pragma mark settings accessors
 // these settings are set when the UI calls one of the methods above.
@@ -97,6 +104,12 @@
 #pragma mark Testing Settings
 -(void)setRtcpFbMode:(NSString*) rtcpFbMode;
 -(NSString*)getRtcpFbMode;
+
+-(int)getUploadBandwidth;
+-(void)setUploadBandwidth:(int)bandwidth;
+
+-(int)getDownloadBandwidth;
+-(void)setDownloadBandwidth:(int)bandwidth;
 
 
 @end

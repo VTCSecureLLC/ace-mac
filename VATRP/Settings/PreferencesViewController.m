@@ -27,7 +27,7 @@
     NSButton *checkboxAlwaysInititate;
     NSButton *checkboxAlwaysAccept;
     //NSComboBox *comboBoxVideoPreset;
-    NSComboBox *comboBoxPreferredSize;
+    //NSComboBox *comboBoxPreferredSize;
     NSButton *checkboxStun;
     NSButton *checkboxEnableICE;
     NSButton *checkboxEnableUPNP;
@@ -269,39 +269,6 @@
 //        comboBoxVideoPreset.stringValue = @"custom";
 //    }
 //    [self.scrollView.documentView addSubview:comboBoxVideoPreset];
-    
-    originY -= 30;
-    
-    comboBoxPreferredSize = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)]; // YES
-    [comboBoxPreferredSize addItemsWithObjectValues:@[@"1080p (1920x1080)", @"720p (1280x720)", @"svga (800x600)", @"4cif (704x576)", @"vga (640x480)", @"cif (352x288)", @"qcif (176x144)"]];
-    
-    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:PREFERRED_VIDEO_RESOLUTION];
-    
-    if (video_resolution) {
-        comboBoxPreferredSize.stringValue = video_resolution;
-    } else {
-        MSVideoSize vsize = linphone_core_get_preferred_video_size([LinphoneManager getLc]);
-        
-        if ((vsize.width == MS_VIDEO_SIZE_1080P_W) && (vsize.height == MS_VIDEO_SIZE_1080P_H)) {
-            comboBoxPreferredSize.stringValue = @"1080p (1920x1080)";
-        } else if ((vsize.width == MS_VIDEO_SIZE_720P_W) && (vsize.height == MS_VIDEO_SIZE_720P_H)) {
-            comboBoxPreferredSize.stringValue = @"720p (1280x720)";
-        } else if ((vsize.width == MS_VIDEO_SIZE_SVGA_W) && (vsize.height == MS_VIDEO_SIZE_SVGA_H)) {
-            comboBoxPreferredSize.stringValue = @"svga (800x600)";
-        } else if ((vsize.width == MS_VIDEO_SIZE_4CIF_W) && (vsize.height == MS_VIDEO_SIZE_4CIF_H)) {
-            comboBoxPreferredSize.stringValue = @"4cif (704x576)";
-        } else if ((vsize.width == MS_VIDEO_SIZE_VGA_W) && (vsize.height == MS_VIDEO_SIZE_VGA_H)) {
-            comboBoxPreferredSize.stringValue = @"vga (640x480)";
-        } else if ((vsize.width == MS_VIDEO_SIZE_CIF_W) && (vsize.height == MS_VIDEO_SIZE_CIF_H)) {
-            comboBoxPreferredSize.stringValue = @"cif (352x288)";
-        } else if ((vsize.width == MS_VIDEO_SIZE_QCIF_W) && (vsize.height == MS_VIDEO_SIZE_QCIF_H)) {
-            comboBoxPreferredSize.stringValue = @"qcif (176x144)";
-        }  else {
-            comboBoxPreferredSize.stringValue = @"None";
-        }
-    }
-    
-    [self.scrollView.documentView addSubview:comboBoxPreferredSize];
     
     originY -= 30;
     labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(20, originY, 100, 20)]; // YES
@@ -593,7 +560,7 @@
     
     NSComboBox *comboBox = (NSComboBox *)[notification object];
     
-    if (comboBox == comboBoxMediaEncription || comboBox == comboBoxPreferredSize)// || comboBox == comboBoxVideoPreset)
+    if (comboBox == comboBoxMediaEncription)// || comboBox == comboBoxPreferredSize)// || comboBox == comboBoxVideoPreset)
     {
         isChanged = YES;
     }
@@ -688,26 +655,6 @@
     
     //linphone_core_set_video_preset(lc, [comboBoxVideoPreset.stringValue UTF8String]);
     
-    MSVideoSize vsize;
-    NSString* preferredSize = comboBoxPreferredSize.stringValue;
-    if ([comboBoxPreferredSize.stringValue isEqualToString:@"1080p (1920x1080)"]) {
-        MS_VIDEO_SIZE_ASSIGN(vsize, 1080P);
-    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"720p (1280x720)"]) {
-        MS_VIDEO_SIZE_ASSIGN(vsize, 720P);
-    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"svga (800x600)"]) {
-        MS_VIDEO_SIZE_ASSIGN(vsize, SVGA);
-    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"4cif (704x576)"]) {
-        MS_VIDEO_SIZE_ASSIGN(vsize, 4CIF);
-    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"vga (640x480)"]) {
-        MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
-    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"cif (352x288)"]) {
-        MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
-    } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"qcif (176x144)"]) {
-        MS_VIDEO_SIZE_ASSIGN(vsize, QCIF);
-    }
-    
-    linphone_core_set_preferred_video_size(lc, vsize);
-    [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:PREFERRED_VIDEO_RESOLUTION];
 
     [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:@"stun_url_preference"];
     [[NSUserDefaults standardUserDefaults] synchronize];

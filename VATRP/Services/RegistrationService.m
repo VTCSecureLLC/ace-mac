@@ -248,10 +248,10 @@
 
     LpConfig *config = linphone_core_get_config(lc);
     LinphoneVideoPolicy policy;
-    policy.automatically_accept = YES;//[self boolForKey:@"accept_video_preference"];
-    policy.automatically_initiate = YES;//[self boolForKey:@"start_video_preference"];
+    policy.automatically_accept = YES;//[self boolForKey:ENABLE_VIDEO_ACCEPT];
+    policy.automatically_initiate = YES;//[self boolForKey:ENABLE_VIDEO_START];
     linphone_core_set_video_policy(lc, &policy);
-    linphone_core_enable_self_view(lc, YES); // [self boolForKey:@"self_video_preference"]
+    linphone_core_enable_self_view(lc, YES); // [self boolForKey:VIDEO_SELF_VIEW_ENABLED]
     BOOL preview_preference = YES;//[self boolForKey:@"preview_preference"];
     lp_config_set_int(config, [LINPHONERC_APPLICATION_KEY UTF8String], "preview_preference", preview_preference);
 

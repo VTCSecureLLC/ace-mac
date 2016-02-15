@@ -14,6 +14,7 @@
 #import "CodecModel.h"
 #import "DefaultSettingsManager.h"
 #import "SettingsHandler.h"
+#import "SettingsConstants.h"
 
 @interface PreferencesViewController () <NSTextFieldDelegate, NSComboBoxDelegate, InCallPreferencesHandlerDelegate> {
     NSMutableArray *audioCodecList;
@@ -172,12 +173,12 @@
     [checkboxEnableVideo setBezelStyle:0];
     [checkboxEnableVideo setTitle:@"Enable Video"];
     
-    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"start_video_preference"]){
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"start_video_preference"];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"enable_video_preference"];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"accept_video_preference"];
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:ENABLE_VIDEO]){
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO_START];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO_ACCEPT];
     }
-    [checkboxEnableVideo setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"start_video_preference"]];
+    [checkboxEnableVideo setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_VIDEO]];
     [checkboxEnableVideo setAction:@selector(onCheckBoxHandler:)];
     [checkboxEnableVideo setTarget:self];
     [self.scrollView.documentView addSubview:checkboxEnableVideo];
@@ -236,7 +237,7 @@
     [checkboxAlwaysInititate setButtonType:NSSwitchButton];
     [checkboxAlwaysInititate setBezelStyle:0];
     [checkboxAlwaysInititate setTitle:@"Always Inititate"];
-    [checkboxAlwaysInititate setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"enable_video_preference"]];
+    [checkboxAlwaysInititate setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_VIDEO]];
     [checkboxAlwaysInititate setAction:@selector(onCheckBoxHandler:)];
     [checkboxAlwaysInititate setTarget:self];
     [self.scrollView.documentView addSubview:checkboxAlwaysInititate];
@@ -246,7 +247,7 @@
     [checkboxAlwaysAccept setButtonType:NSSwitchButton];
     [checkboxAlwaysAccept setBezelStyle:0];
     [checkboxAlwaysAccept setTitle:@"Always accept"];
-    [checkboxAlwaysAccept setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"accept_video_preference"]];
+    [checkboxAlwaysAccept setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_VIDEO_ACCEPT]];
     [checkboxAlwaysAccept setAction:@selector(onCheckBoxHandler:)];
     [checkboxAlwaysAccept setTarget:self];
     [self.scrollView.documentView addSubview:checkboxAlwaysAccept];
@@ -271,7 +272,7 @@
     comboBoxPreferredSize = [[NSComboBox alloc] initWithFrame:NSMakeRect(20, originY, 200, 26)]; // YES
     [comboBoxPreferredSize addItemsWithObjectValues:@[@"1080p (1920x1080)", @"720p (1280x720)", @"svga (800x600)", @"4cif (704x576)", @"vga (640x480)", @"cif (352x288)", @"qcif (176x144)"]];
     
-    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:@"video_preferred_size_preference"];
+    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:PREFERRED_VIDEO_RESOLUTION];
     
     if (video_resolution) {
         comboBoxPreferredSize.stringValue = video_resolution;
@@ -640,9 +641,10 @@
 }
 
 - (void) save {
-    if (!isChanged) {
-        return;
-    }
+    // this dialog is not responding to at least the combo box changes. let's at least make it save by default.
+//    if (!isChanged) {
+//        return;
+//    }
     
     [self saveAudioCodecs];
     [self saveVideoCodecs];
@@ -651,14 +653,31 @@
 
     [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableRTT.state forKey:kREAL_TIME_TEXT_ENABLED];
     
-    linphone_core_enable_video_capture(lc, checkboxAlwaysInititate.state);
-    linphone_core_enable_video_display(lc, checkboxAlwaysInititate.state);
 
-    LinphoneVideoPolicy policy;
-    policy.automatically_initiate = (BOOL)checkboxEnableVideo.state;
-    policy.automatically_accept = (BOOL)checkboxAlwaysAccept.state;
-    linphone_core_set_video_policy(lc, &policy);
-
+    bool enableVideo = checkboxEnableVideo.state;
+    
+    [self.settingsHandler setEnableVideo:enableVideo];
+    linphone_core_enable_video_capture(lc, enableVideo);
+    linphone_core_enable_video_display(lc, enableVideo);
+    
+    [self.settingsHandler setVideoInitiate:checkboxAlwaysInititate.state];
+    [self.settingsHandler setVideoAccept:checkboxAlwaysAccept.state];
+    if (enableVideo)
+    {
+        LinphoneVideoPolicy policy;
+        policy.automatically_initiate = (BOOL)checkboxAlwaysInititate.state;
+        policy.automatically_accept = (BOOL)checkboxAlwaysAccept.state;
+        linphone_core_set_video_policy(lc, &policy);
+    }
+    else
+    {
+        // if video is not enabled, do not enable auto start and auto accept
+        LinphoneVideoPolicy policy;
+        policy.automatically_initiate = false;
+        policy.automatically_accept = false;
+        linphone_core_set_video_policy(lc, &policy);
+    }
+    
     //linphone_core_set_video_preset(lc, [comboBoxVideoPreset.stringValue UTF8String]);
     
     MSVideoSize vsize;
@@ -680,7 +699,7 @@
     }
     
     linphone_core_set_preferred_video_size(lc, vsize);
-    [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:@"video_preferred_size_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:comboBoxPreferredSize.stringValue forKey:PREFERRED_VIDEO_RESOLUTION];
 
     [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:@"stun_url_preference"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -698,6 +717,9 @@
         linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionNone);
 
     linphone_core_enable_ipv6(lc, checkboxIPv6.state);
+    
+    // force the save to sync.
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) saveAudioCodecs {

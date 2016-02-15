@@ -8,6 +8,7 @@
 
 #import "CallInfoViewController.h"
 #import "LinphoneManager.h"
+#import "LinphoneAPI.h"
 
 @interface CallInfoViewController () {
     NSTimer *timerCallInfoUpdate;
@@ -35,6 +36,24 @@
 @property (weak) IBOutlet NSTextField *labelIceConnectivity;
 @property (weak) IBOutlet NSTextField *labelEncryption;
 @property (weak) IBOutlet NSTextField *labelAVPF;
+
+@property (weak) IBOutlet NSTextField *videoPacketLossLbl;
+@property (weak) IBOutlet NSTextField *videoPacketLossLbl_Sender;
+@property (weak) IBOutlet NSTextField *videoPacketLossLbl_Receiver;
+@property (weak) IBOutlet NSTextField *audioPacketLossLbl;
+@property (weak) IBOutlet NSTextField *audioPacketLossLbl_Sender;
+@property (weak) IBOutlet NSTextField *audioPacketLossLbl_Receiver;
+@property (weak) IBOutlet NSTextField *videoPacketLateLbl;
+@property (weak) IBOutlet NSTextField *videoPacketLateLbl_Value;
+@property (weak) IBOutlet NSTextField *audioPacketLateLbl;
+@property (weak) IBOutlet NSTextField *audioPacketLateLbl_value;
+@property (weak) IBOutlet NSTextField *videoInterarrivalJitterLbl;
+@property (weak) IBOutlet NSTextField *videoInterarrivalJitterLbl_sender;
+@property (weak) IBOutlet NSTextField *videoInterarrivalJitterLbl_receiver;
+@property (weak) IBOutlet NSTextField *audioInterarrivalJitterLbl;
+@property (weak) IBOutlet NSTextField *audioInterarrivalJitterLbl_sender;
+@property (weak) IBOutlet NSTextField *audioInterarrivalJitterLbl_receiver;
+
 
 @end
 
@@ -95,8 +114,8 @@
                 self.labelAVPF.stringValue = @"OFF";
             }
 
-            const LinphoneCallStats *audio_stats = linphone_call_get_audio_stats(call);
-            const LinphoneCallStats *video_stats = linphone_call_get_video_stats(call);
+            const LinphoneCallStats *audio_stats = [LinphoneAPI.instance linphoneCallGetAudioStats:call];
+            const LinphoneCallStats *video_stats = [LinphoneAPI.instance linphoneCallGetVideoStats:call];;
             
             if (audio_stats != NULL && video_stats != NULL) {
                 float upload_total = audio_stats->upload_bandwidth + video_stats->upload_bandwidth;
@@ -111,6 +130,19 @@
                 
                 self.labelIceConnectivity.stringValue = [self iceToString:audio_stats->ice_state];
             }
+            LinphoneAPI* linphoneApi = [LinphoneAPI instance];
+            self.videoInterarrivalJitterLbl_sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderInterarrivalVideoJitter:video_stats call:call]];
+            self.audioInterarrivalJitterLbl_sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderInterarrivalAudioJitter:audio_stats call:call]];
+            self.videoInterarrivalJitterLbl_receiver.stringValue = [NSString stringWithFormat:@"Recevier %1.1f", [linphoneApi linphoneCallStatsGetReceiverInterarrivalVideoJitter:video_stats call:call]];
+            self.audioInterarrivalJitterLbl_receiver.stringValue = [NSString stringWithFormat:@"Receiver %1.1f", [linphoneApi linphoneCallStatsGetReceiverInterarrivalAudioJitter:audio_stats call:call]];
+            
+            self.audioPacketLossLbl_Sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderAudioLossRate:audio_stats]];
+            self.videoPacketLossLbl_Sender.stringValue = [NSString stringWithFormat:@"Sender %1.1f", [linphoneApi linphoneCallStatsGetSenderVideoLossRate:video_stats]];
+            self.audioPacketLossLbl_Receiver.stringValue = [NSString stringWithFormat:@"Receiver %1.1f", [linphoneApi linphoneCallStatsGetReceiverAudioLossRate:audio_stats]];
+            self.videoPacketLossLbl_Receiver.stringValue = [NSString stringWithFormat:@"Receiver %1.1f", [linphoneApi linphoneCallStatsGetReceiverVideoLossRate:video_stats]];
+            
+            self.videoPacketLateLbl_Value.stringValue = [NSString stringWithFormat:@"%qu", [linphoneApi linphoneCallStatsGetLateVideoPacketsCumulativeNumber:video_stats call:call]];
+            self.audioPacketLateLbl_value.stringValue = [NSString stringWithFormat:@"%qu", [linphoneApi linphoneCallStatsGetLateAudioPacketsCumulativeNumber:video_stats call:call]];
             
             LinphoneMediaEncryption enc = linphone_call_params_get_media_encryption(current);
             self.labelEncryption.stringValue = [self encryptionToString:enc];

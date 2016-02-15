@@ -126,7 +126,6 @@
 - (IBAction)onButtonCleareUserData:(id)sender {
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];

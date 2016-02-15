@@ -75,7 +75,8 @@
 -(void) setMuteCamera:(bool)enable;
 
 -(void) setEnableVideo:(bool)enable;
-
+-(void) setVideoInitiate:(bool)enable;
+-(void) setVideoAccept:(bool)enable;
 
 #pragma mark settings accessors
 // these settings are set when the UI calls one of the methods above.

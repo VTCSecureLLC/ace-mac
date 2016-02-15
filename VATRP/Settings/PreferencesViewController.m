@@ -62,7 +62,7 @@
     [super viewDidLoad];
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.inCallPreferencessHandlerDelegate = self;
-
+    [self initializeValues];
 }
 
 - (NSString*) textFieldValueWithUserDefaultsKey:(NSString*)key {
@@ -85,7 +85,10 @@
 
 -(void) viewDidAppear{
     // Do view setup here.
-    
+    [self initializeValues];
+}
+-(void)initializeValues
+{
     supportedCodecsMap = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"g722_preference",
                           @"1", @"pcmu_preference",
                           @"1", @"pcma_preference",
@@ -645,6 +648,11 @@
 //    if (!isChanged) {
 //        return;
 //    }
+    // but - if it has not appeared, then there is nothign to save yet.
+    if (![self isViewLoaded])
+    {
+        return;
+    }
     
     [self saveAudioCodecs];
     [self saveVideoCodecs];
@@ -681,7 +689,7 @@
     //linphone_core_set_video_preset(lc, [comboBoxVideoPreset.stringValue UTF8String]);
     
     MSVideoSize vsize;
-    
+    NSString* preferredSize = comboBoxPreferredSize.stringValue;
     if ([comboBoxPreferredSize.stringValue isEqualToString:@"1080p (1920x1080)"]) {
         MS_VIDEO_SIZE_ASSIGN(vsize, 1080P);
     } else     if ([comboBoxPreferredSize.stringValue isEqualToString:@"720p (1280x720)"]) {

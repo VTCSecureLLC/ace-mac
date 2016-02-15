@@ -35,4 +35,8 @@ NSString *const PREFERRED_VIDEO_RESOLUTION = @"video_preferred_size_preference";
 NSString *const MUTE_CAMERA = @"mute_camera";
 NSString *const RTCP_FB_MODE = @"RTCP_FB_MODE"; //Off (Default), Implicit, Explicit
 
+// testing
+NSString *const UPLOAD_BANDWIDTH = @"upload_bandwidth";
+NSString *const DOWNLOAD_BANDWIDTH = @"download_bandwidth";
+
 #endif /* SettingsConstants_h */

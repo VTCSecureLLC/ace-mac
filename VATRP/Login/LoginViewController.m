@@ -29,6 +29,7 @@
 @property (weak) IBOutlet NSTextField *textFieldPassword;
 @property (weak) IBOutlet NSTextField *textFieldDomain;
 @property (weak) IBOutlet NSTextField *textFieldPort;
+@property (weak) IBOutlet NSComboBox *comboBoxTransport;
 @property (weak) IBOutlet NSButton *loginButton;
 
 @property (weak) IBOutlet NSButton *buttonToggleAutoLogin;
@@ -222,7 +223,7 @@
     loginAccount.userID = self.textFieldUserID.stringValue;
     loginAccount.password = self.textFieldPassword.stringValue;
     loginAccount.domain = self.textFieldDomain.stringValue;
-    loginAccount.transport = @"TCP";
+    loginAccount.transport = [self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"] ? @"TLS" : @"TCP";
     loginAccount.port = self.textFieldPort.intValue;
 //  
 //    [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue UserID:self.textFieldUserID.stringValue Password:self.textFieldPassword.stringValue Domain:self.textFieldDomain.stringValue Transport:@"TCP" Port:self.textFieldPort.intValue isDefault:YES];
@@ -499,6 +500,18 @@
 
 - (void)customComboBox:(CustomComboBox*)sender didOpenedComboTable:(BOOL)isOpened {
     [self changeEditBoxesStates:isOpened];
+}
+
+- (IBAction)onComboboxTransport:(id)sender {
+    if([self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"]) {
+        if(self.textFieldPort.intValue == 25060) {
+            self.textFieldPort.stringValue = @"25061";
+        }
+    } else {
+        if(self.textFieldPort.intValue == 25061) {
+            self.textFieldPort.stringValue = @"25060";
+        }
+    }
 }
 
 @end

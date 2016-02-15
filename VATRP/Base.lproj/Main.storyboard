@@ -4201,8 +4201,8 @@ DQ
                                     <action selector="onCheckBox:" target="Xzr-Qg-o8r" id="z76-Ho-lIo"/>
                                 </connections>
                             </button>
-                            <button id="Vl7-0L-4br">
-                                <rect key="frame" x="245" y="324" width="156" height="18"/>
+                            <button hidden="YES" id="Vl7-0L-4br">
+                                <rect key="frame" x="245" y="264" width="156" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="SIP Encryption" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="TZC-sS-CnZ">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4213,7 +4213,7 @@ DQ
                                 </connections>
                             </button>
                             <button id="uPP-PT-fPo">
-                                <rect key="frame" x="245" y="294" width="156" height="18"/>
+                                <rect key="frame" x="245" y="324" width="156" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Wifi Only" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="ifR-ym-aih">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4224,7 +4224,7 @@ DQ
                                 </connections>
                             </button>
                             <button id="swQ-w4-DH7">
-                                <rect key="frame" x="245" y="264" width="187" height="28"/>
+                                <rect key="frame" x="245" y="294" width="187" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Auto answer call" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nLs-il-zuF">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

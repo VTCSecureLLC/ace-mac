@@ -352,6 +352,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     
     // enabled_codecs
     [self enableVideoCodecs];
+    [self enableAudioCodecs];
     
     // bwLimit - ? the name bwlimit is confusing
     //linphone_core_set_video_preset(lc, [DefaultSettingsManager sharedInstance].bwLimit.UTF8String);
@@ -404,15 +405,45 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
             CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
                                                             Rate:pt->clock_rate
                                                         Channels:pt->channels];
+            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
             BOOL enableVideoCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
             
             [mdictForSave setObject:[NSNumber numberWithBool:enableVideoCodec] forKey:codecModel.preference];
-            
+            linphone_core_enable_payload_type(lc, pt, enableVideoCodec);
         }
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
+}
+
+-(void)enableAudioCodecs
+{
+    LinphoneCore *lc = [LinphoneManager getLc];
+    const MSList *codecs = linphone_core_get_audio_codecs(lc);
     
+    PayloadType *pt;
+    const MSList *elem;
+    
+    NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
+    
+    for (elem = codecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            CodecModel *codecModel = [self getAudioCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                            Rate:pt->clock_rate
+                                                        Channels:pt->channels];
+            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
+            BOOL enableAudioCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
+            
+            [mdictForSave setObject:[NSNumber numberWithBool:enableAudioCodec] forKey:codecModel.preference];
+            linphone_core_enable_payload_type(lc, pt, enableAudioCodec);
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
+
 }
 
 - (CodecModel*) getVideoCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {
@@ -449,6 +480,50 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     }
     
     for (CodecModel *codecModel in videoCodecList) {
+        if ([codecModel.name isEqualToString:name] &&
+            codecModel.rate == rate &&
+            codecModel.channels == channels) {
+            return codecModel;
+        }
+    }
+    
+    return nil;
+}
+
+- (CodecModel*) getAudioCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {
+    PayloadType *pt;
+    const MSList *elem;
+    NSMutableArray *audioCodecList = [[NSMutableArray alloc] init];
+    LinphoneCore *lc = [LinphoneManager getLc];
+    const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
+    
+    NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
+    
+    for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+        pt = (PayloadType *)elem->data;
+        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        
+        if (pref) {
+            bool_t value = linphone_core_payload_type_enabled(lc, pt);
+            
+            CodecModel *codecModel = [[CodecModel alloc] init];
+            
+            codecModel.name = [NSString stringWithUTF8String:pt->mime_type];
+            codecModel.preference = pref;
+            codecModel.rate = pt->clock_rate;
+            codecModel.channels = pt->channels;
+            
+            if ([dictAudioCodec objectForKey:pref]) {
+                codecModel.status = [[dictAudioCodec objectForKey:pref] boolValue];
+            } else {
+                codecModel.status = value;
+            }
+            
+            [audioCodecList addObject:codecModel];
+        }
+    }
+    
+    for (CodecModel *codecModel in audioCodecList) {
         if ([codecModel.name isEqualToString:name] &&
             codecModel.rate == rate &&
             codecModel.channels == channels) {

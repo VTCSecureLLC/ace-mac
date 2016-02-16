@@ -165,8 +165,10 @@
     if ([fileManager fileExistsAtPath:filePath]) {
         [fileManager removeItemAtPath:filePath error:nil];
     }
-    
+
     [[AppDelegate sharedInstance] SignOut];
+    [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
+    [self.view.superview.window close];
 }
 
 @end

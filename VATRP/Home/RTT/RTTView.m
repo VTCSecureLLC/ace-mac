@@ -345,7 +345,7 @@ static void chatTable_free_chatrooms(void *data) {
             if (strcasecmp(cr_from_string, fromStr) == 0) {
                 linphone_chat_room_mark_as_read(room);
                 
-                [self updateContentData];
+//                [self updateContentData];
                 [self.tableViewContent reloadData];
                 
                 NSInteger count = ms_list_size(messageList);

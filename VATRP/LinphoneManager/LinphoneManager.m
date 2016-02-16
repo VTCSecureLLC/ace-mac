@@ -1356,7 +1356,7 @@ static BOOL libStarted = FALSE;
     linphone_core_set_friends_database_path(theLinphoneCore, [friendListFilePath UTF8String]);
     
     // start scheduler
-    mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.02
+    mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.03
                                                      target:self
                                                    selector:@selector(iterate)
                                                    userInfo:nil

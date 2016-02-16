@@ -288,7 +288,7 @@ char **soundlist;
 
 - (void)initializeLevelTimer
 {
-    self.timerRecordingLevelsUpdate = [NSTimer scheduledTimerWithTimeInterval: 0.03 target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
+    self.timerRecordingLevelsUpdate = [NSTimer scheduledTimerWithTimeInterval: 0.1 target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
 }
 
 - (void)levelTimerCallback:(NSTimer *)timer

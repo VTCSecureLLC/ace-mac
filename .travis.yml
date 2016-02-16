@@ -21,32 +21,9 @@ cache:
   - $HOME/.homebrew
   - /Library/Caches/Homebrew
 before_script:
-- export HOMEBREW_PREFIX=$HOME/.homebrew
-- if [[ -d $HOMEBREW_PREFIX ]]; then echo "HOMEBREW_PREFIX=$HOMEBREW_PREFIX"; else rsync -aq /usr/local/ $HOMEBREW_PREFIX; fi
-- export PATH=$HOMEBREW_PREFIX/bin:$PATH; hash -r
-- which ccache || brew install ccache || brew link --force ccache || true
-- which md5deep || brew install ccache || brew link --force md5deep || true
-- export CCACHE_DIR=$HOME/.ccache
-- export LINPHONE_CCACHE=ccache
-- export CCACHE_SLOPPINESS=pch_defines,time_macros,include_file_mtime,include_file_ctime,file_macro
-- export CCACHE_COMPILERCHECK=content
-- ccache -M 5G
-- ccache -s 
-- brew update 1>/dev/null
-- brew install doxygen nasm yasm optipng imagemagick intltool ninja antlr cmake gettext
-- brew link --force gettext
-- brew install cairo --without-x11
-- brew install gtk+ --without-x11
-- brew install gtk-mac-integration hicolor-icon-theme
-- wget --no-check-certificate https://raw.github.com/yuvi/gas-preprocessor/master/gas-preprocessor.pl
-- chmod +x gas-preprocessor.pl
-- sudo mv gas-preprocessor.pl /usr/local/bin
-- sudo ln -s /usr/local/bin/glibtoolize /usr/local/bin/libtoolize
-- git submodule update --init --recursive
-- bundle install
+- ./Tools/prepare.sh
 - ./Tools/git_version.sh
 script:
-- python prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_H263=YES -DENABLE_FFMPEG=YES -DENABLE_NON_FREE_CODECS=ON  -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_AMRWB=YES -DENABLE_AMRNB=YES -DENABLE_OPENH264=YES -DENABLE_G729=YES -DENABLE_MPEG4=YES -DENABLE_H263P=ON -DENABLE_ILBC=ON -DENABLE_ISAC=ON -DENABLE_SILK=ON -DENABLE_VCARD=ON -p
 - ./Tools/build_script.sh
 - xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration
   Debug build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS="" 

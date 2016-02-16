@@ -3,10 +3,10 @@
 	url = git://git.linphone.org/belle-sip
 [submodule "submodules/cmake-builder"]
 	path = submodules/cmake-builder
-	url = git://github.com/VTCSecureLLC/linphone-cmake-builder
+	url = git@github.com:VTCSecureLLC/linphone-cmake-builder.git
 [submodule "submodules/linphone"]
 	path = submodules/linphone
-	 url = git://github.com/VTCSecureLLC/linphone.git
+	 url = git@github.com:VTCSecureLLC/linphone.git
 [submodule "submodules/bcg729"]
 	path = submodules/bcg729
 	url = git://git.linphone.org/bcg729.git
@@ -43,3 +43,9 @@
 [submodule "submodules/belr"]
 	path = submodules/belr
 	url = git://git.linphone.org/belr.git
+[submodule "submodules/externals/libmatroska-c"]
+	path = submodules/externals/libmatroska-c
+	url = git://git.linphone.org/libmatroska-c.git
+[submodule "submodules/bctoolbox"]
+	path = submodules/bctoolbox
+	url = git://git.linphone.org/bctoolbox.git

@@ -1215,7 +1215,10 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 
 
 static BOOL libStarted = FALSE;
-
+-(bool)coreIsRunning
+{
+    return libStarted;
+}
 - (void)startLinphoneCore {
     
     if ( libStarted ) {
@@ -1356,7 +1359,7 @@ static BOOL libStarted = FALSE;
     linphone_core_set_friends_database_path(theLinphoneCore, [friendListFilePath UTF8String]);
     
     // start scheduler
-    mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.05
+    mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.02
                                                      target:self
                                                    selector:@selector(iterate)
                                                    userInfo:nil

@@ -57,8 +57,8 @@
 @property(weak,nonatomic)id<SettingsSelfViewDelegate> settingsSelfViewDelegate;
 
 // Bool force provided for debugging, and to reset settings when needed.
--(void)initializeUserDefaults:(bool)force;
-
+-(void) initializeUserDefaults:(bool)force;
+-(void) resetDefaultsWithCoreRunning;
 
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
 -(void) inCallSpeakerWasMuted:(bool)mute;

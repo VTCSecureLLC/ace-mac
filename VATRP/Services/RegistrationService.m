@@ -235,13 +235,16 @@
     for (elem=linphone_core_get_video_codecs(lc);elem!=NULL;elem=elem->next){
         pt=(PayloadType*)elem->data;
         NSString *pref=[SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
-
-        //Disable MP4V for VRS
-        if(strcmp(pt->mime_type, "MP4V-ES") == 0){
-            linphone_core_enable_payload_type(lc, pt, 0);
-            continue;
+        int enable = -1;
+        if (pref != nil)
+        {
+            enable = linphone_core_enable_payload_type(lc,pt,true);
         }
-        int enable = linphone_core_enable_payload_type(lc,pt,1);
+        else
+        {
+            // explicitly disable or linphone leaves it enabled.
+            enable = linphone_core_enable_payload_type(lc, pt, false);
+        }
 
         NSLog(@"enable: %d", enable);
     }
@@ -300,9 +303,15 @@
             pt = (PayloadType *)elem->data;
             NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
-            if ([dictAudioCodec objectForKey:pref]) {
+            if ([dictAudioCodec objectForKey:pref])
+            {
                 linphone_core_enable_payload_type(lc, pt, [[dictAudioCodec objectForKey:pref] boolValue]);
             }
+            else
+            {
+                linphone_core_enable_payload_type(lc, pt, false);
+            }
+                
         }
         
         const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
@@ -311,8 +320,13 @@
             pt = (PayloadType *)elem->data;
             NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
-            if ([dictVideoCodec objectForKey:pref]) {
+            if ([dictVideoCodec objectForKey:pref])
+            {
                 linphone_core_enable_payload_type(lc, pt, [[dictVideoCodec objectForKey:pref] boolValue]);
+            }
+            else
+            {
+                linphone_core_enable_payload_type(lc, pt, false);
             }
         }
     }

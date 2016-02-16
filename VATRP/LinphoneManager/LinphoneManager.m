@@ -266,14 +266,14 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     
 }
 
-- (void)silentPushFailed:(NSTimer*)timer
-{
+//- (void)silentPushFailed:(NSTimer*)timer
+//{
     //	if( silentPushCompletion ){
     //		LOGI(@"silentPush failed, silentPushCompletion block: %p", silentPushCompletion );
     //		silentPushCompletion(UIBackgroundFetchResultNoData);
     //		silentPushCompletion = nil;
     //	}
-}
+//}
 
 #pragma mark - Database Functions
 
@@ -1215,7 +1215,10 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 
 
 static BOOL libStarted = FALSE;
-
+-(bool)coreIsRunning
+{
+    return libStarted;
+}
 - (void)startLinphoneCore {
     
     if ( libStarted ) {

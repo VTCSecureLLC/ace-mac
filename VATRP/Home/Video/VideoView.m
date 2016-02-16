@@ -497,7 +497,7 @@
     CABasicAnimation *anime = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
     anime.fromValue = (id)[layer backgroundColor];
     anime.toValue = (id)CFBridgingRelease(CGColorCreateGenericRGB(0.8, 0.1, 0.1, 1.0));
-    anime.duration = 0.3f;
+    anime.duration = 0.5f;
     anime.autoreverses = YES;
     anime.repeatCount = 100;
     

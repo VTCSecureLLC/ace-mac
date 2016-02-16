@@ -123,6 +123,7 @@ typedef struct _LinphoneManagerSounds {
     CallContext currentCallContextBeforeGoingBackground;
 }
 + (LinphoneManager*)instance;
+- (bool)coreIsRunning;
 #ifdef DEBUG
 + (void)instanceRelease;
 #endif
@@ -194,7 +195,7 @@ typedef struct _LinphoneManagerSounds {
 
 - (float)lpConfigFloatForKey:(NSString*)key forSection:(NSString *)section;
 
-- (void)silentPushFailed:(NSTimer*)timer;
+//- (void)silentPushFailed:(NSTimer*)timer;
 
 @property (readonly) BOOL isTesting;
 //@property (readonly, strong) FastAddressBook* fastAddressBook;

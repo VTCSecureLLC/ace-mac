@@ -17,7 +17,6 @@
 #import <HockeySDK/HockeySDK.h>
 #import "LinphoneLocationManager.h"
 #import "SettingsHandler.h"
-#import <ExceptionHandling/NSExceptionHandler.h>
 
 @interface AppDelegate ()
 {

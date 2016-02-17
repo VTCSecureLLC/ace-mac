@@ -1,43 +1,40 @@
-# ACE Mac
+# ace-mac
 
-## Specific instructions for ACE Mac build
+## Accessible Communications for Everyone
 
-0. Get build time dependancies:
-    
-    A. Get homebrew from http://brew.sh/
-    
-    B. Open terminal app and run: 
+This is source tree for the ACE App for Mac.
 
-        brew update 
-        brew install doxygen nasm yasm optipng imagemagick coreutils intltool ninja antlr cmake gettext
-        brew link --force gettext
-        brew install cairo --without-x11
-        brew install gtk+ --without-x11
-        brew install gtk-mac-integration hicolor-icon-theme
-        wget --no-check-certificate https://raw.github.com/yuvi/gas-preprocessor/master/gas-preprocessor.pl
-        chmod +x gas-preprocessor.pl
-        sudo mv gas-preprocessor.pl /usr/local/bin
-        sudo ln -s /usr/local/bin/glibtoolize /usr/local/bin/libtoolize
-        
-    C. Initalize your git submodules: 
-        
+## Building
+
+This github project is automatically built via Travis.
+
+The `.travis.yml` file is what directs these Travis automated builds. This includes all bootstrapping and preparation of a build environment, including all of the steps below.
+
+These are the steps you can follow to build ace-ios locally.
+
+1. Ensure you have Xcode installed
+2. Prepare your build environment
+
+        ./Tools/prepare.sh
+
+3. Pull the ace-mac repo and init the submodules recursively
+
+        git clone git@github.com:VTCSecureLLC/ace-mac.git
+        cd ace-mac
         git submodule update --init --recursive
 
-1. Open terminal app in the current directory and run:
+4. (re)Build the SDK
 
-        prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_H263=YES -DENABLE_FFMPEG=YES -DENABLE_NON_FREE_CODECS=ON  -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_AMRWB=YES -DENABLE_AMRNB=YES -DENABLE_OPENH264=YES -DENABLE_G729=YES -DENABLE_MPEG4=YES -DENABLE_H263P=ON -DENABLE_ILBC=ON -DENABLE_ISAC=ON -DENABLE_SILK=ON -DENABLE_VCARD=ON -p
+        ./prepare.py -C
+        ./prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_VCARD=ON -p --all-codecs
+        make -j 8
 
-2. Build the SDK with:
+5. Open the ACE.xcodeproj in Xcode and run the project
 
-        make 
+        open ACE.xcodeproj
 
-3. Open the ACE.xcodeproj in Xcode and run the project
 
-Bonus. Update your local git repository:
-    
-    git pull && git submodule update --recursive 
-
-# Customizing your build
+## Customizing your build
 
 Some options can be given during the `prepare.py` step to customize the build. The basic usage of the `prepare.py` script is:
 
@@ -74,9 +71,16 @@ The options that enable you to configure what will be built are the ones beginni
 
 # Updating your build
 
-Simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
-However if the compilation fails, you may need to rebuild everything from scratch using:
+First, update your local git repository:
+    
+        git pull && git submodule update --recursive
 
-        ./prepare.py -C && ./prepare.py [options]
+Usually, simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
 
-Then you re-build as usual.
+If any of the submodules are updated, you will want to clear and rebuild the Linphone SDK.
+
+        ./prepare.py -C
+        ./prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_VCARD=ON -p --all-codecs
+        make -j 8
+
+Then re-build as usual.

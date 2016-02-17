@@ -55,10 +55,11 @@
                 address = [NSString stringWithUTF8String:lDisplayName];
             else if (lUserName)
                 address = [NSString stringWithUTF8String:lUserName];
-        }    }
-    
-    const char* uri = linphone_address_as_string_uri_only(addr);
-    self.textFieldSipURI.stringValue = [NSString stringWithUTF8String:uri];
+        }
+        
+        const char* uri = linphone_address_as_string_uri_only(addr);
+        self.textFieldSipURI.stringValue = [NSString stringWithUTF8String:uri];
+    }
     
     if (address == nil) {
         address = NSLocalizedString(@"Unknown", nil);

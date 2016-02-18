@@ -60,6 +60,11 @@
 
 + (void) callTo:(NSString*)number {
     
+    if (number && number.length && [number hasPrefix:@"00"]) {
+        number = [number substringFromIndex:2];
+        number = [@"+" stringByAppendingString:number];
+    }
+    
     NSString *expression = @"^\\+(?:[0-9] ?){6,14}[0-9]$";
     NSError *error = NULL;
     

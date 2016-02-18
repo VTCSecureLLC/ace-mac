@@ -266,14 +266,14 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     
 }
 
-- (void)silentPushFailed:(NSTimer*)timer
-{
+//- (void)silentPushFailed:(NSTimer*)timer
+//{
     //	if( silentPushCompletion ){
     //		LOGI(@"silentPush failed, silentPushCompletion block: %p", silentPushCompletion );
     //		silentPushCompletion(UIBackgroundFetchResultNoData);
     //		silentPushCompletion = nil;
     //	}
-}
+//}
 
 #pragma mark - Database Functions
 
@@ -1222,7 +1222,10 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 
 
 static BOOL libStarted = FALSE;
-
+-(bool)coreIsRunning
+{
+    return libStarted;
+}
 - (void)startLinphoneCore {
     
     if ( libStarted ) {
@@ -1358,7 +1361,7 @@ static BOOL libStarted = FALSE;
     linphone_core_set_friends_database_path(theLinphoneCore, [friendListFilePath UTF8String]);
     
     // start scheduler
-    mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.02
+    mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.03
                                                      target:self
                                                    selector:@selector(iterate)
                                                    userInfo:nil

@@ -121,7 +121,6 @@ const NSInteger SIP_SIMPLE=1;
     stateNewMessage = NO;
     
     [self updateContentData];
-    
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
@@ -243,6 +242,11 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
     switch (astate) {
+        case LinphoneCallConnected:{
+            [self clearMessageList];
+            [self.tableViewContent reloadData];
+        }
+        break;
         case LinphoneCallStreamsRunning: {
             //            [self updateContentData];
         }
@@ -345,7 +349,7 @@ static void chatTable_free_chatrooms(void *data) {
             if (strcasecmp(cr_from_string, fromStr) == 0) {
                 linphone_chat_room_mark_as_read(room);
                 
-                [self updateContentData];
+//                [self updateContentData];
                 [self.tableViewContent reloadData];
                 
                 NSInteger count = ms_list_size(messageList);

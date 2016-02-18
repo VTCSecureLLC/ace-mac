@@ -10,6 +10,9 @@
 #import "SettingsHandler.h"
 #import "SettingsConstants.h"
 #import "LinphoneManager.h"
+#import "SettingsService.h"
+#import "SDPNegotiationService.h"
+#import "DefaultSettingsManager.h"
 
 @implementation SettingsHandler
 
@@ -23,6 +26,54 @@
             sharedSettingsHandler = [[self alloc] init];
     }
     return sharedSettingsHandler;
+}
+
+- (void)resetDefaultsWithCoreRunning
+{
+    // update core properties while is is running.
+    [self initializeUserDefaults:true];
+    LinphoneCore* linphoneCore = [LinphoneManager getLc];
+    if ((linphoneCore != nil) && [LinphoneManager.instance coreIsRunning])
+    {
+        // now update the settings in linphone to match the defaults. Note: not all settings, but the media settings, for example.
+        // use the settingsserivce to update the settings in the core
+        // force to configuration defaults even if there will be no configuration
+        [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
+        LinphoneCore *lc = [LinphoneManager getLc];
+        const MSList *videoCodecs = linphone_core_get_audio_codecs(lc);
+        
+        PayloadType *pt;
+        const MSList *elem;
+        
+        for (elem = videoCodecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+            
+            if (pref) {
+                NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
+                BOOL enableVideoCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
+                
+                linphone_core_enable_payload_type(lc, pt, enableVideoCodec);
+            }
+        }
+        const MSList *audioCodecs = linphone_core_get_audio_codecs(lc);
+        
+//        PayloadType *pt;
+//        const MSList *elem;
+        
+        for (elem = audioCodecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+            
+            if (pref) {
+                NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
+                BOOL enableAudioCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
+                
+                linphone_core_enable_payload_type(lc, pt, enableAudioCodec);
+            }
+        }
+
+    }
 }
 
 // initialization of user settings
@@ -98,7 +149,7 @@
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enabled_codecs"] == nil)
     {
         // enabled_codecs\":[\"H.264\",\"H.263\",\"VP8\",\"G.722\",\"G.711\"]
-        NSArray *enabledCodecs = @[@"H.264", @"H.263", @"VP8", @"G.722", @"G.711"];
+        NSArray *enabledCodecs = @[@"H.263", @"VP8", @"G.722", @"G.711"];
         [[NSUserDefaults standardUserDefaults] setObject:enabledCodecs forKey:@"enabled_codecs"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"bwLimit"] == nil)

@@ -18,7 +18,8 @@
 #import "LinphoneLocationManager.h"
 #import "SettingsHandler.h"
 
-@interface AppDelegate () {
+@interface AppDelegate ()
+{
     VideoCallWindowController *videoCallWindowController;
     AboutWindowController *aboutWindowController;
 }
@@ -32,7 +33,20 @@
 @synthesize homeWindowController;
 @synthesize viewController;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
+-(void) applicationWillFinishLaunching:(NSNotification *)notification
+{
+#ifdef DEBUG
+    NSLog(@"Debug: No crashes will be reported");
+#else
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b7b28171bab92ce345aac7d54f435020"];
+    [[BITHockeyManager sharedHockeyManager].crashManager setAutoSubmitCrashReport: YES];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+#endif
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
     // Insert code here to initialize your application
     // Initialize settings on launch if they have not been.
     [SettingsHandler.settingsHandler initializeUserDefaults:false];
@@ -54,13 +68,6 @@
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSLog(@"LinphoneVersion: %@", linphoneVersion);
 
-#ifdef DEBUG
-    NSLog(@"Debug: No crashes will be reported");
-#else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b7b28171bab92ce345aac7d54f435020"];
-    [[BITHockeyManager sharedHockeyManager].crashManager setAutoSubmitCrashReport: YES];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-#endif
 
     linphone_core_set_log_level(ORTP_DEBUG);
     linphone_core_enable_logs_with_cb(linphone_iphone_log_handler);
@@ -93,6 +100,7 @@
 }
 
 - (void) showTabWindow {
+    
     self.homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
     [self.homeWindowController showWindow:self];
 
@@ -176,7 +184,7 @@
 //                                                       Transport:accountModel.transport
 //                                                            Port:accountModel.port
 //                                                       isDefault:YES];
-        [SettingsHandler.settingsHandler initializeUserDefaults:true];
+        [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
     }
     
     [self closeTabWindow];

@@ -60,22 +60,24 @@
     
 }
 
--(void)initializeValues
-{
+-(void)initializeValues{
     LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
-    
+
     if (proxyCfg) {
         self.buttonEnableAVPF.state = linphone_proxy_config_avpf_enabled(proxyCfg);
     }
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
+    
     SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
     int upBand = [settingsHandler getUploadBandwidth];
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
+    
     NSString *rtcpFbMode = [SettingsHandler.settingsHandler getRtcpFbMode];
+    if(!rtcpFbMode){ rtcpFbMode = @"Implicit"; }
+    
     [self.comboBoxRTCPFeedBack setStringValue:rtcpFbMode];
-
 }
 
 
@@ -168,6 +170,22 @@
 
     [[AppDelegate sharedInstance] SignOut];
     [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
+    int pid = [[NSProcessInfo processInfo] processIdentifier];
+    NSPipe *pipe = [NSPipe pipe];
+    NSFileHandle *file = pipe.fileHandleForReading;
+    
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/usr/bin/grep";
+    task.arguments = @[@"foo", @"bar.txt"];
+    task.standardOutput = pipe;
+    
+    [task launch];
+    linphone_core_clear_call_logs([LinphoneManager getLc]);
+    linphone_core_clear_all_auth_info([LinphoneManager getLc]);
+    system("defaults delete com.vtcsecure.ace.mac;\
+           mv ~/Library/Application\ Support/com.vtcsecure.ace.mac ~/Libraries/Application\ Support/com.vtcsecure.ace.mac-bad;\
+           mv ~/Library/Preferences\ Support/com.vtcsecure.ace.mac.plist ~/Library/Preferences\ Support/com.vtcsecure.ace.mac.plist-bad;");
+    [[SettingsHandler settingsHandler] resetDefaultsWithCoreRunning];
     [self.view.superview.window close];
 }
 

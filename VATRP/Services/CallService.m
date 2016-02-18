@@ -59,6 +59,20 @@
 }
 
 + (void) callTo:(NSString*)number {
+    
+    NSString *expression = @"^\\+(?:[0-9] ?){6,14}[0-9]$";
+    NSError *error = NULL;
+    
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression options:NSRegularExpressionCaseInsensitive error:&error];
+    
+    NSTextCheckingResult *match = [regex firstMatchInString:number options:0 range:NSMakeRange(0, [number length])];
+    
+    BOOL isInternationalNumber = NO;
+    
+    if (match) {
+        isInternationalNumber = YES;
+    }
+
     // sanity check - make sure that we are not making a call to an address that we already ahve a call out to.
     const MSList *call_list = linphone_core_get_calls([LinphoneManager getLc]);
     int count = 0;
@@ -90,6 +104,12 @@
 // by doing this and not worrying about comparing the adress above.
     if (count == 0)
     {
+        if (isInternationalNumber) {
+            LinphoneProxyConfig *proxyConfig = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+            const char *domain = linphone_proxy_config_get_domain(proxyConfig);
+            number = [NSString stringWithFormat:@"sip:%@@%s;user=phone", number, domain];
+        }
+        
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
         linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
         [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];

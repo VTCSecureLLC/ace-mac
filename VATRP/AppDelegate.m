@@ -93,6 +93,30 @@
     if(linphone_core_get_current_call(lc)){
         linphone_core_terminate_all_calls(lc);
     }
+
+    BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"auto_login"]){
+        shouldAutoLogin = NO;
+    }
+    
+    if (!shouldAutoLogin) {
+        AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+        
+        if (accountModel) {
+            [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+            [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
+        }
+        
+        // Get the default proxyCfg in Linphone
+        LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+        
+        // To unregister from SIP
+        linphone_proxy_config_edit(proxyCfg);
+        linphone_proxy_config_enable_register(proxyCfg, false);
+        linphone_proxy_config_done(proxyCfg);
+        
+        [[LinphoneManager instance] destroyLinphoneCore];
+    }
 }
 
 + (AppDelegate*)sharedInstance {
@@ -177,13 +201,6 @@
     
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
-//        [[AccountsService sharedInstance] addAccountWithUsername:accountModel.username
-//                                                          UserID:accountModel.userID
-//                                                        Password:@""
-//                                                          Domain:accountModel.domain
-//                                                       Transport:accountModel.transport
-//                                                            Port:accountModel.port
-//                                                       isDefault:YES];
         [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
     }
     
@@ -191,8 +208,7 @@
     [viewController closeAllWindows];
     
     // Get the default proxyCfg in Linphone
-    LinphoneProxyConfig* proxyCfg = NULL;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
     
     // To unregister from SIP
     linphone_proxy_config_edit(proxyCfg);

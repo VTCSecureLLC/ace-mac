@@ -59,6 +59,8 @@
 }
 
 + (void) callTo:(NSString*)number {
+    LinphoneCore *lc = [LinphoneManager getLc];
+
     if (![number stringByReplacingOccurrencesOfString:@" " withString:@""].length) {
         NSAlert *alert = [[NSAlert alloc]init];
         [alert addButtonWithTitle:NSLocalizedString(@"OK",nil)];
@@ -69,7 +71,7 @@
     }
     
     // sanity check - make sure that we are not making a call to an address that we already ahve a call out to.
-    const MSList *call_list = linphone_core_get_calls([LinphoneManager getLc]);
+    const MSList *call_list = linphone_core_get_calls(lc);
     int count = 0;
     if (call_list)
     {
@@ -99,8 +101,36 @@
 // by doing this and not worrying about comparing the adress above.
     if (count == 0)
     {
+        @try {
+            LinphoneAddress *address = linphone_core_create_address(lc, [number UTF8String]);
+            if (address) {
+                const char *addr_username = linphone_address_get_username(address);
+                NSString *username = [NSString stringWithUTF8String:addr_username];
+                
+                if (username && username.length && [username hasPrefix:@"00"]) {
+                    username = [username substringFromIndex:2];
+                    username = [@"+" stringByAppendingString:username];
+                }
+                
+                NSString *expression = @"^\\+(?:[0-9] ?){6,14}[0-9]$";
+                NSError *error = NULL;
+                
+                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression options:NSRegularExpressionCaseInsensitive error:&error];
+                
+                NSTextCheckingResult *match = [regex firstMatchInString:username options:0 range:NSMakeRange(0, [username length])];
+                
+                if (match) {
+                    const char *domain = linphone_address_get_domain(address);
+                    number = [NSString stringWithFormat:@"sip:%@@%s;user=phone", username, domain];
+                }
+            }
+        }
+        @catch (NSException *exception) {
+            NSLog(@"CALL Exception: %@", exception);
+        }
+        
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
-        linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
+        linphone_core_enable_self_view(lc, [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
         [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
     }
 }

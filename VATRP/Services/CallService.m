@@ -59,6 +59,15 @@
 }
 
 + (void) callTo:(NSString*)number {
+    if (![number stringByReplacingOccurrencesOfString:@" " withString:@""].length) {
+        NSAlert *alert = [[NSAlert alloc]init];
+        [alert addButtonWithTitle:NSLocalizedString(@"OK",nil)];
+        [alert setMessageText:NSLocalizedString(@"Please enter a valid number", nil)];
+        [alert runModal];
+        
+        return;
+    }
+    
     // sanity check - make sure that we are not making a call to an address that we already ahve a call out to.
     const MSList *call_list = linphone_core_get_calls([LinphoneManager getLc]);
     int count = 0;

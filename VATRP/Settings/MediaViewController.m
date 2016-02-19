@@ -107,11 +107,11 @@ char **soundlist;
     camlist = (char**)linphone_core_get_video_devices([LinphoneManager getLc]);
     [self.comboBoxCaptureDevices removeAllItems];
     for (char* cam = *camlist;*camlist!=NULL;cam=*++camlist) {
-        [self.comboBoxCaptureDevices addItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
+        [self.comboBoxCaptureDevices addItemWithObjectValue:[self takeDevicePureName:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]]];
     }
     
     const char * cam = linphone_core_get_video_device([LinphoneManager getLc]);
-    [self.comboBoxCaptureDevices selectItemWithObjectValue:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]];
+    [self.comboBoxCaptureDevices selectItemWithObjectValue:[self takeDevicePureName:[NSString stringWithCString:cam encoding:NSUTF8StringEncoding]]];
     
     soundlist = (char**)linphone_core_get_sound_devices([LinphoneManager getLc]);
 
@@ -140,6 +140,16 @@ char **soundlist;
         [self displaySelectedVideoDevice];
     }
 
+}
+
+- (NSString*)takeDevicePureName:(NSString*)fullDeviceString {
+    NSArray *splitString = [fullDeviceString componentsSeparatedByString:@": "];
+    NSString *pureDeviceName = fullDeviceString;
+    if (splitString.count > 1) {
+        pureDeviceName = [splitString objectAtIndex:1];
+    }
+    
+    return pureDeviceName;
 }
 
 - (IBAction)onComboboxPreferedVideoResolution:(id)sender {

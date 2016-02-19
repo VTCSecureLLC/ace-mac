@@ -121,7 +121,6 @@ const NSInteger SIP_SIMPLE=1;
     stateNewMessage = NO;
     
     [self updateContentData];
-    
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
@@ -243,6 +242,11 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
     switch (astate) {
+        case LinphoneCallConnected:{
+            [self clearMessageList];
+            [self.tableViewContent reloadData];
+        }
+        break;
         case LinphoneCallStreamsRunning: {
             //            [self updateContentData];
         }

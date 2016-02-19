@@ -77,12 +77,12 @@ NSString *const kLinphoneVideModeUpdate = @"LinphoneVideoModeUpdate";
 
 const int kLinphoneAudioVbrCodecDefaultBitrate=36; /*you can override this from linphonerc or linphonerc-factory*/
 
-extern void libmsilbc_init(void);
-extern void libmsamr_init(void);
-extern void libmsx264_init(void);
-extern void libmsopenh264_init(void);
-extern void libmssilk_init(void);
-extern void libmsbcg729_init(void);
+extern void libmsamr_init(MSFactory *factory);
+//extern void libmsx264_init(MSFactory *factory);
+extern void libmsopenh264_init(MSFactory *factory);
+extern void libmssilk_init(MSFactory *factory);
+extern void libmsbcg729_init(MSFactory *factory);
+extern void libmswebrtc_init(MSFactory *factory);
 
 #define FRONT_CAM_NAME "AV Capture: com.apple.avfoundation.avcapturedevice.built-in_video:1" /*"AV Capture: Front Camera"*/
 #define BACK_CAM_NAME "AV Capture: com.apple.avfoundation.avcapturedevice.built-in_video:0" /*"AV Capture: Back Camera"*/
@@ -478,7 +478,14 @@ static void dump_section(const char* section, void* data){
         lp_config_for_each_section(conf, dump_section, conf);
     }
 }
-
+void configH264HardwareAcell(bool encode, bool decode){
+    MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
+    ms_factory_enable_filter_from_name(f, "VideoToolboxH264encoder", encode);
+    ms_factory_enable_filter_from_name(f, "VideoToolboxH264decoder", decode);
+    
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", !encode);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", !decode);
+}
 #pragma mark - Logs Functions handlers
 static void linphone_iphone_log_user_info(struct _LinphoneCore *lc, const char *message) {
     //	linphone_iphone_log_handler(ORTP_MESSAGE, message, NULL);
@@ -1307,35 +1314,30 @@ static BOOL libStarted = FALSE;
     }
     //	LOGI(@"Create linphonecore");
     
+    theLinphoneCore = linphone_core_new_with_config (&linphonec_vtable
+                                                     ,configDb
+                                                     ,(__bridge void *)(self) /* user_data */);
+    
+   
+
     connectivity=none;
     
-    ms_init(); // Need to initialize mediastreamer2 before loading the plugins
     
-    //	libmsilbc_init();
-#if defined (HAVE_SILK)
-    libmssilk_init();
-#endif
-#ifdef HAVE_AMR
-    libmsamr_init(); //load amr plugin if present from the liblinphone sdk
-#endif
-#ifdef HAVE_X264
-    libmsx264_init(); //load x264 plugin if present from the liblinphone sdk
-#else
-    libmsopenh264_init(); //load openh264 plugin if present from the liblinphone sdk
-#endif
-#if HAVE_G729
-    libmsbcg729_init(); // load g729 plugin
-#endif
+    // Load plugins if available in the linphone SDK - otherwise these calls will do nothing
+    MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
+    libmssilk_init(f);
+    libmsamr_init(f);
+//    libmsx264_init(f);
+    libmsopenh264_init(f);
+    libmsbcg729_init(f);
+    libmswebrtc_init(f);
+    linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
     
     linphone_core_set_log_collection_path([[LinphoneManager cacheDirectory] UTF8String]);
     [self setLogsEnabled:[self lpConfigBoolForKey:@"debugenable_preference"]];
     
     [[AppDelegate sharedInstance].viewController showVideoMailWindow];
-    
-    theLinphoneCore = linphone_core_new_with_config (&linphonec_vtable
-                                                     ,configDb
-                                                     ,(__bridge void *)(self) /* user_data */);
-    
+
     linphone_core_enable_video_preview(theLinphoneCore, FALSE);
     linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
     
@@ -1364,6 +1366,7 @@ static BOOL libStarted = FALSE;
                                                    selector:@selector(iterate)
                                                    userInfo:nil
                                                     repeats:YES];
+//   configH264HardwareAcell(false, false);
 }
 
 - (void)destroyLinphoneCore {

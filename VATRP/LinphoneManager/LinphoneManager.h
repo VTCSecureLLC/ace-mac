@@ -197,6 +197,9 @@ typedef struct _LinphoneManagerSounds {
 
 //- (void)silentPushFailed:(NSTimer*)timer;
 
+void configH264HardwareAcell(bool encode, bool decode);
+
+
 @property (readonly) BOOL isTesting;
 //@property (readonly, strong) FastAddressBook* fastAddressBook;
 @property Connectivity connectivity;

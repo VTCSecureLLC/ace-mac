@@ -70,7 +70,7 @@
 
 
     linphone_core_set_log_level(ORTP_DEBUG);
-    linphone_core_set_log_handler((OrtpLogFunc)linphone_iphone_log_handler);
+    linphone_core_enable_logs_with_cb(linphone_iphone_log_handler);
     
     [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
 }
@@ -232,8 +232,9 @@
     }
 }
 
-void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {
-    NSString *format = [[NSString alloc] initWithUTF8String:fmt];
+
+void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const char *fmt, va_list args) {
+     NSString *format = [[NSString alloc] initWithUTF8String:fmt];
     NSString *formatedString = [[NSString alloc] initWithFormat:format arguments:args];
     char levelC = 'I';
     switch ((OrtpLogLevel)lev) {
@@ -259,6 +260,7 @@ void linphone_iphone_log_handler(int lev, const char *fmt, va_list args) {
     // since \r are interpreted like \n, avoid double new lines when logging packets
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSLog(@"%@ %c %@",linphoneVersion, levelC, [formatedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"]);
+    
 }
 
 @end

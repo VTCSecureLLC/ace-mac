@@ -31,8 +31,15 @@
     self = [super init];
     
     if (self) {
-        [[LinphoneManager instance]	startLinphoneCore];
-        [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+        BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+        if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"auto_login"]){
+            shouldAutoLogin = NO;
+        }
+
+        if (shouldAutoLogin) {
+            [[LinphoneManager instance]	startLinphoneCore];
+            [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+        }
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(registrationUpdateEvent:)
@@ -223,7 +230,7 @@
     [self clearProxyConfig];
     
     NSString *serverAddress = [NSString stringWithFormat:@"sip:%@:%d;transport=%@", domain, port, transport];
-    linphone_proxy_config_enable_register(proxyCfg, true);
+//    linphone_proxy_config_enable_register(proxyCfg, true);
     linphone_proxy_config_set_server_addr(proxyCfg, [serverAddress UTF8String]);
     linphone_core_add_auth_info(lc, info);
     linphone_core_add_proxy_config(lc, proxyCfg);

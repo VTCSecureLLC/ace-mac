@@ -61,11 +61,11 @@
 - (void)loadView {
     [super loadView];
     
+//    [[LinphoneManager instance]	startLinphoneCore];
+//    [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+
     [AppDelegate sharedInstance].loginViewController = self;
 
-    [[LinphoneManager instance]	startLinphoneCore];
-    [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
-    
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
 
     if (accountModel) {
@@ -73,6 +73,12 @@
         self.textFieldUserID.stringValue = accountModel.userID;
         self.textFieldDomain.stringValue = accountModel.domain;
         self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+        
+        if (accountModel.transport && [accountModel.transport isEqualToString:@"TCP"]) {
+            self.comboBoxTransport.stringValue = @"Unencrypted (TCP)";
+        } else {
+            self.comboBoxTransport.stringValue = @"Encrypted (TLS)";
+        }
     }
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
@@ -81,6 +87,8 @@
     }
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     [self.comboBoxProviderSelect removeAllItems];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -174,6 +182,16 @@
     
 }
 
+-(void)globalStateChangedNotificationHandler:(NSNotification*)notif {
+    if ((LinphoneGlobalState)[[[notif userInfo] valueForKey:@"state"] integerValue] == LinphoneGlobalOn) {
+        NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
+        [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
+                                                               withUsername:self.textFieldUsername.stringValue
+                                                                andPassword:self.textFieldPassword.stringValue];
+        [DefaultSettingsManager sharedInstance].delegate = self;
+    }
+}
+
 #pragma mark - CustomComboBox delegate methods
 
 - (void)customComboBox:(CustomComboBox *)sender didSelectedItem:(NSDictionary *)selectedItem {
@@ -191,15 +209,20 @@
 //}
 
 - (IBAction)onButtonLogin:(id)sender {
+    if (![[LinphoneManager instance] coreIsRunning]) {
+        [[LinphoneManager instance]	startLinphoneCore];
+        [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+    } else {
+        NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
+        [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
+                                                               withUsername:self.textFieldUsername.stringValue
+                                                                andPassword:self.textFieldPassword.stringValue];
+        [DefaultSettingsManager sharedInstance].delegate = self;
+    }
     
     [self.prog_Signin setHidden:NO];
     [self.prog_Signin startAnimation:self];
     [self.loginButton setEnabled:NO];
-    NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
-    [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
-                                                           withUsername:self.textFieldUsername.stringValue
-                                                            andPassword:self.textFieldPassword.stringValue];
-    [DefaultSettingsManager sharedInstance].delegate = self;
 }
 
 - (void)didFinishLoadingConfigData {
@@ -225,8 +248,18 @@
     loginAccount.domain = self.textFieldDomain.stringValue;
     loginAccount.transport = [self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"] ? @"TLS" : @"TCP";
     loginAccount.port = self.textFieldPort.intValue;
-//  
-//    [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue UserID:self.textFieldUserID.stringValue Password:self.textFieldPassword.stringValue Domain:self.textFieldDomain.stringValue Transport:@"TCP" Port:self.textFieldPort.intValue isDefault:YES];
+  
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+    if (accountModel) {
+        [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+    }
+    [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
+                                                      UserID:self.textFieldUserID.stringValue
+                                                    Password:self.textFieldPassword.stringValue
+                                                      Domain:self.textFieldDomain.stringValue
+                                                   Transport:[self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"] ? @"TLS" : @"TCP"
+                                                        Port:self.textFieldPort.intValue
+                                                   isDefault:YES];
     
     [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
                                                         UserID:loginAccount.userID

@@ -511,6 +511,7 @@
 }
 
 - (void)setMouseInCallWindow {
+    if(!call) return;
     LinphoneCallState call_state = linphone_call_get_state(call);
     
     if (call_state == LinphoneCallConnected ||

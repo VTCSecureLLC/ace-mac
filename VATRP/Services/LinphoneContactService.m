@@ -68,7 +68,8 @@
 
 - (NSMutableArray*)contactList {
     NSMutableArray *contacts = [NSMutableArray new];
-    const MSList* proxies = linphone_core_get_friend_list([LinphoneManager getLc]);
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    const MSList* proxies = linphone_friend_list_get_friends(friendList);
     while (proxies != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)proxies->data;
         const LinphoneAddress *address = linphone_friend_get_address(friend);
@@ -86,7 +87,8 @@
 
 - (NSMutableArray*)contactListBySearchText:(NSString *)searchText {
     NSMutableArray *contacts = [NSMutableArray new];
-    const MSList* proxies = linphone_core_get_friend_list([LinphoneManager getLc]);
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    const MSList* proxies = linphone_friend_list_get_friends(friendList);
     while (proxies != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)proxies->data;
         const LinphoneAddress *address = linphone_friend_get_address(friend);
@@ -111,7 +113,8 @@
 - (void)deleteContact:(const LinphoneFriend *)contact {
     LinphoneAddress *deletedAddress = (LinphoneAddress*)linphone_friend_get_address(contact);
     char* delAddress = linphone_address_as_string(deletedAddress);
-    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    const MSList* friends = linphone_friend_list_get_friends(friendList);
     while (friends != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)friends->data;
         friends = ms_list_next(friends);
@@ -129,7 +132,8 @@
 }
 
 - (void)deleteContactList {
-    const MSList* friends = linphone_core_get_friend_list([LinphoneManager getLc]);
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    const MSList* friends = linphone_friend_list_get_friends(friendList);
     while (friends != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)friends->data;
         friends = ms_list_next(friends);

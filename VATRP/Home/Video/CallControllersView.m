@@ -163,9 +163,16 @@ BOOL isRTTLocallyEnabled;
 
 }
 
--(void)updateUIForMicrophoneMute:(bool)mute
-{
+-(void)updateUIForMicrophoneMute:(bool)mute{
+    if(!call) return;
+    
     LinphoneCore *lc = [LinphoneManager getLc];
+    const LinphoneCallParams *params = linphone_call_get_current_params(call);
+    
+    if(!params) return;
+    
+    if(!linphone_call_params_audio_enabled(params)) return;
+    
     linphone_core_enable_mic(lc, !mute);
     if (mute) {
         [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];

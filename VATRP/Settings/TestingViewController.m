@@ -170,21 +170,13 @@
 
     [[AppDelegate sharedInstance] SignOut];
     [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
-    int pid = [[NSProcessInfo processInfo] processIdentifier];
-    NSPipe *pipe = [NSPipe pipe];
-    NSFileHandle *file = pipe.fileHandleForReading;
-    
-    NSTask *task = [[NSTask alloc] init];
-    task.launchPath = @"/usr/bin/grep";
-    task.arguments = @[@"foo", @"bar.txt"];
-    task.standardOutput = pipe;
-    
-    [task launch];
+
     linphone_core_clear_call_logs([LinphoneManager getLc]);
     linphone_core_clear_all_auth_info([LinphoneManager getLc]);
     system("defaults delete com.vtcsecure.ace.mac;\
-           mv ~/Library/Application\ Support/com.vtcsecure.ace.mac ~/Libraries/Application\ Support/com.vtcsecure.ace.mac-bad;\
-           mv ~/Library/Preferences\ Support/com.vtcsecure.ace.mac.plist ~/Library/Preferences\ Support/com.vtcsecure.ace.mac.plist-bad;");
+           rm -rf ~/Library/Application\\ Support/com.vtcsecure.ace.mac;\
+            rm -rf ~/Library/Preferences/com.vtcsecure.ace.mac.plist;");
+    [[SettingsHandler settingsHandler]  initializeUserDefaults:NO];
     [[SettingsHandler settingsHandler] resetDefaultsWithCoreRunning];
     [self.view.superview.window close];
 }

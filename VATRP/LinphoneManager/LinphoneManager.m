@@ -1367,7 +1367,7 @@ static BOOL libStarted = FALSE;
     libmsbcg729_init(f);
     libmswebrtc_init(f);
     linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
-    configH264HardwareAcell(false, true);
+    configH264HardwareAcell(false, false);
 }
 
 - (void)destroyLinphoneCore {

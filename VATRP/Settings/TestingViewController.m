@@ -23,6 +23,7 @@
 
 @property (weak) IBOutlet NSTextField *textFieldMaxUpload;
 @property (weak) IBOutlet NSTextField *textFieldMaxDownload;
+@property (weak) IBOutlet NSButton *buttonQoS;
 
 @end
 
@@ -53,11 +54,9 @@
     [self initializeValues];
 }
 
--(void)viewWillAppear
-{
+-(void)viewWillAppear {
     [super viewWillAppear];
     [self initializeValues];
-    
 }
 
 -(void)initializeValues{
@@ -78,6 +77,11 @@
     if(!rtcpFbMode){ rtcpFbMode = @"Implicit"; }
     
     [self.comboBoxRTCPFeedBack setStringValue:rtcpFbMode];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"enable_QoS"]) {
+        self.buttonQoS.state = YES;
+    } else {
+        self.buttonQoS.state = [[SettingsHandler settingsHandler] isQosEnabled];
+    }
 }
 
 
@@ -106,9 +110,29 @@
         // sets the value int he linphone core if the core exists.
         [settingsHandler setDownloadBandwidth:downloadBandwidth];
     }
+    [self saveQosValues];
+}
+
+- (void)saveQosValues {
+    bool stateQoS = [self.buttonQoS state];
+    [[SettingsHandler settingsHandler] setQoSEnable:stateQoS];
+    if (stateQoS) {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], 28);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], 38);
+        linphone_core_set_video_dscp([LinphoneManager getLc], 38);
+    } else {
+        // Default values
+        linphone_core_set_sip_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_video_dscp([LinphoneManager getLc], 0);
+    }
 }
 
 - (IBAction)onCheckBox:(id)sender {
+    isChanged = YES;
+}
+
+- (IBAction)onQoSCheckBox:(id)sender {
     isChanged = YES;
 }
 

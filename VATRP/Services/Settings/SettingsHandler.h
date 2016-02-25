@@ -78,6 +78,8 @@
 -(void) setVideoInitiate:(bool)enable;
 -(void) setVideoAccept:(bool)enable;
 
+- (void)setQoSEnable:(BOOL)enableQos;
+
 #pragma mark settings accessors
 // these settings are set when the UI calls one of the methods above.
 -(bool)isSpeakerMuted;
@@ -88,7 +90,7 @@
 -(bool)isMuteCamera;
 
 -(bool)isVideoEnabled;
-
+- (BOOL)isQosEnabled;
 
 #pragma mark Media Settings
 -(NSString*)getSelectedCamera;

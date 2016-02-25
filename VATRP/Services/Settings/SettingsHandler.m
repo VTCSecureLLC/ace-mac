@@ -368,6 +368,11 @@
     return [self getUserSettingBool:ENABLE_VIDEO];
 }
 
+#pragma mark QoS
+- (BOOL)isQosEnabled {
+    return [self getUserSettingBool:ENABLE_QoS];
+}
+
 #pragma mark Media Settings
 -(NSString*)getSelectedCamera
 {
@@ -519,6 +524,12 @@
 -(void)setAppSettingFloat:(NSString*)settingName withValue:(float)value
 {
     [[NSUserDefaults standardUserDefaults]setFloat:value forKey:settingName];
+}
+
+#pragma mark - testing
+
+- (void)setQoSEnable:(BOOL)enableQos {
+    [self setUserSettingBool:ENABLE_QoS withValue:enableQos];
 }
 
 @end

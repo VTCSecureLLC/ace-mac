@@ -60,22 +60,24 @@
     
 }
 
--(void)initializeValues
-{
+-(void)initializeValues{
     LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
-    
+
     if (proxyCfg) {
         self.buttonEnableAVPF.state = linphone_proxy_config_avpf_enabled(proxyCfg);
     }
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
+    
     SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
     int upBand = [settingsHandler getUploadBandwidth];
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
+    
     NSString *rtcpFbMode = [SettingsHandler.settingsHandler getRtcpFbMode];
+    if(!rtcpFbMode){ rtcpFbMode = @"Implicit"; }
+    
     [self.comboBoxRTCPFeedBack setStringValue:rtcpFbMode];
-
 }
 
 
@@ -168,6 +170,14 @@
 
     [[AppDelegate sharedInstance] SignOut];
     [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
+
+    linphone_core_clear_call_logs([LinphoneManager getLc]);
+    linphone_core_clear_all_auth_info([LinphoneManager getLc]);
+    system("defaults delete com.vtcsecure.ace.mac;\
+           rm -rf ~/Library/Application\\ Support/com.vtcsecure.ace.mac;\
+            rm -rf ~/Library/Preferences/com.vtcsecure.ace.mac.plist;");
+    [[SettingsHandler settingsHandler]  initializeUserDefaults:NO];
+    [[SettingsHandler settingsHandler] resetDefaultsWithCoreRunning];
     [self.view.superview.window close];
 }
 

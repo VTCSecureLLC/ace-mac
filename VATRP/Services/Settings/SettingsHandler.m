@@ -40,7 +40,7 @@
         // force to configuration defaults even if there will be no configuration
         [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
         LinphoneCore *lc = [LinphoneManager getLc];
-        const MSList *videoCodecs = linphone_core_get_audio_codecs(lc);
+        const MSList *videoCodecs = linphone_core_get_video_codecs(lc);
         
         PayloadType *pt;
         const MSList *elem;
@@ -50,7 +50,6 @@
             NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
             
             if (pref) {
-                NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
                 BOOL enableVideoCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
                 
                 linphone_core_enable_payload_type(lc, pt, enableVideoCodec);
@@ -66,7 +65,6 @@
             NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
             
             if (pref) {
-                NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
                 BOOL enableAudioCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
                 
                 linphone_core_enable_payload_type(lc, pt, enableAudioCodec);

@@ -1323,15 +1323,7 @@ static BOOL libStarted = FALSE;
     connectivity=none;
     
     
-    // Load plugins if available in the linphone SDK - otherwise these calls will do nothing
-    MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
-    libmssilk_init(f);
-    libmsamr_init(f);
-//    libmsx264_init(f);
-    libmsopenh264_init(f);
-    libmsbcg729_init(f);
-    libmswebrtc_init(f);
-    linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
+
     
     linphone_core_set_log_collection_path([[LinphoneManager cacheDirectory] UTF8String]);
     [self setLogsEnabled:[self lpConfigBoolForKey:@"debugenable_preference"]];
@@ -1366,7 +1358,16 @@ static BOOL libStarted = FALSE;
                                                    selector:@selector(iterate)
                                                    userInfo:nil
                                                     repeats:YES];
-//   configH264HardwareAcell(false, false);
+    // Load plugins if available in the linphone SDK - otherwise these calls will do nothing
+    MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
+    libmssilk_init(f);
+    libmsamr_init(f);
+    //    libmsx264_init(f);
+    libmsopenh264_init(f);
+    libmsbcg729_init(f);
+    libmswebrtc_init(f);
+    linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
+    configH264HardwareAcell(false, false);
 }
 
 - (void)destroyLinphoneCore {

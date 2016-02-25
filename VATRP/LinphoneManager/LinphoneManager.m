@@ -1381,7 +1381,6 @@ static BOOL libStarted = FALSE;
         //		LOGI(@"Destroy linphonecore");
         linphone_core_destroy(theLinphoneCore);
         theLinphoneCore = nil;
-        ms_exit(); // Uninitialize mediastreamer2
         
         // Post event
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSValue valueWithPointer:theLinphoneCore] forKey:@"core"];

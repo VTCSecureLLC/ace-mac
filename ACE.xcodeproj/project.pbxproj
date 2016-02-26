@@ -21,6 +21,8 @@
 		04C75BCD1C5A22F00089FEB6 /* sorenson.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC61C5A22F00089FEB6 /* sorenson.png */; };
 		04C75BCF1C5A24B50089FEB6 /* caag.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BCE1C5A24B50089FEB6 /* caag.png */; };
 		04FD27921C68E350005659B0 /* camera_mute.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD27911C68E350005659B0 /* camera_mute.png */; };
+		13E71DB41C8006FC0052D2DA /* libmsopenh264.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 13E71DB31C8006FC0052D2DA /* libmsopenh264.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		13E71DB51C8007380052D2DA /* libmsopenh264.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E71DB31C8006FC0052D2DA /* libmsopenh264.0.dylib */; };
 		20A9933A1BB5B9F6008612F9 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A993391BB5B9F6008612F9 /* HockeySDK.framework */; };
 		2B463F061B984E49008E8333 /* ContactsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF51B984E49008E8333 /* ContactsWindowController.m */; };
 		2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B463EF81B984E49008E8333 /* DialpadViewController.m */; };
@@ -390,6 +392,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				13E71DB41C8006FC0052D2DA /* libmsopenh264.0.dylib in Copy Files */,
 				7301AF021C7218A900B3648D /* libmediastreamer_base.7.dylib in Copy Files */,
 				7301AF001C72188A00B3648D /* libmediastreamer_voip.7.dylib in Copy Files */,
 				73AEC3901C6BE99800908DE0 /* libmediastreamer_voip.dylib in Copy Files */,
@@ -468,6 +471,8 @@
 		04C75BC61C5A22F00089FEB6 /* sorenson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sorenson.png; path = providersLogos/sorenson.png; sourceTree = "<group>"; };
 		04C75BCE1C5A24B50089FEB6 /* caag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caag.png; sourceTree = "<group>"; };
 		04FD27911C68E350005659B0 /* camera_mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_mute.png; sourceTree = "<group>"; };
+		13E71DB11C8006CA0052D2DA /* libmsopenh264.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmsopenh264.0.dylib; path = OUTPUT/lib/mediastreamer/plugins/libmsopenh264.0.dylib; sourceTree = "<group>"; };
+		13E71DB31C8006FC0052D2DA /* libmsopenh264.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmsopenh264.0.dylib; path = WORK/Build/msopenh264/src/libmsopenh264.0.dylib; sourceTree = "<group>"; };
 		20A993391BB5B9F6008612F9 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		2B463EF41B984E49008E8333 /* ContactsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsWindowController.h; sourceTree = "<group>"; };
 		2B463EF51B984E49008E8333 /* ContactsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsWindowController.m; sourceTree = "<group>"; };
@@ -833,6 +838,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13E71DB51C8007380052D2DA /* libmsopenh264.0.dylib in Frameworks */,
 				7301AEFA1C6FE5CA00B3648D /* VideoToolbox.framework in Frameworks */,
 				73048F6A1C46BE7600375345 /* libbelr.1.dylib in Frameworks */,
 				73048F681C46BE6F00375345 /* libbelcard.1.dylib in Frameworks */,
@@ -963,6 +969,7 @@
 		20A993351BB5B978008612F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				13E71DB11C8006CA0052D2DA /* libmsopenh264.0.dylib */,
 				7301AF041C72198E00B3648D /* libortp.11.dylib */,
 				7301AEFD1C72186B00B3648D /* libmediastreamer_voip.7.dylib */,
 				7301AEF91C6FE5CA00B3648D /* VideoToolbox.framework */,
@@ -1405,6 +1412,7 @@
 		4AC389BC1B8E87520063298F = {
 			isa = PBXGroup;
 			children = (
+				13E71DB31C8006FC0052D2DA /* libmsopenh264.0.dylib */,
 				731677E91C76B724001C4DB9 /* libbctoolbox.0.0.0.dylib */,
 				731677EA1C76B724001C4DB9 /* libbctoolbox.0.dylib */,
 				731677EB1C76B724001C4DB9 /* libbctoolbox.dylib */,
@@ -1695,7 +1703,6 @@
 				4AC389C21B8E87530063298F /* Frameworks */,
 				CE67587A1BA88A5A005396EF /* Copy Files */,
 				20A9932F1BB5B8A8008612F9 /* ShellScript */,
-				31458E0F1BC2DEAF002CA54D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -2140,6 +2147,8 @@
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
 					"$(PROJECT_DIR)/OUTPUT/lib",
+					"$(PROJECT_DIR)/OUTPUT/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/WORK/Build/msopenh264/src",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;
@@ -2174,6 +2183,8 @@
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
 					"$(PROJECT_DIR)/OUTPUT/lib",
+					"$(PROJECT_DIR)/OUTPUT/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/WORK/Build/msopenh264/src",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vtcsecure.ace.mac;

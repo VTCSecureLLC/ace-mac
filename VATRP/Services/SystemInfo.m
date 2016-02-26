@@ -154,6 +154,12 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
         /**Video**/
         NSString *videoHeader = @"\nVIDEO: \n";
         [values addObject:videoHeader];
+        linphone_core_set_video_preset(lc, "high-fps");
+        NSString *video_preset = [NSString stringWithFormat:@"Video preset = %s", linphone_core_get_video_preset(lc)];
+        [values addObject:video_preset];
+        NSString *adaptiveRateAlgorithm = [NSString stringWithFormat:@"Adaptive rate algorithm = %s",         linphone_core_get_adaptive_rate_algorithm(lc)];
+        
+        [values addObject:adaptiveRateAlgorithm];
         /**Video codecs**/
         
         const MSList *videoCodecs = linphone_core_get_video_codecs(lc);

@@ -385,6 +385,13 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     // sip_videomail_uri - ?
     
     // video_resolution_maximum - set
+    
+    // QoS
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"enable_QoS"]) {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], 28);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], 38);
+        linphone_core_set_video_dscp([LinphoneManager getLc], 38);
+    }
 }
 
 - (void)enableVideoCodecs {

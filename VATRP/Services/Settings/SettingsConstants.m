@@ -38,5 +38,6 @@ NSString *const RTCP_FB_MODE = @"RTCP_FB_MODE"; //Off (Default), Implicit, Expli
 // testing
 NSString *const UPLOAD_BANDWIDTH = @"upload_bandwidth";
 NSString *const DOWNLOAD_BANDWIDTH = @"download_bandwidth";
+NSString *const ENABLE_QoS = @"enable_QoS";
 
 #endif /* SettingsConstants_h */

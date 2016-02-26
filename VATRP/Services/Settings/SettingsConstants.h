@@ -38,6 +38,7 @@ FOUNDATION_EXPORT NSString *const DOWNLOAD_BANDWIDTH;
 
 // Preferences
 FOUNDATION_EXPORT NSString *const MUTE_CAMERA;
+FOUNDATION_EXPORT NSString *const ENABLE_QoS;
 
 
 #endif /* SettingsConstants_h */

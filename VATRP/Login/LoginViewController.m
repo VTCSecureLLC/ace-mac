@@ -209,6 +209,24 @@
 //}
 
 - (IBAction)onButtonLogin:(id)sender {
+    if (!self.textFieldUsername.stringValue || !self.textFieldUsername.stringValue.length ||
+        !   self.textFieldDomain.stringValue || !self.textFieldDomain.stringValue.length) {
+
+        NSAlert *alert = [[NSAlert alloc]init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Please fill the all fields."];
+        [alert runModal];
+        
+        return;
+    }
+
+    [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", self.textFieldUsername.stringValue, self.textFieldDomain.stringValue];
+    
+    if ([[LinphoneManager instance] coreIsRunning]) {
+        [[LinphoneManager instance] destroyLinphoneCore];
+        [LinphoneManager instanceRelease];
+    }
+    
     if (![[LinphoneManager instance] coreIsRunning]) {
         [[LinphoneManager instance]	startLinphoneCore];
         [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];

@@ -10,5 +10,9 @@
 #import "BackgroundedView.h"
 
 @interface RecentsView : BackgroundedView
+
 @property (weak) IBOutlet NSSegmentedControl *callsSegmentControll;
+
+- (void) reloadCallLogs;
+
 @end

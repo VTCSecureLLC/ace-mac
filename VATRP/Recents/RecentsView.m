@@ -12,6 +12,7 @@
 #import "CallService.h"
 #import "ViewManager.h"
 #import "LinphoneContactService.h"
+#import "AccountsService.h"
 #import "AppDelegate.h"
 #import "AddContactDialogBox.h"
 #import "Utils.h"
@@ -38,7 +39,6 @@
     
     [self setBackgroundColor:[NSColor clearColor]];
     
-    callLogs = [[NSMutableArray alloc] init];
     missedFilter = false;
     dialPadFilter = nil;
     
@@ -55,8 +55,6 @@
                                              selector:@selector(contactEditDone:)
                                                  name:@"contactInfoEditDone"
                                                object:nil];
-
-    [self loadData];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -106,31 +104,60 @@
 
 #pragma mark - UITableViewDataSource Functions
 
+- (void) reloadCallLogs {
+    [self loadData];
+}
+
 - (void)loadData {
-    [callLogs removeAllObjects];
-    const MSList *logs = linphone_core_get_call_logs([LinphoneManager getLc]);
-    while (logs != NULL) {
-        LinphoneCallLog *log = (LinphoneCallLog *)logs->data;
-        if (missedFilter) {
-            if (linphone_call_log_get_status(log) == LinphoneCallMissed) {
-                [callLogs addObject:[NSValue valueWithPointer:log]];
-            }
+    @synchronized(self) {
+        if (!callLogs) {
+            callLogs = [[NSMutableArray alloc] init];
         } else {
-            if (dialPadFilter) {
-                NSString *addr = [self addressFromCallLog:log];
-                
-                if (addr && [addr containsString:dialPadFilter]) {
-                    [callLogs addObject:[NSValue valueWithPointer:log]];
-                }
-            } else {
-                [callLogs addObject:[NSValue valueWithPointer:log]];
-            }
+            [callLogs removeAllObjects];
         }
         
-        logs = ms_list_next(logs);
+        const MSList *logs = linphone_core_get_call_logs([LinphoneManager getLc]);
+        while (logs != NULL) {
+            LinphoneCallLog *log = (LinphoneCallLog *)logs->data;
+            if (missedFilter) {
+                if (linphone_call_log_get_status(log) == LinphoneCallMissed) {
+                    [self addCallLogAndCheckAccount:log];
+//                    [callLogs addObject:[NSValue valueWithPointer:log]];
+                }
+            } else {
+                if (dialPadFilter) {
+                    NSString *addr = [self addressFromCallLog:log];
+                    
+                    if (addr && [addr containsString:dialPadFilter]) {
+                        [self addCallLogAndCheckAccount:log];
+//                        [callLogs addObject:[NSValue valueWithPointer:log]];
+                    }
+                } else {
+                    [self addCallLogAndCheckAccount:log];
+//                    [callLogs addObject:[NSValue valueWithPointer:log]];
+                }
+            }
+            
+//            [self addCalbenlLogAndCheckAccount:log];
+            logs = ms_list_next(logs);
+        }
     }
-    
+
     [self.tableViewRecents reloadData];
+}
+
+- (void) addCallLogAndCheckAccount:(LinphoneCallLog*)log {
+    LinphoneAddress *addr = linphone_call_log_get_from(log);
+    const char* char_username = linphone_address_get_username(addr);
+    NSString *username = [NSString stringWithUTF8String:char_username];
+
+    const char* char_domain = linphone_address_get_domain(addr);
+    NSString *domain = [NSString stringWithUTF8String:char_domain];
+
+    AccountModel *currentAccount = [[AccountsService sharedInstance] getDefaultAccount];
+    if ([currentAccount.username isEqualToString:username] && [domain isEqualToString:currentAccount.domain]) {
+        [callLogs addObject:[NSValue valueWithPointer:log]];
+    }
 }
 
 - (IBAction)onSegmentCallType:(id)sender {
@@ -154,8 +181,14 @@
     [self.tableViewRecents reloadData];
 }
 
+#pragma mark - UITableViewDataSource Functions
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return callLogs.count;
+    if (callLogs) {
+        return callLogs.count;
+    }
+    
+    return 0;
 }
 
 - (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {

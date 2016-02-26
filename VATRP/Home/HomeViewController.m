@@ -117,6 +117,7 @@ bool dialPadIsShown;
     [self.callQualityIndicator.layer setBackgroundColor:[NSColor clearColor].CGColor];
     [self.callQualityIndicator setBackgroundColor:[NSColor clearColor]];
 
+    [self.recentsView reloadCallLogs];
 }
 
 #pragma mark - Observers and related functions

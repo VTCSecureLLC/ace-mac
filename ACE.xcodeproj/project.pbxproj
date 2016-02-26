@@ -11,6 +11,7 @@
 		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
 		04C33DE71C58CB9600BF1432 /* import_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE51C58CB9600BF1432 /* import_button.png */; };
 		04C33DE81C58CB9600BF1432 /* export_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE61C58CB9600BF1432 /* export_button.png */; };
+		04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BBE1C5A22D70089FEB6 /* csdvrs.png */; };
 		04C75BC71C5A22F00089FEB6 /* acetest.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC01C5A22F00089FEB6 /* acetest.png */; };
 		04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC11C5A22F00089FEB6 /* belledonne.png */; };
 		04C75BC91C5A22F00089FEB6 /* convo.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BC21C5A22F00089FEB6 /* convo.png */; };
@@ -237,8 +238,6 @@
 		73EDA25B1BFA9F2D00EC7039 /* libcunit.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20D1BFA9F2C00EC7039 /* libcunit.1.0.1.dylib */; };
 		73EDA25C1BFA9F2D00EC7039 /* libcunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20E1BFA9F2C00EC7039 /* libcunit.dylib */; };
 		73EDA25D1BFA9F2D00EC7039 /* libcunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20E1BFA9F2C00EC7039 /* libcunit.dylib */; };
-		73EDA25E1BFA9F2D00EC7039 /* libgsm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */; };
-		73EDA25F1BFA9F2D00EC7039 /* libgsm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */; };
 		73EDA26A1BFA9F2D00EC7039 /* liblinphone.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */; };
 		73EDA26B1BFA9F2D00EC7039 /* liblinphone.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */; };
 		73EDA26C1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */; };
@@ -314,7 +313,6 @@
 		73EDA2FA1BFA9F6D00EC7039 /* libbzrtp.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20C1BFA9F2C00EC7039 /* libbzrtp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2FB1BFA9F6D00EC7039 /* libcunit.1.0.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20D1BFA9F2C00EC7039 /* libcunit.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2FC1BFA9F6D00EC7039 /* libcunit.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20E1BFA9F2C00EC7039 /* libcunit.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73EDA2FD1BFA9F6D00EC7039 /* libgsm.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3031BFA9F6D00EC7039 /* liblinphone.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3041BFA9F6D00EC7039 /* liblinphone.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA30C1BFA9F6D00EC7039 /* libopenh264.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA21E1BFA9F2C00EC7039 /* libopenh264.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -351,6 +349,7 @@
 		CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */; };
 		CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D521C0D898200214C47 /* icon_call_dir_missed.png */; };
 		CE0D5D561C0D898200214C47 /* icon_call_dir_outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D531C0D898200214C47 /* icon_call_dir_outgoing.png */; };
+		CE0D5D581C0D898D00214C47 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D571C0D898D00214C47 /* male.png */; };
 		CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE34B2B41BD1014C0010A2B0 /* info-icon.png */; };
 		CE3D2ECF1C3BD93F00B0BF29 /* DHResourcesView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3D2ECE1C3BD93F00B0BF29 /* DHResourcesView.m */; };
 		CE48DF911C04ABEB0046E727 /* ContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48DF901C04ABEB0046E727 /* ContactTableCellView.m */; };
@@ -414,7 +413,6 @@
 				73EDA2FA1BFA9F6D00EC7039 /* libbzrtp.dylib in Copy Files */,
 				73EDA2FB1BFA9F6D00EC7039 /* libcunit.1.0.1.dylib in Copy Files */,
 				73EDA2FC1BFA9F6D00EC7039 /* libcunit.dylib in Copy Files */,
-				73EDA2FD1BFA9F6D00EC7039 /* libgsm.dylib in Copy Files */,
 				73EDA3031BFA9F6D00EC7039 /* liblinphone.8.dylib in Copy Files */,
 				73EDA3041BFA9F6D00EC7039 /* liblinphone.dylib in Copy Files */,
 				73EDA30C1BFA9F6D00EC7039 /* libopenh264.dylib in Copy Files */,
@@ -749,8 +747,6 @@
 		73EDA20C1BFA9F2C00EC7039 /* libbzrtp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbzrtp.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libbzrtp.dylib"; sourceTree = "<group>"; };
 		73EDA20D1BFA9F2C00EC7039 /* libcunit.1.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcunit.1.0.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libcunit.1.0.1.dylib"; sourceTree = "<group>"; };
 		73EDA20E1BFA9F2C00EC7039 /* libcunit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcunit.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libcunit.dylib"; sourceTree = "<group>"; };
-		73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgsm.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libgsm.dylib"; sourceTree = "<group>"; };
-		73EDA2121BFA9F2C00EC7039 /* libilbcrfc3951.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libilbcrfc3951.a; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libilbcrfc3951.a"; sourceTree = "<group>"; };
 		73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libintl.8.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libintl.8.dylib"; sourceTree = "<group>"; };
 		73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.8.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/liblinphone.8.dylib"; sourceTree = "<group>"; };
 		73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblinphone.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/liblinphone.dylib"; sourceTree = "<group>"; };
@@ -858,7 +854,6 @@
 				73EDA2581BFA9F2D00EC7039 /* libbzrtp.dylib in Frameworks */,
 				73EDA25A1BFA9F2D00EC7039 /* libcunit.1.0.1.dylib in Frameworks */,
 				73EDA25C1BFA9F2D00EC7039 /* libcunit.dylib in Frameworks */,
-				73EDA25E1BFA9F2D00EC7039 /* libgsm.dylib in Frameworks */,
 				73EDA26A1BFA9F2D00EC7039 /* liblinphone.8.dylib in Frameworks */,
 				73EDA26C1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */,
 				73EDA27C1BFA9F2D00EC7039 /* libopenh264.dylib in Frameworks */,
@@ -946,7 +941,6 @@
 				73EDA28D1BFA9F2D00EC7039 /* libpolarssl.dylib in Frameworks */,
 				73EDA27F1BFA9F2D00EC7039 /* libopus.5.dylib in Frameworks */,
 				73EDA2991BFA9F2D00EC7039 /* libsrtp.1.dylib in Frameworks */,
-				73EDA25F1BFA9F2D00EC7039 /* libgsm.dylib in Frameworks */,
 				73EDA2471BFA9F2D00EC7039 /* libavutil.51.35.100.dylib in Frameworks */,
 				73EDA2AB1BFA9F2D00EC7039 /* libvpx.a in Frameworks */,
 				73EDA2811BFA9F2D00EC7039 /* libopus.dylib in Frameworks */,
@@ -1640,8 +1634,6 @@
 				73EDA20C1BFA9F2C00EC7039 /* libbzrtp.dylib */,
 				73EDA20D1BFA9F2C00EC7039 /* libcunit.1.0.1.dylib */,
 				73EDA20E1BFA9F2C00EC7039 /* libcunit.dylib */,
-				73EDA20F1BFA9F2C00EC7039 /* libgsm.dylib */,
-				73EDA2121BFA9F2C00EC7039 /* libilbcrfc3951.a */,
 				73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */,
 				73EDA2151BFA9F2C00EC7039 /* liblinphone.8.dylib */,
 				73EDA2161BFA9F2C00EC7039 /* liblinphone.dylib */,
@@ -1738,7 +1730,7 @@
 		4AC389BD1B8E87520063298F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = VTCSecure;
 				TargetAttributes = {
 					4AC389C41B8E87530063298F = {
@@ -1846,6 +1838,7 @@
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
 				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				69A025B61BFB5C83005C62FA /* numpad_disabled.png in Resources */,
+				CE0D5D581C0D898D00214C47 /* male.png in Resources */,
 				CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
@@ -1875,6 +1868,7 @@
 				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
 				CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */,
 				A49CF7EE1C6CD04400493FC3 /* legal_release.rtf in Resources */,
+				04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */,
 				4A5DD1EE1BD904B3003BE9A2 /* messageOutgoingBubbleTop.png in Resources */,
 				04C75BCF1C5A24B50089FEB6 /* caag.png in Resources */,
 				69EE9BF91C649B990010EBB3 /* RTPquality_bad_rightTop.png in Resources */,
@@ -2063,7 +2057,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2081,7 +2074,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -2176,6 +2169,8 @@
 				INFOPLIST_FILE = VATRP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/VATRP/linphonesdk/libs",
+					"$(PROJECT_DIR)/VATRP/linphonesdk/libs",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib",
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
 					"$(PROJECT_DIR)/OUTPUT/lib",
@@ -2209,7 +2204,6 @@
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
 					"$(PROJECT_DIR)/OUTPUT/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "home.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACE.app/Contents/MacOS/ACE";
 			};
@@ -2232,7 +2226,6 @@
 					"$(PROJECT_DIR)/WORK/Build/linphone_package/linphone-sdk-tmp/lib/mediastreamer/plugins",
 					"$(PROJECT_DIR)/OUTPUT/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "home.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACE.app/Contents/MacOS/ACE";
 			};

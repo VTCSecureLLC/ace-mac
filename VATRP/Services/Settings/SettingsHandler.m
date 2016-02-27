@@ -224,6 +224,11 @@
     {
         [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true] ;
     }
+    if([LinphoneManager getLc]){
+        linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], "Stateful");
+        linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], true);
+        linphone_core_set_video_preset([LinphoneManager getLc], "high-fps");
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

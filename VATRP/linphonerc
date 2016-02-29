@@ -37,10 +37,10 @@ display=1
 capture=1
 show_local=1
 enabled=1
-size=cif
+size=vga
 automatically_initiate=0
 automatically_accept=0
-preset=high-fps
+preset=custom
 
 [video_codec_0]
 mime=H264
@@ -70,8 +70,8 @@ enabled=1
 
 [net]
 firewall_policy=0
-download_bw=660
-upload_bw=660
+download_bw=1500
+upload_bw=1500
 
 [sound]
 playback_dev_id=AU: Audio Unit Receiver

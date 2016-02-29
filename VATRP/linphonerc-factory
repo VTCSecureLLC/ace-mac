@@ -11,6 +11,7 @@ eq_gains=50:2:50 100:2:50
 
 [video]
 display_filter_auto_rotate=0
+preset=custom
 
 [video_codec_0]
 mime=H264

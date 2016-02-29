@@ -147,25 +147,25 @@
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enabled_codecs"] == nil)
     {
         // enabled_codecs\":[\"H.264\",\"H.263\",\"VP8\",\"G.722\",\"G.711\"]
-        NSArray *enabledCodecs = @[@"H.263", @"VP8", @"G.722", @"G.711"];
+        NSArray *enabledCodecs = @[@"H.264", @"H.263", @"VP8", @"G.722", @"G.711"];
         [[NSUserDefaults standardUserDefaults] setObject:enabledCodecs forKey:@"enabled_codecs"];
     }
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:UPLOAD_BANDWIDTH] == nil)
     {
-        [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:1500];
+        [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:0];
         LinphoneCore* linphoneCore = [LinphoneManager getLc];
         if (linphoneCore != nil)
         {
-            linphone_core_set_upload_bandwidth(linphoneCore, 1500);
+            linphone_core_set_upload_bandwidth(linphoneCore, 0);
         }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:DOWNLOAD_BANDWIDTH] == nil)
     {
-        [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:1500];
+        [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:0];
         LinphoneCore* linphoneCore = [LinphoneManager getLc];
         if (linphoneCore != nil)
         {
-            linphone_core_set_download_bandwidth(linphoneCore, 1500);
+            linphone_core_set_download_bandwidth(linphoneCore, 0);
         }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
@@ -174,7 +174,14 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_url_preference"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"bc1.vatrp.net" forKey:@"stun_url_preference"];
+        LinphoneCore* linphoneCore = [LinphoneManager getLc];
+        if (linphoneCore != nil){
+            LinphoneProxyConfig *cfg = linphone_core_get_default_proxy_config(linphoneCore);
+            if(!cfg) return;
+            [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%s",linphone_proxy_config_get_domain(cfg)] forKey:@"stun_url_preference"];
+            linphone_core_set_stun_server(linphoneCore, linphone_proxy_config_get_domain(cfg));
+        }
+
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"ice_preference"] == nil)
     {
@@ -210,7 +217,10 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_FPS] == nil)
     {
-        [self setUserSettingFloat:VIDEO_SHOW_SELF_VIEW withValue:30.0f];
+        [self setUserSettingFloat:VIDEO_SHOW_SELF_VIEW withValue:25.0f];
+        if([LinphoneManager getLc]){
+            linphone_core_set_preferred_framerate([LinphoneManager getLc], 25);
+        }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
         [self setUserSettingString:RTCP_FB_MODE withValue:@"Explicit"];

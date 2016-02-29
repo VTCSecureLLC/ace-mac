@@ -105,7 +105,7 @@
         }
     }
     else{
-        self.textFieldDomain.stringValue = @"bc1.vatrp.net";
+        //self.textFieldDomain.stringValue = @"bc1.vatrp.net";
         self.textFieldPort.stringValue = @"25060";
         [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
     }

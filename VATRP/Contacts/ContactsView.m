@@ -241,8 +241,8 @@
         if (clicked == NSFileHandlingPanelOKButton) {
             NSString *path = panel.directoryURL.path;
             path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@%@.vcard", @"ACE_", @"Contacts"]];
-            /*LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
-            linphone_friend_list_export_friends_as_vcard4_file(friendList, [path UTF8String]);*/
+            LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+            linphone_friend_list_export_friends_as_vcard4_file(friendList, [path UTF8String]);
             NSAlert *alert = [[NSAlert alloc] init];
             [alert addButtonWithTitle:@"OK"];
             [alert setMessageText:@"Contacts have been succefully exported"];
@@ -270,8 +270,8 @@
         NSString *filePath = [[[panel URLs] objectAtIndex:0] absoluteString];
         NSArray* tmpStr = [filePath componentsSeparatedByString:@"file://"];
         NSString *pureFilePath = [tmpStr objectAtIndex:1];
-        /*LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);*/
-        contactsCount =  0; /*linphone_friend_list_import_friends_from_vcard4_file (friendList, [pureFilePath UTF8String]);*/
+        LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+        contactsCount =  linphone_friend_list_import_friends_from_vcard4_file (friendList, [pureFilePath UTF8String]);
         if (contactsCount > 0) {
             [self refreshContactList];
             NSAlert *alert = [[NSAlert alloc] init];

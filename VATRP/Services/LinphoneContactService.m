@@ -33,10 +33,10 @@
 
 - (BOOL)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
     
-    /*LinphoneFriend *friend = linphone_friend_new_with_address ([sipURI UTF8String]);
-    if (!friend) {*/
+    LinphoneFriend *friend = linphone_friend_new_with_address ([sipURI UTF8String]);
+    if (!friend) {
         return NO;
-    /*}
+    }
     int t = linphone_friend_set_name(friend, [name  UTF8String]);
     if  (t == 0) {
         linphone_friend_enable_subscribes(friend,FALSE);
@@ -44,33 +44,31 @@
         linphone_core_add_friend([LinphoneManager getLc],friend);
     }
     return YES;
-    */
 }
 
 - (LinphoneFriend*)createContactFromName:(NSString *)name andSipUri:(NSString *)sipURI {
-    /*LinphoneFriend *newFriend = linphone_friend_new_with_address ([sipURI  UTF8String]);
+    LinphoneFriend *newFriend = linphone_friend_new_with_address ([sipURI  UTF8String]);
     linphone_friend_set_name(newFriend, [name  UTF8String]);
-    return newFriend;*/
-   return nil;
+    return newFriend;
 }
 
 - (BOOL)addContactFromByAddress:(LinphoneAddress*)address {
     BOOL contactExistsInCore = NO;
-    /*LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], address);
+    LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], address);
     if (friend) {
         return contactExistsInCore;
     } else {
         
         linphone_core_add_friend([LinphoneManager getLc], friend);
         contactExistsInCore = YES;
-    }*/
+    }
     
     return contactExistsInCore;
 }
 
 - (NSMutableArray*)contactList {
     NSMutableArray *contacts = [NSMutableArray new];
-    /*LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
     const MSList* proxies = linphone_friend_list_get_friends(friendList);
     while (proxies != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)proxies->data;
@@ -82,14 +80,14 @@
                               @"phone" : [[NSString alloc] initWithUTF8String:addressString],
                               @"provider" : [[NSString alloc] initWithUTF8String:providerName]}];
         proxies = ms_list_next(proxies);
-    }*/
+    }
     
     return contacts;
 }
 
 - (NSMutableArray*)contactListBySearchText:(NSString *)searchText {
     NSMutableArray *contacts = [NSMutableArray new];
-    /*LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
     const MSList* proxies = linphone_friend_list_get_friends(friendList);
     while (proxies != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)proxies->data;
@@ -107,13 +105,13 @@
             [contacts addObject:@{@"name" : displayName, @"phone" : sipURI}];
         }
         proxies = ms_list_next(proxies);
-    }*/
+    }
 
     return contacts;
 }
 
 - (void)deleteContact:(const LinphoneFriend *)contact {
-    /*LinphoneAddress *deletedAddress = (LinphoneAddress*)linphone_friend_get_address(contact);
+    LinphoneAddress *deletedAddress = (LinphoneAddress*)linphone_friend_get_address(contact);
     char* delAddress = linphone_address_as_string(deletedAddress);
     LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
     const MSList* friends = linphone_friend_list_get_friends(friendList);
@@ -125,34 +123,34 @@
         if (strcmp(delAddress, frAddress) == 0) {
             linphone_core_remove_friend([LinphoneManager getLc], friend);
         }
-    }*/
+    }
 }
 
 - (void)deleteContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
-    /*const LinphoneFriend* friend = [self createContactFromName:name andSipUri:sipURI];
-    [self deleteContact:friend];*/
+    const LinphoneFriend* friend = [self createContactFromName:name andSipUri:sipURI];
+    [self deleteContact:friend];
 }
 
 - (void)deleteContactList {
-    /*LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
     const MSList* friends = linphone_friend_list_get_friends(friendList);
     while (friends != NULL) {
         LinphoneFriend* friend = (LinphoneFriend*)friends->data;
         friends = ms_list_next(friends);
         linphone_core_remove_friend([LinphoneManager getLc], friend);
-    }*/
+    }
 }
 
 - (NSString*)contactNameFromAddress:(LinphoneAddress*)address {
     NSString *name = @"";
     
-    /*LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], address);
+    LinphoneFriend *friend  = linphone_core_find_friend([LinphoneManager getLc], address);
     
     if (friend) {
         const char *str = linphone_friend_get_name(friend);
         name = [NSString stringWithUTF8String:str];
         return name;
-    }*/
+    }
     
     return name;
 }

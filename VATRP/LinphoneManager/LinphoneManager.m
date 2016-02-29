@@ -1349,8 +1349,8 @@ static BOOL libStarted = FALSE;
     /*call iterate once immediately in order to initiate background connections with sip server or remote provisioning grab, if any */
     linphone_core_iterate(theLinphoneCore);
     
-    /*NSString *friendListFilePath = [self applicationDirectoryFile:@"linphoneFriendList"];
-    linphone_core_set_friends_database_path(theLinphoneCore, [friendListFilePath UTF8String]);*/
+    NSString *friendListFilePath = [self applicationDirectoryFile:@"linphoneFriendList"];
+    linphone_core_set_friends_database_path(theLinphoneCore, [friendListFilePath UTF8String]);
     
     // start scheduler
     mIterateTimer = [NSTimer scheduledTimerWithTimeInterval:0.03

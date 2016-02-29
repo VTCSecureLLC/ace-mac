@@ -150,10 +150,6 @@
         NSArray *enabledCodecs = @[@"H.263", @"VP8", @"G.722", @"G.711"];
         [[NSUserDefaults standardUserDefaults] setObject:enabledCodecs forKey:@"enabled_codecs"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"bwLimit"] == nil)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:@"high-fps" forKey:@"bwLimit"];
-    }
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:UPLOAD_BANDWIDTH] == nil)
     {
         [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:1500];
@@ -198,9 +194,8 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_VIDEO_RESOLUTION] == nil)
     {
-        [self setUserSettingString:PREFERRED_VIDEO_RESOLUTION withValue:@"cif (352x288)"];
+        [self setUserSettingString:PREFERRED_VIDEO_RESOLUTION withValue:@"vga (640x480)"];
     }
-
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
     {
         [self setUserSettingBool:MUTE_MICROPHONE withValue:false];
@@ -218,7 +213,7 @@
         [self setUserSettingFloat:VIDEO_SHOW_SELF_VIEW withValue:30.0f];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
-        [self setUserSettingString:RTCP_FB_MODE withValue:@"Implicit"];
+        [self setUserSettingString:RTCP_FB_MODE withValue:@"Explicit"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
     {
@@ -227,7 +222,7 @@
     if([LinphoneManager getLc]){
         linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], "Stateful");
         linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], true);
-        linphone_core_set_video_preset([LinphoneManager getLc], "high-fps");
+        linphone_core_set_video_preset([LinphoneManager getLc], "custom");
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

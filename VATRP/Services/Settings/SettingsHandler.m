@@ -217,7 +217,7 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_FPS] == nil)
     {
-        [self setUserSettingFloat:VIDEO_SHOW_SELF_VIEW withValue:25.0f];
+        [self setUserSettingFloat:PREFERRED_FPS withValue:25.0f];
         if([LinphoneManager getLc]){
             linphone_core_set_preferred_framerate([LinphoneManager getLc], 25);
         }

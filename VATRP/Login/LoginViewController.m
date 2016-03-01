@@ -255,6 +255,7 @@
     [self.prog_Signin setHidden:YES];
     [self.prog_Signin stopAnimation:self];
     [self.loginButton setEnabled:YES];
+    [[SettingsHandler settingsHandler] initializeUserDefaults:YES];
 }
 
 - (void)userLogin {

@@ -19,6 +19,7 @@
 +(NSString*) configSettingsAsString;
 +(NSString *) platformType;
 +(NSString*) hardwareId;
++(NSMutableArray*)getLinphoneLogs;
 @end
 
 @implementation SystemInfo
@@ -252,12 +253,55 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
 
             NSString *uploadBW =[NSString stringWithFormat:@"upload_bandwidth = %d", linphone_core_get_upload_bandwidth(lc)];
         [values addObject:uploadBW];
-
+        /*** Linphone logs ***/
+        NSString *linphoneLogHeader = @"\nLinphone Logs: \n";
+        [values addObject: linphoneLogHeader];
+            [values addObjectsFromArray:[SystemInfo getLinphoneLogs]];
+            
         for(int i = 0; i < values.count; i++){
             config = [NSString stringWithFormat:@"%@\n%@", config, [values objectAtIndex:i]];
         }
         return config;
     }
+}
+
++(NSMutableArray*)getLinphoneLogs {
+    NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:3];
+    
+    // retrieve linphone logs if available
+    char *filepath = linphone_core_compress_log_collection();
+    if (filepath != NULL) {
+        NSString *filename = [[NSString stringWithUTF8String:filepath] componentsSeparatedByString:@"/"].lastObject;
+        NSString *mimeType = nil;
+        if ([filename hasSuffix:@".txt"]) {
+            mimeType = @"text/plain";
+        } else if ([filename hasSuffix:@".gz"]) {
+            mimeType = @"application/gzip";
+        } else {
+            NSLog(@"Unknown extension type: %@, not attaching logs", filename);
+        }
+        
+        if (mimeType != nil) {
+            system([[NSString stringWithFormat:@"mv %s ~/Desktop/", filepath] UTF8String]);
+            [attachments addObject:@[ [NSString stringWithUTF8String:filepath], mimeType, filename ]];
+        }
+    }
+    
+    if ([LinphoneManager.instance lpConfigBoolForKey:@"send_logs_include_linphonerc_and_chathistory"]) {
+        // retrieve linphone rc
+        [attachments
+         addObject:@[ [LinphoneManager documentFile:@"linphonerc"], @"text/plain", @"linphone-configuration.rc" ]];
+        
+        // retrieve historydb
+        [attachments addObject:@[
+                                 [LinphoneManager documentFile:@"linphone_chats.db"],
+                                 @"application/x-sqlite3",
+                                 @"linphone-chats-history.db"
+                                 ]];
+    }
+    
+    ms_free(filepath);
+    return attachments;
 }
 
 @end

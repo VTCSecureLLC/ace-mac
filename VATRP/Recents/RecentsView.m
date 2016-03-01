@@ -148,6 +148,11 @@
 
 - (void) addCallLogAndCheckAccount:(LinphoneCallLog*)log {
     LinphoneAddress *addr = linphone_call_log_get_from(log);
+    
+    if (!addr) {
+        return;
+    }
+    
     const char* char_username = linphone_address_get_username(addr);
     NSString *username = [NSString stringWithUTF8String:char_username];
 
@@ -155,7 +160,7 @@
     NSString *domain = [NSString stringWithUTF8String:char_domain];
 
     AccountModel *currentAccount = [[AccountsService sharedInstance] getDefaultAccount];
-    if ([currentAccount.username isEqualToString:username] && [domain isEqualToString:currentAccount.domain]) {
+    if (currentAccount && [currentAccount.username isEqualToString:username] && [domain isEqualToString:currentAccount.domain]) {
         [callLogs addObject:[NSValue valueWithPointer:log]];
     }
 }

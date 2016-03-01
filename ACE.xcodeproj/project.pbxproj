@@ -51,7 +51,6 @@
 		4A50F9C71BB1BDC900FCD070 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9BF1BB1BDC900FCD070 /* settings.png */; };
 		4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */ = {isa = PBXBuildFile; fileRef = 4A50F9C01BB1BDC900FCD070 /* vatrp.ico */; };
 		4A5170771BACC61F00880FFD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5170761BACC61F00880FFD /* SystemConfiguration.framework */; };
-		4A5170791BACD10D00880FFD /* linphonerc in Resources */ = {isa = PBXBuildFile; fileRef = 4A5170781BACD10D00880FFD /* linphonerc */; };
 		4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DD1D71BD8DADB003BE9A2 /* NSArray+Reversing.m */; };
 		4A5DD1DB1BD8DADB003BE9A2 /* NSImage+Merge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DD1D91BD8DADB003BE9A2 /* NSImage+Merge.m */; };
 		4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5DD1E31BD904B3003BE9A2 /* messageIncomingBubbleBottom.png */; };
@@ -80,9 +79,6 @@
 		4AA203C11BD4CAF500DD9A4D /* ChatContactTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203BF1BD4CAF500DD9A4D /* ChatContactTableCellView.m */; };
 		4AA203C41BD4CF3500DD9A4D /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA203C31BD4CF3500DD9A4D /* ChatService.m */; };
 		4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AA203C51BD4D2A000DD9A4D /* chat_icon.png */; };
-		4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5C1BACD437007C1949 /* linphonerc-factory */; };
-		4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */; };
-		4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */; };
 		4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD8E651BAFECF2007C1949 /* Localizable.strings */; };
 		4AADCFB61BCB99C600BF8ABA /* CallInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */; };
 		4AADCFB91BCB99E600BF8ABA /* CallInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */; };
@@ -520,7 +516,6 @@
 		4A50F9C01BB1BDC900FCD070 /* vatrp.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vatrp.ico; sourceTree = "<group>"; };
 		4A5170741BACC61500880FFD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4A5170761BACC61F00880FFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		4A5170781BACD10D00880FFD /* linphonerc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = linphonerc; sourceTree = "<group>"; };
 		4A5DD1D61BD8DADB003BE9A2 /* NSArray+Reversing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reversing.h"; sourceTree = "<group>"; };
 		4A5DD1D71BD8DADB003BE9A2 /* NSArray+Reversing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reversing.m"; sourceTree = "<group>"; };
 		4A5DD1D81BD8DADB003BE9A2 /* NSImage+Merge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Merge.h"; sourceTree = "<group>"; };
@@ -565,9 +560,6 @@
 		4AA203C21BD4CF3500DD9A4D /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
 		4AA203C31BD4CF3500DD9A4D /* ChatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatService.m; sourceTree = "<group>"; };
 		4AA203C51BD4D2A000DD9A4D /* chat_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_icon.png; sourceTree = "<group>"; };
-		4AAD8E5C1BACD437007C1949 /* linphonerc-factory */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory"; sourceTree = "<group>"; };
-		4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory~ipad"; sourceTree = "<group>"; };
-		4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc~ipad"; sourceTree = "<group>"; };
 		4AAD8E651BAFECF2007C1949 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		4AADCFB41BCB99C600BF8ABA /* CallInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallInfoViewController.h; sourceTree = "<group>"; };
 		4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallInfoViewController.m; sourceTree = "<group>"; };
@@ -1496,10 +1488,6 @@
 			children = (
 				4AAF56171BB1615900241DC2 /* Resource */,
 				4AAD8E651BAFECF2007C1949 /* Localizable.strings */,
-				4A5170781BACD10D00880FFD /* linphonerc */,
-				4AAD8E5C1BACD437007C1949 /* linphonerc-factory */,
-				4AAD8E5D1BACD437007C1949 /* linphonerc-factory~ipad */,
-				4AAD8E5E1BACD437007C1949 /* linphonerc~ipad */,
 				4AC389C91B8E87530063298F /* Info.plist */,
 				4AC389CD1B8E87530063298F /* main.m */,
 				697359231C17344400A24D09 /* SettingsUI.plist */,
@@ -1811,7 +1799,6 @@
 				CEF4A3021C0C5BE400B41CDC /* import_export.png in Resources */,
 				CEF3B8171C08A40D00F35757 /* edit_32x32.png in Resources */,
 				4AB556421BDE2454003382B2 /* app_icon.png in Resources */,
-				4AAD8E601BACD437007C1949 /* linphonerc-factory~ipad in Resources */,
 				69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */,
 				69EE9BF51C649B990010EBB3 /* RTPquality_bad_leftBottom.png in Resources */,
 				69EE9C0D1C64B6E20010EBB3 /* RTPquality_medium_top.png in Resources */,
@@ -1851,7 +1838,6 @@
 				69EE9BFA1C649B990010EBB3 /* RTPquality_bad_top.png in Resources */,
 				69EE9BF31C649B990010EBB3 /* RTPquality_bad_bottom.png in Resources */,
 				4A50F9C21BB1BDC900FCD070 /* contacts.png in Resources */,
-				4AAD8E5F1BACD437007C1949 /* linphonerc-factory in Resources */,
 				04C75BC81C5A22F00089FEB6 /* belledonne.png in Resources */,
 				69EE9C071C64B6E20010EBB3 /* RTPquality_medium_left.png in Resources */,
 				4AAD8E661BAFECF3007C1949 /* Localizable.strings in Resources */,
@@ -1859,11 +1845,9 @@
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				69E42FB01C5769B5003EF534 /* icon_fullscreen_open.png in Resources */,
 				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
-				4AAD8E611BACD437007C1949 /* linphonerc~ipad in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
-				4A5170791BACD10D00880FFD /* linphonerc in Resources */,
 				69A025B61BFB5C83005C62FA /* numpad_disabled.png in Resources */,
 				CE0D5D581C0D898D00214C47 /* male.png in Resources */,
 				CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */,

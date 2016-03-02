@@ -19,10 +19,10 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (nonatomic, retain) LoginWindowController *loginWindowController;
+@property (strong, nonatomic, retain) LoginWindowController *loginWindowController;
 @property (nonatomic, retain) LoginViewController *loginViewController;
-@property (nonatomic, retain) HomeWindowController *homeWindowController;
-@property (nonatomic, retain) ViewController *viewController;
+@property (strong, nonatomic, retain) HomeWindowController *homeWindowController;
+@property (strong, nonatomic, retain) ViewController *viewController;
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;
 @property (weak) IBOutlet NSMenuItem *menuItemSignOut;
 @property (weak) IBOutlet NSMenuItem *menuItemMessages;
@@ -52,6 +52,7 @@
 -(NSPoint) getTabWindowOrigin;
 -(void) setTabWindowPos:(NSPoint) pos;
 -(void) SignOut;
+- (IBAction)onSignOut:(NSMenuItem *)sender;
 void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const char *fmt, va_list args);
 @end
 

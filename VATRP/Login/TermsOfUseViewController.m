@@ -24,6 +24,17 @@
 
 @implementation TermsOfUseViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"TermsOfUseViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

@@ -7,6 +7,7 @@
 //
 
 #import "SettingsService.h"
+#import "SettingsConstants.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
@@ -190,7 +191,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
 
 + (void) setStun:(BOOL)enable {
     LinphoneCore *lc = [LinphoneManager getLc];
-    NSString *stun_server = [[NSUserDefaults standardUserDefaults] objectForKey:@"stun_url_preference"];
+    NSString *stun_server = [[NSUserDefaults standardUserDefaults] objectForKey:STUN_SERVER_DOMAIN];
     
     if ([stun_server length] > 0) {
         linphone_core_set_stun_server(lc, [stun_server UTF8String]);

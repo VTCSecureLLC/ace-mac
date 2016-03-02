@@ -113,6 +113,10 @@
 -(int)getDownloadBandwidth;
 -(void)setDownloadBandwidth:(int)bandwidth;
 
-
+#pragma mark app settings
+-(bool) isAdaptiveRateControlEnabled;
+-(NSString*) getAdaptiveRateAlgorithm;
+-(NSString*) getVideoPreset;
+-(NSString*) getStunServerDomain;
 @end
 #endif /* SettingsDelegate_h */

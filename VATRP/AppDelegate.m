@@ -20,6 +20,7 @@
 
 @interface AppDelegate ()
 {
+    NSWindow *window;
     VideoCallWindowController *videoCallWindowController;
     AboutWindowController *aboutWindowController;
 }
@@ -72,7 +73,12 @@
     linphone_core_set_log_level(ORTP_DEBUG);
     linphone_core_enable_logs_with_cb(linphone_iphone_log_handler);
     
-    [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+    //[self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+    
+    self.loginWindowController = [[LoginWindowController alloc] init];
+    
+    [self.loginWindowController showWindow:self];
+    //[self.loginWindowController.window makeKeyAndOrderFront:self];
 }
 
 //- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
@@ -130,6 +136,8 @@
 
     [[AppDelegate sharedInstance].loginWindowController close];
     [AppDelegate sharedInstance].loginWindowController = nil;
+    [self.menuItemSignOut setEnabled:true];
+
 }
 
 -(NSPoint) getTabWindowOrigin{
@@ -196,6 +204,7 @@
     }
 }
 
+
 - (void)onMenuItemPreferencesSignOut:(id)sender {
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
@@ -215,9 +224,15 @@
     linphone_proxy_config_enable_register(proxyCfg, false);
     linphone_proxy_config_done(proxyCfg);
 
-    self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
+    if (self.loginWindowController == nil)
+    {
+        self.loginWindowController = [[LoginWindowController alloc]init];
+    }
+    
+//    self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
+    
     [self.loginWindowController showWindow:self];
-  
+    [self.menuItemSignOut setEnabled:false];
 }
 
 - (IBAction)onMenuItemACEFeedBack:(id)sender {
@@ -230,6 +245,10 @@
 
 -(void) SignOut {
     [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
+}
+
+- (IBAction)onSignOut:(NSMenuItem *)sender {
+    [self onMenuItemPreferencesSignOut:sender];
 }
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {

@@ -130,7 +130,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"" forKey:@"stun_preference"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"stun_server"] != [NSNull null])?[dict objectForKey:@"stun_server"]:@"" forKey:@"stun_url_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"stun_server"] != [NSNull null])?[dict objectForKey:@"stun_server"]:@"" forKey:STUN_SERVER_DOMAIN];
 
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_ice"] != [NSNull null])? [dict objectForKey:@"enable_ice"]:@"" forKey:@"ice_preference"];
     
@@ -270,7 +270,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSString*)stunServer {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"stun_url_preference"];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:STUN_SERVER_DOMAIN];
 }
 
 - (BOOL)enableIce {

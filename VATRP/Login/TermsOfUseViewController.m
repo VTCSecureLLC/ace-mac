@@ -67,7 +67,8 @@
 
 - (IBAction)onButtonAccept:(id)sender {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IS_TERMS_OF_OSE_SHOWED"];
-    loginViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
+//    loginViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
+    loginViewController = [[LoginViewController alloc]init];
     [self.navigationController pushViewController:loginViewController animated:YES];
 }
 

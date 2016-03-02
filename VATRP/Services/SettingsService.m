@@ -341,8 +341,8 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     linphone_core_enable_echo_cancellation(lc, [DefaultSettingsManager sharedInstance].enableEchoCancellation);
     
     // enable_video - set
-    linphone_core_enable_video_capture(lc, [DefaultSettingsManager sharedInstance].enableVideo);
-    linphone_core_enable_video_display(lc, [DefaultSettingsManager sharedInstance].enableVideo);
+    linphone_core_enable_video_capture(lc, true);
+    linphone_core_enable_video_display(lc, true);
 
     // enable_rtt
     [lm lpConfigSetBool:[DefaultSettingsManager sharedInstance].enableRtt forKey:@"rtt"];

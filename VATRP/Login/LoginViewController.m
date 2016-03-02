@@ -224,7 +224,7 @@
     
     if ([[LinphoneManager instance] coreIsRunning]) {
         [[LinphoneManager instance] destroyLinphoneCore];
-        [LinphoneManager instanceRelease];
+        //remove for release build [LinphoneManager instanceRelease];
     }
     
     if (![[LinphoneManager instance] coreIsRunning]) {
@@ -349,8 +349,8 @@
     //    [self resetTextFields];
     
     LinphoneProxyConfig* current_conf = NULL;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &current_conf);
-    if( current_conf != NULL ){
+    current_conf = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+    if(current_conf != NULL){
         const char* proxy_addr = linphone_proxy_config_get_identity(current_conf);
         if( proxy_addr ){
             LinphoneAddress *addr = linphone_address_new( proxy_addr );

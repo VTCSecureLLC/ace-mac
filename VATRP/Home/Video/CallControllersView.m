@@ -172,16 +172,17 @@ BOOL isRTTLocallyEnabled;
     if(!params) return;
     
     if(!linphone_call_params_audio_enabled(params)) return;
-    
-    linphone_core_enable_mic(lc, !mute);
-    if (mute) {
-        [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];
-        [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
-    } else {
-        [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
-        [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
-    }
 
+    if(linphone_call_get_state(call) == LinphoneCallStreamsRunning){
+        linphone_core_enable_mic(lc, !mute);
+        if (mute) {
+            [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];
+            [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:182.0/255.0 green:60.0/255.0 blue:60.0/255.0 alpha:0.8].CGColor];
+        } else {
+            [self.buttonMute setImage:[NSImage imageNamed:@"mute_active"]];
+            [self.buttonMute.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+        }
+    }
 }
 
 - (IBAction)onButtonSpeaker:(id)sender {

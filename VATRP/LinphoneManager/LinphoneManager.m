@@ -1204,7 +1204,7 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
             linphone_core_enable_payload_type(theLinphoneCore,pt,FALSE);
             //			LOGW(@"SILK/24000 and video disabled on old iPhone 3G");
         }
-        linphone_core_enable_video(theLinphoneCore, FALSE, FALSE);
+        //linphone_core_enable_video(theLinphoneCore, FALSE, FALSE);
     }
     
     //	LOGW(@"Linphone [%s]  started on [%s]", linphone_core_get_version(), [[UIDevice currentDevice].model cStringUsingEncoding:[NSString defaultCStringEncoding]]);

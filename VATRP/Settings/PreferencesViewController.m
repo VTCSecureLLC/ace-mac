@@ -171,20 +171,20 @@
     [self.scrollView setDocumentView:docView];
     
     
-    checkboxEnableVideo = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)]; // YES
-    [checkboxEnableVideo setButtonType:NSSwitchButton];
-    [checkboxEnableVideo setBezelStyle:0];
-    [checkboxEnableVideo setTitle:@"Enable Video"];
-    
-    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:ENABLE_VIDEO]){
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO_START];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO_ACCEPT];
-    }
-    [checkboxEnableVideo setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_VIDEO]];
-    [checkboxEnableVideo setAction:@selector(onCheckBoxHandler:)];
-    [checkboxEnableVideo setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxEnableVideo];
+//    checkboxEnableVideo = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)]; // YES
+//    [checkboxEnableVideo setButtonType:NSSwitchButton];
+//    [checkboxEnableVideo setBezelStyle:0];
+//    [checkboxEnableVideo setTitle:@"Enable Video"];
+//    
+//    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:ENABLE_VIDEO]){
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO_START];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ENABLE_VIDEO_ACCEPT];
+//    }
+//    [checkboxEnableVideo setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_VIDEO]];
+//    [checkboxEnableVideo setAction:@selector(onCheckBoxHandler:)];
+//    [checkboxEnableVideo setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxEnableVideo];
     
     originY -= 30;
     checkboxEnableRTT = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)]; // YES
@@ -629,7 +629,7 @@
     [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableRTT.state forKey:kREAL_TIME_TEXT_ENABLED];
     
 
-    bool enableVideo = checkboxEnableVideo.state;
+    bool enableVideo = true;
     
     [self.settingsHandler setEnableVideo:enableVideo];
     linphone_core_enable_video_capture(lc, enableVideo);

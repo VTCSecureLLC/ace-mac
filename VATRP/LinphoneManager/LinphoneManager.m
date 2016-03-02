@@ -77,12 +77,12 @@ NSString *const kLinphoneVideModeUpdate = @"LinphoneVideoModeUpdate";
 
 const int kLinphoneAudioVbrCodecDefaultBitrate=36; /*you can override this from linphonerc or linphonerc-factory*/
 
-extern void libmsamr_init(MSFactory *factory);
+//extern void libmsamr_init(MSFactory *factory);
 //extern void libmsx264_init(MSFactory *factory);
 extern void libmsopenh264_init(MSFactory *factory);
-extern void libmssilk_init(MSFactory *factory);
-extern void libmsbcg729_init(MSFactory *factory);
-extern void libmswebrtc_init(MSFactory *factory);
+//extern void libmssilk_init(MSFactory *factory);
+//extern void libmsbcg729_init(MSFactory *factory);
+//extern void libmswebrtc_init(MSFactory *factory);
 
 #define FRONT_CAM_NAME "AV Capture: com.apple.avfoundation.avcapturedevice.built-in_video:1" /*"AV Capture: Front Camera"*/
 #define BACK_CAM_NAME "AV Capture: com.apple.avfoundation.avcapturedevice.built-in_video:0" /*"AV Capture: Back Camera"*/
@@ -1204,7 +1204,7 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
             linphone_core_enable_payload_type(theLinphoneCore,pt,FALSE);
             //			LOGW(@"SILK/24000 and video disabled on old iPhone 3G");
         }
-        linphone_core_enable_video(theLinphoneCore, FALSE, FALSE);
+        //linphone_core_enable_video(theLinphoneCore, FALSE, FALSE);
     }
     
     //	LOGW(@"Linphone [%s]  started on [%s]", linphone_core_get_version(), [[UIDevice currentDevice].model cStringUsingEncoding:[NSString defaultCStringEncoding]]);
@@ -1360,12 +1360,14 @@ static BOOL libStarted = FALSE;
                                                     repeats:YES];
     // Load plugins if available in the linphone SDK - otherwise these calls will do nothing
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
-    libmssilk_init(f);
-    libmsamr_init(f);
+    //libmssilk_init(f);
+    //libmsamr_init(f);
     //    libmsx264_init(f);
     libmsopenh264_init(f);
-    libmsbcg729_init(f);
-    libmswebrtc_init(f);
+    //libmsbcg729_init(f);
+    //libmswebrtc_init(f);
+    ms_factory_load_plugins(f, ".");
+    ms_factory_load_plugins(f, "lib/mediastreamer/plugins");
     linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
     configH264HardwareAcell(false, false);
 }

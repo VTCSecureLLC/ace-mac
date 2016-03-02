@@ -121,43 +121,25 @@
             LinphoneCallLog *log = (LinphoneCallLog *)logs->data;
             if (missedFilter) {
                 if (linphone_call_log_get_status(log) == LinphoneCallMissed) {
-                    [self addCallLogAndCheckAccount:log];
-//                    [callLogs addObject:[NSValue valueWithPointer:log]];
+                    [callLogs addObject:[NSValue valueWithPointer:log]];
                 }
             } else {
                 if (dialPadFilter) {
                     NSString *addr = [self addressFromCallLog:log];
                     
                     if (addr && [addr containsString:dialPadFilter]) {
-                        [self addCallLogAndCheckAccount:log];
-//                        [callLogs addObject:[NSValue valueWithPointer:log]];
+                        [callLogs addObject:[NSValue valueWithPointer:log]];
                     }
                 } else {
-                    [self addCallLogAndCheckAccount:log];
-//                    [callLogs addObject:[NSValue valueWithPointer:log]];
+                    [callLogs addObject:[NSValue valueWithPointer:log]];
                 }
             }
             
-//            [self addCalbenlLogAndCheckAccount:log];
             logs = ms_list_next(logs);
         }
     }
 
     [self.tableViewRecents reloadData];
-}
-
-- (void) addCallLogAndCheckAccount:(LinphoneCallLog*)log {
-    LinphoneAddress *addr = linphone_call_log_get_from(log);
-    const char* char_username = linphone_address_get_username(addr);
-    NSString *username = [NSString stringWithUTF8String:char_username];
-
-    const char* char_domain = linphone_address_get_domain(addr);
-    NSString *domain = [NSString stringWithUTF8String:char_domain];
-
-    AccountModel *currentAccount = [[AccountsService sharedInstance] getDefaultAccount];
-    if ([currentAccount.username isEqualToString:username] && [domain isEqualToString:currentAccount.domain]) {
-        [callLogs addObject:[NSValue valueWithPointer:log]];
-    }
 }
 
 - (IBAction)onSegmentCallType:(id)sender {

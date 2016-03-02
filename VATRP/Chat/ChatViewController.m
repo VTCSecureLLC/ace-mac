@@ -827,7 +827,10 @@ static void chatTable_free_chatrooms(void *data) {
 - (BOOL) eventBackward {
     if ([[ChatService sharedInstance] sendBackward] && self.textFieldMessage.stringValue && self.textFieldMessage.stringValue.length) {
         self.textFieldMessage.stringValue = [self.textFieldMessage.stringValue substringToIndex:self.textFieldMessage.stringValue.length - 1];
-        self.textViewOutgoing.string = [self.textViewOutgoing.string substringToIndex:self.textViewOutgoing.string.length - 1];
+        
+        if (self.textViewOutgoing.string && self.textViewOutgoing.string.length) {
+            self.textViewOutgoing.string = [self.textViewOutgoing.string substringToIndex:self.textViewOutgoing.string.length - 1];
+        }
     }
     
     return YES;

@@ -213,7 +213,7 @@
 			<key>title</key>
 			<string>Domain</string>
 			<key>defaultValue</key>
-			<string>bc1.vatrp.net</string>
+			<string></string>
 			<key>UserDefaultsKey</key>
 			<string>ACE_DOMAIN</string>
 		</dict>
@@ -223,7 +223,7 @@
 			<key>title</key>
 			<string>Proxy</string>
 			<key>defaultValue</key>
-			<string>bc1.vatrp.net:5060</string>
+			<string></string>
 			<key>UserDefaultsKey</key>
 			<string>ACE_PROXY</string>
 		</dict>
@@ -444,7 +444,7 @@
 				<key>title</key>
 				<string>Preferred FPS</string>
 				<key>defaultValue</key>
-				<string>30</string>
+				<string>25</string>
 				<key>UserDefaultsKey</key>
 				<string>video_preferred_fps_preference</string>
 			</dict>

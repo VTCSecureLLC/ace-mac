@@ -203,7 +203,7 @@
 			<key>title</key>
 			<string>Domain</string>
 			<key>defaultValue</key>
-			<string>bc1.vatrp.net</string>
+			<string></string>
 			<key>UserDefaultsKey</key>
 			<string>ACE_DOMAIN</string>
 		</dict>

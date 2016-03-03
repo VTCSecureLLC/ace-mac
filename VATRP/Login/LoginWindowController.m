@@ -43,7 +43,7 @@
     [super windowDidLoad];
     [AppDelegate sharedInstance].loginWindowController = self;
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
-    shouldAutoLogin = false;//[[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
     if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"auto_login"]){
         shouldAutoLogin = NO;
     }

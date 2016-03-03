@@ -362,8 +362,8 @@
 
     SettingsItemModel *item = (SettingsItemModel*)settingsList[textField.tag];
 
-    if ([item.userDefaultsKey isEqualToString:@"stun_url_preference"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:textField.stringValue forKey:@"stun_url_preference"];
+    if ([item.userDefaultsKey isEqualToString:STUN_SERVER_DOMAIN]) {
+        [[NSUserDefaults standardUserDefaults] setObject:textField.stringValue forKey:STUN_SERVER_DOMAIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];

@@ -39,5 +39,11 @@ NSString *const RTCP_FB_MODE = @"RTCP_FB_MODE"; //Off (Default), Implicit, Expli
 NSString *const UPLOAD_BANDWIDTH = @"upload_bandwidth";
 NSString *const DOWNLOAD_BANDWIDTH = @"download_bandwidth";
 NSString *const ENABLE_QoS = @"enable_QoS";
+NSString *const STUN_SERVER_DOMAIN = @"stun_url_preference";
+
+// app settings
+NSString *const ADAPTIVE_RATE_ALGORITHM = @"adaptive_rate_algorithm";
+NSString *const ADAPTIVE_RATE_CONTROL = @"enable_adaptive_rate_control";
+NSString *const VIDEO_PRESET = @"video_preset";
 
 #endif /* SettingsConstants_h */

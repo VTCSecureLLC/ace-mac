@@ -48,7 +48,7 @@
     
     [AppDelegate sharedInstance].viewController = self;
 
-    [[AppDelegate sharedInstance].menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
+//    [[AppDelegate sharedInstance].menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
 
 
     [[NSNotificationCenter defaultCenter] addObserver:self

@@ -45,6 +45,18 @@
 
 @implementation LoginViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"LoginView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.prog_Signin setHidden:YES];

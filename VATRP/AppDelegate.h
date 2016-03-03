@@ -20,6 +20,7 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (strong, nonatomic, retain) LoginWindowController *loginWindowController;
+@property (nonatomic, retain) NSString *account;
 @property (nonatomic, retain) LoginViewController *loginViewController;
 @property (strong, nonatomic, retain) HomeWindowController *homeWindowController;
 @property (strong, nonatomic, retain) ViewController *viewController;

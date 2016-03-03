@@ -293,9 +293,6 @@
             [SettingsService setStartAppOnBoot:checkbox.state];
         } else if ([item.userDefaultsKey isEqualToString:@"enable_adaptive_rate_control"]) {
             linphone_core_enable_adaptive_rate_control(lc, checkbox.state);
-        } else if ([item.userDefaultsKey isEqualToString:ENABLE_VIDEO]) {
-            bool enable = checkbox.state;
-            linphone_core_enable_video(lc, enable, enable);
         } else if ([item.userDefaultsKey isEqualToString:ENABLE_VIDEO_ACCEPT]) {
             LinphoneVideoPolicy policy;
             policy.automatically_accept = (BOOL)checkbox.state;

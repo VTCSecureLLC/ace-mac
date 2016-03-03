@@ -29,6 +29,7 @@
 
 @implementation AppDelegate
 
+@synthesize account;
 @synthesize loginWindowController;
 @synthesize loginViewController;
 @synthesize homeWindowController;
@@ -51,6 +52,8 @@
     // Insert code here to initialize your application
     // Initialize settings on launch if they have not been.
     [SettingsHandler.settingsHandler initializeUserDefaults:false];
+    
+    self.account = nil;
     
     [AccountsService sharedInstance];
     [CallLogService sharedInstance];
@@ -122,6 +125,7 @@
         linphone_proxy_config_done(proxyCfg);
         
         [[LinphoneManager instance] destroyLinphoneCore];
+        [LinphoneManager instanceRelease];
     }
 }
 
@@ -137,7 +141,7 @@
     [[AppDelegate sharedInstance].loginWindowController close];
     [AppDelegate sharedInstance].loginWindowController = nil;
     [self.menuItemSignOut setEnabled:true];
-
+    [self.menuItemPreferences setEnabled:true];
 }
 
 -(NSPoint) getTabWindowOrigin{
@@ -193,7 +197,8 @@
             [self.settingsWindowController showWindow:self];
             self.settingsWindowController.isShow = YES;
         }
-    }}
+    }
+}
 
 - (IBAction)onMenuItemAbout:(id)sender {
     if (!aboutWindowController) {
@@ -215,6 +220,10 @@
     
     [self closeTabWindow];
     [viewController closeAllWindows];
+    [[ChatService sharedInstance] closeChatWindowAndClear];
+
+    [self.settingsWindowController close];
+    self.settingsWindowController = nil;
     
     // Get the default proxyCfg in Linphone
     LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
@@ -233,6 +242,12 @@
     
     [self.loginWindowController showWindow:self];
     [self.menuItemSignOut setEnabled:false];
+    [self.menuItemPreferences setEnabled:false];
+  
+    if ([[LinphoneManager instance] coreIsRunning]) {
+        [[LinphoneManager instance] destroyLinphoneCore];
+        [LinphoneManager instanceRelease];
+    }
 }
 
 - (IBAction)onMenuItemACEFeedBack:(id)sender {

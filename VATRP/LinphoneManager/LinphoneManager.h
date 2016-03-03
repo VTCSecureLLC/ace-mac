@@ -124,9 +124,9 @@ typedef struct _LinphoneManagerSounds {
 }
 + (LinphoneManager*)instance;
 - (bool)coreIsRunning;
-#ifdef DEBUG
+
 + (void)instanceRelease;
-#endif
+
 + (LinphoneCore*) getLc;
 + (BOOL)runningOnIpad;
 + (BOOL)isNotIphone3G;
@@ -202,6 +202,7 @@ void configH264HardwareAcell(bool encode, bool decode);
 
 @property (readonly) BOOL isTesting;
 //@property (readonly, strong) FastAddressBook* fastAddressBook;
+@property (strong, nonatomic) NSString* account;
 @property Connectivity connectivity;
 @property (readonly) NetworkType network;
 @property (readonly) const char*  frontCamId;

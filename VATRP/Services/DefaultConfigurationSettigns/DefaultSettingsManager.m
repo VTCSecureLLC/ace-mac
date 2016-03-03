@@ -113,7 +113,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_echo_cancellation"] != [NSNull null])? [dict objectForKey:@"enable_echo_cancellation"]:@"" forKey:@"enable_echo_cancellation"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_video"] != [NSNull null])?[dict objectForKey:@"enable_video"]:@"" forKey:ENABLE_VIDEO];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_video"] != [NSNull null])?[dict objectForKey:@"enable_video"]:@"true" forKey:ENABLE_VIDEO];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_rtt"] != [NSNull null])?[dict objectForKey:@"enable_rtt"]:@"" forKey:@"kREAL_TIME_TEXT_ENABLED"];
     

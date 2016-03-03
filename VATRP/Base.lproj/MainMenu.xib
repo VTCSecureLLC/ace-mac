@@ -14,6 +14,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="menuItemPreferences" destination="BOF-NM-1cW" id="Ktp-3C-DeM"/>
                 <outlet property="menuItemSignOut" destination="MH1-bM-s0h" id="GG6-kP-JPT"/>
             </connections>
         </customObject>
@@ -23,7 +24,7 @@
             <items>
                 <menuItem title="ACE" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="ACE" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="ACE" systemMenu="apple" autoenablesItems="NO" id="uQy-DD-JDr">
                         <items>
                             <menuItem title="About US ACE" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -32,7 +33,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Settings…" keyEquivalent="," id="BOF-NM-1cW">
+                            <menuItem title="Settings…" enabled="NO" keyEquivalent="," id="BOF-NM-1cW">
                                 <connections>
                                     <action selector="onMenuItemPreferences:" target="Voe-Tx-rLC" id="wrU-Ok-KFc"/>
                                 </connections>
@@ -67,7 +68,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                            <menuItem title="Sign Out" id="MH1-bM-s0h">
+                            <menuItem title="Sign Out" enabled="NO" id="MH1-bM-s0h">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="onSignOut:" target="Voe-Tx-rLC" id="vz8-36-CRa"/>

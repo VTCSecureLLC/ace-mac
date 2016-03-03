@@ -224,7 +224,7 @@
     
     if ([[LinphoneManager instance] coreIsRunning]) {
         [[LinphoneManager instance] destroyLinphoneCore];
-        //remove for release build [LinphoneManager instanceRelease];
+        [LinphoneManager instanceRelease];
     }
     
     if (![[LinphoneManager instance] coreIsRunning]) {

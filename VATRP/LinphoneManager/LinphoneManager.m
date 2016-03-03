@@ -186,13 +186,11 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     return theLinphoneManager;
 }
 
-#ifdef DEBUG
 + (void)instanceRelease {
     if(theLinphoneManager != nil) {
         theLinphoneManager = nil;
     }
 }
-#endif
 
 + (BOOL)langageDirectionIsRTL {
     static NSLocaleLanguageDirection dir = NSLocaleLanguageDirectionLeftToRight;

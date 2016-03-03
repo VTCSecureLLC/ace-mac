@@ -59,6 +59,14 @@
 #pragma mark - Property Functions
 
 - (void)setCall:(LinphoneCall*)acall {
+    LinphoneCore *lc = [LinphoneManager getLc];
+    if(lc){
+        if(linphone_core_get_calls_nb(lc) > 2){
+            if(acall){
+                linphone_core_decline_call(lc, acall, LinphoneReasonBusy);
+            }
+        }
+    }
     call = acall;
     [self update];
 }

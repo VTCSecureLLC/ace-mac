@@ -86,6 +86,11 @@
     [chatWindowController close];
 }
 
+- (void) closeChatWindowAndClear {
+    [self closeChatWindow];
+    chatWindowController = nil;
+}
+
 - (BOOL) sendMessagt:(NSString*)message {
     LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
     

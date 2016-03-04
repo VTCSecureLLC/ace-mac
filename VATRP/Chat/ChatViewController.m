@@ -805,7 +805,8 @@ static void chatTable_free_chatrooms(void *data) {
             }
         }
         
-        if ([self sendMessage:self.textFieldMessage.stringValue withExterlBodyUrl:nil withInternalURL:nil LinphoneChatRoom:selectedChatRoom]) {
+        if ([self.textFieldMessage.stringValue stringByReplacingOccurrencesOfString:@" " withString:@""].length &&
+            [self sendMessage:self.textFieldMessage.stringValue withExterlBodyUrl:nil withInternalURL:nil LinphoneChatRoom:selectedChatRoom]) {
             [[self.scrollViewContacts animator] setFrame:CGRectMake(self.scrollViewContacts.frame.origin.x, self.scrollViewContacts.frame.origin.y, 243, 450)];
             [self loadData];
             [self updateContentData];

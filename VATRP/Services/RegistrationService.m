@@ -8,6 +8,7 @@
 
 #import "RegistrationService.h"
 #import "SDPNegotiationService.h"
+#import "AccountsService.h"
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
 #import "Utils.h"
@@ -37,8 +38,14 @@
         }
 
         if (shouldAutoLogin) {
-            [[LinphoneManager instance]	startLinphoneCore];
-            [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+            AccountModel *currentAccount = [[AccountsService sharedInstance] getDefaultAccount];
+            
+            if (currentAccount) {
+                [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", currentAccount.username, currentAccount.domain];
+                
+                [[LinphoneManager instance]	startLinphoneCore];
+                [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+            }
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self

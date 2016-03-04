@@ -134,7 +134,6 @@
                     [callLogs addObject:[NSValue valueWithPointer:log]];
                 }
             }
-            
             logs = ms_list_next(logs);
         }
     }

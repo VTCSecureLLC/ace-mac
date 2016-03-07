@@ -20,6 +20,7 @@
 - (LinphoneFriend*)createContactFromName:(NSString*)name andSipUri:(NSString*)sipURI;
 
 - (NSMutableArray*)contactList;
+- (NSMutableArray*)contactFavoritesList;
 - (NSMutableArray*)contactListBySearchText:(NSString*)searchText;
 
 - (void)deleteContact:(const LinphoneFriend*)contact;

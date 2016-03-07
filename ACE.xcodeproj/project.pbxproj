@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		047DB5231C8D7112008F44C5 /* ContactFavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */; };
 		04B5DA531C6215A20049CD6B /* ContactPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA521C6215A20049CD6B /* ContactPictureManager.m */; };
 		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
 		04C33DE71C58CB9600BF1432 /* import_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE51C58CB9600BF1432 /* import_button.png */; };
@@ -458,6 +459,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		047DB5211C8D7112008F44C5 /* ContactFavoriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactFavoriteManager.h; sourceTree = "<group>"; };
+		047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactFavoriteManager.m; sourceTree = "<group>"; };
 		04B5DA511C6215A20049CD6B /* ContactPictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPictureManager.h; sourceTree = "<group>"; };
 		04B5DA521C6215A20049CD6B /* ContactPictureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactPictureManager.m; sourceTree = "<group>"; };
 		04B5DA571C6224B70049CD6B /* NSImage+SaveInFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+SaveInFile.h"; sourceTree = "<group>"; };
@@ -970,6 +973,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		047DB5201C8D709C008F44C5 /* ContactFavoriteManager */ = {
+			isa = PBXGroup;
+			children = (
+				047DB5211C8D7112008F44C5 /* ContactFavoriteManager.h */,
+				047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */,
+			);
+			path = ContactFavoriteManager;
+			sourceTree = "<group>";
+		};
 		04B5DA501C6215140049CD6B /* ContactPictureManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1169,6 +1181,7 @@
 		4A902DDA1BB9486800ECFD86 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				047DB5201C8D709C008F44C5 /* ContactFavoriteManager */,
 				04B5DA501C6215140049CD6B /* ContactPictureManager */,
 				CE5C3F771C4CEEAD005E24A5 /* DefaultConfigurationSettigns */,
 				5EEC291F1C03701700BA43FB /* vCard */,
@@ -2013,6 +2026,7 @@
 				4AAF560D1BAFFC3B00241DC2 /* VATRP/VideoCall/VideoCallWindowController.m in Sources */,
 				4AE0C6781BB2E9D000B4E208 /* CallWindowController.m in Sources */,
 				4A5DD1DB1BD8DADB003BE9A2 /* NSImage+Merge.m in Sources */,
+				047DB5231C8D7112008F44C5 /* ContactFavoriteManager.m in Sources */,
 				6973592A1C17393400A24D09 /* SettingsItemModel.m in Sources */,
 				A49DEE8E1C6EC2610090BDF9 /* LinphoneAPI.m in Sources */,
 				6983EB2B1C43B265004CCD74 /* ThemeMenuViewController.m in Sources */,

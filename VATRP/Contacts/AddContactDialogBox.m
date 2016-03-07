@@ -1,4 +1,4 @@
-//
+ //
 //  AddContactDialogBox.m
 //  ACE
 //
@@ -11,6 +11,7 @@
 #import "Utils.h"
 #import "CustomComboBox.h"
 #import "ContactPictureManager.h"
+#import "ContactFavoriteManager.h"
 #import <Quartz/Quartz.h>
 
 @interface AddContactDialogBox () <CustomComboBoxDelegate>
@@ -54,6 +55,7 @@
         [self setTitle:@"Add contact"];
     }
     [self fixInitialState];
+    [self setFavoriteState];
 }
 
 - (void)initCustomComboBox {
@@ -88,6 +90,11 @@
     }
 }
 
+- (void)setFavoriteState {
+    int isFavorite = [[ContactFavoriteManager sharedInstance] isContactFavoriteWithName:self.oldName andAddress:self.oldPhone];
+    [self.favoritesCheckBox setState:isFavorite];
+}
+
 - (void)setNumberTextField {
      NSDictionary *dict = [_customComboBox.dataSource objectAtIndex:[_customComboBox indexOfSelectedItem]];
      if ([[dict objectForKey:@"domain"] isEqualToString:@"No Provider"]) {
@@ -102,17 +109,6 @@
     nameField = [self.nameTextField stringValue];
     numberField = [self.phoneTextField stringValue];
     customcomboboxField = providerAddress;
-    // VATRP-2376: we will need to specify if this is a favorite or not here
-    bool isFavorite = false;
-    if (isFavorite)
-    {
-        [_favoritesCheckBox setState:NSOnState];
-    }
-    else
-    {
-        [_favoritesCheckBox setState:NSOffState];
-    }
-        
 }
 
 - (BOOL)isChangedFields {
@@ -130,19 +126,22 @@
 - (IBAction)onButtonDone:(id)sender {
     [[ContactPictureManager sharedInstance] saveImage:selectedImage withName:[self.nameTextField stringValue]
                                             andSipURI:[self createFullSipUriFromString:[self.phoneTextField stringValue]]];
+    BOOL isFavorite = ([self.favoritesCheckBox state] == NSOnState)?YES:NO;
     if (self.isEditing) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
                                                             object:@{@"name" : [self.nameTextField stringValue],
                                                                      @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
                                                                      @"oldName": self.oldName,
                                                                      @"oldPhone" : self.oldPhone,
-                                                                     @"provider" : providerAddress}
+                                                                     @"provider" : providerAddress,
+                                                                     @"isFavorite": [NSNumber numberWithBool:isFavorite]}
                                                           userInfo:nil];
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoFilled"
                                                             object:@{@"name" : [self.nameTextField stringValue],
                                                                      @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
-                                                                     @"provider" : providerAddress}
+                                                                     @"provider" : providerAddress,
+                                                                     @"isFavorite": [NSNumber numberWithBool:isFavorite]}
                                                           userInfo:nil];
     }
     [self dismissController:nil];

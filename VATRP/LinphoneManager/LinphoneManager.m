@@ -260,10 +260,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     //	if (lStatus) {
     //		LOGE(@"cannot un register route change handler [%ld]", lStatus);
     //	}
-    //  [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: kLinphoneCallUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneGlobalStateUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneConfiguringStateUpdate];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 

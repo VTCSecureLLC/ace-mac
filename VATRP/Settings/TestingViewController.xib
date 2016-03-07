@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TestingViewController">
+            <connections>
+                <outlet property="buttonEnableAVPF" destination="uDn-d6-uWI" id="3oA-a9-uv5"/>
+                <outlet property="buttonEnableAdaptiveRateControl" destination="Ycm-hW-sZH" id="2D1-De-L8g"/>
+                <outlet property="buttonQoS" destination="aeG-vY-s8G" id="4BP-te-o1y"/>
+                <outlet property="buttonSendDTMF" destination="IfJ-YA-Up2" id="PPp-SK-4Nb"/>
+                <outlet property="comboBoxRTCPFeedBack" destination="CiX-k3-Gz2" id="Sri-U2-fAI"/>
+                <outlet property="textFieldMaxDownload" destination="2BL-pM-gZH" id="asH-yi-a7G"/>
+                <outlet property="textFieldMaxUpload" destination="jX0-Gc-jvo" id="tGy-3h-xcX"/>
+                <outlet property="view" destination="c22-O7-iKe" id="gxs-fC-2bP"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uDn-d6-uWI">
+                    <rect key="frame" x="44" y="354" width="187" height="28"/>
+                    <buttonCell key="cell" type="check" title="Enable AVPF" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fQ0-sB-PtO">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBox:" target="-2" id="t3c-tO-AoJ"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IfJ-YA-Up2">
+                    <rect key="frame" x="44" y="324" width="187" height="28"/>
+                    <buttonCell key="cell" type="check" title="Send DTMFs as SIP info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DE7-nf-5vK">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBox:" target="-2" id="yce-zo-gDq"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ycm-hW-sZH">
+                    <rect key="frame" x="44" y="292" width="204" height="28"/>
+                    <buttonCell key="cell" type="check" title="Enable Adaptive Rate Control" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1bp-WE-OGv">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBox:" target="-2" id="q2v-d3-yuU"/>
+                    </connections>
+                </button>
+                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CiX-k3-Gz2">
+                    <rect key="frame" x="159" y="264" width="150" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="Off" drawsBackground="YES" completes="NO" numberOfVisibleItems="3" id="v5J-RI-a8j">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <objectValues>
+                            <string>Implicit</string>
+                            <string>Explicit</string>
+                            <string>Off</string>
+                        </objectValues>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="onRTCPFeedbackSelected:" target="-2" id="KNE-E5-SRg"/>
+                    </connections>
+                </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hi7-sh-VAd">
+                    <rect key="frame" x="44" y="270" width="109" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="RTCP Feedback:" id="adh-hN-dsy">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xZJ-hr-knI">
+                    <rect key="frame" x="46" y="109" width="177" height="36"/>
+                    <buttonCell key="cell" type="smallSquare" title="Clear user data" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rMd-MC-Mbx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonCleareUserData:" target="-2" id="Ekm-xg-Zet"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Whr-wy-Or2">
+                    <rect key="frame" x="44" y="240" width="83" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Max Upload:" id="T2Q-Jb-SIq">
+                        <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jX0-Gc-jvo">
+                    <rect key="frame" x="150" y="238" width="96" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="1JK-Dc-SFC">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3pG-iJ-skS">
+                    <rect key="frame" x="44" y="210" width="100" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Max Download:" id="b3w-Gu-Fpn">
+                        <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2BL-pM-gZH">
+                    <rect key="frame" x="150" y="208" width="96" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="19Y-ZM-h5m">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aeG-vY-s8G">
+                    <rect key="frame" x="327" y="354" width="109" height="28"/>
+                    <buttonCell key="cell" type="check" title="QoS" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="tbf-bz-2uJ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onQoSCheckBox:" target="-2" id="5SS-bD-Ypz"/>
+                    </connections>
+                </button>
+            </subviews>
+        </customView>
+    </objects>
+</document>

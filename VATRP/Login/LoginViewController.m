@@ -103,6 +103,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kLinphoneGlobalStateUpdate
+                                                  object:nil];
+    
+
+}
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSError *jsonParsingError = nil;
     if(data){
@@ -214,7 +223,7 @@
 //    [[NSNotificationCenter defaultCenter] removeObserver:self
 //                                                    name:kLinphoneRegistrationUpdate
 //                                                  object:nil];
-//    
+//
 //    [[NSNotificationCenter defaultCenter] removeObserver:self
 //                                                    name:kLinphoneConfiguringStateUpdate
 //                                                  object:nil];

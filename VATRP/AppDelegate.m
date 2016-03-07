@@ -187,7 +187,7 @@
 
 - (IBAction)onMenuItemPreferences:(id)sender {
     if (!self.settingsWindowController) {
-        self.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+        self.settingsWindowController = [[SettingsWindowController alloc] init];
         [self.settingsWindowController showWindow:self];
     } else {
         if (self.settingsWindowController.isShow) {
@@ -238,7 +238,6 @@
         self.loginWindowController = [[LoginWindowController alloc]init];
     }
     
-//    self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
     
     [self.loginWindowController showWindow:self];
     [self.menuItemSignOut setEnabled:false];

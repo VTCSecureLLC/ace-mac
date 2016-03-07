@@ -20,6 +20,17 @@
 
 @implementation GeneralViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"GeneralViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

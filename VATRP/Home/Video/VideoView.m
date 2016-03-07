@@ -251,8 +251,9 @@
                 [[CallService sharedInstance] resume:ms_list_nth_data(calls, 0)];
             }
             else{
-
-                [blackCurtain removeFromSuperview];
+                if(blackCurtain){
+                    [blackCurtain removeFromSuperview];
+                }
                 linphone_core_enable_video_preview(lc, FALSE);
                 linphone_core_use_preview_window(lc, FALSE);
                 linphone_core_enable_self_view([LinphoneManager getLc], FALSE);

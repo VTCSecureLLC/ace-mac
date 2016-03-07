@@ -245,12 +245,22 @@
         }
         case LinphoneCallEnd:
         {
-            [blackCurtain removeFromSuperview];
-            linphone_core_enable_video_preview(lc, FALSE);
-            linphone_core_use_preview_window(lc, FALSE);
-            linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
+            
+            if(linphone_core_get_calls_nb([LinphoneManager getLc]) >= 1){
+                const MSList *calls = linphone_core_get_calls([LinphoneManager getLc]);
+                [[CallService sharedInstance] resume:ms_list_nth_data(calls, 0)];
+            }
+            else{
+                if(blackCurtain){
+                    [blackCurtain removeFromSuperview];
+                }
+                linphone_core_enable_video_preview(lc, FALSE);
+                linphone_core_use_preview_window(lc, FALSE);
+                linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
 
-            self.call = nil;
+                self.call = nil;
+            }
+            
             numpadView.hidden = YES;
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];

@@ -210,15 +210,9 @@
     self.textFieldDomain.stringValue = [selectedItem objectForKey:@"domain"];
 }
 
-//-(void)dealloc{
-//    [[NSNotificationCenter defaultCenter] removeObserver:self
-//                                                    name:kLinphoneRegistrationUpdate
-//                                                  object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self
-//                                                    name:kLinphoneConfiguringStateUpdate
-//                                                  object:nil];
-//}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (IBAction)onButtonLogin:(id)sender {
     if (!self.textFieldUsername.stringValue || !self.textFieldUsername.stringValue.length ||

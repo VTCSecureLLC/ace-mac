@@ -59,6 +59,18 @@
 
 @implementation CallInfoViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"CallInfoViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

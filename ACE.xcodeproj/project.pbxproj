@@ -337,6 +337,10 @@
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A45DFA741C8E36F5003FD318 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA731C8E36F5003FD318 /* AboutWindowController.xib */; };
+		A45DFA761C8E371C003FD318 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA751C8E371C003FD318 /* AboutViewController.xib */; };
+		A45DFA781C8E3B98003FD318 /* CallInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA771C8E3B98003FD318 /* CallInfoWindowController.xib */; };
+		A45DFA7A1C8E3BA9003FD318 /* CallInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA791C8E3BA9003FD318 /* CallInfoViewController.xib */; };
 		A49CF7EE1C6CD04400493FC3 /* legal_release.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A49CF7ED1C6CD04400493FC3 /* legal_release.rtf */; };
 		A49DEE8E1C6EC2610090BDF9 /* LinphoneAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */; };
 		A4A6020B1C617C1C00812230 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A602091C617C1C00812230 /* SettingsHandler.m */; };
@@ -797,6 +801,10 @@
 		73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.1.dylib"; sourceTree = "<group>"; };
 		73EDA23A1BFA9F2C00EC7039 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.a"; sourceTree = "<group>"; };
 		73EDA23B1BFA9F2C00EC7039 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.dylib"; sourceTree = "<group>"; };
+		A45DFA731C8E36F5003FD318 /* AboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
+		A45DFA751C8E371C003FD318 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		A45DFA771C8E3B98003FD318 /* CallInfoWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallInfoWindowController.xib; sourceTree = "<group>"; };
+		A45DFA791C8E3BA9003FD318 /* CallInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallInfoViewController.xib; sourceTree = "<group>"; };
 		A49CF7ED1C6CD04400493FC3 /* legal_release.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = legal_release.rtf; sourceTree = "<group>"; };
 		A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinphoneAPI.m; sourceTree = "<group>"; };
 		A49DEE8F1C6EC2760090BDF9 /* LinphoneAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinphoneAPI.h; sourceTree = "<group>"; };
@@ -1265,8 +1273,10 @@
 			children = (
 				4AADCFB71BCB99E600BF8ABA /* CallInfoWindowController.h */,
 				4AADCFB81BCB99E600BF8ABA /* CallInfoWindowController.m */,
+				A45DFA771C8E3B98003FD318 /* CallInfoWindowController.xib */,
 				4AADCFB41BCB99C600BF8ABA /* CallInfoViewController.h */,
 				4AADCFB51BCB99C600BF8ABA /* CallInfoViewController.m */,
+				A45DFA791C8E3BA9003FD318 /* CallInfoViewController.xib */,
 			);
 			path = "Call Info";
 			sourceTree = "<group>";
@@ -1412,8 +1422,10 @@
 			children = (
 				4AB556431BDE2598003382B2 /* AboutWindowController.h */,
 				4AB556441BDE2598003382B2 /* AboutWindowController.m */,
+				A45DFA731C8E36F5003FD318 /* AboutWindowController.xib */,
 				4AB556461BDE25AD003382B2 /* AboutViewController.h */,
 				4AB556471BDE25AD003382B2 /* AboutViewController.m */,
+				A45DFA751C8E371C003FD318 /* AboutViewController.xib */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -1896,6 +1908,7 @@
 				A4FAEECC1C8E280A005103E5 /* ThemeViewController.xib in Resources */,
 				A4CA9EEF1C87767D00B4E8CA /* TermsOfUseViewController.xib in Resources */,
 				69EE9C061C64B6E20010EBB3 /* RTPquality_medium_bottom.png in Resources */,
+				A45DFA781C8E3B98003FD318 /* CallInfoWindowController.xib in Resources */,
 				A4EB900C1C85E0C50038E4FD /* MainMenu.xib in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
 				4A5DD1EB1BD904B3003BE9A2 /* messageIncomingBubbleTop.png in Resources */,
@@ -1925,6 +1938,7 @@
 				69B315951C2414540091534B /* SettingsAdvancedUI.plist in Resources */,
 				69A025B31BFB5C83005C62FA /* mute_disabled.png in Resources */,
 				69A025B51BFB5C83005C62FA /* numpad_active.png in Resources */,
+				A45DFA741C8E36F5003FD318 /* AboutWindowController.xib in Resources */,
 				692EDEEC1C05AC7E006073E2 /* send_message.png in Resources */,
 				69A025B91BFB5C83005C62FA /* speaker_disabled.png in Resources */,
 				CEF3B8111C0897BB00F35757 /* male.png in Resources */,
@@ -1962,6 +1976,7 @@
 				04C75BCB1C5A22F00089FEB6 /* global.png in Resources */,
 				4AB556701BE272D5003382B2 /* call_status_outgoing.png in Resources */,
 				69E42FB01C5769B5003EF534 /* icon_fullscreen_open.png in Resources */,
+				A45DFA7A1C8E3BA9003FD318 /* CallInfoViewController.xib in Resources */,
 				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
@@ -1998,6 +2013,7 @@
 				69EE9C081C64B6E20010EBB3 /* RTPquality_medium_leftBottom.png in Resources */,
 				697840871C089CB9000ED450 /* call resume.png in Resources */,
 				69EE9C091C64B6E20010EBB3 /* RTPquality_medium_leftTop.png in Resources */,
+				A45DFA761C8E371C003FD318 /* AboutViewController.xib in Resources */,
 				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
 				CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */,
 				A49CF7EE1C6CD04400493FC3 /* legal_release.rtf in Resources */,

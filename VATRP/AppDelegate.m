@@ -202,7 +202,7 @@
 
 - (IBAction)onMenuItemAbout:(id)sender {
     if (!aboutWindowController) {
-        aboutWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AboutWindowController"];
+        aboutWindowController = [[AboutWindowController alloc] init];
         [aboutWindowController showWindow:self];
     } else {
         [aboutWindowController showWindow:self];

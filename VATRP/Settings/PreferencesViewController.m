@@ -57,6 +57,16 @@
 @end
 
 @implementation PreferencesViewController
+-(id) init
+{
+    self = [super initWithNibName:@"PreferencesViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -656,7 +666,7 @@
     //linphone_core_set_video_preset(lc, [comboBoxVideoPreset.stringValue UTF8String]);
     
 
-    [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:@"stun_url_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:STUN_SERVER_DOMAIN];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [SettingsService setStun:checkboxStun.state];
     [SettingsService setICE:checkboxEnableICE.state];

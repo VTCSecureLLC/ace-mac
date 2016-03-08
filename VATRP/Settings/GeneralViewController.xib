@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="GeneralViewController">
+            <connections>
+                <outlet property="checkBoxAutoAnswerCall" destination="o9j-rH-4gs" id="D9f-L4-fTW"/>
+                <outlet property="checkBoxStartOnBoot" destination="Dja-9Z-iiH" id="sgO-mT-cEx"/>
+                <outlet property="view" destination="c22-O7-iKe" id="hoR-L5-Upn"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dja-9Z-iiH">
+                    <rect key="frame" x="165" y="364" width="156" height="18"/>
+                    <buttonCell key="cell" type="check" title="Start on boot" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eoe-6q-Myn">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBox:" target="-2" id="h3K-FZ-fE9"/>
+                    </connections>
+                </button>
+                <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qOf-G1-hYX">
+                    <rect key="frame" x="165" y="273" width="156" height="18"/>
+                    <buttonCell key="cell" type="check" title="SIP Encryption" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="k8I-Kj-LDN">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2k-Nm-uhd">
+                    <rect key="frame" x="165" y="333" width="156" height="18"/>
+                    <buttonCell key="cell" type="check" title="Wifi Only" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="G7Y-JR-b7N">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o9j-rH-4gs">
+                    <rect key="frame" x="165" y="303" width="187" height="18"/>
+                    <buttonCell key="cell" type="check" title="Auto answer call" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Rfp-cY-3HX">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBox:" target="-2" id="ie8-fW-4nc"/>
+                    </connections>
+                </button>
+            </subviews>
+        </customView>
+    </objects>
+</document>

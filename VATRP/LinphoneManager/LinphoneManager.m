@@ -260,10 +260,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     //	if (lStatus) {
     //		LOGE(@"cannot un register route change handler [%ld]", lStatus);
     //	}
-    //  [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: kLinphoneCallUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneGlobalStateUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneConfiguringStateUpdate];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 
@@ -447,7 +444,8 @@ exit_dbmigration:
 #pragma mark - Linphone Core Functions
 
 + (LinphoneCore*)getLc {
-    if (theLinphoneCore==nil) {
+    if (theLinphoneCore==nil)
+    {
         @throw([NSException exceptionWithName:@"LinphoneCoreException" reason:@"Linphone core not initialized yet" userInfo:nil]);
     }
     return theLinphoneCore;
@@ -1337,6 +1335,16 @@ static BOOL libStarted = FALSE;
     const char* lRootCa = [[LinphoneManager bundleFile:@"rootca.pem"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
     linphone_core_set_root_ca(theLinphoneCore, lRootCa);
     linphone_core_set_user_certificates_path(theLinphoneCore,[[LinphoneManager cacheDirectory] UTF8String]);
+    
+    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+    linphone_core_set_preferred_framerate([LinphoneManager getLc], [settingsHandler getPreferredFPS]);
+    linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], [[settingsHandler getAdaptiveRateAlgorithm] cStringUsingEncoding:NSUTF8StringEncoding]);
+    linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], [settingsHandler isAdaptiveRateControlEnabled]);
+    linphone_core_set_video_preset([LinphoneManager getLc], "custom");
+    linphone_core_set_upload_bandwidth(theLinphoneCore, [settingsHandler getUploadBandwidth]);
+    linphone_core_set_download_bandwidth(theLinphoneCore, [settingsHandler getDownloadBandwidth]);
+    
+    linphone_core_set_stun_server(theLinphoneCore, [[settingsHandler getStunServerDomain] cStringUsingEncoding:NSUTF8StringEncoding]);
     
     /* The core will call the linphone_iphone_configuring_status_changed callback when the remote provisioning is loaded (or skipped).
      Wait for this to finish the code configuration */

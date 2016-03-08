@@ -130,7 +130,7 @@
 - (IBAction)onButtonSettings:(id)sender {
     AppDelegate *app = [AppDelegate sharedInstance];
     if (!app.settingsWindowController) {
-        app.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+        app.settingsWindowController = [[SettingsWindowController alloc] init];
         [app.settingsWindowController showWindow:self];
 //        if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
 //            [_delegate didClickDockViewSettings:self];

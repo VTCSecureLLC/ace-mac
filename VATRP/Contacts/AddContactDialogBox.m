@@ -38,6 +38,17 @@
 
 #pragma mark - Controller lifecycle
 
+-(id) init
+{
+    self = [super initWithNibName:@"AddContactViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

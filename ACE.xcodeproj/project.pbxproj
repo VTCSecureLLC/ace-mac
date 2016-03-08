@@ -337,6 +337,7 @@
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A47695391C8F2B1400748DEF /* AddContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47695381C8F2B1400748DEF /* AddContactViewController.xib */; };
 		A49CF7EE1C6CD04400493FC3 /* legal_release.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A49CF7ED1C6CD04400493FC3 /* legal_release.rtf */; };
 		A49DEE8E1C6EC2610090BDF9 /* LinphoneAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */; };
 		A4A6020B1C617C1C00812230 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A602091C617C1C00812230 /* SettingsHandler.m */; };
@@ -797,6 +798,7 @@
 		73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.1.dylib"; sourceTree = "<group>"; };
 		73EDA23A1BFA9F2C00EC7039 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.a"; sourceTree = "<group>"; };
 		73EDA23B1BFA9F2C00EC7039 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.dylib"; sourceTree = "<group>"; };
+		A47695381C8F2B1400748DEF /* AddContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactViewController.xib; sourceTree = "<group>"; };
 		A49CF7ED1C6CD04400493FC3 /* legal_release.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = legal_release.rtf; sourceTree = "<group>"; };
 		A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinphoneAPI.m; sourceTree = "<group>"; };
 		A49DEE8F1C6EC2760090BDF9 /* LinphoneAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinphoneAPI.h; sourceTree = "<group>"; };
@@ -1017,6 +1019,7 @@
 				CE7005FE1C048F0000E667F8 /* ContactsView.m */,
 				CE48DF921C04B5110046E727 /* AddContactDialogBox.h */,
 				CE48DF931C04B5110046E727 /* AddContactDialogBox.m */,
+				A47695381C8F2B1400748DEF /* AddContactViewController.xib */,
 				5EEC29061C024CCA00BA43FB /* ContactsViewController.h */,
 				5EEC29071C024CCA00BA43FB /* ContactsViewController.m */,
 			);
@@ -1942,6 +1945,7 @@
 				69EE9BF61C649B990010EBB3 /* RTPquality_bad_leftTop.png in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
 				A4ED74CB1C8E0F960071211B /* TextMenuViewController.xib in Resources */,
+				A47695391C8F2B1400748DEF /* AddContactViewController.xib in Resources */,
 				4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */,
 				69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */,
 				04C33DE81C58CB9600BF1432 /* export_button.png in Resources */,

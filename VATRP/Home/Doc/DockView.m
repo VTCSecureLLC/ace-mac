@@ -32,6 +32,17 @@
 
 @synthesize delegate = _delegate;
 
+-(id) init
+{
+    self = [super initWithNibName:@"DockView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     
@@ -59,7 +70,7 @@
     [labelMessedCalls setWantsLayer:YES];
     [labelMessedCalls.layer setCornerRadius:9.0];
     [labelMessedCalls setHidden:YES];
-    [self addSubview:labelMessedCalls];
+    [self.view addSubview:labelMessedCalls];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -71,11 +82,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
+//- (void)drawRect:(NSRect)dirtyRect {
+//    [super drawRect:dirtyRect];
+//
     // Drawing code here.
-}
+//}
 
 - (IBAction)onButtonRecents:(id)sender {
     if ([_delegate respondsToSelector:@selector(didClickDockViewRecents:)]) {

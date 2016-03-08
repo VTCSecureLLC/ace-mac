@@ -44,6 +44,17 @@
 bool dialPadIsShown;
 @synthesize isAppFullScreen;
 
+-(id) init
+{
+    self = [super initWithNibName:@"HomeViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     dialPadIsShown = true;
@@ -53,8 +64,15 @@ bool dialPadIsShown;
     windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
     [v setBackgroundColor:windowDefaultColor];
-    self.dockView.delegate = self;
     
+    
+    self.dockView = [[DockView alloc] init];
+    [self.dockViewContainer addSubview:[self.dockView view]];
+    self.dockView.delegate = self;
+
+    self.profileView = [[ProfileView alloc] init];
+    [self.profileViewContainer addSubview:[self.profileView view]];
+
     [self.viewContainer setBackgroundColor:[NSColor whiteColor]];
     
     [ViewManager sharedInstance].dockView = self.dockView;

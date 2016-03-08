@@ -15,9 +15,11 @@
 #import "CallQualityIndicator.h"
 
 @interface HomeViewController : NSViewController
+@property (strong) IBOutlet NSView *dockViewContainer;
+@property (strong) IBOutlet NSView *profileViewContainer;
 
-@property (weak) IBOutlet DockView *dockView;
-@property (weak) IBOutlet ProfileView *profileView;
+@property (strong) IBOutlet DockView *dockView;
+@property (strong) IBOutlet ProfileView *profileView;
 @property (weak) IBOutlet DialPadView *dialPadView;
 @property (weak) IBOutlet BackgroundedView *viewContainer;
 @property (weak) IBOutlet RTTView *rttView;

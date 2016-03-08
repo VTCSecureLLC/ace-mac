@@ -135,7 +135,8 @@
 
 - (void) showTabWindow {
     
-    self.homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
+//    self.homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
+    self.homeWindowController = [[HomeWindowController alloc] init];
     [self.homeWindowController showWindow:self];
 
     [[AppDelegate sharedInstance].loginWindowController close];

@@ -14,6 +14,17 @@
 
 @implementation HomeWindowController
 
+-(id) init
+{
+    self = [super initWithWindowNibName:@"HomeWindowController"];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -32,6 +43,8 @@
     [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 310, self.window.frame.size.height)
                   display:YES
                   animate:NO];
+    HomeViewController* homeViewController = [[HomeViewController alloc] init];
+    [self.window.contentView addSubview:homeViewController.view];
 }
 
 - (HomeViewController*) getHomeViewController {

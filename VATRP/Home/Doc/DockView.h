@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
 
 typedef enum : NSUInteger {
     DockViewItemRecents,
@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 
 @protocol DockViewDelegate;
 
-@interface DockView : BackgroundedView
+@interface DockView : BackgroundedViewController
 
 @property (nonatomic, assign) id<DockViewDelegate> delegate;
 

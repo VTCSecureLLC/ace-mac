@@ -31,6 +31,17 @@
 
 @implementation AccountsViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"AccountsViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     

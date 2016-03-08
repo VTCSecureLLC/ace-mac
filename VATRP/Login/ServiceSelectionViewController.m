@@ -43,21 +43,18 @@
 }
 
 - (IBAction)onButtonVideoRelayService:(id)sender {
-    //LoginViewController *controller = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
     LoginViewController *controller  = [[LoginViewController alloc]init];
 
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (IBAction)onButtonIPRelay:(id)sender {
-//    LoginViewController *controller = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
     LoginViewController *controller  = [[LoginViewController alloc]init];
 
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (IBAction)onButtonIPCTS:(id)sender {
-    //LoginViewController *controller = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
     LoginViewController *controller  = [[LoginViewController alloc]init];
 
     [self.navigationController pushViewController:controller animated:YES];

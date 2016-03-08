@@ -57,6 +57,16 @@
 @end
 
 @implementation PreferencesViewController
+-(id) init
+{
+    self = [super initWithNibName:@"PreferencesViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

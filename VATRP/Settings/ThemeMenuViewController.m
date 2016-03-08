@@ -21,6 +21,17 @@
 
 @implementation ThemeMenuViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"ThemeViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

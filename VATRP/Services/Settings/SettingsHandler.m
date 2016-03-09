@@ -220,7 +220,7 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_PRESET] == nil)
     {
-        [self setAppSettingString:VIDEO_PRESET withValue:@"custom"];
+        [self setAppSettingString:VIDEO_PRESET withValue:@"high-fps"];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

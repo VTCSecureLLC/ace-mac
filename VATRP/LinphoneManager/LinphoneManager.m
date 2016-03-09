@@ -1340,7 +1340,7 @@ static BOOL libStarted = FALSE;
     linphone_core_set_preferred_framerate([LinphoneManager getLc], [settingsHandler getPreferredFPS]);
     linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], [[settingsHandler getAdaptiveRateAlgorithm] cStringUsingEncoding:NSUTF8StringEncoding]);
     linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], [settingsHandler isAdaptiveRateControlEnabled]);
-    linphone_core_set_video_preset([LinphoneManager getLc], "custom");
+    linphone_core_set_video_preset([LinphoneManager getLc], "high-fps");
     linphone_core_set_upload_bandwidth(theLinphoneCore, [settingsHandler getUploadBandwidth]);
     linphone_core_set_download_bandwidth(theLinphoneCore, [settingsHandler getDownloadBandwidth]);
     

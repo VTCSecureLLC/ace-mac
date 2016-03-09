@@ -41,6 +41,8 @@
 #import "SettingsService.h"
 #import "SettingsHandler.h"
 #import "AppDelegate.h"
+#import "ContactFavoriteManager.h"
+
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -231,7 +233,9 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
         self->_isTesting = [LinphoneManager isRunningTests];
         
         [self setLinphoneDBFilePath];
-        
+        NSString *friendListFilePath = [self applicationDirectoryFile:[NSString stringWithFormat:@"%@_linphoneFriendList", self.account]];
+        [[ContactFavoriteManager sharedInstance] setDatabasePath:friendListFilePath];
+        [[ContactFavoriteManager sharedInstance] createFavoriteTablesInFriendListByPath];
         
         //        if ([fileManager fileExistsAtPath:dst]) {
         //            [self overrideDefaultSettings];

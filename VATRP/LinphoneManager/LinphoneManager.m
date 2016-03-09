@@ -80,7 +80,7 @@ const int kLinphoneAudioVbrCodecDefaultBitrate=36; /*you can override this from 
 
 //extern void libmsamr_init(MSFactory *factory);
 //extern void libmsx264_init(MSFactory *factory);
-extern void libmsopenh264_init(MSFactory *factory);
+//extern void libmsopenh264_init(MSFactory *factory);
 //extern void libmssilk_init(MSFactory *factory);
 //extern void libmsbcg729_init(MSFactory *factory);
 //extern void libmswebrtc_init(MSFactory *factory);
@@ -260,10 +260,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     //	if (lStatus) {
     //		LOGE(@"cannot un register route change handler [%ld]", lStatus);
     //	}
-    //  [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: kLinphoneCallUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneGlobalStateUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneConfiguringStateUpdate];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 
@@ -484,9 +481,9 @@ void configH264HardwareAcell(bool encode, bool decode){
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264encoder", encode);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264decoder", decode);
-    
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", !encode);
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", !decode);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", true);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", true);
+    ms_factory_enable_filter_from_name(f, "MSX264Enc", false);
 }
 #pragma mark - Logs Functions handlers
 static void linphone_iphone_log_user_info(struct _LinphoneCore *lc, const char *message) {
@@ -1374,12 +1371,15 @@ static BOOL libStarted = FALSE;
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     //libmssilk_init(f);
     //libmsamr_init(f);
-    //    libmsx264_init(f);
-    libmsopenh264_init(f);
+//    libmsx264_init(f);
+    //libmsx264_init();
+//    libmsopenh264_init(f);
     //libmsbcg729_init(f);
     //libmswebrtc_init(f);
-    ms_factory_load_plugins(f, ".");
-    ms_factory_load_plugins(f, "lib/mediastreamer/plugins");
+    
+    NSString *s = [NSString stringWithFormat:@"%@/Contents/Frameworks/",[[NSBundle mainBundle] bundlePath]];
+    NSLog(@"Plugin path: %@", s);
+    ms_factory_load_plugins(f, [s cStringUsingEncoding:[NSString defaultCStringEncoding]]);
     linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
     configH264HardwareAcell(false, false);
 }

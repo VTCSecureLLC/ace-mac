@@ -150,7 +150,8 @@
 
 - (void)didClickPlusButton:(HistoryTableCellView *)contactCellView withInfo:(NSDictionary *)info {
     
-    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+//    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+    editContactDialogBox = [[AddContactDialogBox alloc] init];
     editContactDialogBox.isEditing = YES;
     editContactDialogBox.oldName = [info objectForKey:@"name"];
     editContactDialogBox.oldPhone = [info objectForKey:@"sipUri"];

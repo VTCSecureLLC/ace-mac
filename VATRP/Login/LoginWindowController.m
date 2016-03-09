@@ -69,7 +69,6 @@
                                                               rootViewController:loginViewController];
         } else {
             termsOfUseViewController = [[TermsOfUseViewController alloc]init];
-//            termsOfUseViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TermsOfUseViewController"];
             
             // Init navigation controller and add to window
             navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)

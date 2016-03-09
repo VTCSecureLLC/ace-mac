@@ -31,6 +31,17 @@
 
 @implementation MediaViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"MediaViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     isChanged = NO;

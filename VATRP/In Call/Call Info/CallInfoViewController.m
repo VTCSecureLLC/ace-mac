@@ -59,6 +59,18 @@
 
 @implementation CallInfoViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"CallInfoViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
@@ -103,7 +115,16 @@
             const LinphonePayloadType *video_pt = linphone_call_params_get_used_video_codec(current);
             if (video_pt != NULL) self.labelVideoCodec.stringValue = [NSString stringWithUTF8String:video_pt->mime_type];
             
-            int sip_port = linphone_core_get_sip_port ([LinphoneManager getLc]);
+            LinphoneProxyConfig *cfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+            int sip_port;
+            if(cfg) {
+                const char* proxy_addr = linphone_proxy_config_get_server_addr(cfg);
+                LinphoneAddress *addr = linphone_address_new( proxy_addr );
+                if(addr){
+                    sip_port = linphone_address_get_port(addr);
+                }
+            }
+            
             self.labelSIPPort.stringValue = [NSString stringWithFormat:@"%d", sip_port];
             
             int minPort, maxPort;

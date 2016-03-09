@@ -29,6 +29,17 @@
 
 @implementation TestingViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"TestingViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

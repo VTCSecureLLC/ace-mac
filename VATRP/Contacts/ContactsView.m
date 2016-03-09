@@ -71,6 +71,9 @@
         [_favoriteContactsButton setAction:@selector(favoriteContacts_Click)];
         [self addSubview:_favoriteContactsButton];
         
+        [self.addContactButton setTarget:self];
+        [self.addContactButton setAction:@selector(onButtonAddContact:)];
+        
         [self.addContactButton becomeFirstResponder];
         [self setObservers];
         
@@ -218,6 +221,12 @@
     }
 }
 
+- (IBAction)onButtonAddContact:(id)sender
+{
+    editContactDialogBox = [[AddContactDialogBox alloc] init];
+    editContactDialogBox.isEditing = NO;
+    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+}
 - (IBAction)onButtonClearList:(id)sender {
     NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"
                                      defaultButton:@"Cancel" alternateButton:@"OK"
@@ -353,7 +362,8 @@
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
-    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+//    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+    editContactDialogBox = [[AddContactDialogBox alloc] init];
     editContactDialogBox.isEditing = YES;
     editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
     editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];

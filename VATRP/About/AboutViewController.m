@@ -19,6 +19,17 @@
 
 @implementation AboutViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"AboutViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

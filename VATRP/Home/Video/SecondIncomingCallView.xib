@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SecondIncomingCallView">
+            <connections>
+                <outlet property="buttonDecline" destination="CjM-CU-PZ7" id="0gy-V9-mva"/>
+                <outlet property="buttonEndAnswer" destination="ulW-kg-pGd" id="nAH-4i-lnW"/>
+                <outlet property="buttonHoldAnswer" destination="JqT-IO-JHd" id="Oqr-XT-vun"/>
+                <outlet property="callerImageView" destination="czL-pQ-Ohp" id="x9m-Ix-KnV"/>
+                <outlet property="labelDisplayName" destination="HWL-YN-oPV" id="bbI-rc-ISM"/>
+                <outlet property="view" destination="c22-O7-iKe" id="jF4-F2-jqp"/>
+                <outlet property="viewAlphed" destination="JaK-VS-ZtZ" id="utf-TY-cpd"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulW-kg-pGd">
+                    <rect key="frame" x="117" y="324" width="230" height="60"/>
+                    <buttonCell key="cell" type="square" title="End &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="cQb-LW-YM4">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="32" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonEndAnswer:" target="-2" id="oyi-1A-gse"/>
+                    </connections>
+                </button>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JaK-VS-ZtZ" customClass="BackgroundedView">
+                    <rect key="frame" x="91" y="208" width="538" height="346"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="czL-pQ-Ohp">
+                            <rect key="frame" x="219" y="246" width="100" height="100"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="h9y-8T-Dbj"/>
+                        </imageView>
+                    </subviews>
+                </customView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JqT-IO-JHd">
+                    <rect key="frame" x="375" y="324" width="230" height="60"/>
+                    <buttonCell key="cell" type="square" title="Hold &amp; Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="h09-6h-iNC">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="32" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonHoldAnswer:" target="-2" id="OSW-Pq-6hc"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWL-YN-oPV">
+                    <rect key="frame" x="185" y="400" width="350" height="40"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="y1g-av-irj">
+                        <font key="font" metaFont="system" size="32"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CjM-CU-PZ7">
+                    <rect key="frame" x="246" y="230" width="230" height="60"/>
+                    <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="hMS-HO-gDX">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="32" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonDecline:" target="-2" id="kwM-uj-num"/>
+                    </connections>
+                </button>
+            </subviews>
+        </customView>
+    </objects>
+    <resources>
+        <image name="male" width="53" height="53"/>
+    </resources>
+</document>

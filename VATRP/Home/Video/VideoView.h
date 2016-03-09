@@ -10,7 +10,7 @@
 #import "LinphoneManager.h"
 #import "SettingsHandler.h"
 
-@interface VideoView : NSView<SettingsSelfViewDelegate>
+@interface VideoView : NSViewController<SettingsSelfViewDelegate>
 
 @property (nonatomic, assign) LinphoneCall* call;
 

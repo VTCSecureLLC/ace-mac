@@ -9,6 +9,8 @@
 #ifndef BackgroundedViewController_h
 #define BackgroundedViewController_h
 
+#import <Cocoa/Cocoa.h>
+
 @interface BackgroundedViewController : NSViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
@@ -19,9 +21,9 @@
 
 -(NSRect)getFrame;
 
-
+- (void) addTrackingArea:(NSTrackingArea*)trackingArea;
 - (void) setBackgroundColor:(NSColor*)color;
-- (void)drawRect:(NSRect)dirtyRect;
+- (void) drawRect:(NSRect)dirtyRect;
 
 @end
 

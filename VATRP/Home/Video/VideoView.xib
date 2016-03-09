@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="VideoView">
+            <connections>
+                <outlet property="buttonFullScreen" destination="c3L-Xi-Vu9" id="sJf-WU-FlK"/>
+                <outlet property="callControllerContainer" destination="Gl8-FV-Ntx" id="NbU-de-GLd"/>
+                <outlet property="callControllsConteinerView" destination="Wi4-MK-p4S" id="brj-Uw-YuL"/>
+                <outlet property="callerImageView" destination="Cbb-Ah-I7O" id="YZN-ki-oWo"/>
+                <outlet property="labelCallDuration" destination="iRe-cd-Hjl" id="hwC-et-iPl"/>
+                <outlet property="labelCallState" destination="hm1-fj-1F7" id="CPG-4k-ujm"/>
+                <outlet property="labelDisplayName" destination="Vod-Ov-ORD" id="YnY-D2-Tha"/>
+                <outlet property="labelRingCount" destination="JN6-Id-y5q" id="A8P-8V-GdS"/>
+                <outlet property="localVideo" destination="bZE-id-6Bh" id="k9z-A6-ZVP"/>
+                <outlet property="secondCallContainer" destination="JPl-pp-4tN" id="ulC-Rl-r2p"/>
+                <outlet property="secondIncomingCallContainer" destination="zEA-ge-YEn" id="V8a-Kd-ZCz"/>
+                <outlet property="view" destination="c22-O7-iKe" id="TCk-Ie-DV7"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZE-id-6Bh">
+                    <rect key="frame" x="486" y="580" width="176" height="99"/>
+                </customView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPl-pp-4tN">
+                    <rect key="frame" x="6" y="510" width="186" height="184"/>
+                </customView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="c3L-Xi-Vu9">
+                    <rect key="frame" x="681" y="647" width="32" height="32"/>
+                    <shadow key="shadow">
+                        <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </shadow>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="icon_fullscreen_open" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Wa1-Mn-tkd">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="30"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonFullScreen:" target="-2" id="P7y-NB-Qud"/>
+                    </connections>
+                </button>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zEA-ge-YEn">
+                    <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                </customView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wi4-MK-p4S" customClass="BackgroundedView">
+                    <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vod-Ov-ORD">
+                            <rect key="frame" x="10" y="469" width="700" height="40"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="TH9-Ki-iHi">
+                                <font key="font" metaFont="system" size="36"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hm1-fj-1F7">
+                            <rect key="frame" x="10" y="424" width="700" height="27"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Call status" id="2rl-4Z-aB5">
+                                <font key="font" metaFont="system" size="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iRe-cd-Hjl">
+                            <rect key="frame" x="10" y="400" width="700" height="27"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="0:00:05" id="Oqj-bN-yeh">
+                                <font key="font" metaFont="system" size="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JN6-Id-y5q">
+                            <rect key="frame" x="10" y="286" width="700" height="130"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="1" id="xOp-ga-yiy">
+                                <font key="font" metaFont="system" size="120"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl8-FV-Ntx">
+                            <rect key="frame" x="27" y="12" width="665" height="200"/>
+                        </customView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cbb-Ah-I7O">
+                            <rect key="frame" x="284" y="517" width="150" height="150"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="6nP-yP-jOe"/>
+                        </imageView>
+                    </subviews>
+                </customView>
+            </subviews>
+        </customView>
+    </objects>
+    <resources>
+        <image name="icon_fullscreen_open" width="30" height="30"/>
+        <image name="male" width="53" height="53"/>
+    </resources>
+</document>

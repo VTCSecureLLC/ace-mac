@@ -29,8 +29,8 @@
 @property (weak) IBOutlet NSImageView *imageViewVoiceMail;
 @property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
 
-@property (weak) IBOutlet RecentsView *recentsView;
-@property (weak) IBOutlet ContactsView *contactsView;
+@property (strong) IBOutlet RecentsView *recentsView;
+@property (strong) IBOutlet ContactsView *contactsView;
 @property (weak) IBOutlet SettingsView *settingsView;
 @property (weak) IBOutlet DHResourcesView *dhResourcesView;
 
@@ -72,8 +72,18 @@ bool dialPadIsShown;
 
     self.profileView = [[ProfileView alloc] init];
     [self.profileViewContainer addSubview:[self.profileView view]];
+    self.dialPadView = [[DialPadView alloc] init];
+    [self.dialPadContainer addSubview:[self.dialPadView view]];
 
+    self.rttView = [[RTTView alloc] init];
+    [self.rttViewContainer addSubview:[self.rttView view]];
+    
     [self.viewContainer setBackgroundColor:[NSColor whiteColor]];
+    
+//    self.recentsView = [[RecentsView alloc] init];
+//    self.contactsView = [[ContactsView alloc] init];
+//    [self.viewContainer addSubview:[self.recentsView view]];
+//    [self.viewContainer addSubview:[self.contactsView view]];
     
     [ViewManager sharedInstance].dockView = self.dockView;
     [ViewManager sharedInstance].dialPadView = self.dialPadView;
@@ -81,7 +91,7 @@ bool dialPadIsShown;
     [ViewManager sharedInstance].recentsView = self.recentsView;
     [ViewManager sharedInstance].callView = self.callView;
     
-    viewCurrent = (BackgroundedView*)self.recentsView;
+    viewCurrent = (BackgroundedView*)self.recentsView.view;
     [self initProvidersArray];
     [self setProviderInitialLogo];
     [self.providerTableView reloadData];
@@ -124,7 +134,12 @@ bool dialPadIsShown;
     [self.dhResourcesView setHidden:true];
     [self.contactsView setHidden:true];
     [self.settingsView setHidden:true];
+    
+    self.callQualityIndicator = [[CallQualityIndicator alloc] initWithFrame:self.videoView.view.frame];
+    [self.callView addSubview:self.callQualityIndicator];
 
+    self.videoView = [[VideoView alloc] init];
+    [self.callView addSubview:[self.videoView view]];
     [self.videoView createNumpadView];
 }
 
@@ -240,7 +255,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewDialpad:(DockView*)dockView_
 {
-    NSRect rect = self.dialPadView.frame;
+    NSRect rect = [self.dialPadView getFrame];
     [self hideDialPad:![self.dialPadView isHidden]];
     if (self.viewContainer.frame.origin.y == 81) {
         [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];

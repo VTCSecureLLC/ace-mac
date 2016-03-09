@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
 
-@interface RecentsView : BackgroundedView
+@interface RecentsView : BackgroundedViewController
 
 @property (weak) IBOutlet NSSegmentedControl *callsSegmentControll;
 

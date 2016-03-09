@@ -13,6 +13,7 @@
 #import "CallService.h"
 #import "ChatService.h"
 #import "ChatItemTableCellView.h"
+#import "BackgroundedView.h"
 
 //integers duplicate format as Android
 //const NSInteger TEXT_MODE;
@@ -50,6 +51,16 @@ const NSInteger SIP_SIMPLE=1;
 
 @implementation RTTView
 
+-(id) init
+{
+    self = [super initWithNibName:@"RTTView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 - (void) awakeFromNib {
     [super awakeFromNib];
     
@@ -57,13 +68,10 @@ const NSInteger SIP_SIMPLE=1;
 }
 
 - (void) setCustomFrame:(NSRect)frame {
-    self.frame = frame;
+    self.view.frame = frame;
     [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
 }
 
-- (void) setFrame:(NSRect)frame {
-    [super setFrame:frame];
-}
 
 - (void) viewWillAppear {
     
@@ -215,7 +223,7 @@ static void chatTable_free_chatrooms(void *data) {
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     LinphoneChatMessage *message = ms_list_nth_data(self->messageList, (int)row);
     if (message) {
-        CGFloat cellHeight = [ChatItemTableCellView height:message width:self.frame.size.width];
+        CGFloat cellHeight = [ChatItemTableCellView height:message width:[self getFrame].size.width];
         return cellHeight;
     }
     
@@ -312,7 +320,7 @@ static void chatTable_free_chatrooms(void *data) {
                 self->messageList = ms_list_append(self->messageList, incomingChatMessage);
                 
                 if (incomingCellView) {
-                    CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:self.frame.size.width];
+                    CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:[self getFrame].size.width];
                     if (incomingTextLinesCount == lineCount) {
                         [incomingCellView setChatMessage:incomingChatMessage];
                     } else {

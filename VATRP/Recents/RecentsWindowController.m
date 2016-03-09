@@ -7,6 +7,7 @@
 //
 
 #import "RecentsWindowController.h"
+#import "RecentsView.h"
 
 @interface RecentsWindowController ()
 
@@ -16,6 +17,18 @@
 
 @synthesize isShow;
 
+-(id) init
+{
+    self = [super initWithWindowNibName:@"RecentsWindowController"];
+    if (self)
+    {
+        // init
+        //        self.contentViewController = navigationController;
+    }
+    return self;
+    
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -23,6 +36,11 @@
     self.isShow = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
+    
+    RecentsView* recentsView = [[RecentsView alloc] init];
+    [self.window.contentView addSubview:recentsView.view];
+    [self.window setTitle:@"RecentsWindowController"];
+
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

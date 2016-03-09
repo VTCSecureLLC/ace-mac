@@ -67,12 +67,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear];
     [self checkProvidersInfo];
-    loginClicked = false;
+    
 }
 
 - (void)loadView {
     [super loadView];
-    
+    loginClicked = false;
+
 //    [[LinphoneManager instance]	startLinphoneCore];
 //    [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
 
@@ -99,7 +100,6 @@
     }
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     [self.comboBoxProviderSelect removeAllItems];
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
 }
 
@@ -111,6 +111,79 @@
     
 
 }
+
+#pragma mark - Login methods
+-(void)handleAutoLogin:(AccountModel *)accountModel
+{
+    if (accountModel != nil)
+    {
+        self.textFieldUsername.stringValue = accountModel.username;
+        self.textFieldUserID.stringValue = accountModel.userID;
+        self.textFieldPassword.stringValue = accountModel.password;
+        self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+        self.textFieldDomain.stringValue = accountModel.domain;
+
+        loginClicked = true;
+        [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", self.textFieldUsername.stringValue, self.textFieldDomain.stringValue];
+        if ([[LinphoneManager instance] coreIsRunning]) {
+            [[LinphoneManager instance] destroyLinphoneCore];
+            [LinphoneManager instanceRelease];
+        }
+        
+        if (![[LinphoneManager instance] coreIsRunning]) {
+            [[LinphoneManager instance]	startLinphoneCore];
+            [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+        } else {
+            NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:accountModel.domain];
+            [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
+                                                                   withUsername:accountModel.username
+                                                                    andPassword:accountModel.password];
+            [DefaultSettingsManager sharedInstance].delegate = self;
+        }
+        
+        [self.prog_Signin setHidden:NO];
+        [self.prog_Signin startAnimation:self];
+        [self.loginButton setEnabled:NO];
+    }
+}
+
+- (IBAction)onButtonLogin:(id)sender
+{
+    loginClicked = true;
+    if (!self.textFieldUsername.stringValue || !self.textFieldUsername.stringValue.length ||
+        !   self.textFieldDomain.stringValue || !self.textFieldDomain.stringValue.length) {
+        
+        NSAlert *alert = [[NSAlert alloc]init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Please fill the all fields."];
+        [alert runModal];
+        
+        return;
+    }
+    
+    [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", self.textFieldUsername.stringValue, self.textFieldDomain.stringValue];
+    if ([[LinphoneManager instance] coreIsRunning]) {
+        [[LinphoneManager instance] destroyLinphoneCore];
+        [LinphoneManager instanceRelease];
+    }
+    
+    if (![[LinphoneManager instance] coreIsRunning]) {
+        [[LinphoneManager instance]	startLinphoneCore];
+        [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
+    } else {
+        NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
+        [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
+                                                               withUsername:self.textFieldUsername.stringValue
+                                                                andPassword:self.textFieldPassword.stringValue];
+        [DefaultSettingsManager sharedInstance].delegate = self;
+    }
+    
+    [self.prog_Signin setHidden:NO];
+    [self.prog_Signin startAnimation:self];
+    [self.loginButton setEnabled:NO];
+}
+
+#pragma mark - connection
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSError *jsonParsingError = nil;
@@ -223,41 +296,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (IBAction)onButtonLogin:(id)sender {
-    if (!self.textFieldUsername.stringValue || !self.textFieldUsername.stringValue.length ||
-        !   self.textFieldDomain.stringValue || !self.textFieldDomain.stringValue.length) {
-
-        NSAlert *alert = [[NSAlert alloc]init];
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Please fill the all fields."];
-        [alert runModal];
-        
-        return;
-    }
-
-    [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", self.textFieldUsername.stringValue, self.textFieldDomain.stringValue];
-    
-    if ([[LinphoneManager instance] coreIsRunning]) {
-        [[LinphoneManager instance] destroyLinphoneCore];
-        [LinphoneManager instanceRelease];
-    }
-    
-    if (![[LinphoneManager instance] coreIsRunning]) {
-        [[LinphoneManager instance]	startLinphoneCore];
-        [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
-    } else {
-        NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
-        [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
-                                                               withUsername:self.textFieldUsername.stringValue
-                                                                andPassword:self.textFieldPassword.stringValue];
-        [DefaultSettingsManager sharedInstance].delegate = self;
-    }
-    
-    [self.prog_Signin setHidden:NO];
-    [self.prog_Signin startAnimation:self];
-    [self.loginButton setEnabled:NO];
-}
-
 - (void)didFinishLoadingConfigData {
     [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
     // Later - need to set username, userID, password, domain transport and port.
@@ -273,37 +311,86 @@
     [[SettingsHandler settingsHandler] initializeUserDefaults:YES];
 }
 
-- (void)userLogin {
-    loginClicked = true;
-    loginAccount = [[AccountModel alloc] init];
-    loginAccount.username = self.textFieldUsername.stringValue;
-    loginAccount.userID = self.textFieldUserID.stringValue;
-    loginAccount.password = self.textFieldPassword.stringValue;
-    loginAccount.domain = self.textFieldDomain.stringValue;
-    loginAccount.transport = [self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"] ? @"TLS" : @"TCP";
-    loginAccount.port = self.textFieldPort.intValue;
-  
+- (void)userLogin
+{
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
-    if (accountModel) {
-        [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+    bool shouldAutoLogin = false;
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"auto_login"])
+    {
+        shouldAutoLogin = NO;
     }
-    [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
-                                                      UserID:self.textFieldUserID.stringValue
-                                                    Password:self.textFieldPassword.stringValue
-                                                      Domain:self.textFieldDomain.stringValue
-                                                   Transport:[self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"] ? @"TLS" : @"TCP"
-                                                        Port:self.textFieldPort.intValue
-                                                   isDefault:YES];
+    else
+    {
+        shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
+    }
+    [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     
-    [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
-                                                        UserID:loginAccount.userID
-                                                      password:loginAccount.password
-                                                        domain:loginAccount.domain
-                                                     transport:loginAccount.transport
-                                                          port:loginAccount.port];
-    [self.prog_Signin setHidden:YES];
-    [self.prog_Signin stopAnimation:self];
-    [self.loginButton setEnabled:NO];
+    if (shouldAutoLogin && accountModel &&
+        accountModel.username && accountModel.username.length &&
+        accountModel.userID && accountModel.userID.length &&
+        accountModel.password && accountModel.password.length &&
+        accountModel.domain && accountModel.domain.length &&
+        accountModel.transport && accountModel.transport.length &&
+        accountModel.port)
+    {
+        loginAccount = accountModel;
+    }
+    else
+    {
+        if (accountModel)
+        {
+            [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
+        }
+        [[AccountsService sharedInstance] addAccountWithUsername:self.textFieldUsername.stringValue
+                                                          UserID:self.textFieldUserID.stringValue
+                                                        Password:self.textFieldPassword.stringValue
+                                                          Domain:self.textFieldDomain.stringValue
+                                                       Transport:[self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"] ? @"TLS" : @"TCP"
+                                                            Port:self.textFieldPort.intValue
+                                                       isDefault:YES];
+
+    }
+
+    if (loginClicked || shouldAutoLogin)
+    {
+        if (loginAccount == nil)
+        {
+            loginAccount = [[AccountModel alloc] init];
+            loginAccount.username = self.textFieldUsername.stringValue;
+            loginAccount.userID = self.textFieldUserID.stringValue;
+            loginAccount.password = self.textFieldPassword.stringValue;
+            loginAccount.domain = self.textFieldDomain.stringValue;
+            loginAccount.transport = [self.comboBoxTransport.stringValue isEqualToString:@"Encrypted (TLS)"] ? @"TLS" : @"TCP";
+            loginAccount.port = self.textFieldPort.intValue;
+        }
+        else
+        {
+            self.textFieldUsername.stringValue = accountModel.username;
+            self.textFieldUserID.stringValue = accountModel.userID;
+            self.textFieldPassword.stringValue = accountModel.password;
+            self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+            self.textFieldDomain.stringValue = accountModel.domain;
+            if ([loginAccount.transport isEqualToString:@"TLS"])
+            {
+                [self.comboBoxTransport selectItemWithObjectValue:@"Encrypted (TLS)"];
+            }
+            else
+            {
+                [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
+            }
+        }
+  
+    
+        [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
+                                                            UserID:loginAccount.userID
+                                                          password:loginAccount.password
+                                                            domain:loginAccount.domain
+                                                         transport:loginAccount.transport
+                                                              port:loginAccount.port];
+        [self.prog_Signin setHidden:YES];
+        [self.prog_Signin stopAnimation:self];
+        [self.loginButton setEnabled:NO];
+    }
 }
 
 
@@ -442,7 +529,7 @@
         }
         case LinphoneRegistrationFailed: {
             // VATRP-2202: we do not need to show this message if the user has not yet clicked login.
-            if (![self.loginButton isEnabled])
+            if (loginClicked)//![self.loginButton isEnabled])
             {
                 [self.loginButton setEnabled:YES];
                 [self.prog_Signin setHidden:YES];

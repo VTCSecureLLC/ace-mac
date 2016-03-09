@@ -77,6 +77,8 @@
 
     [self changeViewTo:generalViewController.view];
     
+    [self.window setTitle:@"SettingsWindowController"];
+
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

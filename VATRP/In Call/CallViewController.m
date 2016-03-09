@@ -108,12 +108,14 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
-    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+//    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+    callInfoWindowController = [[CallInfoWindowController alloc] init];
     [callInfoWindowController showWindow:self];
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
-    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+//    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+    keypadWindowController = [[KeypadWindowController alloc] init];
     [keypadWindowController showWindow:self];
 }
 

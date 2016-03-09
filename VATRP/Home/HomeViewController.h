@@ -17,15 +17,17 @@
 @interface HomeViewController : NSViewController
 @property (strong) IBOutlet NSView *dockViewContainer;
 @property (strong) IBOutlet NSView *profileViewContainer;
+@property (strong) IBOutlet NSView *dialPadContainer;
+@property (strong) IBOutlet NSView *rttViewContainer;
 
 @property (strong) IBOutlet DockView *dockView;
 @property (strong) IBOutlet ProfileView *profileView;
-@property (weak) IBOutlet DialPadView *dialPadView;
-@property (weak) IBOutlet BackgroundedView *viewContainer;
-@property (weak) IBOutlet RTTView *rttView;
-@property (weak) IBOutlet VideoView *videoView;
-@property (weak) IBOutlet BackgroundedView *callView;
-@property (weak) IBOutlet CallQualityIndicator *callQualityIndicator;
+@property (strong) IBOutlet DialPadView *dialPadView;
+@property (strong) IBOutlet BackgroundedView *viewContainer;
+@property (strong) IBOutlet RTTView *rttView;
+@property (strong) IBOutlet VideoView *videoView;
+@property (strong) IBOutlet BackgroundedView *callView;
+@property (strong) IBOutlet CallQualityIndicator *callQualityIndicator;
 
 @property (nonatomic, assign) BOOL isAppFullScreen;
 

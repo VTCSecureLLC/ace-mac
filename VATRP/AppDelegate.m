@@ -116,17 +116,18 @@
             [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
         }
         
-        // Get the default proxyCfg in Linphone
-        LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
-        
-        // To unregister from SIP
-        linphone_proxy_config_edit(proxyCfg);
-        linphone_proxy_config_enable_register(proxyCfg, false);
-        linphone_proxy_config_done(proxyCfg);
-        
-        [[LinphoneManager instance] destroyLinphoneCore];
-        [LinphoneManager instanceRelease];
     }
+    // Get the default proxyCfg in Linphone
+    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+    
+    // To unregister from SIP
+    linphone_proxy_config_edit(proxyCfg);
+    linphone_proxy_config_enable_register(proxyCfg, false);
+    linphone_proxy_config_done(proxyCfg);
+    
+    [[LinphoneManager instance] destroyLinphoneCore];
+    [LinphoneManager instanceRelease];
+
 }
 
 + (AppDelegate*)sharedInstance {
@@ -136,11 +137,12 @@
 - (void) showTabWindow {
     
 //    self.homeWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"HomeWindowController"];
+    [[AppDelegate sharedInstance].loginWindowController close];
+    [AppDelegate sharedInstance].loginWindowController = nil;
+    
     self.homeWindowController = [[HomeWindowController alloc] init];
     [self.homeWindowController showWindow:self];
 
-    [[AppDelegate sharedInstance].loginWindowController close];
-    [AppDelegate sharedInstance].loginWindowController = nil;
     [self.menuItemSignOut setEnabled:true];
     [self.menuItemPreferences setEnabled:true];
 }
@@ -179,7 +181,8 @@
 
 - (VideoCallWindowController*) getVideoCallWindow {
     if (!videoCallWindowController) {
-        videoCallWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoCall"];
+//        videoCallWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoCall"];
+        videoCallWindowController = [[VideoCallWindowController alloc] init];
         [videoCallWindowController showWindow:self];
     }
     
@@ -203,7 +206,7 @@
 
 - (IBAction)onMenuItemAbout:(id)sender {
     if (!aboutWindowController) {
-        aboutWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AboutWindowController"];
+        aboutWindowController = [[AboutWindowController alloc] init];
         [aboutWindowController showWindow:self];
     } else {
         [aboutWindowController showWindow:self];

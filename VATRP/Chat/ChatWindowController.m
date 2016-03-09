@@ -16,6 +16,17 @@
 
 @synthesize isShow;
 
+-(id) init
+{
+    self = [super initWithWindowNibName:@"ChatWindowController"];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -24,6 +35,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
     
     self.isShow = YES;
+    
+    ChatViewController* chatViewController = [[ChatViewController alloc] init];
+    [self.window.contentView addSubview:[chatViewController view]];
+    
+    [self.window setTitle:@"ChatWindowController"];
+
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification {

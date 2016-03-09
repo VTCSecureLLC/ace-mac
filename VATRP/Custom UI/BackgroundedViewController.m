@@ -47,6 +47,10 @@
     return self.view.frame;
 }
 
+-(void) addTrackingArea:(NSTrackingArea*)trackingArea
+{
+    [self.view addTrackingArea:trackingArea];
+}
 
 
 - (void) setBackgroundColor:(NSColor*)color {

@@ -45,6 +45,8 @@
                   animate:NO];
     HomeViewController* homeViewController = [[HomeViewController alloc] init];
     [self.window.contentView addSubview:homeViewController.view];
+    [self.window setTitle:@"ACE"];
+
 }
 
 - (HomeViewController*) getHomeViewController {

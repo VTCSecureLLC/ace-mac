@@ -44,9 +44,14 @@
 @property (weak) IBOutlet NSTextField *labelCallDuration;
 
 @property (weak) IBOutlet BackgroundedView *callControllsConteinerView;
-@property (weak) IBOutlet CallControllersView *callControllersView;
-@property (weak) IBOutlet SecondIncomingCallView *secondIncomingCallView;
-@property (weak) IBOutlet SecondCallView *secondCallView;
+
+@property (strong) IBOutlet NSView *callControllerContainer;
+@property (strong) IBOutlet CallControllersView *callControllersView;
+
+@property (strong) IBOutlet NSView *secondCallContainer;
+@property (strong) IBOutlet SecondCallView *secondCallView;
+@property (strong) IBOutlet NSView *secondIncomingCallContainer;
+@property (strong) IBOutlet SecondIncomingCallView *secondIncomingCallView;
 
 @property (weak) IBOutlet NSTextField *labelRingCount;
 
@@ -65,6 +70,28 @@
 
 @synthesize call;
 
+-(id) init
+{
+    self = [super initWithNibName:@"VideoView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.callControllersView = [[CallControllersView alloc] init];
+    [self.callControllerContainer addSubview:[self.callControllersView view]];
+    self.secondCallView = [[SecondCallView alloc] init];
+    [self.secondCallContainer addSubview:[self.secondCallView view]];
+    self.secondIncomingCallView = [[SecondIncomingCallView alloc] init];
+    [self.secondIncomingCallContainer addSubview:[self.secondIncomingCallView view]];
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     
@@ -76,7 +103,7 @@
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.settingsSelfViewDelegate = self;
     
-    self.wantsLayer = YES;
+    self.view.wantsLayer = YES;
     self.remoteVideoView.wantsLayer = YES;
     self.labelDisplayName.wantsLayer = YES;
     self.labelCallState.wantsLayer = YES;
@@ -103,8 +130,8 @@
 //    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
-    cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.frame];
-    blackCurtain = [[BackgroundedView alloc] initWithFrame:self.frame];
+    cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.view.frame];
+    blackCurtain = [[BackgroundedView alloc] initWithFrame:self.view.frame];
     [blackCurtain setBackgroundColor:[NSColor blackColor]];
     // ToD0 - temp for VATRP-2489
     [self.buttonFullScreen setHidden:true];
@@ -116,17 +143,18 @@
     [self.callControllsConteinerView addSubview:numpadView positioned:NSWindowAbove relativeTo:nil];
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
-    // Drawing code here.
-}
+//- (void)drawRect:(NSRect)dirtyRect {
+//    [super drawRect:dirtyRect];
+//
+//    // Drawing code here.
+//}
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
-    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+//    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+    keypadWindowController = [[KeypadWindowController alloc] init];
     [keypadWindowController showWindow:self];
 }
 
@@ -188,7 +216,7 @@
             
             self.labelCallState.stringValue = @"Connected 00:00";
             
-            [self.localVideo setFrame:NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height)];
+            [self.localVideo setFrame:NSMakeRect(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
             HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
             if (homeViewController.isAppFullScreen) {
@@ -201,7 +229,7 @@
             [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
             
             homeViewController.callQualityIndicator.hidden = NO;
-            [homeViewController.callQualityIndicator setNeedsDisplayInRect:self.frame];
+            [homeViewController.callQualityIndicator setNeedsDisplayInRect:self.view.frame];
         }
             break;
         case LinphoneCallOutgoingInit: {
@@ -483,7 +511,7 @@
                                                     selector:@selector(ringCountTimer)
                                                     userInfo:nil
                                                      repeats:YES];
-    [self addSubview:self.labelRingCount positioned:NSWindowAbove relativeTo:nil];
+    [self.view addSubview:self.labelRingCount positioned:NSWindowAbove relativeTo:nil];
 }
 
 - (void)stopRingCountTimer {
@@ -593,19 +621,19 @@
 
     if ([[CallService sharedInstance] getCurrentCall]) {
         if ([self.callControllersView bool_chat_window_open]) {
-            if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
-                [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+            if (self.view.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+                [self.view.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.view.window.frame.origin.y, 1328, self.view.window.frame.size.height)
                               display:YES
                               animate:YES];
             } else {
-                [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1328, self.view.window.frame.size.height)
                               display:YES
                               animate:YES];
             }
             
             [self.callControllersView set_bool_chat_window_open:YES];
         } else {
-            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+            [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1030, self.view.window.frame.size.height)
                           display:YES
                           animate:YES];
             [self.callControllersView set_bool_chat_window_open:NO];
@@ -632,12 +660,12 @@
     NSString *callViewFrameStr = (NSString*)notif.object;
     NSRect callViewFrame = NSRectFromString(callViewFrameStr);
 
-    [[self animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    [[self.view animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
 
     [[self.callControllsConteinerView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
-    [[homeViewController.rttView animator] setFrame:NSMakeRect(callViewFrame.size.width, 0, homeViewController.rttView.frame.size.width, callViewFrame.size.height)];
-    [homeViewController.rttView setCustomFrame:NSMakeRect(callViewFrame.size.width, 0, homeViewController.rttView.frame.size.width, callViewFrame.size.height)];
+    [[homeViewController.rttView.view animator] setFrame:NSMakeRect(callViewFrame.size.width, 0, homeViewController.rttView.view.frame.size.width, callViewFrame.size.height)];
+    [homeViewController.rttView setCustomFrame:NSMakeRect(callViewFrame.size.width, 0, homeViewController.rttView.view.frame.size.width, callViewFrame.size.height)];
      
     [[self.localVideo animator] setFrame:NSMakeRect(callViewFrame.size.width - 240, callViewFrame.size.height - 120, self.localVideo.frame.size.width, self.localVideo.frame.size.height)];
     [[self.buttonFullScreen animator] setFrame:NSMakeRect(callViewFrame.size.width - 35, callViewFrame.size.height - 52, self.buttonFullScreen.frame.size.width, self.buttonFullScreen.frame.size.height)];
@@ -645,10 +673,10 @@
     [[self.labelCallState animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallState.frame.size.width/2, callViewFrame.size.height - 146, self.labelCallState.frame.size.width, self.labelCallState.frame.size.height)];
     [[self.labelCallDuration animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallDuration.frame.size.width/2, callViewFrame.size.height - 170, self.labelCallDuration.frame.size.width, self.labelCallDuration.frame.size.height)];
     [[self.labelRingCount animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallDuration.frame.size.width/2, callViewFrame.size.height/2 - self.labelCallDuration.frame.size.height/2, self.labelRingCount.frame.size.width, self.labelRingCount.frame.size.height)];
-    [[self.callControllersView animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.callControllersView.frame.size.width/2, 12, self.callControllersView.frame.size.width, self.callControllersView.frame.size.height)];
-    [[self.secondIncomingCallView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
+    [[self.callControllersView.view animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.callControllersView.view.frame.size.width/2, 12, self.callControllersView.view.frame.size.width, self.callControllersView.view.frame.size.height)];
+    [[self.secondIncomingCallView.view animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [self.secondIncomingCallView reorderControllersForFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
-    [[self.secondCallView animator] setFrame:NSMakeRect(6, callViewFrame.size.height - 190, self.secondCallView.frame.size.width, self.secondCallView.frame.size.height)];
+    [[self.secondCallView.view animator] setFrame:NSMakeRect(6, callViewFrame.size.height - 190, self.secondCallView.view.frame.size.width, self.secondCallView.view.frame.size.height)];
     [[numpadView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [numpadView setCustomFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     
@@ -661,7 +689,7 @@
     if ([videoMode isEqualToString:@"camera_mute_off"]) {
         [cameraStatusModeImageView setImage:[NSImage imageNamed:@"camera_mute.png"]];
         [blackCurtain addSubview:cameraStatusModeImageView];
-        [self addSubview:blackCurtain];
+        [self.view addSubview:blackCurtain];
     }
     if ([videoMode isEqualToString:@"isCameraMuted"] || [videoMode isEqualToString:@"camera_mute_on"]) {
         [blackCurtain removeFromSuperview];

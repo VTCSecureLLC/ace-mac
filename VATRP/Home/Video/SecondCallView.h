@@ -6,10 +6,10 @@
 //  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
 #import "CallService.h"
 
-@interface SecondCallView : BackgroundedView
+@interface SecondCallView : BackgroundedViewController
 
 @property (nonatomic, assign) LinphoneCall* call;
 

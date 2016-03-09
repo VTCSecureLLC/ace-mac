@@ -14,6 +14,19 @@
 
 @implementation VideoCallWindowController
 
+-(id) init
+{
+    self = [super initWithWindowNibName:@"VideoCallWindowController"];
+    if (self)
+    {
+        // init
+        //        self.contentViewController = navigationController;
+    }
+    return self;
+    
+}
+
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -29,6 +42,11 @@
     pos.x = barOrigin.x - currentWindowSize.x;
     pos.y = barOrigin.y;
     [self.window setFrameOrigin : pos];
+    
+    VideoView* videoView = [[VideoView alloc] init];
+    [self.window.contentView addSubview:[videoView view]];
+    [self.window setTitle:@"VideoCallWindowController"];
+
 }
 
 @end

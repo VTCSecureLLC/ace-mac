@@ -37,6 +37,7 @@
 @property (weak) IBOutlet NSTextField *ringCountLabel;
 
 @property (weak) IBOutlet NSImageView *callAlertImageView;
+@property (strong, nonatomic) NSString *callStatusMessage;
 
 
 - (IBAction)onButtonAnswer:(id)sender;
@@ -123,6 +124,7 @@ static const float callAlertStepInterval = 0.5;
 - (void)callUpdateEvent:(NSNotification*)notif {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
+    self.callStatusMessage = [notif.userInfo objectForKey:@"message"];
     [self callUpdate:acall state:astate];
 }
 
@@ -229,6 +231,9 @@ static const float callAlertStepInterval = 0.5;
         }
         case LinphoneCallEnd:
         {
+            if (linphone_call_get_dir(call) == LinphoneCallOutgoing) {
+                [self displayCallError:call message:@"Call Error"];
+            }
             self.labelCallState.stringValue = @"Call End";
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
@@ -254,16 +259,15 @@ static const float callAlertStepInterval = 0.5;
     }
 }
 
-- (void)displayCallError:(LinphoneCall *)call message:(NSString *)message {
-    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(call));
+- (void)displayCallError:(LinphoneCall *)acall message:(NSString *)message {
+    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(acall));
     NSString *lUserName =
     lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
     NSString *lMessage;
     NSString *lTitle;
     
     // get default proxy
-    LinphoneProxyConfig *proxyCfg;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    LinphoneProxyConfig *proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
     if (proxyCfg == nil) {
         lMessage = NSLocalizedString(@"Please make sure your device is connected to the internet and double check your "
                                      @"SIP account configuration in the settings.",
@@ -272,16 +276,19 @@ static const float callAlertStepInterval = 0.5;
         lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
     }
     
-    switch (linphone_call_get_reason(call)) {
+    switch (linphone_call_get_reason(acall)) {
         case LinphoneReasonNotFound:
             lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
             break;
         case LinphoneReasonBusy:
             lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
             break;
+        case LinphoneReasonDeclined:
+            lMessage = NSLocalizedString(@"The user is not available", nil);
+            break;
         default:
             if (message != nil) {
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, message];
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, self.callStatusMessage];
             }
             break;
     }

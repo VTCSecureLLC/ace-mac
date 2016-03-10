@@ -57,6 +57,8 @@
 @property (weak) IBOutlet NSImageView *callerImageView;
 @property (strong,nonatomic)SettingsHandler* settingsHandler;
 
+@property (strong, nonatomic) NSString *callStatusMessage;
+
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -135,6 +137,7 @@
 - (void)callUpdateEvent:(NSNotification*)notif {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
+    self.callStatusMessage = [notif.userInfo objectForKey:@"message"];
     [self callUpdate:acall state:astate];
 }
 
@@ -245,6 +248,9 @@
         }
         case LinphoneCallEnd:
         {
+            if (linphone_call_get_dir(call) == LinphoneCallOutgoing) {
+                [self displayCallError:call message:@"Call Error"];
+            }
             
             if(linphone_core_get_calls_nb([LinphoneManager getLc]) >= 1){
                 const MSList *calls = linphone_core_get_calls([LinphoneManager getLc]);
@@ -282,7 +288,7 @@
 - (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message {
     NSString *lMessage;
     NSString *lTitle;
-    const LinphoneAddress *address;
+    const LinphoneAddress *linphoneAddress;
     NSString* lUserName = NSLocalizedString(@"Unknown", nil);
     if (call_ == nil)
     {
@@ -290,17 +296,16 @@
     }
     else
     {
-        address = linphone_call_get_remote_address(call_);
+        linphoneAddress = linphone_call_get_remote_address(call_);
         if (address != nil)
         {
-            const char *lUserNameChars = linphone_address_get_username(address);
+            const char *lUserNameChars = linphone_address_get_username(linphoneAddress);
             lUserName =
                 lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
         }
     }
     // get default proxy
-    LinphoneProxyConfig *proxyCfg;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    LinphoneProxyConfig *proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
     if (proxyCfg == nil) {
         lMessage = NSLocalizedString(@"Please make sure your device is connected to the internet and double check your "
                                      @"SIP account configuration in the settings.",
@@ -316,9 +321,12 @@
         case LinphoneReasonBusy:
             lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
             break;
+        case LinphoneReasonDeclined:
+            lMessage = NSLocalizedString(@"The user is not available", nil);
+            break;
         default:
             if (message != nil) {
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, message];
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, self.callStatusMessage];
             }
             break;
     }

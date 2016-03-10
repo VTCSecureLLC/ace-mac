@@ -41,6 +41,8 @@
 #import "SettingsService.h"
 #import "SettingsHandler.h"
 #import "AppDelegate.h"
+#import "ContactFavoriteManager.h"
+
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -231,7 +233,9 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
         self->_isTesting = [LinphoneManager isRunningTests];
         
         [self setLinphoneDBFilePath];
-        
+        NSString *friendListFilePath = [self applicationDirectoryFile:[NSString stringWithFormat:@"%@_linphoneFriendList", self.account]];
+        [[ContactFavoriteManager sharedInstance] setDatabasePath:friendListFilePath];
+        [[ContactFavoriteManager sharedInstance] createFavoriteTablesInFriendListByPath];
         
         //        if ([fileManager fileExistsAtPath:dst]) {
         //            [self overrideDefaultSettings];
@@ -1340,7 +1344,7 @@ static BOOL libStarted = FALSE;
     linphone_core_set_preferred_framerate([LinphoneManager getLc], [settingsHandler getPreferredFPS]);
     linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], [[settingsHandler getAdaptiveRateAlgorithm] cStringUsingEncoding:NSUTF8StringEncoding]);
     linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], [settingsHandler isAdaptiveRateControlEnabled]);
-    linphone_core_set_video_preset([LinphoneManager getLc], "custom");
+    linphone_core_set_video_preset([LinphoneManager getLc], "high-fps");
     linphone_core_set_upload_bandwidth(theLinphoneCore, [settingsHandler getUploadBandwidth]);
     linphone_core_set_download_bandwidth(theLinphoneCore, [settingsHandler getDownloadBandwidth]);
     

@@ -153,6 +153,8 @@
                                 </tableColumns>
                                 <connections>
                                     <action selector="columnChangeSelected:" target="-2" id="Exc-Vm-hLg"/>
+                                    <outlet property="dataSource" destination="-2" id="RDu-sE-t96"/>
+                                    <outlet property="delegate" destination="-2" id="A8l-iq-hxX"/>
                                 </connections>
                             </tableView>
                         </subviews>

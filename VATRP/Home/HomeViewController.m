@@ -33,10 +33,10 @@
 
 @property (strong) DockView *dockView;
 
-@property (strong) IBOutlet RecentsView *recentsView;
-@property (strong) IBOutlet ContactsView *contactsView;
-@property (weak) IBOutlet SettingsView *settingsView;
-@property (weak) IBOutlet DHResourcesView *dhResourcesView;
+@property (strong)  RecentsView *recentsView;
+@property (strong)  ContactsView *contactsView;
+@property (strong)  SettingsView *settingsView;
+@property (strong)  DHResourcesView *dhResourcesView;
 
 @property (weak) IBOutlet NSTableView *providerTableView;
 @property (weak) IBOutlet NSView *providersView;
@@ -86,8 +86,10 @@ bool dialPadIsShown;
     
     self.recentsView = [[RecentsView alloc] init];
     self.contactsView = [[ContactsView alloc] init];
+    self.dhResourcesView = [[DHResourcesView alloc] init];
     [self.viewContainer addSubview:[self.recentsView view]];
     [self.viewContainer addSubview:[self.contactsView view]];
+    [self.viewContainer addSubview:[self.dhResourcesView view]];
     
     [ViewManager sharedInstance].dockView = self.dockView;
     [ViewManager sharedInstance].dialPadView = self.dialPadView;
@@ -95,7 +97,7 @@ bool dialPadIsShown;
     [ViewManager sharedInstance].recentsView = self.recentsView;
     [ViewManager sharedInstance].callView = self.callView;
     
-    viewCurrent = (BackgroundedView*)self.recentsView;
+    viewCurrent = (BackgroundedViewController*)self.recentsView;
     [self initProvidersArray];
     [self setProviderInitialLogo];
     [self.providerTableView reloadData];
@@ -313,7 +315,7 @@ bool dialPadIsShown;
     self.providersView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
-    //viewCurrent = (BackgroundedView*)resourceViewController.view;
+    //viewCurrent = (BackgroundedViewController*)resourceViewController.view;
     viewCurrent = (BackgroundedViewController*)self.dhResourcesView;
     [viewCurrent setHidden:false];
     [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];

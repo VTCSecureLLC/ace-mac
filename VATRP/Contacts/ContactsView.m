@@ -287,11 +287,9 @@
     NSInteger clicked = [panel runModal];
     int contactsCount = 0;
     if (clicked == NSFileHandlingPanelOKButton) {
-        NSString *filePath = [[[panel URLs] objectAtIndex:0] absoluteString];
-        NSArray* tmpStr = [filePath componentsSeparatedByString:@"file://"];
-        NSString *pureFilePath = [tmpStr objectAtIndex:1];
+        NSString *filePath = [[[panel URLs] objectAtIndex:0] path];
         LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
-        contactsCount =  linphone_friend_list_import_friends_from_vcard4_file (friendList, [pureFilePath UTF8String]);
+        contactsCount =  linphone_friend_list_import_friends_from_vcard4_file (friendList, [filePath UTF8String]);
         if (contactsCount > 0) {
             [self refreshContactList];
             NSAlert *alert = [[NSAlert alloc] init];

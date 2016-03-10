@@ -1,4 +1,6 @@
 #!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/..
 
 # Globals
 HOCKEYAPP_TEAM_IDS=${HOCKEYAPP_TEAM_IDS:-47813}

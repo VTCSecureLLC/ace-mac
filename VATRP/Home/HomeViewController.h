@@ -9,30 +9,37 @@
 #import <Cocoa/Cocoa.h>
 #import "VideoView.h"
 #import "ProfileView.h"
-#import "DockView.h"
 #import "DialPadView.h"
 #import "RTTView.h"
 #import "CallQualityIndicator.h"
 
-@interface HomeViewController : NSViewController
+@interface HomeViewController : NSViewController<NSTableViewDelegate, NSTableViewDataSource>
 @property (strong) IBOutlet NSView *dockViewContainer;
 @property (strong) IBOutlet NSView *profileViewContainer;
 @property (strong) IBOutlet NSView *dialPadContainer;
 @property (strong) IBOutlet NSView *rttViewContainer;
 
-@property (strong) IBOutlet DockView *dockView;
-@property (strong) IBOutlet ProfileView *profileView;
-@property (strong) IBOutlet DialPadView *dialPadView;
+@property (strong) ProfileView *profileView;
+@property (strong) DialPadView *dialPadView;
 @property (strong) IBOutlet BackgroundedView *viewContainer;
-@property (strong) IBOutlet RTTView *rttView;
+@property (strong) RTTView *rttView;
 @property (strong) IBOutlet VideoView *videoView;
 @property (strong) IBOutlet BackgroundedView *callView;
 @property (strong) IBOutlet CallQualityIndicator *callQualityIndicator;
 
 @property (nonatomic, assign) BOOL isAppFullScreen;
 
+
 - (ProfileView*) getProfileView;
 - (BOOL) isCurrentTabRecents;
 - (void)mouseMovedWithPoint:(NSPoint)mousePosition;
+
+#pragma mark - methods for dock view
+- (void)hideDockView:(bool)hide;
+- (void) didClickDockViewRecents;
+- (void) didClickDockViewContacts;
+- (void) didClickDockViewDialpad;
+- (void) didClickDockViewResources;
+- (void) didClickDockViewSettings;
 
 @end

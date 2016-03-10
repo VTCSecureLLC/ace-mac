@@ -61,6 +61,7 @@ const NSInteger SIP_SIMPLE=1;
     return self;
     
 }
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     
@@ -76,7 +77,7 @@ const NSInteger SIP_SIMPLE=1;
 - (void) viewWillAppear {
     
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];
-    [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self];
+    [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self.view];
     
     self.buttonSend.wantsLayer = YES;
     self.messageEnterBG.wantsLayer = YES;
@@ -142,6 +143,13 @@ const NSInteger SIP_SIMPLE=1;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void) updateViewForDisplay
+{
+    [self updateContentData];
+    [self.tableViewContent reloadData];
+    int count = ms_list_size(messageList);
+    [self.tableViewContent scrollRowToVisible:count-1];
+}
 
 - (void)updateContentData {
     [self clearMessageList];
@@ -594,9 +602,12 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
         return nil;
     
     const LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
-    const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    if (call != nil)
+    {
+        const LinphoneAddress* addr = linphone_call_get_remote_address(call);
 
-    selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+        selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+    }
 
     return selectedChatRoom;
 }

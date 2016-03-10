@@ -250,16 +250,16 @@
                 linphone_core_enable_mic(lc, !microphoneMuted);
                 bool speakerMuted = [settingsHandler isSpeakerMuted];
                 [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
-                bool micIsEnabled = linphone_core_mic_enabled(lc);
+//                bool micIsEnabled = linphone_core_mic_enabled(lc);
                 linphone_core_set_play_level(lc, 100);
             }
             int playLevel = linphone_core_get_play_level(lc);
             int playbackGain = linphone_core_get_playback_gain_db(lc);
             NSLog([NSString stringWithFormat:@"   play level IS %d, playback gain is %d ********************************", playLevel, playbackGain ]);
             const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
-            const char *microphoneString = linphone_core_get_playback_device([LinphoneManager getLc]);
-            NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
-            NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
+//            const char *microphoneString = linphone_core_get_playback_device([LinphoneManager getLc]);
+//            NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
+//            NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
             bool speakerCanPlayback = linphone_core_sound_device_can_playback(lc, speakerString);
             if (speakerCanPlayback)
             {
@@ -367,7 +367,7 @@
         [lm acceptCall:call];
         
     } else {
-        [[ViewManager sharedInstance].rttView viewWillAppear];
+        [[ViewManager sharedInstance].rttView updateViewForDisplay];
         [self openCallWindow];
 
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setIncomingCall:call];
@@ -377,7 +377,7 @@
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
-    [[ViewManager sharedInstance].rttView viewWillAppear];
+    [[ViewManager sharedInstance].rttView updateViewForDisplay];
     
     [self openCallWindow];
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];

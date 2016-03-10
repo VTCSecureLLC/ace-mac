@@ -40,7 +40,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="64" rowSizeStyle="automatic" viewBased="YES" id="Jbn-Gd-1e8">
-                                        <rect key="frame" x="0.0" y="0.0" width="243" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="243" height="450"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -115,7 +115,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </clipView>
                             <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="CUN-TP-RWv">
-                                <rect key="frame" x="0.0" y="434" width="243" height="16"/>
+                                <rect key="frame" x="0.0" y="-15" width="0.0" height="15"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                             <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1tk-Ze-mBi">
@@ -133,7 +133,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="YvK-8E-uEH">
-                                        <rect key="frame" x="0.0" y="0.0" width="461" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="461" height="410"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <size key="intercellSpacing" width="3" height="2"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -173,7 +173,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </clipView>
                             <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="oDl-3g-Ska">
-                                <rect key="frame" x="0.0" y="394" width="461" height="16"/>
+                                <rect key="frame" x="0.0" y="-15" width="0.0" height="15"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                             <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="rCl-iE-OCU">
@@ -191,10 +191,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="198" height="408"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <size key="minSize" width="198" height="408"/>
+                                        <size key="minSize" width="213" height="408"/>
                                         <size key="maxSize" width="463" height="10000000"/>
                                         <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <size key="minSize" width="198" height="408"/>
+                                        <size key="minSize" width="213" height="408"/>
                                         <size key="maxSize" width="463" height="10000000"/>
                                     </textView>
                                 </subviews>
@@ -219,10 +219,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="198" height="408"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <size key="minSize" width="198" height="408"/>
+                                        <size key="minSize" width="213" height="408"/>
                                         <size key="maxSize" width="463" height="10000000"/>
                                         <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <size key="minSize" width="198" height="408"/>
+                                        <size key="minSize" width="213" height="408"/>
                                         <size key="maxSize" width="463" height="10000000"/>
                                     </textView>
                                 </subviews>

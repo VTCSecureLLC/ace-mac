@@ -17,4 +17,5 @@
 -(NSString*)getDialerText;
 
 -(void)hideDialPad:(bool)hidden;
+-(bool)isHidden;
 @end

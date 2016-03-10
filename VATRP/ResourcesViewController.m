@@ -57,7 +57,7 @@ const NSString *cdnDatabase = @"http://cdn.vatrp.net/numbers.json";
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notification{
     NSDictionary *resource = [cdnResources objectAtIndex:[[notification object] selectedRow]];
-    NSString *name = [resource objectForKey:@"name"];
+//    NSString *name = [resource objectForKey:@"name"];
     NSString *address = [resource objectForKey:@"address"];
     
     [CallService callTo:address];

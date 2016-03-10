@@ -110,7 +110,6 @@
 		4AC389CE1B8E87530063298F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389CD1B8E87530063298F /* main.m */; };
 		4AC389D11B8E87530063298F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389D01B8E87530063298F /* ViewController.m */; };
 		4AC389D31B8E87530063298F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D21B8E87530063298F /* Images.xcassets */; };
-		4AC389D61B8E87530063298F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC389D41B8E87530063298F /* Main.storyboard */; };
 		4AC389E21B8E87530063298F /* VATRPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC389E11B8E87530063298F /* VATRPTests.m */; };
 		4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AC975F31BDA22F700AD35C8 /* chat_message_inprogress.png */; };
 		4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AC975F51BDA23B400AD35C8 /* chat_message_delivered.png */; };
@@ -327,11 +326,11 @@
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		A47695391C8F2B1400748DEF /* AddContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47695381C8F2B1400748DEF /* AddContactViewController.xib */; };
 		A45DFA741C8E36F5003FD318 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA731C8E36F5003FD318 /* AboutWindowController.xib */; };
 		A45DFA761C8E371C003FD318 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA751C8E371C003FD318 /* AboutViewController.xib */; };
 		A45DFA781C8E3B98003FD318 /* CallInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA771C8E3B98003FD318 /* CallInfoWindowController.xib */; };
 		A45DFA7A1C8E3BA9003FD318 /* CallInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA791C8E3BA9003FD318 /* CallInfoViewController.xib */; };
+		A47695391C8F2B1400748DEF /* AddContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47695381C8F2B1400748DEF /* AddContactViewController.xib */; };
 		A476953F1C8F36BA00748DEF /* HomeWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A476953E1C8F36BA00748DEF /* HomeWindowController.xib */; };
 		A47695411C8F36CC00748DEF /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47695401C8F36CC00748DEF /* HomeViewController.xib */; };
 		A47695471C8F3B4000748DEF /* DockView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47695461C8F3B4000748DEF /* DockView.xib */; };
@@ -349,6 +348,7 @@
 		A49DEE8E1C6EC2610090BDF9 /* LinphoneAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */; };
 		A4A6020B1C617C1C00812230 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A602091C617C1C00812230 /* SettingsHandler.m */; };
 		A4A6020D1C617CAE00812230 /* SettingsConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A6020C1C617CAE00812230 /* SettingsConstants.m */; };
+		A4BC0EB01C91FC2500DECCE0 /* DHResourcesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BC0EAF1C91FC2500DECCE0 /* DHResourcesView.xib */; };
 		A4BDF2091C90A8390039A59F /* RecentsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BDF2081C90A8390039A59F /* RecentsWindowController.xib */; };
 		A4BDF20B1C90AB060039A59F /* VideoCallWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BDF20A1C90AB060039A59F /* VideoCallWindowController.xib */; };
 		A4BDF20D1C90ABFE0039A59F /* DialPadWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BDF20C1C90ABFE0039A59F /* DialPadWindow.xib */; };
@@ -640,7 +640,6 @@
 		4AC389CF1B8E87530063298F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4AC389D01B8E87530063298F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4AC389D21B8E87530063298F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4AC389D51B8E87530063298F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4AC389DB1B8E87530063298F /* VATRPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VATRPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AC389E01B8E87530063298F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AC389E11B8E87530063298F /* VATRPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VATRPTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -804,11 +803,11 @@
 		73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.1.dylib"; sourceTree = "<group>"; };
 		73EDA23A1BFA9F2C00EC7039 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.a"; sourceTree = "<group>"; };
 		73EDA23B1BFA9F2C00EC7039 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.dylib"; sourceTree = "<group>"; };
-		A47695381C8F2B1400748DEF /* AddContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactViewController.xib; sourceTree = "<group>"; };
 		A45DFA731C8E36F5003FD318 /* AboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
 		A45DFA751C8E371C003FD318 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		A45DFA771C8E3B98003FD318 /* CallInfoWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallInfoWindowController.xib; sourceTree = "<group>"; };
 		A45DFA791C8E3BA9003FD318 /* CallInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallInfoViewController.xib; sourceTree = "<group>"; };
+		A47695381C8F2B1400748DEF /* AddContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactViewController.xib; sourceTree = "<group>"; };
 		A476953E1C8F36BA00748DEF /* HomeWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeWindowController.xib; sourceTree = "<group>"; };
 		A47695401C8F36CC00748DEF /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		A47695461C8F3B4000748DEF /* DockView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DockView.xib; sourceTree = "<group>"; };
@@ -830,6 +829,7 @@
 		A4A602081C617C1C00812230 /* SettingsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsHandler.h; path = Settings/SettingsHandler.h; sourceTree = "<group>"; };
 		A4A602091C617C1C00812230 /* SettingsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsHandler.m; path = Settings/SettingsHandler.m; sourceTree = "<group>"; };
 		A4A6020C1C617CAE00812230 /* SettingsConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsConstants.m; path = Settings/SettingsConstants.m; sourceTree = "<group>"; };
+		A4BC0EAF1C91FC2500DECCE0 /* DHResourcesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DHResourcesView.xib; sourceTree = "<group>"; };
 		A4BDF2081C90A8390039A59F /* RecentsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecentsWindowController.xib; sourceTree = "<group>"; };
 		A4BDF20A1C90AB060039A59F /* VideoCallWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoCallWindowController.xib; sourceTree = "<group>"; };
 		A4BDF20C1C90ABFE0039A59F /* DialPadWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DialPadWindow.xib; sourceTree = "<group>"; };
@@ -1557,7 +1557,6 @@
 				4AC389D01B8E87530063298F /* ViewController.m */,
 				4AC389D21B8E87530063298F /* Images.xcassets */,
 				A4EB900A1C85E0C50038E4FD /* MainMenu.xib */,
-				4AC389D41B8E87530063298F /* Main.storyboard */,
 				4AC389C81B8E87530063298F /* Supporting Files */,
 			);
 			path = VATRP;
@@ -1616,6 +1615,7 @@
 				5EC9D30F1C288D9900BFAAEC /* ResourcesViewController.m */,
 				CE3D2ECD1C3BD93F00B0BF29 /* DHResourcesView.h */,
 				CE3D2ECE1C3BD93F00B0BF29 /* DHResourcesView.m */,
+				A4BC0EAF1C91FC2500DECCE0 /* DHResourcesView.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2044,6 +2044,7 @@
 				CE0D5D581C0D898D00214C47 /* male.png in Resources */,
 				CE0D5D551C0D898200214C47 /* icon_call_dir_missed.png in Resources */,
 				A47695561C8FA5A100748DEF /* SecondCallView.xib in Resources */,
+				A4BC0EB01C91FC2500DECCE0 /* DHResourcesView.xib in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
 				A4FAEEC81C8E2598005103E5 /* PreferencesViewController.xib in Resources */,
@@ -2053,7 +2054,6 @@
 				69EE9C0C1C64B6E20010EBB3 /* RTPquality_medium_rightTop.png in Resources */,
 				A4BDF2151C90B5C40039A59F /* ChatWindowController.xib in Resources */,
 				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
-				4AC389D61B8E87530063298F /* Main.storyboard in Resources */,
 				69E42FAE1C5765A6003EF534 /* icon_fullscreen_close.png in Resources */,
 				69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */,
 				69A025B21BFB5C83005C62FA /* mute_active.png in Resources */,
@@ -2238,14 +2238,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4AC389D41B8E87530063298F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4AC389D51B8E87530063298F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A4EB900A1C85E0C50038E4FD /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

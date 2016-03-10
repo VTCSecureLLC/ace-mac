@@ -189,8 +189,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
 }
 
-- (void) setFrame:(NSRect)frame {
-    [self.view setFrame:frame];
+- (void) setFrame:(NSRect)frame
+{
+    [super setFrame:frame];
+    
     [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
     
     [self.allContactsButton setFrame:NSMakeRect(0, frame.size.height - 41, 75/*self.addContactButton.frame.size.width*/, self.addContactButton.frame.size.height + 1)];

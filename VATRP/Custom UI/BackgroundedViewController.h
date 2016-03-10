@@ -20,6 +20,7 @@
 -(bool)isHidden;
 
 -(NSRect)getFrame;
+- (void) setFrame:(NSRect)frame;
 
 - (void) addTrackingArea:(NSTrackingArea*)trackingArea;
 - (void) setBackgroundColor:(NSColor*)color;

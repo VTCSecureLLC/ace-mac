@@ -46,6 +46,10 @@
 {
     return self.view.frame;
 }
+- (void) setFrame:(NSRect)frame
+{
+    [self.view setFrame:frame];
+}
 
 -(void) addTrackingArea:(NSTrackingArea*)trackingArea
 {

@@ -333,7 +333,7 @@ BOOL isRTTLocallyEnabled;
             callInfoViewController = [[CallInfoViewController alloc] init];
             [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewController:callInfoViewController
                                                                                     asPopoverRelativeToRect:((NSButton*)sender).frame
-                                                                                                     ofView:self
+                                                                                                     ofView:self.view
                                                                                               preferredEdge:NSRectEdgeMinX
                                                                                                    behavior:NSPopoverBehaviorApplicationDefined];
         }

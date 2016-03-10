@@ -61,6 +61,7 @@
 
 @property (weak) IBOutlet NSImageView *callerImageView;
 @property (strong,nonatomic)SettingsHandler* settingsHandler;
+@property (strong) IBOutlet NSButton *buttonHangUp;
 
 - (void) inCallTick:(NSTimer*)timer;
 
@@ -86,10 +87,29 @@
     [super viewDidLoad];
     self.callControllersView = [[CallControllersView alloc] init];
     [self.callControllerContainer addSubview:[self.callControllersView view]];
+    self.callControllersView.view.hidden = true;
     self.secondCallView = [[SecondCallView alloc] init];
     [self.secondCallContainer addSubview:[self.secondCallView view]];
+    self.secondCallView.view.hidden = true;
     self.secondIncomingCallView = [[SecondIncomingCallView alloc] init];
     [self.secondIncomingCallContainer addSubview:[self.secondIncomingCallView view]];
+    self.secondIncomingCallView.view.hidden = true;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(callUpdateEvent:)
+                                                 name:kLinphoneCallUpdate
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(callViewFrameChange:)
+                                                 name:@"CallViewFrameChange"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(videoModeUpdate:)
+                                                 name:kLinphoneVideModeUpdate
+                                               object:nil];
+
 }
 
 - (void) awakeFromNib {
@@ -112,20 +132,6 @@
     
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonFullScreen];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callViewFrameChange:)
-                                                 name:@"CallViewFrameChange"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(videoModeUpdate:)
-                                                 name:kLinphoneVideModeUpdate
-                                               object:nil];
     
 //    self.labelDisplayName.hidden = YES;
     
@@ -183,6 +189,7 @@
             [self.labelRingCount setTextColor:[NSColor whiteColor]];
             [self startCallFlashingAnimation];
             
+            [self.callControllersView.view setHidden:false];
             [self.callControllsConteinerView setHidden:NO];
         }
         case LinphoneCallIncomingEarlyMedia:
@@ -196,7 +203,7 @@
             
             [self stopRingCountTimer];
             
-            linphone_core_set_native_video_window_id(lc, (__bridge void *)(self));
+            linphone_core_set_native_video_window_id(lc, (__bridge void *)(self.view));
             
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
             
@@ -310,7 +317,7 @@
 - (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message {
     NSString *lMessage;
     NSString *lTitle;
-    const LinphoneAddress *address;
+    const LinphoneAddress *thisAddress;
     NSString* lUserName = NSLocalizedString(@"Unknown", nil);
     if (call_ == nil)
     {
@@ -318,10 +325,10 @@
     }
     else
     {
-        address = linphone_call_get_remote_address(call_);
-        if (address != nil)
+        thisAddress = linphone_call_get_remote_address(call_);
+        if (thisAddress != nil)
         {
-            const char *lUserNameChars = linphone_address_get_username(address);
+            const char *lUserNameChars = linphone_address_get_username(thisAddress);
             lUserName =
                 lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
         }
@@ -383,8 +390,8 @@
     if (addr != NULL) {
         BOOL useLinphoneAddress = true;
         // contact name
-        if(useLinphoneAddress) {
-            const char* lDisplayName = linphone_address_get_display_name(addr);
+        if(useLinphoneAddress) {//
+//            const char* lDisplayName = linphone_address_get_display_name(addr);
             const char* lUserName = linphone_address_get_username(addr);
             if(lUserName)
                 address = [NSString stringWithUTF8String:lUserName];
@@ -529,7 +536,7 @@
 }
 
 - (void) startCallFlashingAnimation {
-    NSView *content = self;
+    NSView *content = self.view;
     CALayer *layer = [content layer];
     
     CABasicAnimation *anime = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
@@ -543,7 +550,7 @@
 }
 
 - (void) stopCallFlashingAnimation {
-    NSView *content = self;
+    NSView *content = self.view;
     CALayer *layer = [content layer];
     [layer removeAllAnimations];
 }
@@ -649,7 +656,7 @@
 
 - (void) hideAppMainBody:(BOOL)hide {
     HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
-    homeViewController.dockView.hidden = hide;
+    [homeViewController hideDockView:hide];
     homeViewController.profileView.hidden = hide;
     homeViewController.dialPadView.hidden = hide;
     homeViewController.viewContainer.hidden = hide;
@@ -702,6 +709,10 @@
     linphone_core_enable_self_view([LinphoneManager getLc], show);
     self.localVideo.hidden = !show;
     
+}
+// to cancel an out going call
+- (IBAction)onHangUp:(NSButton *)sender
+{
 }
 
 @end

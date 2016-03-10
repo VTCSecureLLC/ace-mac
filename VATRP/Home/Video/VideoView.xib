@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="VideoView">
             <connections>
                 <outlet property="buttonFullScreen" destination="c3L-Xi-Vu9" id="sJf-WU-FlK"/>
+                <outlet property="buttonHangUp" destination="Vnq-af-NLE" id="PLs-c8-IFh"/>
                 <outlet property="callControllerContainer" destination="Gl8-FV-Ntx" id="NbU-de-GLd"/>
                 <outlet property="callControllsConteinerView" destination="Wi4-MK-p4S" id="brj-Uw-YuL"/>
                 <outlet property="callerImageView" destination="Cbb-Ah-I7O" id="YZN-ki-oWo"/>
@@ -91,6 +92,16 @@
                             <rect key="frame" x="284" y="517" width="150" height="150"/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="6nP-yP-jOe"/>
                         </imageView>
+                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vnq-af-NLE">
+                            <rect key="frame" x="267" y="220" width="186" height="30"/>
+                            <buttonCell key="cell" type="square" title="Hang up" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="DEf-SW-GdS">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" size="20" name="HelveticaNeue"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onHangUp:" target="-2" id="j39-IW-qSq"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </customView>
             </subviews>

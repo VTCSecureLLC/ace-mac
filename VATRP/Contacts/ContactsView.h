@@ -9,5 +9,5 @@
 #import "BackgroundedViewController.h"
 
 @interface ContactsView : BackgroundedViewController
-
+- (void) setFrame:(NSRect)frame;
 @end

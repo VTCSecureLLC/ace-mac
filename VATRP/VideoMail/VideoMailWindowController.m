@@ -45,7 +45,7 @@
     
     NSPoint barOrigin = [[AppDelegate sharedInstance] getTabWindowOrigin];
     
-    NSPoint currentWindowSize = {self.window.frame.size.width, self.window.frame.size.height};
+//    NSPoint currentWindowSize = {self.window.frame.size.width, self.window.frame.size.height};
     NSPoint barWindowSize = [[AppDelegate sharedInstance] getTabWindowSize];
     
     NSPoint pos;

@@ -99,7 +99,7 @@
     plusWorked = NO;
 }
 
-- (void)hideDialPad:(BOOL)hidden
+- (void)hideDialPad:(bool)hidden
 {
     [self.buttonOne setHidden:hidden];
     [self.buttonTwo setHidden:hidden];
@@ -117,7 +117,12 @@
     [self.buttonCall setHidden:hidden];
     [self.buttonProvider setHidden:hidden];
     
-    self.hidden = hidden;
+    [self.view setHidden:hidden];
+}
+
+-(bool)isHidden
+{
+    return [self.view isHidden];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

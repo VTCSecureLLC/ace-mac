@@ -14,5 +14,6 @@
 @property (weak) IBOutlet NSSegmentedControl *callsSegmentControll;
 
 - (void) reloadCallLogs;
+-(void)setFrame:(NSRect)newFrame;
 
 @end

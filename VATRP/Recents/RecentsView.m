@@ -92,6 +92,7 @@
 //                                               object:nil];
 }
 
+
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
@@ -287,8 +288,9 @@
     return nil;
 }
 
-- (void) setFrame:(NSRect)frame {
-    [self.view setFrame:frame];
+- (void) setFrame:(NSRect)frame
+{
+    [super setFrame:frame];
     
     [self.scrollViewRecents setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
     

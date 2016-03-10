@@ -723,7 +723,7 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
     
     const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
     char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
-    const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
+//    const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
     //	NSString* callID                     = [NSString stringWithUTF8String:call_id];
     
     ms_free(c_address);
@@ -1801,7 +1801,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
         linphone_call_params_enable_low_bandwidth(calleeParams, low_bandwidth);
     }
     linphone_core_set_preferred_framerate(theLinphoneCore, [SettingsHandler.settingsHandler getPreferredFPS]);
-    const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
+//    const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
     linphone_call_params_enable_realtime_text(calleeParams, [SettingsService getRTTEnabled]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
     
@@ -1840,7 +1840,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     LinphoneCallParams *lcallParams = linphone_core_create_call_params(theLinphoneCore, thiscall);
     
     //   VTCSecure add user location when emergency number is dialled.
-    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
+//    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
     //    if (emergency != nil && ([address hasPrefix:emergency] || [address hasPrefix:[@"sip:" stringByAppendingString:emergency]])) {
     //         NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
     //        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
@@ -2033,8 +2033,8 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 
 + (int)unreadMessageCount {
     int count = 0;
-    MSList* rooms = linphone_core_get_chat_rooms([LinphoneManager getLc]);
-    MSList* item = rooms;
+    const MSList* rooms = linphone_core_get_chat_rooms([LinphoneManager getLc]);
+    const MSList* item = rooms;
     while (item) {
         LinphoneChatRoom* room = (LinphoneChatRoom*)item->data;
         if( room ){
@@ -2150,7 +2150,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     return [self lpConfigStringForKey:key forSection:section withDefault:nil];
 }
 - (NSString *)lpConfigStringForKey:(NSString *)key forSection:(NSString *)section withDefault:(NSString *)defaultValue {
-    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+//    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSLog(@"key: %@", key);
     NSLog(@"section: %@", section);
     NSLog(@"defaultValue: %@", defaultValue);

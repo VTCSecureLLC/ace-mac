@@ -325,7 +325,7 @@
     }
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     
-    if (shouldAutoLogin && accountModel &&
+    if (!loginClicked && shouldAutoLogin && accountModel &&
         accountModel.username && accountModel.username.length &&
         accountModel.userID && accountModel.userID.length &&
         accountModel.password && accountModel.password.length &&
@@ -350,12 +350,18 @@
                                                        isDefault:YES];
 
     }
-
+    
+    
+    
     if (loginClicked || shouldAutoLogin)
     {
-        if (loginAccount == nil)
+        if ((loginAccount == nil) || !shouldAutoLogin)
         {
-            loginAccount = [[AccountModel alloc] init];
+            if (loginAccount == nil)
+            {
+                loginAccount = [[AccountModel alloc] init];
+            }
+            // if not autologin, refresh login accoutn with new data.
             loginAccount.username = self.textFieldUsername.stringValue;
             loginAccount.userID = self.textFieldUserID.stringValue;
             loginAccount.password = self.textFieldPassword.stringValue;
@@ -365,11 +371,11 @@
         }
         else
         {
-            self.textFieldUsername.stringValue = accountModel.username;
-            self.textFieldUserID.stringValue = accountModel.userID;
-            self.textFieldPassword.stringValue = accountModel.password;
-            self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
-            self.textFieldDomain.stringValue = accountModel.domain;
+            self.textFieldUsername.stringValue = loginAccount.username;
+            self.textFieldUserID.stringValue = loginAccount.userID;
+            self.textFieldPassword.stringValue = loginAccount.password;
+            self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", loginAccount.port];
+            self.textFieldDomain.stringValue = loginAccount.domain;
             if ([loginAccount.transport isEqualToString:@"TLS"])
             {
                 [self.comboBoxTransport selectItemWithObjectValue:@"Encrypted (TLS)"];
@@ -382,7 +388,7 @@
   
     
         [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
-                                                            UserID:loginAccount.userID
+                                                            UserID:@""//loginAccount.userID
                                                           password:loginAccount.password
                                                             domain:loginAccount.domain
                                                          transport:loginAccount.transport
@@ -531,9 +537,6 @@
             // VATRP-2202: we do not need to show this message if the user has not yet clicked login.
             if (loginClicked)//![self.loginButton isEnabled])
             {
-                [self.loginButton setEnabled:YES];
-                [self.prog_Signin setHidden:YES];
-                [self.prog_Signin stopAnimation:self];
                 NSAlert *alert = [[NSAlert alloc]init];
                 [alert addButtonWithTitle:@"OK"];
                 if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
@@ -546,6 +549,13 @@
                 }
                 [alert runModal];
             }
+            loginClicked = false;
+            [self.loginButton setEnabled:YES];
+            [self.prog_Signin setHidden:YES];
+            [self.prog_Signin stopAnimation:self];
+            [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"auto_login"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.buttonToggleAutoLogin setState:false];
             break;
         }
         case LinphoneRegistrationProgress: {

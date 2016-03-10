@@ -207,7 +207,7 @@
     
     messageList = linphone_chat_room_get_history(selectedChatRoom, 0);
     
-    int count = ms_list_size(messageList);
+//    int count = ms_list_size(messageList);
     //    // also append transient upload messages because they are not in history yet!
     //    for (FileTransferDelegate *ftd in [[LinphoneManager instance] fileTransferDelegates]) {
     //        if (linphone_chat_room_get_peer_address(linphone_chat_message_get_chat_room(ftd.message)) ==
@@ -245,8 +245,8 @@ static int sorted_history_comparison(LinphoneChatRoom *to_insert, LinphoneChatRo
 
 - (MSList *)sortChatRooms {
     MSList *sorted = nil;
-    MSList *unsorted = linphone_core_get_chat_rooms([LinphoneManager getLc]);
-    MSList *iter = unsorted;
+    const MSList *unsorted = linphone_core_get_chat_rooms([LinphoneManager getLc]);
+    const MSList *iter = unsorted;
     
     while (iter) {
         // store last message in user data
@@ -351,7 +351,7 @@ static void chatTable_free_chatrooms(void *data) {
                 const char *text = linphone_chat_message_get_text(last_message);
                 [cellView.textFieldLastMessage setStringValue:[NSString stringWithUTF8String:text]];
                 
-                time_t new = linphone_chat_message_get_time(last_message);
+//                time_t new = linphone_chat_message_get_time(last_message);
                 
                 
             }
@@ -547,7 +547,7 @@ static void chatTable_free_chatrooms(void *data) {
 #pragma mark -
 
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
-    LinphoneCore* lc = [LinphoneManager getLc];
+//    LinphoneCore* lc = [LinphoneManager getLc];
     
     switch (astate) {
         case LinphoneCallStreamsRunning: {

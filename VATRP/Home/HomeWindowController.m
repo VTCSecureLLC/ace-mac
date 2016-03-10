@@ -7,12 +7,14 @@
 //
 
 #import "HomeWindowController.h"
+#import "HomeViewController.h"
 
 @interface HomeWindowController ()
-
 @end
 
+
 @implementation HomeWindowController
+
 
 -(id) init
 {
@@ -43,14 +45,14 @@
     [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 310, self.window.frame.size.height)
                   display:YES
                   animate:NO];
-    HomeViewController* homeViewController = [[HomeViewController alloc] init];
-    [self.window.contentView addSubview:homeViewController.view];
+    self.homeViewController = [[HomeViewController alloc] init];
+    [self.window.contentView addSubview:self.homeViewController.view];
     [self.window setTitle:@"ACE"];
 
 }
 
 - (HomeViewController*) getHomeViewController {
-    return (HomeViewController*)self.contentViewController;
+    return self.homeViewController;
 }
 
 -(NSString*)getACEBuildNumber{

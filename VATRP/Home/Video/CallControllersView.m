@@ -405,6 +405,7 @@ BOOL isRTTLocallyEnabled;
                                           self.buttonDecline.frame.size.width,
                                           self.buttonDecline.frame.size.height);
     [self.buttonDecline setTitle:@"Cancel"];
+//    [self.buttonDecline setHidden:false];
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
     [self enableDisableButtons:NO];
 }

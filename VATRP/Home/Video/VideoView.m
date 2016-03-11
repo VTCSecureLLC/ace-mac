@@ -58,6 +58,7 @@
 @property (weak) IBOutlet NSImageView *callAlertImageView;
 @property (weak) IBOutlet NSView *localVideo;
 @property (weak) IBOutlet NSButton *buttonFullScreen;
+@property (strong) IBOutlet NSView *remoteVideo;
 
 @property (weak) IBOutlet NSImageView *callerImageView;
 @property (strong,nonatomic)SettingsHandler* settingsHandler;
@@ -85,9 +86,11 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
     self.callControllersView = [[CallControllersView alloc] init];
     [self.callControllerContainer addSubview:[self.callControllersView view]];
-    self.callControllersView.view.hidden = true;
+    
+//    self.callControllersView.view.hidden = true;
     self.secondCallView = [[SecondCallView alloc] init];
     [self.secondCallContainer addSubview:[self.secondCallView view]];
     self.secondCallView.view.hidden = true;
@@ -124,10 +127,11 @@
     self.settingsHandler.settingsSelfViewDelegate = self;
     
     self.view.wantsLayer = YES;
-    self.remoteVideoView.wantsLayer = YES;
+    self.remoteVideo.wantsLayer = YES;
     self.labelDisplayName.wantsLayer = YES;
     self.labelCallState.wantsLayer = YES;
     self.buttonFullScreen.wantsLayer = YES;
+    self.callControllsConteinerView.wantsLayer = YES;
     [self.callControllsConteinerView setBackgroundColor:[NSColor clearColor]];
     
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonFullScreen];
@@ -136,8 +140,8 @@
 //    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
-    cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.view.frame];
-    blackCurtain = [[BackgroundedView alloc] initWithFrame:self.view.frame];
+    cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.remoteVideo.frame];
+    blackCurtain = [[BackgroundedView alloc] initWithFrame:self.remoteVideo.frame];
     [blackCurtain setBackgroundColor:[NSColor blackColor]];
     // ToD0 - temp for VATRP-2489
     [self.buttonFullScreen setHidden:true];
@@ -189,7 +193,6 @@
             [self.labelRingCount setTextColor:[NSColor whiteColor]];
             [self startCallFlashingAnimation];
             
-            [self.callControllersView.view setHidden:false];
             [self.callControllsConteinerView setHidden:NO];
         }
         case LinphoneCallIncomingEarlyMedia:
@@ -198,12 +201,12 @@
         }
         case LinphoneCallConnected: {
             [self.callControllersView setCall:acall];
-
+            
             [self stopCallFlashingAnimation];
             
             [self stopRingCountTimer];
             
-            linphone_core_set_native_video_window_id(lc, (__bridge void *)(self.view));
+            linphone_core_set_native_video_window_id(lc, (__bridge void *)(self.remoteVideo));
             
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
             
@@ -224,7 +227,7 @@
             self.labelCallState.stringValue = @"Connected 00:00";
             
             [self.localVideo setFrame:NSMakeRect(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-
+            
             HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
             if (homeViewController.isAppFullScreen) {
                 [[self.localVideo animator] setFrame:NSMakeRect([NSScreen mainScreen].frame.size.width - 234, [NSScreen mainScreen].frame.size.height - 120, 176, 99)];
@@ -246,7 +249,7 @@
         }
             break;
         case LinphoneCallOutgoingRinging: {
-
+            
             self.labelCallState.stringValue = @"Ringing 00:00";
             
             [self startRingCountTimerWithTimeInterval:3.6];
@@ -275,7 +278,7 @@
             self.call = nil;
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             [self.callControllersView set_bool_chat_window_open:NO];
-
+            
             break;
         }
         case LinphoneCallEnd:
@@ -292,7 +295,7 @@
                 linphone_core_enable_video_preview(lc, FALSE);
                 linphone_core_use_preview_window(lc, FALSE);
                 linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
-
+                
                 self.call = nil;
             }
             
@@ -306,7 +309,7 @@
             
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             [self.callControllersView set_bool_chat_window_open:NO];
-
+            
             break;
         }
         default:
@@ -461,6 +464,7 @@
 - (void)showSecondIncomingCallView:(LinphoneCall *)aCall {
     [self.secondIncomingCallView setCall:aCall];
     [self.secondIncomingCallView setHidden:NO];
+    [self.secondIncomingCallContainer setHidden:false];
 }
 
 - (void)hideSecondIncomingCallView {
@@ -583,7 +587,7 @@
         linphone_core_set_video_device(lc, cam);
         linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
         linphone_core_use_preview_window(lc, YES);
-        linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self));
+        linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
         linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
      } else {
         self.localVideo.hidden = YES;

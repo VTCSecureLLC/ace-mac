@@ -70,7 +70,7 @@
         return;
     }
     
-    // sanity check - make sure that we are not making a call to an address that we already ahve a call out to.
+    // sanity check - make sure that we are not making a call to an address that we already have a call out to.
     const MSList *call_list = linphone_core_get_calls(lc);
     int count = 0;
     if (call_list)
@@ -98,7 +98,7 @@
     }
 
 // ToDo? VATRP-2451: If the above is not sufficient to prevent the second call on a double click, then we can prevent a second call
-// by doing this and not worrying about comparing the adress above.
+// by doing this and not worrying about comparing the address above.
     if (count == 0)
     {
         @try {

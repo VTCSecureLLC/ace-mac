@@ -145,6 +145,7 @@ bool dialPadIsShown;
     [self.callView addSubview:self.callQualityIndicator];
 
     self.videoView = [[VideoView alloc] init];
+    self.videoView.view.wantsLayer = true;
     [self.callView addSubview:[self.videoView view]];
     [self.videoView createNumpadView];
  

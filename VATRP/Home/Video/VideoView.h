@@ -28,6 +28,6 @@
 - (void)windowWillExitFullScreen;
 - (void)windowDidExitFullScreen;
 
-@property (weak) IBOutlet NSView *remoteVideoView;
+//@property (weak) IBOutlet NSView *remoteVideoView;
 
 @end

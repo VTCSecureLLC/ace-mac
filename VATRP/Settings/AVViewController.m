@@ -25,6 +25,17 @@
 
 @implementation AVViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"AVViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

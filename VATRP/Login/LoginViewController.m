@@ -45,6 +45,18 @@
 
 @implementation LoginViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"LoginView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.prog_Signin setHidden:YES];
@@ -89,6 +101,15 @@
     [self.comboBoxProviderSelect removeAllItems];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kLinphoneGlobalStateUpdate
+                                                  object:nil];
+    
+
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -198,17 +219,29 @@
     self.textFieldDomain.stringValue = [selectedItem objectForKey:@"domain"];
 }
 
-//-(void)dealloc{
-//    [[NSNotificationCenter defaultCenter] removeObserver:self
-//                                                    name:kLinphoneRegistrationUpdate
-//                                                  object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self
-//                                                    name:kLinphoneConfiguringStateUpdate
-//                                                  object:nil];
-//}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (IBAction)onButtonLogin:(id)sender {
+    if (!self.textFieldUsername.stringValue || !self.textFieldUsername.stringValue.length ||
+        !   self.textFieldDomain.stringValue || !self.textFieldDomain.stringValue.length) {
+
+        NSAlert *alert = [[NSAlert alloc]init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Please fill the all fields."];
+        [alert runModal];
+        
+        return;
+    }
+
+    [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", self.textFieldUsername.stringValue, self.textFieldDomain.stringValue];
+    
+    if ([[LinphoneManager instance] coreIsRunning]) {
+        [[LinphoneManager instance] destroyLinphoneCore];
+        [LinphoneManager instanceRelease];
+    }
+    
     if (![[LinphoneManager instance] coreIsRunning]) {
         [[LinphoneManager instance]	startLinphoneCore];
         [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
@@ -331,8 +364,8 @@
     //    [self resetTextFields];
     
     LinphoneProxyConfig* current_conf = NULL;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &current_conf);
-    if( current_conf != NULL ){
+    current_conf = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+    if(current_conf != NULL){
         const char* proxy_addr = linphone_proxy_config_get_identity(current_conf);
         if( proxy_addr ){
             LinphoneAddress *addr = linphone_address_new( proxy_addr );

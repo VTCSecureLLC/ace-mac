@@ -24,6 +24,17 @@
 
 @implementation TermsOfUseViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"TermsOfUseViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
@@ -56,7 +67,7 @@
 
 - (IBAction)onButtonAccept:(id)sender {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IS_TERMS_OF_OSE_SHOWED"];
-    loginViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginViewController"];
+    loginViewController = [[LoginViewController alloc]init];
     [self.navigationController pushViewController:loginViewController animated:YES];
 }
 

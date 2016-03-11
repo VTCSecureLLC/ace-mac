@@ -74,6 +74,11 @@
 }
 
 - (void)call:(NSString*)address displayName:(NSString *)displayName {
+    //Always enable camera and microphone for emergency calls
+    if([address isEqualToString:@"911"]){
+        linphone_core_enable_video_capture([LinphoneManager getLc], TRUE);
+        linphone_core_enable_mic([LinphoneManager getLc], TRUE);
+    }
     [CallService callTo:address];
 }
 

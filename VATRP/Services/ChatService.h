@@ -18,6 +18,7 @@
 + (ChatService *)sharedInstance;
 - (BOOL) openChatWindowWithUser:(NSString*)user;
 - (void) closeChatWindow;
+- (void) closeChatWindowAndClear;
 - (BOOL) sendMessagt:(NSString*)message;
 - (BOOL) sendEnter:(LinphoneChatMessage*)messagePtr ChatRoom:(LinphoneChatRoom*)chatroom_ptr;
 - (BOOL) sendBackward;

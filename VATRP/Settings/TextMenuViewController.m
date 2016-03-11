@@ -21,6 +21,17 @@
 
 @implementation TextMenuViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"TextMenuViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

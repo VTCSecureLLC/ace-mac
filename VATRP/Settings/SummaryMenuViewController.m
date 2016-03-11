@@ -18,6 +18,16 @@
 
 @implementation SummaryMenuViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"SummaryViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

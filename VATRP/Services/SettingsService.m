@@ -7,6 +7,7 @@
 //
 
 #import "SettingsService.h"
+#import "SettingsConstants.h"
 #import "LinphoneManager.h"
 #import "AccountsService.h"
 #import "RegistrationService.h"
@@ -190,7 +191,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
 
 + (void) setStun:(BOOL)enable {
     LinphoneCore *lc = [LinphoneManager getLc];
-    NSString *stun_server = [[NSUserDefaults standardUserDefaults] objectForKey:@"stun_url_preference"];
+    NSString *stun_server = [[NSUserDefaults standardUserDefaults] objectForKey:STUN_SERVER_DOMAIN];
     
     if ([stun_server length] > 0) {
         linphone_core_set_stun_server(lc, [stun_server UTF8String]);
@@ -341,8 +342,8 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     linphone_core_enable_echo_cancellation(lc, [DefaultSettingsManager sharedInstance].enableEchoCancellation);
     
     // enable_video - set
-    linphone_core_enable_video_capture(lc, [DefaultSettingsManager sharedInstance].enableVideo);
-    linphone_core_enable_video_display(lc, [DefaultSettingsManager sharedInstance].enableVideo);
+    linphone_core_enable_video_capture(lc, true);
+    linphone_core_enable_video_display(lc, true);
 
     // enable_rtt
     [lm lpConfigSetBool:[DefaultSettingsManager sharedInstance].enableRtt forKey:@"rtt"];

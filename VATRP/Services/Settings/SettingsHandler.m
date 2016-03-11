@@ -153,35 +153,18 @@
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:UPLOAD_BANDWIDTH] == nil)
     {
         [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:0];
-        LinphoneCore* linphoneCore = [LinphoneManager getLc];
-        if (linphoneCore != nil)
-        {
-            linphone_core_set_upload_bandwidth(linphoneCore, 0);
-        }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:DOWNLOAD_BANDWIDTH] == nil)
     {
         [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:0];
-        LinphoneCore* linphoneCore = [LinphoneManager getLc];
-        if (linphoneCore != nil)
-        {
-            linphone_core_set_download_bandwidth(linphoneCore, 0);
-        }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"stun_preference"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_url_preference"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:STUN_SERVER_DOMAIN] == nil)
     {
-        LinphoneCore* linphoneCore = [LinphoneManager getLc];
-        if (linphoneCore != nil){
-            LinphoneProxyConfig *cfg = linphone_core_get_default_proxy_config(linphoneCore);
-            if(!cfg) return;
-            [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%s",linphone_proxy_config_get_domain(cfg)] forKey:@"stun_url_preference"];
-            linphone_core_set_stun_server(linphoneCore, linphone_proxy_config_get_domain(cfg));
-        }
-
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:STUN_SERVER_DOMAIN];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"ice_preference"] == nil)
     {
@@ -218,9 +201,6 @@
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_FPS] == nil)
     {
         [self setUserSettingFloat:PREFERRED_FPS withValue:25.0f];
-        if([LinphoneManager getLc]){
-            linphone_core_set_preferred_framerate([LinphoneManager getLc], 25);
-        }
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
         [self setUserSettingString:RTCP_FB_MODE withValue:@"Explicit"];
@@ -229,10 +209,18 @@
     {
         [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true] ;
     }
-    if([LinphoneManager getLc]){
-        linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], "Stateful");
-        linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], true);
-        linphone_core_set_video_preset([LinphoneManager getLc], "custom");
+
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:ADAPTIVE_RATE_ALGORITHM] == nil)
+    {
+        [self setAppSettingString:ADAPTIVE_RATE_ALGORITHM withValue:@"Stateful"] ;
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:ADAPTIVE_RATE_CONTROL] == nil)
+    {
+        [self setAppSettingBool:ADAPTIVE_RATE_CONTROL withValue:true] ;
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_PRESET] == nil)
+    {
+        [self setAppSettingString:VIDEO_PRESET withValue:@"high-fps"];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -457,6 +445,23 @@
     }
 }
 
+#pragma mark app settings
+-(bool) isAdaptiveRateControlEnabled
+{
+    return [self getAppSettingBool:ADAPTIVE_RATE_CONTROL];
+}
+-(NSString*)  getAdaptiveRateAlgorithm
+{
+    return [self getAppSettingString:ADAPTIVE_RATE_ALGORITHM];
+}
+-(NSString*) getVideoPreset
+{
+    return [self getAppSettingString:VIDEO_PRESET];
+}
+-(NSString*) getStunServerDomain
+{
+    return [self getAppSettingString:STUN_SERVER_DOMAIN];
+}
 
 //=================================================================================================================
 // Generic Settings Accessors

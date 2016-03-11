@@ -31,6 +31,17 @@
 
 @implementation AccountsViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"AccountsViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     
@@ -55,8 +66,7 @@
 
 - (void)setFields {
     LinphoneCore *lc = [LinphoneManager getLc];
-    LinphoneProxyConfig *cfg=NULL;
-    linphone_core_get_default_proxy(lc,&cfg);
+    LinphoneProxyConfig *cfg = linphone_core_get_default_proxy_config(lc);
     if (cfg) {
         const char *identity=linphone_proxy_config_get_identity(cfg);
         LinphoneAddress *addr=linphone_address_new(identity);
@@ -94,14 +104,16 @@
         if(accountModel.transport != NULL) {
             if([[accountModel.transport lowercaseString] isEqualToString:@"tls"]) {;
                 [self.comboBoxTransport selectItemWithObjectValue:@"Encrypted (TLS)"];
-                self.textFieldPort.stringValue = @"25061";
             } else {
                 [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
-                self.textFieldPort.stringValue = @"25060";
             }
         }
-        if(accountModel.port > 0 ) {
-            self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
+        if(cfg) {
+            const char* proxy_addr = linphone_proxy_config_get_server_addr(cfg);
+            LinphoneAddress *addr = linphone_address_new( proxy_addr );
+            if(addr){
+                self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", linphone_address_get_port(addr)];
+            }
         }
     }
     else{

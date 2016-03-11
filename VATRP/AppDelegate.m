@@ -20,6 +20,7 @@
 
 @interface AppDelegate ()
 {
+    NSWindow *window;
     VideoCallWindowController *videoCallWindowController;
     AboutWindowController *aboutWindowController;
 }
@@ -28,6 +29,7 @@
 
 @implementation AppDelegate
 
+@synthesize account;
 @synthesize loginWindowController;
 @synthesize loginViewController;
 @synthesize homeWindowController;
@@ -51,6 +53,8 @@
     // Initialize settings on launch if they have not been.
     [SettingsHandler.settingsHandler initializeUserDefaults:false];
     
+    self.account = nil;
+    
     [AccountsService sharedInstance];
     [CallLogService sharedInstance];
     [RegistrationService sharedInstance];
@@ -72,7 +76,12 @@
     linphone_core_set_log_level(ORTP_DEBUG);
     linphone_core_enable_logs_with_cb(linphone_iphone_log_handler);
     
-    [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+    //[self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
+    
+    self.loginWindowController = [[LoginWindowController alloc] init];
+    
+    [self.loginWindowController showWindow:self];
+    //[self.loginWindowController.window makeKeyAndOrderFront:self];
 }
 
 //- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
@@ -116,6 +125,7 @@
         linphone_proxy_config_done(proxyCfg);
         
         [[LinphoneManager instance] destroyLinphoneCore];
+        [LinphoneManager instanceRelease];
     }
 }
 
@@ -130,6 +140,8 @@
 
     [[AppDelegate sharedInstance].loginWindowController close];
     [AppDelegate sharedInstance].loginWindowController = nil;
+    [self.menuItemSignOut setEnabled:true];
+    [self.menuItemPreferences setEnabled:true];
 }
 
 -(NSPoint) getTabWindowOrigin{
@@ -175,7 +187,7 @@
 
 - (IBAction)onMenuItemPreferences:(id)sender {
     if (!self.settingsWindowController) {
-        self.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+        self.settingsWindowController = [[SettingsWindowController alloc] init];
         [self.settingsWindowController showWindow:self];
     } else {
         if (self.settingsWindowController.isShow) {
@@ -185,16 +197,18 @@
             [self.settingsWindowController showWindow:self];
             self.settingsWindowController.isShow = YES;
         }
-    }}
+    }
+}
 
 - (IBAction)onMenuItemAbout:(id)sender {
     if (!aboutWindowController) {
-        aboutWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AboutWindowController"];
+        aboutWindowController = [[AboutWindowController alloc] init];
         [aboutWindowController showWindow:self];
     } else {
         [aboutWindowController showWindow:self];
     }
 }
+
 
 - (void)onMenuItemPreferencesSignOut:(id)sender {
     AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
@@ -206,6 +220,10 @@
     
     [self closeTabWindow];
     [viewController closeAllWindows];
+    [[ChatService sharedInstance] closeChatWindowAndClear];
+
+    [self.settingsWindowController close];
+    self.settingsWindowController = nil;
     
     // Get the default proxyCfg in Linphone
     LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
@@ -215,9 +233,20 @@
     linphone_proxy_config_enable_register(proxyCfg, false);
     linphone_proxy_config_done(proxyCfg);
 
-    self.loginWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"LoginWindowController"];
+    if (self.loginWindowController == nil)
+    {
+        self.loginWindowController = [[LoginWindowController alloc]init];
+    }
+    
+    
     [self.loginWindowController showWindow:self];
+    [self.menuItemSignOut setEnabled:false];
+    [self.menuItemPreferences setEnabled:false];
   
+    if ([[LinphoneManager instance] coreIsRunning]) {
+        [[LinphoneManager instance] destroyLinphoneCore];
+        [LinphoneManager instanceRelease];
+    }
 }
 
 - (IBAction)onMenuItemACEFeedBack:(id)sender {
@@ -230,6 +259,10 @@
 
 -(void) SignOut {
     [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
+}
+
+- (IBAction)onSignOut:(NSMenuItem *)sender {
+    [self onMenuItemPreferencesSignOut:sender];
 }
 
 - (void)registrationUpdateEvent:(NSNotification*)notif {

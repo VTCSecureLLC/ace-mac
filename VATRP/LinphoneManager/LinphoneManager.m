@@ -40,6 +40,9 @@
 #import "SDPNegotiationService.h"
 #import "SettingsService.h"
 #import "SettingsHandler.h"
+#import "AppDelegate.h"
+#import "ContactFavoriteManager.h"
+
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -185,13 +188,11 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     return theLinphoneManager;
 }
 
-#ifdef DEBUG
 + (void)instanceRelease {
     if(theLinphoneManager != nil) {
         theLinphoneManager = nil;
     }
 }
-#endif
 
 + (BOOL)langageDirectionIsRTL {
     static NSLocaleLanguageDirection dir = NSLocaleLanguageDirectionLeftToRight;
@@ -217,6 +218,8 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
         
         //		sounds.vibrate = kSystemSoundID_Vibrate;
         
+        self.account = [AppDelegate sharedInstance].account;
+        
         logs = [[NSMutableArray alloc] init];
         database = NULL;
         speakerEnabled = FALSE;
@@ -230,7 +233,9 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
         self->_isTesting = [LinphoneManager isRunningTests];
         
         [self setLinphoneDBFilePath];
-        
+        NSString *friendListFilePath = [self applicationDirectoryFile:[NSString stringWithFormat:@"%@_linphoneFriendList", self.account]];
+        [[ContactFavoriteManager sharedInstance] setDatabasePath:friendListFilePath];
+        [[ContactFavoriteManager sharedInstance] createFavoriteTablesInFriendListByPath];
         
         //        if ([fileManager fileExistsAtPath:dst]) {
         //            [self overrideDefaultSettings];
@@ -259,10 +264,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     //	if (lStatus) {
     //		LOGE(@"cannot un register route change handler [%ld]", lStatus);
     //	}
-    //  [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: kLinphoneCallUpdate];
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneGlobalStateUpdate];
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneConfiguringStateUpdate];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 
@@ -287,7 +289,7 @@ static int check_should_migrate_images(void* data ,int argc,char** argv,char** c
     char *errMsg;
     NSError* error;
     NSString *oldDbPath = [LinphoneManager documentFile:kLinphoneOldChatDBFilename];
-    NSString *newDbPath = [LinphoneManager documentFile:kLinphoneInternalChatDBFilename];
+    NSString *newDbPath = [LinphoneManager documentFile:[NSString stringWithFormat:@"%@_linphone_chats.db", self.account]];
     BOOL shouldMigrate  = [[NSFileManager defaultManager] fileExistsAtPath:oldDbPath];
     BOOL shouldMigrateImages = FALSE;
     LinphoneProxyConfig* default_proxy;
@@ -446,7 +448,8 @@ exit_dbmigration:
 #pragma mark - Linphone Core Functions
 
 + (LinphoneCore*)getLc {
-    if (theLinphoneCore==nil) {
+    if (theLinphoneCore==nil)
+    {
         @throw([NSException exceptionWithName:@"LinphoneCoreException" reason:@"Linphone core not initialized yet" userInfo:nil]);
     }
     return theLinphoneCore;
@@ -482,9 +485,9 @@ void configH264HardwareAcell(bool encode, bool decode){
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264encoder", encode);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264decoder", decode);
-    
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", !encode);
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", !decode);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", true);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", true);
+    ms_factory_enable_filter_from_name(f, "MSX264Enc", false);
 }
 #pragma mark - Logs Functions handlers
 static void linphone_iphone_log_user_info(struct _LinphoneCore *lc, const char *message) {
@@ -1083,7 +1086,7 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
     
     //get default config from bundle
     NSString *zrtpSecretsFileName = [LinphoneManager documentFile:@"zrtp_secrets"];
-    NSString *chatDBFileName      = [LinphoneManager documentFile:kLinphoneInternalChatDBFilename];
+    NSString *chatDBFileName      = [LinphoneManager documentFile:[NSString stringWithFormat:@"%@_linphone_chats.db", self.account]];
     const char* lRootCa           = [[LinphoneManager bundleFile:@"rootca.pem"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
     
     //	linphone_core_set_user_agent(theLinphoneCore, [[[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] stringByAppendingString:@"Iphone"] UTF8String], LINPHONE_IOS_VERSION);
@@ -1204,7 +1207,7 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
             linphone_core_enable_payload_type(theLinphoneCore,pt,FALSE);
             //			LOGW(@"SILK/24000 and video disabled on old iPhone 3G");
         }
-        linphone_core_enable_video(theLinphoneCore, FALSE, FALSE);
+        //linphone_core_enable_video(theLinphoneCore, FALSE, FALSE);
     }
     
     //	LOGW(@"Linphone [%s]  started on [%s]", linphone_core_get_version(), [[UIDevice currentDevice].model cStringUsingEncoding:[NSString defaultCStringEncoding]]);
@@ -1226,8 +1229,7 @@ static BOOL libStarted = FALSE;
 {
     return libStarted;
 }
-- (void)startLinphoneCore {
-    
+- (void)startLinphoneCore {    
     if ( libStarted ) {
         //		LOGE(@"Liblinphone is already initialized!");
         return;
@@ -1338,6 +1340,16 @@ static BOOL libStarted = FALSE;
     linphone_core_set_root_ca(theLinphoneCore, lRootCa);
     linphone_core_set_user_certificates_path(theLinphoneCore,[[LinphoneManager cacheDirectory] UTF8String]);
     
+    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+    linphone_core_set_preferred_framerate([LinphoneManager getLc], [settingsHandler getPreferredFPS]);
+    linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], [[settingsHandler getAdaptiveRateAlgorithm] cStringUsingEncoding:NSUTF8StringEncoding]);
+    linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], [settingsHandler isAdaptiveRateControlEnabled]);
+    linphone_core_set_video_preset([LinphoneManager getLc], "high-fps");
+    linphone_core_set_upload_bandwidth(theLinphoneCore, [settingsHandler getUploadBandwidth]);
+    linphone_core_set_download_bandwidth(theLinphoneCore, [settingsHandler getDownloadBandwidth]);
+    
+    linphone_core_set_stun_server(theLinphoneCore, [[settingsHandler getStunServerDomain] cStringUsingEncoding:NSUTF8StringEncoding]);
+    
     /* The core will call the linphone_iphone_configuring_status_changed callback when the remote provisioning is loaded (or skipped).
      Wait for this to finish the code configuration */
     
@@ -1349,7 +1361,8 @@ static BOOL libStarted = FALSE;
     /*call iterate once immediately in order to initiate background connections with sip server or remote provisioning grab, if any */
     linphone_core_iterate(theLinphoneCore);
     
-    NSString *friendListFilePath = [self applicationDirectoryFile:@"linphoneFriendList"];
+    NSString *friendListFilePath = [self applicationDirectoryFile:[NSString stringWithFormat:@"%@_linphoneFriendList", self.account]];
+    NSLog(@"friendListFilePath: %@", friendListFilePath);
     linphone_core_set_friends_database_path(theLinphoneCore, [friendListFilePath UTF8String]);
     
     // start scheduler
@@ -1362,7 +1375,8 @@ static BOOL libStarted = FALSE;
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     //libmssilk_init(f);
     //libmsamr_init(f);
-    //    libmsx264_init(f);
+//    libmsx264_init(f);
+    //libmsx264_init();
 //    libmsopenh264_init(f);
     //libmsbcg729_init(f);
     //libmswebrtc_init(f);
@@ -1615,7 +1629,9 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     //containers from MacOSX, Finder do not display hidden files leading
     //to useless painful operations to display the .linphonerc file
     NSString *src = [LinphoneManager documentFile:@".linphonerc"];
-    NSString *dst = [LinphoneManager documentFile:@"linphonerc"];
+    NSString *dst = [LinphoneManager documentFile:[NSString stringWithFormat:@"%@_linphonerc", self.account]];
+    NSLog(@"dst: %@", dst);
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *fileError = nil;
     if ([fileManager fileExistsAtPath:src]) {
@@ -1630,12 +1646,14 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 }
 
 - (void)copyDefaultSettings {
-    NSString *src = [LinphoneManager bundleFile:@"linphonerc"];
+    NSString *src = [LinphoneManager bundleFile:[NSString stringWithFormat:@"%@_linphonerc", self.account]];
+    NSLog(@"src: %@", src);
     NSString *srcIpad = [LinphoneManager bundleFile:@"linphonerc~ipad"];
     if ([LinphoneManager runningOnIpad] && [[NSFileManager defaultManager] fileExistsAtPath:srcIpad]){
         src = srcIpad;
     }
-    NSString *dst = [LinphoneManager documentFile:@"linphonerc"];
+    NSString *dst = [LinphoneManager documentFile:[NSString stringWithFormat:@"%@_linphonerc", self.account]];
+    NSLog(@"dst: %@", dst);
     [LinphoneManager copyFile:src destination:dst override:YES];
 }
 
@@ -1645,7 +1663,8 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     if ([LinphoneManager runningOnIpad] && [[NSFileManager defaultManager] fileExistsAtPath:factoryIpad]){
         factory = factoryIpad;
     }
-    NSString *confiFileName = [LinphoneManager documentFile:@"linphonerc"];
+    NSString *confiFileName = [LinphoneManager documentFile:[NSString stringWithFormat:@"%@_linphonerc", self.account]];
+    NSLog(@"confiFileName: %@", confiFileName);
     configDb=lp_config_new_with_factory([confiFileName cStringUsingEncoding:[NSString defaultCStringEncoding]]
                                         , [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 }
@@ -1653,7 +1672,8 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 - (void)setLinphoneDBFilePath {
     NSString* factory = [LinphoneManager bundleFile:@"linphonerc-factory"];
     [self createBundleFolderInAppSupportDirectory];
-    NSString *configFilePath = [self applicationDirectoryFile:@"linphonerc"];
+    NSString *configFilePath = [self applicationDirectoryFile:[NSString stringWithFormat:@"%@_linphonerc", self.account]];
+    NSLog(@"configFilePath: %@", configFilePath);
     configDb=lp_config_new_with_factory([configFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]
                                         , [factory cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 }

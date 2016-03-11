@@ -21,14 +21,11 @@ cache:
   - $HOME/.homebrew
   - /Library/Caches/Homebrew
 before_script:
-- ./Tools/prepare.sh
+- ./Tools/dependencies.sh
 - ./Tools/git_version.sh
 script:
-- ./Tools/build_script.sh
-- xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration
-  Debug build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS="" 
-- xcodebuild -project ACE.xcodeproj -alltargets -parallelizeTargets -configuration
-  Release build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS="" 
+- ./Tools/prepare.sh
+- ./Tools/travis_compile.sh
 after_success:
 - ./Tools/release.sh
 notifications:

@@ -21,6 +21,7 @@
 #import "CallService.h"
 #import "ContactPictureManager.h"
 #import "ContactsService.h"
+#import "ContactFavoriteManager.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     AddContactDialogBox *editContactDialogBox;
@@ -71,6 +72,9 @@
         [_favoriteContactsButton setAction:@selector(favoriteContacts_Click)];
         [self addSubview:_favoriteContactsButton];
         
+        [self.addContactButton setTarget:self];
+        [self.addContactButton setAction:@selector(onButtonAddContact:)];
+        
         [self.addContactButton becomeFirstResponder];
         [self setObservers];
         
@@ -110,6 +114,10 @@
     NSString *newSipURI = [contactInfo objectForKey:@"phone"];
     
     if ([[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI]) {
+        
+        int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
+        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
+        
         [self refreshContactList];
     } else {
         NSAlert *alert = [NSAlert alertWithMessageText:@"Invalid sip uri"
@@ -122,17 +130,21 @@
 }
 
 - (void)contactEditDone:(NSNotification*)notif {
-    [self refreshContactList];
+    
     NSDictionary *contactInfo = (NSDictionary*)[notif object];
-    if (![self isChnagedContactFields:contactInfo]) {
-        return;
-    }
     selectedProviderName = [contactInfo objectForKey:@"provider"];
-
     NSString *newDisplayName = [contactInfo objectForKey:@"name"];
     NSString *newSipURI = [contactInfo objectForKey:@"phone"];
-    
+    if (![self isChnagedContactFields:contactInfo]) {
+        int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
+        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
+        [self refreshContactList];
+        return;
+    }
+    [self refreshContactList];
     if ([[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI]) {
+        int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
+        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
         NSString *oldDisplayName = [contactInfo objectForKey:@"oldName"];
         NSString *oldSipURI = [contactInfo objectForKey:@"oldPhone"];
         [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:oldDisplayName andSipUri:oldSipURI];
@@ -202,6 +214,7 @@
         // then show all contacts
 
     }
+    [self refreshContactList];
 }
 
 -(void) favoriteContacts_Click
@@ -216,8 +229,15 @@
 //        [_allContactsButton setEnabled:true];
         // show only favorite contacts
     }
+    [self refreshContactList];
 }
 
+- (IBAction)onButtonAddContact:(id)sender
+{
+    editContactDialogBox = [[AddContactDialogBox alloc] init];
+    editContactDialogBox.isEditing = NO;
+    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+}
 - (IBAction)onButtonClearList:(id)sender {
     NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"
                                      defaultButton:@"Cancel" alternateButton:@"OK"
@@ -291,7 +311,11 @@
 
 - (void)refreshContactList {
     [self.contactInfos removeAllObjects];
-    self.contactInfos = [[LinphoneContactService sharedInstance] contactList];
+    if ([_allContactsButton state] == NSOffState) {
+        self.contactInfos = [[LinphoneContactService sharedInstance] contactList];
+    } else {
+        self.contactInfos = [[LinphoneContactService sharedInstance] contactFavoritesList];
+    }
     self.contactInfos = [self sortListAlphabetically:self.contactInfos];
     [self.tableViewContacts reloadData];
 }
@@ -346,6 +370,7 @@
 #pragma mark - ContactTableCellView delegate methods
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
+    [[ContactFavoriteManager sharedInstance] deleteContactFavoriteOptionWithName:[contactCellView.nameTextField stringValue] andAddress:[contactCellView.phoneTextField stringValue]];
     [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
     //NSString *provider  = [Utils providerNameFromSipURI:[contactCellView.phoneTextField stringValue]];
     [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:[contactCellView.phoneTextField stringValue]];
@@ -353,7 +378,8 @@
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
-    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+//    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
+    editContactDialogBox = [[AddContactDialogBox alloc] init];
     editContactDialogBox.isEditing = YES;
     editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
     editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];

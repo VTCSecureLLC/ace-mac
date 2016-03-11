@@ -48,7 +48,7 @@
     
     [AppDelegate sharedInstance].viewController = self;
 
-    [[AppDelegate sharedInstance].menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
+//    [[AppDelegate sharedInstance].menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
 
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -128,7 +128,7 @@
 
 - (IBAction)onButtonSettings:(id)sender {
     if (!self.settingsWindowController) {
-        self.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+        self.settingsWindowController = [[SettingsWindowController alloc] init];
         [self.settingsWindowController showWindow:self];
     } else {
         if (self.settingsWindowController.isShow) {

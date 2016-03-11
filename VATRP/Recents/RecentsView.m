@@ -33,9 +33,20 @@
 
 @implementation RecentsView
 
+-(id) init
+{
+    self = [super initWithNibName:@"RecentsView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 
-- (void) awakeFromNib {
-    [super awakeFromNib];
+-(void) viewDidLoad
+{
+    [super viewDidLoad];
     
     [self setBackgroundColor:[NSColor clearColor]];
     
@@ -46,7 +57,7 @@
                                              selector:@selector(callUpdate:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dialpadTextUpdate:)
                                                  name:DIALPAD_TEXT_CHANGED
@@ -55,7 +66,32 @@
                                              selector:@selector(contactEditDone:)
                                                  name:@"contactInfoEditDone"
                                                object:nil];
+  
 }
+
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    
+//    [self setBackgroundColor:[NSColor clearColor]];
+    
+    missedFilter = false;
+    dialPadFilter = nil;
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(callUpdate:)
+//                                                 name:kLinphoneCallUpdate
+//                                               object:nil];
+
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(dialpadTextUpdate:)
+//                                                 name:DIALPAD_TEXT_CHANGED
+//                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(contactEditDone:)
+//                                                 name:@"contactInfoEditDone"
+//                                               object:nil];
+}
+
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
@@ -252,7 +288,8 @@
     return nil;
 }
 
-- (void) setFrame:(NSRect)frame {
+- (void) setFrame:(NSRect)frame
+{
     [super setFrame:frame];
     
     [self.scrollViewRecents setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
@@ -260,9 +297,11 @@
     [self.callsSegmentControll setFrame:NSMakeRect((frame.size.width - self.callsSegmentControll.frame.size.width)/2, frame.size.height - 30, self.callsSegmentControll.frame.size.width, self.callsSegmentControll.frame.size.height)];
 }
 
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLinphoneCallUpdate object:nil];
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLinphoneCallUpdate object:nil];
 }
 
 @end

@@ -64,7 +64,7 @@
 -(void) inCallSpeakerWasMuted:(bool)mute;
 -(void) inCallMicrophoneWasMuted:(bool)mute;
 -(void) inCallShowSelfView:(bool)shown;
--(void) inCallMuteCamera:(bool)enable;
+//-(void) inCallMuteCamera:(bool)enable;
 
 
 #pragma mark items for settingsHandlerDelegate - setting from settings dialog to responders
@@ -87,7 +87,7 @@
 -(bool)isEchoCancellationEnabled;
 -(bool)isShowSelfViewEnabled;
 -(bool)isShowPreviewEnabled;
--(bool)isMuteCamera;
+//-(bool)isMuteCamera;
 
 -(bool)isVideoEnabled;
 - (BOOL)isQosEnabled;

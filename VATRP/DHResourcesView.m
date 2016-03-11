@@ -27,6 +27,17 @@
     NSString *cdnDatabase;
 }
 
+-(id) init
+{
+    self = [super initWithNibName:@"DHResourcesView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     cdnDatabase = @"http://cdn.vatrp.net/numbers.json";
@@ -84,6 +95,10 @@
     textField.stringValue = [NSString stringWithFormat:@"%@", name];
     return textField;
     
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
+    return 30;
 }
 
 

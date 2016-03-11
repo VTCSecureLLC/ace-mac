@@ -163,9 +163,9 @@ static NSFont *CELL_FONT = nil;
     if (is_external || localImage) {
         if (localImage) {
             if (messageImageView.image == nil) {
-                NSURL *imageUrl = [NSURL URLWithString:localImage];
+//                NSURL *imageUrl = [NSURL URLWithString:localImage];
                 labelChat.hidden = YES;
-                __block LinphoneChatMessage *achat = chat;
+//                __block LinphoneChatMessage *achat = chat;
             }
         } else {
             labelChat.hidden = YES;

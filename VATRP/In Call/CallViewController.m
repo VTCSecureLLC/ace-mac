@@ -53,7 +53,7 @@
 @synthesize call;
 
 dispatch_queue_t callAlertAnimationQueue;
-static const float callAlertStepInterval = 0.5;
+//static const float callAlertStepInterval = 0.5;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -114,7 +114,8 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
-    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+//    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+    keypadWindowController = [[KeypadWindowController alloc] init];
     [keypadWindowController showWindow:self];
 }
 
@@ -225,7 +226,8 @@ static const float callAlertStepInterval = 0.5;
         {
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
-            [self displayCallError:call message:@"Call Error"];
+            // changing to the call pointer that is reporting the error
+            [self displayCallError:acall message:@"Call Error"];
         }
         case LinphoneCallEnd:
         {
@@ -254,8 +256,8 @@ static const float callAlertStepInterval = 0.5;
     }
 }
 
-- (void)displayCallError:(LinphoneCall *)call message:(NSString *)message {
-    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(call));
+- (void)displayCallError:(LinphoneCall *)callWithError message:(NSString *)message {
+    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(callWithError));
     NSString *lUserName =
     lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
     NSString *lMessage;
@@ -272,7 +274,7 @@ static const float callAlertStepInterval = 0.5;
         lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
     }
     
-    switch (linphone_call_get_reason(call)) {
+    switch (linphone_call_get_reason(callWithError)) {
         case LinphoneReasonNotFound:
             lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
             break;
@@ -320,7 +322,7 @@ static const float callAlertStepInterval = 0.5;
         BOOL useLinphoneAddress = true;
         // contact name
         if(useLinphoneAddress) {
-            const char* lDisplayName = linphone_address_get_display_name(addr);
+//            const char* lDisplayName = linphone_address_get_display_name(addr);
             const char* lUserName = linphone_address_get_username(addr);
             if(lUserName)
                 address = [NSString stringWithUTF8String:lUserName];

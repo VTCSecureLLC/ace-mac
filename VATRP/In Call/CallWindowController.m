@@ -22,12 +22,14 @@
     NSPoint barOrigin = [[AppDelegate sharedInstance] getTabWindowOrigin];
     
     NSPoint currentWindowSize = {self.window.frame.size.width, self.window.frame.size.height};
-    NSPoint barWindowSize = [[AppDelegate sharedInstance] getTabWindowSize];
+//    NSPoint barWindowSize = [[AppDelegate sharedInstance] getTabWindowSize];
     
     NSPoint pos;
     pos.x = barOrigin.x - currentWindowSize.x;
     pos.y = barOrigin.y;
     [self.window setFrameOrigin : pos];
+    
+    [self.window setTitle:@"CallWindowController"];
 }
 
 - (CallViewController*) getCallViewController {

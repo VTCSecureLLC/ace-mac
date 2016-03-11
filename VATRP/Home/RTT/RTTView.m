@@ -13,6 +13,7 @@
 #import "CallService.h"
 #import "ChatService.h"
 #import "ChatItemTableCellView.h"
+#import "BackgroundedView.h"
 
 //integers duplicate format as Android
 //const NSInteger TEXT_MODE;
@@ -50,6 +51,17 @@ const NSInteger SIP_SIMPLE=1;
 
 @implementation RTTView
 
+-(id) init
+{
+    self = [super initWithNibName:@"RTTView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     
@@ -57,18 +69,15 @@ const NSInteger SIP_SIMPLE=1;
 }
 
 - (void) setCustomFrame:(NSRect)frame {
-    self.frame = frame;
+    self.view.frame = frame;
     [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
 }
 
-- (void) setFrame:(NSRect)frame {
-    [super setFrame:frame];
-}
 
 - (void) viewWillAppear {
     
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];
-    [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self];
+    [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self.view];
     
     self.buttonSend.wantsLayer = YES;
     self.messageEnterBG.wantsLayer = YES;
@@ -134,6 +143,13 @@ const NSInteger SIP_SIMPLE=1;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void) updateViewForDisplay
+{
+    [self updateContentData];
+    [self.tableViewContent reloadData];
+    int count = ms_list_size(messageList);
+    [self.tableViewContent scrollRowToVisible:count-1];
+}
 
 - (void)updateContentData {
     [self clearMessageList];
@@ -215,7 +231,7 @@ static void chatTable_free_chatrooms(void *data) {
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     LinphoneChatMessage *message = ms_list_nth_data(self->messageList, (int)row);
     if (message) {
-        CGFloat cellHeight = [ChatItemTableCellView height:message width:self.frame.size.width];
+        CGFloat cellHeight = [ChatItemTableCellView height:message width:[self getFrame].size.width];
         return cellHeight;
     }
     
@@ -312,7 +328,7 @@ static void chatTable_free_chatrooms(void *data) {
                 self->messageList = ms_list_append(self->messageList, incomingChatMessage);
                 
                 if (incomingCellView) {
-                    CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:self.frame.size.width];
+                    CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:[self getFrame].size.width];
                     if (incomingTextLinesCount == lineCount) {
                         [incomingCellView setChatMessage:incomingChatMessage];
                     } else {
@@ -586,9 +602,12 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
         return nil;
     
     const LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
-    const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    if (call != nil)
+    {
+        const LinphoneAddress* addr = linphone_call_get_remote_address(call);
 
-    selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+        selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+    }
 
     return selectedChatRoom;
 }

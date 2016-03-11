@@ -46,6 +46,17 @@
 
 #pragma mark - View lifecycle methods
 
+-(id) init
+{
+    self = [super initWithNibName:@"ContactsView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     static BOOL firstTime = YES;
@@ -61,7 +72,7 @@
 //        [_allContactsButton setEnabled:false]; // initialize for toggle being controlled by the two buttons, not by the button itself
         [_allContactsButton setTarget:self];
         [_allContactsButton setAction:@selector(allContacts_Click)];
-        [self addSubview:_allContactsButton];
+        [self.view addSubview:_allContactsButton];
         
         _favoriteContactsButton = [[NSButton alloc]init];//[[NSButton alloc] initWithFrame:CGRectMake(100, self.view.frame.origin.y + self.view.frame.size.height -50 , 100, 50 )];
         [_favoriteContactsButton setTitle:@"Favorites"];
@@ -70,7 +81,7 @@
         [_favoriteContactsButton setState:NSOnState];
         [_favoriteContactsButton setTarget:self];
         [_favoriteContactsButton setAction:@selector(favoriteContacts_Click)];
-        [self addSubview:_favoriteContactsButton];
+        [self.view addSubview:_favoriteContactsButton];
         
         [self.addContactButton setTarget:self];
         [self.addContactButton setAction:@selector(onButtonAddContact:)];
@@ -178,8 +189,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
 }
 
-- (void) setFrame:(NSRect)frame {
+- (void) setFrame:(NSRect)frame
+{
     [super setFrame:frame];
+    
     [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
     
     [self.allContactsButton setFrame:NSMakeRect(0, frame.size.height - 41, 75/*self.addContactButton.frame.size.width*/, self.addContactButton.frame.size.height + 1)];

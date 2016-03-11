@@ -147,7 +147,6 @@ char **soundlist;
     {
         [self initializeRecorder];
         [self initializeLevelTimer];
-        // TODO ASAP: make sure that the camera is displayed properly in viewWillAppear and released in viewWillDisappear!!!
         [self displaySelectedVideoDevice];
     }
 
@@ -323,7 +322,7 @@ char **soundlist;
     {
         [self.timerRecordingLevelsUpdate invalidate];
         self.timerRecordingLevelsUpdate = nil;
-        self.recorder.stop;
+        [self.recorder stop];
         self.recorder = nil;
     }
 }

@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ContactPictureManager.h"
 #import "Utils.h"
+#import "BackgroundedView.h"
 
 @interface SecondIncomingCallView () {
     NSRect selfOriginFrame;
@@ -29,6 +30,17 @@
 @implementation SecondIncomingCallView
 
 @synthesize call;
+
+-(id) init
+{
+    self = [super initWithNibName:@"SecondIncomingCallView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 
 - (void) awakeFromNib {
     [super awakeFromNib];
@@ -53,7 +65,7 @@
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
     
     self.labelDisplayName.wantsLayer = YES;
-    selfOriginFrame = self.frame;
+    selfOriginFrame = self.view.frame;
 }
 
 #pragma mark - Property Functions
@@ -124,13 +136,13 @@
 }
 
 - (void) shakeWindow {
-    self.frame = selfOriginFrame;
+    self.view.frame = selfOriginFrame;
 
     static int numberOfShakes = 3;
     static float durationOfShake = 0.5f;
     static float vigourOfShake = 0.05f;
     
-    CGRect frame = [self frame];
+    CGRect frame = [self getFrame];
     CAKeyframeAnimation *shakeAnimation = [CAKeyframeAnimation animation];
     
     CGMutablePathRef shakePath = CGPathCreateMutable();
@@ -145,8 +157,8 @@
     shakeAnimation.path = shakePath;
     shakeAnimation.duration = durationOfShake;
     
-    [self setAnimations:[NSDictionary dictionaryWithObject: shakeAnimation forKey:@"frameOrigin"]];
-    [[self animator] setFrameOrigin:NSMakePoint(frame.origin.x + 1, frame.origin.y)];
+    [self.view setAnimations:[NSDictionary dictionaryWithObject: shakeAnimation forKey:@"frameOrigin"]];
+    [[self.view animator] setFrameOrigin:NSMakePoint(frame.origin.x + 1, frame.origin.y)];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent {

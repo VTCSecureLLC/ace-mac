@@ -79,8 +79,8 @@
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
     
-    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
-    int upBand = [settingsHandler getUploadBandwidth];
+//    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+//    int upBand = [settingsHandler getUploadBandwidth];
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
     

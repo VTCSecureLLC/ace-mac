@@ -413,7 +413,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
             CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
                                                             Rate:pt->clock_rate
                                                         Channels:pt->channels];
-            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
+//            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
             BOOL enableVideoCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
             
             [mdictForSave setObject:[NSNumber numberWithBool:enableVideoCodec] forKey:codecModel.preference];
@@ -442,7 +442,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
             CodecModel *codecModel = [self getAudioCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
                                                             Rate:pt->clock_rate
                                                         Channels:pt->channels];
-            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
+//            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
             BOOL enableAudioCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
             
             [mdictForSave setObject:[NSNumber numberWithBool:enableAudioCodec] forKey:codecModel.preference];

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SecondCallView">
+            <connections>
+                <outlet property="buttonHangup" destination="mXw-Kp-see" id="j0a-dl-tmu"/>
+                <outlet property="labelCallDuration" destination="85e-HR-TPB" id="D7q-uO-ftO"/>
+                <outlet property="labelCallState" destination="zle-ea-vkq" id="Ztw-jc-1fO"/>
+                <outlet property="labelDisplayName" destination="fS7-S7-dos" id="t0s-iZ-mVi"/>
+                <outlet property="view" destination="c22-O7-iKe" id="7Be-FM-MZf"/>
+                <outlet property="viewAlphaed" destination="0GZ-Ld-reg" id="DZh-os-feG"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="186" height="184"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0GZ-Ld-reg" customClass="BackgroundedView">
+                    <rect key="frame" x="0.0" y="0.0" width="186" height="184"/>
+                </customView>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j06-JK-VUE">
+                    <rect key="frame" x="69" y="70" width="55" height="67"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="call swap" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="64D-o8-c99">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonSwap:" target="-2" id="zSS-Kx-tc4"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXw-Kp-see">
+                    <rect key="frame" x="0.0" y="27" width="186" height="30"/>
+                    <buttonCell key="cell" type="square" title="Hang up" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="Ld1-wa-JJ9">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="20" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonHangup:" target="-2" id="ZrA-Xz-9Q3"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fS7-S7-dos">
+                    <rect key="frame" x="0.0" y="150" width="186" height="30"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="12341234" id="5re-5Y-B2a">
+                        <font key="font" metaFont="system" size="25"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zle-ea-vkq">
+                    <rect key="frame" x="4" y="4" width="89" height="20"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="On Hold" id="Pxj-bX-kdi">
+                        <font key="font" metaFont="system" size="20"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="85e-HR-TPB">
+                    <rect key="frame" x="94" y="4" width="89" height="20"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="03:54" id="PwR-1X-vTz">
+                        <font key="font" metaFont="system" size="20"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+        </customView>
+    </objects>
+    <resources>
+        <image name="call swap" width="55" height="67"/>
+    </resources>
+</document>

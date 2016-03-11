@@ -40,6 +40,16 @@
 
 @implementation DialPadView
 
+-(id) init
+{
+    self = [super initWithNibName:@"DialPadView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 
 - (void) awakeFromNib {
     [super awakeFromNib];
@@ -89,7 +99,7 @@
     plusWorked = NO;
 }
 
-- (void)hideDialPad:(BOOL)hidden
+- (void)hideDialPad:(bool)hidden
 {
     [self.buttonOne setHidden:hidden];
     [self.buttonTwo setHidden:hidden];
@@ -107,7 +117,12 @@
     [self.buttonCall setHidden:hidden];
     [self.buttonProvider setHidden:hidden];
     
-    self.hidden = hidden;
+    [self.view setHidden:hidden];
+}
+
+-(bool)isHidden
+{
+    return [self.view isHidden];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -130,7 +145,7 @@
         
         retval = YES;
         // then finish editing and make the call
-        [self.window makeFirstResponder:self.buttonCall];
+        [self.view.window makeFirstResponder:self.buttonCall];
         [CallService callTo:self.textFieldNumber.stringValue];
     }
     return retval;
@@ -190,7 +205,7 @@
 
 - (void) mouseDown:(NSEvent *)theEvent {
 
-    NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSPoint curPoint = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
 
     if (CGRectContainsPoint(self.buttonOne.frame, curPoint)) {
         [self onButtonNumber:self.buttonOne];
@@ -251,7 +266,7 @@
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSLog(@"DialPadView.viewDidMoveToSuperview: LinphoneVersion: %@", linphoneVersion);
     
-    [self addSubview:self.buttonOne];
+    [self.view addSubview:self.buttonOne];
     [self.buttonOne setFrame:NSMakeRect(0, 176, 103, 44)];
 }
 

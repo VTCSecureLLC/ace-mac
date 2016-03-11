@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="DockView">
+            <connections>
+                <outlet property="buttonContacts" destination="vtR-mx-wJH" id="vpl-Z4-GoE"/>
+                <outlet property="buttonDialpad" destination="LOR-pB-lKg" id="2ab-oQ-bV6"/>
+                <outlet property="buttonRecents" destination="mbi-Ql-l0S" id="YNm-pZ-lbl"/>
+                <outlet property="buttonResources" destination="dqd-8S-USV" id="ijX-Cs-4cR"/>
+                <outlet property="buttonSettings" destination="RYS-zI-Y3V" id="FH0-eb-e0P"/>
+                <outlet property="view" destination="c22-O7-iKe" id="ITL-Bs-FME"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="BackgroundedView">
+            <rect key="frame" x="0.0" y="0.0" width="310" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mbi-Ql-l0S">
+                    <rect key="frame" x="0.0" y="11" width="62" height="69"/>
+                    <buttonCell key="cell" type="smallSquare" title="Call History" bezelStyle="smallSquare" image="recents" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="sWT-hl-o90">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="10"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonRecents:" target="-2" id="fNY-4Y-hD9"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-mx-wJH">
+                    <rect key="frame" x="62" y="11" width="62" height="69"/>
+                    <buttonCell key="cell" type="smallSquare" title="Phone Book" bezelStyle="smallSquare" image="contacts" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="X77-nQ-fa2">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="10"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonContacts:" target="-2" id="wyW-6J-FID"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqd-8S-USV">
+                    <rect key="frame" x="186" y="11" width="62" height="69"/>
+                    <buttonCell key="cell" type="smallSquare" title="Resources" bezelStyle="smallSquare" image="messages" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="K2x-So-4WP">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="10"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonResources:" target="-2" id="8W5-pF-bWP"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-zI-Y3V">
+                    <rect key="frame" x="248" y="11" width="62" height="69"/>
+                    <buttonCell key="cell" type="smallSquare" title="Settings" bezelStyle="smallSquare" image="settings" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Obt-Pg-FPm">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="10"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonSettings:" target="-2" id="d7h-FC-GcP"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LOR-pB-lKg">
+                    <rect key="frame" x="124" y="11" width="62" height="69"/>
+                    <buttonCell key="cell" type="smallSquare" title="Dialpad" bezelStyle="smallSquare" image="dialpad" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="ggI-Lc-1eL">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="10"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonDialpad:" target="-2" id="hoy-eC-xE8"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="485" y="312"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="contacts" width="24" height="40"/>
+        <image name="dialpad" width="26" height="40"/>
+        <image name="messages" width="32" height="40"/>
+        <image name="recents" width="25" height="40"/>
+        <image name="settings" width="25" height="40"/>
+    </resources>
+</document>

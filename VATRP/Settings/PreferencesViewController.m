@@ -111,7 +111,7 @@
     
     LinphoneCore *lc = [LinphoneManager getLc];
     
-    const char *preset = linphone_core_get_video_preset(lc);
+//    const char *preset = linphone_core_get_video_preset(lc);
     
     PayloadType *pt;
     const MSList *elem;

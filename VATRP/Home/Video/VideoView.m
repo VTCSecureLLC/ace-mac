@@ -96,7 +96,7 @@
     self.secondCallView.view.hidden = true;
     self.secondIncomingCallView = [[SecondIncomingCallView alloc] init];
     [self.secondIncomingCallContainer addSubview:[self.secondIncomingCallView view]];
-    self.secondIncomingCallView.view.hidden = true;
+    self.secondIncomingCallContainer.hidden = true;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
@@ -192,8 +192,10 @@
             [self startRingCountTimerWithTimeInterval:3.75];
             [self.labelRingCount setTextColor:[NSColor whiteColor]];
             [self startCallFlashingAnimation];
-            
-            [self.callControllsConteinerView setHidden:NO];
+            if ([self.secondIncomingCallContainer isHidden] == true)
+            {
+                [self.callControllsConteinerView setHidden:NO];
+            }
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -266,6 +268,7 @@
         {
             SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
             [self showSelfViewFromSettings:[settingsHandlerInstance isShowSelfViewEnabled]];
+            [self.callerImageView setHidden:true];
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }
@@ -297,6 +300,7 @@
                 linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
                 
                 self.call = nil;
+                [self.callerImageView setHidden:false];
             }
             
             numpadView.hidden = YES;
@@ -309,7 +313,6 @@
             
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             [self.callControllersView set_bool_chat_window_open:NO];
-            
             break;
         }
         default:
@@ -465,10 +468,11 @@
     [self.secondIncomingCallView setCall:aCall];
     [self.secondIncomingCallView setHidden:NO];
     [self.secondIncomingCallContainer setHidden:false];
+    [self.callControllsConteinerView setHidden:true];
 }
 
 - (void)hideSecondIncomingCallView {
-    [self.secondIncomingCallView setHidden:YES];
+    [self.secondIncomingCallContainer setHidden:YES];
 }
 
 - (void)setCallToSecondCallView:(LinphoneCall*)aCall {
@@ -561,6 +565,12 @@
 
 - (void)setMouseInCallWindow {
     if(!call) return;
+    
+    if ([self.secondIncomingCallContainer isHidden] == false)
+    {
+        return;
+    }
+    
     LinphoneCallState call_state = linphone_call_get_state(call);
     
     if (call_state == LinphoneCallConnected ||

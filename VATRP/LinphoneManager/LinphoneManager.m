@@ -1830,16 +1830,12 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     thiscall = linphone_core_get_current_call(theLinphoneCore);
     LinphoneCallParams *lcallParams = linphone_core_create_call_params(theLinphoneCore, thiscall);
     
-    //   VTCSecure add user location when emergency number is dialled.
-    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
-    //    if (emergency != nil && ([address hasPrefix:emergency] || [address hasPrefix:[@"sip:" stringByAppendingString:emergency]])) {
-    //         NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
-    //        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-    //    }
-    
-    if ([address isEqualToString:@"911"]) {
+    if ([address isEqualToString:@"911"] ||
+        [address isEqualToString:@"sip:911"] ||
+        [address isEqualToString:@"sip:1911"] ||
+        [address isEqualToString:@"sip:+1911"]) {
         NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
-        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+        linphone_call_params_add_custom_header(lcallParams,"Geolocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
     }
     
     if([self lpConfigBoolForKey:@"edge_opt_preference"]) {

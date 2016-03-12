@@ -12,5 +12,4 @@
 
 @interface TermsOfUseViewController : NSViewController <BFViewController>
 
--(void) setParent:(LoginWindowController*) parentWindow;
 @end

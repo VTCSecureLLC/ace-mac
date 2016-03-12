@@ -10,6 +10,4 @@
 
 @interface LoginWindowController : NSWindowController
 
--(void) termsAccepted:(bool)accepted;
-
 @end

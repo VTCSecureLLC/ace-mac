@@ -36,11 +36,6 @@
     
 }
 
--(void)setParent:(LoginWindowController *)parentWindow
-{
-    parent = parentWindow;
-}
-
 -(void)awakeFromNib
 {
     [super awakeFromNib];

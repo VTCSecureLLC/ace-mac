@@ -28,14 +28,14 @@
 @property (weak) IBOutlet NSMenuItem *menuItemSignOut;
 @property (weak) IBOutlet NSMenuItem *menuItemMessages;
 
-@property (weak) IBOutlet NSMenuItem *menuItemFEDVRS;
-@property (weak) IBOutlet NSMenuItem *menuItemZVRS;
-@property (weak) IBOutlet NSMenuItem *menuItemPurple;
-@property (weak) IBOutlet NSMenuItem *menuItemSorenson;
-@property (weak) IBOutlet NSMenuItem *menuItemConvo;
-@property (weak) IBOutlet NSMenuItem *menuItemGlobalENus;
-@property (weak) IBOutlet NSMenuItem *menuItemGlobalENes;
-@property (weak) IBOutlet NSMenuItem *menuItemCAAG;
+//@property (weak) IBOutlet NSMenuItem *menuItemFEDVRS;
+//@property (weak) IBOutlet NSMenuItem *menuItemZVRS;
+//@property (weak) IBOutlet NSMenuItem *menuItemPurple;
+//@property (weak) IBOutlet NSMenuItem *menuItemSorenson;
+//@property (weak) IBOutlet NSMenuItem *menuItemConvo;
+//@property (weak) IBOutlet NSMenuItem *menuItemGlobalENus;
+//@property (weak) IBOutlet NSMenuItem *menuItemGlobalENes;
+//@property (weak) IBOutlet NSMenuItem *menuItemCAAG;
 
 @property (nonatomic, retain) ContactsWindowController *contactsWindowController;
 @property (nonatomic, retain) RecentsWindowController *recentsWindowController;

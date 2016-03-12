@@ -356,7 +356,11 @@
     return 50;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     ContactTableCellView *cellView = [tableView makeViewWithIdentifier:@"ContactCell" owner:self];
     NSDictionary *dict = [self.contactInfos objectAtIndex:row];
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];

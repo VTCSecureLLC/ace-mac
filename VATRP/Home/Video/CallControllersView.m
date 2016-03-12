@@ -334,8 +334,12 @@ BOOL isRTTLocallyEnabled;
             [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewController:callInfoViewController
                                                                                     asPopoverRelativeToRect:((NSButton*)sender).frame
                                                                                                      ofView:self.view
-                                                                                              preferredEdge:NSRectEdgeMinX
-                                                                                                   behavior:NSPopoverBehaviorApplicationDefined];
+#if defined __MAC_10_9 || defined __MAC_10_8
+                                                                                             preferredEdge:self.view.frame.origin.x
+#else
+                                                                                             preferredEdge:NSRectEdgeMinX
+#endif
+                                                                                                  behavior:NSPopoverBehaviorApplicationDefined];
         }
     } else {
         callInfoWindowController = [[CallInfoWindowController alloc] init];

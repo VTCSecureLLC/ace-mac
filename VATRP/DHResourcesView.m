@@ -54,7 +54,11 @@
     cdnResources = [[NSMutableArray alloc] init];
     urlSession = [NSURLSession sharedSession];
     
+#if defined __MAC_10_9 || defined __MAC_10_8
+    [[urlSession dataTaskWithURL:[NSURL URLWithString:(NSString*)cdnDatabase] completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
+#else
     [[urlSession dataTaskWithURL:[NSURL URLWithString:(NSString*)cdnDatabase] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+#endif
         NSError *jsonParsingError = nil;
         if(data){
             NSArray *resources = [NSJSONSerialization JSONObjectWithData:data

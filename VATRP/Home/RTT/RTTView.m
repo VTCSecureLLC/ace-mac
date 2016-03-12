@@ -215,7 +215,11 @@ static void chatTable_free_chatrooms(void *data) {
     return count;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     LinphoneChatMessage *chat = ms_list_nth_data(self->messageList, (int)row);
     
     ChatItemTableCellView *cellView = [tableView makeViewWithIdentifier:@"ChatCell" owner:self];

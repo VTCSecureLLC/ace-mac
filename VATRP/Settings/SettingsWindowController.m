@@ -127,7 +127,11 @@
 - (void) changeViewTo:(NSView*)view {
     [prevView removeFromSuperview];
     prevView = view;
+#if defined __MAC_10_9 || defined __MAC_10_8
+    prevView.frame = CGRectMake(0, self.window.contentViewController.view.frame.size.height - prevView.frame.size.height, prevView.frame.size.width, prevView.frame.size.height);
+#else
     prevView.frame = CGRectMake(0, self.window.contentView.frame.size.height - prevView.frame.size.height, prevView.frame.size.width, prevView.frame.size.height);
+#endif
     [self.window.contentView addSubview:prevView];
 }
 - (IBAction)onSaveButtonClick:(NSButton *)sender {

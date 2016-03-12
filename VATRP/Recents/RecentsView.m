@@ -209,7 +209,11 @@
     return 0;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     HistoryTableCellView *cellView = [tableView makeViewWithIdentifier:@"CallLog" owner:self];
     cellView.delegate = self;
     LinphoneCallLog *log = [[callLogs objectAtIndex:row] pointerValue];

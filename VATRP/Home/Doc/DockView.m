@@ -68,7 +68,12 @@
     [labelMessedCalls setBackgroundColor:[NSColor redColor]];
     [labelMessedCalls setTextColor:[NSColor whiteColor]];
     [labelMessedCalls setFont:[NSFont systemFontOfSize:14]];
-    [labelMessedCalls.cell setAlignment:NSTextAlignmentCenter];
+//    [labelMessedCalls.cell setAlignment:<#(NSTextAlignment)#>]
+#if defined __MAC_10_9 || __MAC_10_8
+    [labelMessedCalls.cell setAlignment:kCTTextAlignmentCenter];
+#else
+    [labelMessedCalls.cell setAlignment:NSAlignmentCenter];
+#endif
     [labelMessedCalls setWantsLayer:YES];
     [labelMessedCalls.layer setCornerRadius:9.0];
     [labelMessedCalls setHidden:YES];

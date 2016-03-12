@@ -90,7 +90,11 @@
     return 1;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     SettingsHeaderModel *object = settingsList[row];
 
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:@"SettingsCell" owner:self];

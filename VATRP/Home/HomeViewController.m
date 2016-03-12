@@ -63,7 +63,7 @@ bool dialPadIsShown;
     [super viewDidLoad];
     dialPadIsShown = true;
     // Do view setup here.
-    [self activateMenuItems];
+//    [self activateMenuItems];
     
     windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
@@ -387,7 +387,11 @@ bool dialPadIsShown;
     return providersArray.count;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
     NSDictionary *dict = [providersArray objectAtIndex:row];
     NSString *imageName = [dict objectForKey:@"providerLogo"];
@@ -488,6 +492,7 @@ bool dialPadIsShown;
     self.isAppFullScreen = NO;
 }
 
+    /*
 - (void)activateMenuItems {
     [[[[NSApplication sharedApplication] delegate] menuItemFEDVRS] setAction:@selector(callToProvider:)];
     [[[[NSApplication sharedApplication] delegate] menuItemZVRS] setAction:@selector(callToProvider:)];
@@ -504,6 +509,7 @@ bool dialPadIsShown;
     NSString *phoneNumber = [[sender title] stringByReplacingOccurrencesOfString:@" " withString:@""];
     [[LinphoneManager instance] call:phoneNumber displayName:[self providerNameByPhoneNumber:phoneNumber] transfer:NO];
 }
+     */
 
 - (NSString*)providerNameByPhoneNumber:(NSString*)phoneNumber {
     

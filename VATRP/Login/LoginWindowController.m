@@ -32,7 +32,7 @@
     if (self)
     {
         // init
-        self.contentViewController = navigationController;
+        
     }
     return self;
     
@@ -69,25 +69,35 @@
 //    } else {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         
-        if ([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"IS_TERMS_OF_OSE_SHOWED"]) {
+        if (false && [[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"IS_TERMS_OF_OSE_SHOWED"]) {
             loginViewController = [[LoginViewController alloc]init];
             
             // Init navigation controller and add to window
-            navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
-                                                              rootViewController:loginViewController];
+//            navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height) rootViewController:loginViewController];
+//            self.window.contentViewController = navigationController;
+            [self.window.contentView addSubview:loginViewController.view];
         } else {
             termsOfUseViewController = [[TermsOfUseViewController alloc]init];
-            
+            [termsOfUseViewController setParent:self];
             // Init navigation controller and add to window
-            navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height)
-                                                              rootViewController:termsOfUseViewController];
+//            navigationController = [[BFNavigationController alloc] initWithFrame:NSMakeRect(0, 0, self.window.frame.size.width, self.window.frame.size.height) rootViewController:termsOfUseViewController];
+//            self.window.contentViewController = navigationController;
+            [self.window.contentView addSubview:termsOfUseViewController.view];
             //[SettingsHandler.settingsHandler initializeUserDefaults:true];
         }
-        
-        [self.window.contentView addSubview:navigationController.view];
 //    }
     [self.window setTitle:@"ACE Login"];
 
+}
+
+-(void)termsAccepted:(bool)accepted
+{
+    if (accepted)
+    {
+        [self.window.contentView removeView:termsOfUseViewController.view];
+        loginViewController = [[LoginViewController alloc]init];
+        [self.window.contentView addSubview:loginViewController.view];
+    }
 }
 
 @end

@@ -64,6 +64,15 @@
     [self checkProvidersInfo];
 }
 
+-(void) awakeFromNib
+{
+    [super awakeFromNib];
+    [self.prog_Signin setHidden:YES];
+    [self.loginButton setEnabled:YES];
+    [self checkProvidersInfo];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear];
     [self checkProvidersInfo];

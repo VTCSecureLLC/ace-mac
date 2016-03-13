@@ -81,7 +81,7 @@
     self.loginWindowController = [[LoginWindowController alloc] init];
     
     [self.loginWindowController showWindow:self];
-    //[self.loginWindowController.window makeKeyAndOrderFront:self];
+   //[self.loginWindowController.window makeKeyAndOrderFront:self];
 }
 
 //- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
@@ -140,7 +140,10 @@
     [[AppDelegate sharedInstance].loginWindowController close];
     [AppDelegate sharedInstance].loginWindowController = nil;
     
-    self.homeWindowController = [[HomeWindowController alloc] init];
+    if (self.homeWindowController == nil)
+    {
+        self.homeWindowController = [[HomeWindowController alloc] init];
+    }
     [self.homeWindowController showWindow:self];
 
     [self.menuItemSignOut setEnabled:true];

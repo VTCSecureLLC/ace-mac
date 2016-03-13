@@ -31,14 +31,17 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     
     // Do view setup here.
+    [self initializeData];
+}
 
+-(void) initializeData
+{
     self.checkBoxAutoAnswerCall.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.checkBoxStartOnBoot.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"start_at_boot_preference"];
- 
     isChanged = NO;
 }
 

@@ -12,6 +12,7 @@
 @interface RecentsView : BackgroundedViewController
 
 @property (weak) IBOutlet NSSegmentedControl *callsSegmentControll;
+-(void) initializeData;
 
 - (void) reloadCallLogs;
 -(void)setFrame:(NSRect)newFrame;

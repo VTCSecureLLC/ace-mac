@@ -55,8 +55,8 @@
 dispatch_queue_t callAlertAnimationQueue;
 //static const float callAlertStepInterval = 0.5;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     // Do view setup here.
     
     windowTitle  = @"Call with %@ duration: %@";

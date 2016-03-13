@@ -44,25 +44,21 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    
-    isChanged = NO;
+    [self initializeData];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)initializeData
+{
     // Do view setup here.
     self.textFieldUserID.enabled = false;
     self.textFieldUsername.enabled = false;
     self.secureTextFieldPassword.enabled = false;
     self.textFieldDomain.enabled = false;
     self.textFieldPort.enabled = false;
-    
-}
-
-- (void)viewWillAppear {
-    [super viewWillAppear];
+    isChanged = NO;
     [self setFields];
 }
+
 
 - (void)setFields {
     LinphoneCore *lc = [LinphoneManager getLc];

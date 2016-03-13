@@ -206,19 +206,31 @@ static NSFont *CELL_FONT = nil;
     BOOL outgoing = linphone_chat_message_is_outgoing(chat);
     
     if (!outgoing) {
+#if defined __MAC_10_9 || __MAC_10_8
+#else
 //        [imageViewStatus setAccessibilityValue:@"incoming"];
+#endif
         imageViewStatus.hidden = TRUE; // not useful for incoming chats..
     } else if (state == LinphoneChatMessageStateInProgress) {
         [imageViewStatus setImage:[NSImage imageNamed:@"chat_message_inprogress.png"]];
+#if defined __MAC_10_9 || __MAC_10_8
+#else
 //        [statusImage setAccessibilityValue:@"in progress"];
+#endif
         imageViewStatus.hidden = FALSE;
     } else if (state == LinphoneChatMessageStateDelivered || state == LinphoneChatMessageStateFileTransferDone) {
         [imageViewStatus setImage:[NSImage imageNamed:@"chat_message_delivered.png"]];
+#if defined __MAC_10_9 || __MAC_10_8
+#else
         [imageViewStatus setAccessibilityValue:@"delivered"];
+#endif
         imageViewStatus.hidden = FALSE;
     } else {
         [imageViewStatus setImage:[NSImage imageNamed:@"chat_message_not_delivered.png"]];
+#if defined __MAC_10_9 || __MAC_10_8
+#else
         [imageViewStatus setAccessibilityValue:@"not delivered"];
+#endif
         imageViewStatus.hidden = FALSE;
         
 //        NSAttributedString *resend_text =

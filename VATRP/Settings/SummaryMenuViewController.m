@@ -28,8 +28,8 @@
     return self;
     
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     // Do view setup here.
     isChanged = NO;
 }

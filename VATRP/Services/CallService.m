@@ -311,8 +311,6 @@
             }
             
             [[ChatService sharedInstance] closeChatWindow];
-            [[ViewManager sharedInstance].rttView viewWillDisappear];
-
         }
             break;
         case LinphoneCallReleased: {
@@ -322,7 +320,6 @@
             }
             
             [[ChatService sharedInstance] closeChatWindow];
-            [[ViewManager sharedInstance].rttView viewWillDisappear];
             currentCall = NULL;
 
             [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];

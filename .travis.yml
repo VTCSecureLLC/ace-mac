@@ -1,5 +1,9 @@
 language: objective-c
-osx_image: xcode7.2
+# https://docs.travis-ci.com/user/languages/objective-c
+# Xcode 6.2 (10.9.x)
+osx_image: beta-xcode6.2
+# Xcode 7.2 (10.11.x)
+#osx_image: xcode7.2
 branches:
   except:
     - /^v[0-9]/

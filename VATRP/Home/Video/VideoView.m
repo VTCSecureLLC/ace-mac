@@ -86,11 +86,11 @@
     
 }
 
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self initializeData];
-}
+//-(void)viewDidLoad
+//{
+//    [super viewDidLoad];
+//    [self initializeData];
+//}
 
 - (void) awakeFromNib {
     [super awakeFromNib];
@@ -246,13 +246,13 @@
             
             self.labelCallState.stringValue = @"Connected 00:00";
             
-            [self.localVideo setFrame:NSMakeRect(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//            [self.localVideo setFrame:NSMakeRect(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
             
             HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
             if (homeViewController.isAppFullScreen) {
                 [[self.localVideo animator] setFrame:NSMakeRect([NSScreen mainScreen].frame.size.width - 234, [NSScreen mainScreen].frame.size.height - 120, 176, 99)];
             } else {
-                [[self.localVideo animator] setFrame:NSMakeRect(507, 580, 176, 99)];
+                [[self.localVideo animator] setFrame:NSMakeRect(486, 580, 176, 99)];
             }
             
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];

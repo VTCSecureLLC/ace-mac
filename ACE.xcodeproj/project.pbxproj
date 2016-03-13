@@ -361,6 +361,8 @@
 		A4EB900C1C85E0C50038E4FD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EB900A1C85E0C50038E4FD /* MainMenu.xib */; };
 		A4EB90101C85EC370038E4FD /* LoginWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EB900F1C85EC370038E4FD /* LoginWindow.xib */; };
 		A4EB90121C85ECB50038E4FD /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EB90111C85ECB50038E4FD /* LoginView.xib */; };
+		A4EC099D1C95040F0075002D /* AddContactWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EC099B1C95040F0075002D /* AddContactWindowController.m */; };
+		A4EC099E1C95040F0075002D /* AddContactWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EC099C1C95040F0075002D /* AddContactWindowController.xib */; };
 		A4ED74C71C8DFC480071211B /* GeneralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4ED74C61C8DFC480071211B /* GeneralViewController.xib */; };
 		A4ED74CB1C8E0F960071211B /* TextMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4ED74CA1C8E0F960071211B /* TextMenuViewController.xib */; };
 		A4F34C501C8A403B001CDA96 /* SettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4F34C4F1C8A403B001CDA96 /* SettingsWindow.xib */; };
@@ -842,6 +844,9 @@
 		A4EB900B1C85E0C50038E4FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		A4EB900F1C85EC370038E4FD /* LoginWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginWindow.xib; sourceTree = "<group>"; };
 		A4EB90111C85ECB50038E4FD /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		A4EC099A1C95040F0075002D /* AddContactWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactWindowController.h; sourceTree = "<group>"; };
+		A4EC099B1C95040F0075002D /* AddContactWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactWindowController.m; sourceTree = "<group>"; };
+		A4EC099C1C95040F0075002D /* AddContactWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactWindowController.xib; sourceTree = "<group>"; };
 		A4ED74C61C8DFC480071211B /* GeneralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralViewController.xib; sourceTree = "<group>"; };
 		A4ED74CA1C8E0F960071211B /* TextMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextMenuViewController.xib; sourceTree = "<group>"; };
 		A4F34C4F1C8A403B001CDA96 /* SettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsWindow.xib; sourceTree = "<group>"; };
@@ -1046,14 +1051,17 @@
 		2B463EF31B984E49008E8333 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				A4EC099A1C95040F0075002D /* AddContactWindowController.h */,
+				A4EC099B1C95040F0075002D /* AddContactWindowController.m */,
+				A4EC099C1C95040F0075002D /* AddContactWindowController.xib */,
+				CE48DF921C04B5110046E727 /* AddContactDialogBox.h */,
+				CE48DF931C04B5110046E727 /* AddContactDialogBox.m */,
+				A47695381C8F2B1400748DEF /* AddContactViewController.xib */,
 				2B463EF41B984E49008E8333 /* ContactsWindowController.h */,
 				2B463EF51B984E49008E8333 /* ContactsWindowController.m */,
 				CE7005FD1C048F0000E667F8 /* ContactsView.h */,
 				CE7005FE1C048F0000E667F8 /* ContactsView.m */,
 				A476955B1C8FB92E00748DEF /* ContactsView.xib */,
-				CE48DF921C04B5110046E727 /* AddContactDialogBox.h */,
-				CE48DF931C04B5110046E727 /* AddContactDialogBox.m */,
-				A47695381C8F2B1400748DEF /* AddContactViewController.xib */,
 				5EEC29061C024CCA00BA43FB /* ContactsViewController.h */,
 				5EEC29071C024CCA00BA43FB /* ContactsViewController.m */,
 			);
@@ -2069,6 +2077,7 @@
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				A476953F1C8F36BA00748DEF /* HomeWindowController.xib in Resources */,
 				A4EB90101C85EC370038E4FD /* LoginWindow.xib in Resources */,
+				A4EC099E1C95040F0075002D /* AddContactWindowController.xib in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,
 				69EE9BF81C649B990010EBB3 /* RTPquality_bad_rightBottom.png in Resources */,
 				A4EB90121C85ECB50038E4FD /* LoginView.xib in Resources */,
@@ -2153,6 +2162,7 @@
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
 				CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */,
 				6983EB281C43A169004CCD74 /* AVViewController.m in Sources */,
+				A4EC099D1C95040F0075002D /* AddContactWindowController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
 				4AA203C01BD4CAF500DD9A4D /* BackgroundedView.m in Sources */,
 				6983EB2E1C43BAE0004CCD74 /* SummaryMenuViewController.m in Sources */,

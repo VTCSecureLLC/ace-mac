@@ -76,10 +76,6 @@
     [self checkProvidersInfo];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear];
-    [self checkProvidersInfo];
-}
 
 - (void)loadView {
     [super loadView];

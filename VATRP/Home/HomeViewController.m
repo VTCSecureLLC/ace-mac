@@ -26,6 +26,7 @@
     BackgroundedViewController *viewCurrent;
     NSArray *providersArray;
     NSColor *windowDefaultColor;
+    bool uiInitialized;
 }
 
 @property (weak) IBOutlet NSImageView *imageViewVoiceMail;
@@ -58,12 +59,29 @@ bool dialPadIsShown;
     return self;
     
 }
+-(void) awakeFromNib
+{
+    [super awakeFromNib];
+//    [self initializeData];
+}
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+//    [self initializeData];
+}
+
+-(void) initializeData
+{
+    // 10.9 - awake from nib being called twice.
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
     dialPadIsShown = true;
     // Do view setup here.
-//    [self activateMenuItems];
     
     windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
@@ -72,7 +90,6 @@ bool dialPadIsShown;
     
     self.dockView = [[DockView alloc] init:self];
     [self.dockViewContainer addSubview:[self.dockView view]];
-//    self.dockView.delegate = self;
 
     self.profileView = [[ProfileView alloc] init];
     [self.profileViewContainer addSubview:[self.profileView view]];
@@ -85,6 +102,7 @@ bool dialPadIsShown;
     [self.viewContainer setBackgroundColor:[NSColor whiteColor]];
     
     self.recentsView = [[RecentsView alloc] init];
+    [self.recentsView initializeData];
     self.contactsView = [[ContactsView alloc] init];
     self.dhResourcesView = [[DHResourcesView alloc] init];
     [self.viewContainer addSubview:[self.recentsView view]];
@@ -127,11 +145,6 @@ bool dialPadIsShown;
     }
     self.isAppFullScreen = false;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
-
     // initially the dialpad is open
     [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];
     [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
@@ -149,17 +162,12 @@ bool dialPadIsShown;
     [self.callView addSubview:[self.videoView view]];
     [self.videoView createNumpadView];
  
-}
-
-- (void) viewDidAppear {
-    [super viewDidAppear];
-    
     [self.callQualityIndicator setWantsLayer:YES];
     [self.callQualityIndicator.layer setBackgroundColor:[NSColor clearColor].CGColor];
     [self.callQualityIndicator setBackgroundColor:[NSColor clearColor]];
-
-    [self.recentsView reloadCallLogs];
+    
 }
+
 
 #pragma mark - Observers and related functions
 
@@ -173,18 +181,11 @@ bool dialPadIsShown;
                                                  name:@"didClosedMessagesWindow"
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifyReceived:) name:kLinphoneNotifyReceived object:nil];
-}
 
-- (void)removeObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"didClosedSettingsWindow"
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"didClosedMessagesWindow"
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kLinphoneNotifyReceived
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
 }
 
 - (void)didClosedMessagesWindow:(NSNotification*)not {
@@ -337,6 +338,7 @@ bool dialPadIsShown;
     self.providersView.hidden = YES;
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
+    
     viewCurrent = (BackgroundedViewController*)self.settingsView;
     [viewCurrent setHidden:false];
     [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
@@ -365,7 +367,7 @@ bool dialPadIsShown;
 }
 
 - (void)dealloc {
-    [self removeObservers];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)initProvidersArray {
@@ -543,6 +545,11 @@ bool dialPadIsShown;
 -(void)hideDockView:(bool)hide
 {
     [self.dockView setHidden:hide];
+}
+    
+-(void) reloadRecents
+{
+    [self.recentsView reloadCallLogs];
 }
 
 @end

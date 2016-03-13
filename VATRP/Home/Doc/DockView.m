@@ -156,6 +156,7 @@
     AppDelegate *app = [AppDelegate sharedInstance];
     if (!app.settingsWindowController) {
         app.settingsWindowController = [[SettingsWindowController alloc] init];
+        [app.settingsWindowController  initializeData];
         [app.settingsWindowController showWindow:self];
 //        if (self.parent != nil) {
 //            [self.parent didClickDockViewSettings];
@@ -166,6 +167,7 @@
             app.settingsWindowController = nil;
         } else {
             [app.settingsWindowController showWindow:self];
+            [app.settingsWindowController  initializeData];
             app.settingsWindowController.isShow = YES;
 //            if (self.parent != nil) {
 //                [self.parent didClickDockViewSettings];

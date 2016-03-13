@@ -57,26 +57,28 @@
 }
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    [self.prog_Signin setHidden:YES];
-    [self.loginButton setEnabled:YES];
-    [self checkProvidersInfo];
+    [self initializeData];
 }
 
 -(void) awakeFromNib
 {
     [super awakeFromNib];
+    [self initializeData];
+}
+
+-(void)initializeData
+{
     [self.prog_Signin setHidden:YES];
     [self.loginButton setEnabled:YES];
     [self checkProvidersInfo];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear];
     [self checkProvidersInfo];
-    
 }
 
 - (void)loadView {

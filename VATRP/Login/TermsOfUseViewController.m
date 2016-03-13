@@ -14,6 +14,7 @@
 @interface TermsOfUseViewController () {
     LoginViewController *loginViewController;
     LoginWindowController* parent;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollView;
@@ -39,28 +40,16 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    // Do view setup here.
-    // read the text from thr rtf as a formatted string and add the text to the text field
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"legal_release" ofType:@"rtf"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    if ([fileManager fileExistsAtPath:filePath])
-    {
-        NSString *contents = [[[NSAttributedString alloc] initWithRTF:[NSData dataWithContentsOfFile:filePath] documentAttributes:NULL] string];
-        if (contents != nil)
-        {
-            [self.textView setString:contents];
-        }
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrolling:) name:NSScrollViewDidLiveScrollNotification object:nil];
-    
+    [self initializeData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
-    // read the text from thr rtf as a formatted string and add the text to the text field
+    [self initializeData];
+}
+
+- (void) initializeData
+{
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"legal_release" ofType:@"rtf"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -73,7 +62,11 @@
         }
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrolling:) name:NSScrollViewDidLiveScrollNotification object:nil];
+    if (!observersAdded)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrolling:) name:NSScrollViewDidLiveScrollNotification object:nil];
+        observersAdded = true;
+    }
 }
 
 - (void)scrolling:(NSNotification*)notif {

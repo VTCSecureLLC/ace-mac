@@ -8,7 +8,6 @@
 
 #import "ContactsView.h"
 #import "ContactTableCellView.h"
-#import "AddContactDialogBox.h"
 #include "linphone/linphonecore.h"
 #include "linphone/linphone_tunnel.h"
 #import "DockView.h"
@@ -16,7 +15,6 @@
 #import "LinphoneContactService.h"
 #include "LinphoneManager.h"
 #import "AppDelegate.h"
-#import "AddContactDialogBox.h"
 #import "Utils.h"
 #import "CallService.h"
 #import "ContactPictureManager.h"
@@ -24,7 +22,6 @@
 #import "ContactFavoriteManager.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
-    AddContactDialogBox *editContactDialogBox;
     NSString *selectedProviderName;
     NSString *dialPadFilter;
 }
@@ -247,9 +244,13 @@
 
 - (IBAction)onButtonAddContact:(id)sender
 {
-    editContactDialogBox = [[AddContactDialogBox alloc] init];
-    editContactDialogBox.isEditing = NO;
-    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.addContactWindowController)
+    {
+        app.addContactWindowController = [[AddContactWindowController alloc] init];
+    }
+    [app.addContactWindowController showWindow:self];
+    [app.addContactWindowController setIsEditing:false];
 }
 - (IBAction)onButtonClearList:(id)sender {
     NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"
@@ -395,13 +396,13 @@
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
-//    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
-    editContactDialogBox = [[AddContactDialogBox alloc] init];
-    editContactDialogBox.isEditing = YES;
-    editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
-    editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];
-    editContactDialogBox.oldProviderName = contactCellView.providerName;
-    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.addContactWindowController)
+    {
+        app.addContactWindowController = [[AddContactWindowController alloc] init];
+    }
+    [app.addContactWindowController showWindow:self];
+    [app.addContactWindowController initializeDataWith:true oldName:[contactCellView.nameTextField stringValue] oldPhone:[contactCellView.phoneTextField stringValue] oldProviderName:contactCellView.providerName ];
 }
 
 #pragma mark - Functions related to the call

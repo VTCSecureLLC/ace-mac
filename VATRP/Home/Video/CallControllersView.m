@@ -306,7 +306,7 @@ BOOL isRTTLocallyEnabled;
 - (void)set_bool_chat_window_open:(BOOL)open {
     chat_window_open = open;
     HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
-    homeViewController.rttView.hidden = !open;
+    [homeViewController.rttView setHidden:!open];
 }
 
 - (IBAction)onButtonChat:(id)sender {

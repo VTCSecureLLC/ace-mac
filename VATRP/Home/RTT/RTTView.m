@@ -35,6 +35,7 @@ const NSInteger SIP_SIMPLE=1;
     ChatItemTableCellView *incomingCellView;
     LinphoneChatMessage *outgoingChatMessage;
     CGFloat incomingTextLinesCount;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSButton *buttonSend;
@@ -66,16 +67,6 @@ const NSInteger SIP_SIMPLE=1;
     [super awakeFromNib];
     
     [ViewManager sharedInstance].rttView = self;
-}
-
-- (void) setCustomFrame:(NSRect)frame {
-    self.view.frame = frame;
-    [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
-}
-
-
-- (void) viewWillAppear {
-    
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];
     [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self.view];
     
@@ -93,34 +84,6 @@ const NSInteger SIP_SIMPLE=1;
     
     [self.tableViewContent setBackgroundColor:[NSColor clearColor]];
     
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Message" attributes:attributes];
-    self.textFieldMessage.placeholderAttributedString = attributedString;
-    
-    // Do view setup here.
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textComposeEvent:)
-                                                 name:kLinphoneTextComposeEvent
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textReceivedEvent:)
-                                                 name:kLinphoneTextReceived
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textDidChange:)
-                                                 name:NSControlTextDidChangeNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                  selector:@selector(textDidBeginEditing:)
-                                                      name:NSTextDidBeginEditingNotification
-                                                    object:nil];
-    
     contacts = nil;
     selectedChatRoom = nil;
     incomingChatMessage = nil;
@@ -129,16 +92,74 @@ const NSInteger SIP_SIMPLE=1;
     incomingTextLinesCount = 1;
     stateNewMessage = NO;
     
+}
+
+-(void) setHidden:(bool)hidden
+{
+    [self.view setHidden:hidden];
+    if (hidden)
+    {
+        [self removeObservers];
+    }
+    else
+    {
+        [self initializeData];
+    }
+}
+
+-(void) initializeData
+{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Message" attributes:attributes];
+#if defined __MAC_10_8 || defined __MAC10_8
+    [self.textFieldMessage setPlaceholderString:@"Message"];
+#else
+    [self.textFieldMessage setPlaceholderAttributedString:attributedString];
+#endif
     [self updateContentData];
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
+    
+    // Do view setup here.
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textComposeEvent:)
+                                                     name:kLinphoneTextComposeEvent
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textDidChange:)
+                                                     name:NSControlTextDidChangeNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textDidBeginEditing:)
+                                                     name:NSTextDidBeginEditingNotification
+                                                   object:nil];
+    }
+
 }
 
-- (void) viewWillDisappear {
-    selectedChatRoom = nil;
+- (void) setCustomFrame:(NSRect)frame {
+    self.view.frame = frame;
+    [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
+}
+
+-(void) removeObservers
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

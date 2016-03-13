@@ -32,6 +32,8 @@
     ChatItemTableCellView *incomingCellView;
     LinphoneChatMessage *outgoingChatMessage;
     CGFloat incomingTextLinesCount;
+    
+    bool observersAdded;
 }
 
 
@@ -61,30 +63,33 @@
 
 @synthesize selectUser;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     // Do view setup here.
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textComposeEvent:)
-                                                 name:kLinphoneTextComposeEvent
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textReceivedEvent:)
-                                                 name:kLinphoneTextReceived
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textDidChange:)
-                                                 name:NSControlTextDidChangeNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveMessage:)
-                                                 name:kCHAT_RECEIVE_MESSAGE
-                                               object:nil];
+    if (!observersAdded)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textComposeEvent:)
+                                                     name:kLinphoneTextComposeEvent
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textDidChange:)
+                                                     name:NSControlTextDidChangeNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveMessage:)
+                                                     name:kCHAT_RECEIVE_MESSAGE
+                                                   object:nil];
+        observersAdded = true;
+    }
     
     [self.viewTextEnterBG setBackgroundColor:[NSColor clearColor]];
     [self.viewSeparateLine setBackgroundColor:[NSColor lightGrayColor]];
@@ -107,8 +112,8 @@
     [self loadData];
 }
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
+- (void) initializeData
+{
     
     self.scrollViewIncoming.hidden = YES;
     self.scrollViewOutgoing.hidden = YES;

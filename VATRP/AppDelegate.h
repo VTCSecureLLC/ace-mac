@@ -10,12 +10,13 @@
 #import "LoginWindowController.h"
 #import "LoginViewController.h"
 #import "HomeWindowController.h"
+
 #import "VideoCallWindowController.h"
 #import "ContactsWindowController.h"
 #import "RecentsWindowController.h"
 #import "ChatWindowController.h"
 #import "ViewController.h"
-
+#import "AddContactWindowController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
@@ -42,7 +43,7 @@
 @property (nonatomic, retain) SettingsWindowController *settingsWindowController;
 @property (nonatomic, retain) VideoMailWindowController *videoMailWindowController;
 @property (nonatomic, retain) ChatWindowController *chatWindowController;
-
+@property (nonatomic, retain) AddContactWindowController *addContactWindowController;
 
 + (AppDelegate*)sharedInstance;
 - (void) showTabWindow;

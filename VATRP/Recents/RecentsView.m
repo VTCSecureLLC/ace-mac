@@ -14,16 +14,15 @@
 #import "LinphoneContactService.h"
 #import "AccountsService.h"
 #import "AppDelegate.h"
-#import "AddContactDialogBox.h"
 #import "Utils.h"
 
 
 @interface RecentsView () <HistoryTableCellViewViewDelegate> {
     NSMutableArray *callLogs;
     BOOL missedFilter;
-    AddContactDialogBox *editContactDialogBox;
     NSString *dialPadFilter;
     LinphoneCallLog *selectedCallLog;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollViewRecents;
@@ -47,49 +46,37 @@
 -(void) viewDidLoad
 {
     [super viewDidLoad];
-    
+}
+
+- (void) awakeFromNib {
+    [super awakeFromNib];
+}
+
+-(void) initializeData
+{
     [self setBackgroundColor:[NSColor clearColor]];
     
     missedFilter = false;
     dialPadFilter = nil;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdate:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdate:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(dialpadTextUpdate:)
-                                                 name:DIALPAD_TEXT_CHANGED
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contactEditDone:)
-                                                 name:@"contactInfoEditDone"
-                                               object:nil];
-  
-}
-
-- (void) awakeFromNib {
-    [super awakeFromNib];
-    
-//    [self setBackgroundColor:[NSColor clearColor]];
-    
-    missedFilter = false;
-    dialPadFilter = nil;
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(callUpdate:)
-//                                                 name:kLinphoneCallUpdate
-//                                               object:nil];
-
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(dialpadTextUpdate:)
-//                                                 name:DIALPAD_TEXT_CHANGED
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(contactEditDone:)
-//                                                 name:@"contactInfoEditDone"
-//                                               object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(dialpadTextUpdate:)
+                                                     name:DIALPAD_TEXT_CHANGED
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contactEditDone:)
+                                                     name:@"contactInfoEditDone"
+                                                   object:nil];
+    }
+    [self reloadCallLogs];
 }
 
 
@@ -160,10 +147,11 @@
                     [callLogs addObject:[NSValue valueWithPointer:log]];
                 }
             } else {
-                if (dialPadFilter) {
+                if (dialPadFilter != nil) {
                     NSString *addr = [self addressFromCallLog:log];
                     
-                    if (addr && [addr containsString:dialPadFilter]) {
+                    if ((addr != nil) && [addr rangeOfString:dialPadFilter].location != NSNotFound)//if (addr && [addr containsString:dialPadFilter])
+                    {
                         [callLogs addObject:[NSValue valueWithPointer:log]];
                     }
                 } else {
@@ -185,14 +173,13 @@
 }
 
 - (void)didClickPlusButton:(HistoryTableCellView *)contactCellView withInfo:(NSDictionary *)info {
-    
-//    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
-    editContactDialogBox = [[AddContactDialogBox alloc] init];
-    editContactDialogBox.isEditing = YES;
-    editContactDialogBox.oldName = [info objectForKey:@"name"];
-    editContactDialogBox.oldPhone = [info objectForKey:@"sipUri"];
-    editContactDialogBox.oldProviderName = [Utils providerNameFromSipURI:[info objectForKey:@"sipUri"]];
-    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.addContactWindowController)
+    {
+        app.addContactWindowController = [[AddContactWindowController alloc] init];
+    }
+    [app.addContactWindowController showWindow:self];
+    [app.addContactWindowController initializeDataWith:true oldName:[info objectForKey:@"name"] oldPhone:[info objectForKey:@"sipUri"] oldProviderName:[Utils providerNameFromSipURI:[info objectForKey:@"sipUri"]] ];
 }
 
 - (void)contactEditDone:(NSNotification*)notif {

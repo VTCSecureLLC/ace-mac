@@ -29,10 +29,13 @@
 
 @property (nonatomic, assign) BOOL isAppFullScreen;
 
+-(void) initializeData;
 
 - (ProfileView*) getProfileView;
 - (BOOL) isCurrentTabRecents;
 - (void)mouseMovedWithPoint:(NSPoint)mousePosition;
+
+-(void) reloadRecents;
 
 #pragma mark - methods for dock view
 - (void)hideDockView:(bool)hide;

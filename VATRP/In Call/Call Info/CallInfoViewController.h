@@ -9,5 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface CallInfoViewController : NSViewController
+- (void) initializeData;
 
 @end

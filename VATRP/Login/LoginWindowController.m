@@ -53,6 +53,7 @@
        termsOfUseViewController = [[TermsOfUseViewController alloc]init];
        [self.window.contentView addSubview:termsOfUseViewController.view];
     }
+    
     [self.window setTitle:@"ACE Login"];
 
 }

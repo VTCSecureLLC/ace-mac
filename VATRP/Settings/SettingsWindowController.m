@@ -30,7 +30,7 @@
     PreferencesViewController *preferencesViewController;
     MediaViewController *mediaViewController;
     TestingViewController *testingViewController;
-    IBOutlet NSView *prevView;
+    IBOutlet NSView *viewContainer;
     IBOutlet NSButton *saveBtn;
     NSViewController* currentViewController;
 }
@@ -81,6 +81,19 @@
 
 }
 
+-(void) initializeData
+{
+    [generalViewController initializeData];
+    [avViewController initializeData];
+    [themeMenuViewController initializeData];
+    [textMenuViewController initializeData];
+    [summaryMenuViewController initializeData];
+    [accountsViewController initializeData];
+    [preferencesViewController initializeData];
+    [mediaViewController initializeData];
+    [testingViewController initializeData];
+}
+
 - (void)myWindowWillClose:(NSNotification *)notification
 {
     self.isShow = NO;
@@ -124,15 +137,12 @@
     [self changeViewTo:testingViewController.view];
 }
 
-- (void) changeViewTo:(NSView*)view {
-    [prevView removeFromSuperview];
-    prevView = view;
-#if defined __MAC_10_9 || defined __MAC_10_8
-    prevView.frame = CGRectMake(0, self.window.contentViewController.view.frame.size.height - prevView.frame.size.height, prevView.frame.size.width, prevView.frame.size.height);
-#else
-    prevView.frame = CGRectMake(0, self.window.contentView.frame.size.height - prevView.frame.size.height, prevView.frame.size.width, prevView.frame.size.height);
-#endif
-    [self.window.contentView addSubview:prevView];
+- (void) changeViewTo:(NSView*)view
+{
+    for (NSView *subview in [viewContainer subviews]) {
+        [subview removeFromSuperview];
+    }
+    [viewContainer addSubview:view];
 }
 - (IBAction)onSaveButtonClick:(NSButton *)sender {
     if (![accountsViewController save]) {

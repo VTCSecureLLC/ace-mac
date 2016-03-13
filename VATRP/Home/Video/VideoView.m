@@ -37,6 +37,9 @@
     NumpadView *numpadView;
     NSImageView *cameraStatusModeImageView;
     BackgroundedView *blackCurtain;
+    
+    bool observersAdded;
+    bool displayErrorLock;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -86,43 +89,21 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.callControllersView = [[CallControllersView alloc] init];
-    [self.callControllerContainer addSubview:[self.callControllersView view]];
-    
-//    self.callControllersView.view.hidden = true;
-    self.secondCallView = [[SecondCallView alloc] init];
-    [self.secondCallContainer addSubview:[self.secondCallView view]];
-    self.secondCallView.view.hidden = true;
-    self.secondIncomingCallView = [[SecondIncomingCallView alloc] init];
-    [self.secondIncomingCallContainer addSubview:[self.secondIncomingCallView view]];
-    self.secondIncomingCallContainer.hidden = true;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callViewFrameChange:)
-                                                 name:@"CallViewFrameChange"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(videoModeUpdate:)
-                                                 name:kLinphoneVideModeUpdate
-                                               object:nil];
-
+    [self initializeData];
 }
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    
+    [self initializeData];
+}
+
+- (void) initializeData
+{
     windowTitle  = @"Call with %@ duration: %@";
     address = @"";
     
     timerCallDuration = nil;
-
+    
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.settingsSelfViewDelegate = self;
     
@@ -137,7 +118,7 @@
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonFullScreen];
     
     
-//    self.labelDisplayName.hidden = YES;
+    //    self.labelDisplayName.hidden = YES;
     
     self.callControllersView.delegate = self;
     cameraStatusModeImageView = [[NSImageView alloc] initWithFrame:self.remoteVideo.frame];
@@ -145,6 +126,42 @@
     [blackCurtain setBackgroundColor:[NSColor blackColor]];
     // ToD0 - temp for VATRP-2489
     [self.buttonFullScreen setHidden:true];
+    
+    
+    self.callControllersView = [[CallControllersView alloc] init];
+    [self.callControllerContainer addSubview:[self.callControllersView view]];
+    
+    //    self.callControllersView.view.hidden = true;
+    self.secondCallView = [[SecondCallView alloc] init];
+    [self.secondCallContainer addSubview:[self.secondCallView view]];
+    self.secondCallView.view.hidden = true;
+    self.secondIncomingCallView = [[SecondIncomingCallView alloc] init];
+    [self.secondIncomingCallContainer addSubview:[self.secondIncomingCallView view]];
+    self.secondIncomingCallContainer.hidden = true;
+    
+    if (!observersAdded)
+    {
+        [self addObservers];
+         observersAdded = true;
+    }
+}
+
+-(void) addObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(callUpdateEvent:)
+                                                 name:kLinphoneCallUpdate
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(callViewFrameChange:)
+                                                 name:@"CallViewFrameChange"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(videoModeUpdate:)
+                                                 name:kLinphoneVideModeUpdate
+                                               object:nil];
 }
 
 - (void)createNumpadView {
@@ -196,6 +213,7 @@
             {
                 [self.callControllsConteinerView setHidden:NO];
             }
+            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
         }
         case LinphoneCallIncomingEarlyMedia:
         {
@@ -248,6 +266,7 @@
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Calling 00:00";
             [self.callControllsConteinerView setHidden:NO];
+            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
         }
             break;
         case LinphoneCallOutgoingRinging: {
@@ -276,7 +295,7 @@
         {
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
-            [self displayCallError:call message:@"Call Error"];
+            [self displayCallError:acall message:@"Call Error"];
             numpadView.hidden = YES;
             self.call = nil;
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
@@ -320,7 +339,13 @@
     }
 }
 
-- (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message {
+- (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message
+{
+    if (displayErrorLock)
+    {
+        return;
+    }
+    displayErrorLock = true;
     NSString *lMessage;
     NSString *lTitle;
     const LinphoneAddress *thisAddress;
@@ -349,19 +374,25 @@
     } else {
         lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
     }
-    
-    switch (linphone_call_get_reason(call_)) {
-        case LinphoneReasonNotFound:
-            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
-            break;
-        case LinphoneReasonBusy:
-            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
-            break;
-        default:
-            if (message != nil) {
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, message];
-            }
-            break;
+    if (call_ != nil)
+    {
+        switch (linphone_call_get_reason(call_)) {
+            case LinphoneReasonNotFound:
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
+                break;
+            case LinphoneReasonBusy:
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
+                break;
+            default:
+                if (message != nil) {
+                    lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, message];
+                }
+                break;
+        }
+    }
+    else
+    {
+        lMessage = [NSString stringWithFormat:NSLocalizedString(@"Call information unavailable.", nil)];
     }
     
     lTitle = NSLocalizedString(@"Call failed", nil);
@@ -373,6 +404,7 @@
     [alert setAlertStyle:NSWarningAlertStyle];
     
     [alert runModal];
+    displayErrorLock = false;
 }
 
 - (void)dismiss {
@@ -621,7 +653,7 @@
         [[[ViewManager sharedInstance].callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height)];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height))];
         HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
-        homeViewController.rttView.hidden = NO;
+        [homeViewController.rttView setHidden:false];
     } else {
         [[[ViewManager sharedInstance].callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height))];
@@ -674,7 +706,7 @@
     homeViewController.profileView.hidden = hide;
     homeViewController.dialPadView.hidden = hide;
     homeViewController.viewContainer.hidden = hide;
-    homeViewController.rttView.hidden = hide;
+    [homeViewController.rttView setHidden:hide];
 }
 
 - (void)callViewFrameChange:(NSNotification*)notif {

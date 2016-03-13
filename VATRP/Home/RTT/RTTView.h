@@ -9,6 +9,7 @@
 #import "BackgroundedViewController.h"
 
 @interface RTTView : BackgroundedViewController
+
 - (void) setCustomFrame:(NSRect)frame;
 
 - (void) updateViewForDisplay;

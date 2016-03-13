@@ -71,7 +71,39 @@
     dcFormatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;
     dcFormatter.allowedUnits = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     dcFormatter.unitsStyle = NSDateComponentsFormatterUnitsStylePositional;
-    return [dcFormatter stringFromTimeInterval:seconds];
+    NSString* value = [dcFormatter stringFromTimeInterval:seconds];
+    if (value != nil)
+    {
+        return value;
+    }
+    else
+    {
+        NSMutableString* selfConstructedValue = [[NSMutableString alloc] init];
+        int hours = seconds / 3600;
+        int minutes = (seconds - (hours * 3600)) / 60;
+        int remainingSeconds = seconds % 60;
+        if (hours > 0)
+        {
+            [selfConstructedValue appendString:[NSMutableString stringWithFormat:@"%d:", hours]];
+        }
+        if (minutes < 10)
+        {
+            [selfConstructedValue appendString:[NSMutableString stringWithFormat:@"0%d:", minutes]];
+        }
+        else
+        {
+            [selfConstructedValue appendString:[NSMutableString stringWithFormat:@"%d:", minutes]];
+        }
+        if (remainingSeconds < 10)
+        {
+            [selfConstructedValue appendString:[NSMutableString stringWithFormat:@"0%d", remainingSeconds]];
+        }
+        else
+        {
+            [selfConstructedValue appendString:[NSMutableString stringWithFormat:@"%d", remainingSeconds]];
+        }
+        return selfConstructedValue;
+    }
 }
 
 + (BOOL) nsStringIsValidSip:(NSString *)checkString {

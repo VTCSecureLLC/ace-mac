@@ -32,6 +32,8 @@
     ChatItemTableCellView *incomingCellView;
     LinphoneChatMessage *outgoingChatMessage;
     CGFloat incomingTextLinesCount;
+    
+    bool observersAdded;
 }
 
 
@@ -61,30 +63,33 @@
 
 @synthesize selectUser;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     // Do view setup here.
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textComposeEvent:)
-                                                 name:kLinphoneTextComposeEvent
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textReceivedEvent:)
-                                                 name:kLinphoneTextReceived
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textDidChange:)
-                                                 name:NSControlTextDidChangeNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveMessage:)
-                                                 name:kCHAT_RECEIVE_MESSAGE
-                                               object:nil];
+    if (!observersAdded)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textComposeEvent:)
+                                                     name:kLinphoneTextComposeEvent
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textDidChange:)
+                                                     name:NSControlTextDidChangeNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveMessage:)
+                                                     name:kCHAT_RECEIVE_MESSAGE
+                                                   object:nil];
+        observersAdded = true;
+    }
     
     [self.viewTextEnterBG setBackgroundColor:[NSColor clearColor]];
     [self.viewSeparateLine setBackgroundColor:[NSColor lightGrayColor]];
@@ -107,8 +112,8 @@
     [self loadData];
 }
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
+- (void) initializeData
+{
     
     self.scrollViewIncoming.hidden = YES;
     self.scrollViewOutgoing.hidden = YES;
@@ -207,7 +212,7 @@
     
     messageList = linphone_chat_room_get_history(selectedChatRoom, 0);
     
-    int count = ms_list_size(messageList);
+//    int count = ms_list_size(messageList);
     //    // also append transient upload messages because they are not in history yet!
     //    for (FileTransferDelegate *ftd in [[LinphoneManager instance] fileTransferDelegates]) {
     //        if (linphone_chat_room_get_peer_address(linphone_chat_message_get_chat_room(ftd.message)) ==
@@ -245,8 +250,8 @@ static int sorted_history_comparison(LinphoneChatRoom *to_insert, LinphoneChatRo
 
 - (MSList *)sortChatRooms {
     MSList *sorted = nil;
-    MSList *unsorted = linphone_core_get_chat_rooms([LinphoneManager getLc]);
-    MSList *iter = unsorted;
+    const MSList *unsorted = linphone_core_get_chat_rooms([LinphoneManager getLc]);
+    const MSList *iter = unsorted;
     
     while (iter) {
         // store last message in user data
@@ -284,7 +289,11 @@ static void chatTable_free_chatrooms(void *data) {
     return count;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     NSString *identifier = [tableColumn identifier];
     
     if (tableView == self.tableViewContacts) {
@@ -351,7 +360,7 @@ static void chatTable_free_chatrooms(void *data) {
                 const char *text = linphone_chat_message_get_text(last_message);
                 [cellView.textFieldLastMessage setStringValue:[NSString stringWithUTF8String:text]];
                 
-                time_t new = linphone_chat_message_get_time(last_message);
+//                time_t new = linphone_chat_message_get_time(last_message);
                 
                 
             }
@@ -547,7 +556,7 @@ static void chatTable_free_chatrooms(void *data) {
 #pragma mark -
 
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
-    LinphoneCore* lc = [LinphoneManager getLc];
+//    LinphoneCore* lc = [LinphoneManager getLc];
     
     switch (astate) {
         case LinphoneCallStreamsRunning: {

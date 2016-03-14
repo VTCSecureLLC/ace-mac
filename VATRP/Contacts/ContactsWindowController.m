@@ -24,6 +24,9 @@
     self.isShow = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
+    
+    [self.window setTitle:@"ContactsWindowController"];
+
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

@@ -10,6 +10,7 @@
 
 @interface ThemeMenuViewController : NSViewController
 
+-(void) initializeData;
 - (void) save;
 
 @end

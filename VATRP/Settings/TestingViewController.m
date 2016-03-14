@@ -40,8 +40,9 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self initializeData];
     // Do view setup here.
     // note: when we open the dialog for teh second time, this method will nto be called, so items will not be refreshed.
     // moving initialization into a separate emthod that will e call from this as well as the viewWillAppear method.
@@ -62,15 +63,10 @@
     
     [self.comboBoxRTCPFeedBack setEditable:NO];
     
-    [self initializeValues];
+    [self initializeData];
 }
 
--(void)viewWillAppear {
-    [super viewWillAppear];
-    [self initializeValues];
-}
-
--(void)initializeValues{
+-(void)initializeData{
     LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
 
     if (proxyCfg) {
@@ -79,8 +75,8 @@
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
     
-    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
-    int upBand = [settingsHandler getUploadBandwidth];
+//    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+//    int upBand = [settingsHandler getUploadBandwidth];
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
     

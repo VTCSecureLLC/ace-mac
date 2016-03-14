@@ -130,7 +130,7 @@
             //            }];
             //            [alert show];
         } else {
-            BOOL success = [self addProxyConfig:username UserID:userID password:password domain:domain withTransport:transport port:port];
+            /*BOOL success =*/ [self addProxyConfig:username UserID:userID password:password domain:domain withTransport:transport port:port];
             //            if( !success ){
             //                waitView.hidden = true;
             //            }

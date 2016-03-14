@@ -19,7 +19,9 @@ export CCACHE_COMPILERCHECK=content
 ccache -M 5G
 ccache -s 
 brew update 1>/dev/null
-brew install doxygen homebrew/versions/nasm21106 yasm optipng imagemagick intltool ninja antlr cmake gettext
+brew install doxygen homebrew/versions/nasm21106 yasm optipng imagemagick intltool ninja antlr
+brew install cmake || true
+brew install gettext || true
 nasm -v
 brew link --force gettext
 brew install cairo --without-x11

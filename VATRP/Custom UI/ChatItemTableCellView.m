@@ -116,7 +116,11 @@ static NSFont *CELL_FONT = nil;
         imageViewBubble.frame = CGRectMake(outgoing ? self.frame.size.width - 270 : 5, 0, 267, image.size.height);
         labelChat.frame = CGRectMake(outgoing ? 5 : 15, image.size.height - height, 220, height);
         labelDate.frame = CGRectMake(outgoing ? 5 : 40, 5, 220, 12);
+#if defined __MAC_10_9 || defined __MAC_10_8
+        [labelDate.cell setAlignment:outgoing ? kCTTextAlignmentLeft : kCTTextAlignmentRight];
+#else
         [labelDate.cell setAlignment:outgoing ? NSTextAlignmentLeft : NSTextAlignmentRight];
+#endif
         imageViewStatus.frame = CGRectMake(outgoing ? 230 : 245, 5, 18.0/1.5, 17.0/1.5);
         
         [imageViewBubble setWantsLayer:YES];
@@ -163,9 +167,9 @@ static NSFont *CELL_FONT = nil;
     if (is_external || localImage) {
         if (localImage) {
             if (messageImageView.image == nil) {
-                NSURL *imageUrl = [NSURL URLWithString:localImage];
+//                NSURL *imageUrl = [NSURL URLWithString:localImage];
                 labelChat.hidden = YES;
-                __block LinphoneChatMessage *achat = chat;
+//                __block LinphoneChatMessage *achat = chat;
             }
         } else {
             labelChat.hidden = YES;
@@ -202,19 +206,31 @@ static NSFont *CELL_FONT = nil;
     BOOL outgoing = linphone_chat_message_is_outgoing(chat);
     
     if (!outgoing) {
+#if defined __MAC_10_9 || __MAC_10_8
+#else
 //        [imageViewStatus setAccessibilityValue:@"incoming"];
+#endif
         imageViewStatus.hidden = TRUE; // not useful for incoming chats..
     } else if (state == LinphoneChatMessageStateInProgress) {
         [imageViewStatus setImage:[NSImage imageNamed:@"chat_message_inprogress.png"]];
+#if defined __MAC_10_9 || __MAC_10_8
+#else
 //        [statusImage setAccessibilityValue:@"in progress"];
+#endif
         imageViewStatus.hidden = FALSE;
     } else if (state == LinphoneChatMessageStateDelivered || state == LinphoneChatMessageStateFileTransferDone) {
         [imageViewStatus setImage:[NSImage imageNamed:@"chat_message_delivered.png"]];
+#if defined __MAC_10_9 || __MAC_10_8
+#else
         [imageViewStatus setAccessibilityValue:@"delivered"];
+#endif
         imageViewStatus.hidden = FALSE;
     } else {
         [imageViewStatus setImage:[NSImage imageNamed:@"chat_message_not_delivered.png"]];
+#if defined __MAC_10_9 || __MAC_10_8
+#else
         [imageViewStatus setAccessibilityValue:@"not delivered"];
+#endif
         imageViewStatus.hidden = FALSE;
         
 //        NSAttributedString *resend_text =
@@ -282,7 +298,11 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
         NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:messageText attributes:attributes];
         
         CGFloat width = 220; // whatever your desired width is
+#if defined __MAC_10_9 || defined __MAC_10_8
+        CGRect rect = [attributedString boundingRectWithSize:CGSizeMake(width, 10000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
+#else
         CGRect rect = [attributedString boundingRectWithSize:CGSizeMake(width, 10000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+#endif
         messageSize = rect.size;
     } else {
         messageSize = CGSizeMake(CELL_IMAGE_WIDTH, CELL_IMAGE_HEIGHT);

@@ -30,7 +30,7 @@
     PreferencesViewController *preferencesViewController;
     MediaViewController *mediaViewController;
     TestingViewController *testingViewController;
-    IBOutlet NSView *prevView;
+    IBOutlet NSView *viewContainer;
     IBOutlet NSButton *saveBtn;
     NSViewController* currentViewController;
 }
@@ -77,6 +77,21 @@
 
     [self changeViewTo:generalViewController.view];
     
+    [self.window setTitle:@"SettingsWindowController"];
+
+}
+
+-(void) initializeData
+{
+    [generalViewController initializeData];
+    [avViewController initializeData];
+    [themeMenuViewController initializeData];
+    [textMenuViewController initializeData];
+    [summaryMenuViewController initializeData];
+    [accountsViewController initializeData];
+    [preferencesViewController initializeData];
+    [mediaViewController initializeData];
+    [testingViewController initializeData];
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification
@@ -122,11 +137,12 @@
     [self changeViewTo:testingViewController.view];
 }
 
-- (void) changeViewTo:(NSView*)view {
-    [prevView removeFromSuperview];
-    prevView = view;
-    prevView.frame = CGRectMake(0, self.window.contentView.frame.size.height - prevView.frame.size.height, prevView.frame.size.width, prevView.frame.size.height);
-    [self.window.contentView addSubview:prevView];
+- (void) changeViewTo:(NSView*)view
+{
+    for (NSView *subview in [viewContainer subviews]) {
+        [subview removeFromSuperview];
+    }
+    [viewContainer addSubview:view];
 }
 - (IBAction)onSaveButtonClick:(NSButton *)sender {
     if (![accountsViewController save]) {

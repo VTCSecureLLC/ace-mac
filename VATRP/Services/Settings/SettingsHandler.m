@@ -423,7 +423,7 @@
 -(void)setUploadBandwidth:(int)bandwidth
 {
     [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:bandwidth];
-    int test = [[NSUserDefaults standardUserDefaults] integerForKey:UPLOAD_BANDWIDTH];
+//    int test = [[NSUserDefaults standardUserDefaults] integerForKey:UPLOAD_BANDWIDTH];
     LinphoneCore* linphoneCore = [LinphoneManager getLc];
     if (linphoneCore != nil)
     {

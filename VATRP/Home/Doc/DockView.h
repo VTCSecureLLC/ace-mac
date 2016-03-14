@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
+#import "HomeViewController.h"
 
 typedef enum : NSUInteger {
     DockViewItemRecents,
@@ -19,10 +20,11 @@ typedef enum : NSUInteger {
 
 @protocol DockViewDelegate;
 
-@interface DockView : BackgroundedView
+@interface DockView : BackgroundedViewController
 
-@property (nonatomic, assign) id<DockViewDelegate> delegate;
+@property (nonatomic, weak) id<DockViewDelegate> delegate;
 
+- (id) init:(HomeViewController*)parentController;
 - (void) selectItemWithDocViewItem:(DockViewItem)docViewItem;
 - (void)clearDockViewButtonsBackgroundColorsExceptDialPadButton:(BOOL)clear;
 - (void)clearDockViewSettingsBackgroundColor:(BOOL)clear;

@@ -10,6 +10,7 @@
 #import "HomeViewController.h"
 
 @interface HomeWindowController : NSWindowController
+@property (strong) HomeViewController* homeViewController;
 
 - (HomeViewController*) getHomeViewController;
 

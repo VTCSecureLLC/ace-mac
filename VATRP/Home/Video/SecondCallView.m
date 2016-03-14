@@ -8,6 +8,7 @@
 
 #import "SecondCallView.h"
 #import "Utils.h"
+#import "BackgroundedView.h"
 
 @interface SecondCallView () {
     NSTimer *timerCallDuration;
@@ -26,10 +27,21 @@
 
 @synthesize call;
 
+-(id) init
+{
+    self = [super initWithNibName:@"SecondCallView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     
-    self.wantsLayer = YES;
+    self.view.wantsLayer = YES;
     [self setBackgroundColor:[NSColor clearColor]];
     
     self.viewAlphaed.wantsLayer = YES;

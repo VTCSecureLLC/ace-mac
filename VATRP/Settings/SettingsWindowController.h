@@ -12,6 +12,8 @@
 
 @property (nonatomic, assign) BOOL isShow;
 
+// note: 10.9 - viewWillAppear not being called. using explicit initialization to keep code a little cleaner (fewer if defs)
+-(void) initializeData;
 - (void) addPreferencesToolbarItem;
 
 @end

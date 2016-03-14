@@ -547,4 +547,16 @@
     [self setUserSettingBool:ENABLE_QoS withValue:enableQos];
 }
 
+- (void)setQoSSignalingValue:(int)signalingValue {
+    [self setUserSettingInt:QoS_Signaling withValue:signalingValue];
+}
+
+- (void)setQoSAudioValue:(int)audioValue {
+    [self setUserSettingInt:QoS_Audio withValue:audioValue];
+}
+
+- (void)setQoSVideoValue:(int)videoValue {
+    [self setUserSettingInt:QoS_Video withValue:videoValue];
+}
+
 @end

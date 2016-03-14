@@ -1,4 +1,4 @@
-//
+./VATRP/Settings/TestingViewController.m //
 //  SettingsService.m
 //  ACE
 //
@@ -388,10 +388,14 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     // video_resolution_maximum - set
     
     // QoS
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"enable_QoS"]) {
-        linphone_core_set_sip_dscp([LinphoneManager getLc], 28);
-        linphone_core_set_audio_dscp([LinphoneManager getLc], 38);
-        linphone_core_set_video_dscp([LinphoneManager getLc], 38);
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"enable_QoS"]) {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], 24);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], 46);
+        linphone_core_set_video_dscp([LinphoneManager getLc], 46);
+    } else {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_video_dscp([LinphoneManager getLc], 0);
     }
 }
 

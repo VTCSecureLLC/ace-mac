@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="HomeViewController">
+            <connections>
+                <outlet property="callQualityIndicator" destination="diF-ia-rMj" id="Gf1-qM-fav"/>
+                <outlet property="callView" destination="Vdb-8b-tuP" id="D9M-bM-acA"/>
+                <outlet property="dialPadContainer" destination="2n0-18-V9q" id="n7U-Wu-bsq"/>
+                <outlet property="dockViewContainer" destination="so2-rH-9Uf" id="GDU-zs-nuw"/>
+                <outlet property="profileViewContainer" destination="081-mu-sOq" id="OB2-4e-SnU"/>
+                <outlet property="rttViewContainer" destination="IfG-4O-eDm" id="zIC-Gq-DNv"/>
+                <outlet property="view" destination="c22-O7-iKe" id="sIF-rf-DRn"/>
+                <outlet property="viewContainer" destination="5Th-bI-5Gl" id="FSc-j4-uDm"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="BackgroundedView">
+            <rect key="frame" x="0.0" y="0.0" width="1328" height="700"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView id="so2-rH-9Uf">
+                    <rect key="frame" x="0.0" y="0.0" width="310" height="80"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+                <customView id="081-mu-sOq">
+                    <rect key="frame" x="0.0" y="648" width="310" height="52"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+                <customView id="2n0-18-V9q">
+                    <rect key="frame" x="0.0" y="81" width="310" height="270"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+                <customView id="IfG-4O-eDm">
+                    <rect key="frame" x="1030" y="0.0" width="298" height="701"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+                <customView id="5Th-bI-5Gl" customClass="BackgroundedView">
+                    <rect key="frame" x="0.0" y="351" width="310" height="297"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+                <customView id="Vdb-8b-tuP" customClass="BackgroundedView">
+                    <rect key="frame" x="310" y="0.0" width="720" height="700"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <customView hidden="YES" id="diF-ia-rMj" customClass="CallQualityIndicator">
+                            <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </customView>
+                    </subviews>
+                </customView>
+            </subviews>
+        </customView>
+    </objects>
+</document>

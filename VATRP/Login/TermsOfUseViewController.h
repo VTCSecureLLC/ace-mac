@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "BFViewController.h"
+#import "LoginWindowController.h"
 
 @interface TermsOfUseViewController : NSViewController <BFViewController>
 

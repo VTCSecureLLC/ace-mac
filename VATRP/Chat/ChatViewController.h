@@ -11,5 +11,5 @@
 @interface ChatViewController : NSViewController
 
 @property (nonatomic, retain) NSString *selectUser;
-
+-(void) initializeData;
 @end

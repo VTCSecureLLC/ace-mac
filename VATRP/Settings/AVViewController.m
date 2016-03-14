@@ -36,16 +36,14 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     // Do view setup here.
-
-    isChanged = NO;
+    [self initializeData];
 }
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
-
+- (void) initializeData
+{
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.inCallSettingsDelegate = self;
     
@@ -54,7 +52,7 @@
     self.buttonEchoCancel.state = [self.settingsHandler isEchoCancellationEnabled];
     self.buttonShowSelfView.state = [self.settingsHandler isShowSelfViewEnabled];
     self.buttonShowPreview.state = [self.settingsHandler isShowPreviewEnabled];
-    
+    isChanged = NO;
 }
 
 - (IBAction)onCheckBoxSpeakerMute:(id)sender {

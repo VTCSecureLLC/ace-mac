@@ -71,15 +71,10 @@
 }
 
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
-    
-}
 
--(void)viewWillAppear
+-(void)awakeFromNib
 {
-    [super viewWillAppear];
+    [super awakeFromNib];
     [self callInfoUpdateTimer];
     if (timerCallInfoUpdate && [timerCallInfoUpdate isValid])
     {

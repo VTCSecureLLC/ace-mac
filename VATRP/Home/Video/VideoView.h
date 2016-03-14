@@ -10,7 +10,7 @@
 #import "LinphoneManager.h"
 #import "SettingsHandler.h"
 
-@interface VideoView : NSView<SettingsSelfViewDelegate>
+@interface VideoView : NSViewController<SettingsSelfViewDelegate>
 
 @property (nonatomic, assign) LinphoneCall* call;
 
@@ -28,6 +28,6 @@
 - (void)windowWillExitFullScreen;
 - (void)windowDidExitFullScreen;
 
-@property (weak) IBOutlet NSView *remoteVideoView;
+//@property (weak) IBOutlet NSView *remoteVideoView;
 
 @end

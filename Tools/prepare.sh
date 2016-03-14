@@ -1,31 +1,8 @@
 #!/bin/bash
-set -ex
+set -xe
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/..
 
-which brew || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+python prepare.py -C || true
+python prepare.py -G Ninja -DENABLE_WEBRTC_AEC=ON -DENABLE_H263=YES -DENABLE_FFMPEG=YES -DENABLE_NON_FREE_CODECS=ON -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_AMRWB=NO -DENABLE_AMRNB=NO -DENABLE_OPENH264=YES -DENABLE_X264=NO -DENABLE_G729=NO -DENABLE_MPEG4=NO -DENABLE_H263P=NO -DENABLE_ILBC=NO -DENABLE_ISAC=NO -DENABLE_SILK=NO -DENABLE_VCARD=ON -DLINPHONE_BUILDER_LATEST=YES -DENABLE_RELATIVE_PREFIX=YES -DENABLE_GSM=NO -DENABLE_BV16=NO -DENABLE_MKV=NO -DENABLE_SPEEX=NO -p
 
-if [ -n "$TRAVIS" ]; then
-  export HOMEBREW_PREFIX=$HOME/.homebrew
-  if [[ -d $HOMEBREW_PREFIX ]]; then echo "HOMEBREW_PREFIX=$HOMEBREW_PREFIX"; else rsync -aq /usr/local/ $HOMEBREW_PREFIX; fi
-  export PATH=$HOMEBREW_PREFIX/bin:$PATH; hash -r
-fi
-which ccache || brew install ccache || brew link --force ccache || true
-which md5deep || brew install ccache || brew link --force md5deep || true
-export CCACHE_DIR=$HOME/.ccache
-export LINPHONE_CCACHE=ccache
-export CCACHE_SLOPPINESS=pch_defines,time_macros,include_file_mtime,include_file_ctime,file_macro
-export CCACHE_COMPILERCHECK=content
-ccache -M 5G
-ccache -s 
-brew update 1>/dev/null
-brew install doxygen homebrew/versions/nasm21106 yasm optipng imagemagick intltool ninja antlr cmake gettext
-nasm -v
-brew link --force gettext
-brew install cairo --without-x11
-brew install gtk+ --without-x11
-brew install gtk-mac-integration hicolor-icon-theme
-wget --no-check-certificate https://raw.github.com/yuvi/gas-preprocessor/master/gas-preprocessor.pl
-chmod +x gas-preprocessor.pl
-[ -x /usr/local/bin/gas-preprocessor.pl ] || sudo mv -f gas-preprocessor.pl /usr/local/bin
-[ -x /usr/local/bin/libtoolize ] || sudo ln -sf /usr/local/bin/glibtoolize /usr/local/bin/libtoolize
-git submodule update --init --recursive
-bundle install

@@ -6,8 +6,8 @@
 //  Copyright © 2016 VTCSecure. All rights reserved.
 //
 
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
 
-@interface DHResourcesView : BackgroundedView
+@interface DHResourcesView : BackgroundedViewController
 
 @end

@@ -30,13 +30,9 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
-}
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
+- (void) awakeFromNib {
+    [super awakeFromNib];
 
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];

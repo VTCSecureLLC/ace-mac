@@ -19,6 +19,7 @@
 
 - (void)awakeFromNib {
     [self createTrackingArea];
+    [self.editButton setAction:@selector(onEditClick:)];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

@@ -8,7 +8,6 @@
 
 #import "ContactsView.h"
 #import "ContactTableCellView.h"
-#import "AddContactDialogBox.h"
 #include "linphone/linphonecore.h"
 #include "linphone/linphone_tunnel.h"
 #import "DockView.h"
@@ -16,7 +15,6 @@
 #import "LinphoneContactService.h"
 #include "LinphoneManager.h"
 #import "AppDelegate.h"
-#import "AddContactDialogBox.h"
 #import "Utils.h"
 #import "CallService.h"
 #import "ContactPictureManager.h"
@@ -24,7 +22,6 @@
 #import "ContactFavoriteManager.h"
 
 @interface ContactsView ()<ContactTableCellViewDelegate> {
-    AddContactDialogBox *editContactDialogBox;
     NSString *selectedProviderName;
     NSString *dialPadFilter;
 }
@@ -46,6 +43,17 @@
 
 #pragma mark - View lifecycle methods
 
+-(id) init
+{
+    self = [super initWithNibName:@"ContactsView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     static BOOL firstTime = YES;
@@ -61,7 +69,7 @@
 //        [_allContactsButton setEnabled:false]; // initialize for toggle being controlled by the two buttons, not by the button itself
         [_allContactsButton setTarget:self];
         [_allContactsButton setAction:@selector(allContacts_Click)];
-        [self addSubview:_allContactsButton];
+        [self.view addSubview:_allContactsButton];
         
         _favoriteContactsButton = [[NSButton alloc]init];//[[NSButton alloc] initWithFrame:CGRectMake(100, self.view.frame.origin.y + self.view.frame.size.height -50 , 100, 50 )];
         [_favoriteContactsButton setTitle:@"Favorites"];
@@ -70,7 +78,7 @@
         [_favoriteContactsButton setState:NSOnState];
         [_favoriteContactsButton setTarget:self];
         [_favoriteContactsButton setAction:@selector(favoriteContacts_Click)];
-        [self addSubview:_favoriteContactsButton];
+        [self.view addSubview:_favoriteContactsButton];
         
         [self.addContactButton setTarget:self];
         [self.addContactButton setAction:@selector(onButtonAddContact:)];
@@ -178,8 +186,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DIALPAD_TEXT_CHANGED" object: nil];
 }
 
-- (void) setFrame:(NSRect)frame {
+- (void) setFrame:(NSRect)frame
+{
     [super setFrame:frame];
+    
     [self.scrollViewContacts setFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height - 40)];
     
     [self.allContactsButton setFrame:NSMakeRect(0, frame.size.height - 41, 75/*self.addContactButton.frame.size.width*/, self.addContactButton.frame.size.height + 1)];
@@ -234,9 +244,13 @@
 
 - (IBAction)onButtonAddContact:(id)sender
 {
-    editContactDialogBox = [[AddContactDialogBox alloc] init];
-    editContactDialogBox.isEditing = NO;
-    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.addContactWindowController)
+    {
+        app.addContactWindowController = [[AddContactWindowController alloc] init];
+    }
+    [app.addContactWindowController showWindow:self];
+    [app.addContactWindowController setIsEditing:false];
 }
 - (IBAction)onButtonClearList:(id)sender {
     NSAlert *alert = [NSAlert alertWithMessageText:@"Deleting the list"
@@ -343,7 +357,11 @@
     return 50;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     ContactTableCellView *cellView = [tableView makeViewWithIdentifier:@"ContactCell" owner:self];
     NSDictionary *dict = [self.contactInfos objectAtIndex:row];
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
@@ -378,13 +396,13 @@
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
-//    editContactDialogBox = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AddContactDialogBox"];
-    editContactDialogBox = [[AddContactDialogBox alloc] init];
-    editContactDialogBox.isEditing = YES;
-    editContactDialogBox.oldName = [contactCellView.nameTextField stringValue];
-    editContactDialogBox.oldPhone = [contactCellView.phoneTextField stringValue];
-    editContactDialogBox.oldProviderName = contactCellView.providerName;
-    [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewControllerAsModalWindow:editContactDialogBox];
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.addContactWindowController)
+    {
+        app.addContactWindowController = [[AddContactWindowController alloc] init];
+    }
+    [app.addContactWindowController showWindow:self];
+    [app.addContactWindowController initializeDataWith:true oldName:[contactCellView.nameTextField stringValue] oldPhone:[contactCellView.phoneTextField stringValue] oldProviderName:contactCellView.providerName ];
 }
 
 #pragma mark - Functions related to the call

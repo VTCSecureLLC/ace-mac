@@ -50,10 +50,15 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     
     [self initCustomComboBox];
+    [self initializeData];
+}
+
+-(void)initializeData
+{
     if (self.isEditing) {
         [self initContactPicture];
         [self setTitle:@"Edit contact"];

@@ -13,6 +13,8 @@
 
 @interface TermsOfUseViewController () {
     LoginViewController *loginViewController;
+    LoginWindowController* parent;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollView;
@@ -35,10 +37,19 @@
     
 }
 
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self initializeData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
-    // read the text from thr rtf as a formatted string and add the text to the text field
+    [self initializeData];
+}
+
+- (void) initializeData
+{
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"legal_release" ofType:@"rtf"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -51,7 +62,11 @@
         }
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrolling:) name:NSScrollViewDidLiveScrollNotification object:nil];
+    if (!observersAdded)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrolling:) name:NSScrollViewDidLiveScrollNotification object:nil];
+        observersAdded = true;
+    }
 }
 
 - (void)scrolling:(NSNotification*)notif {
@@ -68,7 +83,7 @@
 - (IBAction)onButtonAccept:(id)sender {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IS_TERMS_OF_OSE_SHOWED"];
     loginViewController = [[LoginViewController alloc]init];
-    [self.navigationController pushViewController:loginViewController animated:YES];
+    [self.view.superview replaceSubview:self.view with:loginViewController.view ];
 }
 
 - (IBAction)onButtonDecline:(id)sender {

@@ -9,26 +9,40 @@
 #import <Cocoa/Cocoa.h>
 #import "VideoView.h"
 #import "ProfileView.h"
-#import "DockView.h"
 #import "DialPadView.h"
 #import "RTTView.h"
 #import "CallQualityIndicator.h"
 
-@interface HomeViewController : NSViewController
+@interface HomeViewController : NSViewController<NSTableViewDelegate, NSTableViewDataSource>
+@property (strong) IBOutlet NSView *dockViewContainer;
+@property (strong) IBOutlet NSView *profileViewContainer;
+@property (strong) IBOutlet NSView *dialPadContainer;
+@property (strong) IBOutlet NSView *rttViewContainer;
 
-@property (weak) IBOutlet DockView *dockView;
-@property (weak) IBOutlet ProfileView *profileView;
-@property (weak) IBOutlet DialPadView *dialPadView;
-@property (weak) IBOutlet BackgroundedView *viewContainer;
-@property (weak) IBOutlet RTTView *rttView;
-@property (weak) IBOutlet VideoView *videoView;
-@property (weak) IBOutlet BackgroundedView *callView;
-@property (weak) IBOutlet CallQualityIndicator *callQualityIndicator;
+@property (strong) ProfileView *profileView;
+@property (strong) DialPadView *dialPadView;
+@property (strong) IBOutlet BackgroundedView *viewContainer;
+@property (strong) RTTView *rttView;
+@property (strong) IBOutlet VideoView *videoView;
+@property (strong) IBOutlet BackgroundedView *callView;
+@property (strong) IBOutlet CallQualityIndicator *callQualityIndicator;
 
 @property (nonatomic, assign) BOOL isAppFullScreen;
+
+-(void) initializeData;
 
 - (ProfileView*) getProfileView;
 - (BOOL) isCurrentTabRecents;
 - (void)mouseMovedWithPoint:(NSPoint)mousePosition;
+
+-(void) reloadRecents;
+
+#pragma mark - methods for dock view
+- (void)hideDockView:(bool)hide;
+- (void) didClickDockViewRecents;
+- (void) didClickDockViewContacts;
+- (void) didClickDockViewDialpad;
+- (void) didClickDockViewResources;
+- (void) didClickDockViewSettings;
 
 @end

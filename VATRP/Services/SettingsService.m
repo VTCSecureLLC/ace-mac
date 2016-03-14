@@ -1,4 +1,4 @@
-./VATRP/Settings/TestingViewController.m //
+//
 //  SettingsService.m
 //  ACE
 //

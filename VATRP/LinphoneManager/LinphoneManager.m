@@ -1385,7 +1385,7 @@ static BOOL libStarted = FALSE;
     //libmssilk_init(f);
     //libmsamr_init(f);
     //    libmsx264_init(f);
-    libmsopenh264_init(f);
+    //libmsopenh264_init(f);
     //libmsbcg729_init(f);
     //libmswebrtc_init(f);
     ms_factory_load_plugins(f, ".");

@@ -79,6 +79,9 @@
 -(void) setVideoAccept:(bool)enable;
 
 - (void)setQoSEnable:(BOOL)enableQos;
+- (void)setQoSSignalingValue:(int)signalingValue;
+- (void)setQoSAudioValue:(int)audioValue;
+- (void)setQoSVideoValue:(int)videoValue;
 
 #pragma mark settings accessors
 // these settings are set when the UI calls one of the methods above.

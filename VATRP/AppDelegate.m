@@ -148,6 +148,7 @@
 
     [self.menuItemSignOut setEnabled:true];
     [self.menuItemPreferences setEnabled:true];
+    [self.menuItemMessages setEnabled:true];
 }
 
 -(NSPoint) getTabWindowOrigin{
@@ -249,6 +250,7 @@
     [self.loginWindowController showWindow:self];
     [self.menuItemSignOut setEnabled:false];
     [self.menuItemPreferences setEnabled:false];
+    [self.menuItemMessages setEnabled:false];
   
     if ([[LinphoneManager instance] coreIsRunning]) {
         [[LinphoneManager instance] destroyLinphoneCore];
@@ -256,36 +258,48 @@
     }
 }
 
-- (IBAction)onMenuItemACEFeedBack:(id)sender {
+- (IBAction)onMenuItemACEFeedBack:(id)sender
+{
     [[[BITHockeyManager sharedHockeyManager] feedbackManager] showFeedbackWindow];
 }
-
-- (void)onMenuItemMessages:(id)sender {
+- (IBAction)onMenuItemMessages:(NSMenuItem *)sender
+{
     [[ChatService sharedInstance] openChatWindowWithUser:nil];
 }
 
--(void) SignOut {
+-(void) SignOut
+{
     [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
 }
 
-- (IBAction)onSignOut:(NSMenuItem *)sender {
+- (IBAction)onSignOut:(NSMenuItem *)sender
+{
     [self onMenuItemPreferencesSignOut:sender];
 }
 
+- (IBAction)onMenuItemSelfPreview:(NSMenuItem *)sender
+{
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
+}
+
+- (IBAction)onMenuItemGoToSupport:(NSMenuItem *)sender
+{
+    [[[BITHockeyManager sharedHockeyManager] feedbackManager] showFeedbackWindow];
+}
+
+- (IBAction)onMenuItemWelcomeTour:(NSMenuItem *)sender
+{
+    // to come later
+}
+
+- (IBAction)onMenuItemPrivacyPolicy:(NSMenuItem *)sender
+{
+    // to come later
+}
+
+
 - (void)registrationUpdateEvent:(NSNotification*)notif {
     LinphoneRegistrationState state = (LinphoneRegistrationState)[[notif.userInfo objectForKey: @"state"] intValue];
-    
-//    if (state == LinphoneRegistrationOk) {
-//        [self.menuItemSignOut setAction:@selector(onMenuItemPreferencesSignOut:)];
-//    } else {
-//        [self.menuItemSignOut setAction:nil];
-//    }
-
-    if (state == LinphoneRegistrationOk) {
-        [self.menuItemMessages setAction:@selector(onMenuItemMessages:)];
-    } else {
-        [self.menuItemMessages setAction:nil];
-    }
 }
 
 

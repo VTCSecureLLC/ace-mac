@@ -6,7 +6,7 @@
 	url = git://github.com/VTCSecureLLC/linphone-cmake-builder.git
 [submodule "submodules/linphone"]
 	path = submodules/linphone
-	url = git://github.com/VTCSecureLLC/linphone.git
+	url = git://git.linphone.org/linphone.git
 [submodule "submodules/bcg729"]
 	path = submodules/bcg729
 	url = git://git.linphone.org/bcg729.git
@@ -46,8 +46,3 @@
 [submodule "submodules/externals/mbedtls"]
 	path = submodules/externals/mbedtls
 	url = git://git.linphone.org/mbedtls.git
-[submodule "submodules/externals/bv16-floatingpoint"]
-	path = submodules/externals/bv16-floatingpoint
-	url = git://git.linphone.org/bv16-floatingpoint.git
-
-

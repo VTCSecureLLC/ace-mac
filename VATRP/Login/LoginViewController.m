@@ -157,18 +157,36 @@
 - (IBAction)onButtonLogin:(id)sender
 {
     loginClicked = true;
-    if (!self.textFieldUsername.stringValue || !self.textFieldUsername.stringValue.length ||
-        !   self.textFieldDomain.stringValue || !self.textFieldDomain.stringValue.length) {
-        
+    NSString* userName = [self.textFieldUsername.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString* password = [self.textFieldPassword.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString* domain = [self.textFieldDomain.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString* errorMessage;
+    if ((userName == nil) || (userName.length == 0))
+    {
+        errorMessage = @"Please enter a valid user name.";
+    }
+    else if ((password == nil) || (password.length == 0))
+    {
+        errorMessage = @"Please enter a valid password.";
+    }
+    else if ((domain == nil) || (domain.length == 0))
+    {
+        errorMessage = @"Please select a valid domain.";
+    }
+    if ((errorMessage != nil) && (errorMessage.length != 0))
+    {
         NSAlert *alert = [[NSAlert alloc]init];
         [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Please fill the all fields."];
+        [alert setMessageText:errorMessage];
         [alert runModal];
         
         return;
     }
-    
-    [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", self.textFieldUsername.stringValue, self.textFieldDomain.stringValue];
+    // replace string values with the trimmed values
+    self.textFieldUsername.stringValue = userName;
+    self.textFieldPassword.stringValue = password;
+    self.textFieldDomain.stringValue = domain;
+    [AppDelegate sharedInstance].account = [NSString stringWithFormat:@"%@_%@", userName, domain];
     if ([[LinphoneManager instance] coreIsRunning]) {
         [[LinphoneManager instance] destroyLinphoneCore];
         [LinphoneManager instanceRelease];
@@ -178,10 +196,10 @@
         [[LinphoneManager instance]	startLinphoneCore];
         [[LinphoneManager instance] lpConfigSetBool:FALSE forKey:@"enable_first_login_view_preference"];
     } else {
-        NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:self.textFieldDomain.stringValue];
+        NSString *dnsSRVName = [@"_rueconfig._tls." stringByAppendingString:domain];
         [[DefaultSettingsManager sharedInstance] parseDefaultConfigSettings:dnsSRVName
-                                                               withUsername:self.textFieldUsername.stringValue
-                                                                andPassword:self.textFieldPassword.stringValue];
+                                                               withUsername:userName
+                                                                andPassword:password];
         [DefaultSettingsManager sharedInstance].delegate = self;
     }
     
@@ -552,7 +570,21 @@
                 [alert addButtonWithTitle:@"OK"];
                 if ([message isEqualToString:@"Forbidden"] || [message isEqualToString:@"Unauthorized"])
                 {
-                    [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                    NSString* userName = self.textFieldUsername.stringValue;
+                    NSString* password = self.textFieldPassword.stringValue;
+                    if ((userName == nil) || (userName.length == 0))
+                    {
+                        [alert setMessageText:@"Please enter a valid user name."];
+                    }
+                    else if ((password == nil) || (password.length == 0))
+                    {
+                        [alert setMessageText:@"Please enter a valid password."];
+                    }
+                    else
+                    {
+                        [alert setMessageText:@"The user name and password that you entered do not match."];
+                    }
+//                    [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
                 }
                 else
                 {

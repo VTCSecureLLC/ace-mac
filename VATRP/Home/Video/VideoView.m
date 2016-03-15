@@ -379,21 +379,25 @@
     } else {
         lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
     }
-    switch (linphone_call_get_reason(call_)) {
-        case LinphoneReasonNotFound:
-            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
-            break;
-        case LinphoneReasonBusy:
-            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
-            break;
-        case LinphoneReasonDeclined:
-            lMessage = NSLocalizedString(@"The user is not available", nil);
-            break;
-        default:
-            if (message != nil) {
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, self.callStatusMessage];
-            }
-            break;
+    if (call_ != nil) {
+        switch (linphone_call_get_reason(call_)) {
+            case LinphoneReasonNotFound:
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
+                break;
+            case LinphoneReasonBusy:
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
+                break;
+            case LinphoneReasonDeclined:
+                lMessage = NSLocalizedString(@"The user is not available", nil);
+                break;
+            default:
+                if (message != nil) {
+                    lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, self.callStatusMessage];
+                }
+                break;
+        }
+    } else {
+        lMessage = [NSString stringWithFormat:NSLocalizedString(@"Call information unavailable.", nil)];
     }
     
     lTitle = NSLocalizedString(@"Call failed", nil);

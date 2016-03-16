@@ -21,7 +21,8 @@ const NSInteger NO_TEXT=-1;
 const NSInteger RTT=0;
 const NSInteger SIP_SIMPLE=1;
 
-@interface RTTView () {
+@interface RTTView () <NSTextFieldDelegate>
+{
     MSList *contacts;
     
     LinphoneCall *currentCall;
@@ -83,6 +84,7 @@ const NSInteger SIP_SIMPLE=1;
     self.textFieldMessage.focusRingType = NSFocusRingTypeNone;
     
     [self.tableViewContent setBackgroundColor:[NSColor clearColor]];
+    [self.textFieldMessage setDelegate:self];
     
     // Do view setup here.
     if (!observersAdded)
@@ -100,15 +102,16 @@ const NSInteger SIP_SIMPLE=1;
                                                  selector:@selector(textReceivedEvent:)
                                                      name:kLinphoneTextReceived
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textDidChange:)
-                                                     name:NSControlTextDidChangeNotification
-                                                   object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textDidBeginEditing:)
-                                                     name:NSTextDidBeginEditingNotification
-                                                   object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(textDidChange:)
+//                                                     name:NSControlTextDidChangeNotification
+//                                                   object:nil];
+        
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(textDidBeginEditing:)
+//                                                     name:NSTextDidBeginEditingNotification
+//                                                   object:nil];
     }
 
 }
@@ -170,6 +173,9 @@ const NSInteger SIP_SIMPLE=1;
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
+}
+
+- (IBAction)rttTextDidChange:(NSTextField *)sender {
 }
 
 - (void)updateContentData {
@@ -453,12 +459,21 @@ long msgSize; //message length buffer
                         }
             }
     }
-- (void)textDidBeginEditing:(NSNotification *)notification{ //Get length of message string
-        msgSize = self.textFieldMessage.stringValue.length-1;
-        if(msgSize < 0) msgSize = 0;
+    
+    
+    
+- (void)textDidBeginEditing:(NSNotification *)notification
+{
+    //Get length of message string
+    msgSize = self.textFieldMessage.stringValue.length-1;
+    if(msgSize < 0)
+    {
+        msgSize = 0;
     }
+}
 
-- (void)textDidChange:(NSNotification *)aNotification {
+- (void)textDidChange:(NSNotification *)aNotification
+{
     NSUInteger lastSymbolIndex = self.textFieldMessage.stringValue.length - 1;
     NSString *lastSymbol = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
     

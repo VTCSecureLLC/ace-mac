@@ -14,7 +14,6 @@
 #import "ContactsView.h"
 #import "NumpadView.h"
 #import "SettingsView.h"
-#import "ProviderTableCellView.h"
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
 #import "AppDelegate.h"
@@ -24,7 +23,6 @@
 @interface HomeViewController ()
 {
     BackgroundedViewController *viewCurrent;
-    NSArray *providersArray;
     NSColor *windowDefaultColor;
     bool uiInitialized;
 }
@@ -38,9 +36,6 @@
 @property (strong)  ContactsView *contactsView;
 @property (strong)  SettingsView *settingsView;
 @property (strong)  DHResourcesView *dhResourcesView;
-
-@property (weak) IBOutlet NSTableView *providerTableView;
-@property (weak) IBOutlet NSView *providersView;
 
 @property bool hasProviderAlertBeenShown;
 @end
@@ -116,9 +111,6 @@ bool dialPadIsShown;
     [ViewManager sharedInstance].callView = self.callView;
     
     viewCurrent = (BackgroundedViewController*)self.recentsView;
-    [self initProvidersArray];
-    [self setProviderInitialLogo];
-    [self.providerTableView reloadData];
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
@@ -225,7 +217,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewRecents
 {
-    self.providersView.hidden = YES;
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     self.recentsView.callsSegmentControll.hidden = NO;
@@ -247,7 +239,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewContacts
 {
-    self.providersView.hidden = YES;
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     
@@ -314,7 +306,7 @@ bool dialPadIsShown;
     
 //    ResourcesViewController *resourceViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"DHResources"];
 //
-    self.providersView.hidden = YES;
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     //viewCurrent = (BackgroundedViewController*)resourceViewController.view;
@@ -335,7 +327,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewSettings
 {
-    self.providersView.hidden = YES;
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     
@@ -370,58 +362,6 @@ bool dialPadIsShown;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)initProvidersArray {
-    providersArray = [[Utils cdnResources] mutableCopy];
-    self.providerTableView.delegate = self;
-    self.providerTableView.dataSource = self;
-}
-
-- (void)setProviderInitialLogo {
-    NSDictionary *dict = [providersArray objectAtIndex:0];
-    NSString *imageName = [dict objectForKey:@"providerLogo"];
-    NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
-    [self.dialPadView setProvButtonImage:providerLogo];
-}
-
-#pragma mark - TableView delegate methods
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return providersArray.count;
-}
-
-#if defined __MAC_10_9 || defined __MAC_10_8
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-#else
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
-#endif
-    ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
-    NSDictionary *dict = [providersArray objectAtIndex:row];
-    NSString *imageName = [dict objectForKey:@"providerLogo"];
-    [cellView.providerImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
-    
-    return cellView;
-}
-
-- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
-    return 53;
-}
-
-- (IBAction)didSelectedTableRow:(id)sender {
-    NSInteger selectedRow = [self.providerTableView selectedRow];
-    if (selectedRow >= 0 && selectedRow < providersArray.count) {
-        NSDictionary *dict = [providersArray objectAtIndex:selectedRow];
-        NSString *imageName = [dict objectForKey:@"providerLogo"];
-        NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
-      
-        [self.dialPadView setProvButtonImage:providerLogo];
-        NSString *currentText = [self.dialPadView getDialerText];
-        currentText = [currentText stringByReplacingOccurrencesOfString:@"sip:" withString:@""];
-        currentText = [currentText componentsSeparatedByString:@"@"][0];
-        [self.dialPadView setDialerText:[NSString stringWithFormat:@"sip:%@@%@", currentText, [dict objectForKey:@"domain"]]];
-
-        self.providersView.hidden = YES;
-    }
-}
 
 - (IBAction)onVideoMailClicked:(id)sender {
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_videomail_uri"]){
@@ -430,13 +370,6 @@ bool dialPadIsShown;
     }
 }
 
-- (IBAction)onButtonProv:(id)sender {
-    self.providersView.hidden = !self.providersView.hidden;
-    
-//    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-////    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
-//    [window toggleFullScreen:self];
-}
 
 - (IBAction)onButtonProfileImage:(id)sender {
 }

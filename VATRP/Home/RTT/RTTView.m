@@ -84,43 +84,6 @@ const NSInteger SIP_SIMPLE=1;
     
     [self.tableViewContent setBackgroundColor:[NSColor clearColor]];
     
-    contacts = nil;
-    selectedChatRoom = nil;
-    incomingChatMessage = nil;
-    outgoingChatMessage = nil;
-    incomingCellView = nil;
-    incomingTextLinesCount = 1;
-    stateNewMessage = NO;
-    
-}
-
--(void) setHidden:(bool)hidden
-{
-    [self.view setHidden:hidden];
-    if (hidden)
-    {
-        [self removeObservers];
-    }
-    else
-    {
-        [self initializeData];
-    }
-}
-
--(void) initializeData
-{
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Message" attributes:attributes];
-#if defined __MAC_10_8 || defined __MAC10_8
-    [self.textFieldMessage setPlaceholderString:@"Message"];
-#else
-    [self.textFieldMessage setPlaceholderAttributedString:attributedString];
-#endif
-    [self updateContentData];
-    [self.tableViewContent reloadData];
-    int count = ms_list_size(messageList);
-    [self.tableViewContent scrollRowToVisible:count-1];
-    
     // Do view setup here.
     if (!observersAdded)
     {
@@ -147,6 +110,43 @@ const NSInteger SIP_SIMPLE=1;
                                                      name:NSTextDidBeginEditingNotification
                                                    object:nil];
     }
+
+}
+
+-(void) setHidden:(bool)hidden
+{
+    [self.view setHidden:hidden];
+    if (hidden)
+    {
+//        [self removeObservers];
+    }
+    else
+    {
+        [self initializeData];
+    }
+}
+
+-(void) initializeData
+{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Message" attributes:attributes];
+#if defined __MAC_10_8 || defined __MAC10_8
+    [self.textFieldMessage setPlaceholderString:@"Message"];
+#else
+    [self.textFieldMessage setPlaceholderAttributedString:attributedString];
+#endif
+    [self updateContentData];
+    [self.tableViewContent reloadData];
+    int count = ms_list_size(messageList);
+    [self.tableViewContent scrollRowToVisible:count-1];
+    
+    contacts = nil;
+    selectedChatRoom = nil;
+    incomingChatMessage = nil;
+    outgoingChatMessage = nil;
+    incomingCellView = nil;
+    incomingTextLinesCount = 1;
+    stateNewMessage = NO;
 
 }
 

@@ -28,6 +28,9 @@
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;
 @property (weak) IBOutlet NSMenuItem *menuItemSignOut;
 @property (weak) IBOutlet NSMenuItem *menuItemMessages;
+@property (weak) IBOutlet NSMenuItem *menuItemSelfPreview;
+@property (weak) IBOutlet NSMenuItem *menuItemGoToSupport;
+@property (weak) IBOutlet NSMenuItem *menuItemWelcomeTour;
 
 //@property (weak) IBOutlet NSMenuItem *menuItemFEDVRS;
 //@property (weak) IBOutlet NSMenuItem *menuItemZVRS;

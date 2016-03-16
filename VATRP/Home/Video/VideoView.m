@@ -214,6 +214,7 @@
             [self startCallFlashingAnimation];
             if ([self.secondIncomingCallContainer isHidden] == true)
             {
+                [self.callControllersView initializeButtonsFromSettings];
                 [self.callControllsConteinerView setHidden:NO];
             }
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];

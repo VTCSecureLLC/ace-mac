@@ -146,7 +146,7 @@
         retval = YES;
         // then finish editing and make the call
         [self.view.window makeFirstResponder:self.buttonCall];
-        [CallService callTo:self.textFieldNumber.stringValue];
+        [self CallTo];
     }
     return retval;
 }
@@ -188,11 +188,16 @@
 //    
 //    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
 //    [self performSelector:@selector(CallTo) withObject:nil afterDelay:0.1];
-    [CallService callTo:self.textFieldNumber.stringValue];
+    [self CallTo];
 }
 
 - (void) CallTo {
-    [CallService callTo:self.textFieldNumber.stringValue];
+    // rudimentary test to ensure that we are not trying to call and empty address
+    NSString* address = self.textFieldNumber.stringValue;
+    if ((address != nil) && (address.length > 0))
+    {
+        [CallService callTo:self.textFieldNumber.stringValue];
+    }
 }
 
 - (IBAction)onButtonDelete:(id)sender {

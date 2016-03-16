@@ -1397,10 +1397,14 @@ static BOOL libStarted = FALSE;
     configH264HardwareAcell(false, false);
 }
 
-- (void)destroyLinphoneCore {
-    [mIterateTimer invalidate];
+- (void)destroyLinphoneCore
+{
+    if ((mIterateTimer != nil) && [mIterateTimer isValid])
+    {
+        [mIterateTimer invalidate];
+    }
     //just in case
-    [self removeCTCallCenterCb];
+//    [self removeCTCallCenterCb]; // Liz E. - commented out because this method is currently commented out
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     

@@ -99,7 +99,8 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     LinphoneCore *lc = [LinphoneManager getLc];
-    if(linphone_core_get_current_call(lc)){
+    
+    if((lc != nil) && linphone_core_get_current_call(lc)){
         linphone_core_terminate_all_calls(lc);
     }
 
@@ -108,23 +109,29 @@
         shouldAutoLogin = NO;
     }
     
-    if (!shouldAutoLogin) {
+    if (!shouldAutoLogin)
+    {
         AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
         
-        if (accountModel) {
+        if (accountModel)
+        {
             [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
             [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
         }
         
     }
     // Get the default proxyCfg in Linphone
-    LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
-    
-    // To unregister from SIP
-    linphone_proxy_config_edit(proxyCfg);
-    linphone_proxy_config_enable_register(proxyCfg, false);
-    linphone_proxy_config_done(proxyCfg);
-    
+    if (lc != nil)
+    {
+        LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+        if (proxyCfg != nil)
+        {
+            // To unregister from SIP
+            linphone_proxy_config_edit(proxyCfg);
+            linphone_proxy_config_enable_register(proxyCfg, false);
+            linphone_proxy_config_done(proxyCfg);
+        }
+    }
     [[LinphoneManager instance] destroyLinphoneCore];
     [LinphoneManager instanceRelease];
 

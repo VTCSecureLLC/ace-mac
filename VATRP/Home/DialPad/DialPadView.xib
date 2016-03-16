@@ -20,6 +20,8 @@
                 <outlet property="buttonStar" destination="bDI-6r-AlO" id="cn9-ps-VIj"/>
                 <outlet property="buttonThree" destination="M70-6t-DZz" id="bzx-k6-iPe"/>
                 <outlet property="buttonTwo" destination="IOq-1a-J3U" id="6BJ-Ff-Zsf"/>
+                <outlet property="providerTableView" destination="hhW-jG-K0V" id="8iq-Sx-wqP"/>
+                <outlet property="providersView" destination="B1g-TU-txL" id="8fO-9Q-ZG0"/>
                 <outlet property="textFieldNumber" destination="t2Q-8n-CGI" id="Suu-Bu-i4W"/>
                 <outlet property="view" destination="c22-O7-iKe" id="B3a-SY-I9l"/>
                 <outlet property="viewZeroButton" destination="Urr-ab-7LG" id="Plf-9f-RR5"/>
@@ -330,6 +332,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="28"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onShowProviders:" target="-2" id="v9g-im-050"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zl1-l5-ytv">
                     <rect key="frame" x="103" y="0.0" width="207" height="44"/>

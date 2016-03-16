@@ -214,7 +214,6 @@
             [self startCallFlashingAnimation];
             if ([self.secondIncomingCallContainer isHidden] == true)
             {
-                [self.callControllersView initializeButtonsFromSettings];
                 [self.callControllsConteinerView setHidden:NO];
             }
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
@@ -292,6 +291,7 @@
             SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
             [self showSelfViewFromSettings:[settingsHandlerInstance isShowSelfViewEnabled]];
             [self.callerImageView setHidden:true];
+            [self.callControllersView initializeButtonsFromSettings];
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }

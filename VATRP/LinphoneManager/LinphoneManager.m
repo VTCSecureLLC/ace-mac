@@ -487,9 +487,9 @@ void configH264HardwareAcell(bool encode, bool decode){
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264encoder", encode);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264decoder", decode);
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", true);
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", true);
-    ms_factory_enable_filter_from_name(f, "MSX264Enc", false);
+    
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", !encode);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", !decode);
 }
 #pragma mark - Logs Functions handlers
 static void linphone_iphone_log_user_info(struct _LinphoneCore *lc, const char *message) {
@@ -1384,9 +1384,8 @@ static BOOL libStarted = FALSE;
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     //libmssilk_init(f);
     //libmsamr_init(f);
-//    libmsx264_init(f);
-    //libmsx264_init();
-//    libmsopenh264_init(f);
+    //libmsx264_init(f);
+    //libmsopenh264_init(f);
     //libmsbcg729_init(f);
     //libmswebrtc_init(f);
     

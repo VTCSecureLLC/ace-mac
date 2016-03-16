@@ -16,7 +16,8 @@
 #import "CallService.h"
 #import "ChatService.h"
 
-@interface ChatViewController () {
+@interface ChatViewController () <NSTextFieldDelegate>
+{
     ChatContactTableCellView *selectedContactCell;
     
     MSList *contacts;
@@ -80,10 +81,10 @@
                                                  selector:@selector(textReceivedEvent:)
                                                      name:kLinphoneTextReceived
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textDidChange:)
-                                                     name:NSControlTextDidChangeNotification
-                                                   object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(textDidChange:)
+//                                                     name:NSControlTextDidChangeNotification
+//                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMessage:)
                                                      name:kCHAT_RECEIVE_MESSAGE
@@ -97,7 +98,8 @@
     [self.viewChatContentBG setWantsLayer:YES];
     [self.viewChatContentBG.layer setBorderWidth:1.0];
     [self.viewChatContentBG.layer setBorderColor:[NSColor lightGrayColor].CGColor];
-    
+    [self.textFieldMessage setDelegate:self];
+
     BackgroundedView *backgroundedView = (BackgroundedView*)self.view;
     [backgroundedView setBackgroundColor:[NSColor colorWithRed:221.0/255.0 green:221.0/255.0 blue:221.0/255.0 alpha:1.0]];
     contacts = nil;

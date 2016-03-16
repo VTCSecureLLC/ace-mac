@@ -102,16 +102,6 @@ const NSInteger SIP_SIMPLE=1;
                                                  selector:@selector(textReceivedEvent:)
                                                      name:kLinphoneTextReceived
                                                    object:nil];
-        
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(textDidChange:)
-//                                                     name:NSControlTextDidChangeNotification
-//                                                   object:nil];
-        
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(textDidBeginEditing:)
-//                                                     name:NSTextDidBeginEditingNotification
-//                                                   object:nil];
     }
 
 }

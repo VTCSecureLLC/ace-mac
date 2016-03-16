@@ -144,17 +144,8 @@
 
 - (IBAction)onButtonDone:(id)sender
 {
-    // validate that the fields are not null
-    NSString* newName = [self.nameTextField stringValue];
-    NSString* newPhone  = [self.nameTextField stringValue];
-    if ((newName != nil) && (newName.length > 0) && (newPhone != nil) && (newPhone.length > 0))
-    {
-        // show message to the user that they need to provide a name and phone
-        
-    }
-    // see if the contact exists prior to adding.
-    bool contactExists = [self doesContactExist];
-    if (!contactExists)
+    bool canAddContact = [self validateCanAddContact];
+    if (canAddContact)
     {
         [[ContactPictureManager sharedInstance] saveImage:selectedImage withName:[self.nameTextField stringValue]
                                                 andSipURI:[self createFullSipUriFromString:[self.phoneTextField stringValue]]];
@@ -179,12 +170,51 @@
                                                                          @"isFavorite": [NSNumber numberWithBool:isFavorite]}
                                                               userInfo:nil];
         }
-        [self dismissController:nil];
+        // need to close properly
+        [[self.view window] close];
     }
-    else
+}
+
+-(bool) validateCanAddContact
+{
+    NSString* warningMessage;
+    
+    // validate that the fields are not null
+    NSString* newName = [self.nameTextField stringValue];
+    NSString* newPhone  = [self.nameTextField stringValue];
+    if ((newName == nil) || (newName.length == 0))
     {
-        // show a message to the user that the contact already exists.
+        // show message to the user that they need to provide a name
+        warningMessage = @"Please provide a name for the new contact.";
     }
+    else if ((newPhone == nil) || (newPhone.length == 0))
+    {
+        // show message to the user that they need to provide a phone
+        warningMessage = @"Please provide an address for the new contact.";
+    }
+    else if (!self.isEditing && [self doesContactExist]) // see if the contact exists prior to adding.
+    {
+        warningMessage = @"Contact already exists.";
+    }
+    if ((warningMessage != nil) && (warningMessage.length > 0))
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        if (self.isEditing)
+        {
+            [alert setMessageText:@"Unable to Edit Contact"];
+        }
+        else
+        {
+            [alert setMessageText:@"Unable to Add Contact"];
+        }
+        [alert setInformativeText:warningMessage];
+        [alert setAlertStyle:NSInformationalAlertStyle];
+    
+        [alert runModal];
+        return false;
+    }
+    return true;
 }
 
 -(bool) doesContactExist
@@ -284,6 +314,10 @@
     else{
         // The user canceled, so there is nothing to do.
     }
+}
+- (IBAction)onCancel:(NSButton *)sender
+{
+    [[self.view window] close];
 }
 
 @end

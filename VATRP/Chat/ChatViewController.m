@@ -81,10 +81,6 @@
                                                  selector:@selector(textReceivedEvent:)
                                                      name:kLinphoneTextReceived
                                                    object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(textDidChange:)
-//                                                     name:NSControlTextDidChangeNotification
-//                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMessage:)
                                                      name:kCHAT_RECEIVE_MESSAGE

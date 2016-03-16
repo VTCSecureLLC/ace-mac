@@ -128,7 +128,7 @@
                     </connections>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ewG-BK-aQx">
-                    <rect key="frame" x="198" y="29" width="178" height="32"/>
+                    <rect key="frame" x="353" y="29" width="100" height="32"/>
                     <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ef6-ZX-mbD">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -226,6 +226,19 @@
                     </buttonCell>
                     <connections>
                         <action selector="onButtonChangePicture:" target="-2" id="rCR-0G-HVF"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LkH-73-lVb">
+                    <rect key="frame" x="149" y="29" width="100" height="32"/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6if-AE-SVy">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCancel:" target="-2" id="WV5-oH-8tC"/>
                     </connections>
                 </button>
             </subviews>

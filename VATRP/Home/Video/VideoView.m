@@ -309,7 +309,7 @@
         }
         case LinphoneCallEnd:
         {
-            if (linphone_call_get_dir(call) == LinphoneCallOutgoing) {
+            if ((call != nil) && linphone_call_get_dir(call) == LinphoneCallOutgoing) {
                 [self displayCallError:call message:@"Call Error"];
             }
             
@@ -381,7 +381,12 @@
         lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
     }
     if (call_ != nil) {
+        
         switch (linphone_call_get_reason(call_)) {
+            case LinphoneReasonNone:
+                // then there was no error - we are getting this on call ending - do not show an error
+                return;
+                break;
             case LinphoneReasonNotFound:
                 lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
                 break;
@@ -390,6 +395,57 @@
                 break;
             case LinphoneReasonDeclined:
                 lMessage = NSLocalizedString(@"The user is not available", nil);
+                break;
+            case LinphoneReasonNoResponse: /**<No response received from remote*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"No response from client.", nil), lUserName];
+                break;
+            case LinphoneReasonForbidden: /**<Authentication failed due to bad credentials or resource forbidden*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Authentication failed.", nil), lUserName];
+                break;
+            case LinphoneReasonNotAnswered: /**<The call was not answered in time (request timeout)*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ timed out.", nil), lUserName];
+                break;
+            case LinphoneReasonUnsupportedContent: /**<Unsupported content */
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ call content is unsupported.", nil), lUserName];
+                break;
+            case LinphoneReasonIOError: /**<Transport error: connection failures, disconnections etc...*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"There was a transport error during call setup or connection.", nil), lUserName];
+                break;
+            case LinphoneReasonDoNotDisturb: /**<Do not disturb reason*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ asked not to be disturbed.", nil), lUserName];
+                break;
+            case LinphoneReasonUnauthorized: /**<Operation is unauthorized because missing credential*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Credntials were not provided.", nil), lUserName];
+                break;
+            case LinphoneReasonNotAcceptable: /**<Operation like call update rejected by peer*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Operation was rejected by peer.", nil), lUserName];
+                break;
+            case LinphoneReasonNoMatch: /**<Operation could not be executed by server or remote client because it didn't have any context for it*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"No match for operation.", nil), lUserName];
+                break;
+            case LinphoneReasonMovedPermanently: /**<Resource moved permanently*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ has moved permanently.", nil), lUserName];
+                break;
+            case LinphoneReasonGone: /**<Resource no longer exists*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ no longer exists.", nil), lUserName];
+                break;
+            case LinphoneReasonTemporarilyUnavailable: /**<Temporarily unavailable*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is temporarily unavailable.", nil), lUserName];
+                break;
+            case LinphoneReasonAddressIncomplete: /**<Address incomplete*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Call address is incomplete.", nil), lUserName];
+                break;
+            case LinphoneReasonNotImplemented: /**<Not implemented*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Request is not implemented.", nil), lUserName];
+                break;
+            case LinphoneReasonBadGateway: /**<Bad gateway*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad gateway.", nil), lUserName];
+                break;
+            case LinphoneReasonServerTimeout: /**<Server timeout*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Server timeout.", nil), lUserName];
+                break;
+            case LinphoneReasonUnknown: /**Unknown reason*/
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Reason unknown.", nil), lUserName];
                 break;
             default:
                 if (message != nil) {

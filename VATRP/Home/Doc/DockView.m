@@ -68,7 +68,6 @@
     [labelMessedCalls setBackgroundColor:[NSColor redColor]];
     [labelMessedCalls setTextColor:[NSColor whiteColor]];
     [labelMessedCalls setFont:[NSFont systemFontOfSize:14]];
-//    [labelMessedCalls.cell setAlignment:<#(NSTextAlignment)#>]
 #if defined __MAC_10_9 || __MAC_10_8
     [labelMessedCalls.cell setAlignment:kCTTextAlignmentCenter];
 #else
@@ -273,7 +272,10 @@
                 }
                 
                 labelMessedCalls.intValue = missedCount;
-                [labelMessedCalls setHidden:NO];
+                if (missedCount > 0)
+                {
+                    [labelMessedCalls setHidden:NO];
+                }
             } else {
                 linphone_core_reset_missed_calls_count([LinphoneManager getLc]);
             }

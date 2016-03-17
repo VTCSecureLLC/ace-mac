@@ -205,7 +205,9 @@
     
     LinphoneCore *lc = [LinphoneManager getLc];
     
+
     switch (astate) {
+            //    LinphoneCallIncomingReceived, /**<This is a new incoming call */
         case LinphoneCallIncomingReceived: {
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Incoming Call 00:00";
@@ -218,10 +220,12 @@
             }
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
         }
+            //    LinphoneCallIncomingEarlyMedia, /**<We are proposing early media to an incoming call */
         case LinphoneCallIncomingEarlyMedia:
         {
             break;
         }
+            //    LinphoneCallConnected, /**<Connected, the call is answered */
         case LinphoneCallConnected: {
             [self.callControllersView setCall:acall];
             
@@ -265,6 +269,7 @@
             [homeViewController.callQualityIndicator setNeedsDisplayInRect:self.view.frame];
         }
             break;
+            //    LinphoneCallOutgoingInit, /**<An outgoing call is started */
         case LinphoneCallOutgoingInit: {
             [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Calling 00:00";
@@ -272,6 +277,7 @@
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
         }
             break;
+            //    LinphoneCallOutgoingRinging, /**<An outgoing call is ringing at remote end */
         case LinphoneCallOutgoingRinging: {
             
             self.labelCallState.stringValue = @"Ringing 00:00";
@@ -280,12 +286,14 @@
             [self.labelRingCount setTextColor:[NSColor redColor]];
         }
             break;
+            //    LinphoneCallPaused, /**< The call is paused, remote end has accepted the pause */
         case LinphoneCallPaused: {
             int call_Duration = linphone_call_get_duration(acall);
             NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
             self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@",string_time];
         }
             break;
+            //    LinphoneCallStreamsRunning, /**<The media streams are established and running*/
         case LinphoneCallStreamsRunning:
         {
             SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
@@ -295,6 +303,7 @@
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }
+            //    LinphoneCallError, /**<The call encountered an error*/
         case LinphoneCallError:
         {
             [self stopRingCountTimer];
@@ -307,6 +316,7 @@
             
             break;
         }
+            //    LinphoneCallEnd, /**<The call ended normally*/
         case LinphoneCallEnd:
         {
             if ((call != nil) && linphone_call_get_dir(call) == LinphoneCallOutgoing) {
@@ -341,6 +351,42 @@
             [self.callControllersView set_bool_chat_window_open:NO];
             break;
         }
+            //    LinphoneCallIdle,					/**<Initial call state */
+//        case LinphoneCallIdle :
+//            break;
+            //    LinphoneCallOutgoingProgress, /**<An outgoing call is in progress */
+//        case LinphoneCallOutgoingProgress :
+//            break;
+            //    LinphoneCallOutgoingEarlyMedia, /**<An outgoing call is proposed early media */
+//        case LinphoneCallOutgoingEarlyMedia :
+//            break;
+            //    LinphoneCallPausing, /**<The call is pausing at the initiative of local end */
+//        case LinphoneCallPausing :
+//            break;
+            //    LinphoneCallResuming, /**<The call is being resumed by local end*/
+//        case LinphoneCallResuming :
+//            break;
+            //    LinphoneCallRefered, /**<The call is being transfered to another party, resulting in a new outgoing call to follow immediately*/
+//        case LinphoneCallRefered :
+//            break;
+            //    LinphoneCallPausedByRemote, /**<The call is paused by remote end*/
+//        case LinphoneCallPausedByRemote :
+//            break;
+            //    LinphoneCallUpdatedByRemote, /**<The call's parameters change is requested by remote end, used for example when video is added by remote */
+//        case LinphoneCallUpdatedByRemote :
+//            break;
+            //    LinphoneCallUpdating, /**<A call update has been initiated by us */
+//        case LinphoneCallUpdating :
+//            break;
+            //    LinphoneCallReleased, /**< The call object is no more retained by the core */
+//        case LinphoneCallReleased :
+//            break;
+            //    LinphoneCallEarlyUpdatedByRemote, /*<The call is updated by remote while not yet answered (early dialog SIP UPDATE received).*/
+//        case LinphoneCallEarlyUpdatedByRemote :
+//            break;
+            //    LinphoneCallEarlyUpdating /*<We are updating the call while not yet answered (early dialog SIP UPDATE sent)*/
+//        case LinphoneCallEarlyUpdating :
+//            break;
         default:
             break;
     }

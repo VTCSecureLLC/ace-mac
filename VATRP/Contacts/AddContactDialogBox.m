@@ -56,13 +56,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [self initCustomComboBox];
-    [self initializeData];
 }
 
 -(void)initializeData
 {
-    if (self.isEditing) {
+    if (self.isEditing)
+    {
         [self initContactPicture];
         [self setTitle:@"Edit contact"];
         [self.nameTextField setStringValue:self.oldName];
@@ -70,9 +69,12 @@
         name = [self.nameTextField stringValue];
         phone = [self.phoneTextField stringValue];
         [self setNumberTextField];
-    } else {
+    }
+    else
+    {
         [self setTitle:@"Add contact"];
     }
+    [self initCustomComboBox];
     [self fixInitialState];
     [self setFavoriteState];
 }

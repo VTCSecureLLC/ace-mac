@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
 make -j 8
-ninja -C WORK/cmake
+#ninja -C WORK/cmake
 wget http://ciscobinary.openh264.org/libopenh264-1.5.0-osx64.dylib.bz2 
 bzip2 -d libopenh264-1.5.0-osx64.dylib.bz2
 install_name_tool -id @rpath/libopenh264.1.dylib libopenh264-1.5.0-osx64.dylib 

@@ -16,6 +16,8 @@
 
 @property (nonatomic, assign) id<CallControllersViewDelegate> delegate;
 
+-(void)initializeButtonsFromSettings;
+
 - (void)setCall:(LinphoneCall*)acall;
 - (void)setIncomingCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;

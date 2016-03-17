@@ -37,6 +37,9 @@
 
 -(void) reloadRecents;
 
+#pragma mark - methods for dialpad
+- (void) showProviderList;
+
 #pragma mark - methods for dock view
 - (void)hideDockView:(bool)hide;
 - (void) didClickDockViewRecents;

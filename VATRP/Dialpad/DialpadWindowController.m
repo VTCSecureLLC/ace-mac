@@ -16,6 +16,18 @@
 
 @synthesize isShow;
 
+-(id) init
+{
+    self = [super initWithWindowNibName:@"DialpadWindow"];
+    if (self)
+    {
+        // init
+        //        self.contentViewController = navigationController;
+    }
+    return self;
+    
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -35,6 +47,11 @@
     pos.y = barOrigin.y - currentWindowSize.y - barWindowSize.y;
     [self.window setFrameOrigin : pos];
     
+    DialPadView* dialPadView = [[DialPadView alloc] init];
+    [self.window.contentView addSubview:[dialPadView view]];
+    
+    [self.window setTitle:@"DialpadWindowController"];
+
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

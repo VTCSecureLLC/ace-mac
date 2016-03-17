@@ -1,4 +1,4 @@
-//
+ //
 //  AddContactDialogBox.m
 //  ACE
 //
@@ -11,7 +11,10 @@
 #import "Utils.h"
 #import "CustomComboBox.h"
 #import "ContactPictureManager.h"
+#import "ContactFavoriteManager.h"
 #import <Quartz/Quartz.h>
+#import "LinphoneContactService.h"
+
 
 @interface AddContactDialogBox () <CustomComboBoxDelegate>
 {
@@ -32,16 +35,33 @@
 @property (strong, nonatomic) IBOutlet CustomComboBox *customComboBox;
 @property (weak) IBOutlet NSButton* favoritesCheckBox;
 
+
 @end
 
 @implementation AddContactDialogBox
 
 #pragma mark - Controller lifecycle
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(id) init
+{
+    self = [super initWithNibName:@"AddContactViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
     
     [self initCustomComboBox];
+    [self initializeData];
+}
+
+-(void)initializeData
+{
     if (self.isEditing) {
         [self initContactPicture];
         [self setTitle:@"Edit contact"];
@@ -54,6 +74,7 @@
         [self setTitle:@"Add contact"];
     }
     [self fixInitialState];
+    [self setFavoriteState];
 }
 
 - (void)initCustomComboBox {
@@ -88,6 +109,11 @@
     }
 }
 
+- (void)setFavoriteState {
+    int isFavorite = [[ContactFavoriteManager sharedInstance] isContactFavoriteWithName:self.oldName andAddress:self.oldPhone];
+    [self.favoritesCheckBox setState:isFavorite];
+}
+
 - (void)setNumberTextField {
      NSDictionary *dict = [_customComboBox.dataSource objectAtIndex:[_customComboBox indexOfSelectedItem]];
      if ([[dict objectForKey:@"domain"] isEqualToString:@"No Provider"]) {
@@ -102,17 +128,6 @@
     nameField = [self.nameTextField stringValue];
     numberField = [self.phoneTextField stringValue];
     customcomboboxField = providerAddress;
-    // VATRP-2376: we will need to specify if this is a favorite or not here
-    bool isFavorite = false;
-    if (isFavorite)
-    {
-        [_favoritesCheckBox setState:NSOnState];
-    }
-    else
-    {
-        [_favoritesCheckBox setState:NSOffState];
-    }
-        
 }
 
 - (BOOL)isChangedFields {
@@ -127,25 +142,95 @@
 
 #pragma mark - Buttons action functions
 
-- (IBAction)onButtonDone:(id)sender {
-    [[ContactPictureManager sharedInstance] saveImage:selectedImage withName:[self.nameTextField stringValue]
-                                            andSipURI:[self createFullSipUriFromString:[self.phoneTextField stringValue]]];
-    if (self.isEditing) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
-                                                            object:@{@"name" : [self.nameTextField stringValue],
-                                                                     @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
-                                                                     @"oldName": self.oldName,
-                                                                     @"oldPhone" : self.oldPhone,
-                                                                     @"provider" : providerAddress}
-                                                          userInfo:nil];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoFilled"
-                                                            object:@{@"name" : [self.nameTextField stringValue],
-                                                                     @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
-                                                                     @"provider" : providerAddress}
-                                                          userInfo:nil];
+- (IBAction)onButtonDone:(id)sender
+{
+    bool canAddContact = [self validateCanAddContact];
+    if (canAddContact)
+    {
+        [[ContactPictureManager sharedInstance] saveImage:selectedImage withName:[self.nameTextField stringValue]
+                                                andSipURI:[self createFullSipUriFromString:[self.phoneTextField stringValue]]];
+        BOOL isFavorite = ([self.favoritesCheckBox state] == NSOnState)?YES:NO;
+        if (self.isEditing)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoEditDone"
+                                                                object:@{@"name" : [self.nameTextField stringValue],
+                                                                         @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
+                                                                         @"oldName": self.oldName,
+                                                                         @"oldPhone" : self.oldPhone,
+                                                                         @"provider" : providerAddress,
+                                                                         @"isFavorite": [NSNumber numberWithBool:isFavorite]}
+                                                              userInfo:nil];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"contactInfoFilled"
+                                                                object:@{@"name" : [self.nameTextField stringValue],
+                                                                         @"phone": [self createFullSipUriFromString:[self.phoneTextField stringValue]],
+                                                                         @"provider" : providerAddress,
+                                                                         @"isFavorite": [NSNumber numberWithBool:isFavorite]}
+                                                              userInfo:nil];
+        }
+        // need to close properly
+        [[self.view window] close];
     }
-    [self dismissController:nil];
+}
+
+-(bool) validateCanAddContact
+{
+    NSString* warningMessage;
+    
+    // validate that the fields are not null
+    NSString* newName = [self.nameTextField stringValue];
+    NSString* newPhone  = [self.nameTextField stringValue];
+    if ((newName == nil) || (newName.length == 0))
+    {
+        // show message to the user that they need to provide a name
+        warningMessage = @"Please provide a name for the new contact.";
+    }
+    else if ((newPhone == nil) || (newPhone.length == 0))
+    {
+        // show message to the user that they need to provide a phone
+        warningMessage = @"Please provide an address for the new contact.";
+    }
+    else if (!self.isEditing && [self doesContactExist]) // see if the contact exists prior to adding.
+    {
+        warningMessage = @"Contact already exists.";
+    }
+    if ((warningMessage != nil) && (warningMessage.length > 0))
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        if (self.isEditing)
+        {
+            [alert setMessageText:@"Unable to Edit Contact"];
+        }
+        else
+        {
+            [alert setMessageText:@"Unable to Add Contact"];
+        }
+        [alert setInformativeText:warningMessage];
+        [alert setAlertStyle:NSInformationalAlertStyle];
+    
+        [alert runModal];
+        return false;
+    }
+    return true;
+}
+
+-(bool) doesContactExist
+{
+    NSMutableArray* contactInfoList = [[LinphoneContactService sharedInstance] contactList];
+    NSString* phone = [self createFullSipUriFromString:[self.phoneTextField stringValue]];
+    
+    for (NSDictionary* contactInfo in contactInfoList)
+    {
+        NSString* existingPhone = [contactInfo valueForKey:@"phone"];
+        if ((existingPhone != nil) && [existingPhone isEqualToString:phone])
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 #pragma mark - helper functions
@@ -229,6 +314,10 @@
     else{
         // The user canceled, so there is nothing to do.
     }
+}
+- (IBAction)onCancel:(NSButton *)sender
+{
+    [[self.view window] close];
 }
 
 @end

@@ -16,6 +16,17 @@
 
 @implementation SelfVideoViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"SelfVideoViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

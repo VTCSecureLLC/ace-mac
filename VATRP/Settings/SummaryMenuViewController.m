@@ -18,8 +18,18 @@
 
 @implementation SummaryMenuViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(id) init
+{
+    self = [super initWithNibName:@"SummaryViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+- (void)awakeFromNib {
+    [super awakeFromNib];
     // Do view setup here.
     isChanged = NO;
 }

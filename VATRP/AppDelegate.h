@@ -10,12 +10,13 @@
 #import "LoginWindowController.h"
 #import "LoginViewController.h"
 #import "HomeWindowController.h"
+
 #import "VideoCallWindowController.h"
 #import "ContactsWindowController.h"
 #import "RecentsWindowController.h"
 #import "ChatWindowController.h"
 #import "ViewController.h"
-
+#import "AddContactWindowController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
@@ -27,22 +28,25 @@
 @property (weak) IBOutlet NSMenuItem *menuItemPreferences;
 @property (weak) IBOutlet NSMenuItem *menuItemSignOut;
 @property (weak) IBOutlet NSMenuItem *menuItemMessages;
+@property (weak) IBOutlet NSMenuItem *menuItemSelfPreview;
+@property (weak) IBOutlet NSMenuItem *menuItemGoToSupport;
+@property (weak) IBOutlet NSMenuItem *menuItemWelcomeTour;
 
-@property (weak) IBOutlet NSMenuItem *menuItemFEDVRS;
-@property (weak) IBOutlet NSMenuItem *menuItemZVRS;
-@property (weak) IBOutlet NSMenuItem *menuItemPurple;
-@property (weak) IBOutlet NSMenuItem *menuItemSorenson;
-@property (weak) IBOutlet NSMenuItem *menuItemConvo;
-@property (weak) IBOutlet NSMenuItem *menuItemGlobalENus;
-@property (weak) IBOutlet NSMenuItem *menuItemGlobalENes;
-@property (weak) IBOutlet NSMenuItem *menuItemCAAG;
+//@property (weak) IBOutlet NSMenuItem *menuItemFEDVRS;
+//@property (weak) IBOutlet NSMenuItem *menuItemZVRS;
+//@property (weak) IBOutlet NSMenuItem *menuItemPurple;
+//@property (weak) IBOutlet NSMenuItem *menuItemSorenson;
+//@property (weak) IBOutlet NSMenuItem *menuItemConvo;
+//@property (weak) IBOutlet NSMenuItem *menuItemGlobalENus;
+//@property (weak) IBOutlet NSMenuItem *menuItemGlobalENes;
+//@property (weak) IBOutlet NSMenuItem *menuItemCAAG;
 
 @property (nonatomic, retain) ContactsWindowController *contactsWindowController;
 @property (nonatomic, retain) RecentsWindowController *recentsWindowController;
 @property (nonatomic, retain) SettingsWindowController *settingsWindowController;
 @property (nonatomic, retain) VideoMailWindowController *videoMailWindowController;
 @property (nonatomic, retain) ChatWindowController *chatWindowController;
-
+@property (nonatomic, retain) AddContactWindowController *addContactWindowController;
 
 + (AppDelegate*)sharedInstance;
 - (void) showTabWindow;

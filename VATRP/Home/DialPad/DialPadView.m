@@ -12,10 +12,12 @@
 #import "CallService.h"
 #import "ViewManager.h"
 #import "AppDelegate.h"
+#import "ProviderTableCellView.h"
 
 
 @interface DialPadView () {
     BOOL plusWorked;
+    NSArray *providersArray;
 }
 
 @property (weak) IBOutlet NSTextField *textFieldNumber;
@@ -35,11 +37,25 @@
 @property (weak) IBOutlet NSButton *buttonProvider;
 @property (weak) IBOutlet NSView *viewZeroButton;
 
+
+@property (weak) IBOutlet NSTableView *providerTableView;
+@property (weak) IBOutlet NSView *providersView;
+
 @end
 
 
 @implementation DialPadView
 
+-(id) init
+{
+    self = [super initWithNibName:@"DialPadView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 
 - (void) awakeFromNib {
     [super awakeFromNib];
@@ -87,9 +103,21 @@
     [self addTrackingArea:trackingArea];
     self.textFieldNumber.delegate = self;
     plusWorked = NO;
+    [self initProvidersArray];
+    [self setProviderInitialLogo];
+    [self.providerTableView reloadData];
 }
 
-- (void)hideDialPad:(BOOL)hidden
+//-(void) initilializeData
+//{
+//}
+
+-(void)hideProvidersView:(bool)hide
+{
+    [self.providersView setHidden:hide];
+}
+
+- (void)hideDialPad:(bool)hidden
 {
     [self.buttonOne setHidden:hidden];
     [self.buttonTwo setHidden:hidden];
@@ -107,7 +135,12 @@
     [self.buttonCall setHidden:hidden];
     [self.buttonProvider setHidden:hidden];
     
-    self.hidden = hidden;
+    [self.view setHidden:hidden];
+}
+
+-(bool)isHidden
+{
+    return [self.view isHidden];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -119,7 +152,7 @@
 #pragma mark - NSTextView delegate methods
 
 - (void)controlTextDidChange:(NSNotification *)obj {
-        [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
+   [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.textFieldNumber.stringValue];
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
@@ -130,8 +163,8 @@
         
         retval = YES;
         // then finish editing and make the call
-        [self.window makeFirstResponder:self.buttonCall];
-        [CallService callTo:self.textFieldNumber.stringValue];
+        [self.view.window makeFirstResponder:self.buttonCall];
+        [self CallTo];
     }
     return retval;
 }
@@ -173,11 +206,16 @@
 //    
 //    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
 //    [self performSelector:@selector(CallTo) withObject:nil afterDelay:0.1];
-    [CallService callTo:self.textFieldNumber.stringValue];
+    [self CallTo];
 }
 
 - (void) CallTo {
-    [CallService callTo:self.textFieldNumber.stringValue];
+    // rudimentary test to ensure that we are not trying to call and empty address
+    NSString* address = self.textFieldNumber.stringValue;
+    if ((address != nil) && (address.length > 0))
+    {
+        [CallService callTo:self.textFieldNumber.stringValue];
+    }
 }
 
 - (IBAction)onButtonDelete:(id)sender {
@@ -190,7 +228,7 @@
 
 - (void) mouseDown:(NSEvent *)theEvent {
 
-    NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSPoint curPoint = [self.view convertPoint:[theEvent locationInWindow] fromView:nil];
 
     if (CGRectContainsPoint(self.buttonOne.frame, curPoint)) {
         [self onButtonNumber:self.buttonOne];
@@ -251,7 +289,7 @@
     NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSLog(@"DialPadView.viewDidMoveToSuperview: LinphoneVersion: %@", linphoneVersion);
     
-    [self addSubview:self.buttonOne];
+    [self.view addSubview:self.buttonOne];
     [self.buttonOne setFrame:NSMakeRect(0, 176, 103, 44)];
 }
 
@@ -260,6 +298,11 @@
 }
 -(NSString*) getDialerText{
     return self.textFieldNumber.stringValue;
+}
+- (IBAction)onShowProviders:(NSButton *)sender
+{
+    bool currentlyHidden = self.providersView.hidden;
+    [self.providersView setHidden:!currentlyHidden];
 }
 
 - (void)setProvButtonImage:(NSImage*)img {
@@ -275,5 +318,62 @@
 //    }
     [self.buttonProvider setImage:img];
 }
+
+- (void)initProvidersArray {
+    providersArray = [[Utils cdnResources] mutableCopy];
+    self.providerTableView.delegate = self;
+    self.providerTableView.dataSource = self;
+}
+
+- (void)setProviderInitialLogo {
+    NSDictionary *dict = [providersArray objectAtIndex:0];
+    NSString *imageName = [dict objectForKey:@"providerLogo"];
+    NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
+    [self setProvButtonImage:providerLogo];
+}
+
+#pragma mark - TableView delegate methods
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return providersArray.count;
+}
+
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
+    ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
+    NSDictionary *dict = [providersArray objectAtIndex:row];
+    NSString *imageName = [dict objectForKey:@"providerLogo"];
+    [cellView.providerImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
+    
+    return cellView;
+}
+    
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
+    return 53;
+}
+    
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row
+{
+    if (row >= 0 && row < providersArray.count)
+    {
+        NSDictionary *dict = [providersArray objectAtIndex:row];
+        NSString *imageName = [dict objectForKey:@"providerLogo"];
+        NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
+            
+        [self setProvButtonImage:providerLogo];
+        NSString *currentText = [self getDialerText];
+        currentText = [currentText stringByReplacingOccurrencesOfString:@"sip:" withString:@""];
+        currentText = [currentText componentsSeparatedByString:@"@"][0];
+        [self setDialerText:[NSString stringWithFormat:@"sip:%@@%@", currentText, [dict objectForKey:@"domain"]]];
+            
+        [self.providersView setHidden:true];
+        return true;
+    }
+    return false;
+}
+
 
 @end

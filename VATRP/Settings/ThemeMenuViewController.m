@@ -21,21 +21,31 @@
 
 @implementation ThemeMenuViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
+-(id) init
+{
+    self = [super initWithNibName:@"ThemeViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
     
-    isChanged = NO;
 }
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
-    
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Do view setup here.
+    [self initializeData];
+}
+
+- (void) initializeData
+{
     NSColor *color = [SettingsService getColorWithKey:@"APP_FOREGROUND_COLOR"];
     [self.colorWellForeground setColor:color ? color : [NSColor whiteColor]];
     color = [SettingsService getColorWithKey:@"APP_BACKGROUND_COLOR"];
     [self.colorWellBackground setColor:color ? color : [NSColor whiteColor]];
     self.buttonForce508.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"APP_FORCE_508"];
+    isChanged = NO;
 }
 
 - (IBAction)onColorForeground:(id)sender {

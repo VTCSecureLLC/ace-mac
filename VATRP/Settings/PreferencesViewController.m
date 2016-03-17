@@ -57,12 +57,22 @@
 @end
 
 @implementation PreferencesViewController
+-(id) init
+{
+    self = [super initWithNibName:@"PreferencesViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.inCallPreferencessHandlerDelegate = self;
-    [self initializeValues];
+    [self initializeData];
 }
 
 - (NSString*) textFieldValueWithUserDefaultsKey:(NSString*)key {
@@ -83,11 +93,7 @@
     return nil;
 }
 
--(void) viewDidAppear{
-    // Do view setup here.
-    [self initializeValues];
-}
--(void)initializeValues
+-(void)initializeData
 {
     supportedCodecsMap = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"g722_preference",
                           @"1", @"pcmu_preference",
@@ -101,7 +107,7 @@
     
     LinphoneCore *lc = [LinphoneManager getLc];
     
-    const char *preset = linphone_core_get_video_preset(lc);
+//    const char *preset = linphone_core_get_video_preset(lc);
     
     PayloadType *pt;
     const MSList *elem;

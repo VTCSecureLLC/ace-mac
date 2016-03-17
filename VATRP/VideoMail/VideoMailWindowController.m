@@ -12,7 +12,7 @@
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
 #import "CallService.h"
-
+#import "SelfVideoViewController.h"
 
 @interface VideoMailWindowController ()
 
@@ -21,6 +21,18 @@
 @implementation VideoMailWindowController
 
 @synthesize isShow;
+
+-(id) init
+{
+    self = [super initWithWindowNibName:@"VideoMailWindowController"];
+    if (self)
+    {
+        // init
+        //        self.contentViewController = navigationController;
+    }
+    return self;
+    
+}
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -33,13 +45,19 @@
     
     NSPoint barOrigin = [[AppDelegate sharedInstance] getTabWindowOrigin];
     
-    NSPoint currentWindowSize = {self.window.frame.size.width, self.window.frame.size.height};
+//    NSPoint currentWindowSize = {self.window.frame.size.width, self.window.frame.size.height};
     NSPoint barWindowSize = [[AppDelegate sharedInstance] getTabWindowSize];
     
     NSPoint pos;
     pos.x = barOrigin.x + barWindowSize.x;
     pos.y = barOrigin.y;
     [self.window setFrameOrigin : pos];
+    
+    SelfVideoViewController* selfVideoViewController = [[SelfVideoViewController alloc] init];
+    [self.window.contentView addSubview:[selfVideoViewController view]];
+    
+    [self.window setTitle:@"VideoMailWindowController"];
+
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification

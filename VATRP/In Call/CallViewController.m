@@ -37,6 +37,7 @@
 @property (weak) IBOutlet NSTextField *ringCountLabel;
 
 @property (weak) IBOutlet NSImageView *callAlertImageView;
+@property (strong, nonatomic) NSString *callStatusMessage;
 
 
 - (IBAction)onButtonAnswer:(id)sender;
@@ -53,10 +54,10 @@
 @synthesize call;
 
 dispatch_queue_t callAlertAnimationQueue;
-static const float callAlertStepInterval = 0.5;
+//static const float callAlertStepInterval = 0.5;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     // Do view setup here.
     
     windowTitle  = @"Call with %@ duration: %@";
@@ -108,12 +109,14 @@ static const float callAlertStepInterval = 0.5;
 }
 
 - (IBAction)onButtonCallInfo:(id)sender {
-    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+//    callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+    callInfoWindowController = [[CallInfoWindowController alloc] init];
     [callInfoWindowController showWindow:self];
 }
 
 - (IBAction)onButtonKeypad:(id)sender {
-    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+//    keypadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"KeypadWindowController"];
+    keypadWindowController = [[KeypadWindowController alloc] init];
     [keypadWindowController showWindow:self];
 }
 
@@ -122,6 +125,7 @@ static const float callAlertStepInterval = 0.5;
 - (void)callUpdateEvent:(NSNotification*)notif {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
+    self.callStatusMessage = [notif.userInfo objectForKey:@"message"];
     [self callUpdate:acall state:astate];
 }
 
@@ -224,10 +228,14 @@ static const float callAlertStepInterval = 0.5;
         {
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
-            [self displayCallError:call message:@"Call Error"];
+            // changing to the call pointer that is reporting the error
+            [self displayCallError:acall message:@"Call Error"];
         }
         case LinphoneCallEnd:
         {
+            if (linphone_call_get_dir(call) == LinphoneCallOutgoing) {
+                [self displayCallError:call message:@"Call Error"];
+            }
             self.labelCallState.stringValue = @"Call End";
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
@@ -253,16 +261,15 @@ static const float callAlertStepInterval = 0.5;
     }
 }
 
-- (void)displayCallError:(LinphoneCall *)call message:(NSString *)message {
-    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(call));
+- (void)displayCallError:(LinphoneCall *)acall message:(NSString *)message {
+    const char *lUserNameChars = linphone_address_get_username(linphone_call_get_remote_address(acall));
     NSString *lUserName =
     lUserNameChars ? [[NSString alloc] initWithUTF8String:lUserNameChars] : NSLocalizedString(@"Unknown", nil);
     NSString *lMessage;
     NSString *lTitle;
     
     // get default proxy
-    LinphoneProxyConfig *proxyCfg;
-    linphone_core_get_default_proxy([LinphoneManager getLc], &proxyCfg);
+    LinphoneProxyConfig *proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
     if (proxyCfg == nil) {
         lMessage = NSLocalizedString(@"Please make sure your device is connected to the internet and double check your "
                                      @"SIP account configuration in the settings.",
@@ -270,17 +277,20 @@ static const float callAlertStepInterval = 0.5;
     } else {
         lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
     }
-    
-    switch (linphone_call_get_reason(call)) {
+
+    switch (linphone_call_get_reason(acall)) {
         case LinphoneReasonNotFound:
             lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
             break;
         case LinphoneReasonBusy:
             lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
             break;
+        case LinphoneReasonDeclined:
+            lMessage = NSLocalizedString(@"The user is not available", nil);
+            break;
         default:
             if (message != nil) {
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, message];
+                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, self.callStatusMessage];
             }
             break;
     }
@@ -319,7 +329,7 @@ static const float callAlertStepInterval = 0.5;
         BOOL useLinphoneAddress = true;
         // contact name
         if(useLinphoneAddress) {
-            const char* lDisplayName = linphone_address_get_display_name(addr);
+//            const char* lDisplayName = linphone_address_get_display_name(addr);
             const char* lUserName = linphone_address_get_username(addr);
             if(lUserName)
                 address = [NSString stringWithUTF8String:lUserName];

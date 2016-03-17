@@ -54,6 +54,18 @@
 
 BOOL isRTTEnabled;
 BOOL isRTTLocallyEnabled;
+
+-(id) init
+{
+    self = [super initWithNibName:@"CallControllersView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
 
@@ -90,7 +102,7 @@ BOOL isRTTLocallyEnabled;
     [self.buttonDecline.layer setBackgroundColor:[NSColor redColor].CGColor];
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
     
-    self.wantsLayer = YES;
+    self.view.wantsLayer = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callUpdateEvent:)
@@ -152,13 +164,10 @@ BOOL isRTTLocallyEnabled;
     LinphoneCore *lc = [LinphoneManager getLc];
     bool currentlyMuted = !linphone_core_mic_enabled(lc);
     // being verbose for explicit readable logic
-    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
     if (currentlyMuted) {
         [self updateUIForMicrophoneMute:false];
-        [settingsHandler inCallMicrophoneWasMuted:false];
     } else {
         [self updateUIForMicrophoneMute:true];
-        [settingsHandler inCallMicrophoneWasMuted:true];
     }
 
 }
@@ -198,8 +207,6 @@ BOOL isRTTLocallyEnabled;
         muteSpeaker = true;
     }
     [self updateUIForSpeakerMute:muteSpeaker];
-    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
-    [settingsHandler inCallSpeakerWasMuted:muteSpeaker];
 }
 
 -(void)updateUIForSpeakerMute:(bool)mute
@@ -257,7 +264,7 @@ BOOL isRTTLocallyEnabled;
     HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
 
     if (homeViewController.isAppFullScreen) {
-        if (homeViewController.rttView.hidden) {
+        if (homeViewController.rttView.isHidden) {
 //            [[homeViewController.callView animator] setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height)];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CallViewFrameChange" object:NSStringFromRect(NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width - 298, [NSScreen mainScreen].frame.size.height))];
             [self set_bool_chat_window_open:YES];
@@ -267,18 +274,18 @@ BOOL isRTTLocallyEnabled;
             [self set_bool_chat_window_open:NO];
         }
     } else {
-        if (self.window.frame.size.width == 1328) {
-            [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1030, self.window.frame.size.height)
+        if (self.view.window.frame.size.width == 1328) {
+            [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1030, self.view.window.frame.size.height)
                           display:YES
                           animate:YES];
             [self set_bool_chat_window_open:NO];
         } else {
-            if (self.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
-                [self.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+            if (self.view.window.frame.origin.x + 1328 > [[NSScreen mainScreen] frame].size.width) {
+                [self.view.window setFrame:NSMakeRect([[NSScreen mainScreen] frame].size.width  - 1328 - 5, self.view.window.frame.origin.y, 1328, self.view.window.frame.size.height)
                               display:YES
                               animate:YES];
             } else {
-                [self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, 1328, self.window.frame.size.height)
+                [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1328, self.view.window.frame.size.height)
                               display:YES
                               animate:YES];
                 [self set_bool_chat_window_open:YES];
@@ -294,7 +301,7 @@ BOOL isRTTLocallyEnabled;
 - (void)set_bool_chat_window_open:(BOOL)open {
     chat_window_open = open;
     HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
-    homeViewController.rttView.hidden = !open;
+    [homeViewController.rttView setHidden:!open];
 }
 
 - (IBAction)onButtonChat:(id)sender {
@@ -317,16 +324,21 @@ BOOL isRTTLocallyEnabled;
             [callInfoViewController dismissController:self];
             callInfoViewController = nil;
         } else {
-            callInfoViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfoViewController"];
-            
+//            callInfoViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfoViewController"];
+            callInfoViewController = [[CallInfoViewController alloc] init];
             [[AppDelegate sharedInstance].homeWindowController.contentViewController presentViewController:callInfoViewController
                                                                                     asPopoverRelativeToRect:((NSButton*)sender).frame
-                                                                                                     ofView:self
-                                                                                              preferredEdge:NSRectEdgeMinX
-                                                                                                   behavior:NSPopoverBehaviorApplicationDefined];
+                                                                                                     ofView:self.view
+#if defined __MAC_10_9 || defined __MAC_10_8
+                                                                                             preferredEdge:self.view.frame.origin.x
+#else
+                                                                                             preferredEdge:NSRectEdgeMinX
+#endif
+                                                                                                  behavior:NSPopoverBehaviorApplicationDefined];
         }
     } else {
-        callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
+        callInfoWindowController = [[CallInfoWindowController alloc] init];
+//        callInfoWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CallInfo"];
         [callInfoWindowController showWindow:self];
     }
     
@@ -374,7 +386,7 @@ BOOL isRTTLocallyEnabled;
     [self callUpdate:call state:linphone_call_get_state(call)];
 
     self.buttonAnswer.hidden = NO;
-    self.buttonDecline.frame = CGRectMake(self.frame.size.width - self.buttonDecline.frame.size.width,
+    self.buttonDecline.frame = CGRectMake(self.view.frame.size.width - self.buttonDecline.frame.size.width,
                                           self.buttonDecline.frame.origin.y,
                                           self.buttonDecline.frame.size.width,
                                           self.buttonDecline.frame.size.height);
@@ -387,11 +399,12 @@ BOOL isRTTLocallyEnabled;
     call = acall;
     
     self.buttonAnswer.hidden = YES;
-    self.buttonDecline.frame = CGRectMake((self.frame.size.width - self.buttonDecline.frame.size.width)/2,
+    self.buttonDecline.frame = CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width)/2,
                                           self.buttonDecline.frame.origin.y,
                                           self.buttonDecline.frame.size.width,
                                           self.buttonDecline.frame.size.height);
     [self.buttonDecline setTitle:@"Cancel"];
+//    [self.buttonDecline setHidden:false];
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
     [self enableDisableButtons:NO];
 }
@@ -430,7 +443,7 @@ BOOL isRTTLocallyEnabled;
 
             [self.buttonDecline setTitle:@"End Call"];
             [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
-            self.buttonDecline.frame = CGRectMake((self.frame.size.width - self.buttonDecline.frame.size.width) / 2,
+            self.buttonDecline.frame = CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width) / 2,
                                                   self.buttonDecline.frame.origin.y,
                                                   self.buttonDecline.frame.size.width,
                                                   self.buttonDecline.frame.size.height);

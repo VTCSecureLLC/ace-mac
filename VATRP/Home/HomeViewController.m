@@ -14,28 +14,28 @@
 #import "ContactsView.h"
 #import "NumpadView.h"
 #import "SettingsView.h"
-#import "ProviderTableCellView.h"
 #import "DHResourcesView.h"
 #import "ResourcesViewController.h"
 #import "AppDelegate.h"
 #import "Utils.h"
+#import "DockView.h"
 
-@interface HomeViewController () <DockViewDelegate, NSTableViewDelegate, NSTableViewDataSource> {
-    BackgroundedView *viewCurrent;
-    NSArray *providersArray;
+@interface HomeViewController ()
+{
+    BackgroundedViewController *viewCurrent;
     NSColor *windowDefaultColor;
+    bool uiInitialized;
 }
 
 @property (weak) IBOutlet NSImageView *imageViewVoiceMail;
 @property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
 
-@property (weak) IBOutlet RecentsView *recentsView;
-@property (weak) IBOutlet ContactsView *contactsView;
-@property (weak) IBOutlet SettingsView *settingsView;
-@property (weak) IBOutlet DHResourcesView *dhResourcesView;
+@property (strong) DockView *dockView;
 
-@property (weak) IBOutlet NSTableView *providerTableView;
-@property (weak) IBOutlet NSView *providersView;
+@property (strong)  RecentsView *recentsView;
+@property (strong)  ContactsView *contactsView;
+@property (strong)  SettingsView *settingsView;
+@property (strong)  DHResourcesView *dhResourcesView;
 
 @property bool hasProviderAlertBeenShown;
 @end
@@ -44,18 +44,65 @@
 bool dialPadIsShown;
 @synthesize isAppFullScreen;
 
-- (void)viewDidLoad {
+-(id) init
+{
+    self = [super initWithNibName:@"HomeViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+-(void) awakeFromNib
+{
+    [super awakeFromNib];
+//    [self initializeData];
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+//    [self initializeData];
+}
+
+-(void) initializeData
+{
+    // 10.9 - awake from nib being called twice.
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
     dialPadIsShown = true;
     // Do view setup here.
-    [self activateMenuItems];
     
     windowDefaultColor = [NSColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0];
     BackgroundedView *v = (BackgroundedView*)self.view;
     [v setBackgroundColor:windowDefaultColor];
-    self.dockView.delegate = self;
+    
+    
+    self.dockView = [[DockView alloc] init:self];
+    [self.dockViewContainer addSubview:[self.dockView view]];
+
+    self.profileView = [[ProfileView alloc] init];
+    [self.profileViewContainer addSubview:[self.profileView view]];
+    self.dialPadView = [[DialPadView alloc] init];
+    [self.dialPadContainer addSubview:[self.dialPadView view]];
+
+    self.rttView = [[RTTView alloc] init];
+    [self.rttViewContainer addSubview:[self.rttView view]];
     
     [self.viewContainer setBackgroundColor:[NSColor whiteColor]];
+    
+    self.recentsView = [[RecentsView alloc] init];
+    [self.recentsView initializeData];
+    self.contactsView = [[ContactsView alloc] init];
+    self.dhResourcesView = [[DHResourcesView alloc] init];
+    [self.viewContainer addSubview:[self.recentsView view]];
+    [self.viewContainer addSubview:[self.contactsView view]];
+    [self.viewContainer addSubview:[self.dhResourcesView view]];
     
     [ViewManager sharedInstance].dockView = self.dockView;
     [ViewManager sharedInstance].dialPadView = self.dialPadView;
@@ -63,10 +110,7 @@ bool dialPadIsShown;
     [ViewManager sharedInstance].recentsView = self.recentsView;
     [ViewManager sharedInstance].callView = self.callView;
     
-    viewCurrent = (BackgroundedView*)self.recentsView;
-    [self initProvidersArray];
-    [self setProviderInitialLogo];
-    [self.providerTableView reloadData];
+    viewCurrent = (BackgroundedViewController*)self.recentsView;
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
@@ -93,11 +137,6 @@ bool dialPadIsShown;
     }
     self.isAppFullScreen = false;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
-
     // initially the dialpad is open
     [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];
     [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
@@ -106,19 +145,21 @@ bool dialPadIsShown;
     [self.dhResourcesView setHidden:true];
     [self.contactsView setHidden:true];
     [self.settingsView setHidden:true];
-
-    [self.videoView createNumpadView];
-}
-
-- (void) viewDidAppear {
-    [super viewDidAppear];
     
+    self.callQualityIndicator = [[CallQualityIndicator alloc] initWithFrame:self.videoView.view.frame];
+    [self.callView addSubview:self.callQualityIndicator];
+
+    self.videoView = [[VideoView alloc] init];
+    self.videoView.view.wantsLayer = true;
+    [self.callView addSubview:[self.videoView view]];
+    [self.videoView createNumpadView];
+ 
     [self.callQualityIndicator setWantsLayer:YES];
     [self.callQualityIndicator.layer setBackgroundColor:[NSColor clearColor].CGColor];
     [self.callQualityIndicator setBackgroundColor:[NSColor clearColor]];
-
-    [self.recentsView reloadCallLogs];
+    
 }
+
 
 #pragma mark - Observers and related functions
 
@@ -132,18 +173,11 @@ bool dialPadIsShown;
                                                  name:@"didClosedMessagesWindow"
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifyReceived:) name:kLinphoneNotifyReceived object:nil];
-}
 
-- (void)removeObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"didClosedSettingsWindow"
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"didClosedMessagesWindow"
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kLinphoneNotifyReceived
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
 }
 
 - (void)didClosedMessagesWindow:(NSNotification*)not {
@@ -181,18 +215,20 @@ bool dialPadIsShown;
 
 #pragma mark DocView Delegate
 
-- (void) didClickDockViewRecents:(DockView*)docView_ {
-    self.providersView.hidden = YES;
+- (void) didClickDockViewRecents
+{
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
     self.recentsView.callsSegmentControll.hidden = NO;
-    viewCurrent = (BackgroundedView*)self.recentsView;
-    viewCurrent.hidden = NO;
-    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
+    [self.recentsView setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
+    viewCurrent = (BackgroundedViewController*)self.recentsView;
+    [viewCurrent setHidden:false];
+//    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
 
-    [self.recentsView setHidden:false];
+//    [self.recentsView setHidden:false];
     [self.dhResourcesView setHidden:true];
     [self.contactsView setHidden:true];
     [self.settingsView setHidden:true];
@@ -201,52 +237,67 @@ bool dialPadIsShown;
 
 }
 
-- (void) didClickDockViewContacts:(DockView*)docView_ {
-    self.providersView.hidden = YES;
+- (void) didClickDockViewContacts
+{
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
-    viewCurrent = (BackgroundedView*)self.contactsView;
-    viewCurrent.hidden = NO;
-    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
+    
+    [self.contactsView setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
+    viewCurrent = (BackgroundedViewController*)self.contactsView;
+    [viewCurrent setHidden:false];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
 
     
     [self.recentsView setHidden:true];
     [self.dhResourcesView setHidden:true];
-    [self.contactsView setHidden:false];
+//    [self.contactsView setHidden:false];
     [self.settingsView setHidden:true];
     
     [self hideDialPad:true];
 }
 
-- (void) didClickDockViewDialpad:(DockView*)dockView_
+- (void) didClickDockViewDialpad
 {
-    NSRect rect = self.dialPadView.frame;
-    [self hideDialPad:![self.dialPadView isHidden]];
-    if (self.viewContainer.frame.origin.y == 81) {
+//    NSRect rect = [self.dialPadView getFrame];
+    bool dialPadIsHidden = [self.dialPadView isHidden];
+    if (dialPadIsHidden)
+    {
+        [self hideDialPad:false];
+        NSRect dialPadFrame = self.dialPadContainer.frame;
         [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];
         [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
         [self.dockView selectItemWithDocViewItem:DockViewItemDialpad];
-    } else {
+    }
+    else
+    {
+        [self hideDialPad:true];
         [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
         [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
         [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
         
-        if ([viewCurrent isKindOfClass:[RecentsView class]]) {
+        if ([viewCurrent isKindOfClass:[RecentsView class]])
+        {
             [self.dockView selectItemWithDocViewItem:DockViewItemRecents];
-        } else if ([viewCurrent isKindOfClass:[ContactsView class]]) {
+        }
+        else if ([viewCurrent isKindOfClass:[ContactsView class]])
+        {
             [self.dockView selectItemWithDocViewItem:DockViewItemContacts];
-        } else if ([viewCurrent isKindOfClass:[SettingsView class]]) {
+        }
+        else if ([viewCurrent isKindOfClass:[SettingsView class]])
+        {
             [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
-        } else if ([viewCurrent isKindOfClass:[DHResourcesView class]]) {
+        }
+        else if ([viewCurrent isKindOfClass:[DHResourcesView class]])
+        {
             [self.dockView selectItemWithDocViewItem:DockViewItemResources];
         }
     }
     
 }
 
-- (void) didClickDockViewResources:(DockView*)dockView_
+- (void) didClickDockViewResources
 {
     [self resourcesClicked];
 }
@@ -255,31 +306,33 @@ bool dialPadIsShown;
     
 //    ResourcesViewController *resourceViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"DHResources"];
 //
-    self.providersView.hidden = YES;
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
-    //viewCurrent = (BackgroundedView*)resourceViewController.view;
-    viewCurrent = (BackgroundedView*)self.dhResourcesView;
-    viewCurrent.hidden = NO;
+    //viewCurrent = (BackgroundedViewController*)resourceViewController.view;
+    viewCurrent = (BackgroundedViewController*)self.dhResourcesView;
+    [viewCurrent setHidden:false];
     [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
 
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemResources];
     
     [self.recentsView setHidden:true];
-    [self.dhResourcesView setHidden:false];
+//    [self.dhResourcesView setHidden:false];
     [self.contactsView setHidden:true];
     [self.settingsView setHidden:true];
     
     [self hideDialPad:true];
 }
 
-- (void) didClickDockViewSettings:(DockView*)dockView_ {
-    self.providersView.hidden = YES;
+- (void) didClickDockViewSettings
+{
+    [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
-    viewCurrent = (BackgroundedView*)self.settingsView;
-    viewCurrent.hidden = NO;
+    
+    viewCurrent = (BackgroundedViewController*)self.settingsView;
+    [viewCurrent setHidden:false];
     [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
     [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
     [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
@@ -287,13 +340,15 @@ bool dialPadIsShown;
     [self.recentsView setHidden:true];
     [self.dhResourcesView setHidden:true];
     [self.contactsView setHidden:true];
-    [self.settingsView setHidden:false];
+//    [self.settingsView setHidden:false];
     
     [self hideDialPad:true];
 }
 
 -(void)hideDialPad:(bool)hide
 {
+//    [self.dialPadContainer setHidden:true];
+//    [self.dialPadContainer drawRect:[self.dialPadContainer frame]];
     [self.dialPadView hideDialPad:hide];
 }
 
@@ -304,57 +359,9 @@ bool dialPadIsShown;
 }
 
 - (void)dealloc {
-    [self removeObservers];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)initProvidersArray {
-    providersArray = [[Utils cdnResources] mutableCopy];
-    self.providerTableView.delegate = self;
-    self.providerTableView.dataSource = self;
-}
-
-- (void)setProviderInitialLogo {
-    NSDictionary *dict = [providersArray objectAtIndex:0];
-    NSString *imageName = [dict objectForKey:@"providerLogo"];
-    NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
-    [self.dialPadView setProvButtonImage:providerLogo];
-}
-
-#pragma mark - TableView delegate methods
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return providersArray.count;
-}
-
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
-    ProviderTableCellView *cellView = [tableView makeViewWithIdentifier:@"providerCell" owner:self];
-    NSDictionary *dict = [providersArray objectAtIndex:row];
-    NSString *imageName = [dict objectForKey:@"providerLogo"];
-    [cellView.providerImageView setImage:[[NSImage alloc]initWithContentsOfFile:imageName]];
-    
-    return cellView;
-}
-
-- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
-    return 53;
-}
-
-- (IBAction)didSelectedTableRow:(id)sender {
-    NSInteger selectedRow = [self.providerTableView selectedRow];
-    if (selectedRow >= 0 && selectedRow < providersArray.count) {
-        NSDictionary *dict = [providersArray objectAtIndex:selectedRow];
-        NSString *imageName = [dict objectForKey:@"providerLogo"];
-        NSImage * providerLogo =  [[NSImage alloc] initWithContentsOfFile:imageName];
-      
-        [self.dialPadView setProvButtonImage:providerLogo];
-        NSString *currentText = [self.dialPadView getDialerText];
-        currentText = [currentText stringByReplacingOccurrencesOfString:@"sip:" withString:@""];
-        currentText = [currentText componentsSeparatedByString:@"@"][0];
-        [self.dialPadView setDialerText:[NSString stringWithFormat:@"sip:%@@%@", currentText, [dict objectForKey:@"domain"]]];
-
-        self.providersView.hidden = YES;
-    }
-}
 
 - (IBAction)onVideoMailClicked:(id)sender {
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_videomail_uri"]){
@@ -363,13 +370,6 @@ bool dialPadIsShown;
     }
 }
 
-- (IBAction)onButtonProv:(id)sender {
-    self.providersView.hidden = !self.providersView.hidden;
-    
-//    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-////    window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
-//    [window toggleFullScreen:self];
-}
 
 - (IBAction)onButtonProfileImage:(id)sender {
 }
@@ -427,6 +427,7 @@ bool dialPadIsShown;
     self.isAppFullScreen = NO;
 }
 
+    /*
 - (void)activateMenuItems {
     [[[[NSApplication sharedApplication] delegate] menuItemFEDVRS] setAction:@selector(callToProvider:)];
     [[[[NSApplication sharedApplication] delegate] menuItemZVRS] setAction:@selector(callToProvider:)];
@@ -443,6 +444,7 @@ bool dialPadIsShown;
     NSString *phoneNumber = [[sender title] stringByReplacingOccurrencesOfString:@" " withString:@""];
     [[LinphoneManager instance] call:phoneNumber displayName:[self providerNameByPhoneNumber:phoneNumber] transfer:NO];
 }
+     */
 
 - (NSString*)providerNameByPhoneNumber:(NSString*)phoneNumber {
     
@@ -472,6 +474,15 @@ bool dialPadIsShown;
     }
     
     return @"N/A";
+}
+-(void)hideDockView:(bool)hide
+{
+    [self.dockView setHidden:hide];
+}
+    
+-(void) reloadRecents
+{
+    [self.recentsView reloadCallLogs];
 }
 
 @end

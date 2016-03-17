@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
 
-@interface DialPadView : BackgroundedView <NSTextFieldDelegate>
+@interface DialPadView : BackgroundedViewController <NSTextFieldDelegate,NSTableViewDelegate, NSTableViewDataSource>
 
 -(void)setProvButtonImage:(NSImage*)img;
 
@@ -17,4 +17,7 @@
 -(NSString*)getDialerText;
 
 -(void)hideDialPad:(bool)hidden;
+-(bool)isHidden;
+
+-(void)hideProvidersView:(bool)hide;
 @end

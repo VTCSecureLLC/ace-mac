@@ -15,4 +15,5 @@
 
 - (void)registrationUpdate:(LinphoneRegistrationState)state message:(NSString*)message;
 
+-(void)handleAutoLogin:(AccountModel*)accountModel;
 @end

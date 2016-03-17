@@ -24,13 +24,28 @@
 @property (weak) IBOutlet NSTextField *textFieldMaxUpload;
 @property (weak) IBOutlet NSTextField *textFieldMaxDownload;
 @property (weak) IBOutlet NSButton *buttonQoS;
+@property (weak) IBOutlet NSTextField *textFieldSignaling;
+@property (weak) IBOutlet NSTextField *textFieldAudio;
+@property (weak) IBOutlet NSTextField *textFieldVideo;
 
 @end
 
 @implementation TestingViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(id) init
+{
+    self = [super initWithNibName:@"TestingViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self initializeData];
     // Do view setup here.
     // note: when we open the dialog for teh second time, this method will nto be called, so items will not be refreshed.
     // moving initialization into a separate emthod that will e call from this as well as the viewWillAppear method.
@@ -51,15 +66,10 @@
     
     [self.comboBoxRTCPFeedBack setEditable:NO];
     
-    [self initializeValues];
+    [self initializeData];
 }
 
--(void)viewWillAppear {
-    [super viewWillAppear];
-    [self initializeValues];
-}
-
--(void)initializeValues{
+-(void)initializeData{
     LinphoneProxyConfig* proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
 
     if (proxyCfg) {
@@ -68,8 +78,8 @@
     
     self.buttonEnableAdaptiveRateControl.state = linphone_core_adaptive_rate_control_enabled([LinphoneManager getLc]);
     
-    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
-    int upBand = [settingsHandler getUploadBandwidth];
+//    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+//    int upBand = [settingsHandler getUploadBandwidth];
     self.textFieldMaxUpload.intValue = linphone_core_get_upload_bandwidth([LinphoneManager getLc]);
     self.textFieldMaxDownload.intValue = linphone_core_get_download_bandwidth([LinphoneManager getLc]);
     
@@ -81,11 +91,15 @@
         self.buttonQoS.state = YES;
     } else {
         self.buttonQoS.state = [[SettingsHandler settingsHandler] isQosEnabled];
+        self.textFieldSignaling.stringValue =  [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Signaling"];
+        self.textFieldAudio.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Audio"];
+        self.textFieldVideo.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Video"];
     }
 }
 
 
 - (void) save {
+    [self saveQosValues];
     if (!isChanged) {
         return;
     }
@@ -110,18 +124,22 @@
         // sets the value int he linphone core if the core exists.
         [settingsHandler setDownloadBandwidth:downloadBandwidth];
     }
-    [self saveQosValues];
 }
 
 - (void)saveQosValues {
     bool stateQoS = [self.buttonQoS state];
     [[SettingsHandler settingsHandler] setQoSEnable:stateQoS];
+    int signalValue = self.textFieldSignaling.intValue;
+    int audioValue = self.textFieldAudio.intValue;
+    int videoValue = self.textFieldVideo.intValue;
+    [[SettingsHandler settingsHandler] setQoSSignalingValue:signalValue];
+    [[SettingsHandler settingsHandler] setQoSAudioValue:audioValue];
+    [[SettingsHandler settingsHandler] setQoSVideoValue:videoValue];
     if (stateQoS) {
-        linphone_core_set_sip_dscp([LinphoneManager getLc], 28);
-        linphone_core_set_audio_dscp([LinphoneManager getLc], 38);
-        linphone_core_set_video_dscp([LinphoneManager getLc], 38);
+        linphone_core_set_sip_dscp([LinphoneManager getLc], signalValue);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], audioValue);
+        linphone_core_set_video_dscp([LinphoneManager getLc], videoValue);
     } else {
-        // Default values
         linphone_core_set_sip_dscp([LinphoneManager getLc], 0);
         linphone_core_set_audio_dscp([LinphoneManager getLc], 0);
         linphone_core_set_video_dscp([LinphoneManager getLc], 0);
@@ -133,6 +151,19 @@
 }
 
 - (IBAction)onQoSCheckBox:(id)sender {
+    [self.textFieldSignaling setEditable:self.buttonQoS.state];
+    [self.textFieldAudio setEnabled:self.buttonQoS.state];
+    [self.textFieldVideo setEnabled:self.buttonQoS.state];
+    if (self.buttonQoS.state) {
+        self.textFieldSignaling.stringValue =  [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Signaling"];
+        self.textFieldAudio.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Audio"];
+        self.textFieldVideo.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Video"];
+    } else {
+        self.textFieldSignaling.stringValue = @"0";
+        self.textFieldAudio.stringValue = @"0";
+        self.textFieldVideo.stringValue = @"0";
+    }
+    
     isChanged = YES;
 }
 

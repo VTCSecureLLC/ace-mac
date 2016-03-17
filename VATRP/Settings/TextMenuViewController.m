@@ -21,10 +21,26 @@
 
 @implementation TextMenuViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(id) init
+{
+    self = [super initWithNibName:@"TextMenuViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
     
     // Do view setup here.
+    [self initializeData];
+}
+
+-(void)initializeData
+{
     self.enable_text.state = [SettingsService getRTTEnabled];
     if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"TEXT_SEND_MODE"]){
         [[NSUserDefaults standardUserDefaults] setObject:@"Real Time Text (RTT)" forKey:@"TEXT_SEND_MODE"];

@@ -31,35 +31,26 @@
 
 @implementation MediaViewController
 
+-(id) init
+{
+    self = [super initWithNibName:@"MediaViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
-    isChanged = NO;
+    [self initializeData];
 }
 
 char **camlist;
 char **soundlist;
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
-    [self initializeValues];
-}
 
--(void)viewWillAppear
-{
-    [super viewWillAppear];
-    // ensure that the view is refreshed on the second launch.
-    [self initializeValues];
-
-    
-}
--(void)viewWillDisappear
-{
-    linphone_core_enable_video_preview([LinphoneManager getLc], false);
-    linphone_core_enable_self_view([LinphoneManager getLc], false);
-
-}
-
--(void)initializeValues
+-(void)initializeData
 {
     NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:kPREFERED_VIDEO_RESOLUTION];
     
@@ -136,10 +127,9 @@ char **soundlist;
     {
         [self initializeRecorder];
         [self initializeLevelTimer];
-        // TODO ASAP: make sure that the camera is displayed properly in viewWillAppear and released in viewWillDisappear!!!
         [self displaySelectedVideoDevice];
     }
-
+    isChanged = NO;
 }
 
 - (NSString*)takeDevicePureName:(NSString*)fullDeviceString {
@@ -312,7 +302,7 @@ char **soundlist;
     {
         [self.timerRecordingLevelsUpdate invalidate];
         self.timerRecordingLevelsUpdate = nil;
-        self.recorder.stop;
+        [self.recorder stop];
         self.recorder = nil;
     }
 }

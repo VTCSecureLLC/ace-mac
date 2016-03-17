@@ -82,7 +82,8 @@
 
 - (IBAction)onButtonRecents:(id)sender {
     if (!self.recentsWindowController) {
-        self.recentsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Recents"];
+        self.recentsWindowController = [[RecentsWindowController alloc] init];
+//        self.recentsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Recents"];
         [self.recentsWindowController showWindow:self];
     } else {
         if (self.recentsWindowController.isShow) {
@@ -96,7 +97,8 @@
 
 - (IBAction)onButtonContacts:(id)sender {
     if (!self.contactsWindowController) {
-        self.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
+//        self.contactsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Contacts"];
+        self.contactsWindowController = [[ContactsWindowController alloc] init];
         [self.contactsWindowController showWindow:self];
     } else {
         if (self.contactsWindowController.isShow) {
@@ -110,7 +112,8 @@
 
 - (IBAction)onButtonDialpad:(id)sender {
     if (!self.dialpadWindowController) {
-        self.dialpadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Dialpad"];
+//        self.dialpadWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Dialpad"];
+        self.dialpadWindowController = [[DialpadWindowController alloc] init];
         [self.dialpadWindowController showWindow:self];
     } else {
         if (self.dialpadWindowController.isShow) {
@@ -128,7 +131,7 @@
 
 - (IBAction)onButtonSettings:(id)sender {
     if (!self.settingsWindowController) {
-        self.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+        self.settingsWindowController = [[SettingsWindowController alloc] init];
         [self.settingsWindowController showWindow:self];
     } else {
         if (self.settingsWindowController.isShow) {
@@ -147,7 +150,8 @@
 
 - (void) showVideoMailWindow {
     if (!self.videoMailWindowController) {
-        self.videoMailWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoMail"];
+//        self.videoMailWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoMail"];
+        self.videoMailWindowController = [[VideoMailWindowController alloc] init];
         [self.videoMailWindowController showWindow:self];
     }
 

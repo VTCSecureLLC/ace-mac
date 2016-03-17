@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MediaViewController">
+            <connections>
+                <outlet property="cameraPreview" destination="kP8-Q5-fLU" id="G5e-QG-Nlx"/>
+                <outlet property="comboBoxCaptureDevices" destination="LS6-fT-o2i" id="mku-yO-BND"/>
+                <outlet property="comboBoxMediaEncription" destination="W6h-2Z-avF" id="HNM-5l-jnt"/>
+                <outlet property="comboBoxMicrophone" destination="gHq-0z-tbA" id="a88-jT-O0h"/>
+                <outlet property="comboBoxSpeaker" destination="I5M-AS-qVH" id="ndU-xX-WYg"/>
+                <outlet property="comboBoxVideoSize" destination="u2h-tP-60Q" id="6lt-SN-lgN"/>
+                <outlet property="levelIndicatorMicrophone" destination="LbH-TL-B2s" id="3p0-y7-nIQ"/>
+                <outlet property="view" destination="c22-O7-iKe" id="YIb-Ge-tlb"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u2h-tP-60Q">
+                    <rect key="frame" x="240" y="273" width="208" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="uyE-La-ykm">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <objectValues>
+                            <string>1080p (1920x1080)</string>
+                            <string>720p (1280x720)</string>
+                            <string>svga (800x600)</string>
+                            <string>4cif (704x576)</string>
+                            <string>vga (640x480)</string>
+                            <string>cif (352x288)</string>
+                            <string>qcif (176x144)</string>
+                        </objectValues>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="onComboboxPreferedVideoResolution:" target="-2" id="i5H-ja-BfL"/>
+                    </connections>
+                </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="olC-bd-uGL">
+                    <rect key="frame" x="33" y="280" width="191" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Prefered video resolution" id="a1Q-wU-M4f">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W6h-2Z-avF">
+                    <rect key="frame" x="240" y="244" width="208" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="mK9-vf-cDY">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <objectValues>
+                            <string>Unencrypted</string>
+                            <string>Encrypted (SRTP)</string>
+                            <string>Encrypted (ZRTP)</string>
+                            <string>Encrypted (DTLS)</string>
+                        </objectValues>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="onComboboxMediaEncription:" target="-2" id="KHy-09-Y0G"/>
+                    </connections>
+                </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5fZ-Uv-3cu">
+                    <rect key="frame" x="33" y="249" width="191" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Media Encryption" id="ZBu-RO-t3P">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LS6-fT-o2i">
+                    <rect key="frame" x="240" y="216" width="208" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="oQ8-YP-y5D">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="onComboBoxCaptureDevice:" target="-2" id="OtU-1f-daL"/>
+                    </connections>
+                </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vtP-To-1nN">
+                    <rect key="frame" x="33" y="221" width="191" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Camera" id="szf-cn-rt6">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gHq-0z-tbA">
+                    <rect key="frame" x="240" y="356" width="208" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="OpZ-CL-lNe">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="onComboBoxMicrophone:" target="-2" id="OMJ-DC-Lr7"/>
+                    </connections>
+                </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zvv-Jx-kKK">
+                    <rect key="frame" x="33" y="361" width="191" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Microphone" id="fXG-lE-vWq">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <levelIndicator canDrawConcurrently="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LbH-TL-B2s">
+                    <rect key="frame" x="240" y="335" width="205" height="20"/>
+                    <levelIndicatorCell key="cell" continuous="YES" alignment="left" doubleValue="-5" minValue="-15" maxValue="10" criticalValue="10" numberOfTickMarks="25" levelIndicatorStyle="continuousCapacity" id="lfQ-re-NyJ"/>
+                </levelIndicator>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kP8-Q5-fLU">
+                    <rect key="frame" x="170" y="25" width="275" height="187"/>
+                </customView>
+                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I5M-AS-qVH">
+                    <rect key="frame" x="240" y="303" width="208" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="Rji-Gj-Ged">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="onComboBoxSpeaker:" target="-2" id="4E2-ie-yDA"/>
+                    </connections>
+                </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAM-bg-Hjm">
+                    <rect key="frame" x="33" y="309" width="191" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Speaker" id="T9I-VU-KEr">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+        </customView>
+    </objects>
+</document>

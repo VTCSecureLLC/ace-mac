@@ -25,16 +25,25 @@
 
 @implementation AVViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
-
-    isChanged = NO;
+-(id) init
+{
+    self = [super initWithNibName:@"AVViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
 }
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Do view setup here.
+    [self initializeData];
+}
 
+- (void) initializeData
+{
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.inCallSettingsDelegate = self;
     
@@ -43,7 +52,7 @@
     self.buttonEchoCancel.state = [self.settingsHandler isEchoCancellationEnabled];
     self.buttonShowSelfView.state = [self.settingsHandler isShowSelfViewEnabled];
     self.buttonShowPreview.state = [self.settingsHandler isShowPreviewEnabled];
-    
+    isChanged = NO;
 }
 
 - (IBAction)onCheckBoxSpeakerMute:(id)sender {

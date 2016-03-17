@@ -1,4 +1,6 @@
 #!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/..
 
 # Globals
 HOCKEYAPP_TEAM_IDS=${HOCKEYAPP_TEAM_IDS:-47813}
@@ -13,6 +15,11 @@ fi
 
 if [ "$TRAVIS_BRANCH" != "master" ] ; then
   echo "TRAVIS_BRANCH is not master. Deploy skipped"
+  exit 0
+fi
+
+if [ "$TRAVIS_PULL_REQUEST" = "true"  ]; then
+  echo "This is a Pull Request. Deploy skipped"
   exit 0
 fi
 

@@ -31,27 +31,34 @@
 
 @implementation AccountsViewController
 
-- (void) awakeFromNib {
-    [super awakeFromNib];
+-(id) init
+{
+    self = [super initWithNibName:@"AccountsViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
     
-    isChanged = NO;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    [self initializeData];
+}
+
+- (void)initializeData
+{
     // Do view setup here.
     self.textFieldUserID.enabled = false;
     self.textFieldUsername.enabled = false;
     self.secureTextFieldPassword.enabled = false;
     self.textFieldDomain.enabled = false;
     self.textFieldPort.enabled = false;
-    
-}
-
-- (void)viewWillAppear {
-    [super viewWillAppear];
+    isChanged = NO;
     [self setFields];
 }
+
 
 - (void)setFields {
     LinphoneCore *lc = [LinphoneManager getLc];

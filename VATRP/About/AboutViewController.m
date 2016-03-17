@@ -19,13 +19,20 @@
 
 @implementation AboutViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
+-(id) init
+{
+    self = [super initWithNibName:@"AboutViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
 }
 
-- (void) viewWillAppear {
-    [super viewWillAppear];
+
+- (void) awakeFromNib {
+    [super awakeFromNib];
 
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];

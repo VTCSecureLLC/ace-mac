@@ -220,7 +220,7 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_PRESET] == nil)
     {
-        [self setAppSettingString:VIDEO_PRESET withValue:@"custom"];
+        [self setAppSettingString:VIDEO_PRESET withValue:@"high-fps"];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -423,7 +423,7 @@
 -(void)setUploadBandwidth:(int)bandwidth
 {
     [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:bandwidth];
-    int test = [[NSUserDefaults standardUserDefaults] integerForKey:UPLOAD_BANDWIDTH];
+//    int test = [[NSUserDefaults standardUserDefaults] integerForKey:UPLOAD_BANDWIDTH];
     LinphoneCore* linphoneCore = [LinphoneManager getLc];
     if (linphoneCore != nil)
     {
@@ -545,6 +545,18 @@
 
 - (void)setQoSEnable:(BOOL)enableQos {
     [self setUserSettingBool:ENABLE_QoS withValue:enableQos];
+}
+
+- (void)setQoSSignalingValue:(int)signalingValue {
+    [self setUserSettingInt:QoS_Signaling withValue:signalingValue];
+}
+
+- (void)setQoSAudioValue:(int)audioValue {
+    [self setUserSettingInt:QoS_Audio withValue:audioValue];
+}
+
+- (void)setQoSVideoValue:(int)videoValue {
+    [self setUserSettingInt:QoS_Video withValue:videoValue];
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "SettingsWindowController.h"
-#import "SettingsViewController.h"
 #import "GeneralViewController.h"
 #import "AVViewController.h"
 #import "ThemeMenuViewController.h"
@@ -15,13 +14,13 @@
 #import "SummaryMenuViewController.h"
 #import "AccountsViewController.h"
 #import "PreferencesViewController.h"
-#import "CodecsViewController.h"
 #import "MediaViewController.h"
 #import "TestingViewController.h"
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
 
-@interface SettingsWindowController () <SettingsViewControllerDelegate> {
+@interface SettingsWindowController ()
+{
     GeneralViewController *generalViewController;
     AVViewController *avViewController;
     ThemeMenuViewController *themeMenuViewController;
@@ -29,11 +28,11 @@
     SummaryMenuViewController *summaryMenuViewController;
     AccountsViewController *accountsViewController;
     PreferencesViewController *preferencesViewController;
-    CodecsViewController *codecsViewController;
     MediaViewController *mediaViewController;
     TestingViewController *testingViewController;
-    
-    NSView *prevView;
+    IBOutlet NSView *viewContainer;
+    IBOutlet NSButton *saveBtn;
+    NSViewController* currentViewController;
 }
 
 @property (weak) IBOutlet NSToolbar *toolbar;
@@ -45,6 +44,17 @@
 
 @synthesize isShow;
 
+-(id) init
+{
+    self = [super initWithWindowNibName:@"SettingsWindow"];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -54,21 +64,34 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myWindowWillClose:) name:NSWindowWillCloseNotification object:[self window]];
     
-    generalViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"GeneralViewController"];
-    avViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AVViewController"];
-    themeMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ThemeMenuViewController"];
-    textMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TextMenuViewController"];
-    summaryMenuViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"SummaryMenuViewController"];
-    accountsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AccountsViewController"];
-    preferencesViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"PreferencesViewController"];
-    codecsViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"CodecsViewController"];
-    mediaViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MediaViewController"];
-    testingViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"TestingViewController"];
+    generalViewController = [[GeneralViewController alloc] init];
+    avViewController = [[AVViewController alloc] init];
+    themeMenuViewController = [[ThemeMenuViewController alloc] init];
+    textMenuViewController = [[TextMenuViewController alloc] init];
+    summaryMenuViewController = [[SummaryMenuViewController alloc] init];
+    accountsViewController = [[AccountsViewController alloc] init];
+    preferencesViewController = [[PreferencesViewController alloc] init];
+    mediaViewController = [[MediaViewController alloc] init];
+    testingViewController = [[TestingViewController alloc] init];
     
+
     [self changeViewTo:generalViewController.view];
     
-    SettingsViewController *settingsViewController = (SettingsViewController*)self.contentViewController;
-    settingsViewController.delegate = self;
+    [self.window setTitle:@"SettingsWindowController"];
+
+}
+
+-(void) initializeData
+{
+    [generalViewController initializeData];
+    [avViewController initializeData];
+    [themeMenuViewController initializeData];
+    [textMenuViewController initializeData];
+    [summaryMenuViewController initializeData];
+    [accountsViewController initializeData];
+    [preferencesViewController initializeData];
+    [mediaViewController initializeData];
+    [testingViewController initializeData];
 }
 
 - (void)myWindowWillClose:(NSNotification *)notification
@@ -105,9 +128,6 @@
     [self changeViewTo:preferencesViewController.view];
 }
 
-- (IBAction)onToolbarItemCodecs:(id)sender {
-    [self changeViewTo:codecsViewController.view];
-}
 
 - (IBAction)onToolbarItemMedia:(id)sender {
     [self changeViewTo:mediaViewController.view];
@@ -117,14 +137,14 @@
     [self changeViewTo:testingViewController.view];
 }
 
-- (void) changeViewTo:(NSView*)view {
-    [prevView removeFromSuperview];
-    prevView = view;
-    prevView.frame = CGRectMake(0, self.window.contentView.frame.size.height - prevView.frame.size.height, prevView.frame.size.width, prevView.frame.size.height);
-    [self.window.contentView addSubview:prevView];
+- (void) changeViewTo:(NSView*)view
+{
+    for (NSView *subview in [viewContainer subviews]) {
+        [subview removeFromSuperview];
+    }
+    [viewContainer addSubview:view];
 }
-
-- (void) didClickSettingsViewControllerSeve:(SettingsViewController*)settingsViewController {
+- (IBAction)onSaveButtonClick:(NSButton *)sender {
     if (![accountsViewController save]) {
         return;
     }
@@ -133,7 +153,6 @@
     [avViewController save];
     [themeMenuViewController save];
     [textMenuViewController save];
-    [codecsViewController save];
     [mediaViewController save];
     [testingViewController save];
     [summaryMenuViewController save];

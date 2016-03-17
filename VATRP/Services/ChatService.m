@@ -56,7 +56,8 @@
     unread_messages = 0;
     
     if (!chatWindowController) {
-        chatWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ChatWindowController"];
+//        chatWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ChatWindowController"];
+        chatWindowController = [[ChatWindowController alloc] init];
         if (user) {
             ChatViewController *chatViewController = [chatWindowController getChatViewController];
             chatViewController.selectUser = user;

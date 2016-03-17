@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SettingsWindowController">
+            <connections>
+                <outlet property="saveBtn" destination="Ol5-dW-GjM" id="HEW-ht-T1q"/>
+                <outlet property="toolbar" destination="fdV-K0-xoP" id="9bD-JV-Em6"/>
+                <outlet property="toolbarItemPreferences" destination="TbG-Ci-u4c" id="ek8-7D-RIs"/>
+                <outlet property="viewContainer" destination="08M-Oy-dAR" id="gDc-D7-VMI"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="gwY-sO-c4Y"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="520" height="470"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <view key="contentView" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="520" height="470"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="08M-Oy-dAR">
+                        <rect key="frame" x="20" y="70" width="480" height="400"/>
+                    </customView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ol5-dW-GjM">
+                        <rect key="frame" x="323" y="19" width="177" height="36"/>
+                        <buttonCell key="cell" type="smallSquare" title="SAVE" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OUz-bg-1O6">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onSaveButtonClick:" target="-2" id="Fnl-B4-iu0"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="8F734F5E-73DF-40F5-84AF-44638A586947" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="fdV-K0-xoP">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="1E7942C9-75F5-4340-9A13-CB07AB781858" explicitItemIdentifier="general" label="General" paletteLabel="General" tag="-1" id="ggU-AV-iTA">
+                        <connections>
+                            <action selector="onToolbarItemGeneral:" target="-2" id="dcO-Rx-PWh"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="79CA1116-EE0E-4E02-81A4-FE2782938E75" explicitItemIdentifier="audiovideo" label="Audio/Video" paletteLabel="Audio/Video" tag="-1" id="RK2-bw-FMX">
+                        <connections>
+                            <action selector="onToolbarItemAudioVideo:" target="-2" id="Qbv-Hi-Jdt"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" explicitItemIdentifier="theme" label="Theme" paletteLabel="Theme" tag="-1" id="tMA-Zm-GiX">
+                        <connections>
+                            <action selector="onToolbarItemThemeMenu:" target="-2" id="90y-uU-fYY"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="865783C0-F2C4-49F6-A432-FD515E1C5565" explicitItemIdentifier="textmenu" label="Text" paletteLabel="Text" tag="-1" id="bDS-0Z-wkS">
+                        <connections>
+                            <action selector="onToolbarItemTextMenu:" target="-2" id="8vb-AU-2zy"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="69BF9171-9D8D-4195-8E1B-7710354E054C" explicitItemIdentifier="summarymenu" label="Summary" paletteLabel="Summary" tag="-1" id="bFO-tA-hQf">
+                        <connections>
+                            <action selector="onToolbarItemSummaryMenu:" target="-2" id="aJW-HD-qlI"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="0F9704DA-AAAC-432B-A310-2326165A3E53" explicitItemIdentifier="account" label="Account" paletteLabel="Account" tag="-1" image="accounts_icon" id="C9o-Wl-MuT">
+                        <connections>
+                            <action selector="onToolbarItemAccount:" target="-2" id="zuZ-qt-K7a"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="00623CA0-7636-4C50-AB85-B328D70A57C7" explicitItemIdentifier="preferences" label="Preferences" paletteLabel="Preferences" tag="-1" id="TbG-Ci-u4c">
+                        <connections>
+                            <action selector="onToolbarItemPreferences:" target="-2" id="Rs4-Pi-AAe"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="FF52FFAD-ECA5-4282-A075-897DDA0CF736" explicitItemIdentifier="codecs" label="Codecs" paletteLabel="Codecs" tag="-1" id="FtM-DZ-hnd">
+                        <connections>
+                            <action selector="onToolbarItemCodecs:" target="-2" id="W2a-2u-jwD"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="8FE6954C-74B7-452F-AA88-76258B8CDCD0" explicitItemIdentifier="media" label="Media" paletteLabel="Media" tag="-1" id="HrM-Zw-n46">
+                        <connections>
+                            <action selector="onToolbarItemMedia:" target="-2" id="MCQ-4a-NEu"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="A0797B28-B465-4A1A-A779-69A7B112BD06" explicitItemIdentifier="testing" label="Testing" paletteLabel="Testing" tag="-1" id="zhr-H7-Bem">
+                        <connections>
+                            <action selector="onToolbarItemTesting:" target="-2" id="SXH-aY-OXS"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="ggU-AV-iTA"/>
+                    <toolbarItem reference="RK2-bw-FMX"/>
+                    <toolbarItem reference="tMA-Zm-GiX"/>
+                    <toolbarItem reference="bDS-0Z-wkS"/>
+                    <toolbarItem reference="bFO-tA-hQf"/>
+                    <toolbarItem reference="C9o-Wl-MuT"/>
+                    <toolbarItem reference="HrM-Zw-n46"/>
+                    <toolbarItem reference="zhr-H7-Bem"/>
+                </defaultToolbarItems>
+            </toolbar>
+            <point key="canvasLocation" x="315" y="340"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="accounts_icon" width="250" height="250"/>
+    </resources>
+</document>

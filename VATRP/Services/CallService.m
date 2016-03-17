@@ -70,7 +70,7 @@
         return;
     }
     
-    // sanity check - make sure that we are not making a call to an address that we already ahve a call out to.
+    // sanity check - make sure that we are not making a call to an address that we already have a call out to.
     const MSList *call_list = linphone_core_get_calls(lc);
     int count = 0;
     if (call_list)
@@ -98,7 +98,7 @@
     }
 
 // ToDo? VATRP-2451: If the above is not sufficient to prevent the second call on a double click, then we can prevent a second call
-// by doing this and not worrying about comparing the adress above.
+// by doing this and not worrying about comparing the address above.
     if (count == 0)
     {
         @try {
@@ -250,16 +250,16 @@
                 linphone_core_enable_mic(lc, !microphoneMuted);
                 bool speakerMuted = [settingsHandler isSpeakerMuted];
                 [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
-                bool micIsEnabled = linphone_core_mic_enabled(lc);
+//                bool micIsEnabled = linphone_core_mic_enabled(lc);
                 linphone_core_set_play_level(lc, 100);
             }
             int playLevel = linphone_core_get_play_level(lc);
             int playbackGain = linphone_core_get_playback_gain_db(lc);
             NSLog([NSString stringWithFormat:@"   play level IS %d, playback gain is %d ********************************", playLevel, playbackGain ]);
             const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
-            const char *microphoneString = linphone_core_get_playback_device([LinphoneManager getLc]);
-            NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
-            NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
+//            const char *microphoneString = linphone_core_get_playback_device([LinphoneManager getLc]);
+//            NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
+//            NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
             bool speakerCanPlayback = linphone_core_sound_device_can_playback(lc, speakerString);
             if (speakerCanPlayback)
             {
@@ -311,8 +311,6 @@
             }
             
             [[ChatService sharedInstance] closeChatWindow];
-            [[ViewManager sharedInstance].rttView viewWillDisappear];
-
         }
             break;
         case LinphoneCallReleased: {
@@ -322,7 +320,6 @@
             }
             
             [[ChatService sharedInstance] closeChatWindow];
-            [[ViewManager sharedInstance].rttView viewWillDisappear];
             currentCall = NULL;
 
             [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
@@ -367,7 +364,7 @@
         [lm acceptCall:call];
         
     } else {
-        [[ViewManager sharedInstance].rttView viewWillAppear];
+        [[ViewManager sharedInstance].rttView updateViewForDisplay];
         [self openCallWindow];
 
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setIncomingCall:call];
@@ -377,7 +374,7 @@
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
-    [[ViewManager sharedInstance].rttView viewWillAppear];
+    [[ViewManager sharedInstance].rttView updateViewForDisplay];
     
     [self openCallWindow];
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setOutgoingCall:call];

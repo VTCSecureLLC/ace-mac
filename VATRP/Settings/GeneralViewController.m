@@ -20,14 +20,28 @@
 
 @implementation GeneralViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(id) init
+{
+    self = [super initWithNibName:@"GeneralViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
     
     // Do view setup here.
+    [self initializeData];
+}
 
+-(void) initializeData
+{
     self.checkBoxAutoAnswerCall.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_AUTO_ANSWER_CALL"];
     self.checkBoxStartOnBoot.state = [[NSUserDefaults standardUserDefaults] boolForKey:@"start_at_boot_preference"];
- 
     isChanged = NO;
 }
 

@@ -6,10 +6,12 @@
 //  Copyright © 2015 VTCSecure. All rights reserved.
 //
 
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
 
-@interface RTTView : BackgroundedView
-- (void) viewWillAppear;
-- (void) viewWillDisappear;
+@interface RTTView : BackgroundedViewController
+
 - (void) setCustomFrame:(NSRect)frame;
+
+- (void) updateViewForDisplay;
+
 @end

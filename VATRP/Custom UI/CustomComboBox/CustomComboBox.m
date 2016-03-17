@@ -52,7 +52,11 @@
     return _dataSource.count;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     CustomComboBoxCell *cellView = [tableView makeViewWithIdentifier:@"CustomComboBoxCell" owner:self];
    
     NSDictionary *dict = [_dataSource objectAtIndex:row];

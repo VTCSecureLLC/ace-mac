@@ -41,6 +41,8 @@
 #import "SettingsService.h"
 #import "SettingsHandler.h"
 #import "AppDelegate.h"
+#import "ContactFavoriteManager.h"
+
 //#import "LinphoneIOSVersion.h"
 
 //#import <AVFoundation/AVAudioPlayer.h>
@@ -80,7 +82,7 @@ const int kLinphoneAudioVbrCodecDefaultBitrate=36; /*you can override this from 
 
 //extern void libmsamr_init(MSFactory *factory);
 //extern void libmsx264_init(MSFactory *factory);
-extern void libmsopenh264_init(MSFactory *factory);
+//extern void libmsopenh264_init(MSFactory *factory);
 //extern void libmssilk_init(MSFactory *factory);
 //extern void libmsbcg729_init(MSFactory *factory);
 //extern void libmswebrtc_init(MSFactory *factory);
@@ -129,6 +131,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
 //@synthesize silentPushCompletion;
 @synthesize wasRemoteProvisioned;
 @synthesize configDb;
+bool iterateLock;
 
 + (BOOL)isCodecSupported: (const char *)codecName {
     return (codecName != NULL) &&
@@ -181,6 +184,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     @synchronized(self){
         if(theLinphoneManager == nil) {
             theLinphoneManager = [[LinphoneManager alloc] init];
+            iterateLock = false;
         }
     }
     return theLinphoneManager;
@@ -231,7 +235,9 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
         self->_isTesting = [LinphoneManager isRunningTests];
         
         [self setLinphoneDBFilePath];
-        
+        NSString *friendListFilePath = [self applicationDirectoryFile:[NSString stringWithFormat:@"%@_linphoneFriendList", self.account]];
+        [[ContactFavoriteManager sharedInstance] setDatabasePath:friendListFilePath];
+        [[ContactFavoriteManager sharedInstance] createFavoriteTablesInFriendListByPath];
         
         //        if ([fileManager fileExistsAtPath:dst]) {
         //            [self overrideDefaultSettings];
@@ -260,10 +266,7 @@ NSString *const kLinphoneInternalChatDBFilename = @"linphone_chats.db";
     //	if (lStatus) {
     //		LOGE(@"cannot un register route change handler [%ld]", lStatus);
     //	}
-    //  [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: kLinphoneCallUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneGlobalStateUpdate];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kLinphoneConfiguringStateUpdate];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 
@@ -484,9 +487,9 @@ void configH264HardwareAcell(bool encode, bool decode){
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264encoder", encode);
     ms_factory_enable_filter_from_name(f, "VideoToolboxH264decoder", decode);
-    
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", !encode);
-    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", !decode);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Enc", true);
+    ms_factory_enable_filter_from_name(f, "MSOpenH264Dec", true);
+    ms_factory_enable_filter_from_name(f, "MSX264Enc", false);
 }
 #pragma mark - Logs Functions handlers
 static void linphone_iphone_log_user_info(struct _LinphoneCore *lc, const char *message) {
@@ -720,7 +723,7 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
     
     const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
     char* c_address                      = linphone_address_as_string_uri_only(remoteAddress);
-    const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
+//    const char* call_id                  = linphone_chat_message_get_custom_header(msg, "Call-ID");
     //	NSString* callID                     = [NSString stringWithUTF8String:call_id];
     
     ms_free(c_address);
@@ -1061,12 +1064,19 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
 
 //scheduling loop
 - (void)iterate {
+    if (iterateLock)
+    {
+        return;
+    }
+    iterateLock = true;
     @try {
         if ([NSThread mainThread])
             linphone_core_iterate(theLinphoneCore);
+        iterateLock = false;
     }
     @catch (NSException *exception) {
         NSLog(@"linphone_core_iterate exception: %@", exception);
+        iterateLock = false;
     }
 }
 
@@ -1343,7 +1353,7 @@ static BOOL libStarted = FALSE;
     linphone_core_set_preferred_framerate([LinphoneManager getLc], [settingsHandler getPreferredFPS]);
     linphone_core_set_adaptive_rate_algorithm([LinphoneManager getLc], [[settingsHandler getAdaptiveRateAlgorithm] cStringUsingEncoding:NSUTF8StringEncoding]);
     linphone_core_enable_adaptive_rate_control([LinphoneManager getLc], [settingsHandler isAdaptiveRateControlEnabled]);
-    linphone_core_set_video_preset([LinphoneManager getLc], "custom");
+    linphone_core_set_video_preset([LinphoneManager getLc], "high-fps");
     linphone_core_set_upload_bandwidth(theLinphoneCore, [settingsHandler getUploadBandwidth]);
     linphone_core_set_download_bandwidth(theLinphoneCore, [settingsHandler getDownloadBandwidth]);
     
@@ -1374,20 +1384,27 @@ static BOOL libStarted = FALSE;
     MSFactory *f = linphone_core_get_ms_factory(theLinphoneCore);
     //libmssilk_init(f);
     //libmsamr_init(f);
-    //    libmsx264_init(f);
-    libmsopenh264_init(f);
+//    libmsx264_init(f);
+    //libmsx264_init();
+//    libmsopenh264_init(f);
     //libmsbcg729_init(f);
     //libmswebrtc_init(f);
-    ms_factory_load_plugins(f, ".");
-    ms_factory_load_plugins(f, "lib/mediastreamer/plugins");
+    
+    NSString *s = [NSString stringWithFormat:@"%@/Contents/Frameworks/",[[NSBundle mainBundle] bundlePath]];
+    NSLog(@"Plugin path: %@", s);
+    ms_factory_load_plugins(f, [s cStringUsingEncoding:[NSString defaultCStringEncoding]]);
     linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
     configH264HardwareAcell(false, false);
 }
 
-- (void)destroyLinphoneCore {
-    [mIterateTimer invalidate];
+- (void)destroyLinphoneCore
+{
+    if ((mIterateTimer != nil) && [mIterateTimer isValid])
+    {
+        [mIterateTimer invalidate];
+    }
     //just in case
-    [self removeCTCallCenterCb];
+//    [self removeCTCallCenterCb]; // Liz E. - commented out because this method is currently commented out
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -1788,7 +1805,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
         linphone_call_params_enable_low_bandwidth(calleeParams, low_bandwidth);
     }
     linphone_core_set_preferred_framerate(theLinphoneCore, [SettingsHandler.settingsHandler getPreferredFPS]);
-    const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
+//    const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
     linphone_call_params_enable_realtime_text(calleeParams, [SettingsService getRTTEnabled]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
     
@@ -1826,16 +1843,12 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     thiscall = linphone_core_get_current_call(theLinphoneCore);
     LinphoneCallParams *lcallParams = linphone_core_create_call_params(theLinphoneCore, thiscall);
     
-    //   VTCSecure add user location when emergency number is dialled.
-    NSString *emergency = [[LinphoneManager instance] lpConfigStringForKey:@"emergency_username" forSection:@"vtcsecure"];
-    //    if (emergency != nil && ([address hasPrefix:emergency] || [address hasPrefix:[@"sip:" stringByAppendingString:emergency]])) {
-    //         NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
-    //        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-    //    }
-    
-    if ([address isEqualToString:@"911"]) {
+    if ([address isEqualToString:@"911"] ||
+        [address isEqualToString:@"sip:911"] ||
+        [address isEqualToString:@"sip:1911"] ||
+        [address isEqualToString:@"sip:+1911"]) {
         NSString *locationString = [[LinphoneLocationManager sharedManager] currentLocationAsText];
-        linphone_call_params_add_custom_header(lcallParams,"userLocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+        linphone_call_params_add_custom_header(lcallParams,"Geolocation",[locationString cStringUsingEncoding:[NSString defaultCStringEncoding]]);
     }
     
     if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
@@ -2020,8 +2033,8 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 
 + (int)unreadMessageCount {
     int count = 0;
-    MSList* rooms = linphone_core_get_chat_rooms([LinphoneManager getLc]);
-    MSList* item = rooms;
+    const MSList* rooms = linphone_core_get_chat_rooms([LinphoneManager getLc]);
+    const MSList* item = rooms;
     while (item) {
         LinphoneChatRoom* room = (LinphoneChatRoom*)item->data;
         if( room ){
@@ -2137,7 +2150,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     return [self lpConfigStringForKey:key forSection:section withDefault:nil];
 }
 - (NSString *)lpConfigStringForKey:(NSString *)key forSection:(NSString *)section withDefault:(NSString *)defaultValue {
-    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
+//    NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
     NSLog(@"key: %@", key);
     NSLog(@"section: %@", section);
     NSLog(@"defaultValue: %@", defaultValue);

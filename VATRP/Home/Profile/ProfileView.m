@@ -25,6 +25,17 @@
 
 @implementation ProfileView
 
+-(id) init
+{
+    self = [super initWithNibName:@"ProfileView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     

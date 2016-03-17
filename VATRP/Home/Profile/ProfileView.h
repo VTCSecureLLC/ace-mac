@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BackgroundedView.h"
+#import "BackgroundedViewController.h"
 
-@interface ProfileView : BackgroundedView
+@interface ProfileView : BackgroundedViewController
 
 - (void)registrationUpdateEvent:(NSNotification*)notif;
 

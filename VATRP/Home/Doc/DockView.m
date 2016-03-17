@@ -18,6 +18,7 @@
     
     NSTextField *labelMessedCalls;
 }
+@property (strong) HomeViewController* parent;
 
 @property (weak) IBOutlet NSButton *buttonRecents;
 @property (weak) IBOutlet NSButton *buttonContacts;
@@ -30,7 +31,19 @@
 
 @implementation DockView
 
-@synthesize delegate = _delegate;
+@synthesize delegate;// = _delegate;
+
+-(id) init:(HomeViewController*)parentController
+{
+    self = [super initWithNibName:@"DockView" bundle:nil];
+    if (self)
+    {
+        // init
+        self.parent = parentController;
+    }
+    return self;
+    
+}
 
 - (void) awakeFromNib {
     [super awakeFromNib];
@@ -55,11 +68,15 @@
     [labelMessedCalls setBackgroundColor:[NSColor redColor]];
     [labelMessedCalls setTextColor:[NSColor whiteColor]];
     [labelMessedCalls setFont:[NSFont systemFontOfSize:14]];
-    [labelMessedCalls.cell setAlignment:NSTextAlignmentCenter];
+#if defined __MAC_10_9 || __MAC_10_8
+    [labelMessedCalls.cell setAlignment:kCTTextAlignmentCenter];
+#else
+    [labelMessedCalls.cell setAlignment:NSAlignmentCenter];
+#endif
     [labelMessedCalls setWantsLayer:YES];
     [labelMessedCalls.layer setCornerRadius:9.0];
     [labelMessedCalls setHidden:YES];
-    [self addSubview:labelMessedCalls];
+    [self.view addSubview:labelMessedCalls];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -71,17 +88,20 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
+//- (void)drawRect:(NSRect)dirtyRect {
+//    [super drawRect:dirtyRect];
+//
     // Drawing code here.
-}
+//}
 
 - (IBAction)onButtonRecents:(id)sender {
-    if ([_delegate respondsToSelector:@selector(didClickDockViewRecents:)]) {
-        [_delegate didClickDockViewRecents:self];
+//    if (([self delegate] != nil) && [[self delegate] respondsToSelector:@selector(didClickDockViewRecents:)]) {
+//        [[self delegate] didClickDockViewRecents:self];
+//    }
+    if (self.parent != nil)
+    {
+        [self.parent didClickDockViewRecents];
     }
-    
     labelMessedCalls.stringValue = @"";
     [labelMessedCalls setHidden:YES];
     linphone_core_reset_missed_calls_count([LinphoneManager getLc]);
@@ -101,22 +121,26 @@
 //        }
 //    }
 
-    if ([_delegate respondsToSelector:@selector(didClickDockViewContacts:)]) {
-        [_delegate didClickDockViewContacts:self];
+//    if ((self.delegate != nil) && [self.delegate respondsToSelector:@selector(didClickDockViewContacts:)]) {
+    if (self.parent != nil)
+    {
+        [self.parent didClickDockViewContacts];
     }
 }
 
 - (IBAction)onButtonDialpad:(id)sender {
-    if ([_delegate respondsToSelector:@selector(didClickDockViewDialpad:)]) {
-        [_delegate didClickDockViewDialpad:self];
+    if (self.parent != nil)
+    {
+        [self.parent didClickDockViewDialpad];
     }
 }
 
 - (IBAction)onButtonResources:(id)sender {
    // BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
    // if (isOpenedChatWindow) {
-        if ([_delegate respondsToSelector:@selector(didClickDockViewResources:)]) {
-            [_delegate didClickDockViewResources:self];
+        if (self.parent != nil)
+        {
+            [self.parent didClickDockViewResources];
         }
     //}
     
@@ -130,10 +154,11 @@
 - (IBAction)onButtonSettings:(id)sender {
     AppDelegate *app = [AppDelegate sharedInstance];
     if (!app.settingsWindowController) {
-        app.settingsWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Settings"];
+        app.settingsWindowController = [[SettingsWindowController alloc] init];
+        [app.settingsWindowController  initializeData];
         [app.settingsWindowController showWindow:self];
-//        if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-//            [_delegate didClickDockViewSettings:self];
+//        if (self.parent != nil) {
+//            [self.parent didClickDockViewSettings];
 //        }
     } else {
         if (app.settingsWindowController.isShow) {
@@ -141,16 +166,17 @@
             app.settingsWindowController = nil;
         } else {
             [app.settingsWindowController showWindow:self];
+            [app.settingsWindowController  initializeData];
             app.settingsWindowController.isShow = YES;
-//            if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-//                [_delegate didClickDockViewSettings:self];
+//            if (self.parent != nil) {
+//                [self.parent didClickDockViewSettings];
 //            }
         }
     }
 
 
-//    if ([_delegate respondsToSelector:@selector(didClickDockViewSettings:)]) {
-//        [_delegate didClickDockViewSettings:self];
+//    if (self.parent != nil) {
+//        [self.parent didClickDockViewSettings];
 //    }
 }
 
@@ -246,7 +272,10 @@
                 }
                 
                 labelMessedCalls.intValue = missedCount;
-                [labelMessedCalls setHidden:NO];
+                if (missedCount > 0)
+                {
+                    [labelMessedCalls setHidden:NO];
+                }
             } else {
                 linphone_core_reset_missed_calls_count([LinphoneManager getLc]);
             }

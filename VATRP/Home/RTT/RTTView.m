@@ -13,6 +13,7 @@
 #import "CallService.h"
 #import "ChatService.h"
 #import "ChatItemTableCellView.h"
+#import "BackgroundedView.h"
 
 //integers duplicate format as Android
 //const NSInteger TEXT_MODE;
@@ -20,7 +21,8 @@ const NSInteger NO_TEXT=-1;
 const NSInteger RTT=0;
 const NSInteger SIP_SIMPLE=1;
 
-@interface RTTView () {
+@interface RTTView () <NSTextFieldDelegate>
+{
     MSList *contacts;
     
     LinphoneCall *currentCall;
@@ -34,6 +36,8 @@ const NSInteger SIP_SIMPLE=1;
     ChatItemTableCellView *incomingCellView;
     LinphoneChatMessage *outgoingChatMessage;
     CGFloat incomingTextLinesCount;
+    bool observersAdded;
+    bool rttDisabledMessageHasBeenShown;
 }
 
 @property (weak) IBOutlet NSButton *buttonSend;
@@ -50,25 +54,23 @@ const NSInteger SIP_SIMPLE=1;
 
 @implementation RTTView
 
+-(id) init
+{
+    self = [super initWithNibName:@"RTTView" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void) awakeFromNib {
     [super awakeFromNib];
     
     [ViewManager sharedInstance].rttView = self;
-}
-
-- (void) setCustomFrame:(NSRect)frame {
-    self.frame = frame;
-    [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
-}
-
-- (void) setFrame:(NSRect)frame {
-    [super setFrame:frame];
-}
-
-- (void) viewWillAppear {
-    
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];
-    [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self];
+    [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self.view];
     
     self.buttonSend.wantsLayer = YES;
     self.messageEnterBG.wantsLayer = YES;
@@ -83,34 +85,55 @@ const NSInteger SIP_SIMPLE=1;
     self.textFieldMessage.focusRingType = NSFocusRingTypeNone;
     
     [self.tableViewContent setBackgroundColor:[NSColor clearColor]];
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Message" attributes:attributes];
-    self.textFieldMessage.placeholderAttributedString = attributedString;
+    [self.textFieldMessage setDelegate:self];
     
     // Do view setup here.
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textComposeEvent:)
-                                                 name:kLinphoneTextComposeEvent
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textReceivedEvent:)
-                                                 name:kLinphoneTextReceived
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textDidChange:)
-                                                 name:NSControlTextDidChangeNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                  selector:@selector(textDidBeginEditing:)
-                                                      name:NSTextDidBeginEditingNotification
-                                                    object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textComposeEvent:)
+                                                     name:kLinphoneTextComposeEvent
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
+    }
+
+}
+
+-(void) setHidden:(bool)hidden
+{
+    [self.view setHidden:hidden];
+    rttDisabledMessageHasBeenShown = false;
+    if (hidden)
+    {
+//        [self removeObservers];
+    }
+    else
+    {
+        [self initializeData];
+    }
+}
+
+-(void) initializeData
+{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Message" attributes:attributes];
+#if defined __MAC_10_8 || defined __MAC10_8
+    [self.textFieldMessage setPlaceholderString:@"Message"];
+#else
+    [self.textFieldMessage setPlaceholderAttributedString:attributedString];
+#endif
+    [self updateContentData];
+    [self.tableViewContent reloadData];
+    int count = ms_list_size(messageList);
+    [self.tableViewContent scrollRowToVisible:count-1];
     
     contacts = nil;
     selectedChatRoom = nil;
@@ -119,19 +142,29 @@ const NSInteger SIP_SIMPLE=1;
     incomingCellView = nil;
     incomingTextLinesCount = 1;
     stateNewMessage = NO;
-    
+
+}
+
+- (void) setCustomFrame:(NSRect)frame {
+    self.view.frame = frame;
+    [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
+}
+
+-(void) removeObservers
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) updateViewForDisplay
+{
     [self updateContentData];
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);
     [self.tableViewContent scrollRowToVisible:count-1];
-}
-
-- (void) viewWillDisappear {
-    selectedChatRoom = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -199,7 +232,11 @@ static void chatTable_free_chatrooms(void *data) {
     return count;
 }
 
+#if defined __MAC_10_9 || defined __MAC_10_8
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#else
 - (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
+#endif
     LinphoneChatMessage *chat = ms_list_nth_data(self->messageList, (int)row);
     
     ChatItemTableCellView *cellView = [tableView makeViewWithIdentifier:@"ChatCell" owner:self];
@@ -215,7 +252,7 @@ static void chatTable_free_chatrooms(void *data) {
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     LinphoneChatMessage *message = ms_list_nth_data(self->messageList, (int)row);
     if (message) {
-        CGFloat cellHeight = [ChatItemTableCellView height:message width:self.frame.size.width];
+        CGFloat cellHeight = [ChatItemTableCellView height:message width:[self getFrame].size.width];
         return cellHeight;
     }
     
@@ -312,7 +349,7 @@ static void chatTable_free_chatrooms(void *data) {
                 self->messageList = ms_list_append(self->messageList, incomingChatMessage);
                 
                 if (incomingCellView) {
-                    CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:self.frame.size.width];
+                    CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:[self getFrame].size.width];
                     if (incomingTextLinesCount == lineCount) {
                         [incomingCellView setChatMessage:incomingChatMessage];
                     } else {
@@ -412,12 +449,21 @@ long msgSize; //message length buffer
                         }
             }
     }
-- (void)textDidBeginEditing:(NSNotification *)notification{ //Get length of message string
-        msgSize = self.textFieldMessage.stringValue.length-1;
-        if(msgSize < 0) msgSize = 0;
+    
+    
+    
+- (void)textDidBeginEditing:(NSNotification *)notification
+{
+    //Get length of message string
+    msgSize = self.textFieldMessage.stringValue.length-1;
+    if(msgSize < 0)
+    {
+        msgSize = 0;
     }
+}
 
-- (void)textDidChange:(NSNotification *)aNotification {
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
     NSUInteger lastSymbolIndex = self.textFieldMessage.stringValue.length - 1;
     NSString *lastSymbol = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
     
@@ -441,7 +487,7 @@ long msgSize; //message length buffer
             
         }
         else{
-            if (![[ChatService sharedInstance] sendMessagt:lastSymbol]) {
+            if (!rttDisabledMessageHasBeenShown && ![[ChatService sharedInstance] sendMessagt:lastSymbol]) {
                 NSAlert *alert = [[NSAlert alloc]init];
                 [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
                 [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
@@ -586,9 +632,12 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
         return nil;
     
     const LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
-    const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+    if (call != nil)
+    {
+        const LinphoneAddress* addr = linphone_call_get_remote_address(call);
 
-    selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+        selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+    }
 
     return selectedChatRoom;
 }

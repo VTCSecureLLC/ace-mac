@@ -66,7 +66,7 @@
     LinphoneCore* linphoneCore = [LinphoneManager getLc];
     if (linphoneCore == nil)
     {
-        return false;
+        return 0;
     }
     // 2. get the list of calls from the core
     const MSList* callList = linphone_core_get_calls(linphoneCore);

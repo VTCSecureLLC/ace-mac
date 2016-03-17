@@ -60,6 +60,33 @@
     return false;
 }
 
+-(int)getCurrentNumberOfCalls
+{
+    // 1. verify that the linphone core exists and is running
+    LinphoneCore* linphoneCore = [LinphoneManager getLc];
+    if (linphoneCore == nil)
+    {
+        return false;
+    }
+    // 2. get the list of calls from the core
+    const MSList* callList = linphone_core_get_calls(linphoneCore);
+    int count = 0;
+    if (callList != nil)
+    {
+        count = ms_list_size(callList);
+    }
+    return count;
+}
+
+-(const LinphoneCall*) linphoneCoreGetCurrentCall:(const LinphoneCore*)linphoneCore
+{
+    if (linphoneCore != nil)
+    {
+        return linphone_core_get_current_call(linphoneCore);
+    }
+    return nil;
+}
+
 -(NSString*)linphoneCoreGetAdaptiveRate:(LinphoneCore*)linphoneCore
 {
     if (linphoneCore != nil)

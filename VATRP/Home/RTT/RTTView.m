@@ -462,7 +462,7 @@ long msgSize; //message length buffer
     }
 }
 
-- (void)controlTextDidChangejhf:(NSNotification *)aNotification
+- (void)controlTextDidChange:(NSNotification *)aNotification
 {
     NSUInteger lastSymbolIndex = self.textFieldMessage.stringValue.length - 1;
     NSString *lastSymbol = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];

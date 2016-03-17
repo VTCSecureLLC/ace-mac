@@ -10,7 +10,7 @@
 
 @protocol DefaultSettingsManagerDelegate <NSObject>
 - (void)didFinishLoadingConfigData;
--(void)didFinishWithError;
+-(void)didFinishWithError;//:(NSError*)error; // because we need to do a null test on this error. The srv resolver throws a null error when it has received all of its info in one packet.
 @end
 
 

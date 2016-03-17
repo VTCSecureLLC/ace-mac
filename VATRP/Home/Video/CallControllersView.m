@@ -108,15 +108,17 @@ BOOL isRTTLocallyEnabled;
                                              selector:@selector(callUpdateEvent:)
                                                  name:kLinphoneCallUpdate
                                                object:nil];
-    [self initializeButtonsFromSettings];
 }
 
 -(void)initializeButtonsFromSettings
 {
-    [self updateUIForSpeakerMute:[self.settingsHandler isSpeakerMuted]];
-    [self updateUIForMicrophoneMute:[self.settingsHandler isMicrophoneMuted]];
-    [self updateUIForEnableVideo:[self.settingsHandler isVideoEnabled]];
-
+    int callCount = [[LinphoneAPI instance] getCurrentNumberOfCalls];
+    if (callCount ==1)
+    { // if it is 0, we do not need to so set up. if it is greater than 1, then we are already set up
+        [self updateUIForSpeakerMute:[self.settingsHandler isSpeakerMuted]];
+        [self updateUIForMicrophoneMute:[self.settingsHandler isMicrophoneMuted]];
+        [self updateUIForEnableVideo:[self.settingsHandler isVideoEnabled]];
+    }
 }
 
 -(void)dealloc{

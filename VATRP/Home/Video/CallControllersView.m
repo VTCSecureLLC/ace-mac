@@ -14,7 +14,7 @@
 #import "SettingsService.h"
 #import "AppDelegate.h"
 #import "Utils.h"
-
+#import "LinphoneAPI.h"
 
 @interface CallControllersView () {
     LinphoneCall* call;
@@ -123,14 +123,17 @@ BOOL isRTTLocallyEnabled;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (IBAction)onButtonHold:(id)sender {
-    if (call) {
-        LinphoneCallState call_state = linphone_call_get_state(call);
+- (IBAction)onButtonHold:(id)sender
+{
+    LinphoneCall* currentCall = [[LinphoneAPI instance] linphoneCoreGetCurrentCall:[LinphoneManager getLc]];
+    if (currentCall)
+    {
+        LinphoneCallState call_state = linphone_call_get_state(currentCall);
      
         if (call_state == LinphoneCallPaused) {
-            linphone_core_resume_call([LinphoneManager getLc], call);
+            linphone_core_resume_call([LinphoneManager getLc], currentCall);
         } else {
-            linphone_core_pause_call([LinphoneManager getLc], call);
+            linphone_core_pause_call([LinphoneManager getLc], currentCall);
         }
         
         [self.buttonHold setEnabled:NO];
@@ -172,17 +175,31 @@ BOOL isRTTLocallyEnabled;
 
 }
 
--(void)updateUIForMicrophoneMute:(bool)mute{
-    if(!call) return;
+-(void)updateUIForMicrophoneMute:(bool)mute
+{
+    int callCount = [[LinphoneAPI instance] getCurrentNumberOfCalls];
+    if (callCount  > 1)
+    {
+        // then we have already set up everything here
+        return;
+    }
+    // To Do: currently avoiding  race condition where call setup is not complete or the call is being switched
+    //  (call has not been set here - this is a 'which observer fired first' issue)
+    //  address observer race condition handling after intial realase, get to stable now
+    const LinphoneCall* currentCall = [[LinphoneAPI instance] linphoneCoreGetCurrentCall:[LinphoneManager getLc]];
+    if (!currentCall)
+    {
+        return;
+    }
     
     LinphoneCore *lc = [LinphoneManager getLc];
-    const LinphoneCallParams *params = linphone_call_get_current_params(call);
+    const LinphoneCallParams *params = linphone_call_get_current_params(currentCall);
     
     if(!params) return;
     
     if(!linphone_call_params_audio_enabled(params)) return;
 
-    if(linphone_call_get_state(call) == LinphoneCallStreamsRunning){
+    if(linphone_call_get_state(currentCall) == LinphoneCallStreamsRunning){
         linphone_core_enable_mic(lc, !mute);
         if (mute) {
             [self.buttonMute setImage:[NSImage imageNamed:@"mute_disabled"]];

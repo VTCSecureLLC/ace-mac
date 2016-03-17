@@ -582,7 +582,6 @@
         [self update];
         [self.callControllersView setCall:call];
     }
-    // if we have more than one call
 }
 
 - (void)setIncomingCall:(LinphoneCall*)acall {

@@ -131,6 +131,7 @@
     
     
     self.callControllersView = [[CallControllersView alloc] init];
+    self.callControllersView.delegate = self;
     [self.callControllerContainer addSubview:[self.callControllersView view]];
     
     //    self.callControllersView.view.hidden = true;

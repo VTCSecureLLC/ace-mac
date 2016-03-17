@@ -37,6 +37,7 @@ const NSInteger SIP_SIMPLE=1;
     LinphoneChatMessage *outgoingChatMessage;
     CGFloat incomingTextLinesCount;
     bool observersAdded;
+    bool rttDisabledMessageHasBeenShown;
 }
 
 @property (weak) IBOutlet NSButton *buttonSend;
@@ -109,6 +110,7 @@ const NSInteger SIP_SIMPLE=1;
 -(void) setHidden:(bool)hidden
 {
     [self.view setHidden:hidden];
+    rttDisabledMessageHasBeenShown = false;
     if (hidden)
     {
 //        [self removeObservers];
@@ -165,8 +167,6 @@ const NSInteger SIP_SIMPLE=1;
     [self.tableViewContent scrollRowToVisible:count-1];
 }
 
-- (IBAction)rttTextDidChange:(NSTextField *)sender {
-}
 
 - (void)updateContentData {
     [self clearMessageList];
@@ -462,7 +462,7 @@ long msgSize; //message length buffer
     }
 }
 
-- (void)textDidChange:(NSNotification *)aNotification
+- (void)controlTextDidChange:(NSNotification *)aNotification
 {
     NSUInteger lastSymbolIndex = self.textFieldMessage.stringValue.length - 1;
     NSString *lastSymbol = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
@@ -487,7 +487,7 @@ long msgSize; //message length buffer
             
         }
         else{
-            if (![[ChatService sharedInstance] sendMessagt:lastSymbol]) {
+            if (!rttDisabledMessageHasBeenShown && ![[ChatService sharedInstance] sendMessagt:lastSymbol]) {
                 NSAlert *alert = [[NSAlert alloc]init];
                 [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
                 [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];

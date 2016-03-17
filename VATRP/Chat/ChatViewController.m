@@ -690,7 +690,7 @@ static void chatTable_free_chatrooms(void *data) {
     
 }
 
-- (void)textDidChange:(NSNotification *)aNotification {
+- (void)controlTextDidChange:(NSNotification *)aNotification {
     NSTextField *textField = [aNotification object];
     
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];

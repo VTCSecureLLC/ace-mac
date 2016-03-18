@@ -65,9 +65,9 @@
         [viewBG addSubview:buttonNine];
         buttonZero = [self numpadButtonWithFrame:NSMakeRect(77, 0, 76, 76) Title:@"0" Tag:0];
         [viewBG addSubview:buttonZero];
-        buttonStar = [self numpadButtonWithFrame:NSMakeRect(0, 0, 76, 76) Title:@"*" Tag:0];
+        buttonStar = [self numpadButtonWithFrame:NSMakeRect(0, 0, 76, 76) Title:@"*" Tag:10];
         [viewBG addSubview:buttonStar];
-        buttonSharp = [self numpadButtonWithFrame:NSMakeRect(154, 0, 76, 76) Title:@"#" Tag:0];
+        buttonSharp = [self numpadButtonWithFrame:NSMakeRect(154, 0, 76, 76) Title:@"#" Tag:11];
         [viewBG addSubview:buttonSharp];
     
 

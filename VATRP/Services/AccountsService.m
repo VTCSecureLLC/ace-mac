@@ -8,6 +8,7 @@
 
 #import "AccountsService.h"
 #import "AccountModel.h"
+#import "FXKeyChain.h"
 
 #define USER_DEFAULTS_ACCOUNT_LIST @"USER_DEFAULTS_ACCOUNT_LIST"
 
@@ -47,15 +48,20 @@
 }
 
 - (void) load {
-    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_ACCOUNT_LIST];
+    FXKeychain *fxKeyChainObj=[[FXKeychain alloc]init];
+    NSDictionary* dict = [fxKeyChainObj objectForKey:USER_DEFAULTS_ACCOUNT_LIST];
+//    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_ACCOUNT_LIST];
 
 //    NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
-    for (NSString *key in dict) {
-        NSDictionary *accountDict = [dict objectForKey:key];
-        AccountModel *accountModel = [[AccountModel alloc] init];
-        [accountModel loadByDictionary:accountDict];
+    if (dict != nil)
+    {
+        for (NSString *key in dict) {
+            NSDictionary *accountDict = [dict objectForKey:key];
+            AccountModel *accountModel = [[AccountModel alloc] init];
+            [accountModel loadByDictionary:accountDict];
         
-        [accountsMap setObject:accountModel forKeyedSubscript:accountModel.username];
+            [accountsMap setObject:accountModel forKeyedSubscript:accountModel.username];
+        }
     }
 }
 
@@ -99,7 +105,9 @@
         [tempDict setObject:accountDict forKeyedSubscript:accountModel.username];
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:USER_DEFAULTS_ACCOUNT_LIST];
+    FXKeychain *fxKeyChainObj=[[FXKeychain alloc]init];
+    [fxKeyChainObj setObject:tempDict forKey:USER_DEFAULTS_ACCOUNT_LIST];
+//    [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:USER_DEFAULTS_ACCOUNT_LIST];
 }
 
 - (AccountModel*) getDefaultAccount {

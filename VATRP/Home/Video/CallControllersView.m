@@ -164,13 +164,10 @@ BOOL isRTTLocallyEnabled;
     LinphoneCore *lc = [LinphoneManager getLc];
     bool currentlyMuted = !linphone_core_mic_enabled(lc);
     // being verbose for explicit readable logic
-    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
     if (currentlyMuted) {
         [self updateUIForMicrophoneMute:false];
-        [settingsHandler inCallMicrophoneWasMuted:false];
     } else {
         [self updateUIForMicrophoneMute:true];
-        [settingsHandler inCallMicrophoneWasMuted:true];
     }
 
 }
@@ -210,8 +207,6 @@ BOOL isRTTLocallyEnabled;
         muteSpeaker = true;
     }
     [self updateUIForSpeakerMute:muteSpeaker];
-    SettingsHandler *settingsHandler = [SettingsHandler settingsHandler];
-    [settingsHandler inCallSpeakerWasMuted:muteSpeaker];
 }
 
 -(void)updateUIForSpeakerMute:(bool)mute

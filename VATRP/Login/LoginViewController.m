@@ -588,7 +588,12 @@
                 }
                 else
                 {
-                    [alert setMessageText:message];
+                    NSString* messageString = [NSString stringWithFormat:@"Linphone registration Error event: message=%@", message];
+                    NSLog(@"%@",messageString);
+                    if (![message isEqualToString:@"io error"])
+                    {
+                        [alert setMessageText:message];
+                    }
                 }
                 [alert runModal];
             }

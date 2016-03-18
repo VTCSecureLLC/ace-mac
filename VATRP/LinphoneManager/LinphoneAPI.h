@@ -30,7 +30,8 @@
 -(bool)callAppearsValid:(LinphoneCall*) call;
 
 #pragma mark accessors for in call values
-
+-(const LinphoneCall*) linphoneCoreGetCurrentCall:(const LinphoneCore*)linphoneCore;
+-(int)getCurrentNumberOfCalls;
 
 #pragma mark accessors for in call diagnostics
 -(const LinphoneCallStats*)linphoneCallGetAudioStats:(LinphoneCall*)call;

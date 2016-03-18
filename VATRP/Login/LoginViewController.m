@@ -331,7 +331,8 @@
     [self userLogin];
 }
 
-- (void)didFinishWithError {
+- (void)didFinishWithError//:(NSError*)error
+{
     NSLog(@"Error loading config data");
     [self userLogin];
     [self.prog_Signin setHidden:YES];

@@ -591,10 +591,9 @@
 
 - (void)onCheckboxVideoStatus:(id)sender {
     NSButton *button = (NSButton*)sender;
-    
+
     CodecModel *codecModel = [videoCodecList objectAtIndex:button.tag];
     codecModel.status = button.state;
-    
     
     isChanged = YES;
 }
@@ -663,7 +662,7 @@
     
 
     [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:STUN_SERVER_DOMAIN];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [SettingsService setStun:checkboxStun.state];
     [SettingsService setICE:checkboxEnableICE.state];
     [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableICE.state forKey:@"ice_preference"];

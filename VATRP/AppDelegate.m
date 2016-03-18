@@ -113,7 +113,7 @@
         
         if (accountModel) {
             [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
-            [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
+//            [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
         }
         
     }
@@ -223,7 +223,7 @@
     
     if (accountModel) {
         [[AccountsService sharedInstance] removeAccountWithUsername:accountModel.username];
-        [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
+//        [SettingsHandler.settingsHandler resetDefaultsWithCoreRunning];
     }
     
     [self closeTabWindow];

@@ -36,6 +36,7 @@
 @property (weak) IBOutlet NSButton *buttonCall;
 @property (weak) IBOutlet NSButton *buttonProvider;
 @property (weak) IBOutlet NSView *viewZeroButton;
+@property (weak) IBOutlet NSTextField *textFieldStar;
 
 
 @property (weak) IBOutlet NSTableView *providerTableView;
@@ -174,7 +175,8 @@
     NSButton *button = (NSButton*)sender;
     
     switch (button.tag) {
-        case 10: {
+        case 10:
+        case 12: {
             self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"*"];
             linphone_core_play_dtmf([LinphoneManager getLc], '*', 100);
         }
@@ -248,8 +250,9 @@
         [self onButtonNumber:self.buttonEight];
     } else if (CGRectContainsPoint(self.buttonNine.frame, curPoint)) {
         [self onButtonNumber:self.buttonNine];
+    } else if (CGRectContainsPoint(self.textFieldStar.frame, curPoint)) {
+        [self onButtonNumber:self.textFieldStar];
     }
-    
     [self performSelector:@selector(longPressPlus) withObject:nil afterDelay:1.0];
 }
 

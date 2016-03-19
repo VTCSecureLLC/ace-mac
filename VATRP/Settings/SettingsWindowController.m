@@ -74,7 +74,7 @@
     accountsViewController = [[AccountsViewController alloc] init];
     preferencesViewController = [[PreferencesViewController alloc] init];
     mediaViewController = [[MediaViewController alloc] init];
-    testingViewController = [[TestingViewController alloc] init];
+    testingViewController = [[TestingViewController alloc] init:self];
     
     preferencesIndex = -1;
 
@@ -185,6 +185,11 @@
         [self.toolbar insertItemWithItemIdentifier:@"preferences" atIndex:[self.toolbar visibleItems].count];
         preferencesIndex = [self.toolbar visibleItems].count;
     }
+}
+
+-(void)closeWindow
+{
+    [self close];
 }
 
 - (void) dealloc {

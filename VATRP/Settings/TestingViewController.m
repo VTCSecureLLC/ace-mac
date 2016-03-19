@@ -12,6 +12,9 @@
 #import "SettingsService.h"
 #import "AppDelegate.h"
 #import "SettingsHandler.h"
+#import "FXKeyChain.h"
+#import "AccountsService.h"
+
 @interface TestingViewController () {
     BOOL isChanged;
 }
@@ -28,16 +31,19 @@
 @property (weak) IBOutlet NSTextField *textFieldAudio;
 @property (weak) IBOutlet NSTextField *textFieldVideo;
 
+@property (strong) SettingsWindowController* parentWindowController;
+
 @end
 
 @implementation TestingViewController
 
--(id) init
+-(id) init:(SettingsWindowController*)parentController
 {
     self = [super initWithNibName:@"TestingViewController" bundle:nil];
     if (self)
     {
         // init
+        self.parentWindowController = parentController;
     }
     return self;
     
@@ -233,7 +239,13 @@
             rm -rf ~/Library/Preferences/com.vtcsecure.ace.mac.plist;");
     [[SettingsHandler settingsHandler]  initializeUserDefaults:NO];
     [[SettingsHandler settingsHandler] resetDefaultsWithCoreRunning];
-    [self.view.superview.window close];
+    FXKeychain *fxKeyChainObj=[[FXKeychain alloc]init];
+    [fxKeyChainObj removeObjectForKey:USER_DEFAULTS_ACCOUNT_LIST];
+
+    if (self.parentWindowController != nil)
+    {
+        [self.parentWindowController closeWindow];
+    }
 }
 
 @end

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "AccountModel.h"
 
+#define USER_DEFAULTS_ACCOUNT_LIST @"USER_DEFAULTS_ACCOUNT_LIST"
+
 @interface AccountsService : NSObject
 
 + (AccountsService *)sharedInstance;

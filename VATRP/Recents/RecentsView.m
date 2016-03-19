@@ -172,7 +172,8 @@
     NSLog(@"segmentedControl.selectedSegment: %ld", (long)segmentedControl.selectedSegment);
 }
 
-- (void)didClickPlusButton:(HistoryTableCellView *)contactCellView withInfo:(NSDictionary *)info {
+-(void) handleAddContact:(NSDictionary*)info
+{
     AppDelegate *app = [AppDelegate sharedInstance];
     if (!app.addContactWindowController)
     {
@@ -219,6 +220,19 @@
     //    selectedRow = marrayLoad[row];
     if(tableView.clickedRow != row){
         return NO;
+    }
+    HistoryTableCellView *selectedCell = (HistoryTableCellView* )[tableView viewAtColumn:0 row:row makeIfNecessary:YES];
+    if ((selectedCell != nil) && [selectedCell addContactOnRowSelection])
+    {
+        // get the user info from the cell
+        NSDictionary* userInfo = [selectedCell getUserInformation];
+        // call the add contact method
+        if (userInfo != nil)
+        {
+            [self handleAddContact:userInfo];
+        }
+        // and return without selecting/highlighting the row
+        return false;
     }
     LinphoneCallLog *callLog = [[callLogs objectAtIndex:row] pointerValue];
     LinphoneAddress *addr;

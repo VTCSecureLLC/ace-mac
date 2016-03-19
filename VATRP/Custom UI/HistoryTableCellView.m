@@ -175,6 +175,15 @@
     }
 }
 
+-(bool) addContactOnRowSelection
+{
+    if (self.plusButton.hidden == false)
+    {
+        return true;
+    }
+    return false;
+}
+
 - (void)mouseEntered:(NSEvent *)theEvent {
     [self hidePlusButton:NO];
 }
@@ -184,22 +193,19 @@
 }
 
 #pragma mark - Buttons actions
-
-- (IBAction)onPlusClick:(id)sender {
-    if ([_delegate respondsToSelector:@selector(didClickPlusButton:withInfo:)]) {
-        NSString *name = nil;
-        const char *lDisplayName = linphone_address_get_display_name(userAddress);
-        if (lDisplayName) {
-            name = [NSString stringWithUTF8String:lDisplayName];
-        } else {
-            name = @"";
-        }
-        const char* uri = linphone_address_as_string_uri_only(userAddress);
-        NSDictionary *dict = @{@"name" : name,
-                               @"sipUri" : [NSString stringWithUTF8String:uri] };
-    
-        [_delegate didClickPlusButton:self withInfo:dict];
+-(NSDictionary*)getUserInformation
+{
+    NSString *name = nil;
+    const char *lDisplayName = linphone_address_get_display_name(userAddress);
+    if (lDisplayName) {
+        name = [NSString stringWithUTF8String:lDisplayName];
+    } else {
+        name = @"";
     }
+    const char* uri = linphone_address_as_string_uri_only(userAddress);
+    NSDictionary *dict = @{@"name" : name,
+                           @"sipUri" : [NSString stringWithUTF8String:uri] };
+    
+    return dict;
 }
-
 @end

@@ -96,7 +96,7 @@
                                     <action selector="onMenuItemMessages:" target="Voe-Tx-rLC" id="7Mk-Ld-xrA"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Self Preview" hidden="YES" id="sLY-oB-wF6">
+                            <menuItem title="Self Preview" enabled="NO" id="sLY-oB-wF6">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="onMenuItemSelfPreview:" target="Voe-Tx-rLC" id="LPO-kf-i60"/>

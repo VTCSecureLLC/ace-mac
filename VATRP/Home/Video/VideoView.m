@@ -140,6 +140,7 @@
     self.secondCallView.view.hidden = true;
     self.secondIncomingCallView = [[SecondIncomingCallView alloc] init];
     [self.secondIncomingCallContainer addSubview:[self.secondIncomingCallView view]];
+    [self.secondIncomingCallView setHidden:true];
     self.secondIncomingCallContainer.hidden = true;
     
     if (!observersAdded)
@@ -607,13 +608,15 @@
 
 - (void)showSecondIncomingCallView:(LinphoneCall *)aCall {
     [self.secondIncomingCallView setCall:aCall];
-    [self.secondIncomingCallView setHidden:NO];
+    [self.secondIncomingCallView setHidden:false];
     [self.secondIncomingCallContainer setHidden:false];
     [self.callControllsConteinerView setHidden:true];
 }
 
 - (void)hideSecondIncomingCallView {
-    [self.secondIncomingCallContainer setHidden:YES];
+    [self.secondIncomingCallView setHidden:true];
+    [self.secondIncomingCallContainer setHidden:true];
+    [self.callControllsConteinerView setHidden:false];
 }
 
 - (void)setCallToSecondCallView:(LinphoneCall*)aCall {
@@ -707,7 +710,8 @@
 - (void)setMouseInCallWindow {
     if(!call) return;
     
-    if ([self.secondIncomingCallContainer isHidden] == false)
+    
+    if ([self.secondIncomingCallView isHidden] == false)
     {
         return;
     }

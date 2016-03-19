@@ -323,7 +323,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     #pragma unused(resolver)
     NSLog(@"didStopWithError %@", error);
     if(self.delegate){
-        [self.delegate didFinishWithError];
+        [self.delegate didFinishWithError ];//: error];
     }
 }
 

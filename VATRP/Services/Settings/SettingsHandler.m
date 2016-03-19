@@ -31,7 +31,7 @@
 - (void)resetDefaultsWithCoreRunning
 {
     // update core properties while is is running.
-    [self initializeUserDefaults:true];
+    [self initializeUserDefaults:false];
     LinphoneCore* linphoneCore = [LinphoneManager getLc];
     if ((linphoneCore != nil) && [LinphoneManager.instance coreIsRunning])
     {
@@ -283,7 +283,7 @@
 
 -(void)setMuteCamera:(bool)mute
 {
-    [self setUserSettingBool:MUTE_SPEAKER withValue:mute];
+    [self setUserSettingBool:MUTE_CAMERA withValue:mute];
     if ([self.preferencessHandlerDelegate respondsToSelector:@selector(muteCamera:)]) {
         [self.preferencessHandlerDelegate muteCamera:mute];
     }

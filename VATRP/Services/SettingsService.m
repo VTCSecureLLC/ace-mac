@@ -403,25 +403,30 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     PayloadType *pt;
     const MSList *elem;
     
-    NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"] == nil)
+    {
+
+        NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
     
-    for (elem = codecs; elem != NULL; elem = elem->next) {
-        pt = (PayloadType *)elem->data;
-        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+        for (elem = codecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
-        if (pref) {
-            CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
-                                                            Rate:pt->clock_rate
-                                                        Channels:pt->channels];
+            if (pref) {
+                CodecModel *codecModel = [self getVideoCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                                Rate:pt->clock_rate
+                                                            Channels:pt->channels];
 //            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
-            BOOL enableVideoCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
+                BOOL enableVideoCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
             
-            [mdictForSave setObject:[NSNumber numberWithBool:enableVideoCodec] forKey:codecModel.preference];
-            linphone_core_enable_payload_type(lc, pt, enableVideoCodec);
+                [mdictForSave setObject:[NSNumber numberWithBool:enableVideoCodec] forKey:codecModel.preference];
+                linphone_core_enable_payload_type(lc, pt, enableVideoCodec);
+            }
         }
-    }
     
-    [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
+        [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
+    }
+    // else linphone core will be updated from the map that already exists on registration
 }
 
 -(void)enableAudioCodecs
@@ -432,26 +437,28 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     PayloadType *pt;
     const MSList *elem;
     
-    NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
-    
-    for (elem = codecs; elem != NULL; elem = elem->next) {
-        pt = (PayloadType *)elem->data;
-        NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"] == nil)
+    {
+        NSMutableDictionary *mdictForSave = [[NSMutableDictionary alloc] init];
+        for (elem = codecs; elem != NULL; elem = elem->next) {
+            pt = (PayloadType *)elem->data;
+            NSString *pref = [SDPNegotiationService getPreferenceForCodec:pt->mime_type withRate:pt->clock_rate];
         
-        if (pref) {
-            CodecModel *codecModel = [self getAudioCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
-                                                            Rate:pt->clock_rate
-                                                        Channels:pt->channels];
+            if (pref) {
+                CodecModel *codecModel = [self getAudioCodecWithName:[NSString stringWithUTF8String:pt->mime_type]
+                                                                Rate:pt->clock_rate
+                                                            Channels:pt->channels];
 //            NSArray* enabledCodecs = [DefaultSettingsManager sharedInstance].enabledCodecs;
-            BOOL enableAudioCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
+                BOOL enableAudioCodec = [[DefaultSettingsManager sharedInstance].enabledCodecs containsObject:[NSString stringWithUTF8String:pt->mime_type]];
             
-            [mdictForSave setObject:[NSNumber numberWithBool:enableAudioCodec] forKey:codecModel.preference];
-            linphone_core_enable_payload_type(lc, pt, enableAudioCodec);
+                [mdictForSave setObject:[NSNumber numberWithBool:enableAudioCodec] forKey:codecModel.preference];
+                linphone_core_enable_payload_type(lc, pt, enableAudioCodec);
+            }
         }
-    }
     
-    [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
-
+        [[NSUserDefaults standardUserDefaults] setObject:mdictForSave forKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
+    }
+    // else linphone core will be updated from the map that already exists on registration
 }
 
 - (CodecModel*) getVideoCodecWithName:(NSString*)name Rate:(int)rate Channels:(int)channels {

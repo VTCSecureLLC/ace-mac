@@ -19,7 +19,7 @@
 #import "AppDelegate.h"
 #import "LinphoneManager.h"
 
-@interface SettingsWindowController ()
+@interface SettingsWindowController () 
 {
     GeneralViewController *generalViewController;
     AVViewController *avViewController;
@@ -33,6 +33,8 @@
     IBOutlet NSView *viewContainer;
     IBOutlet NSButton *saveBtn;
     NSViewController* currentViewController;
+    
+    NSUInteger preferencesIndex;
 }
 
 @property (weak) IBOutlet NSToolbar *toolbar;
@@ -72,8 +74,9 @@
     accountsViewController = [[AccountsViewController alloc] init];
     preferencesViewController = [[PreferencesViewController alloc] init];
     mediaViewController = [[MediaViewController alloc] init];
-    testingViewController = [[TestingViewController alloc] init];
+    testingViewController = [[TestingViewController alloc] init:self];
     
+    preferencesIndex = -1;
 
     [self changeViewTo:generalViewController.view];
     
@@ -163,24 +166,38 @@
 }
 
 - (void) addPreferencesToolbarItem {
+    
     NSArray *visibleItems = self.toolbar.visibleItems;
     
     BOOL found = NO;
     
-    for (NSToolbarItem *toolbarItem in visibleItems) {
-        if ([toolbarItem.itemIdentifier isEqualToString:@"preferences"]) {
+    for (NSToolbarItem *toolbarItem in visibleItems)
+    {
+        if ([toolbarItem.itemIdentifier isEqualToString:@"preferences"])
+        {
             found = YES;
-            
-            break;
+            return;
         }
     }
     
-    if (!found) {
+    if (!found)
+    {
         [self.toolbar insertItemWithItemIdentifier:@"preferences" atIndex:[self.toolbar visibleItems].count];
+        preferencesIndex = [self.toolbar visibleItems].count;
     }
 }
 
+-(void)closeWindow
+{
+    [self close];
+}
+
 - (void) dealloc {
+    
+    if (preferencesIndex > -1)
+    {
+        [self.toolbar removeItemAtIndex:preferencesIndex];
+    }
     if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
         [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
     }

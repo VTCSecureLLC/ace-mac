@@ -1096,7 +1096,9 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
     //get default config from bundle
     NSString *zrtpSecretsFileName = [LinphoneManager documentFile:@"zrtp_secrets"];
     NSString *chatDBFileName      = [LinphoneManager documentFile:[NSString stringWithFormat:@"%@_linphone_chats.db", self.account]];
-    const char* lRootCa           = [[LinphoneManager bundleFile:@"rootca.pem"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
+    NSString *caFilePath = [[NSBundle mainBundle] pathForResource:@"cafile" ofType:@"pem"];
+    const char* lRootCa = [caFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]];
+
     
     //	linphone_core_set_user_agent(theLinphoneCore, [[[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] stringByAppendingString:@"Iphone"] UTF8String], LINPHONE_IOS_VERSION);
     
@@ -1106,7 +1108,7 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
     //		fastAddressBook = [[FastAddressBook alloc] init];
     //	}
     
-    linphone_core_set_root_ca(theLinphoneCore, lRootCa);
+//    linphone_core_set_root_ca(theLinphoneCore, lRootCa);
     // Set audio assets
     const char* lRing = [[LinphoneManager bundleFile:@"ring.wav"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
     linphone_core_set_ring(theLinphoneCore, lRing);
@@ -1345,9 +1347,13 @@ static BOOL libStarted = FALSE;
     linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)([AppDelegate sharedInstance].viewController.videoMailWindowController.contentViewController.view));
     
     /* set the CA file no matter what, since the remote provisioning could be hitting an HTTPS server */
-    const char* lRootCa = [[LinphoneManager bundleFile:@"rootca.pem"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
+    NSString *caFilePath = [[NSBundle mainBundle] pathForResource:@"cafile" ofType:@"pem"];
+    const char* lRootCa = [caFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]];
+
     linphone_core_set_root_ca(theLinphoneCore, lRootCa);
     linphone_core_set_user_certificates_path(theLinphoneCore,[[LinphoneManager cacheDirectory] UTF8String]);
+    linphone_core_verify_server_cn(theLinphoneCore, true);
+    linphone_core_verify_server_certificates(theLinphoneCore,true);
     
     SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
     linphone_core_set_preferred_framerate([LinphoneManager getLc], [settingsHandler getPreferredFPS]);

@@ -337,6 +337,7 @@
 		73EDA3261BFA9F6E00EC7039 /* libz.1.2.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2381BFA9F2C00EC7039 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3271BFA9F6E00EC7039 /* libz.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA3291BFA9F6E00EC7039 /* libz.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA23B1BFA9F2C00EC7039 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A4429C051C9C6B1800CB8182 /* FXKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = A4429C041C9C6B1800CB8182 /* FXKeyChain.m */; };
 		A45DFA741C8E36F5003FD318 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA731C8E36F5003FD318 /* AboutWindowController.xib */; };
 		A45DFA761C8E371C003FD318 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA751C8E371C003FD318 /* AboutViewController.xib */; };
 		A45DFA781C8E3B98003FD318 /* CallInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45DFA771C8E3B98003FD318 /* CallInfoWindowController.xib */; };
@@ -359,6 +360,7 @@
 		A49DEE8E1C6EC2610090BDF9 /* LinphoneAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = A49DEE8D1C6EC2610090BDF9 /* LinphoneAPI.m */; };
 		A4A6020B1C617C1C00812230 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A602091C617C1C00812230 /* SettingsHandler.m */; };
 		A4A6020D1C617CAE00812230 /* SettingsConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A6020C1C617CAE00812230 /* SettingsConstants.m */; };
+		A4AEC6451C9B72E0005FA0A4 /* rootca.pem in Resources */ = {isa = PBXBuildFile; fileRef = A4AEC6441C9B72E0005FA0A4 /* rootca.pem */; };
 		A4BC0EB01C91FC2500DECCE0 /* DHResourcesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BC0EAF1C91FC2500DECCE0 /* DHResourcesView.xib */; };
 		A4BDF2091C90A8390039A59F /* RecentsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BDF2081C90A8390039A59F /* RecentsWindowController.xib */; };
 		A4BDF20B1C90AB060039A59F /* VideoCallWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BDF20A1C90AB060039A59F /* VideoCallWindowController.xib */; };
@@ -830,6 +832,8 @@
 		73EDA2391BFA9F2C00EC7039 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.1.dylib"; sourceTree = "<group>"; };
 		73EDA23A1BFA9F2C00EC7039 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.a"; sourceTree = "<group>"; };
 		73EDA23B1BFA9F2C00EC7039 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libz.dylib"; sourceTree = "<group>"; };
+		A4429C031C9C6B0200CB8182 /* FXKeyChain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FXKeyChain.h; path = Utilities/Security/FXKeyChain.h; sourceTree = "<group>"; };
+		A4429C041C9C6B1800CB8182 /* FXKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FXKeyChain.m; path = Utilities/Security/FXKeyChain.m; sourceTree = "<group>"; };
 		A45DFA731C8E36F5003FD318 /* AboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
 		A45DFA751C8E371C003FD318 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		A45DFA771C8E3B98003FD318 /* CallInfoWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallInfoWindowController.xib; sourceTree = "<group>"; };
@@ -856,6 +860,7 @@
 		A4A602081C617C1C00812230 /* SettingsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsHandler.h; path = Settings/SettingsHandler.h; sourceTree = "<group>"; };
 		A4A602091C617C1C00812230 /* SettingsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsHandler.m; path = Settings/SettingsHandler.m; sourceTree = "<group>"; };
 		A4A6020C1C617CAE00812230 /* SettingsConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsConstants.m; path = Settings/SettingsConstants.m; sourceTree = "<group>"; };
+		A4AEC6441C9B72E0005FA0A4 /* rootca.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rootca.pem; sourceTree = "<group>"; };
 		A4BC0EAF1C91FC2500DECCE0 /* DHResourcesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DHResourcesView.xib; sourceTree = "<group>"; };
 		A4BDF2081C90A8390039A59F /* RecentsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecentsWindowController.xib; sourceTree = "<group>"; };
 		A4BDF20A1C90AB060039A59F /* VideoCallWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoCallWindowController.xib; sourceTree = "<group>"; };
@@ -1380,6 +1385,7 @@
 		4AAF56171BB1615900241DC2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				A4AEC6441C9B72E0005FA0A4 /* rootca.pem */,
 				4A2BAB961BC4FAE200640476 /* cafile.pem */,
 				4AAF56181BB1615900241DC2 /* Images */,
 				4A902DED1BB96C6D00ECFD86 /* sounds */,
@@ -1579,6 +1585,7 @@
 		4AC389C71B8E87530063298F /* VATRP */ = {
 			isa = PBXGroup;
 			children = (
+				A4429C021C9C6ACE00CB8182 /* Utilities */,
 				5EC9D30A1C288D5600BFAAEC /* Resources */,
 				4AAFD9FC1BA610F100C35A74 /* LinphoneManager */,
 				4A902DDA1BB9486800ECFD86 /* Services */,
@@ -1732,6 +1739,15 @@
 				A476954F1C8F655800748DEF /* RTTView.xib */,
 			);
 			path = RTT;
+			sourceTree = "<group>";
+		};
+		A4429C021C9C6ACE00CB8182 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A4429C031C9C6B0200CB8182 /* FXKeyChain.h */,
+				A4429C041C9C6B1800CB8182 /* FXKeyChain.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		A4A602051C617C0500812230 /* Settings */ = {
@@ -2026,6 +2042,7 @@
 				69EE9BF51C649B990010EBB3 /* RTPquality_bad_leftBottom.png in Resources */,
 				A4FAEEC61C8E24B7005103E5 /* SummaryViewController.xib in Resources */,
 				69EE9C0D1C64B6E20010EBB3 /* RTPquality_medium_top.png in Resources */,
+				A4AEC6451C9B72E0005FA0A4 /* rootca.pem in Resources */,
 				69EE9BF41C649B990010EBB3 /* RTPquality_bad_left.png in Resources */,
 				69EE9C0A1C64B6E20010EBB3 /* RTPquality_medium_right.png in Resources */,
 				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
@@ -2185,6 +2202,7 @@
 				4AB2A2D31BF2273E006AC5C6 /* DockView.m in Sources */,
 				2B463F071B984E49008E8333 /* DialpadViewController.m in Sources */,
 				4A902DFB1BB9823200ECFD86 /* CodecModel.m in Sources */,
+				A4429C051C9C6B1800CB8182 /* FXKeyChain.m in Sources */,
 				4AAF56101BAFFC5700241DC2 /* VideoCallViewController.m in Sources */,
 				4A902DE91BB95A7000ECFD86 /* Utils.m in Sources */,
 				4AE0C67B1BB2E9E900B4E208 /* CallViewController.m in Sources */,

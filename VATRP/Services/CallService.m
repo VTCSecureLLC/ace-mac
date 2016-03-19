@@ -17,6 +17,7 @@
     CallWindowController *callWindowController;
     
     LinphoneCall *currentCall;
+    LinphoneCall *callToSwapTo;
 }
 
 + (int) callsCount;
@@ -158,12 +159,12 @@
 
 - (void) swapCallsToCall:(LinphoneCall*)aCall {
     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
-    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:aCall];
 
     linphone_core_pause_call([LinphoneManager getLc], currentCall);
-    linphone_core_resume_call([LinphoneManager getLc], aCall);
+    callToSwapTo = aCall;
+//    linphone_core_resume_call([LinphoneManager getLc], aCall);
 
-    currentCall = aCall;
+//    currentCall = aCall;
 }
 
 - (LinphoneCall*) getCurrentCall {
@@ -178,6 +179,46 @@
     
     NSLog(@"****** callupdate");
     switch (state) {
+        case LinphoneCallIdle:					/**<Initial call state */
+            NSLog(@"****** LinphoneCallIdle");
+            break;
+        case LinphoneCallOutgoingProgress: /**<An outgoing call is in progress */
+            NSLog(@"****** LinphoneCallOutgoingProgress");
+            break;
+        case LinphoneCallOutgoingRinging: /**<An outgoing call is ringing at remote end */
+            NSLog(@"****** LinphoneCallOutgoingRinging");
+            break;
+        case LinphoneCallOutgoingEarlyMedia: /**<An outgoing call is proposed early media */
+            NSLog(@"****** LinphoneCallOutgoingEarlyMedia");
+            break;
+        case LinphoneCallPausing: /**<The call is pausing at the initiative of local end */
+            NSLog(@"****** LinphoneCallPausing");
+            break;
+        case LinphoneCallPaused: /**< The call is paused, remote end has accepted the pause */
+            NSLog(@"****** LinphoneCallPaused");
+            if (callToSwapTo != nil)
+            {
+                linphone_core_resume_call([LinphoneManager getLc], callToSwapTo);
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:callToSwapTo];
+                currentCall = callToSwapTo;
+            }
+            break;
+        case LinphoneCallResuming: /**<The call is being resumed by local end*/
+            NSLog(@"****** LinphoneCallResuming");
+            break;
+        case LinphoneCallRefered: /**<The call is being transfered to another party, resulting in a new outgoing call to follow immediately*/
+            NSLog(@"****** LinphoneCallRefered");
+            break;
+        case LinphoneCallUpdating: /**<A call update has been initiated by us */
+            NSLog(@"****** LinphoneCallUpdating");
+            break;
+        case LinphoneCallEarlyUpdatedByRemote: /*<The call is updated by remote while not yet answered (early dialog SIP UPDATE received).*/
+            NSLog(@"****** LinphoneCallEarlyUpdatedByRemote");
+            break;
+        case LinphoneCallEarlyUpdating: /*<We are updating the call while not yet answered (early dialog SIP UPDATE sent)*/
+            NSLog(@"****** LinphoneCallEarlyUpdating");
+            break;
+
         case LinphoneCallIncomingReceived:
             NSLog(@"****** LinphoneCallIncomingReceived");
         case LinphoneCallIncomingEarlyMedia:

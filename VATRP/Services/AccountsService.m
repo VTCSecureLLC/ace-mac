@@ -10,7 +10,6 @@
 #import "AccountModel.h"
 #import "FXKeyChain.h"
 
-#define USER_DEFAULTS_ACCOUNT_LIST @"USER_DEFAULTS_ACCOUNT_LIST"
 
 
 @interface AccountsService () {

@@ -586,6 +586,7 @@
                         [alert setMessageText:@"The user name and password that you entered do not match."];
                     }
 //                    [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                    [alert runModal];
                 }
                 else
                 {
@@ -594,9 +595,9 @@
                     if (![message isEqualToString:@"io error"])
                     {
                         [alert setMessageText:message];
+                        [alert runModal];
                     }
                 }
-                [alert runModal];
             }
             loginClicked = false;
             [self.loginButton setEnabled:YES];

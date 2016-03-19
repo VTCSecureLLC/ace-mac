@@ -127,19 +127,18 @@ BOOL isRTTLocallyEnabled;
 
 - (IBAction)onButtonHold:(id)sender
 {
-    LinphoneCall* currentCall = [[LinphoneAPI instance] linphoneCoreGetCurrentCall:[LinphoneManager getLc]];
-    if (currentCall)
-    {
-        LinphoneCallState call_state = linphone_call_get_state(currentCall);
+    LinphoneCallState call_state = linphone_call_get_state(call);
      
-        if (call_state == LinphoneCallPaused) {
-            linphone_core_resume_call([LinphoneManager getLc], currentCall);
-        } else {
-            linphone_core_pause_call([LinphoneManager getLc], currentCall);
-        }
-        
-        [self.buttonHold setEnabled:NO];
+    if (call_state == LinphoneCallPaused)
+    {
+       linphone_core_resume_call([LinphoneManager getLc], call);
     }
+    else
+    {
+       linphone_core_pause_call([LinphoneManager getLc], call);
+    }
+        
+    [self.buttonHold setEnabled:NO];
 }
 
 - (IBAction)onButtonVideo:(id)sender {

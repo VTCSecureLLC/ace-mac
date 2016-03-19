@@ -73,6 +73,9 @@
     else
     {
         [self setTitle:@"Add contact"];
+        [self.nameTextField setStringValue:@""];
+        [self.phoneTextField setStringValue:@""];
+        [self.favoritesCheckBox setState:NSOffState];
     }
     [self initCustomComboBox];
     [self fixInitialState];

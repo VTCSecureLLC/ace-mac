@@ -17,6 +17,7 @@
 #import <HockeySDK/HockeySDK.h>
 #import "LinphoneLocationManager.h"
 #import "SettingsHandler.h"
+#import "LinphoneAPI.h"
 
 @interface AppDelegate ()
 {
@@ -152,10 +153,14 @@
         self.homeWindowController = [[HomeWindowController alloc] init];
     }
     [self.homeWindowController showWindow:self];
-
+    if ([[SettingsHandler settingsHandler] isShowPreviewEnabled])
+    {
+        [[LinphoneAPI instance] linphoneShowSelfPreview:true];
+    }
     [self.menuItemSignOut setEnabled:true];
     [self.menuItemPreferences setEnabled:true];
     [self.menuItemMessages setEnabled:true];
+    [self.menuItemSelfPreview setEnabled:true];
 }
 
 -(NSPoint) getTabWindowOrigin{
@@ -258,6 +263,7 @@
     [self.menuItemSignOut setEnabled:false];
     [self.menuItemPreferences setEnabled:false];
     [self.menuItemMessages setEnabled:false];
+    [self.menuItemSelfPreview setEnabled:false];
   
     if ([[LinphoneManager instance] coreIsRunning]) {
         [[LinphoneManager instance] destroyLinphoneCore];
@@ -286,7 +292,7 @@
 
 - (IBAction)onMenuItemSelfPreview:(NSMenuItem *)sender
 {
-    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
+    [[SettingsHandler settingsHandler] setShowVideoSelfPreview:![[SettingsHandler settingsHandler]isShowPreviewEnabled]];
 }
 
 - (IBAction)onMenuItemGoToSupport:(NSMenuItem *)sender

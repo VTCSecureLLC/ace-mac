@@ -336,6 +336,14 @@
                     }
                 }
             }
+            else
+            {
+                if ([[SettingsHandler settingsHandler] isShowPreviewEnabled])
+                {
+                    [[LinphoneAPI instance] linphoneShowSelfPreview:true];
+                }
+
+            }
         }
             break;
         default:

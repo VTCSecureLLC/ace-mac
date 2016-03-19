@@ -25,6 +25,7 @@
 #import "Utils.h"
 #import "BackgroundedView.h"
 #import "SettingsHandler.h"
+#import "LinphoneAPI.h"
 
 @interface VideoView () <CallControllersViewDelegate> {
     NSTimer *timerCallDuration;
@@ -732,7 +733,12 @@
 }
 
 - (void)showVideoPreview {
-    if ([SettingsService getShowPreview]) {
+    bool previewEnabled = [[SettingsHandler settingsHandler] isShowPreviewEnabled];
+    if (call == nil)
+    {
+        [[LinphoneAPI instance] linphoneShowSelfPreview:previewEnabled];
+    }
+    if (previewEnabled) {
         LinphoneCore *lc = [LinphoneManager getLc];
         const char *cam = linphone_core_get_video_device(lc);
         linphone_core_set_video_device(lc, cam);

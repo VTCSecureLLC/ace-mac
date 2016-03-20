@@ -112,12 +112,18 @@ BOOL isRTTLocallyEnabled;
 
 -(void)initializeButtonsFromSettings
 {
-    int callCount = [[LinphoneAPI instance] getCurrentNumberOfCalls];
-    if (callCount ==1)
-    { // if it is 0, we do not need to so set up. if it is greater than 1, then we are already set up
+//    int callCount = [[LinphoneAPI instance] getCurrentNumberOfCalls];
+//    if (callCount ==1)
+//    { // if it is 0, we do not need to so set up. if it is greater than 1, then we are already set up
+    if ([[LinphoneAPI instance] callAppearsValid:call])
+    {
         [self updateUIForSpeakerMute:[self.settingsHandler isSpeakerMuted]];
         [self updateUIForMicrophoneMute:[self.settingsHandler isMicrophoneMuted]];
         [self updateUIForEnableVideo:[self.settingsHandler isVideoEnabled]];
+    }
+    else
+    {
+        NSLog(@"CallControllersView.initializeBUttonsFromSettings: trying o initialize but call does not appear to be valid");
     }
 }
 

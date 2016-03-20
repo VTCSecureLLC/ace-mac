@@ -23,6 +23,7 @@
                 <outlet property="providerTableView" destination="hhW-jG-K0V" id="8iq-Sx-wqP"/>
                 <outlet property="providersView" destination="B1g-TU-txL" id="8fO-9Q-ZG0"/>
                 <outlet property="textFieldNumber" destination="t2Q-8n-CGI" id="Suu-Bu-i4W"/>
+                <outlet property="textFieldStar" destination="JoW-Gu-Z8j" id="cIP-ss-cMq"/>
                 <outlet property="view" destination="c22-O7-iKe" id="B3a-SY-I9l"/>
                 <outlet property="viewZeroButton" destination="Urr-ab-7LG" id="Plf-9f-RR5"/>
             </connections>
@@ -287,7 +288,7 @@
                         <action selector="onButtonNumber:" target="-2" id="8nz-2D-eQA"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JoW-Gu-Z8j">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="JoW-Gu-Z8j">
                     <rect key="frame" x="40" y="44" width="22" height="41"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="*" id="dud-Oa-Dqw">
                         <font key="font" size="50" name=".HelveticaNeueDeskInterface-Regular"/>

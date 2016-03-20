@@ -293,6 +293,8 @@
                 [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
 //                bool micIsEnabled = linphone_core_mic_enabled(lc);
                 linphone_core_set_play_level(lc, 100);
+                // tell the rtt window to add observers
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
             }
             int playLevel = linphone_core_get_play_level(lc);
             int playbackGain = linphone_core_get_playback_gain_db(lc);
@@ -342,6 +344,10 @@
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondCallView];
                 const MSList *call_list = linphone_core_get_calls(lc);
                 currentCall = (LinphoneCall*)call_list->data;
+            }
+            else if (call_count == 0)
+            {
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
             }
             
             if (currentCall && aCall != currentCall) {

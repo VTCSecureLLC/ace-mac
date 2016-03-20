@@ -87,35 +87,13 @@ const NSInteger SIP_SIMPLE=1;
     [self.tableViewContent setBackgroundColor:[NSColor clearColor]];
     [self.textFieldMessage setDelegate:self];
     
-    // Do view setup here.
-    if (!observersAdded)
-    {
-        observersAdded = true;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(callUpdateEvent:)
-                                                     name:kLinphoneCallUpdate
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textComposeEvent:)
-                                                     name:kLinphoneTextComposeEvent
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textReceivedEvent:)
-                                                     name:kLinphoneTextReceived
-                                                   object:nil];
-    }
-
 }
 
 -(void) setHidden:(bool)hidden
 {
     [self.view setHidden:hidden];
     rttDisabledMessageHasBeenShown = false;
-    if (hidden)
-    {
-//        [self removeObservers];
-    }
-    else
+    if (!hidden)
     {
         [self initializeData];
     }
@@ -148,6 +126,27 @@ const NSInteger SIP_SIMPLE=1;
 - (void) setCustomFrame:(NSRect)frame {
     self.view.frame = frame;
     [self.scrollViewContent setFrame:NSMakeRect(0, 100, frame.size.width, frame.size.height - 100)];
+}
+
+-(void) addInCallObservers
+{
+    // Do view setup here.
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textComposeEvent:)
+                                                     name:kLinphoneTextComposeEvent
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
+    }
 }
 
 -(void) removeObservers
@@ -295,7 +294,8 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (void)textComposeEvent:(NSNotification *)notif {
     //New message is received rtt or sip simple
-
+    // Note: if we are not in call, do not try to do anything with the message.
+    
     //VATRP-1292 open chat window immediately when a new message is recieved.
     if(![ViewManager sharedInstance].callControllersView_delegate.bool_chat_window_open){
         [[ViewManager sharedInstance].callControllersView_delegate performChatButtonClick];

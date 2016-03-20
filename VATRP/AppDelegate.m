@@ -283,6 +283,7 @@
 -(void) SignOut
 {
     [self onMenuItemPreferencesSignOut:self.menuItemSignOut];
+    [self.settingsWindowController closeWindow];
 }
 
 - (IBAction)onSignOut:(NSMenuItem *)sender

@@ -98,6 +98,11 @@
 //    [[NSApplication sharedApplication] terminate:self];
 //}
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+    return true;
+}
+
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     LinphoneCore *lc = [LinphoneManager getLc];
     

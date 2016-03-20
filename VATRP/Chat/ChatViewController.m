@@ -16,7 +16,7 @@
 #import "CallService.h"
 #import "ChatService.h"
 
-@interface ChatViewController () <NSTextFieldDelegate>
+@interface ChatViewController () <NSTextFieldDelegate>//,NSTableViewDelegate, NSTableViewDataSource>
 {
     ChatContactTableCellView *selectedContactCell;
     
@@ -35,6 +35,7 @@
     CGFloat incomingTextLinesCount;
     
     bool observersAdded;
+    bool viewControlsInitialized;
 }
 
 
@@ -66,6 +67,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    if (viewControlsInitialized)
+    {
+        return;
+    }
+    viewControlsInitialized = true;
     // Do view setup here.
     if (!observersAdded)
     {
@@ -106,8 +112,6 @@
     incomingCellView = nil;
     incomingTextLinesCount = 1;
     stateNewMessage = NO;
-    
-    [self loadData];
 }
 
 - (void) initializeData
@@ -116,6 +120,8 @@
     self.scrollViewIncoming.hidden = YES;
     self.scrollViewOutgoing.hidden = YES;
     
+    [self loadData];
+
     if (self.selectUser) {
         LinphoneCore *lc = [LinphoneManager getLc];
         LinphoneProxyConfig *cfg = NULL;
@@ -149,7 +155,9 @@
             }
             
             if (index >= 0 ) {
-                [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:index] afterDelay:0.0];
+                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:index];
+                [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
+//                [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:index] afterDelay:0.0];
             }
         }
         
@@ -177,7 +185,9 @@
                 NSString *username = [NSString stringWithUTF8String:username_char];
                 
                 if (username && [username isEqualToString:self.selectUser]) {
-                    [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:i] afterDelay:0.0];
+                    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:i];
+                    [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
+//                    [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:i] afterDelay:0.0];
                     
                     break;
                 }
@@ -186,7 +196,9 @@
         
         self.selectUser = nil;
     } else {
-        [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:0] afterDelay:0.0];
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+        [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
+//        [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:0] afterDelay:0.0];
     }
 }
 

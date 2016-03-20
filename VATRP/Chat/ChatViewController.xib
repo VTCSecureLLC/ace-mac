@@ -18,7 +18,7 @@
                 <outlet property="textFieldRemoteUri" destination="oTF-IK-FJ7" id="lWR-Oj-r0G"/>
                 <outlet property="textViewIncoming" destination="pHD-MQ-QJC" id="PB5-Lo-3h0"/>
                 <outlet property="textViewOutgoing" destination="77t-c4-z9J" id="V3b-rj-BOy"/>
-                <outlet property="view" destination="c22-O7-iKe" id="rFT-mz-4H8"/>
+                <outlet property="view" destination="c22-O7-iKe" id="Rci-0E-pzw"/>
                 <outlet property="viewChatContentBG" destination="wGQ-i2-3gL" id="lbD-X1-AZD"/>
                 <outlet property="viewSeparateLine" destination="Sjj-Ad-sbK" id="52z-e5-8d2"/>
                 <outlet property="viewTextEnterBG" destination="akr-Ut-EiW" id="hfn-pW-Cp6"/>

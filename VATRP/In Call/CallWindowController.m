@@ -29,7 +29,7 @@
     pos.y = barOrigin.y;
     [self.window setFrameOrigin : pos];
     
-    [self.window setTitle:@"CallWindowController"];
+    [self.window setTitle:@"Call"];
 }
 
 - (CallViewController*) getCallViewController {

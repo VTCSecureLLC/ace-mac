@@ -80,7 +80,7 @@
 
     [self changeViewTo:generalViewController.view];
     
-    [self.window setTitle:@"SettingsWindowController"];
+    [self.window setTitle:@"Settings"];
 
 }
 

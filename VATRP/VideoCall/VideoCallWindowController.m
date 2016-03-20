@@ -45,7 +45,7 @@
     
     VideoView* videoView = [[VideoView alloc] init];
     [self.window.contentView addSubview:[videoView view]];
-    [self.window setTitle:@"VideoCallWindowController"];
+    [self.window setTitle:@"Video Call"];
 
 }
 

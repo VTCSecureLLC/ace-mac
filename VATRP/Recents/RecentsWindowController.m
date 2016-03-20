@@ -39,7 +39,7 @@
     
     RecentsView* recentsView = [[RecentsView alloc] init];
     [self.window.contentView addSubview:recentsView.view];
-    [self.window setTitle:@"RecentsWindowController"];
+    [self.window setTitle:@"Recents"];
 
 }
 

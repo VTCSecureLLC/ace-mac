@@ -71,6 +71,7 @@
 -(void) setMuteSpeaker:(bool)mute;
 -(void) setMuteMicrophone:(bool)mute;
 -(void) setShowSelfView:(bool)show;
+-(void)setShowVideoSelfPreview:(bool)show;
 -(void) setEnableEchoCancellation:(bool)show;
 -(void) setMuteCamera:(bool)enable;
 

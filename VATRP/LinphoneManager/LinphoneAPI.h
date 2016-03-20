@@ -52,6 +52,7 @@
 -(float)linphoneCallStatsGetSenderAudioLossRate:(const LinphoneCallStats*)audioStats;
 -(float)linphoneCallStatsGetSenderVideoLossRate:(const LinphoneCallStats*)videoStats;
 
+-(void)linphoneShowSelfPreview:(bool)show;
 
 @end
 

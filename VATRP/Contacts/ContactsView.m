@@ -24,6 +24,7 @@
 @interface ContactsView ()<ContactTableCellViewDelegate> {
     NSString *selectedProviderName;
     NSString *dialPadFilter;
+    bool favoriteTabsButtonsAdded;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollViewContacts;
@@ -56,8 +57,8 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    static BOOL firstTime = YES;
-    if (firstTime) {
+    if (!favoriteTabsButtonsAdded)
+    {
         // ToDo VATRP-2376: defining the allCOntats and favoriteContacts buttons programmatically until the storyboard is managable.
         //   Once the custom controls are written for each panel, move all control creation to the control definition.
         _allContactsButton = [[NSButton alloc]init];//[[NSButton alloc]initWithFrame:CGRectMake(0, 50, 75, 38)];
@@ -87,7 +88,7 @@
         [self setObservers];
         
         self.contactInfos = [NSMutableArray new];
-        firstTime = NO;
+        favoriteTabsButtonsAdded = true;
     }
     [self refreshContactList];
 }

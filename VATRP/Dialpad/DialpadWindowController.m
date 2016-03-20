@@ -50,7 +50,7 @@
     DialPadView* dialPadView = [[DialPadView alloc] init];
     [self.window.contentView addSubview:[dialPadView view]];
     
-    [self.window setTitle:@"DialpadWindowController"];
+    [self.window setTitle:@"Dialpad"];
 
 }
 

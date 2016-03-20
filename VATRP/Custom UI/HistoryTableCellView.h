@@ -14,6 +14,8 @@
 @interface HistoryTableCellView : NSTableCellView
 
 - (void) setCallLog:(LinphoneCallLog*)callLog;
+-(bool) addContactOnRowSelection;
+-(NSDictionary*)getUserInformation;
 
 @property (weak) IBOutlet NSImageView *imageViewCallStatus;
 @property (weak) IBOutlet NSTextField *textFieldRemoteName;
@@ -27,8 +29,5 @@
 
 @protocol HistoryTableCellViewViewDelegate <NSObject>
 
-@optional
-
-- (void)didClickPlusButton:(HistoryTableCellView*)contactCellView withInfo:(NSDictionary*)info;
 
 @end

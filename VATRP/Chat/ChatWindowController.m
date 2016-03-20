@@ -39,7 +39,7 @@
     ChatViewController* chatViewController = [[ChatViewController alloc] init];
     [self.window.contentView addSubview:[chatViewController view]];
     [chatViewController initializeData];
-    [self.window setTitle:@"ChatWindowController"];
+    [self.window setTitle:@"Messages"];
 
 }
 

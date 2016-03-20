@@ -74,13 +74,13 @@
     accountsViewController = [[AccountsViewController alloc] init];
     preferencesViewController = [[PreferencesViewController alloc] init];
     mediaViewController = [[MediaViewController alloc] init];
-    testingViewController = [[TestingViewController alloc] init];
+    testingViewController = [[TestingViewController alloc] init:self];
     
     preferencesIndex = -1;
 
     [self changeViewTo:generalViewController.view];
     
-    [self.window setTitle:@"SettingsWindowController"];
+    [self.window setTitle:@"Settings"];
 
 }
 
@@ -187,6 +187,11 @@
     }
 }
 
+-(void)closeWindow
+{
+    [self close];
+}
+
 - (void) dealloc {
     
     if (preferencesIndex > -1)
@@ -196,9 +201,12 @@
     if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
         [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
     }
-    linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
-    linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
-    linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
+    if (![[SettingsHandler settingsHandler] isShowPreviewEnabled])
+    {
+        linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
+        linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
+        linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
+    }
 }
 
 @end

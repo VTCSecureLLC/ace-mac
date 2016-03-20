@@ -25,6 +25,7 @@
 #import "Utils.h"
 #import "BackgroundedView.h"
 #import "SettingsHandler.h"
+#import "LinphoneAPI.h"
 
 @interface VideoView () <CallControllersViewDelegate> {
     NSTimer *timerCallDuration;
@@ -140,6 +141,7 @@
     self.secondCallView.view.hidden = true;
     self.secondIncomingCallView = [[SecondIncomingCallView alloc] init];
     [self.secondIncomingCallContainer addSubview:[self.secondIncomingCallView view]];
+    [self.secondIncomingCallView setHidden:true];
     self.secondIncomingCallContainer.hidden = true;
     
     if (!observersAdded)
@@ -607,13 +609,15 @@
 
 - (void)showSecondIncomingCallView:(LinphoneCall *)aCall {
     [self.secondIncomingCallView setCall:aCall];
-    [self.secondIncomingCallView setHidden:NO];
+    [self.secondIncomingCallView setHidden:false];
     [self.secondIncomingCallContainer setHidden:false];
     [self.callControllsConteinerView setHidden:true];
 }
 
 - (void)hideSecondIncomingCallView {
-    [self.secondIncomingCallContainer setHidden:YES];
+    [self.secondIncomingCallView setHidden:true];
+    [self.secondIncomingCallContainer setHidden:true];
+    [self.callControllsConteinerView setHidden:false];
 }
 
 - (void)setCallToSecondCallView:(LinphoneCall*)aCall {
@@ -623,6 +627,19 @@
 - (void)hideSecondCallView {
     [self.secondCallView setCall:nil];
     [self.secondCallView setHidden:YES];
+    // verify that the call being held here is the current call
+    LinphoneCall* remainingCall = [[CallService sharedInstance] getCurrentCall];
+    if (remainingCall != call)
+    {
+        // then we need to update the call here and in children that retain a pointer to the call
+        [self setCall:remainingCall];
+        [[CallService sharedInstance] resume:remainingCall];
+    } // otherwise the current call is the remaining call
+    
+    if (call == nil)
+    {
+        NSLog(@"VideoView.hideSecondCallView: The second call view is being hidden and the current call is null.");
+    }
 }
 
 - (void) inCallTick:(NSTimer*)timer {
@@ -707,7 +724,8 @@
 - (void)setMouseInCallWindow {
     if(!call) return;
     
-    if ([self.secondIncomingCallContainer isHidden] == false)
+    
+    if ([self.secondIncomingCallView isHidden] == false)
     {
         return;
     }
@@ -732,7 +750,12 @@
 }
 
 - (void)showVideoPreview {
-    if ([SettingsService getShowPreview]) {
+    bool previewEnabled = [[SettingsHandler settingsHandler] isShowPreviewEnabled];
+    if (call == nil)
+    {
+        [[LinphoneAPI instance] linphoneShowSelfPreview:previewEnabled];
+    }
+    if (previewEnabled) {
         LinphoneCore *lc = [LinphoneManager getLc];
         const char *cam = linphone_core_get_video_device(lc);
         linphone_core_set_video_device(lc, cam);

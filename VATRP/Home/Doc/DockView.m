@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "ChatService.h"
 #import "ResourcesWindowController.h"
+#import "LinphoneAPI.h"
 
 @interface DockView () {
     NSButton *selectedDocViewItem;

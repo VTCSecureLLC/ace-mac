@@ -586,12 +586,18 @@
                         [alert setMessageText:@"The user name and password that you entered do not match."];
                     }
 //                    [alert setMessageText:@"Either the user name or the password is incorrect. Please enter a valid user name and password."];
+                    [alert runModal];
                 }
                 else
                 {
-                    [alert setMessageText:message];
+                    NSString* messageString = [NSString stringWithFormat:@"Linphone registration Error event: message=%@", message];
+                    NSLog(@"%@",messageString);
+                    if (![message isEqualToString:@"io error"])
+                    {
+                        [alert setMessageText:message];
+                        [alert runModal];
+                    }
                 }
-                [alert runModal];
             }
             loginClicked = false;
             [self.loginButton setEnabled:YES];

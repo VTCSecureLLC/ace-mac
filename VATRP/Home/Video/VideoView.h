@@ -13,7 +13,7 @@
 @interface VideoView : NSViewController<SettingsSelfViewDelegate>
 
 @property (nonatomic, assign) LinphoneCall* call;
-
+- (bool)isInCall;
 - (void)createNumpadView;
 - (void)setIncomingCall:(LinphoneCall*)acall;
 - (void)setOutgoingCall:(LinphoneCall*)acall;

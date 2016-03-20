@@ -286,6 +286,22 @@ static void chatTable_free_chatrooms(void *data) {
     NSInteger count = ms_list_size(messageList);
     return count;
 }
+- (IBAction)onNewClick:(NSButton *)sender
+{
+    stateNewMessage = YES;
+    
+    [self.tableViewContacts deselectAll:nil];
+    if (selectedContactCell) [selectedContactCell.layer setBackgroundColor:[NSColor clearColor].CGColor];
+    selectedChatRoom = NULL;
+    [self updateContentData];
+    
+    [self selectNewMessage];
+    
+    [self.tableViewContacts reloadData];
+    [self.tableViewContent reloadData];
+    
+    [self.tableViewContacts scrollRowToVisible:0];
+}
 
 #if defined __MAC_10_9 || defined __MAC_10_8
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -439,8 +455,10 @@ static void chatTable_free_chatrooms(void *data) {
         selectedContactCell = selectedCell;
         
         selectedChatRoom = (LinphoneChatRoom *)ms_list_nth_data(contacts, (int)index);
-        linphone_chat_room_mark_as_read(selectedChatRoom);
-        
+        if (selectedChatRoom != nil)
+        {
+            linphone_chat_room_mark_as_read(selectedChatRoom);
+        }
         //        linphone_chat_room_delete_history(selectedChatRoom);
         //        linphone_chat_room_unref(selectedChatRoom);
         //        contacts = ms_list_remove(contacts, selectedChatRoom);
@@ -452,12 +470,13 @@ static void chatTable_free_chatrooms(void *data) {
         
         NSInteger count = ms_list_size(messageList);
         [self.tableViewContent scrollRowToVisible:count-1];
+        if (selectedChatRoom != nil)
+        {
+            const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
+            const char* lUserName = linphone_address_get_username(addr);
         
-        const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
-        const char* lUserName = linphone_address_get_username(addr);
-        
-        if (lUserName)
-            self.textFieldRemoteUri.stringValue = [NSString stringWithUTF8String:lUserName];
+            if (lUserName)
+                self.textFieldRemoteUri.stringValue = [NSString stringWithUTF8String:lUserName];
         
         [self.textFieldNoRecipient setHidden:YES];
         [self.textFieldNoRecipient resignFirstResponder];
@@ -499,7 +518,7 @@ static void chatTable_free_chatrooms(void *data) {
                 //                self.scrollViewContent.hidden = YES;
             }
         }
-        
+        }
         return YES;
     }
     
@@ -514,22 +533,6 @@ static void chatTable_free_chatrooms(void *data) {
     //        [self.tableViewContacts reloadData];
     //        [self.tableViewContent reloadData];
     //    }
-}
-
-- (IBAction)onButtonNewChat:(id)sender {
-    stateNewMessage = YES;
-    
-    [self.tableViewContacts deselectAll:nil];
-    if (selectedContactCell) [selectedContactCell.layer setBackgroundColor:[NSColor clearColor].CGColor];
-    selectedChatRoom = NULL;
-    [self updateContentData];
-    
-    [self selectNewMessage];
-    
-    [self.tableViewContacts reloadData];
-    [self.tableViewContent reloadData];
-    
-    [self.tableViewContacts scrollRowToVisible:0];
 }
 
 - (IBAction)onButtonSend:(id)sender {

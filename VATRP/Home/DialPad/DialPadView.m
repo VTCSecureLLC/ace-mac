@@ -172,9 +172,9 @@
 
 
 - (IBAction)onButtonNumber:(id)sender {
-    NSButton *button = (NSButton*)sender;
+    NSControl *control = (NSControl*)sender;
     
-    switch (button.tag) {
+    switch (control.tag) {
         case 10:
         case 12: {
             self.textFieldNumber.stringValue = [self.textFieldNumber.stringValue stringByAppendingString:@"*"];
@@ -187,7 +187,7 @@
         }
             break;
         default: {
-            NSString *number = [NSString stringWithFormat:@"%ld", (long)button.tag];
+            NSString *number = [NSString stringWithFormat:@"%ld", (long)control.tag];
             const char *charArray = [number UTF8String];
             char charNumber = charArray[0];
             linphone_core_play_dtmf([LinphoneManager getLc], charNumber, 100);

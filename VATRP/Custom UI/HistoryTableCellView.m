@@ -177,11 +177,16 @@
 
 -(bool) addContactOnRowSelection
 {
-    if (self.plusButton.hidden == false)
+    NSPoint mouseLocation = [[self window] mouseLocationOutsideOfEventStream];
+    mouseLocation = [self convertPoint:mouseLocation fromView:nil];
+    if (NSPointInRect(mouseLocation, [self.plusButton bounds]))
     {
         return true;
     }
-    return false;
+    else
+    {
+        return false;
+    }
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent {

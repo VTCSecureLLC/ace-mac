@@ -627,6 +627,19 @@
 - (void)hideSecondCallView {
     [self.secondCallView setCall:nil];
     [self.secondCallView setHidden:YES];
+    // verify that the call being held here is the current call
+    LinphoneCall* remainingCall = [[CallService sharedInstance] getCurrentCall];
+    if (remainingCall != call)
+    {
+        // then we need to update the call here and in children that retain a pointer to the call
+        [self setCall:remainingCall];
+        [[CallService sharedInstance] resume:remainingCall];
+    } // otherwise the current call is the remaining call
+    
+    if (call == nil)
+    {
+        NSLog(@"VideoView.hideSecondCallView: The second call view is being hidden and the current call is null.");
+    }
 }
 
 - (void) inCallTick:(NSTimer*)timer {

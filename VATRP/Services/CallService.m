@@ -199,8 +199,10 @@
             if (callToSwapTo != nil)
             {
                 linphone_core_resume_call([LinphoneManager getLc], callToSwapTo);
+                // below should be handled by the call resume - when the streams are runnign again
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:callToSwapTo];
                 currentCall = callToSwapTo;
+                callToSwapTo = nil; // clear after swapping
             }
             break;
         case LinphoneCallResuming: /**<The call is being resumed by local end*/
@@ -281,7 +283,7 @@
             
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
             
-            // - there is an issue here. As of 2-9-2016 if we cann enable mic when there is more than one call there is a crash -
+            // - there is an issue here. As of 2-9-2016 if we can enable mic when there is more than one call there is a crash -
             //    linphone is making the settings on each call without checking to see if the audio stream in null. So for now we need
             //    a notion of whether or not this is the first call on the line
             if ([CallService callsCount] < 2)
@@ -293,6 +295,17 @@
                 [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
 //                bool micIsEnabled = linphone_core_mic_enabled(lc);
                 linphone_core_set_play_level(lc, 100);
+                // tell the rtt window to add observers
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
+            }
+            else
+            {
+                if (currentCall != aCall)
+                {
+                    // handle change for call waiting
+                    // update my pointer
+                    currentCall = aCall;
+                }
             }
             int playLevel = linphone_core_get_play_level(lc);
             int playbackGain = linphone_core_get_playback_gain_db(lc);
@@ -342,6 +355,10 @@
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondCallView];
                 const MSList *call_list = linphone_core_get_calls(lc);
                 currentCall = (LinphoneCall*)call_list->data;
+            }
+            else if (call_count == 0)
+            {
+                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
             }
             
             if (currentCall && aCall != currentCall) {

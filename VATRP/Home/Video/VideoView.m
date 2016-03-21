@@ -299,6 +299,12 @@
             //    LinphoneCallStreamsRunning, /**<The media streams are established and running*/
         case LinphoneCallStreamsRunning:
         {
+            // handle change for call waiting
+            if (call != acall)
+            {
+                // update myself and references
+                [self setCall:acall];
+            }
             SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
             [self showSelfViewFromSettings:[settingsHandlerInstance isShowSelfViewEnabled]];
             [self.callerImageView setHidden:true];

@@ -14,4 +14,9 @@
 
 - (void) updateViewForDisplay;
 
+// we want the observers to be added when we are in call, removed if we are not in a call.
+-(void) addInCallObservers;
+-(void) removeObservers;
+
+
 @end

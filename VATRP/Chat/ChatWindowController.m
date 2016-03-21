@@ -10,6 +10,8 @@
 
 @interface ChatWindowController ()
 
+@property (strong) ChatViewController* chatViewController;
+
 @end
 
 @implementation ChatWindowController
@@ -36,10 +38,10 @@
     
     self.isShow = YES;
     
-    ChatViewController* chatViewController = [[ChatViewController alloc] init];
-    [self.window.contentView addSubview:[chatViewController view]];
-    [chatViewController initializeData];
-    [self.window setTitle:@"ChatWindowController"];
+    self.chatViewController = [[ChatViewController alloc] init];
+    [self.window.contentView addSubview:[self.chatViewController view]];
+    [self.chatViewController initializeData];
+    [self.window setTitle:@"Messages"];
 
 }
 

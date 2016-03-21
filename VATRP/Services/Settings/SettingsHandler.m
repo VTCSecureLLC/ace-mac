@@ -13,7 +13,8 @@
 #import "SettingsService.h"
 #import "SDPNegotiationService.h"
 #import "DefaultSettingsManager.h"
-
+#import "LinphoneAPI.h"
+#import "AppDelegate.h"
 @implementation SettingsHandler
 
 #pragma mark singleton methods
@@ -321,6 +322,13 @@
         {
             [self.settingsSelfViewDelegate showSelfViewFromSettings:show];
         }
+}
+
+-(void)setShowVideoSelfPreview:(bool)show
+{
+    [self setUserSettingBool:VIDEO_SHOW_PREVIEW withValue:show];
+
+    [[LinphoneAPI instance] linphoneShowSelfPreview:show];
 }
 
 -(void)setEnableEchoCancellation:(bool)enable

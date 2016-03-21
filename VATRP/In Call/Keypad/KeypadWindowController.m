@@ -28,7 +28,7 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    [self.window setTitle:@"KeypadWindowController"];
+    [self.window setTitle:@"Keypad"];
 
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     DialPadView* dialPadView = [[DialPadView alloc] init];

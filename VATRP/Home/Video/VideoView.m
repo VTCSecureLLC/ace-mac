@@ -25,6 +25,7 @@
 #import "Utils.h"
 #import "BackgroundedView.h"
 #import "SettingsHandler.h"
+#import "LinphoneAPI.h"
 
 @interface VideoView () <CallControllersViewDelegate> {
     NSTimer *timerCallDuration;
@@ -298,6 +299,12 @@
             //    LinphoneCallStreamsRunning, /**<The media streams are established and running*/
         case LinphoneCallStreamsRunning:
         {
+            // handle change for call waiting
+            if (call != acall)
+            {
+                // update myself and references
+                [self setCall:acall];
+            }
             SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
             [self showSelfViewFromSettings:[settingsHandlerInstance isShowSelfViewEnabled]];
             [self.callerImageView setHidden:true];
@@ -626,6 +633,19 @@
 - (void)hideSecondCallView {
     [self.secondCallView setCall:nil];
     [self.secondCallView setHidden:YES];
+    // verify that the call being held here is the current call
+    LinphoneCall* remainingCall = [[CallService sharedInstance] getCurrentCall];
+    if (remainingCall != call)
+    {
+        // then we need to update the call here and in children that retain a pointer to the call
+        [self setCall:remainingCall];
+        [[CallService sharedInstance] resume:remainingCall];
+    } // otherwise the current call is the remaining call
+    
+    if (call == nil)
+    {
+        NSLog(@"VideoView.hideSecondCallView: The second call view is being hidden and the current call is null.");
+    }
 }
 
 - (void) inCallTick:(NSTimer*)timer {
@@ -736,7 +756,12 @@
 }
 
 - (void)showVideoPreview {
-    if ([SettingsService getShowPreview]) {
+    bool previewEnabled = [[SettingsHandler settingsHandler] isShowPreviewEnabled];
+    if (call == nil)
+    {
+        [[LinphoneAPI instance] linphoneShowSelfPreview:previewEnabled];
+    }
+    if (previewEnabled) {
         LinphoneCore *lc = [LinphoneManager getLc];
         const char *cam = linphone_core_get_video_device(lc);
         linphone_core_set_video_device(lc, cam);

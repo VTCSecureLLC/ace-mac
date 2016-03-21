@@ -56,7 +56,7 @@
     SelfVideoViewController* selfVideoViewController = [[SelfVideoViewController alloc] init];
     [self.window.contentView addSubview:[selfVideoViewController view]];
     
-    [self.window setTitle:@"VideoMailWindowController"];
+    [self.window setTitle:@"Video Mail"];
 
 }
 

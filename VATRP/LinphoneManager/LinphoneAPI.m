@@ -249,5 +249,18 @@
 // @return The RTP statistics that have been computed by the remote end for the call.
 // LINPHONE_PUBLIC const rtp_stats_t * 	linphone_call_log_get_remote_stats (const LinphoneCallLog *cl)
 
+-(void)linphoneShowSelfPreview:(bool)show
+{
+    // 1. verify that the linphone core exists and is running
+    LinphoneCore* linphoneCore = [LinphoneManager getLc];
+    if (linphoneCore == nil)
+    {
+        return;
+    }
+
+    linphone_core_enable_video_preview([LinphoneManager getLc], show);
+    linphone_core_use_preview_window([LinphoneManager getLc], show);
+    linphone_core_enable_self_view([LinphoneManager getLc], show);
+}
 
 @end

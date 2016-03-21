@@ -82,6 +82,8 @@
 
 - (IBAction)onCheckBoxShowPreview:(id)sender {
     isChanged = YES;
+    bool showSelfPreview = [self.buttonShowPreview state];
+    [self.settingsHandler setShowVideoSelfPreview:showSelfPreview];
 }
 
 - (void) save {

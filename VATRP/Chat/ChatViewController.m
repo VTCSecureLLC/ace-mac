@@ -16,7 +16,7 @@
 #import "CallService.h"
 #import "ChatService.h"
 
-@interface ChatViewController () <NSTextFieldDelegate>
+@interface ChatViewController () <NSTextFieldDelegate>//,NSTableViewDelegate, NSTableViewDataSource>
 {
     ChatContactTableCellView *selectedContactCell;
     
@@ -35,6 +35,7 @@
     CGFloat incomingTextLinesCount;
     
     bool observersAdded;
+    bool viewControlsInitialized;
 }
 
 
@@ -66,6 +67,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    if (viewControlsInitialized)
+    {
+        return;
+    }
+    viewControlsInitialized = true;
     // Do view setup here.
     if (!observersAdded)
     {
@@ -106,8 +112,6 @@
     incomingCellView = nil;
     incomingTextLinesCount = 1;
     stateNewMessage = NO;
-    
-    [self loadData];
 }
 
 - (void) initializeData
@@ -116,6 +120,8 @@
     self.scrollViewIncoming.hidden = YES;
     self.scrollViewOutgoing.hidden = YES;
     
+    [self loadData];
+
     if (self.selectUser) {
         LinphoneCore *lc = [LinphoneManager getLc];
         LinphoneProxyConfig *cfg = NULL;
@@ -149,7 +155,9 @@
             }
             
             if (index >= 0 ) {
-                [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:index] afterDelay:0.0];
+                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:index];
+                [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
+//                [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:index] afterDelay:0.0];
             }
         }
         
@@ -177,7 +185,9 @@
                 NSString *username = [NSString stringWithUTF8String:username_char];
                 
                 if (username && [username isEqualToString:self.selectUser]) {
-                    [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:i] afterDelay:0.0];
+                    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:i];
+                    [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
+//                    [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:i] afterDelay:0.0];
                     
                     break;
                 }
@@ -186,7 +196,9 @@
         
         self.selectUser = nil;
     } else {
-        [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:0] afterDelay:0.0];
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+        [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
+//        [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:0] afterDelay:0.0];
     }
 }
 
@@ -285,6 +297,22 @@ static void chatTable_free_chatrooms(void *data) {
     
     NSInteger count = ms_list_size(messageList);
     return count;
+}
+- (IBAction)onNewClick:(NSButton *)sender
+{
+    stateNewMessage = YES;
+    
+    [self.tableViewContacts deselectAll:nil];
+    if (selectedContactCell) [selectedContactCell.layer setBackgroundColor:[NSColor clearColor].CGColor];
+    selectedChatRoom = NULL;
+    [self updateContentData];
+    
+    [self selectNewMessage];
+    
+    [self.tableViewContacts reloadData];
+    [self.tableViewContent reloadData];
+    
+    [self.tableViewContacts scrollRowToVisible:0];
 }
 
 #if defined __MAC_10_9 || defined __MAC_10_8
@@ -439,8 +467,10 @@ static void chatTable_free_chatrooms(void *data) {
         selectedContactCell = selectedCell;
         
         selectedChatRoom = (LinphoneChatRoom *)ms_list_nth_data(contacts, (int)index);
-        linphone_chat_room_mark_as_read(selectedChatRoom);
-        
+        if (selectedChatRoom != nil)
+        {
+            linphone_chat_room_mark_as_read(selectedChatRoom);
+        }
         //        linphone_chat_room_delete_history(selectedChatRoom);
         //        linphone_chat_room_unref(selectedChatRoom);
         //        contacts = ms_list_remove(contacts, selectedChatRoom);
@@ -452,12 +482,13 @@ static void chatTable_free_chatrooms(void *data) {
         
         NSInteger count = ms_list_size(messageList);
         [self.tableViewContent scrollRowToVisible:count-1];
+        if (selectedChatRoom != nil)
+        {
+            const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
+            const char* lUserName = linphone_address_get_username(addr);
         
-        const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
-        const char* lUserName = linphone_address_get_username(addr);
-        
-        if (lUserName)
-            self.textFieldRemoteUri.stringValue = [NSString stringWithUTF8String:lUserName];
+            if (lUserName)
+                self.textFieldRemoteUri.stringValue = [NSString stringWithUTF8String:lUserName];
         
         [self.textFieldNoRecipient setHidden:YES];
         [self.textFieldNoRecipient resignFirstResponder];
@@ -499,7 +530,7 @@ static void chatTable_free_chatrooms(void *data) {
                 //                self.scrollViewContent.hidden = YES;
             }
         }
-        
+        }
         return YES;
     }
     
@@ -514,22 +545,6 @@ static void chatTable_free_chatrooms(void *data) {
     //        [self.tableViewContacts reloadData];
     //        [self.tableViewContent reloadData];
     //    }
-}
-
-- (IBAction)onButtonNewChat:(id)sender {
-    stateNewMessage = YES;
-    
-    [self.tableViewContacts deselectAll:nil];
-    if (selectedContactCell) [selectedContactCell.layer setBackgroundColor:[NSColor clearColor].CGColor];
-    selectedChatRoom = NULL;
-    [self updateContentData];
-    
-    [self selectNewMessage];
-    
-    [self.tableViewContacts reloadData];
-    [self.tableViewContent reloadData];
-    
-    [self.tableViewContacts scrollRowToVisible:0];
 }
 
 - (IBAction)onButtonSend:(id)sender {

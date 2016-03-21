@@ -123,7 +123,7 @@ BOOL isRTTLocallyEnabled;
     }
     else
     {
-        NSLog(@"CallControllersView.initializeBUttonsFromSettings: trying o initialize but call does not appear to be valid");
+        NSLog(@"CallControllersView.initializeBUttonsFromSettings: trying to initialize but call does not appear to be valid");
     }
 }
 

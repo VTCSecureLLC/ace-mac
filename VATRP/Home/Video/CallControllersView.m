@@ -23,6 +23,7 @@
     BOOL isSendingVideo;
     BOOL chat_window_open;
     BOOL videoCurrentlyEnabled;
+    bool observersAdded;
     
     
     CallInfoWindowController *callInfoWindowController;
@@ -104,10 +105,14 @@ BOOL isRTTLocallyEnabled;
     
     self.view.wantsLayer = YES;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+    }
 }
 
 -(void)initializeButtonsFromSettings

@@ -18,6 +18,7 @@
     NSArray *dockViewButtons;
     
     NSTextField *labelMessedCalls;
+    bool observersAdded;
 }
 @property (strong) HomeViewController* parent;
 
@@ -79,11 +80,14 @@
     [labelMessedCalls setHidden:YES];
     [self.view addSubview:labelMessedCalls];
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+    }
 }
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

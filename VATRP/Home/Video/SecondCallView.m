@@ -13,6 +13,7 @@
 
 @interface SecondCallView () {
     NSTimer *timerCallDuration;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet BackgroundedView *viewAlphaed;
@@ -57,10 +58,13 @@
     
     self.labelDisplayName.wantsLayer = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+    if (observersAdded)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+    }
 }
 
 -(void)dealloc{

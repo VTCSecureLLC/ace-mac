@@ -25,6 +25,7 @@
     NSString *selectedProviderName;
     NSString *dialPadFilter;
     bool favoriteTabsButtonsAdded;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollViewContacts;
@@ -85,7 +86,11 @@
         [self.addContactButton setAction:@selector(onButtonAddContact:)];
         
         [self.addContactButton becomeFirstResponder];
-        [self setObservers];
+        if (!observersAdded)
+        {
+            observersAdded = true;
+            [self setObservers];
+        }
         
         self.contactInfos = [NSMutableArray new];
         favoriteTabsButtonsAdded = true;

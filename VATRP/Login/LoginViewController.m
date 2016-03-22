@@ -21,6 +21,7 @@
 @interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
     bool loginClicked;
+    bool observersAdded;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
 
@@ -107,16 +108,16 @@
     }
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     [self.comboBoxProviderSelect removeAllItems];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kLinphoneGlobalStateUpdate
-                                                  object:nil];
-    
-
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
 #pragma mark - Login methods

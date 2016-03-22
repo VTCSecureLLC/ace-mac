@@ -115,7 +115,7 @@ bool dialPadIsShown;
     
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
 
-    [self setObservers];
+    [self setObservers]; // locked by uiInitialized
     NSImageView *imgView;
     
     NSImage *img;

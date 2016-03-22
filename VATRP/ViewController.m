@@ -18,6 +18,7 @@
 
 @interface ViewController () {
     ChatWindowController *chatWindowController;
+    bool observersAdded;
 }
 
 @property (nonatomic, retain) ContactsWindowController *contactsWindowController;
@@ -50,22 +51,25 @@
 
 //    [[AppDelegate sharedInstance].menuItemPreferences setAction:@selector(onMenuItemPreferences:)];
 
+    if (!observersAdded)
+    {
+        observersAdded = true;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(registrationUpdateEvent:)
-                                                 name:kLinphoneRegistrationUpdate
-                                               object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(registrationUpdateEvent:)
+                                                     name:kLinphoneRegistrationUpdate
+                                                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(chatUnreadMessageEvent:)
-                                                 name:kCHAT_UNREAD_MESSAGE
-                                               object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(chatUnreadMessageEvent:)
+                                                     name:kCHAT_UNREAD_MESSAGE
+                                                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(chatCleareUnreadMessageEvent:)
-                                                 name:kCHAT_CLEARE_UNREAD_MESSAGES
-                                               object:nil];
-    
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(chatCleareUnreadMessageEvent:)
+                                                     name:kCHAT_CLEARE_UNREAD_MESSAGES
+                                                   object:nil];
+    }
     linphone_core_set_native_video_window_id([LinphoneManager getLc], (__bridge void *)(self.view));
     linphone_core_use_preview_window([LinphoneManager getLc], YES);
     linphone_core_set_native_preview_window_id([LinphoneManager getLc], (__bridge void *)(self.view));

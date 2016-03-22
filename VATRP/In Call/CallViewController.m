@@ -307,6 +307,7 @@ dispatch_queue_t callAlertAnimationQueue;
 }
 
 - (void)dismiss {
+    [self stopInCallTimer];
     VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
     [videoCallWindowController close];
 
@@ -314,13 +315,16 @@ dispatch_queue_t callAlertAnimationQueue;
     callInfoWindowController = nil;
     
     [[[CallService sharedInstance] getCallWindowController] close];
+    
+}
 
+-(void)stopInCallTimer
+{
     if (timerCallDuration && [timerCallDuration isValid]) {
         [timerCallDuration invalidate];
         timerCallDuration = nil;
     }
 }
-
 - (void)update {
     [self view]; //Force view load
     
@@ -351,6 +355,10 @@ dispatch_queue_t callAlertAnimationQueue;
     call = acall;
     [self update];
     [self callUpdate:call state:linphone_call_get_state(call)];
+    if (call == nil)
+    {
+        [self stopInCallTimer];
+    }
 }
 
 - (void)setOutgoingCall:(LinphoneCall*)acall {

@@ -531,7 +531,12 @@
     [self.callControllersView dismisCallInfoWindow];
     
     [[[CallService sharedInstance] getCallWindowController] close];
-    
+
+    [self stopInCallTimer];
+
+}
+-(void)stopInCallTimer
+{
     if (timerCallDuration && [timerCallDuration isValid]) {
         [timerCallDuration invalidate];
         timerCallDuration = nil;
@@ -590,6 +595,11 @@
     if (call) {
         [self update];
         [self.callControllersView setCall:call];
+    }
+    if (call == nil)
+    {
+        // invalidate the timer if there is no current call
+        [self stopInCallTimer];
     }
 }
 

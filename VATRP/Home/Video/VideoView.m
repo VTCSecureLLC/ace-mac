@@ -536,6 +536,8 @@
         [timerCallDuration invalidate];
         timerCallDuration = nil;
     }
+    
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].dialPadView setDialerText:@""];
 }
 
 - (void)update {

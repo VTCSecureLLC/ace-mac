@@ -13,6 +13,7 @@
 
 @property (weak) IBOutlet NSSegmentedControl *callsSegmentControll;
 -(void) initializeData;
+-(void)clearData;
 
 - (void) reloadCallLogs;
 -(void)setFrame:(NSRect)newFrame;

@@ -99,6 +99,11 @@ const NSInteger SIP_SIMPLE=1;
     }
 }
 
+-(void)clearData
+{
+    selectedChatRoom = nil;
+    [self clearMessageList];
+}
 -(void) initializeData
 {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];

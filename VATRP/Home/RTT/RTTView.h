@@ -10,6 +10,8 @@
 
 @interface RTTView : BackgroundedViewController
 
+-(void)clearData;
+
 - (void) setCustomFrame:(NSRect)frame;
 
 - (void) updateViewForDisplay;

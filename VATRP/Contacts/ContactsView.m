@@ -338,6 +338,12 @@
     self.contactInfos = [self sortListAlphabetically:self.contactInfos];
     [self.tableViewContacts reloadData];
 }
+-(void)clearData
+{
+    [self.contactInfos removeAllObjects];
+    [self.tableViewContacts reloadData];
+}
+
 
 -(NSMutableArray*) sortListAlphabetically:(NSMutableArray*) list{
     NSSortDescriptor *firstNameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];

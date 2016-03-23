@@ -30,6 +30,8 @@
 @property (nonatomic, assign) BOOL isAppFullScreen;
 
 -(void) initializeData;
+-(void)refreshForNewLogin;
+-(void)clearData;
 
 - (ProfileView*) getProfileView;
 - (BOOL) isCurrentTabRecents;

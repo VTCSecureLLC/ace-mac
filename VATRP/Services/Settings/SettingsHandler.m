@@ -32,7 +32,7 @@
 - (void)resetDefaultsWithCoreRunning
 {
     // update core properties while is is running.
-    [self initializeUserDefaults:false];
+    [self initializeUserDefaults:false settingForNoConfig:false];
     LinphoneCore* linphoneCore = [LinphoneManager getLc];
     if ((linphoneCore != nil) && [LinphoneManager.instance coreIsRunning])
     {
@@ -76,11 +76,10 @@
 }
 
 // initialization of user settings
--(void)initializeUserDefaults:(bool)force
+-(void)initializeUserDefaults:(bool)force settingForNoConfig:(bool)settingForNoConfig
 {
     // "{\"version\":1,\"expiration_time\":3600,\"configuration_auth_password\":\"\",\"configuration_auth_expiration\":-1,\"sip_registration_maximum_threshold\":10,\"sip_register_usernames\":[],\"sip_auth_username\":\"\",\"sip_auth_password\":\"\",\"sip_register_domain\":\"acetest-registrar.vatrp.net\",\"sip_register_port\":25060,\"sip_register_transport\":\"tcp\",\"enable_echo_cancellation\":true,\"enable_video\":true,\"enable_rtt\":true,\"enable_adaptive_rate\":true,\"enabled_codecs\":[\"H.264\",\"H.263\",\"VP8\",\"G.722\",\"G.711\"],\"bwLimit\":\"high-fps\",\"upload_bandwidth\":660,\"download_bandwidth\":660,\"enable_stun\":false,\"stun_server\":\"\",\"enable_ice\":false,\"logging\":\"info\",\"sip_mwi_uri\":\"\",\"sip_videomail_uri\":\"\",\"video_resolution_maximum\":\"cif\"}"
 
-    
     // convert these over to use the generic methods for app versus user settings when there is a chance
     
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"version"] == nil)
@@ -151,6 +150,10 @@
         NSArray *enabledCodecs = @[@"H.264", @"H.263", @"VP8", @"G.722", @"G.711"];
         [[NSUserDefaults standardUserDefaults] setObject:enabledCodecs forKey:@"enabled_codecs"];
     }
+    if (settingForNoConfig)
+    {
+        [self enableInitialAudioCodecs];
+    }
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:UPLOAD_BANDWIDTH] == nil)
     {
         [self setUserSettingInt:UPLOAD_BANDWIDTH withValue:0];
@@ -159,7 +162,7 @@
     {
         [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:0];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
+    if ((force || settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"stun_preference"];
     }
@@ -167,9 +170,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:STUN_SERVER_DOMAIN];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"ice_preference"] == nil)
+    if ((force || settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:ENABLE_ICE] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"ice_preference"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:ENABLE_ICE];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"logging"] == nil)
     {
@@ -187,15 +190,15 @@
     {
         [self setUserSettingString:PREFERRED_VIDEO_RESOLUTION withValue:@"vga (640x480)"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
+    if ((force && !settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_MICROPHONE] == nil)
     {
         [self setUserSettingBool:MUTE_MICROPHONE withValue:false];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_SPEAKER] == nil)
+    if ((force && !settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:MUTE_SPEAKER] == nil)
     {
         [self setUserSettingBool:MUTE_SPEAKER withValue:false];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
+    if ((force && !settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
     {
         [self setUserSettingBool:VIDEO_SHOW_SELF_VIEW withValue:true];
     }
@@ -222,6 +225,10 @@
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_PRESET] == nil)
     {
         [self setAppSettingString:VIDEO_PRESET withValue:@"high-fps"];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:USE_IPV6] == nil)
+    {
+        [self setAppSettingBool:USE_IPV6 withValue:true] ;
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -345,6 +352,57 @@
 //    }
 }
 
+-(void)storeEnabledCodecs
+{
+    // convert to the names used by linphone:
+    NSArray* enabledCodecs = [[NSUserDefaults standardUserDefaults] arrayForKey:@"enabled_codecs"];
+    NSMutableArray* namedCodecs = [[NSMutableArray alloc] init];
+    for (NSString* name in enabledCodecs)
+    {
+        NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"."];
+        NSString *result = [[name componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
+        NSString* lowerCase = [result lowercaseString];
+        
+        [namedCodecs addObject:lowerCase];//[NSString stringWithFormat:@"%@_preference", lowerCase]];
+    }
+    
+    NSMutableDictionary* videoDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* audioDict = [[NSMutableDictionary alloc] init];
+    for (NSString* codecPreference in namedCodecs)
+    {
+        if ([codecPreference isEqualToString:@"h264"] || [codecPreference isEqualToString:@"H.264"])
+        {
+            [videoDict setValue:@"1" forKey:@"h264_preference"];
+        }
+        if ([codecPreference isEqualToString:@"h263"] || [codecPreference isEqualToString:@"H.263"])
+        {
+            [videoDict setValue:@"1" forKey:@"h263_preference"];
+        }
+        if ([codecPreference isEqualToString:@"vp8"] || [codecPreference isEqualToString:@"VP8"])
+        {
+            [videoDict setValue:@"1" forKey:@"vp8_preference"];
+        }
+        if ([codecPreference isEqualToString:@"g722"] || [codecPreference isEqualToString:@"G.722"])
+        {
+            [audioDict setValue:@1 forKey:@"g722_preference"];
+        }
+        if ([codecPreference isEqualToString:@"g711"] || [codecPreference isEqualToString:@"G.711"])
+        {
+            [audioDict setValue:@1 forKey:@"pcmu_preference"];
+            [audioDict setValue:@1 forKey:@"pcma_preference"];
+        }
+    }
+    [self setUserSettingObject:kUSER_DEFAULTS_AUDIO_CODECS_MAP withValue:audioDict];
+    [self setUserSettingObject:kUSER_DEFAULTS_VIDEO_CODECS_MAP withValue:videoDict];
+}
+-(void)enableInitialAudioCodecs
+{
+    NSMutableDictionary* audioDict = [[NSMutableDictionary alloc] init];
+    [audioDict setValue:@1 forKey:@"g722_preference"];
+    [audioDict setValue:@1 forKey:@"pcmu_preference"];
+    [audioDict setValue:@1 forKey:@"pcma_preference"];
+    [self setUserSettingObject:kUSER_DEFAULTS_AUDIO_CODECS_MAP withValue:audioDict];
+}
 -(void)setStunServerDomain:(NSString*)stunServerDomain
 {
     [self setUserSettingString:STUN_SERVER_DOMAIN withValue:stunServerDomain];
@@ -380,6 +438,15 @@
 -(bool)isVideoEnabled
 {
     return [self getUserSettingBool:ENABLE_VIDEO];
+}
+
+-(bool)getEnableIPV6
+{
+    return [self getUserSettingBool:USE_IPV6];
+}
+-(bool)getEnableICE;
+{
+    return [self getUserSettingBool:ENABLE_ICE];
 }
 
 #pragma mark QoS

@@ -1364,6 +1364,16 @@ static BOOL libStarted = FALSE;
     linphone_core_set_download_bandwidth(theLinphoneCore, [settingsHandler getDownloadBandwidth]);
     
     linphone_core_set_stun_server(theLinphoneCore, [[settingsHandler getStunServerDomain] cStringUsingEncoding:NSUTF8StringEncoding]);
+    if ([settingsHandler getEnableICE])
+    {
+        linphone_core_set_firewall_policy(theLinphoneCore, LinphonePolicyUseIce);
+    }
+    else
+    {
+        linphone_core_set_firewall_policy(theLinphoneCore, LinphonePolicyNoFirewall);
+    }
+    linphone_core_enable_ipv6(theLinphoneCore, [settingsHandler getEnableIPV6]);
+
     
     /* The core will call the linphone_iphone_configuring_status_changed callback when the remote provisioning is loaded (or skipped).
      Wait for this to finish the code configuration */

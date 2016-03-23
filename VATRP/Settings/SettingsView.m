@@ -303,13 +303,13 @@
             linphone_core_set_video_policy(lc, &policy);
         } else if ([item.userDefaultsKey isEqualToString:@"stun_preference"]) {
             [SettingsService setStun:checkbox.state];
-        } else if ([item.userDefaultsKey isEqualToString:@"ice_preference"]) {
+        } else if ([item.userDefaultsKey isEqualToString:ENABLE_ICE]) {
             [SettingsService setICE:checkbox.state];
         } else if ([item.userDefaultsKey isEqualToString:@"ACE_ENABLE_UPNP"]) {
             [SettingsService setUPNP:checkbox.state];
         } else if ([item.userDefaultsKey isEqualToString:@"random_port_preference"]) {
             [SettingsService setRandomPorts:checkbox.state];
-        } else if ([item.userDefaultsKey isEqualToString:@"use_ipv6"]) {
+        } else if ([item.userDefaultsKey isEqualToString:USE_IPV6]) {
             linphone_core_enable_ipv6(lc, checkbox.state);
             [[NSUserDefaults standardUserDefaults] setBool:checkbox.state forKey:item.userDefaultsKey];
         } else {

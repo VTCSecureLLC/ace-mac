@@ -52,7 +52,7 @@
 {
     // Insert code here to initialize your application
     // Initialize settings on launch if they have not been.
-    [SettingsHandler.settingsHandler initializeUserDefaults:false];
+    [SettingsHandler.settingsHandler initializeUserDefaults:false settingForNoConfig:false];
     
     self.account = nil;
     

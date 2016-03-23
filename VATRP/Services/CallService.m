@@ -158,13 +158,8 @@
 }
 
 - (void) swapCallsToCall:(LinphoneCall*)aCall {
-    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
-
     linphone_core_pause_call([LinphoneManager getLc], currentCall);
     callToSwapTo = aCall;
-//    linphone_core_resume_call([LinphoneManager getLc], aCall);
-
-//    currentCall = aCall;
 }
 
 - (LinphoneCall*) getCurrentCall {
@@ -201,8 +196,6 @@
                 linphone_core_resume_call([LinphoneManager getLc], callToSwapTo);
                 // below should be handled by the call resume - when the streams are runnign again
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:callToSwapTo];
-                currentCall = callToSwapTo;
-                callToSwapTo = nil; // clear after swapping
             }
             break;
         case LinphoneCallResuming: /**<The call is being resumed by local end*/
@@ -300,7 +293,13 @@
             }
             else
             {
-                if (currentCall != aCall)
+                if (callToSwapTo != nil)
+                {
+                    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
+                    currentCall = callToSwapTo;
+                    callToSwapTo = nil; // clear after swapping
+                }
+                else if (currentCall != aCall)
                 {
                     // handle change for call waiting
                     // update my pointer

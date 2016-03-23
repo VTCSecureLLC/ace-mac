@@ -44,6 +44,11 @@ NSString *const QoS_Audio = @"QoS_Audio";
 NSString *const QoS_Video = @"QoS_Video";
 NSString *const STUN_SERVER_DOMAIN = @"stun_url_preference";
 
+// network
+NSString *const USE_IPV6 = @"use_ipv6";
+NSString *const ENABLE_ICE = @"ice_preference";
+
+
 // app settings
 NSString *const ADAPTIVE_RATE_ALGORITHM = @"adaptive_rate_algorithm";
 NSString *const ADAPTIVE_RATE_CONTROL = @"enable_adaptive_rate_control";

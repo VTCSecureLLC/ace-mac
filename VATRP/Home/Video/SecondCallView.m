@@ -14,6 +14,7 @@
 @interface SecondCallView () {
     NSTimer *timerCallDuration;
     bool observersAdded;
+    bool callSwapLock;
 }
 
 @property (weak) IBOutlet BackgroundedView *viewAlphaed;
@@ -58,8 +59,9 @@
     
     self.labelDisplayName.wantsLayer = YES;
     
-    if (observersAdded)
+    if (!observersAdded)
     {
+        observersAdded = true;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(callUpdateEvent:)
                                                      name:kLinphoneCallUpdate
@@ -71,7 +73,20 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (IBAction)onButtonSwap:(id)sender {
+    // this right here needs to know if we are done setting up streams from previous swap prior to performing another swap.
+    // we can no just disable the button. trying a flag as a switch. ig is a little bit tricky - we are going to set the lock here
+    // and unlock when the streams running event comes in.
+    if (callSwapLock)
+    {
+        return;
+    }
+    callSwapLock = true;
     [[CallService sharedInstance] swapCallsToCall:self.call];
+}
+
+-(void)unlockSwap
+{
+    callSwapLock = false;
 }
 
 - (IBAction)onButtonHangup:(id)sender {
@@ -117,6 +132,7 @@
             self.call = nil;
             [self setHidden:YES];
             [self stopCallDurationTimer];
+            callSwapLock = false;
         }
             break;
         default:

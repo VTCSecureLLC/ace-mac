@@ -53,6 +53,15 @@
 
 }
 
+-(void)refreshForNewLogin
+{
+    [self.homeViewController refreshForNewLogin];
+}
+-(void)clearData
+{
+    [self.homeViewController clearData];
+}
+
 - (HomeViewController*) getHomeViewController {
     return self.homeViewController;
 }

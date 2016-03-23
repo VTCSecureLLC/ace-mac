@@ -12,6 +12,9 @@
 @interface HomeWindowController : NSWindowController
 @property (strong) HomeViewController* homeViewController;
 
+-(void)refreshForNewLogin;
+-(void)clearData;
+
 - (HomeViewController*) getHomeViewController;
 
 -(NSPoint) getWindowOrigin;

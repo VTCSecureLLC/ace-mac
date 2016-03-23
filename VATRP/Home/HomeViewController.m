@@ -180,6 +180,19 @@ bool dialPadIsShown;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
 }
 
+-(void)refreshForNewLogin
+{
+    [self.recentsView reloadCallLogs];
+    [self.contactsView refreshContactList];
+}
+-(void)clearData
+{
+    [self.recentsView clearData];
+    [self.contactsView clearData];
+    [self.rttView clearData];
+}
+
+
 - (void)didClosedMessagesWindow:(NSNotification*)not {
     [self.dockView clearDockViewMessagesBackgroundColor:YES];
 }

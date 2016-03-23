@@ -640,6 +640,7 @@
 
 - (void)setCallToSecondCallView:(LinphoneCall*)aCall {
     [self.secondCallView setCall:aCall];
+    [self.secondCallView unlockSwap];
 }
 
 - (void)hideSecondCallView {

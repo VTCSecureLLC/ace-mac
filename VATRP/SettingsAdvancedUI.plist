@@ -523,7 +523,7 @@
 				<key>title</key>
 				<string>Enable ICE</string>
 				<key>defaultValue</key>
-				<false/>
+				<true/>
 				<key>UserDefaultsKey</key>
 				<string>ice_preference</string>
 			</dict>
@@ -603,7 +603,7 @@
 				<key>title</key>
 				<string>IPv6</string>
 				<key>defaultValue</key>
-				<false/>
+				<true/>
 				<key>UserDefaultsKey</key>
 				<string>use_ipv6</string>
 			</dict>

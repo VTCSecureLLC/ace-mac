@@ -366,7 +366,8 @@
     [checkboxEnableICE setButtonType:NSSwitchButton];
     [checkboxEnableICE setBezelStyle:0];
     [checkboxEnableICE setTitle:@"Use ICE"];
-    [checkboxEnableICE setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
+    bool enableIce = [[SettingsHandler settingsHandler] getEnableICE];
+    [checkboxEnableICE setState:enableIce];
     [checkboxEnableICE setAction:@selector(onCheckBoxHandler:)];
     [checkboxEnableICE setTarget:self];
     [self.scrollView.documentView addSubview:checkboxEnableICE];
@@ -665,7 +666,7 @@
 
     [SettingsService setStun:checkboxStun.state];
     [SettingsService setICE:checkboxEnableICE.state];
-    [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableICE.state forKey:@"ice_preference"];
+    [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableICE.state forKey:ENABLE_ICE];
 
     if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (SRTP)"] == NSOrderedSame)
         linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionSRTP);

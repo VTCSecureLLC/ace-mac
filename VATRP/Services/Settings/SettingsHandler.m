@@ -345,6 +345,14 @@
 //    }
 }
 
+-(void)setStunServerDomain:(NSString*)stunServerDomain
+{
+    [self setUserSettingString:STUN_SERVER_DOMAIN withValue:stunServerDomain];
+}
+-(NSString*)setStunServerDomain
+{
+    return [self getUserSettingString:STUN_SERVER_DOMAIN];
+}
 //==========================================================================================
 // Accessors
 #pragma mark settings accessors

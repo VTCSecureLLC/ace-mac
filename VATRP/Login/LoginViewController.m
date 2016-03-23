@@ -17,7 +17,6 @@
 #import "DefaultSettingsManager.h"
 #import "CustomComboBox.h"
 
-
 @interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
     bool loginClicked;
@@ -341,6 +340,8 @@
     [self.prog_Signin stopAnimation:self];
     [self.loginButton setEnabled:YES];
     [[SettingsHandler settingsHandler] initializeUserDefaults:false settingForNoConfig:true];
+    // update the STUN server to match the provider domain
+    [[SettingsHandler settingsHandler] setStunServerDomain:self.textFieldDomain.stringValue];
 }
 
 - (void)userLogin

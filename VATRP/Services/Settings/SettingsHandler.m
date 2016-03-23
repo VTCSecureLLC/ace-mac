@@ -402,7 +402,14 @@
     [audioDict setValue:@1 forKey:@"pcmu_preference"];
     [audioDict setValue:@1 forKey:@"pcma_preference"];
     [self setUserSettingObject:kUSER_DEFAULTS_AUDIO_CODECS_MAP withValue:audioDict];
-
+}
+-(void)setStunServerDomain:(NSString*)stunServerDomain
+{
+    [self setUserSettingString:STUN_SERVER_DOMAIN withValue:stunServerDomain];
+}
+-(NSString*)setStunServerDomain
+{
+    return [self getUserSettingString:STUN_SERVER_DOMAIN];
 }
 //==========================================================================================
 // Accessors

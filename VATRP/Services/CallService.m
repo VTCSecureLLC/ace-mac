@@ -273,6 +273,8 @@
         case LinphoneCallStreamsRunning:
         {
             NSLog(@"****** LinphoneCallStreamsRunning");
+            // tell the rtt window to add observers
+            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
             
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
             
@@ -288,8 +290,6 @@
                 [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
 //                bool micIsEnabled = linphone_core_mic_enabled(lc);
                 linphone_core_set_play_level(lc, 100);
-                // tell the rtt window to add observers
-                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
             }
             else
             {

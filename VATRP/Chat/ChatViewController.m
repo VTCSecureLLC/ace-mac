@@ -564,6 +564,8 @@ static void chatTable_free_chatrooms(void *data) {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
     [self callUpdate:acall state:astate];
+    NSLog(@"*** --> RTT.callUpdateEvent called");
+
 }
 
 #pragma mark -
@@ -584,6 +586,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textComposeEvent called");
+
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == selectedChatRoom) {
         BOOL composing = linphone_chat_room_is_remote_composing(room);
@@ -644,6 +648,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textRecievedEvent called");
+
     LinphoneAddress *from = [[[notif userInfo] objectForKey:@"from_address"] pointerValue];
     LinphoneChatRoom *room = [[notif.userInfo objectForKey:@"room"] pointerValue];
     LinphoneChatMessage *chat = [[notif.userInfo objectForKey:@"message"] pointerValue];
@@ -679,6 +685,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)didReceiveMessage:(NSNotification *)aNotification {
+    NSLog(@"*** --> RTT.didReceiveMessage called");
+
     NSDictionary *dict_message = [aNotification object];
     
     //    BOOL composing = [[dict_message objectForKey:@"composing"] boolValue];
@@ -867,6 +875,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (BOOL)sendMessage:(NSString *)message withExterlBodyUrl:(NSURL *)externalUrl withInternalURL:(NSURL *)internalUrl LinphoneChatRoom:(LinphoneChatRoom*)room {
+    NSLog(@"*** --> RTT.sendMessage called");
+
     if (room == NULL) {
         NSLog(@"Cannot send message: No chatroom");
         return FALSE;

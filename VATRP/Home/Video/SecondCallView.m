@@ -132,6 +132,7 @@
             self.call = nil;
             [self setHidden:YES];
             [self stopCallDurationTimer];
+            callSwapLock = false;
         }
             break;
         default:

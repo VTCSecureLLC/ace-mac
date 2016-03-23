@@ -9,9 +9,11 @@
 #import "SecondCallView.h"
 #import "Utils.h"
 #import "BackgroundedView.h"
+#import "LinphoneAPI.h"
 
 @interface SecondCallView () {
     NSTimer *timerCallDuration;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet BackgroundedView *viewAlphaed;
@@ -56,10 +58,13 @@
     
     self.labelDisplayName.wantsLayer = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+    if (observersAdded)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+    }
 }
 
 -(void)dealloc{
@@ -83,6 +88,10 @@
         [self setHidden:NO];
         
         [self startCallDurationTimer];
+    }
+    else
+    {
+        [self stopCallDurationTimer];
     }
 }
 
@@ -138,7 +147,8 @@
 }
 
 - (void) inCallTick:(NSTimer*)timer {
-    if (self.call) {
+    if ((self.call) && [[LinphoneAPI instance] callAppearsValid:call])
+    {
         int call_Duration = linphone_call_get_duration(self.call);
         self.labelCallDuration.stringValue = [Utils getTimeStringFromSeconds:call_Duration];
         
@@ -161,6 +171,10 @@
             default:
                 break;
         }
+    }
+    else
+    {
+        NSLog(@"SecondCallView.inCallTick: attempting to update call state, but my current call poitner does not appear to be valid.");
     }
 }
 

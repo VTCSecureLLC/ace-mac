@@ -90,6 +90,8 @@
 }
 
 - (IBAction)onButtonHoldAnswer:(id)sender {
+//    NSMutableString* displayLabel = [NSMutableString stringWithFormat:@"Answering %@",self.labelDisplayName.stringValue];
+//    [self.labelDisplayName setStringValue:displayLabel];
     [[CallService sharedInstance] accept:self.call];
     [self setHidden:YES];
 }

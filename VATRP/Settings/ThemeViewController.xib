@@ -19,11 +19,11 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4O4-K1-txY">
+                <colorWell hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4O4-K1-txY">
                     <rect key="frame" x="244" y="354" width="155" height="27"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </colorWell>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rl3-2F-t5j">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rl3-2F-t5j">
                     <rect key="frame" x="53" y="326" width="185" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background Color:" id="e1T-rI-gI1">
                         <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
@@ -31,18 +31,18 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ag-S6-seX">
+                <colorWell hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ag-S6-seX">
                     <rect key="frame" x="244" y="322" width="155" height="27"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </colorWell>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qSG-fB-0ni">
-                    <rect key="frame" x="242" y="288" width="159" height="28"/>
+                    <rect key="frame" x="242" y="354" width="159" height="28"/>
                     <buttonCell key="cell" type="check" title="Force 508" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cca-DN-8SD">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7g-ds-4Pm">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7g-ds-4Pm">
                     <rect key="frame" x="53" y="358" width="185" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Foreground Color:" id="chI-Lr-jeS">
                         <font key="font" size="13" name=".HelveticaNeueDeskInterface-Regular"/>

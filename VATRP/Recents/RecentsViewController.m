@@ -14,6 +14,7 @@
 @interface RecentsViewController () {
     NSMutableArray *callLogs;
     BOOL missedFilter;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSTableView *tableViewCallLog;
@@ -40,11 +41,14 @@
     
     self.segmentedControlCallType.selectedSegment = 0;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdate:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
-    
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdate:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+    }
     [self loadData];
 }
 

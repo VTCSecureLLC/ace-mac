@@ -27,6 +27,7 @@
     KeypadWindowController *keypadWindowController;
     
     NSString *windowTitle, *address;
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -73,10 +74,15 @@ dispatch_queue_t callAlertAnimationQueue;
     self.view.wantsLayer = YES;
     self.remoteVideoView.wantsLayer = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+    }
     
     self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
     self.labelDisplayName.hidden = YES;

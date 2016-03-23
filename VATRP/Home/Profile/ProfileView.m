@@ -13,7 +13,7 @@
 
 
 @interface ProfileView () {
-    
+    bool observersAdded;
 }
 
 @property (weak) IBOutlet NSImageView *imageViewProfile;
@@ -43,11 +43,15 @@
     [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:self.imageViewProfile.frame.size.width/2.0 Width:2 Control:self.imageViewProfile];
     [self.imageViewProfile setImage:[NSImage imageNamed:@"whiteMale"]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(registrationUpdateEvent:)
-                                                 name:kLinphoneRegistrationUpdate
-                                               object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(registrationUpdateEvent:)
+                                                     name:kLinphoneRegistrationUpdate
+                                                   object:nil];
     
+    }
     [self updateUI];
 }
 

@@ -237,7 +237,7 @@
     system("defaults delete com.vtcsecure.ace.mac;\
            rm -rf ~/Library/Application\\ Support/com.vtcsecure.ace.mac;\
             rm -rf ~/Library/Preferences/com.vtcsecure.ace.mac.plist;");
-    [[SettingsHandler settingsHandler]  initializeUserDefaults:NO];
+    [[SettingsHandler settingsHandler]  initializeUserDefaults:false settingForNoConfig:false];
     [[SettingsHandler settingsHandler] resetDefaultsWithCoreRunning];
     FXKeychain *fxKeyChainObj=[[FXKeychain alloc]init];
     [fxKeyChainObj removeObjectForKey:USER_DEFAULTS_ACCOUNT_LIST];

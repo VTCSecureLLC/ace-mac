@@ -56,8 +56,9 @@
 @property(weak,nonatomic)id<PreferencesHandlerDelegate> preferencessHandlerDelegate;
 @property(weak,nonatomic)id<SettingsSelfViewDelegate> settingsSelfViewDelegate;
 
-// Bool force provided for debugging, and to reset settings when needed.
--(void) initializeUserDefaults:(bool)force;
+// Bool force provided for debugging, and to reset settings when needed. settingForNoConfig - if calling after login with no
+//   config found this should be true. Otherwise leave it false.
+-(void) initializeUserDefaults:(bool)force settingForNoConfig:(bool)settingForNoConfig;
 -(void) resetDefaultsWithCoreRunning;
 
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
@@ -84,6 +85,7 @@
 - (void)setQoSAudioValue:(int)audioValue;
 - (void)setQoSVideoValue:(int)videoValue;
 
+-(void)storeEnabledCodecs;
 - (void)setStunServerDomain:(NSString*)stunServerDomain;
 
 #pragma mark settings accessors
@@ -124,6 +126,8 @@
 -(NSString*) getAdaptiveRateAlgorithm;
 -(NSString*) getVideoPreset;
 -(NSString*) getStunServerDomain;
+-(bool)getEnableIPV6;
+-(bool)getEnableICE;
 -(NSString*)setStunServerDomain;
 @end
 #endif /* SettingsDelegate_h */

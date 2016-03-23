@@ -195,7 +195,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     
     if ([stun_server length] > 0) {
         linphone_core_set_stun_server(lc, [stun_server UTF8String]);
-        BOOL ice_preference = [[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"];
+        BOOL ice_preference = [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_ICE];
         if (ice_preference) {
             linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
         }
@@ -214,7 +214,7 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
         linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
     } else {
         linphone_core_set_firewall_policy(lc, LinphonePolicyNoFirewall);
-        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"]];
+        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_ICE]];
     }
 }
 

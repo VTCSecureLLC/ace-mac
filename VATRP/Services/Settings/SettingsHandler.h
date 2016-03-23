@@ -71,7 +71,7 @@
 -(void) setMuteSpeaker:(bool)mute;
 -(void) setMuteMicrophone:(bool)mute;
 -(void) setShowSelfView:(bool)show;
--(void)setShowVideoSelfPreview:(bool)show;
+-(void) setShowVideoSelfPreview:(bool)show;
 -(void) setEnableEchoCancellation:(bool)show;
 -(void) setMuteCamera:(bool)enable;
 
@@ -83,6 +83,8 @@
 - (void)setQoSSignalingValue:(int)signalingValue;
 - (void)setQoSAudioValue:(int)audioValue;
 - (void)setQoSVideoValue:(int)videoValue;
+
+- (void)setStunServerDomain:(NSString*)stunServerDomain;
 
 #pragma mark settings accessors
 // these settings are set when the UI calls one of the methods above.
@@ -122,5 +124,6 @@
 -(NSString*) getAdaptiveRateAlgorithm;
 -(NSString*) getVideoPreset;
 -(NSString*) getStunServerDomain;
+-(NSString*)setStunServerDomain;
 @end
 #endif /* SettingsDelegate_h */

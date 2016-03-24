@@ -79,10 +79,10 @@
                                                  selector:@selector(callUpdateEvent:)
                                                      name:kLinphoneCallUpdate
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textComposeEvent:)
-                                                     name:kLinphoneTextComposeEvent
-                                                   object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(textComposeEvent:)
+//                                                     name:kLinphoneTextComposeEvent
+//                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(textReceivedEvent:)
                                                      name:kLinphoneTextReceived

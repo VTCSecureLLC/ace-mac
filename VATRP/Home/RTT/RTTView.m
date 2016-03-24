@@ -96,6 +96,7 @@ const NSInteger SIP_SIMPLE=1;
     if (!hidden)
     {
         [self initializeData];
+        [self updateViewForDisplay];
     }
 }
 
@@ -482,10 +483,12 @@ long msgSize; //message length buffer
     
     int TEXT_MODE=[self getTextMode];
     
-    if(TEXT_MODE==RTT){
+    if(TEXT_MODE==RTT)
+    {
         NSLog(@"*** --> controlTextDidChange - RTT Mode called");
 
-            if((self.textFieldMessage.stringValue.length-1) - msgSize  > 1){
+            if((self.textFieldMessage.stringValue.length-1) - msgSize  > 1)
+            {
                     /** Text was pasted **/         /** Difference of length
                                                                                                buffer and current text is
                                                                                                greater than one.User entered

@@ -444,7 +444,7 @@
 				<key>title</key>
 				<string>Preferred FPS</string>
 				<key>defaultValue</key>
-				<string>25</string>
+				<string>30</string>
 				<key>UserDefaultsKey</key>
 				<string>video_preferred_fps_preference</string>
 			</dict>

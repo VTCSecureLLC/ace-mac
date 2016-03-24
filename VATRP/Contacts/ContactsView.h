@@ -10,4 +10,6 @@
 
 @interface ContactsView : BackgroundedViewController
 - (void) setFrame:(NSRect)frame;
+- (void)refreshContactList;
+-(void)clearData;
 @end

@@ -160,9 +160,9 @@
             }
             logs = ms_list_next(logs);
         }
+        
+        [self.tableViewRecents reloadData];
     }
-
-    [self.tableViewRecents reloadData];
 }
 
 - (IBAction)onSegmentCallType:(id)sender {
@@ -302,6 +302,11 @@
     [self.callsSegmentControll setFrame:NSMakeRect((frame.size.width - self.callsSegmentControll.frame.size.width)/2, frame.size.height - 30, self.callsSegmentControll.frame.size.width, self.callsSegmentControll.frame.size.height)];
 }
 
+-(void)clearData
+{
+    [callLogs removeAllObjects];
+    [self.tableViewRecents reloadData];
+}
 - (void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

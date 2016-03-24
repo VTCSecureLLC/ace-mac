@@ -99,6 +99,11 @@ const NSInteger SIP_SIMPLE=1;
     }
 }
 
+-(void)clearData
+{
+    selectedChatRoom = nil;
+    [self clearMessageList];
+}
 -(void) initializeData
 {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
@@ -133,6 +138,7 @@ const NSInteger SIP_SIMPLE=1;
     // Do view setup here.
     if (!observersAdded)
     {
+        NSLog(@"*** --> RTT.addInCallObservers called");
         observersAdded = true;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(callUpdateEvent:)
@@ -151,6 +157,7 @@ const NSInteger SIP_SIMPLE=1;
 
 -(void) removeObservers
 {
+    NSLog(@"*** --> RTT.removeObservers called");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -272,6 +279,7 @@ static void chatTable_free_chatrooms(void *data) {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
     [self callUpdate:acall state:astate];
+    NSLog(@"*** --> RTT.callUpdateEvent called");
 }
 
 #pragma mark -
@@ -293,6 +301,7 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textComposeEvent called");
     //New message is received rtt or sip simple
     // Note: if we are not in call, do not try to do anything with the message.
     
@@ -368,6 +377,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textReceivedEvent called");
+
     LinphoneAddress *from = [[[notif userInfo] objectForKey:@"from_address"] pointerValue];
     LinphoneChatRoom *room = [[notif.userInfo objectForKey:@"room"] pointerValue];
     LinphoneChatMessage *chat = [[notif.userInfo objectForKey:@"message"] pointerValue];
@@ -401,6 +412,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)didReceiveMessage:(NSNotification *)aNotification {
+    NSLog(@"*** --> RTT.didReceiveMessage called");
+
     NSDictionary *dict_message = [aNotification object];
     
     //    BOOL composing = [[dict_message objectForKey:@"composing"] boolValue];
@@ -470,6 +483,7 @@ long msgSize; //message length buffer
     int TEXT_MODE=[self getTextMode];
     
     if(TEXT_MODE==RTT){
+        NSLog(@"*** --> controlTextDidChange - RTT Mode called");
 
             if((self.textFieldMessage.stringValue.length-1) - msgSize  > 1){
                     /** Text was pasted **/         /** Difference of length

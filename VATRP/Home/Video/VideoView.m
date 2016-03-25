@@ -69,6 +69,7 @@
 @property (strong) IBOutlet NSButton *buttonHangUp;
 
 @property (strong, nonatomic) NSString *callStatusMessage;
+@property (strong, nonatomic)IBOutlet NSImageView *holdImageView;
 
 - (void) inCallTick:(NSTimer*)timer;
 
@@ -207,7 +208,7 @@
     }
     
     LinphoneCore *lc = [LinphoneManager getLc];
-    
+    self.holdImageView.hidden = YES;
 
     switch (astate) {
             //    LinphoneCallIncomingReceived, /**<This is a new incoming call */
@@ -295,6 +296,7 @@
             int call_Duration = linphone_call_get_duration(acall);
             NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
             self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@",string_time];
+            self.holdImageView.hidden = NO;
         }
             break;
             //    LinphoneCallStreamsRunning, /**<The media streams are established and running*/
@@ -678,7 +680,7 @@
     if (call) {
         int call_Duration = linphone_call_get_duration(call);
         NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
-
+        self.holdImageView.hidden = YES;
         LinphoneCallState call_state = linphone_call_get_state(call);
         
         switch (call_state) {
@@ -692,6 +694,7 @@
             case LinphoneCallPausedByRemote:
             {
                 self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@", string_time];
+                self.holdImageView.hidden = NO;
             }
                 break;
                 

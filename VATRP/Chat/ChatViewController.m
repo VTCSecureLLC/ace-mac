@@ -195,11 +195,11 @@
         }
         
         self.selectUser = nil;
-    } else {
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
-        [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
-//        [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:0] afterDelay:0.0];
     }
+    // do not forace a selection it is not handled during windows setup - the row selected method is not called.
+    //    and having the first index selected manually leaves the table thinking that it already has a selection, so it still
+    // does not call shouldSelectRow if the first row is selected. in the event that the user has only one contact, they will never see the history.
+
 }
 
 -(void)dealloc{

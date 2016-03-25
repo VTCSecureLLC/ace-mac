@@ -153,6 +153,7 @@
     if (settingForNoConfig)
     {
         [self enableInitialAudioCodecs];
+        [self enableInitialVideoCodecs];
     }
     if (force ||[[NSUserDefaults standardUserDefaults]objectForKey:UPLOAD_BANDWIDTH] == nil)
     {
@@ -403,6 +404,15 @@
     [audioDict setValue:@1 forKey:@"pcma_preference"];
     [self setUserSettingObject:kUSER_DEFAULTS_AUDIO_CODECS_MAP withValue:audioDict];
 }
+-(void)enableInitialVideoCodecs
+{
+    NSMutableDictionary* videoDict = [[NSMutableDictionary alloc] init];
+    [videoDict setValue:@1 forKey:@"h264_preference"];
+    [videoDict setValue:@1 forKey:@"h263_preference"];
+    [videoDict setValue:@1 forKey:@"vp8_preference"];
+    [self setUserSettingObject:kUSER_DEFAULTS_VIDEO_CODECS_MAP withValue:videoDict];
+}
+
 -(void)setStunServerDomain:(NSString*)stunServerDomain
 {
     [self setUserSettingString:STUN_SERVER_DOMAIN withValue:stunServerDomain];

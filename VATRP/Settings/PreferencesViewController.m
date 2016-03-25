@@ -246,7 +246,7 @@
     [checkboxAlwaysInititate setButtonType:NSSwitchButton];
     [checkboxAlwaysInititate setBezelStyle:0];
     [checkboxAlwaysInititate setTitle:@"Always Inititate"];
-    [checkboxAlwaysInititate setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_VIDEO]];
+    [checkboxAlwaysInititate setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_VIDEO_START]];
     [checkboxAlwaysInititate setAction:@selector(onCheckBoxHandler:)];
     [checkboxAlwaysInititate setTarget:self];
     [self.scrollView.documentView addSubview:checkboxAlwaysInititate];

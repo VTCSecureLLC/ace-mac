@@ -146,18 +146,10 @@ bool dialPadIsShown;
     [self.contactsView setHidden:true];
     [self.settingsView setHidden:true];
     
-    self.callQualityIndicator = [[CallQualityIndicator alloc] initWithFrame:self.videoView.view.frame];
-    [self.callView addSubview:self.callQualityIndicator];
-
     self.videoView = [[VideoView alloc] init];
     self.videoView.view.wantsLayer = true;
     [self.callView addSubview:[self.videoView view]];
     [self.videoView createNumpadView];
- 
-    [self.callQualityIndicator setWantsLayer:YES];
-    [self.callQualityIndicator.layer setBackgroundColor:[NSColor clearColor].CGColor];
-    [self.callQualityIndicator setBackgroundColor:[NSColor clearColor]];
-    
 }
 
 

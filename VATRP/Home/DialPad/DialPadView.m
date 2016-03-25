@@ -20,7 +20,6 @@
     NSArray *providersArray;
 }
 
-@property (weak) IBOutlet NSTextField *textFieldNumber;
 @property (weak) IBOutlet NSButton *buttonOne;
 @property (weak) IBOutlet NSButton *buttonTwo;
 @property (weak) IBOutlet NSButton *buttonThree;

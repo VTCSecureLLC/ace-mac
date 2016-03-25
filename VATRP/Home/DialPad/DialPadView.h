@@ -20,4 +20,7 @@
 -(bool)isHidden;
 
 -(void)hideProvidersView:(bool)hide;
+
+@property (weak) IBOutlet NSTextField *textFieldNumber;
+
 @end

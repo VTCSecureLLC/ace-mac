@@ -161,7 +161,16 @@
     [summaryMenuViewController save];
     [preferencesViewController save];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+    if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
+        [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
+    }
+    if (![[SettingsHandler settingsHandler] isShowPreviewEnabled])
+    {
+        linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
+        linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
+        linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
+    }
+
     [self close];
 }
 
@@ -197,15 +206,6 @@
     if (preferencesIndex > -1)
     {
         [self.toolbar removeItemAtIndex:preferencesIndex];
-    }
-    if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
-        [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
-    }
-    if (![[SettingsHandler settingsHandler] isShowPreviewEnabled])
-    {
-        linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
-        linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
-        linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
     }
 }
 

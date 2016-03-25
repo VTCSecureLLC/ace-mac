@@ -417,7 +417,7 @@ BOOL isRTTLocallyEnabled;
     [self callUpdate:call state:linphone_call_get_state(call)];
 
     self.buttonAnswer.hidden = NO;
-    self.buttonDecline.frame = CGRectMake(self.view.frame.size.width - self.buttonDecline.frame.size.width,
+    self.buttonDecline.frame = CGRectMake(self.view.frame.size.width - self.buttonDecline.frame.size.width - 85,
                                           self.buttonDecline.frame.origin.y,
                                           self.buttonDecline.frame.size.width,
                                           self.buttonDecline.frame.size.height);

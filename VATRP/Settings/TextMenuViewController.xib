@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TextMenuViewController">
             <connections>
                 <outlet property="enable_text" destination="3Ix-Ed-z39" id="zV3-JG-gv1"/>
+                <outlet property="fontsPopUpButton" destination="Mls-OY-Lv1" id="qKK-nU-od2"/>
                 <outlet property="text_send_mode" destination="FSf-W6-IHb" id="vQe-YO-lVF"/>
                 <outlet property="view" destination="c22-O7-iKe" id="lLC-jy-ZB6"/>
             </connections>
@@ -51,7 +52,33 @@
                         <action selector="onComboBoxTextSendMode:" target="-2" id="o5P-oz-TW5"/>
                     </connections>
                 </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TaX-h4-2Vb">
+                    <rect key="frame" x="125" y="290" width="101" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="RTT Font" id="lhB-eY-zn6">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mls-OY-Lv1">
+                    <rect key="frame" x="238" y="285" width="169" height="26"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="msy-0k-jly" id="ccA-x6-Jcp">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="Cnb-bJ-EWo">
+                            <items>
+                                <menuItem state="on" id="msy-0k-jly"/>
+                                <menuItem title="Item 2" id="R53-Kg-LqA"/>
+                                <menuItem title="Item 3" id="NPg-cX-N4f"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="onFontBoxTap:" target="-2" id="POq-gb-Ac5"/>
+                    </connections>
+                </popUpButton>
             </subviews>
+            <point key="canvasLocation" x="623" y="315"/>
         </customView>
     </objects>
 </document>

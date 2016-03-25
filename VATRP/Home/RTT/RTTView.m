@@ -84,6 +84,16 @@ const NSInteger SIP_SIMPLE=1;
     
     self.textFieldMessage.focusRingType = NSFocusRingTypeNone;
     
+    NSString *currentRttFontName = nil;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"rttFontName"]) {
+        NSString *storedRttFontName = [[NSUserDefaults standardUserDefaults] stringForKey:@"rttFontName"];
+        currentRttFontName = storedRttFontName;
+    } else {
+        currentRttFontName = @"Helvetica";
+    }
+    
+    NSFont* font = [NSFont fontWithName:currentRttFontName size:13.0];
+    [self.textFieldMessage setFont:font];
     [self.tableViewContent setBackgroundColor:[NSColor clearColor]];
     [self.textFieldMessage setDelegate:self];
     

@@ -51,7 +51,8 @@
 + (AppDelegate*)sharedInstance;
 - (void) showTabWindow;
 - (void) closeTabWindow;
-- (VideoCallWindowController*) getVideoCallWindow;
+-(void) dismissCallWindows;
+//- (VideoCallWindowController*) getVideoCallWindow;
 
 -(NSPoint) getTabWindowSize;
 -(NSPoint) getTabWindowOrigin;

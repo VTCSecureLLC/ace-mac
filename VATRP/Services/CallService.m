@@ -55,9 +55,17 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)closeCallWindowController
+{
+    if (callWindowController != nil)
+    {
+        [callWindowController close];
+    }
+}
 - (CallWindowController*) getCallWindowController {
     return callWindowController;
 }
+
 
 + (void) callTo:(NSString*)number {
     LinphoneCore *lc = [LinphoneManager getLc];
@@ -463,14 +471,13 @@
     LinphoneCore *lc = [LinphoneManager getLc];
 
     if (!linphone_core_get_calls(lc)) {
+        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         
         if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
-            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
             [window toggleFullScreen:self];
             [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
         }
         
-        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
                  display:YES
                  animate:YES];

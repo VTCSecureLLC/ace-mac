@@ -146,18 +146,10 @@ bool dialPadIsShown;
     [self.contactsView setHidden:true];
     [self.settingsView setHidden:true];
     
-    self.callQualityIndicator = [[CallQualityIndicator alloc] initWithFrame:self.videoView.view.frame];
-    [self.callView addSubview:self.callQualityIndicator];
-
     self.videoView = [[VideoView alloc] init];
     self.videoView.view.wantsLayer = true;
     [self.callView addSubview:[self.videoView view]];
     [self.videoView createNumpadView];
- 
-    [self.callQualityIndicator setWantsLayer:YES];
-    [self.callQualityIndicator.layer setBackgroundColor:[NSColor clearColor].CGColor];
-    [self.callQualityIndicator setBackgroundColor:[NSColor clearColor]];
-    
 }
 
 
@@ -230,6 +222,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewRecents
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:@""];
     [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
@@ -277,14 +270,16 @@ bool dialPadIsShown;
     bool dialPadIsHidden = [self.dialPadView isHidden];
     if (dialPadIsHidden)
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:self.dialPadView.textFieldNumber.stringValue];
         [self hideDialPad:false];
-        NSRect dialPadFrame = self.dialPadContainer.frame;
+        //NSRect dialPadFrame = self.dialPadContainer.frame;
         [self.viewContainer setFrame:NSMakeRect(0, 351, 310, 297)];
         [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
         [self.dockView selectItemWithDocViewItem:DockViewItemDialpad];
     }
     else
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:@""];
         [self hideDialPad:true];
         [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
         [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];

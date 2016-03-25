@@ -71,6 +71,7 @@
 @property (strong, nonatomic) NSString *callStatusMessage;
 @property (strong, nonatomic)IBOutlet NSImageView *holdImageView;
 
+@property (weak) IBOutlet NSImageView *imageViewQuality;
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -213,7 +214,6 @@
     switch (astate) {
             //    LinphoneCallIncomingReceived, /**<This is a new incoming call */
         case LinphoneCallIncomingReceived: {
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimerWithTimeInterval:3.75];
             [self.labelRingCount setTextColor:[NSColor whiteColor]];
@@ -269,14 +269,10 @@
             
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
             [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
-            
-            homeViewController.callQualityIndicator.hidden = NO;
-            [homeViewController.callQualityIndicator setNeedsDisplayInRect:self.view.frame];
         }
             break;
             //    LinphoneCallOutgoingInit, /**<An outgoing call is started */
         case LinphoneCallOutgoingInit: {
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Calling 00:00";
             [self.callControllsConteinerView setHidden:NO];
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
@@ -335,7 +331,6 @@
             [self displayCallError:acall message:@"Call Error"];
             numpadView.hidden = YES;
             self.call = nil;
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             [self.callControllersView set_bool_chat_window_open:NO];
             
             break;
@@ -371,7 +366,6 @@
                 [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
             }
             
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             [self.callControllersView set_bool_chat_window_open:NO];
             break;
         }
@@ -702,10 +696,20 @@
                 break;
         }
         
-        float quality = linphone_call_get_current_quality(call);
-        HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
-        homeViewController.callQualityIndicator.callQuality = quality;
-        [homeViewController.callQualityIndicator setNeedsDisplayInRect:homeViewController.callQualityIndicator.frame];
+        int quality = (int)linphone_call_get_current_quality(call);
+        quality = 0;
+        
+        switch (quality) {
+            case 0:
+            case 1:
+            case 2: {
+                self.imageViewQuality.image = [NSImage imageNamed:[NSString stringWithFormat:@"call_quality_indicator_%d", quality]];
+            }
+                break;
+            default:
+                self.imageViewQuality.image = [NSImage imageNamed:@"call_quality_indicator_3"];
+                break;
+        }
     }
 }
 
@@ -899,9 +903,6 @@
     [[self.secondCallView.view animator] setFrame:NSMakeRect(6, callViewFrame.size.height - 190, self.secondCallView.view.frame.size.width, self.secondCallView.view.frame.size.height)];
     [[numpadView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [numpadView setCustomFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
-    
-    
-    [[[[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator animator] setFrame:CGRectMake(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
 }
 
 - (void)videoModeUpdate:(NSNotification*)notif {

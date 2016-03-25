@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04444CB71CA51B8500D2BEE2 /* hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 04444CB61CA51B8500D2BEE2 /* hold.png */; };
 		047DB5231C8D7112008F44C5 /* ContactFavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */; };
 		04B5DA531C6215A20049CD6B /* ContactPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA521C6215A20049CD6B /* ContactPictureManager.m */; };
 		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
@@ -497,6 +498,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04444CB61CA51B8500D2BEE2 /* hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hold.png; sourceTree = "<group>"; };
 		047DB5211C8D7112008F44C5 /* ContactFavoriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactFavoriteManager.h; sourceTree = "<group>"; };
 		047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactFavoriteManager.m; sourceTree = "<group>"; };
 		04B5DA511C6215A20049CD6B /* ContactPictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPictureManager.h; sourceTree = "<group>"; };
@@ -1397,6 +1399,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				04444CB61CA51B8500D2BEE2 /* hold.png */,
 				04FD27911C68E350005659B0 /* camera_mute.png */,
 				04C33DE51C58CB9600BF1432 /* import_button.png */,
 				04C33DE61C58CB9600BF1432 /* export_button.png */,
@@ -2074,6 +2077,7 @@
 				4AC389D31B8E87530063298F /* Images.xcassets in Resources */,
 				69EE9BF61C649B990010EBB3 /* RTPquality_bad_leftTop.png in Resources */,
 				4A902DF41BB96C6D00ECFD86 /* ring.wav in Resources */,
+				04444CB71CA51B8500D2BEE2 /* hold.png in Resources */,
 				A4ED74CB1C8E0F960071211B /* TextMenuViewController.xib in Resources */,
 				A47695391C8F2B1400748DEF /* AddContactViewController.xib in Resources */,
 				4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */,

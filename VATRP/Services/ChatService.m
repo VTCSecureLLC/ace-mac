@@ -92,6 +92,19 @@
     chatWindowController = nil;
 }
 
+// Note: Outgoign may be working properly based on how Windows is behaving. verify display of incoming first
+// the inProgressChatMessage is for an RTT message that the user is currently composing (the enter key has not yet been tapped)
+//-(bool)sendCharacter:(NSString*)message inProgressChatMessage:(LinphoenChatMessage*)inProgressChatMessage
+//{
+//    // verify that the message is valid
+//    LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
+//
+//    if (!call)
+//        return NO;
+//
+//
+//}
+
 - (BOOL) sendMessagt:(NSString*)message {
     LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
     
@@ -101,6 +114,7 @@
     LinphoneChatRoom *chat_room = linphone_call_get_chat_room(call);
     
     if (chat_room) {
+        // we shoulkd not be creating a new message with every character. add a send message method for rtt that will accept an existing message.
         LinphoneChatMessage* rtt_message = linphone_chat_room_create_message(chat_room, NULL);
         
         const char* character = [message UTF8String];

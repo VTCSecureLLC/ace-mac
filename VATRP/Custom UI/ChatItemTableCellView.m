@@ -139,6 +139,10 @@ static NSFont *CELL_FONT = nil;
 }
 
 + (NSString *)decodeTextMessage:(const char *)text {
+    if (text == nil)
+    {
+        return @"";
+    }
     NSString *decoded = [NSString stringWithUTF8String:text];
     if (decoded == nil) {
         // couldn't decode the string as UTF8, do a lossy conversion

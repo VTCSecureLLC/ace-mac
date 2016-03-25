@@ -204,7 +204,7 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_FPS] == nil)
     {
-        [self setUserSettingFloat:PREFERRED_FPS withValue:25.0f];
+        [self setUserSettingFloat:PREFERRED_FPS withValue:30.0f];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
         [self setUserSettingString:RTCP_FB_MODE withValue:@"Explicit"];

@@ -157,6 +157,10 @@
     {
         self.homeWindowController = [[HomeWindowController alloc] init];
     }
+    else
+    {
+        [self.homeWindowController refreshForNewLogin];
+    }
     [self.homeWindowController showWindow:self];
     if ([[SettingsHandler settingsHandler] isShowPreviewEnabled])
     {
@@ -196,8 +200,10 @@
 }
 
 - (void) closeTabWindow {
+    [self.homeWindowController clearData];
     [self.homeWindowController close];
-    self.homeWindowController = nil;
+    
+    //self.homeWindowController = nil;
 }
 
 - (VideoCallWindowController*) getVideoCallWindow {

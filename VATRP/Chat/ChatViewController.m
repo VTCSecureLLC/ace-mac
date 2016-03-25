@@ -79,10 +79,10 @@
                                                  selector:@selector(callUpdateEvent:)
                                                      name:kLinphoneCallUpdate
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textComposeEvent:)
-                                                     name:kLinphoneTextComposeEvent
-                                                   object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(textComposeEvent:)
+//                                                     name:kLinphoneTextComposeEvent
+//                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(textReceivedEvent:)
                                                      name:kLinphoneTextReceived
@@ -195,11 +195,11 @@
         }
         
         self.selectUser = nil;
-    } else {
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
-        [self.tableViewContacts selectRowIndexes:indexSet byExtendingSelection:NO];
-//        [self performSelector:@selector(selectTableCell:) withObject:[NSNumber numberWithInt:0] afterDelay:0.0];
     }
+    // do not forace a selection it is not handled during windows setup - the row selected method is not called.
+    //    and having the first index selected manually leaves the table thinking that it already has a selection, so it still
+    // does not call shouldSelectRow if the first row is selected. in the event that the user has only one contact, they will never see the history.
+
 }
 
 -(void)dealloc{
@@ -564,6 +564,8 @@ static void chatTable_free_chatrooms(void *data) {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
     [self callUpdate:acall state:astate];
+    NSLog(@"*** --> RTT.callUpdateEvent called");
+
 }
 
 #pragma mark -
@@ -584,6 +586,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textComposeEvent called");
+
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == selectedChatRoom) {
         BOOL composing = linphone_chat_room_is_remote_composing(room);
@@ -606,18 +610,27 @@ static void chatTable_free_chatrooms(void *data) {
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
                     ms_list_remove(self->messageList, incomingChatMessage);
-                    NSString *str_msg = [NSString stringWithUTF8String:text_char];
-                    if ([text isEqualToString:@"\b"]) {
-                        if (str_msg && str_msg.length > 0) {
-                            str_msg = [str_msg substringToIndex:str_msg.length - 1];
-                            self.textViewIncoming.string = str_msg;
+                    if (text_char)
+                    {
+                        // ToDo: Liz E. - there was a crash on this char_text reported as being ""
+                        NSString *str_msg = [NSString stringWithUTF8String:text_char];
+                        if ([text isEqualToString:@"\b"]) {
+                            if (str_msg && str_msg.length > 0) {
+                                str_msg = [str_msg substringToIndex:str_msg.length - 1];
+                                self.textViewIncoming.string = str_msg;
+                            }
+                        } else  {
+                            str_msg = [str_msg stringByAppendingString:text];
+                            self.textViewIncoming.string = [self.textViewIncoming.string stringByAppendingString:text];
                         }
-                    } else {
-                        str_msg = [str_msg stringByAppendingString:text];
-                        self.textViewIncoming.string = [self.textViewIncoming.string stringByAppendingString:text];
-                    }
                     
-                    incomingChatMessage = linphone_chat_room_create_message(selectedChatRoom, [str_msg UTF8String]);
+                        incomingChatMessage = linphone_chat_room_create_message(selectedChatRoom, [str_msg UTF8String]);
+                    }
+                    else
+                    {
+                        bool test = true;
+                        test = false;
+                    }
                 } else {
                     incomingChatMessage = linphone_chat_room_create_message(selectedChatRoom, [text UTF8String]);
                 }
@@ -644,6 +657,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textRecievedEvent called");
+
     LinphoneAddress *from = [[[notif userInfo] objectForKey:@"from_address"] pointerValue];
     LinphoneChatRoom *room = [[notif.userInfo objectForKey:@"room"] pointerValue];
     LinphoneChatMessage *chat = [[notif.userInfo objectForKey:@"message"] pointerValue];
@@ -679,6 +694,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)didReceiveMessage:(NSNotification *)aNotification {
+    NSLog(@"*** --> RTT.didReceiveMessage called");
+
     NSDictionary *dict_message = [aNotification object];
     
     //    BOOL composing = [[dict_message objectForKey:@"composing"] boolValue];
@@ -706,6 +723,7 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification {
+    return;
     NSTextField *textField = [aNotification object];
     
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
@@ -778,7 +796,7 @@ static void chatTable_free_chatrooms(void *data) {
     
     LinphoneCall *currentCall_ = [[CallService sharedInstance] getCurrentCall];
     
-    if (currentCall_) {
+    if (currentCall_ && outgoingChatMessage) {
         [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:selectedChatRoom];
         
         
@@ -867,6 +885,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (BOOL)sendMessage:(NSString *)message withExterlBodyUrl:(NSURL *)externalUrl withInternalURL:(NSURL *)internalUrl LinphoneChatRoom:(LinphoneChatRoom*)room {
+    NSLog(@"*** --> RTT.sendMessage called");
+
     if (room == NULL) {
         NSLog(@"Cannot send message: No chatroom");
         return FALSE;

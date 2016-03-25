@@ -240,13 +240,14 @@
             
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
             
-            if ([SettingsService getShowPreview]) {
-                self.localVideo.hidden = NO;
-                linphone_core_use_preview_window(lc, YES);
-                linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
-            } else {
+//            if ([[SettingsHandler settingsHandler] isShowSelfViewEnabled]) {
+//                self.localVideo.hidden = NO;
+//                linphone_core_use_preview_window(lc, YES);
+//                linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
+//                linphone_core_enable_self_view(lc, true);
+//            } else {
                 self.localVideo.hidden = YES;
-            }
+//            }
             
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                                  target:self
@@ -305,10 +306,22 @@
                 // update myself and references
                 [self setCall:acall];
             }
-            SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
-            [self showSelfViewFromSettings:[settingsHandlerInstance isShowSelfViewEnabled]];
+//            SettingsHandler *settingsHandlerInstance = [SettingsHandler settingsHandler];
+//            [self showSelfViewFromSettings:[settingsHandlerInstance isShowSelfViewEnabled]];
+
             [self.callerImageView setHidden:true];
             [self.callControllersView initializeButtonsFromSettings];
+            linphone_core_enable_self_view(lc, [[SettingsHandler settingsHandler] isShowSelfViewEnabled]);
+                
+//            if ([SettingsService getShowPreview]) {
+//                self.localVideo.hidden = NO;
+//                linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
+//                linphone_core_use_preview_window(lc, YES);
+//                linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
+//                linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
+//            } else {
+//                self.localVideo.hidden = YES;
+//            }
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
             break;
         }

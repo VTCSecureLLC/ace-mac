@@ -95,9 +95,13 @@ const NSInteger SIP_SIMPLE=1;
     rttDisabledMessageHasBeenShown = false;
     if (!hidden)
     {
-        [self initializeData];
-        [self updateViewForDisplay];
+        [self updateForNewCall];
     }
+}
+- (void) updateForNewCall
+{
+    [self initializeData];
+    [self updateViewForDisplay];
 }
 
 -(void)clearData

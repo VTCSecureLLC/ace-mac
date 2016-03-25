@@ -297,6 +297,7 @@
                 {
                     [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
                     currentCall = callToSwapTo;
+                    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView updateForNewCall];
                     callToSwapTo = nil; // clear after swapping
                 }
                 else if (currentCall != aCall)

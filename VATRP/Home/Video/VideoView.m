@@ -292,7 +292,6 @@
         case LinphoneCallOutgoingRinging: {
             
             self.labelCallState.stringValue = @"Ringing 00:00";
-            
             [self startRingCountTimerWithTimeInterval:3.6];
             [self.labelRingCount setTextColor:[NSColor redColor]];
         }
@@ -331,6 +330,11 @@
 //                self.localVideo.hidden = YES;
 //            }
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
+            if ([self.callControllersView bool_chat_window_open])
+            {
+                [self.callControllersView performChatButtonClick];
+            }
+
             break;
         }
             //    LinphoneCallError, /**<The call encountered an error*/
@@ -750,6 +754,11 @@
 }
 
 - (void)ringCountTimer {
+    // in theory we should not need this, however, since we are working on a system where we do not control the order in which events are fired, this is a safe way to make sure that the user has the controls needed to cancel an outgoign call.
+    if ([self.callControllsConteinerView isHidden] && [self.secondIncomingCallContainer isHidden])
+    {
+        [self.callControllsConteinerView setHidden:false];
+    }
     self.labelRingCount.stringValue = [@(self.labelRingCount.intValue + 1) stringValue];
 }
 

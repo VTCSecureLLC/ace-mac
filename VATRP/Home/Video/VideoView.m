@@ -380,16 +380,10 @@
                 [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
             }
             
-<<<<<<< HEAD
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             if ([self.callControllersView bool_chat_window_open])
             {
                 [self.callControllersView performChatButtonClick];
             }
-            //[self.callControllersView set_bool_chat_window_open:NO];
-=======
-            [self.callControllersView set_bool_chat_window_open:NO];
->>>>>>> master
             break;
         }
             //    LinphoneCallIdle,					/**<Initial call state */

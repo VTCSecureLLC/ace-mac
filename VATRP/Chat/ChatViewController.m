@@ -65,6 +65,17 @@
 
 @synthesize selectUser;
 
+-(id) init
+{
+    self = [super initWithNibName:@"ChatViewController" bundle:nil];
+    if (self)
+    {
+        // init
+    }
+    return self;
+    
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     if (viewControlsInitialized)

@@ -206,6 +206,17 @@
     //self.homeWindowController = nil;
 }
 
+
+-(void)dismissCallWindows
+{
+    if (videoCallWindowController != nil)
+    {
+        [videoCallWindowController close];
+    }
+    
+    [[CallService sharedInstance] closeCallWindowController];
+
+}
 - (VideoCallWindowController*) getVideoCallWindow {
     if (!videoCallWindowController) {
 //        videoCallWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoCall"];

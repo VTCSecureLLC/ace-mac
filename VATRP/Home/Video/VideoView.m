@@ -39,6 +39,7 @@
     NSImageView *cameraStatusModeImageView;
     BackgroundedView *blackCurtain;
     
+    bool uiInitialized;
     bool observersAdded;
     bool displayErrorLock;
 }
@@ -99,7 +100,11 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    [self initializeData];
+    if (!uiInitialized)
+    {
+        [self initializeData];
+        uiInitialized = true;
+    }
 }
 
 - (void) initializeData
@@ -109,6 +114,10 @@
     
     timerCallDuration = nil;
     
+    if (uiInitialized)
+    {
+        return;
+    }
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.settingsSelfViewDelegate = self;
     
@@ -131,6 +140,7 @@
     [blackCurtain setBackgroundColor:[NSColor blackColor]];
     // ToD0 - temp for VATRP-2489
     [self.buttonFullScreen setHidden:true];
+    
     
     
     self.callControllersView = [[CallControllersView alloc] init];
@@ -331,8 +341,12 @@
             [self displayCallError:acall message:@"Call Error"];
             numpadView.hidden = YES;
             self.call = nil;
-            [self.callControllersView set_bool_chat_window_open:NO];
-            
+
+            if ([self.callControllersView bool_chat_window_open])
+            {
+                [self.callControllersView performChatButtonClick];
+            }
+
             break;
         }
             //    LinphoneCallEnd, /**<The call ended normally*/
@@ -366,7 +380,10 @@
                 [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
             }
             
-            [self.callControllersView set_bool_chat_window_open:NO];
+            if ([self.callControllersView bool_chat_window_open])
+            {
+                [self.callControllersView performChatButtonClick];
+            }
             break;
         }
             //    LinphoneCallIdle,					/**<Initial call state */
@@ -534,12 +551,8 @@
 }
 
 - (void)dismiss {
-    VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-    [videoCallWindowController close];
-    
+    [[AppDelegate sharedInstance] dismissCallWindows];
     [self.callControllersView dismisCallInfoWindow];
-    
-    [[[CallService sharedInstance] getCallWindowController] close];
 
     [self stopInCallTimer];
 
@@ -854,7 +867,7 @@
                               display:YES
                               animate:YES];
             }
-            
+
             [self.callControllersView set_bool_chat_window_open:YES];
         } else {
             [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1030, self.view.window.frame.size.height)

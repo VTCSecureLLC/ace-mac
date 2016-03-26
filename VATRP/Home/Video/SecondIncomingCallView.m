@@ -14,6 +14,7 @@
 
 @interface SecondIncomingCallView () {
     NSRect selfOriginFrame;
+    bool uiInitialized;
 }
 
 @property (weak) IBOutlet BackgroundedView *viewAlphed;
@@ -44,7 +45,12 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
 //    self.wantsLayer = YES;
 //    [self setBackgroundColor:[NSColor redColor]];
     

@@ -314,11 +314,13 @@ dispatch_queue_t callAlertAnimationQueue;
 
 - (void)dismiss {
     [self stopInCallTimer];
-    VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-    [videoCallWindowController close];
+    
 
-    [callInfoWindowController close];
-    callInfoWindowController = nil;
+    if (callInfoWindowController != nil)
+    {
+        [callInfoWindowController close];
+        callInfoWindowController = nil;
+    }
     
     [[[CallService sharedInstance] getCallWindowController] close];
     

@@ -586,7 +586,7 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
-    NSLog(@"*** --> RTT.textComposeEvent called");
+    NSLog(@"*** --> ChatViewController.textComposeEvent called");
 
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == selectedChatRoom) {
@@ -657,7 +657,7 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
-    NSLog(@"*** --> RTT.textRecievedEvent called");
+    NSLog(@"*** --> ChatViewController.textRecievedEvent called");
 
     LinphoneAddress *from = [[[notif userInfo] objectForKey:@"from_address"] pointerValue];
     LinphoneChatRoom *room = [[notif.userInfo objectForKey:@"room"] pointerValue];
@@ -694,7 +694,7 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)didReceiveMessage:(NSNotification *)aNotification {
-    NSLog(@"*** --> RTT.didReceiveMessage called");
+    NSLog(@"*** --> ChatViewController.didReceiveMessage called");
 
     NSDictionary *dict_message = [aNotification object];
     
@@ -885,7 +885,7 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (BOOL)sendMessage:(NSString *)message withExterlBodyUrl:(NSURL *)externalUrl withInternalURL:(NSURL *)internalUrl LinphoneChatRoom:(LinphoneChatRoom*)room {
-    NSLog(@"*** --> RTT.sendMessage called");
+    NSLog(@"*** --> ChatViewController.sendMessage called");
 
     if (room == NULL) {
         NSLog(@"Cannot send message: No chatroom");

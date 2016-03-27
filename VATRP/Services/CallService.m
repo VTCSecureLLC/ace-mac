@@ -496,24 +496,42 @@
 {
     @try
     {
-        // execute osacript exitScreenSaver.scpt
-//        int pid = [[NSProcessInfo processInfo] processIdentifier];
-        NSPipe *pipe = [NSPipe pipe];
-        NSFileHandle *file = pipe.fileHandleForReading;
-
-        NSTask *task = [[NSTask alloc] init];
-        task.launchPath = @"/usr/bin/osacript";
-        task.arguments = @[@"-e", @"'tell application \"System Events\" to keystroke return'"];
+        // simulate keystroke - command key
+        CGEventSourceRef src =
+        CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
         
-        task.standardOutput = pipe;
+        CGEventRef cmdd = CGEventCreateKeyboardEvent(src, 0x38, true);
+        CGEventRef cmdu = CGEventCreateKeyboardEvent(src, 0x38, false);
+        
+        
+        CGEventTapLocation loc = kCGHIDEventTap; // kCGSessionEventTap also works
+        CGEventPost(loc, cmdd);
+        CGEventPost(loc, cmdu);
+        
+        CFRelease(cmdd);
+        CFRelease(cmdu);
+        CFRelease(src);
+        NSLog (@"exitScreenSaver script completed");
+        return;
+        // execute osacript exitScreenSaver.scpt
+        // works on 10.10 in case we need it different than the others. but i think the above will begin
+//        int pid = [[NSProcessInfo processInfo] processIdentifier];
+//        NSPipe *pipe = [NSPipe pipe];
+//        NSFileHandle *file = pipe.fileHandleForReading;
+
+//        NSTask *task = [[NSTask alloc] init];
+//        task.launchPath = @"/usr/bin/osacript";
+//        task.arguments = @[@"-e", @"'tell application \"System Events\" to key up 56'"];
+        
+//        task.standardOutput = pipe;
     
-        [task launch];
+//        [task launch];
     
-        NSData *data = [file readDataToEndOfFile];
-        [file closeFile];
+//        NSData *data = [file readDataToEndOfFile];
+//        [file closeFile];
     
-        NSString *cmdOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-        NSLog (@"exitScreenSaver script completed\n%@", cmdOutput);
+//        NSString *cmdOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+//        NSLog (@"exitScreenSaver script completed\n%@", cmdOutput);
 
     }
     @catch (NSException* ex)

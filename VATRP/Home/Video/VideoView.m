@@ -714,7 +714,6 @@
         }
         
         int quality = (int)linphone_call_get_current_quality(call);
-        quality = 0;
         
         switch (quality) {
             case 0:

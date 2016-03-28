@@ -13,6 +13,7 @@
 
 @interface SecondCallView () {
     NSTimer *timerCallDuration;
+    bool uiInitialized;
     bool observersAdded;
     bool callSwapLock;
 }
@@ -44,6 +45,12 @@
 - (void) awakeFromNib {
     [super awakeFromNib];
     
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
     self.view.wantsLayer = YES;
     [self setBackgroundColor:[NSColor clearColor]];
     

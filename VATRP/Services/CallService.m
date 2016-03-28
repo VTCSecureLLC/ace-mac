@@ -18,6 +18,9 @@
     
     LinphoneCall *currentCall;
     LinphoneCall *callToSwapTo;
+    
+    bool screenSaverIsRunning;
+    bool screenIsLocked;
 }
 
 + (int) callsCount;
@@ -46,6 +49,29 @@
                                                  selector:@selector(callUpdate:)
                                                      name:kLinphoneCallUpdate
                                                    object:nil];
+        NSDistributedNotificationCenter * center
+        = [NSDistributedNotificationCenter defaultCenter];
+        
+        [center addObserver: self
+                   selector:    @selector(handleScreenSaverStarted:)
+                       name:        @"com.apple.screensaver.didstart"
+                     object:      nil
+         ];
+        [center addObserver: self
+                   selector:    @selector(handleScreenSaverStopped:)
+                       name:        @"com.apple.screensaver.didstop"
+                     object:      nil
+         ];
+        [center addObserver: self
+                   selector:    @selector(handleScreenIsLocked:)
+                       name:        @"com.apple.screenIsLocked"
+                     object:      nil
+         ];
+        [center addObserver: self
+                   selector:    @selector(handleScreenIsUnlocked:)
+                       name:        @"com.apple.screenIsUnlocked"
+                     object:      nil
+         ];
     }
     
     return self;
@@ -55,9 +81,17 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)closeCallWindowController
+{
+    if (callWindowController != nil)
+    {
+        [callWindowController close];
+    }
+}
 - (CallWindowController*) getCallWindowController {
     return callWindowController;
 }
+
 
 + (void) callTo:(NSString*)number {
     LinphoneCore *lc = [LinphoneManager getLc];
@@ -409,12 +443,117 @@
     }
 }
 
-- (void)displayIncomingCall:(LinphoneCall*)call {
-    if ([AppDelegate sharedInstance].homeWindowController.window.miniaturized) {
-        [[AppDelegate sharedInstance].homeWindowController.window makeKeyAndOrderFront:self];
-    } else {
-        [NSApp activateIgnoringOtherApps:YES];
+#pragma mark - screen saver/lock handlers
+-(void) handleScreenSaverStarted:(NSNotification*)notif
+{
+    screenSaverIsRunning = true;
+    NSLog(@"CallService.handleScreenSaverStarted");
+}
+-(void)handleScreenSaverStopped:(NSNotification*)notif
+{
+    screenSaverIsRunning = false;
+    NSLog(@"CallService.handleScreenSaverStopped");
+}
+-(void) handleScreenIsLocked:(NSNotification*)notif
+{
+    screenIsLocked = true;
+    NSLog(@"CallService.handleScreenLocked");
+}
+-(void) handleScreenIsUnlocked:(NSNotification*)notif
+{
+    screenIsLocked = false;
+    NSLog(@"CallService.handleScreenUnLocked");
+}
+
+-(void) wakeDisplay
+{
+    @try
+    {
+        // execute caffeinate  -u -t 1
+        int pid = [[NSProcessInfo processInfo] processIdentifier];
+        NSPipe *pipe = [NSPipe pipe];
+        NSFileHandle *file = pipe.fileHandleForReading;
+    
+        NSTask *task = [[NSTask alloc] init];
+        task.launchPath = @"/usr/bin/caffeinate";
+        task.arguments = @[@"-u", @"-t 1"];
+        task.standardOutput = pipe;
+    
+        [task launch];
+    
+        NSData *data = [file readDataToEndOfFile];
+        [file closeFile];
+    
+        NSString *cmdOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+        NSLog (@"caffeinate returned:\n%@", cmdOutput);
     }
+    @catch (NSException* ex)
+    {
+        NSLog(@"CallService.wakeDisplay: there is an incoming call but we are unable to wake the screen.");
+    }
+}
+-(void) dismissScreenSaver
+{
+    @try
+    {
+        // simulate keystroke - command key
+        CGEventSourceRef src =
+        CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+        
+        CGEventRef cmdd = CGEventCreateKeyboardEvent(src, 0x38, true);
+        CGEventRef cmdu = CGEventCreateKeyboardEvent(src, 0x38, false);
+        
+        
+        CGEventTapLocation loc = kCGHIDEventTap; // kCGSessionEventTap also works
+        CGEventPost(loc, cmdd);
+        CGEventPost(loc, cmdu);
+        
+        CFRelease(cmdd);
+        CFRelease(cmdu);
+        CFRelease(src);
+        NSLog (@"exitScreenSaver script completed");
+        return;
+        // execute osacript exitScreenSaver.scpt
+        // works on 10.10 in case we need it different than the others. but i think the above will begin
+//        int pid = [[NSProcessInfo processInfo] processIdentifier];
+//        NSPipe *pipe = [NSPipe pipe];
+//        NSFileHandle *file = pipe.fileHandleForReading;
+
+//        NSTask *task = [[NSTask alloc] init];
+//        task.launchPath = @"/usr/bin/osacript";
+//        task.arguments = @[@"-e", @"'tell application \"System Events\" to key up 56'"];
+        
+//        task.standardOutput = pipe;
+    
+//        [task launch];
+    
+//        NSData *data = [file readDataToEndOfFile];
+//        [file closeFile];
+    
+//        NSString *cmdOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+//        NSLog (@"exitScreenSaver script completed\n%@", cmdOutput);
+
+    }
+    @catch (NSException* ex)
+    {
+        NSLog(@"CallService.dismissScreenSaver: there is an incoming call but we are unable to turn the screen saver off.");
+    }
+}
+
+- (void)displayIncomingCall:(LinphoneCall*)call {
+    // handle screen if it is asleep
+    [self wakeDisplay];
+    // handle screen saver if it is on
+    if (screenSaverIsRunning)
+    {
+        [self dismissScreenSaver];
+    }
+    // how to handle a locked screen?
+    
+    // handles if we are in the background or if we are minimized
+    [NSApp activateIgnoringOtherApps:YES];
+    [[AppDelegate sharedInstance].homeWindowController.window makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:false];
 
     currentCall = call;
     
@@ -437,6 +576,7 @@
     }
 }
 
+#pragma mark - screen display
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
@@ -463,14 +603,13 @@
     LinphoneCore *lc = [LinphoneManager getLc];
 
     if (!linphone_core_get_calls(lc)) {
+        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         
         if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
-            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
             [window toggleFullScreen:self];
             [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
         }
         
-        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
                  display:YES
                  animate:YES];

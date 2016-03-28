@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
@@ -7,7 +7,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="HomeViewController">
             <connections>
-                <outlet property="callQualityIndicator" destination="diF-ia-rMj" id="Gf1-qM-fav"/>
                 <outlet property="callView" destination="Vdb-8b-tuP" id="D9M-bM-acA"/>
                 <outlet property="dialPadContainer" destination="2n0-18-V9q" id="n7U-Wu-bsq"/>
                 <outlet property="dockViewContainer" destination="so2-rH-9Uf" id="GDU-zs-nuw"/>
@@ -46,12 +45,6 @@
                 <customView id="Vdb-8b-tuP" customClass="BackgroundedView">
                     <rect key="frame" x="310" y="0.0" width="720" height="700"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <customView hidden="YES" id="diF-ia-rMj" customClass="CallQualityIndicator">
-                            <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        </customView>
-                    </subviews>
                 </customView>
             </subviews>
         </customView>

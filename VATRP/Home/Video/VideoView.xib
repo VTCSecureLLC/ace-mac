@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="VideoView">
@@ -11,6 +12,8 @@
                 <outlet property="callControllerContainer" destination="Gl8-FV-Ntx" id="NbU-de-GLd"/>
                 <outlet property="callControllsConteinerView" destination="Wi4-MK-p4S" id="brj-Uw-YuL"/>
                 <outlet property="callerImageView" destination="Cbb-Ah-I7O" id="YZN-ki-oWo"/>
+                <outlet property="holdImageView" destination="8Tb-De-0ze" id="06c-Il-hyZ"/>
+                <outlet property="imageViewQuality" destination="bmn-7M-X2j" id="sLE-C0-MRy"/>
                 <outlet property="labelCallDuration" destination="iRe-cd-Hjl" id="hwC-et-iPl"/>
                 <outlet property="labelCallState" destination="hm1-fj-1F7" id="CPG-4k-ujm"/>
                 <outlet property="labelDisplayName" destination="Vod-Ov-ORD" id="YnY-D2-Tha"/>
@@ -31,6 +34,10 @@
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Aa-wV-oYP">
                     <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
                 </customView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmn-7M-X2j">
+                    <rect key="frame" x="27" y="61" width="54" height="30"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="call_quality_indicator_0" id="Xef-Dv-YpF"/>
+                </imageView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZE-id-6Bh">
                     <rect key="frame" x="486" y="580" width="176" height="99"/>
                 </customView>
@@ -72,18 +79,18 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iRe-cd-Hjl">
-                            <rect key="frame" x="10" y="400" width="700" height="27"/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="0:00:05" id="Oqj-bN-yeh">
-                                <font key="font" metaFont="system" size="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JN6-Id-y5q">
                             <rect key="frame" x="10" y="286" width="700" height="130"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="1" id="xOp-ga-yiy">
                                 <font key="font" metaFont="system" size="120"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iRe-cd-Hjl">
+                            <rect key="frame" x="10" y="400" width="700" height="27"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="0:00:05" id="Oqj-bN-yeh">
+                                <font key="font" metaFont="system" size="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
@@ -95,12 +102,18 @@
                             <rect key="frame" x="284" y="517" width="150" height="150"/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="6nP-yP-jOe"/>
                         </imageView>
+                        <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Tb-De-0ze">
+                            <rect key="frame" x="216" y="314" width="288" height="72"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="hold" id="mAP-Cx-MWH"/>
+                        </imageView>
                     </subviews>
                 </customView>
             </subviews>
         </customView>
     </objects>
     <resources>
+        <image name="call_quality_indicator_0" width="54" height="30"/>
+        <image name="hold" width="288" height="72"/>
         <image name="icon_fullscreen_open" width="30" height="30"/>
         <image name="male" width="53" height="53"/>
     </resources>

@@ -38,6 +38,7 @@ const NSInteger SIP_SIMPLE=1;
     CGFloat incomingTextLinesCount;
     bool observersAdded;
     bool rttDisabledMessageHasBeenShown;
+    bool uiInitialized;
 }
 
 @property (weak) IBOutlet NSButton *buttonSend;
@@ -68,6 +69,12 @@ const NSInteger SIP_SIMPLE=1;
 - (void) awakeFromNib {
     [super awakeFromNib];
     
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
     [ViewManager sharedInstance].rttView = self;
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];
     [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self.view];
@@ -174,6 +181,7 @@ const NSInteger SIP_SIMPLE=1;
 {
     NSLog(@"*** --> RTT.removeObservers called");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    observersAdded = false;
 }
 
 -(void)dealloc{
@@ -324,6 +332,10 @@ static void chatTable_free_chatrooms(void *data) {
     if(![ViewManager sharedInstance].callControllersView_delegate.bool_chat_window_open){
         [[ViewManager sharedInstance].callControllersView_delegate performChatButtonClick];
     }
+    else
+    {
+        NSLog(@"*** --> RTT.textComposeEvent I think that the chat window is already open");
+    }
     
     
     LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
@@ -351,7 +363,7 @@ static void chatTable_free_chatrooms(void *data) {
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
                     
-                    if (strlen(text_char)) {
+                    if ((text_char != nil) && strlen(text_char)) {
                         self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
                         NSString *str_msg = [NSString stringWithUTF8String:text_char];
                         if ([text isEqualToString:@"\b"]) {

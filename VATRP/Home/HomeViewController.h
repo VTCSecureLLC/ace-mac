@@ -11,7 +11,7 @@
 #import "ProfileView.h"
 #import "DialPadView.h"
 #import "RTTView.h"
-#import "CallQualityIndicator.h"
+#import "BackgroundedView.h"
 
 @interface HomeViewController : NSViewController<NSTableViewDelegate, NSTableViewDataSource>
 @property (strong) IBOutlet NSView *dockViewContainer;
@@ -25,7 +25,6 @@
 @property (strong) RTTView *rttView;
 @property (strong) IBOutlet VideoView *videoView;
 @property (strong) IBOutlet BackgroundedView *callView;
-@property (strong) IBOutlet CallQualityIndicator *callQualityIndicator;
 
 @property (nonatomic, assign) BOOL isAppFullScreen;
 

@@ -39,6 +39,7 @@
     NSImageView *cameraStatusModeImageView;
     BackgroundedView *blackCurtain;
     
+    bool uiInitialized;
     bool observersAdded;
     bool displayErrorLock;
 }
@@ -71,6 +72,7 @@
 @property (strong, nonatomic) NSString *callStatusMessage;
 @property (strong, nonatomic)IBOutlet NSImageView *holdImageView;
 
+@property (weak) IBOutlet NSImageView *imageViewQuality;
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -98,7 +100,11 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    [self initializeData];
+    if (!uiInitialized)
+    {
+        [self initializeData];
+        uiInitialized = true;
+    }
 }
 
 - (void) initializeData
@@ -108,6 +114,10 @@
     
     timerCallDuration = nil;
     
+    if (uiInitialized)
+    {
+        return;
+    }
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.settingsSelfViewDelegate = self;
     
@@ -130,6 +140,7 @@
     [blackCurtain setBackgroundColor:[NSColor blackColor]];
     // ToD0 - temp for VATRP-2489
     [self.buttonFullScreen setHidden:true];
+    
     
     
     self.callControllersView = [[CallControllersView alloc] init];
@@ -213,7 +224,6 @@
     switch (astate) {
             //    LinphoneCallIncomingReceived, /**<This is a new incoming call */
         case LinphoneCallIncomingReceived: {
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimerWithTimeInterval:3.75];
             [self.labelRingCount setTextColor:[NSColor whiteColor]];
@@ -269,14 +279,10 @@
             
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
             [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
-            
-            homeViewController.callQualityIndicator.hidden = NO;
-            [homeViewController.callQualityIndicator setNeedsDisplayInRect:self.view.frame];
         }
             break;
             //    LinphoneCallOutgoingInit, /**<An outgoing call is started */
         case LinphoneCallOutgoingInit: {
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
             self.labelCallState.stringValue = @"Calling 00:00";
             [self.callControllsConteinerView setHidden:NO];
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
@@ -286,7 +292,6 @@
         case LinphoneCallOutgoingRinging: {
             
             self.labelCallState.stringValue = @"Ringing 00:00";
-            
             [self startRingCountTimerWithTimeInterval:3.6];
             [self.labelRingCount setTextColor:[NSColor redColor]];
         }
@@ -325,6 +330,11 @@
 //                self.localVideo.hidden = YES;
 //            }
             //            [self changeCurrentView:[InCallViewController compositeViewDescription]];
+            if ([self.callControllersView bool_chat_window_open])
+            {
+                [self.callControllersView performChatButtonClick];
+            }
+
             break;
         }
             //    LinphoneCallError, /**<The call encountered an error*/
@@ -335,9 +345,12 @@
             [self displayCallError:acall message:@"Call Error"];
             numpadView.hidden = YES;
             self.call = nil;
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
-            [self.callControllersView set_bool_chat_window_open:NO];
-            
+
+            if ([self.callControllersView bool_chat_window_open])
+            {
+                [self.callControllersView performChatButtonClick];
+            }
+
             break;
         }
             //    LinphoneCallEnd, /**<The call ended normally*/
@@ -371,8 +384,10 @@
                 [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
             }
             
-            [[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator.hidden = YES;
-            [self.callControllersView set_bool_chat_window_open:NO];
+            if ([self.callControllersView bool_chat_window_open])
+            {
+                [self.callControllersView performChatButtonClick];
+            }
             break;
         }
             //    LinphoneCallIdle,					/**<Initial call state */
@@ -540,12 +555,8 @@
 }
 
 - (void)dismiss {
-    VideoCallWindowController *videoCallWindowController = [[AppDelegate sharedInstance] getVideoCallWindow];
-    [videoCallWindowController close];
-    
+    [[AppDelegate sharedInstance] dismissCallWindows];
     [self.callControllersView dismisCallInfoWindow];
-    
-    [[[CallService sharedInstance] getCallWindowController] close];
 
     [self stopInCallTimer];
 
@@ -702,10 +713,20 @@
                 break;
         }
         
-        float quality = linphone_call_get_current_quality(call);
-        HomeViewController *homeViewController = [[AppDelegate sharedInstance].homeWindowController getHomeViewController];
-        homeViewController.callQualityIndicator.callQuality = quality;
-        [homeViewController.callQualityIndicator setNeedsDisplayInRect:homeViewController.callQualityIndicator.frame];
+        int quality = (int)linphone_call_get_current_quality(call);
+        quality = 0;
+        
+        switch (quality) {
+            case 0:
+            case 1:
+            case 2: {
+                self.imageViewQuality.image = [NSImage imageNamed:[NSString stringWithFormat:@"call_quality_indicator_%d", quality]];
+            }
+                break;
+            default:
+                self.imageViewQuality.image = [NSImage imageNamed:@"call_quality_indicator_3"];
+                break;
+        }
     }
 }
 
@@ -733,6 +754,11 @@
 }
 
 - (void)ringCountTimer {
+    // in theory we should not need this, however, since we are working on a system where we do not control the order in which events are fired, this is a safe way to make sure that the user has the controls needed to cancel an outgoign call.
+    if ([self.callControllsConteinerView isHidden] && [self.secondIncomingCallContainer isHidden])
+    {
+        [self.callControllsConteinerView setHidden:false];
+    }
     self.labelRingCount.stringValue = [@(self.labelRingCount.intValue + 1) stringValue];
 }
 
@@ -850,7 +876,7 @@
                               display:YES
                               animate:YES];
             }
-            
+
             [self.callControllersView set_bool_chat_window_open:YES];
         } else {
             [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1030, self.view.window.frame.size.height)
@@ -899,9 +925,6 @@
     [[self.secondCallView.view animator] setFrame:NSMakeRect(6, callViewFrame.size.height - 190, self.secondCallView.view.frame.size.width, self.secondCallView.view.frame.size.height)];
     [[numpadView animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [numpadView setCustomFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
-    
-    
-    [[[[AppDelegate sharedInstance].homeWindowController getHomeViewController].callQualityIndicator animator] setFrame:CGRectMake(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
 }
 
 - (void)videoModeUpdate:(NSNotification*)notif {

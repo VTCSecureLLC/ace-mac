@@ -57,8 +57,16 @@
 - (void)initFontFamilies {
     
     NSArray *systemFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
-    [self.fontsPopUpButton removeAllItems];
-    [self.fontsPopUpButton addItemsWithTitles:systemFonts];
+    NSMenu *menu = [NSMenu new];
+    for (NSString *family in systemFonts) {
+        NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:family size:[NSFont systemFontSize]],NSFontAttributeName,[NSColor blackColor],NSForegroundColorAttributeName,nil];
+        NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:family];
+        [aString addAttributes:attr range:NSMakeRange(0, [aString length])];
+        NSMenuItem *item = [NSMenuItem new];
+        [item setAttributedTitle:aString];
+        [menu addItem:item];
+    }
+    [self.fontsPopUpButton setMenu:menu];
     NSString *currentRttFontName = nil;
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"rttFontName"]) {
         NSString *storedRttFontName = [[NSUserDefaults standardUserDefaults] stringForKey:@"rttFontName"];

@@ -1406,6 +1406,19 @@ static BOOL libStarted = FALSE;
     //libmsbcg729_init(f);
     //libmswebrtc_init(f);
     
+    if ([settingsHandler getQoSEnabled])
+    {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], [settingsHandler getQoSSignalingValue]);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], [settingsHandler getQoSAudioValue]);
+        linphone_core_set_video_dscp([LinphoneManager getLc], [settingsHandler getQoSVideoValue]);
+    }
+    else
+    {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_video_dscp([LinphoneManager getLc], 0);
+    }
+
     NSString *s = [NSString stringWithFormat:@"%@/Contents/Frameworks/",[[NSBundle mainBundle] bundlePath]];
     NSLog(@"Plugin path: %@", s);
     ms_factory_load_plugins(f, [s cStringUsingEncoding:[NSString defaultCStringEncoding]]);

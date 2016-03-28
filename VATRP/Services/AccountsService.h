@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AccountModel.h"
 
-#define USER_DEFAULTS_ACCOUNT_LIST @"USER_DEFAULTS_ACCOUNT_LIST"
+#define USER_DEFAULTS_ACCOUNT_LIST @"ACE User Account"
 
 @interface AccountsService : NSObject
 

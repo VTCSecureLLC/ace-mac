@@ -308,7 +308,7 @@
         {
             NSLog(@"****** LinphoneCallStreamsRunning");
             // tell the rtt window to add observers
-            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
+//            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
             
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
             
@@ -392,7 +392,7 @@
             }
             else if (call_count == 0)
             {
-                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
+//                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
             }
             
             if (currentCall && aCall != currentCall) {

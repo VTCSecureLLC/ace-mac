@@ -17,6 +17,7 @@
 #import "SettingsHeaderModel.h"
 #import "SettingsItemModel.h"
 #import "CodecModel.h"
+#import "SettingsHandler.h"
 
 static NSMutableArray *settingsList;
 
@@ -388,11 +389,24 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
     // video_resolution_maximum - set
     
     // QoS
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"enable_QoS"]) {
-        linphone_core_set_sip_dscp([LinphoneManager getLc], 28);
-        linphone_core_set_audio_dscp([LinphoneManager getLc], 38);
-        linphone_core_set_video_dscp([LinphoneManager getLc], 38);
+    // To Do - verify that this is right - it does nto appear so to me. if
+    bool qosEnabled = [[SettingsHandler settingsHandler] getQoSEnabled];
+    if (qosEnabled)
+    {
+        if (qosEnabled)
+        {
+            linphone_core_set_sip_dscp([LinphoneManager getLc], [[SettingsHandler settingsHandler] getQoSSignalingValue]);
+            linphone_core_set_audio_dscp([LinphoneManager getLc], [[SettingsHandler settingsHandler] getQoSAudioValue]);
+            linphone_core_set_video_dscp([LinphoneManager getLc], [[SettingsHandler settingsHandler] getQoSVideoValue]);
+        }
+        else
+        {
+            linphone_core_set_sip_dscp([LinphoneManager getLc], 0);
+            linphone_core_set_audio_dscp([LinphoneManager getLc], 0);
+            linphone_core_set_video_dscp([LinphoneManager getLc], 0);
+        }
     }
+
 }
 
 - (void)enableVideoCodecs {

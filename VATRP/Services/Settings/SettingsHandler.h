@@ -85,6 +85,11 @@
 - (void)setQoSAudioValue:(int)audioValue;
 - (void)setQoSVideoValue:(int)videoValue;
 
+- (bool)getQoSEnabled;
+- (int)getQoSSignalingValue;
+- (int)getQoSAudioValue;
+- (int)getQoSVideoValue;
+
 -(void)storeEnabledCodecs;
 - (void)setStunServerDomain:(NSString*)stunServerDomain;
 

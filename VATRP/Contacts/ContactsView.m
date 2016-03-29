@@ -286,7 +286,7 @@
             linphone_friend_list_export_friends_as_vcard4_file(friendList, [path UTF8String]);
             NSAlert *alert = [[NSAlert alloc] init];
             [alert addButtonWithTitle:@"OK"];
-            [alert setMessageText:@"Contacts have been succefully exported"];
+            [alert setMessageText:@"Contacts have been successfully exported"];
             [alert setAlertStyle:NSWarningAlertStyle];
             [alert runModal];
         }
@@ -315,7 +315,7 @@
             [self refreshContactList];
             NSAlert *alert = [[NSAlert alloc] init];
             [alert addButtonWithTitle:@"OK"];
-            [alert setMessageText:@"Contacts have been succefully imported"];
+            [alert setMessageText:@"Contacts have been successfully imported"];
             [alert setAlertStyle:NSWarningAlertStyle];
             [alert runModal];
         } else {

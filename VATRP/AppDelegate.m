@@ -64,6 +64,8 @@
 
     videoCallWindowController = nil;
     
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+    
     [[LinphoneLocationManager sharedManager] startMonitoring];
     // Set observers
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -368,5 +370,13 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
     NSLog(@"%@ %c %@",linphoneVersion, levelC, [formatedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"]);
     
 }
+
+#pragma mark - local notifications
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
+     shouldPresentNotification:(NSUserNotification *)notification
+{
+    return YES;
+}
+
 
 @end

@@ -231,6 +231,22 @@
     {
         [self setAppSettingBool:USE_IPV6 withValue:true] ;
     }
+    if (force || ([[NSUserDefaults standardUserDefaults] objectForKey:ENABLE_QoS] == nil))
+    {
+        [self setQoSEnable:true];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults] objectForKey:QoS_Signaling] == nil)
+    {
+        [self setQoSSignalingValue:24];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults] objectForKey:QoS_Audio] == nil)
+    {
+        [self setQoSAudioValue:48];
+    }
+    if (force || [[NSUserDefaults standardUserDefaults] objectForKey:QoS_Video] == nil)
+    {
+        [self setQoSVideoValue:48];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -511,7 +527,7 @@
 
 -(int)getUploadBandwidth
 {
-    return (int)[[NSUserDefaults standardUserDefaults]integerForKey:UPLOAD_BANDWIDTH];
+    return [self getUserSettingInt:UPLOAD_BANDWIDTH];
 }
 -(void)setUploadBandwidth:(int)bandwidth
 {
@@ -526,7 +542,7 @@
 
 -(int)getDownloadBandwidth
 {
-    return (int)[[NSUserDefaults standardUserDefaults]integerForKey:DOWNLOAD_BANDWIDTH];
+    return [self getUserSettingInt:DOWNLOAD_BANDWIDTH];
 }
 -(void)setDownloadBandwidth:(int)bandwidth
 {
@@ -580,13 +596,13 @@
     [[NSUserDefaults standardUserDefaults]setValue:value forKey:settingName];
 }
 
--(NSInteger)getUserSettingInt:(NSString*)settingName
+-(int)getUserSettingInt:(NSString*)settingName
 {
-    return [[NSUserDefaults standardUserDefaults]integerForKey:settingName];
+    return (int)[[NSUserDefaults standardUserDefaults]integerForKey:settingName];
 }
--(void)setUserSettingInt:(NSString*)settingName withValue:(NSInteger)value
+-(void)setUserSettingInt:(NSString*)settingName withValue:(int)value
 {
-    [[NSUserDefaults standardUserDefaults]setInteger:value forKey:settingName];
+    [[NSUserDefaults standardUserDefaults]setInteger:(NSInteger)value forKey:settingName];
 }
 
 -(NSObject*)getUserSettingObject:(NSString*)settingName
@@ -650,6 +666,25 @@
 
 - (void)setQoSVideoValue:(int)videoValue {
     [self setUserSettingInt:QoS_Video withValue:videoValue];
+}
+- (bool)getQoSEnabled
+{
+    return [self getUserSettingBool:ENABLE_QoS];
+}
+
+- (int)getQoSSignalingValue
+{
+    return [self getUserSettingInt:QoS_Signaling];
+}
+
+- (int)getQoSAudioValue
+{
+    return [self getUserSettingInt:QoS_Audio];
+}
+
+- (int)getQoSVideoValue
+{
+    return [self getUserSettingInt:QoS_Video];
 }
 
 @end

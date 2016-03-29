@@ -308,7 +308,7 @@
         {
             NSLog(@"****** LinphoneCallStreamsRunning");
             // tell the rtt window to add observers
-            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
+//            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
             
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
             
@@ -392,7 +392,7 @@
             }
             else if (call_count == 0)
             {
-                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
+//                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
             }
             
             if (currentCall && aCall != currentCall) {
@@ -540,6 +540,36 @@
     }
 }
 
+-(void)notifyUserOfIncomingCallIfScreenIsLocked:(LinphoneCall*) call
+{
+    if (screenIsLocked && (call != nil))
+    {
+        NSString* address;
+        const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+        char * remoteAddress = linphone_call_get_remote_address_as_string(call);
+        NSString  *sipURI = [NSString stringWithUTF8String:remoteAddress];
+        if (addr != NULL) {
+            BOOL useLinphoneAddress = true;
+            // contact name
+            if(useLinphoneAddress) {//
+                //            const char* lDisplayName = linphone_address_get_display_name(addr);
+                const char* lUserName = linphone_address_get_username(addr);
+                if(lUserName)
+                    address = [NSString stringWithUTF8String:lUserName];
+            }
+        }
+        if (address == nil)
+        {
+            address = @"Unknown";
+        }
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title = @"Incoming Call";
+        notification.informativeText = [NSString stringWithFormat:@"Incoming call from %@", address];
+        notification.soundName = NSUserNotificationDefaultSoundName;
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    }
+}
+
 - (void)displayIncomingCall:(LinphoneCall*)call {
     // handle screen if it is asleep
     [self wakeDisplay];
@@ -549,6 +579,8 @@
         [self dismissScreenSaver];
     }
     // how to handle a locked screen?
+    // if screen is locked, send a notification
+    [self notifyUserOfIncomingCallIfScreenIsLocked:call];
     
     // handles if we are in the background or if we are minimized
     [NSApp activateIgnoringOtherApps:YES];

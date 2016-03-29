@@ -159,34 +159,46 @@
     [mediaViewController save];
     [testingViewController save];
     [summaryMenuViewController save];
-    [preferencesViewController save];
+    if ([self isPreferencesInToolbar])
+    {
+        [preferencesViewController save];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+    if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
+        [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
+    }
+    if (![[SettingsHandler settingsHandler] isShowPreviewEnabled])
+    {
+        linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
+        linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
+        linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
+    }
+
     [self close];
 }
 
-- (void) addPreferencesToolbarItem {
-    
-    NSArray *visibleItems = self.toolbar.visibleItems;
-    
-    BOOL found = NO;
-    
-    for (NSToolbarItem *toolbarItem in visibleItems)
+- (void) addPreferencesToolbarItem
+{
+    if (![self isPreferencesInToolbar])
     {
-        if ([toolbarItem.itemIdentifier isEqualToString:@"preferences"])
-        {
-            found = YES;
-            return;
-        }
-    }
-    
-    if (!found)
-    {
+        NSArray *visibleItems = self.toolbar.visibleItems;
         [self.toolbar insertItemWithItemIdentifier:@"preferences" atIndex:[self.toolbar visibleItems].count];
         preferencesIndex = [self.toolbar visibleItems].count;
     }
 }
 
+-(bool)isPreferencesInToolbar
+{
+    NSArray *visibleItems = self.toolbar.visibleItems;
+    for (NSToolbarItem *toolbarItem in visibleItems)
+    {
+        if ([toolbarItem.itemIdentifier isEqualToString:@"preferences"])
+        {
+            return true;
+        }
+    }
+    return false;
+}
 -(void)closeWindow
 {
     [self close];
@@ -197,15 +209,6 @@
     if (preferencesIndex > -1)
     {
         [self.toolbar removeItemAtIndex:preferencesIndex];
-    }
-    if([AppDelegate sharedInstance].viewController.videoMailWindowController.isShow){
-        [[AppDelegate sharedInstance].viewController.videoMailWindowController close];
-    }
-    if (![[SettingsHandler settingsHandler] isShowPreviewEnabled])
-    {
-        linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
-        linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
-        linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
     }
 }
 

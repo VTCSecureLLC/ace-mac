@@ -9,9 +9,13 @@
 #import "SecondCallView.h"
 #import "Utils.h"
 #import "BackgroundedView.h"
+#import "LinphoneAPI.h"
 
 @interface SecondCallView () {
     NSTimer *timerCallDuration;
+    bool uiInitialized;
+    bool observersAdded;
+    bool callSwapLock;
 }
 
 @property (weak) IBOutlet BackgroundedView *viewAlphaed;
@@ -41,6 +45,12 @@
 - (void) awakeFromNib {
     [super awakeFromNib];
     
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
     self.view.wantsLayer = YES;
     [self setBackgroundColor:[NSColor clearColor]];
     
@@ -56,17 +66,34 @@
     
     self.labelDisplayName.wantsLayer = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+    }
 }
 
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (IBAction)onButtonSwap:(id)sender {
+    // this right here needs to know if we are done setting up streams from previous swap prior to performing another swap.
+    // we can no just disable the button. trying a flag as a switch. ig is a little bit tricky - we are going to set the lock here
+    // and unlock when the streams running event comes in.
+    if (callSwapLock)
+    {
+        return;
+    }
+    callSwapLock = true;
     [[CallService sharedInstance] swapCallsToCall:self.call];
+}
+
+-(void)unlockSwap
+{
+    callSwapLock = false;
 }
 
 - (IBAction)onButtonHangup:(id)sender {
@@ -83,6 +110,10 @@
         [self setHidden:NO];
         
         [self startCallDurationTimer];
+    }
+    else
+    {
+        [self stopCallDurationTimer];
     }
 }
 
@@ -108,6 +139,7 @@
             self.call = nil;
             [self setHidden:YES];
             [self stopCallDurationTimer];
+            callSwapLock = false;
         }
             break;
         default:
@@ -138,7 +170,8 @@
 }
 
 - (void) inCallTick:(NSTimer*)timer {
-    if (self.call) {
+    if ((self.call) && [[LinphoneAPI instance] callAppearsValid:call])
+    {
         int call_Duration = linphone_call_get_duration(self.call);
         self.labelCallDuration.stringValue = [Utils getTimeStringFromSeconds:call_Duration];
         
@@ -161,6 +194,10 @@
             default:
                 break;
         }
+    }
+    else
+    {
+        NSLog(@"SecondCallView.inCallTick: attempting to update call state, but my current call poitner does not appear to be valid.");
     }
 }
 

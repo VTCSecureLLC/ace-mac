@@ -38,6 +38,7 @@ const NSInteger SIP_SIMPLE=1;
     CGFloat incomingTextLinesCount;
     bool observersAdded;
     bool rttDisabledMessageHasBeenShown;
+    bool uiInitialized;
 }
 
 @property (weak) IBOutlet NSButton *buttonSend;
@@ -68,6 +69,12 @@ const NSInteger SIP_SIMPLE=1;
 - (void) awakeFromNib {
     [super awakeFromNib];
     
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
     [ViewManager sharedInstance].rttView = self;
     [self setBackgroundColor:[NSColor colorWithRed:44.0/255.0 green:55.0/255.0 blue:61.0/255.0 alpha:1.0]];
     [Utils setUIBorderColor:[NSColor whiteColor] CornerRadius:0 Width:1 Control:(NSControl*)self.view];
@@ -86,7 +93,7 @@ const NSInteger SIP_SIMPLE=1;
     
     [self.tableViewContent setBackgroundColor:[NSColor clearColor]];
     [self.textFieldMessage setDelegate:self];
-    
+    [self addInCallObservers];
 }
 
 -(void) setHidden:(bool)hidden
@@ -95,10 +102,24 @@ const NSInteger SIP_SIMPLE=1;
     rttDisabledMessageHasBeenShown = false;
     if (!hidden)
     {
-        [self initializeData];
+        selectedChatRoom = nil;
+        [self clearMessageList];
+//        [self updateContentData];
+        [self.tableViewContent reloadData];
+        [self updateViewForDisplay];
     }
 }
+- (void) updateForNewCall
+{
+//    [self initializeData];
+    [self updateViewForDisplay];
+}
 
+-(void)clearData
+{
+    selectedChatRoom = nil;
+    [self clearMessageList];
+}
 -(void) initializeData
 {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, nil];
@@ -133,6 +154,7 @@ const NSInteger SIP_SIMPLE=1;
     // Do view setup here.
     if (!observersAdded)
     {
+        NSLog(@"*** --> RTT.addInCallObservers called");
         observersAdded = true;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(callUpdateEvent:)
@@ -151,7 +173,9 @@ const NSInteger SIP_SIMPLE=1;
 
 -(void) removeObservers
 {
+    NSLog(@"*** --> RTT.removeObservers called");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    observersAdded = false;
 }
 
 -(void)dealloc{
@@ -272,6 +296,7 @@ static void chatTable_free_chatrooms(void *data) {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
     [self callUpdate:acall state:astate];
+    NSLog(@"*** --> RTT.callUpdateEvent called");
 }
 
 #pragma mark -
@@ -293,12 +318,23 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textComposeEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textComposeEvent called");
+    LinphoneCall* currentCall = [[CallService sharedInstance] getCurrentCall];
+    if (currentCall == nil)
+    {
+        return; // this event is not for this controller - leave it for sip simple.
+    }
+        
     //New message is received rtt or sip simple
     // Note: if we are not in call, do not try to do anything with the message.
     
     //VATRP-1292 open chat window immediately when a new message is recieved.
     if(![ViewManager sharedInstance].callControllersView_delegate.bool_chat_window_open){
         [[ViewManager sharedInstance].callControllersView_delegate performChatButtonClick];
+    }
+    else
+    {
+        NSLog(@"*** --> RTT.textComposeEvent I think that the chat window is already open");
     }
     
     
@@ -327,7 +363,7 @@ static void chatTable_free_chatrooms(void *data) {
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
                     
-                    if (strlen(text_char)) {
+                    if ((text_char != nil) && strlen(text_char)) {
                         self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
                         NSString *str_msg = [NSString stringWithUTF8String:text_char];
                         if ([text isEqualToString:@"\b"]) {
@@ -368,6 +404,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
+    NSLog(@"*** --> RTT.textReceivedEvent called");
+
     LinphoneAddress *from = [[[notif userInfo] objectForKey:@"from_address"] pointerValue];
     LinphoneChatRoom *room = [[notif.userInfo objectForKey:@"room"] pointerValue];
     LinphoneChatMessage *chat = [[notif.userInfo objectForKey:@"message"] pointerValue];
@@ -401,6 +439,8 @@ static void chatTable_free_chatrooms(void *data) {
 }
 
 - (void)didReceiveMessage:(NSNotification *)aNotification {
+    NSLog(@"*** --> RTT.didReceiveMessage called");
+
     NSDictionary *dict_message = [aNotification object];
     
     //    BOOL composing = [[dict_message objectForKey:@"composing"] boolValue];
@@ -469,9 +509,12 @@ long msgSize; //message length buffer
     
     int TEXT_MODE=[self getTextMode];
     
-    if(TEXT_MODE==RTT){
+    if(TEXT_MODE==RTT)
+    {
+        NSLog(@"*** --> controlTextDidChange - RTT Mode called");
 
-            if((self.textFieldMessage.stringValue.length-1) - msgSize  > 1){
+            if((self.textFieldMessage.stringValue.length-1) - msgSize  > 1)
+            {
                     /** Text was pasted **/         /** Difference of length
                                                                                                buffer and current text is
                                                                                                greater than one.User entered
@@ -487,7 +530,8 @@ long msgSize; //message length buffer
             
         }
         else{
-            if (!rttDisabledMessageHasBeenShown && ![[ChatService sharedInstance] sendMessagt:lastSymbol]) {
+            if (!rttDisabledMessageHasBeenShown && ![[ChatService sharedInstance] sendMessagt:lastSymbol])
+            {
                 NSAlert *alert = [[NSAlert alloc]init];
                 [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
                 [alert setMessageText:NSLocalizedString(@"RTT has been disabled for this call", nil)];
@@ -545,12 +589,17 @@ long msgSize; //message length buffer
         } else {
         
             outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
+            LinphoneChatRoom* chatRoom = [self getCurrentChatRoom];
+            [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:chatRoom];
 
-            [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:[self getCurrentChatRoom]];
+            // we must ref & unref message because in case of error, it will be destroy otherwise
+            linphone_chat_room_send_chat_message(chatRoom, linphone_chat_message_ref(outgoingChatMessage));
 
             self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
             
             [self.tableViewContent reloadData];
+            linphone_chat_message_unref(outgoingChatMessage);
+            outgoingChatMessage = nil;
             
             NSInteger count = ms_list_size(messageList);
             [self.tableViewContent scrollRowToVisible:count-1];

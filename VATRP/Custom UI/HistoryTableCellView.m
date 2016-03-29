@@ -92,10 +92,12 @@
 
 + (NSString *)timeFormatConvertToSeconds:(int)totalSeconds
 {
+    
     int seconds = totalSeconds % 60;
     int minutes = (totalSeconds / 60) % 60;
+    int hours = ((totalSeconds / 60) / 60);
     
-    return [NSString stringWithFormat:@"%02dm %02ds", minutes, seconds];
+    return [NSString stringWithFormat:@"%02dh %02dm %02ds", hours, minutes, seconds];
 }
 
 - (NSString*)makeStringFromDate:(NSDate*)date {

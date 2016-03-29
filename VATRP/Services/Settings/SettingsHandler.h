@@ -56,8 +56,9 @@
 @property(weak,nonatomic)id<PreferencesHandlerDelegate> preferencessHandlerDelegate;
 @property(weak,nonatomic)id<SettingsSelfViewDelegate> settingsSelfViewDelegate;
 
-// Bool force provided for debugging, and to reset settings when needed.
--(void) initializeUserDefaults:(bool)force;
+// Bool force provided for debugging, and to reset settings when needed. settingForNoConfig - if calling after login with no
+//   config found this should be true. Otherwise leave it false.
+-(void) initializeUserDefaults:(bool)force settingForNoConfig:(bool)settingForNoConfig;
 -(void) resetDefaultsWithCoreRunning;
 
 #pragma mark items for inCallSettingsDelegate - setting from call window to settings dialog
@@ -71,7 +72,7 @@
 -(void) setMuteSpeaker:(bool)mute;
 -(void) setMuteMicrophone:(bool)mute;
 -(void) setShowSelfView:(bool)show;
--(void)setShowVideoSelfPreview:(bool)show;
+-(void) setShowVideoSelfPreview:(bool)show;
 -(void) setEnableEchoCancellation:(bool)show;
 -(void) setMuteCamera:(bool)enable;
 
@@ -83,6 +84,14 @@
 - (void)setQoSSignalingValue:(int)signalingValue;
 - (void)setQoSAudioValue:(int)audioValue;
 - (void)setQoSVideoValue:(int)videoValue;
+
+- (bool)getQoSEnabled;
+- (int)getQoSSignalingValue;
+- (int)getQoSAudioValue;
+- (int)getQoSVideoValue;
+
+-(void)storeEnabledCodecs;
+- (void)setStunServerDomain:(NSString*)stunServerDomain;
 
 #pragma mark settings accessors
 // these settings are set when the UI calls one of the methods above.
@@ -122,5 +131,8 @@
 -(NSString*) getAdaptiveRateAlgorithm;
 -(NSString*) getVideoPreset;
 -(NSString*) getStunServerDomain;
+-(bool)getEnableIPV6;
+-(bool)getEnableICE;
+-(NSString*)setStunServerDomain;
 @end
 #endif /* SettingsDelegate_h */

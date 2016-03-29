@@ -14,6 +14,7 @@
 #import "SettingsHandler.h"
 #import "FXKeyChain.h"
 #import "AccountsService.h"
+#import "SettingsConstants.h"
 
 @interface TestingViewController () {
     BOOL isChanged;
@@ -93,13 +94,15 @@
     if(!rtcpFbMode){ rtcpFbMode = @"Implicit"; }
     
     [self.comboBoxRTCPFeedBack setStringValue:rtcpFbMode];
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"enable_QoS"]) {
-        self.buttonQoS.state = YES;
+    self.buttonQoS.state = [[SettingsHandler settingsHandler] isQosEnabled];
+    if (![[SettingsHandler settingsHandler] getQoSEnabled]) {
+        self.textFieldSignaling.stringValue =  [NSString stringWithFormat:@"%i",0];
+        self.textFieldAudio.stringValue = [NSString stringWithFormat:@"%i",0];
+        self.textFieldVideo.stringValue = [NSString stringWithFormat:@"%i",0];
     } else {
-        self.buttonQoS.state = [[SettingsHandler settingsHandler] isQosEnabled];
-        self.textFieldSignaling.stringValue =  [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Signaling"];
-        self.textFieldAudio.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Audio"];
-        self.textFieldVideo.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Video"];
+        self.textFieldSignaling.stringValue =  [NSString stringWithFormat:@"%i",[[SettingsHandler settingsHandler] getQoSSignalingValue]];
+        self.textFieldAudio.stringValue = [NSString stringWithFormat:@"%i",[[SettingsHandler settingsHandler] getQoSAudioValue]];
+        self.textFieldVideo.stringValue = [NSString stringWithFormat:@"%i",[[SettingsHandler settingsHandler] getQoSVideoValue]];
     }
 }
 
@@ -135,17 +138,23 @@
 - (void)saveQosValues {
     bool stateQoS = [self.buttonQoS state];
     [[SettingsHandler settingsHandler] setQoSEnable:stateQoS];
-    int signalValue = self.textFieldSignaling.intValue;
-    int audioValue = self.textFieldAudio.intValue;
-    int videoValue = self.textFieldVideo.intValue;
-    [[SettingsHandler settingsHandler] setQoSSignalingValue:signalValue];
-    [[SettingsHandler settingsHandler] setQoSAudioValue:audioValue];
-    [[SettingsHandler settingsHandler] setQoSVideoValue:videoValue];
-    if (stateQoS) {
-        linphone_core_set_sip_dscp([LinphoneManager getLc], signalValue);
-        linphone_core_set_audio_dscp([LinphoneManager getLc], audioValue);
-        linphone_core_set_video_dscp([LinphoneManager getLc], videoValue);
-    } else {
+    if (stateQoS)
+    {
+        int signalValue = self.textFieldSignaling.intValue;
+        int audioValue = self.textFieldAudio.intValue;
+        int videoValue = self.textFieldVideo.intValue;
+        [[SettingsHandler settingsHandler] setQoSSignalingValue:signalValue];
+        [[SettingsHandler settingsHandler] setQoSAudioValue:audioValue];
+        [[SettingsHandler settingsHandler] setQoSVideoValue:videoValue];
+        if (stateQoS)
+        {
+            linphone_core_set_sip_dscp([LinphoneManager getLc], signalValue);
+            linphone_core_set_audio_dscp([LinphoneManager getLc], audioValue);
+            linphone_core_set_video_dscp([LinphoneManager getLc], videoValue);
+        }
+    }
+    else
+    {
         linphone_core_set_sip_dscp([LinphoneManager getLc], 0);
         linphone_core_set_audio_dscp([LinphoneManager getLc], 0);
         linphone_core_set_video_dscp([LinphoneManager getLc], 0);
@@ -161,9 +170,9 @@
     [self.textFieldAudio setEnabled:self.buttonQoS.state];
     [self.textFieldVideo setEnabled:self.buttonQoS.state];
     if (self.buttonQoS.state) {
-        self.textFieldSignaling.stringValue =  [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Signaling"];
-        self.textFieldAudio.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Audio"];
-        self.textFieldVideo.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"QoS_Video"];
+        self.textFieldSignaling.stringValue =  [NSString stringWithFormat:@"%i", [[SettingsHandler settingsHandler] getQoSSignalingValue]];
+        self.textFieldAudio.stringValue = [NSString stringWithFormat:@"%i", [[SettingsHandler settingsHandler] getQoSAudioValue]];
+        self.textFieldVideo.stringValue = [NSString stringWithFormat:@"%i", [[SettingsHandler settingsHandler] getQoSVideoValue]];
     } else {
         self.textFieldSignaling.stringValue = @"0";
         self.textFieldAudio.stringValue = @"0";
@@ -237,7 +246,7 @@
     system("defaults delete com.vtcsecure.ace.mac;\
            rm -rf ~/Library/Application\\ Support/com.vtcsecure.ace.mac;\
             rm -rf ~/Library/Preferences/com.vtcsecure.ace.mac.plist;");
-    [[SettingsHandler settingsHandler]  initializeUserDefaults:NO];
+    [[SettingsHandler settingsHandler]  initializeUserDefaults:false settingForNoConfig:false];
     [[SettingsHandler settingsHandler] resetDefaultsWithCoreRunning];
     FXKeychain *fxKeyChainObj=[[FXKeychain alloc]init];
     [fxKeyChainObj removeObjectForKey:USER_DEFAULTS_ACCOUNT_LIST];

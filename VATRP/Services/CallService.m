@@ -18,6 +18,9 @@
     
     LinphoneCall *currentCall;
     LinphoneCall *callToSwapTo;
+    
+    bool screenSaverIsRunning;
+    bool screenIsLocked;
 }
 
 + (int) callsCount;
@@ -46,6 +49,29 @@
                                                  selector:@selector(callUpdate:)
                                                      name:kLinphoneCallUpdate
                                                    object:nil];
+        NSDistributedNotificationCenter * center
+        = [NSDistributedNotificationCenter defaultCenter];
+        
+        [center addObserver: self
+                   selector:    @selector(handleScreenSaverStarted:)
+                       name:        @"com.apple.screensaver.didstart"
+                     object:      nil
+         ];
+        [center addObserver: self
+                   selector:    @selector(handleScreenSaverStopped:)
+                       name:        @"com.apple.screensaver.didstop"
+                     object:      nil
+         ];
+        [center addObserver: self
+                   selector:    @selector(handleScreenIsLocked:)
+                       name:        @"com.apple.screenIsLocked"
+                     object:      nil
+         ];
+        [center addObserver: self
+                   selector:    @selector(handleScreenIsUnlocked:)
+                       name:        @"com.apple.screenIsUnlocked"
+                     object:      nil
+         ];
     }
     
     return self;
@@ -55,9 +81,17 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)closeCallWindowController
+{
+    if (callWindowController != nil)
+    {
+        [callWindowController close];
+    }
+}
 - (CallWindowController*) getCallWindowController {
     return callWindowController;
 }
+
 
 + (void) callTo:(NSString*)number {
     LinphoneCore *lc = [LinphoneManager getLc];
@@ -131,7 +165,7 @@
         }
         
         [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView showVideoPreview];
-        linphone_core_enable_self_view(lc, [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
+        //linphone_core_enable_self_view(lc, [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
         [[CallService sharedInstance] performSelector:@selector(callUsingLinphoneManager:) withObject:number afterDelay:1.0];
     }
 }
@@ -145,7 +179,7 @@
 }
 
 - (void) accept:(LinphoneCall *)aCall {
-    linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
+    //linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
     [[LinphoneManager instance] acceptCall:aCall];
 }
 
@@ -158,13 +192,8 @@
 }
 
 - (void) swapCallsToCall:(LinphoneCall*)aCall {
-    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
-
     linphone_core_pause_call([LinphoneManager getLc], currentCall);
     callToSwapTo = aCall;
-//    linphone_core_resume_call([LinphoneManager getLc], aCall);
-
-//    currentCall = aCall;
 }
 
 - (LinphoneCall*) getCurrentCall {
@@ -201,8 +230,6 @@
                 linphone_core_resume_call([LinphoneManager getLc], callToSwapTo);
                 // below should be handled by the call resume - when the streams are runnign again
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:callToSwapTo];
-                currentCall = callToSwapTo;
-                callToSwapTo = nil; // clear after swapping
             }
             break;
         case LinphoneCallResuming: /**<The call is being resumed by local end*/
@@ -280,6 +307,8 @@
         case LinphoneCallStreamsRunning:
         {
             NSLog(@"****** LinphoneCallStreamsRunning");
+            // tell the rtt window to add observers
+//            [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
             
             // The streams are set up. Make sure that the initial call settings are handled on call set up here.
             
@@ -295,12 +324,17 @@
                 [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
 //                bool micIsEnabled = linphone_core_mic_enabled(lc);
                 linphone_core_set_play_level(lc, 100);
-                // tell the rtt window to add observers
-                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView addInCallObservers];
             }
             else
             {
-                if (currentCall != aCall)
+                if (callToSwapTo != nil)
+                {
+                    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCallToSecondCallView:currentCall];
+                    currentCall = callToSwapTo;
+                    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView updateForNewCall];
+                    callToSwapTo = nil; // clear after swapping
+                }
+                else if (currentCall != aCall)
                 {
                     // handle change for call waiting
                     // update my pointer
@@ -358,7 +392,7 @@
             }
             else if (call_count == 0)
             {
-                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
+//                [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].rttView removeObservers];
             }
             
             if (currentCall && aCall != currentCall) {
@@ -409,12 +443,149 @@
     }
 }
 
-- (void)displayIncomingCall:(LinphoneCall*)call {
-    if ([AppDelegate sharedInstance].homeWindowController.window.miniaturized) {
-        [[AppDelegate sharedInstance].homeWindowController.window makeKeyAndOrderFront:self];
-    } else {
-        [NSApp activateIgnoringOtherApps:YES];
+#pragma mark - screen saver/lock handlers
+-(void) handleScreenSaverStarted:(NSNotification*)notif
+{
+    screenSaverIsRunning = true;
+    NSLog(@"CallService.handleScreenSaverStarted");
+}
+-(void)handleScreenSaverStopped:(NSNotification*)notif
+{
+    screenSaverIsRunning = false;
+    NSLog(@"CallService.handleScreenSaverStopped");
+}
+-(void) handleScreenIsLocked:(NSNotification*)notif
+{
+    screenIsLocked = true;
+    NSLog(@"CallService.handleScreenLocked");
+}
+-(void) handleScreenIsUnlocked:(NSNotification*)notif
+{
+    screenIsLocked = false;
+    NSLog(@"CallService.handleScreenUnLocked");
+}
+
+-(void) wakeDisplay
+{
+    @try
+    {
+        // execute caffeinate  -u -t 1
+        int pid = [[NSProcessInfo processInfo] processIdentifier];
+        NSPipe *pipe = [NSPipe pipe];
+        NSFileHandle *file = pipe.fileHandleForReading;
+    
+        NSTask *task = [[NSTask alloc] init];
+        task.launchPath = @"/usr/bin/caffeinate";
+        task.arguments = @[@"-u", @"-t 1"];
+        task.standardOutput = pipe;
+    
+        [task launch];
+    
+        NSData *data = [file readDataToEndOfFile];
+        [file closeFile];
+    
+        NSString *cmdOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+        NSLog (@"caffeinate returned:\n%@", cmdOutput);
     }
+    @catch (NSException* ex)
+    {
+        NSLog(@"CallService.wakeDisplay: there is an incoming call but we are unable to wake the screen.");
+    }
+}
+-(void) dismissScreenSaver
+{
+    @try
+    {
+        // simulate keystroke - command key
+        CGEventSourceRef src =
+        CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+        
+        CGEventRef cmdd = CGEventCreateKeyboardEvent(src, 0x38, true);
+        CGEventRef cmdu = CGEventCreateKeyboardEvent(src, 0x38, false);
+        
+        
+        CGEventTapLocation loc = kCGHIDEventTap; // kCGSessionEventTap also works
+        CGEventPost(loc, cmdd);
+        CGEventPost(loc, cmdu);
+        
+        CFRelease(cmdd);
+        CFRelease(cmdu);
+        CFRelease(src);
+        NSLog (@"exitScreenSaver script completed");
+        return;
+        // execute osacript exitScreenSaver.scpt
+        // works on 10.10 in case we need it different than the others. but i think the above will begin
+//        int pid = [[NSProcessInfo processInfo] processIdentifier];
+//        NSPipe *pipe = [NSPipe pipe];
+//        NSFileHandle *file = pipe.fileHandleForReading;
+
+//        NSTask *task = [[NSTask alloc] init];
+//        task.launchPath = @"/usr/bin/osacript";
+//        task.arguments = @[@"-e", @"'tell application \"System Events\" to key up 56'"];
+        
+//        task.standardOutput = pipe;
+    
+//        [task launch];
+    
+//        NSData *data = [file readDataToEndOfFile];
+//        [file closeFile];
+    
+//        NSString *cmdOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+//        NSLog (@"exitScreenSaver script completed\n%@", cmdOutput);
+
+    }
+    @catch (NSException* ex)
+    {
+        NSLog(@"CallService.dismissScreenSaver: there is an incoming call but we are unable to turn the screen saver off.");
+    }
+}
+
+-(void)notifyUserOfIncomingCallIfScreenIsLocked:(LinphoneCall*) call
+{
+    if (screenIsLocked && (call != nil))
+    {
+        NSString* address;
+        const LinphoneAddress* addr = linphone_call_get_remote_address(call);
+        char * remoteAddress = linphone_call_get_remote_address_as_string(call);
+        NSString  *sipURI = [NSString stringWithUTF8String:remoteAddress];
+        if (addr != NULL) {
+            BOOL useLinphoneAddress = true;
+            // contact name
+            if(useLinphoneAddress) {//
+                //            const char* lDisplayName = linphone_address_get_display_name(addr);
+                const char* lUserName = linphone_address_get_username(addr);
+                if(lUserName)
+                    address = [NSString stringWithUTF8String:lUserName];
+            }
+        }
+        if (address == nil)
+        {
+            address = @"Unknown";
+        }
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title = @"Incoming Call";
+        notification.informativeText = [NSString stringWithFormat:@"Incoming call from %@", address];
+        notification.soundName = NSUserNotificationDefaultSoundName;
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    }
+}
+
+- (void)displayIncomingCall:(LinphoneCall*)call {
+    // handle screen if it is asleep
+    [self wakeDisplay];
+    // handle screen saver if it is on
+    if (screenSaverIsRunning)
+    {
+        [self dismissScreenSaver];
+    }
+    // how to handle a locked screen?
+    // if screen is locked, send a notification
+    [self notifyUserOfIncomingCallIfScreenIsLocked:call];
+    
+    // handles if we are in the background or if we are minimized
+    [NSApp activateIgnoringOtherApps:YES];
+    [[AppDelegate sharedInstance].homeWindowController.window makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:false];
 
     currentCall = call;
     
@@ -437,6 +608,7 @@
     }
 }
 
+#pragma mark - screen display
 - (void)displayOutgoingCall:(LinphoneCall*)call {
     currentCall = call;
 
@@ -463,14 +635,13 @@
     LinphoneCore *lc = [LinphoneManager getLc];
 
     if (!linphone_core_get_calls(lc)) {
+        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         
         if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
-            NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
             [window toggleFullScreen:self];
             [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
         }
         
-        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
         [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
                  display:YES
                  animate:YES];

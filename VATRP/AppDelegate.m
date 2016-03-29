@@ -52,7 +52,7 @@
 {
     // Insert code here to initialize your application
     // Initialize settings on launch if they have not been.
-    [SettingsHandler.settingsHandler initializeUserDefaults:false];
+    [SettingsHandler.settingsHandler initializeUserDefaults:false settingForNoConfig:false];
     
     self.account = nil;
     
@@ -63,6 +63,8 @@
     [ChatService sharedInstance];
 
     videoCallWindowController = nil;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
     [[LinphoneLocationManager sharedManager] startMonitoring];
     // Set observers
@@ -157,6 +159,10 @@
     {
         self.homeWindowController = [[HomeWindowController alloc] init];
     }
+    else
+    {
+        [self.homeWindowController refreshForNewLogin];
+    }
     [self.homeWindowController showWindow:self];
     if ([[SettingsHandler settingsHandler] isShowPreviewEnabled])
     {
@@ -196,10 +202,23 @@
 }
 
 - (void) closeTabWindow {
+    [self.homeWindowController clearData];
     [self.homeWindowController close];
-    self.homeWindowController = nil;
+    
+    //self.homeWindowController = nil;
 }
 
+
+-(void)dismissCallWindows
+{
+    if (videoCallWindowController != nil)
+    {
+        [videoCallWindowController close];
+    }
+    
+    [[CallService sharedInstance] closeCallWindowController];
+
+}
 - (VideoCallWindowController*) getVideoCallWindow {
     if (!videoCallWindowController) {
 //        videoCallWindowController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"VideoCall"];
@@ -351,5 +370,13 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
     NSLog(@"%@ %c %@",linphoneVersion, levelC, [formatedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"]);
     
 }
+
+#pragma mark - local notifications
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
+     shouldPresentNotification:(NSUserNotification *)notification
+{
+    return YES;
+}
+
 
 @end

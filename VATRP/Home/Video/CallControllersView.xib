@@ -27,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Sv-kU-KYo">
-                    <rect key="frame" x="614" y="3" width="50" height="33"/>
+                    <rect key="frame" x="1" y="3" width="50" height="33"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="rtt_on_off" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="Nqc-MN-v5v">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -67,7 +67,7 @@
                     <rect key="frame" x="38" y="151" width="16" height="16"/>
                 </progressIndicator>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="84g-5t-UrS">
-                    <rect key="frame" x="0.0" y="40" width="248" height="68"/>
+                    <rect key="frame" x="85" y="40" width="200" height="68"/>
                     <buttonCell key="cell" type="square" title="Answer" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="hi8-1x-46C">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" size="38" name="HelveticaNeue"/>
@@ -97,7 +97,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G4x-NJ-vNN">
-                    <rect key="frame" x="302" y="40" width="248" height="68"/>
+                    <rect key="frame" x="370" y="40" width="200" height="68"/>
                     <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="but-JO-vaV">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" size="38" name="HelveticaNeue"/>

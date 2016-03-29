@@ -14,6 +14,7 @@
 
 @interface SecondIncomingCallView () {
     NSRect selfOriginFrame;
+    bool uiInitialized;
 }
 
 @property (weak) IBOutlet BackgroundedView *viewAlphed;
@@ -44,7 +45,12 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+
 //    self.wantsLayer = YES;
 //    [self setBackgroundColor:[NSColor redColor]];
     
@@ -90,6 +96,8 @@
 }
 
 - (IBAction)onButtonHoldAnswer:(id)sender {
+//    NSMutableString* displayLabel = [NSMutableString stringWithFormat:@"Answering %@",self.labelDisplayName.stringValue];
+//    [self.labelDisplayName setStringValue:displayLabel];
     [[CallService sharedInstance] accept:self.call];
     [self setHidden:YES];
 }

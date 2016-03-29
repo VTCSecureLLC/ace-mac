@@ -87,6 +87,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
 
+// ToDo: Liz E., Post GA - fix the rest of the settings constants.
 - (void)storeToUserDefaults:(NSDictionary*)dict {
     
     [[NSUserDefaults standardUserDefaults] setObject:[dict objectForKey:@"version"] forKey:@"version"];
@@ -119,7 +120,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_adaptive_rate"] != [NSNull null])?[dict objectForKey:@"enable_adaptive_rate"]:@"" forKey:@"enable_adaptive_rate_control"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enabled_codecs"] != [NSNull null])?[dict objectForKey:@"enabled_codecs"]:@[@"H.263", @"VP8", @"G.722", @"G.711"] forKey:@"enabled_codecs"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enabled_codecs"] != [NSNull null])?[dict objectForKey:@"enabled_codecs"]:@[@"H.264", @"H.263", @"VP8", @"G.722", @"G.711"] forKey:@"enabled_codecs"];
 //    NSArray* test = [[NSUserDefaults standardUserDefaults] objectForKey:@"enabled_codecs"];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"bwLimit"] != [NSNull null])?[dict objectForKey:@"bwLimit"]:@"" forKey:@"bwLimit"];
@@ -128,11 +129,11 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:DOWNLOAD_BANDWIDTH] != [NSNull null])?[[dict objectForKey:DOWNLOAD_BANDWIDTH] integerValue]:1500 forKey:DOWNLOAD_BANDWIDTH ];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"" forKey:@"stun_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"true" forKey:@"stun_preference"];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"stun_server"] != [NSNull null])?[dict objectForKey:@"stun_server"]:@"" forKey:STUN_SERVER_DOMAIN];
 
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_ice"] != [NSNull null])? [dict objectForKey:@"enable_ice"]:@"" forKey:@"ice_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_ice"] != [NSNull null])? [dict objectForKey:@"enable_ice"]:@"true" forKey:ENABLE_ICE];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"logging"] != [NSNull null])? [dict objectForKey:@"logging"]:@"" forKey:@"logging"];
     
@@ -250,6 +251,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSArray*)enabledCodecs {
+
     return [[self removeDotsFromArray:(NSArray*)[[NSUserDefaults standardUserDefaults] objectForKey:@"enabled_codecs"]] copy];
 }
 
@@ -274,7 +276,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (BOOL)enableIce {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"ice_preference"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_ICE];
 }
 
 - (NSString*)logging {

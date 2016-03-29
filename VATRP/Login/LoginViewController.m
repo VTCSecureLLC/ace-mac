@@ -17,10 +17,10 @@
 #import "DefaultSettingsManager.h"
 #import "CustomComboBox.h"
 
-
 @interface LoginViewController ()<DefaultSettingsManagerDelegate, CustomComboBoxDelegate> {
     AccountModel *loginAccount;
     bool loginClicked;
+    bool observersAdded;
 }
 @property (weak) IBOutlet NSProgressIndicator *prog_Signin;
 
@@ -107,16 +107,16 @@
     }
     [self.buttonToggleAutoLogin setState:shouldAutoLogin];
     [self.comboBoxProviderSelect removeAllItems];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
+    if (!observersAdded)
+    {
+        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kLinphoneGlobalStateUpdate
-                                                  object:nil];
-    
-
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
 #pragma mark - Login methods
@@ -328,6 +328,7 @@
 - (void)didFinishLoadingConfigData {
     [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
     // Later - need to set username, userID, password, domain transport and port.
+    [[SettingsHandler settingsHandler] storeEnabledCodecs]; // stores in the dict that we need them in. these will be used during registration.
     [self userLogin];
 }
 
@@ -338,7 +339,9 @@
     [self.prog_Signin setHidden:YES];
     [self.prog_Signin stopAnimation:self];
     [self.loginButton setEnabled:YES];
-    [[SettingsHandler settingsHandler] initializeUserDefaults:false];
+    [[SettingsHandler settingsHandler] initializeUserDefaults:false settingForNoConfig:true];
+    // update the STUN server to match the provider domain
+    [[SettingsHandler settingsHandler] setStunServerDomain:self.textFieldDomain.stringValue];
 }
 
 - (void)userLogin

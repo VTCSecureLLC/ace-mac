@@ -23,6 +23,7 @@
     BOOL isSendingVideo;
     BOOL chat_window_open;
     BOOL videoCurrentlyEnabled;
+    bool uiInitialized;
     
     
     CallInfoWindowController *callInfoWindowController;
@@ -69,6 +70,12 @@ BOOL isRTTLocallyEnabled;
 - (void) awakeFromNib {
     [super awakeFromNib];
 
+    if (uiInitialized)
+    {
+        return;
+    }
+    uiInitialized = true;
+    
     self.settingsHandler = [SettingsHandler settingsHandler];
     self.settingsHandler.settingsHandlerDelegate = self;
     self.settingsHandler.preferencessHandlerDelegate = self;
@@ -104,10 +111,14 @@ BOOL isRTTLocallyEnabled;
     
     self.view.wantsLayer = YES;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callUpdateEvent:)
-                                                 name:kLinphoneCallUpdate
-                                               object:nil];
+//    if (!observersAdded)
+//    {
+//        observersAdded = true;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(callUpdateEvent:)
+                                                     name:kLinphoneCallUpdate
+                                                   object:nil];
+//    }
 }
 
 -(void)initializeButtonsFromSettings
@@ -123,7 +134,7 @@ BOOL isRTTLocallyEnabled;
     }
     else
     {
-        NSLog(@"CallControllersView.initializeBUttonsFromSettings: trying o initialize but call does not appear to be valid");
+        NSLog(@"CallControllersView.initializeBUttonsFromSettings: trying to initialize but call does not appear to be valid");
     }
 }
 
@@ -276,6 +287,10 @@ BOOL isRTTLocallyEnabled;
                 isRTTEnabled = YES;
             }
         }
+        else
+        {
+            NSLog(@"CallControllersView.performChatButtonClick: called but he current call is null");
+        }
     }
     
     if(!isRTTEnabled){
@@ -300,6 +315,7 @@ BOOL isRTTLocallyEnabled;
             [self set_bool_chat_window_open:NO];
         }
     } else {
+        CGRect currentFrame = self.view.window.frame;
         if (self.view.window.frame.size.width == 1328) {
             [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1030, self.view.window.frame.size.height)
                           display:YES
@@ -314,8 +330,8 @@ BOOL isRTTLocallyEnabled;
                 [self.view.window setFrame:NSMakeRect(self.view.window.frame.origin.x, self.view.window.frame.origin.y, 1328, self.view.window.frame.size.height)
                               display:YES
                               animate:YES];
-                [self set_bool_chat_window_open:YES];
             }
+            [self set_bool_chat_window_open:YES];
         }
     }
 }
@@ -412,7 +428,7 @@ BOOL isRTTLocallyEnabled;
     [self callUpdate:call state:linphone_call_get_state(call)];
 
     self.buttonAnswer.hidden = NO;
-    self.buttonDecline.frame = CGRectMake(self.view.frame.size.width - self.buttonDecline.frame.size.width,
+    self.buttonDecline.frame = CGRectMake(self.view.frame.size.width - self.buttonDecline.frame.size.width - 85,
                                           self.buttonDecline.frame.origin.y,
                                           self.buttonDecline.frame.size.width,
                                           self.buttonDecline.frame.size.height);
@@ -440,6 +456,16 @@ BOOL isRTTLocallyEnabled;
 - (void)callUpdateEvent:(NSNotification*)notif {
     LinphoneCall *acall = [[notif.userInfo objectForKey: @"call"] pointerValue];
     LinphoneCallState astate = [[notif.userInfo objectForKey: @"state"] intValue];
+    if (call == nil)
+    {
+        call = acall;
+    }
+    else if (call != acall)
+    {
+        // do not just silently fail. Update the reference and log it.
+        NSLog(@"CallControllersView.callUpdateEvent: received a call update event but the call reference is not equal to the event call. updating reference.");
+        call = acall;
+    }
     [self callUpdate:acall state:astate];
 }
 

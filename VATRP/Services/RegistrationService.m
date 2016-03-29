@@ -306,7 +306,7 @@
     if (state == LinphoneRegistrationOk) {
         NSDictionary *dictAudioCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_AUDIO_CODECS_MAP"];
         NSDictionary *dictVideoCodec = [[NSUserDefaults standardUserDefaults] objectForKey:@"kUSER_DEFAULTS_VIDEO_CODECS_MAP"];
-        
+
         LinphoneCore *lc = [LinphoneManager getLc];
         PayloadType *pt;
         const MSList *elem;

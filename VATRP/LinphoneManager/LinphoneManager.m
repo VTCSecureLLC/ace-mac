@@ -1364,6 +1364,16 @@ static BOOL libStarted = FALSE;
     linphone_core_set_download_bandwidth(theLinphoneCore, [settingsHandler getDownloadBandwidth]);
     
     linphone_core_set_stun_server(theLinphoneCore, [[settingsHandler getStunServerDomain] cStringUsingEncoding:NSUTF8StringEncoding]);
+    if ([settingsHandler getEnableICE])
+    {
+        linphone_core_set_firewall_policy(theLinphoneCore, LinphonePolicyUseIce);
+    }
+    else
+    {
+        linphone_core_set_firewall_policy(theLinphoneCore, LinphonePolicyNoFirewall);
+    }
+    linphone_core_enable_ipv6(theLinphoneCore, [settingsHandler getEnableIPV6]);
+
     
     /* The core will call the linphone_iphone_configuring_status_changed callback when the remote provisioning is loaded (or skipped).
      Wait for this to finish the code configuration */
@@ -1396,6 +1406,19 @@ static BOOL libStarted = FALSE;
     //libmsbcg729_init(f);
     //libmswebrtc_init(f);
     
+    if ([settingsHandler getQoSEnabled])
+    {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], [settingsHandler getQoSSignalingValue]);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], [settingsHandler getQoSAudioValue]);
+        linphone_core_set_video_dscp([LinphoneManager getLc], [settingsHandler getQoSVideoValue]);
+    }
+    else
+    {
+        linphone_core_set_sip_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_audio_dscp([LinphoneManager getLc], 0);
+        linphone_core_set_video_dscp([LinphoneManager getLc], 0);
+    }
+
     NSString *s = [NSString stringWithFormat:@"%@/Contents/Frameworks/",[[NSBundle mainBundle] bundlePath]];
     NSLog(@"Plugin path: %@", s);
     ms_factory_load_plugins(f, [s cStringUsingEncoding:[NSString defaultCStringEncoding]]);

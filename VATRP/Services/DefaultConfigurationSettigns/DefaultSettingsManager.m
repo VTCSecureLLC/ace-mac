@@ -141,7 +141,30 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_videomail_uri"] != [NSNull null])?[dict objectForKey:@"sip_videomail_uri"]:@"" forKey:@"sip_videomail_uri"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"video_resolution_maximum"] != [NSNull null])? [dict objectForKey:@"video_resolution_maximum"]:@"" forKey:PREFERRED_VIDEO_RESOLUTION];
+    NSString* valueToStore;
+    if ([dict objectForKey:@"video_resolution_maximum"] != nil)
+    {
+        // convert incoming to the strings that we are using:
+        NSString* value = [dict objectForKey:@"video_resolution_maximum"];
+        if ([value isEqualToString:@"1090p"])
+            valueToStore = @"1080p (1920x1080)";
+        else if ([value isEqualToString:@"720p"])
+            valueToStore = @"720p (1280x720)";
+        else if ([value isEqualToString:@"svga"])
+            valueToStore = @"svga (800x600)";
+        else if ([value isEqualToString:@"4cif"])
+            valueToStore = @"4cif (704x576)";
+        else if ([value isEqualToString:@"vga"])
+            valueToStore = @"vga (640x480)";
+        else if ([value isEqualToString:@"qcif"])
+            valueToStore = @"qcif (176x144)";
+        else if ([value isEqualToString:@"cif"])
+            valueToStore = @"cif (352x288)";
+    }
+    if (valueToStore == nil) // our current default
+        valueToStore = @"vga (640x480)";
+
+    [[NSUserDefaults standardUserDefaults] setObject:valueToStore forKey:PREFERRED_VIDEO_RESOLUTION];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 

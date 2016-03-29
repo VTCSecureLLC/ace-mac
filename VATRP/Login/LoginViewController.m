@@ -718,7 +718,7 @@
     [self.textFieldUsername setEnabled:!state];
     [self.textFieldUserID setEnabled:!state];
     [self.textFieldPassword setEnabled:!state];
-    [self.textFieldDomain setEnabled:!state];
+//    [self.textFieldDomain setEnabled:!state];
 }
 
 #pragma mark - CustomComboBox delegate methods

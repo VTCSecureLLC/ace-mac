@@ -138,7 +138,7 @@
 //    linphone_chat_message_set_user_data((LinphoneChatMessage*)messagePtr, (void*)0x2028);
 //    linphone_chat_room_send_chat_message((LinphoneChatRoom*)chatroom_ptr, (LinphoneChatMessage*)messagePtr);
     
-    [self sendChar:(uint32_t)0x2028];
+    [self sendChar:(uint32_t)0x0A];//2028];
     
     return YES;
 }
@@ -155,7 +155,9 @@
     return YES;
 }
 
-- (BOOL) sendChar:(uint32_t)char_simbol {
+
+- (BOOL) sendChar:(uint32_t)char_simbol
+{
     LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
     
     if (!call) {

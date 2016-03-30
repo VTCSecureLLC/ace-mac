@@ -110,7 +110,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"sip_register_port"] != [NSNull null])?[[dict objectForKey:@"sip_register_port"] integerValue]:0 forKey:@"sip_register_port"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_register_transport"] != [NSNull null])?[dict objectForKey:@"sip_register_transport"]:@"" forKey:@"sip_register_transport"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:SIP_REGISTER_TRANSPORT] != [NSNull null])?[dict objectForKey:SIP_REGISTER_TRANSPORT]:@"" forKey:SIP_REGISTER_TRANSPORT];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_echo_cancellation"] != [NSNull null])? [dict objectForKey:@"enable_echo_cancellation"]:@"" forKey:@"enable_echo_cancellation"];
     
@@ -254,7 +254,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSString*)sipRegisterTransport {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"sip_register_transport"];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:SIP_REGISTER_TRANSPORT];
 }
 
 - (BOOL)enableEchoCancellation {

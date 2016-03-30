@@ -197,7 +197,7 @@ const NSInteger SIP_SIMPLE=1;
     if (![self getCurrentChatRoom])
         return;
     
-    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 0);
+//    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 1);
 }
 
 - (void)clearMessageList {
@@ -592,13 +592,9 @@ long msgSize; //message length buffer
             LinphoneChatRoom* chatRoom = [self getCurrentChatRoom];
             [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:chatRoom];
 
-            // we must ref & unref message because in case of error, it will be destroy otherwise
-            linphone_chat_room_send_chat_message(chatRoom, linphone_chat_message_ref(outgoingChatMessage));
-
             self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
             
             [self.tableViewContent reloadData];
-            linphone_chat_message_unref(outgoingChatMessage);
             outgoingChatMessage = nil;
             
             NSInteger count = ms_list_size(messageList);
@@ -646,8 +642,9 @@ long msgSize; //message length buffer
         [LinphoneManager setValueInMessageAppData:[internalUrl absoluteString] forKey:@"localimage" inMessage:msg];
     }
     
-    
-    [self updateContentData];
+    self->messageList = ms_list_append(self->messageList, msg);
+
+//    [self updateContentData];
     [self.tableViewContent reloadData];
     
     int count = ms_list_size(messageList);

@@ -329,6 +329,14 @@
     [[SettingsService sharedInstance] setConfigurationSettingsInitialValues];
     // Later - need to set username, userID, password, domain transport and port.
     [[SettingsHandler settingsHandler] storeEnabledCodecs]; // stores in the dict that we need them in. these will be used during registration.
+    // transport value to use is pulled from the combo box
+    NSString* transport = [[DefaultSettingsManager sharedInstance] sipRegisterTransport];
+    if (transport && [transport isEqualToString:@"tcp"]) {
+        self.comboBoxTransport.stringValue = @"Unencrypted (TCP)";
+    } else {
+        self.comboBoxTransport.stringValue = @"Encrypted (TLS)";
+    }
+
     [self userLogin];
 }
 
@@ -710,7 +718,7 @@
     [self.textFieldUsername setEnabled:!state];
     [self.textFieldUserID setEnabled:!state];
     [self.textFieldPassword setEnabled:!state];
-    [self.textFieldDomain setEnabled:!state];
+//    [self.textFieldDomain setEnabled:!state];
 }
 
 #pragma mark - CustomComboBox delegate methods

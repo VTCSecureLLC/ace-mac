@@ -241,11 +241,11 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults] objectForKey:QoS_Audio] == nil)
     {
-        [self setQoSAudioValue:48];
+        [self setQoSAudioValue:46];
     }
     if (force || [[NSUserDefaults standardUserDefaults] objectForKey:QoS_Video] == nil)
     {
-        [self setQoSVideoValue:48];
+        [self setQoSVideoValue:46];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

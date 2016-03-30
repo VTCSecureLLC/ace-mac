@@ -301,7 +301,7 @@
             LinphoneVideoPolicy policy;
             policy.automatically_accept = (BOOL)checkbox.state;
             linphone_core_set_video_policy(lc, &policy);
-        } else if ([item.userDefaultsKey isEqualToString:@"stun_preference"]) {
+        } else if ([item.userDefaultsKey isEqualToString:ENABLE_STUN]) {
             [SettingsService setStun:checkbox.state];
         } else if ([item.userDefaultsKey isEqualToString:ENABLE_ICE]) {
             [SettingsService setICE:checkbox.state];
@@ -370,7 +370,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:textField.stringValue forKey:STUN_SERVER_DOMAIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
+        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_STUN]];
     } else if ([item.userDefaultsKey isEqualToString:PREFERRED_FPS]) {
         [SettingsHandler.settingsHandler setPreferredFPS:textField.floatValue];
         linphone_core_set_preferred_framerate(lc, textField.floatValue);

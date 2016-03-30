@@ -10,7 +10,8 @@
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
 #import "Utils.h"
-
+#import "SettingsConstants.h"
+#import "AccountsService.h"
 
 @interface ProfileView () {
     bool observersAdded;
@@ -19,6 +20,8 @@
 @property (weak) IBOutlet NSImageView *imageViewProfile;
 @property (weak) IBOutlet NSTextField *labelProfileName;
 @property (weak) IBOutlet NSImageView *imageViewRegStatus;
+@property (strong) IBOutlet NSButton *videoMailButton;
+@property (strong) IBOutlet NSTextField *videoMailCountTextField;
 
 @end
 
@@ -135,6 +138,35 @@
         LinphoneRegistrationState state = linphone_proxy_config_get_state(cfg);
         [self registrationUpdate:state message:nil];
     }
+}
+- (IBAction)videoMailClick:(NSButton *)sender
+{
+    NSString* videoMailUri;
+    if([[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI] != nil)
+    {
+        videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI];
+    }
+    if ((videoMailUri == nil) || ([videoMailUri length] == 0))
+    {
+        AccountModel* myAccount = [[AccountsService sharedInstance] getDefaultAccount];
+        videoMailUri = [NSString stringWithFormat:@"sip:%@@%@;user=phone", [myAccount username], [myAccount domain]];// my sip address
+    }
+    [[LinphoneManager instance] call:videoMailUri displayName:@"Videomail" transfer:NO];
+}
+
+-(void) updateVoiceMailIndicator:(NSInteger)mwiCount
+{
+    if (mwiCount == 0)
+    {
+        // use white font
+        [self.videoMailCountTextField setTextColor:[NSColor whiteColor]];
+    }
+    else
+    {
+        // use red font
+        [self.videoMailCountTextField setTextColor:[NSColor redColor]];
+    }
+    [self.videoMailCountTextField setStringValue:[NSString stringWithFormat:@"%ld", mwiCount]];
 }
 
 @end

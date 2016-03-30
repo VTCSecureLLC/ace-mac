@@ -12,6 +12,8 @@
 #import "RegistrationService.h"
 #import "Utils.h"
 #import "DefaultSettingsManager.h"
+#import "SettingsConstants.h"
+
 @interface AccountsViewController () {
     AccountModel *accountModel;
     BOOL isChanged;
@@ -121,8 +123,8 @@
         self.textFieldMailWaitingIndicatorURI.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_mwi_uri"];
     }
     
-    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_videomail_uri"]){
-        self.textFieldVideoMailUri.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_videomail_uri"];
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:VIDEO_MAIL_URI]){
+        self.textFieldVideoMailUri.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI];
     }
 }
 
@@ -176,7 +178,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     if(![self.textFieldVideoMailUri.stringValue isEqualToString:@""]){
-        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailUri.stringValue forKey:@"sip_videomail_uri"];
+        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailUri.stringValue forKey:VIDEO_MAIL_URI];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 

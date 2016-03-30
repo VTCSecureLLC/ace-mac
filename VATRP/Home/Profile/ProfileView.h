@@ -12,5 +12,5 @@
 @interface ProfileView : BackgroundedViewController
 
 - (void)registrationUpdateEvent:(NSNotification*)notif;
-
+-(void) updateVoiceMailIndicator:(NSInteger)mwiCount;
 @end

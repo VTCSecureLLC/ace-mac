@@ -139,7 +139,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_mwi_uri"] != [NSNull null])? [dict objectForKey:@"sip_mwi_uri"]:@"" forKey:@"sip_mwi_uri"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_videomail_uri"] != [NSNull null])?[dict objectForKey:@"sip_videomail_uri"]:@"" forKey:@"sip_videomail_uri"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:VIDEO_MAIL_URI] != [NSNull null])?[dict objectForKey:VIDEO_MAIL_URI]:@"" forKey:VIDEO_MAIL_URI];
     
     NSString* valueToStore;
     if ([dict objectForKey:@"video_resolution_maximum"] != nil)
@@ -203,7 +203,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (void)setSipVideomailUri:(NSString *)sipVideomailUri {
-    [[NSUserDefaults standardUserDefaults] setObject:sipVideomailUri forKey:@"sip_videomail_uri"];
+    [[NSUserDefaults standardUserDefaults] setObject:sipVideomailUri forKey:VIDEO_MAIL_URI];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -311,7 +311,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSString*)sipVideomailUri {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"sip_videomail_uri"];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:VIDEO_MAIL_URI];
 }
 
 - (NSString*)videoResolutionMaximum {

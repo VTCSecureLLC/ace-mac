@@ -10,6 +10,9 @@
 #define SettingsConstants_h
 
 #import <Foundation/Foundation.h>
+// account
+FOUNDATION_EXPORT NSString *const VIDEO_MAIL_URI;
+
 
 // AV Settings Items
 FOUNDATION_EXPORT NSString *const MUTE_SPEAKER;

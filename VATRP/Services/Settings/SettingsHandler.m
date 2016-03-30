@@ -183,9 +183,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_mwi_uri"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_videomail_uri"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_MAIL_URI] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_videomail_uri"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:VIDEO_MAIL_URI];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_VIDEO_RESOLUTION] == nil)
     {

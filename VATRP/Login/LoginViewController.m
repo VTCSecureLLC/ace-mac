@@ -336,7 +336,7 @@
     } else {
         self.comboBoxTransport.stringValue = @"Encrypted (TLS)";
     }
-
+    
     [self userLogin];
 }
 

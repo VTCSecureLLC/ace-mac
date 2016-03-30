@@ -10,8 +10,9 @@
 #import "LinphoneManager.h"
 #import "AppDelegate.h"
 #import "SettingsHandler.h"
+#import "SettingsConstants.h"
 @import AVFoundation;
-#define kPREFERED_VIDEO_RESOLUTION @"kPREFERED_VIDEO_RESOLUTION"
+//#define kPREFERED_VIDEO_RESOLUTION @"kPREFERED_VIDEO_RESOLUTION"
 
 @interface MediaViewController () {
     BOOL isChanged;
@@ -52,7 +53,7 @@ char **soundlist;
 
 -(void)initializeData
 {
-    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:kPREFERED_VIDEO_RESOLUTION];
+    NSString *video_resolution = [[NSUserDefaults standardUserDefaults] objectForKey:PREFERRED_VIDEO_RESOLUTION];
     
     if (video_resolution) {
         self.comboBoxVideoSize.stringValue = video_resolution;
@@ -204,7 +205,7 @@ char **soundlist;
     
     
     linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
-    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxVideoSize.stringValue forKey:kPREFERED_VIDEO_RESOLUTION];
+    [[NSUserDefaults standardUserDefaults] setObject:self.comboBoxVideoSize.stringValue forKey:PREFERRED_VIDEO_RESOLUTION];
     
     int retval = 0;
     

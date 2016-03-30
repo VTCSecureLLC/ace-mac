@@ -98,11 +98,7 @@
         if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
         if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
         if(accountModel.transport != NULL) {
-            if([[accountModel.transport lowercaseString] isEqualToString:@"tls"]) {;
-                [self.comboBoxTransport selectItemWithObjectValue:@"Encrypted (TLS)"];
-            } else {
-                [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
-            }
+            [self.comboBoxTransport selectItemWithObjectValue:[[SettingsHandler settingsHandler] getUITransportStringForString:accountModel.transport]];
         }
         if(cfg) {
             const char* proxy_addr = linphone_proxy_config_get_server_addr(cfg);

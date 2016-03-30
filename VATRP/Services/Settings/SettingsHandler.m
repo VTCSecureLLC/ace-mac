@@ -122,9 +122,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setInteger:25060 forKey:@"sip_register_port"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_transport"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:SIP_REGISTER_TRANSPORT] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"tcp" forKey:@"sip_register_transport"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"tcp" forKey:SIP_REGISTER_TRANSPORT];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_echo_cancellation"] == nil)
     {
@@ -570,6 +570,25 @@
 -(NSString*) getStunServerDomain
 {
     return [self getAppSettingString:STUN_SERVER_DOMAIN];
+}
+
+-(NSString*) getUITransportString
+{
+    NSString* transport = [self getUserSettingString:SIP_REGISTER_TRANSPORT];
+    return [self getUITransportStringForString:transport];
+}
+-(NSString*) getUITransportStringForString:(NSString*)stringToCompare
+{
+    if (stringToCompare &&
+        ([stringToCompare isEqualToString:@"tls"] || [stringToCompare isEqualToString:@"TLS"] ||
+         [stringToCompare isEqualToString:@"Encrypted (TLS)"]))
+    {
+        return @"Encrypted (TLS)";
+    }
+    else
+    {
+        return @"Unencrypted (TCP)";
+    }
 }
 
 //=================================================================================================================

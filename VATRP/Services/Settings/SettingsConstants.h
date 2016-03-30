@@ -44,7 +44,8 @@ FOUNDATION_EXPORT NSString *const QoS_Signaling;
 FOUNDATION_EXPORT NSString *const QoS_Audio;
 FOUNDATION_EXPORT NSString *const QoS_Video;
 
-// Netowrk
+// Network
+FOUNDATION_EXPORT NSString *const SIP_REGISTER_TRANSPORT;
 FOUNDATION_EXPORT NSString *const USE_IPV6;
 FOUNDATION_EXPORT NSString *const ENABLE_ICE;
 

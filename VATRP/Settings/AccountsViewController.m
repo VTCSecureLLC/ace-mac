@@ -12,6 +12,8 @@
 #import "RegistrationService.h"
 #import "Utils.h"
 #import "DefaultSettingsManager.h"
+#import "SettingsConstants.h"
+
 @interface AccountsViewController () {
     AccountModel *accountModel;
     BOOL isChanged;
@@ -98,11 +100,7 @@
         if(accountModel.password != NULL) { self.secureTextFieldPassword.stringValue = accountModel.password; }
         if(accountModel.domain != NULL) { self.textFieldDomain.stringValue = accountModel.domain; }
         if(accountModel.transport != NULL) {
-            if([[accountModel.transport lowercaseString] isEqualToString:@"tls"]) {;
-                [self.comboBoxTransport selectItemWithObjectValue:@"Encrypted (TLS)"];
-            } else {
-                [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
-            }
+            [self.comboBoxTransport selectItemWithObjectValue:[[SettingsHandler settingsHandler] getUITransportStringForString:accountModel.transport]];
         }
         if(cfg) {
             const char* proxy_addr = linphone_proxy_config_get_server_addr(cfg);
@@ -121,8 +119,8 @@
         self.textFieldMailWaitingIndicatorURI.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_mwi_uri"];
     }
     
-    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_videomail_uri"]){
-        self.textFieldVideoMailUri.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_videomail_uri"];
+    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:VIDEO_MAIL_URI]){
+        self.textFieldVideoMailUri.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI];
     }
 }
 
@@ -176,7 +174,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     if(![self.textFieldVideoMailUri.stringValue isEqualToString:@""]){
-        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailUri.stringValue forKey:@"sip_videomail_uri"];
+        [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailUri.stringValue forKey:VIDEO_MAIL_URI];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 

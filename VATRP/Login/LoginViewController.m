@@ -74,6 +74,8 @@
     [self.prog_Signin setHidden:YES];
     [self.loginButton setEnabled:YES];
     [self checkProvidersInfo];
+    [self.comboBoxTransport selectItemWithObjectValue:[[SettingsHandler settingsHandler] getUITransportStringForString:@"tcp"]];
+
 }
 
 
@@ -94,11 +96,7 @@
         self.textFieldDomain.stringValue = accountModel.domain;
         self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
         
-        if (accountModel.transport && [accountModel.transport isEqualToString:@"TCP"]) {
-            self.comboBoxTransport.stringValue = @"Unencrypted (TCP)";
-        } else {
-            self.comboBoxTransport.stringValue = @"Encrypted (TLS)";
-        }
+        self.textFieldDomain.stringValue = [[SettingsHandler settingsHandler] getUITransportString];
     }
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
@@ -330,12 +328,7 @@
     // Later - need to set username, userID, password, domain transport and port.
     [[SettingsHandler settingsHandler] storeEnabledCodecs]; // stores in the dict that we need them in. these will be used during registration.
     // transport value to use is pulled from the combo box
-    NSString* transport = [[DefaultSettingsManager sharedInstance] sipRegisterTransport];
-    if (transport && [transport isEqualToString:@"tcp"]) {
-        self.comboBoxTransport.stringValue = @"Unencrypted (TCP)";
-    } else {
-        self.comboBoxTransport.stringValue = @"Encrypted (TLS)";
-    }
+    self.comboBoxTransport.stringValue = [[SettingsHandler settingsHandler] getUITransportString];
 
     [self userLogin];
 }
@@ -417,14 +410,7 @@
             self.textFieldPassword.stringValue = loginAccount.password;
             self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", loginAccount.port];
             self.textFieldDomain.stringValue = loginAccount.domain;
-            if ([loginAccount.transport isEqualToString:@"TLS"])
-            {
-                [self.comboBoxTransport selectItemWithObjectValue:@"Encrypted (TLS)"];
-            }
-            else
-            {
-                [self.comboBoxTransport selectItemWithObjectValue:@"Unencrypted (TCP)"];
-            }
+            [self.comboBoxTransport selectItemWithObjectValue:[[SettingsHandler settingsHandler] getUITransportStringForString:loginAccount.transport]];
         }
   
     

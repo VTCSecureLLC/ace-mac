@@ -11,6 +11,9 @@
 
 #import <Foundation/Foundation.h>
 
+// account
+NSString *const VIDEO_MAIL_URI = @"sip_videomail_uri";
+
 // AV Settings
 NSString *const MUTE_SPEAKER = @"SPEAKER_MUTE";
 NSString *const MUTE_MICROPHONE = @"MICROPHONE_MUTE";
@@ -45,6 +48,7 @@ NSString *const QoS_Video = @"QoS_Video";
 NSString *const STUN_SERVER_DOMAIN = @"stun_url_preference";
 
 // network
+NSString *const SIP_REGISTER_TRANSPORT = @"sip_register_transport";
 NSString *const USE_IPV6 = @"use_ipv6";
 NSString *const ENABLE_ICE = @"ice_preference";
 

@@ -24,7 +24,7 @@
     BOOL chat_window_open;
     BOOL videoCurrentlyEnabled;
     bool uiInitialized;
-    
+    bool holdLock;
     
     CallInfoWindowController *callInfoWindowController;
     CallInfoViewController *callInfoViewController;
@@ -144,18 +144,29 @@ BOOL isRTTLocallyEnabled;
 
 - (IBAction)onButtonHold:(id)sender
 {
+    if (holdLock) // hold lock
+        return;
+    holdLock = true;
+    
     LinphoneCallState call_state = linphone_call_get_state(call);
      
     if (call_state == LinphoneCallPaused)
     {
        linphone_core_resume_call([LinphoneManager getLc], call);
+        [self.buttonHold setAction:@selector(nilSymbol)];
+        [self.buttonHold setEnabled:NO];
+    }
+    else if (call_state == LinphoneCallStreamsRunning)
+    {
+       linphone_core_pause_call([LinphoneManager getLc], call);
+        [self.buttonHold setEnabled:NO];
+        [self.buttonHold setAction:@selector(nilSymbol)];
     }
     else
     {
-       linphone_core_pause_call([LinphoneManager getLc], call);
+        holdLock = false; // we are not responding in this state.
     }
-        
-    [self.buttonHold setEnabled:NO];
+    
 }
 
 - (IBAction)onButtonVideo:(id)sender {
@@ -500,8 +511,6 @@ BOOL isRTTLocallyEnabled;
                                                   self.buttonDecline.frame.size.width,
                                                   self.buttonDecline.frame.size.height);
             
-            [self enableDisableButtons:YES];
-
             if ([SettingsService getMicMute]) {
                 [self onButtonMute:self.buttonMute];
             }
@@ -518,9 +527,18 @@ BOOL isRTTLocallyEnabled;
             self.labelCallState.stringValue = @"Ringing...";
         }
             break;
+        case LinphoneCallPausing: {
+            [self.buttonHold setImage:[NSImage imageNamed:@"call resume"]];
+            [self.buttonHold setEnabled:YES];
+            [self.buttonHold setAction:@selector(onButtonHold:)];
+            holdLock = false;
+            [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+        }
         case LinphoneCallPaused: {
             [self.buttonHold setImage:[NSImage imageNamed:@"call resume"]];
             [self.buttonHold setEnabled:YES];
+            [self.buttonHold setAction:@selector(onButtonHold:)];
+            holdLock = false;
             [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
         }
             break;
@@ -536,9 +554,11 @@ BOOL isRTTLocallyEnabled;
                 [self.rttStatusButton.layer setBackgroundColor:[NSColor greenColor].CGColor];
             }
             [self.buttonHold setImage:[NSImage imageNamed:@"call hold"]];
-            [self.buttonHold setEnabled:YES];
             [self.buttonHold.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
             [self update];
+            [self.buttonHold setAction:@selector(onButtonHold:)];
+            holdLock = false;
+            [self enableDisableButtons:YES];
 
             break;
         }

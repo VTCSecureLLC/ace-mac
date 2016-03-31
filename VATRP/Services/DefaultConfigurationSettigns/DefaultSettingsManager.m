@@ -110,7 +110,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:@"sip_register_port"] != [NSNull null])?[[dict objectForKey:@"sip_register_port"] integerValue]:0 forKey:@"sip_register_port"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_register_transport"] != [NSNull null])?[dict objectForKey:@"sip_register_transport"]:@"" forKey:@"sip_register_transport"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:SIP_REGISTER_TRANSPORT] != [NSNull null])?[dict objectForKey:SIP_REGISTER_TRANSPORT]:@"" forKey:SIP_REGISTER_TRANSPORT];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_echo_cancellation"] != [NSNull null])? [dict objectForKey:@"enable_echo_cancellation"]:@"" forKey:@"enable_echo_cancellation"];
     
@@ -139,7 +139,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_mwi_uri"] != [NSNull null])? [dict objectForKey:@"sip_mwi_uri"]:@"" forKey:@"sip_mwi_uri"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"sip_videomail_uri"] != [NSNull null])?[dict objectForKey:@"sip_videomail_uri"]:@"" forKey:@"sip_videomail_uri"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:VIDEO_MAIL_URI] != [NSNull null])?[dict objectForKey:VIDEO_MAIL_URI]:@"" forKey:VIDEO_MAIL_URI];
     
     NSString* valueToStore;
     if ([dict objectForKey:@"video_resolution_maximum"] != nil)
@@ -203,7 +203,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (void)setSipVideomailUri:(NSString *)sipVideomailUri {
-    [[NSUserDefaults standardUserDefaults] setObject:sipVideomailUri forKey:@"sip_videomail_uri"];
+    [[NSUserDefaults standardUserDefaults] setObject:sipVideomailUri forKey:VIDEO_MAIL_URI];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -254,7 +254,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSString*)sipRegisterTransport {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"sip_register_transport"];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:SIP_REGISTER_TRANSPORT];
 }
 
 - (BOOL)enableEchoCancellation {
@@ -311,7 +311,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (NSString*)sipVideomailUri {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"sip_videomail_uri"];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:VIDEO_MAIL_URI];
 }
 
 - (NSString*)videoResolutionMaximum {

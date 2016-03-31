@@ -129,7 +129,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setInteger:([dict objectForKey:DOWNLOAD_BANDWIDTH] != [NSNull null])?[[dict objectForKey:DOWNLOAD_BANDWIDTH] integerValue]:1500 forKey:DOWNLOAD_BANDWIDTH ];
     
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"true" forKey:@"stun_preference"];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_stun"] != [NSNull null])?[dict objectForKey:@"enable_stun"]:@"true" forKey:ENABLE_STUN];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"stun_server"] != [NSNull null])?[dict objectForKey:@"stun_server"]:@"" forKey:STUN_SERVER_DOMAIN];
 
@@ -291,7 +291,7 @@ static DefaultSettingsManager *sharedInstance = nil;
 }
 
 - (BOOL)enableStun {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"enable_stun"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_STUN];
 }
 
 - (NSString*)stunServer {

@@ -84,7 +84,7 @@
                         </allowedInputSourceLocales>
                     </secureTextFieldCell>
                     <connections>
-                        <outlet property="nextKeyView" destination="Wk6-3G-kYA" id="naW-kk-WcW"/>
+                        <outlet property="nextKeyView" destination="PUY-Bi-Kkt" id="xIH-3V-OqL"/>
                     </connections>
                 </secureTextField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8U3-yn-3Su">
@@ -130,7 +130,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <outlet property="nextKeyView" destination="KEh-xK-aQE" id="gKs-YH-BIn"/>
+                        <outlet property="nextKeyView" destination="KEh-xK-aQE" id="pcl-iU-nmI"/>
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A56-bG-jhg">
@@ -151,14 +151,11 @@
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wk6-3G-kYA">
                     <rect key="frame" x="154" y="155" width="167" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="h5D-FV-VjS">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="h5D-FV-VjS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
-                    <connections>
-                        <outlet property="nextKeyView" destination="E0R-F1-ZJg" id="WEN-Xa-5kG"/>
-                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E0R-F1-ZJg">
                     <rect key="frame" x="154" y="125" width="167" height="22"/>
@@ -182,7 +179,6 @@ DQ
                     </buttonCell>
                     <connections>
                         <action selector="onButtonLogin:" target="-2" id="XAe-Ki-YVm"/>
-                        <outlet property="nextKeyView" destination="E0R-F1-ZJg" id="CVU-Z0-UxZ"/>
                     </connections>
                 </button>
                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="5cl-9L-Aqd">

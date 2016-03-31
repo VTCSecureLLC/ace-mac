@@ -61,9 +61,9 @@
                         <action selector="onCheckBoxShowSelfView:" target="-2" id="Yh0-Yq-Ehs"/>
                     </connections>
                 </button>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5B-i0-MQ4">
+                <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5B-i0-MQ4">
                     <rect key="frame" x="88" y="234" width="304" height="28"/>
-                    <buttonCell key="cell" type="check" title="Show Preview" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ReB-BU-jxg">
+                    <buttonCell key="cell" type="check" title="Show Preview" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="ReB-BU-jxg">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>

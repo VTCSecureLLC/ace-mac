@@ -87,12 +87,20 @@ static NSFont *CELL_FONT = nil;
                                              spacingX:0
                                              spacingY:0
                                            vertically:YES];
-
+        NSString *currentRttFontName = nil;
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"rttFontName"]) {
+            NSString *storedRttFontName = [[NSUserDefaults standardUserDefaults] stringForKey:@"rttFontName"];
+            currentRttFontName = storedRttFontName;
+        } else {
+            currentRttFontName = @"Helvetica";
+        }
         if (!imageViewBubble) {
             imageViewBubble = [[NSImageView alloc] initWithFrame:CGRectMake(0, 0, 267, height)];
             [self addSubview:imageViewBubble];
 
             labelChat = [[NSTextView alloc] initWithFrame:CGRectMake(0, 0, 220, height)];
+            NSFont* font = [NSFont fontWithName:currentRttFontName size:17.0];
+            [labelChat setFont:font];
             [labelChat setEditable:NO];
             [labelChat setWantsLayer:YES];
             [labelChat setDrawsBackground:YES];
@@ -116,6 +124,8 @@ static NSFont *CELL_FONT = nil;
         imageViewBubble.frame = CGRectMake(outgoing ? self.frame.size.width - 270 : 5, 0, 267, image.size.height);
         labelChat.frame = CGRectMake(outgoing ? 5 : 15, image.size.height - height, 220, height);
         labelDate.frame = CGRectMake(outgoing ? 5 : 40, 5, 220, 12);
+        NSFont* font = [NSFont fontWithName:currentRttFontName size:17.0];
+        [labelChat setFont:font];
 #if defined __MAC_10_9 || defined __MAC_10_8
         [labelDate.cell setAlignment:outgoing ? kCTTextAlignmentLeft : kCTTextAlignmentRight];
 #else
@@ -186,9 +196,16 @@ static NSFont *CELL_FONT = nil;
             
             /* We need to use an attributed string here so that data detector don't mess
              * with the text style. See http://stackoverflow.com/a/20669356 */
-            
+            NSString *currentRttFontName = nil;
+            if ([[NSUserDefaults standardUserDefaults] objectForKey:@"rttFontName"]) {
+                NSString *storedRttFontName = [[NSUserDefaults standardUserDefaults] stringForKey:@"rttFontName"];
+                currentRttFontName = storedRttFontName;
+            } else {
+                currentRttFontName = @"Helvetica";
+            }
+            NSFont* font = [NSFont fontWithName:currentRttFontName size:17.0];
             [labelChat setTextColor:[NSColor colorWithDeviceRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1.0]];
-            [labelChat setFont:CELL_FONT];
+            [labelChat setFont:font];
             labelChat.string = nstext;;
         } else {
             labelChat.string = @"";

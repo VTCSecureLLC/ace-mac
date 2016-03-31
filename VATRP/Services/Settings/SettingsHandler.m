@@ -122,9 +122,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setInteger:25060 forKey:@"sip_register_port"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_register_transport"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:SIP_REGISTER_TRANSPORT] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"tcp" forKey:@"sip_register_transport"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"tcp" forKey:SIP_REGISTER_TRANSPORT];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_echo_cancellation"] == nil)
     {
@@ -183,9 +183,9 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_mwi_uri"];
     }
-    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"sip_videomail_uri"] == nil)
+    if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_MAIL_URI] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sip_videomail_uri"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:VIDEO_MAIL_URI];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:PREFERRED_VIDEO_RESOLUTION] == nil)
     {
@@ -241,11 +241,11 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults] objectForKey:QoS_Audio] == nil)
     {
-        [self setQoSAudioValue:48];
+        [self setQoSAudioValue:46];
     }
     if (force || [[NSUserDefaults standardUserDefaults] objectForKey:QoS_Video] == nil)
     {
-        [self setQoSVideoValue:48];
+        [self setQoSVideoValue:46];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -570,6 +570,25 @@
 -(NSString*) getStunServerDomain
 {
     return [self getAppSettingString:STUN_SERVER_DOMAIN];
+}
+
+-(NSString*) getUITransportString
+{
+    NSString* transport = [self getUserSettingString:SIP_REGISTER_TRANSPORT];
+    return [self getUITransportStringForString:transport];
+}
+-(NSString*) getUITransportStringForString:(NSString*)stringToCompare
+{
+    if (stringToCompare &&
+        ([stringToCompare isEqualToString:@"tls"] || [stringToCompare isEqualToString:@"TLS"] ||
+         [stringToCompare isEqualToString:@"Encrypted (TLS)"]))
+    {
+        return @"Encrypted (TLS)";
+    }
+    else
+    {
+        return @"Unencrypted (TCP)";
+    }
 }
 
 //=================================================================================================================

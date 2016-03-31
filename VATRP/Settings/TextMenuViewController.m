@@ -16,6 +16,7 @@
 
 @property (weak) IBOutlet NSButton *enable_text;
 @property (weak) IBOutlet NSComboBox *text_send_mode;
+@property (weak) IBOutlet NSPopUpButton *fontsPopUpButton;
 
 @end
 
@@ -50,6 +51,31 @@
     self.text_send_mode.enabled = NO;
     
     isChanged = NO;
+    [self initFontFamilies];
+}
+
+- (void)initFontFamilies {
+    
+    NSArray *systemFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
+    NSMenu *menu = [NSMenu new];
+    for (NSString *family in systemFonts) {
+        NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:family size:[NSFont systemFontSize]],NSFontAttributeName,[NSColor blackColor],NSForegroundColorAttributeName,nil];
+        NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:family];
+        [aString addAttributes:attr range:NSMakeRange(0, [aString length])];
+        NSMenuItem *item = [NSMenuItem new];
+        [item setAttributedTitle:aString];
+        [menu addItem:item];
+    }
+    [self.fontsPopUpButton setMenu:menu];
+    NSString *currentRttFontName = nil;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"rttFontName"]) {
+        NSString *storedRttFontName = [[NSUserDefaults standardUserDefaults] stringForKey:@"rttFontName"];
+        currentRttFontName = storedRttFontName;
+    } else {
+        currentRttFontName = @"Helvetica";
+    }
+    
+    [self.fontsPopUpButton setTitle:currentRttFontName];
 }
 
 - (IBAction)onCheckBoxEnableText:(id)sender {
@@ -60,6 +86,10 @@
 - (IBAction)onComboBoxTextSendMode:(id)sender {
     isChanged = YES;
      NSLog(@"SEND MODE");
+}
+
+- (IBAction)onFontBoxTap:(id)sender {
+    isChanged = YES;
 }
 
 - (void) save {
@@ -77,6 +107,9 @@
     NSString* text_mode_string=[defaults stringForKey:@"TEXT_SEND_MODE"];
     NSLog(@"SEND MODE %@",text_mode_string);
     
+    NSMenuItem *selectedRttFontItem = self.fontsPopUpButton.selectedItem;
+    [[NSUserDefaults standardUserDefaults] setObject:selectedRttFontItem.title forKey:@"rttFontName"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

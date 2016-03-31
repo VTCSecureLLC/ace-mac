@@ -10,6 +10,8 @@
                 <outlet property="imageViewProfile" destination="hAv-PA-h90" id="diM-PJ-NoQ"/>
                 <outlet property="imageViewRegStatus" destination="IS3-N0-aPh" id="fOY-uM-fti"/>
                 <outlet property="labelProfileName" destination="ER1-5M-Pj2" id="wDn-E1-m3v"/>
+                <outlet property="videoMailButton" destination="ViB-gf-OTa" id="Llk-dI-7Sv"/>
+                <outlet property="videoMailCountTextField" destination="soc-ve-6fL" id="jhz-Q5-rM4"/>
                 <outlet property="view" destination="c22-O7-iKe" id="Yc9-82-0eK"/>
             </connections>
         </customObject>
@@ -27,14 +29,6 @@
                     <rect key="frame" x="286" y="27" width="15" height="15"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Ueg-nq-EBk"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="soc-ve-6fL">
-                    <rect key="frame" x="223" y="0.0" width="37" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Ylu-Gs-0wr">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" red="0.93191682450000002" green="0.051781192029999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ER1-5M-Pj2">
                     <rect key="frame" x="76" y="26" width="199" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="jZB-Ux-2Ww">
@@ -44,11 +38,14 @@
                     </textFieldCell>
                 </textField>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViB-gf-OTa">
-                    <rect key="frame" x="217" y="14" width="48" height="32"/>
+                    <rect key="frame" x="218" y="2" width="48" height="32"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="video_mail" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="2CA-Ju-jSR">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="videoMailClick:" target="-2" id="axS-Qs-ljP"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1U0-cg-VAN">
                     <rect key="frame" x="11" y="0.0" width="52" height="50"/>
@@ -57,6 +54,14 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="soc-ve-6fL">
+                    <rect key="frame" x="272" y="10" width="37" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="0" id="Ylu-Gs-0wr">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
         </customView>
     </objects>

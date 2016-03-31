@@ -19,6 +19,7 @@
 #import "AppDelegate.h"
 #import "Utils.h"
 #import "DockView.h"
+#import "SettingsConstants.h"
 
 @interface HomeViewController ()
 {
@@ -27,8 +28,8 @@
     bool uiInitialized;
 }
 
-@property (weak) IBOutlet NSImageView *imageViewVoiceMail;
-@property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
+//@property (weak) IBOutlet NSImageView *imageViewVoiceMail;
+//@property (weak) IBOutlet NSTextField *textFieldVoiceMailCount;
 
 @property (strong) DockView *dockView;
 
@@ -210,8 +211,8 @@ bool dialPadIsShown;
     }
     mwiCount++;
     [[NSUserDefaults standardUserDefaults] setInteger:mwiCount forKey:@"sip_mwi_count"];
-    self.textFieldVoiceMailCount.stringValue = [NSString stringWithFormat:@"( %ld )", mwiCount];
-    
+    //self.textFieldVoiceMailCount.stringValue = [NSString stringWithFormat:@"( %ld )", mwiCount];
+    [self.profileView updateVoiceMailIndicator:mwiCount];
     const char *body = linphone_content_get_buffer(content);
     if ((body = strstr(body, "voice-message: ")) == NULL) {
         return;
@@ -370,13 +371,6 @@ bool dialPadIsShown;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-
-- (IBAction)onVideoMailClicked:(id)sender {
-    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_videomail_uri"]){
-        NSString *videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:@"sip_videomail_uri"];
-        [[LinphoneManager instance] call:videoMailUri displayName:@"Videomail" transfer:NO];
-    }
-}
 
 
 - (IBAction)onButtonProfileImage:(id)sender {

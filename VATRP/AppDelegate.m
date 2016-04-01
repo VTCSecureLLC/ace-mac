@@ -403,11 +403,13 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
     if ([lookup[@"resultCount"] integerValue] == 1){
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
         NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-        if (![appStoreVersion isEqualToString:currentVersion]){
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert addButtonWithTitle:@"OK"];
-            [alert setMessageText:@"There is a newer version of this app available."];
-            [alert runModal];
+        if (currentVersion && appStoreVersion) {
+            if (![appStoreVersion isEqualToString:currentVersion]){
+                NSAlert *alert = [[NSAlert alloc] init];
+                [alert addButtonWithTitle:@"OK"];
+                [alert setMessageText:@"There is a newer version of this app available."];
+                [alert runModal];
+            }
         }
     }
 }

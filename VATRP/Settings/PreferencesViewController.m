@@ -450,7 +450,7 @@
     [self.scrollView.documentView addSubview:labelTitle];
     
     comboBoxMediaEncription = [[NSComboBox alloc] initWithFrame:NSMakeRect(130, originY, 170, 26)];
-    [comboBoxMediaEncription addItemsWithObjectValues:@[@"Encrypted (SRTP)", @"Encrypted (ZRTP)", @"Encrypted (DTLS)", @"Unencrypted"]];
+    [comboBoxMediaEncription addItemsWithObjectValues:@[@"Encrypted (SRTP)", /*@"Encrypted (ZRTP)", @"Encrypted (DTLS)",*/ @"Unencrypted"]];
     [self.scrollView.documentView addSubview:comboBoxMediaEncription];
     
     LinphoneMediaEncryption menc = linphone_core_get_media_encryption([LinphoneManager getLc]);
@@ -677,10 +677,10 @@
 
     if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (SRTP)"] == NSOrderedSame)
         linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionSRTP);
-    else if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (ZRTP)"] == NSOrderedSame)
-        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionZRTP);
-    else if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (DTLS)"] == NSOrderedSame)
-        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionDTLS);
+//    else if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (ZRTP)"] == NSOrderedSame)
+//        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionZRTP);
+//    else if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (DTLS)"] == NSOrderedSame)
+//        linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionDTLS);
     else
         linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionNone);
 

@@ -64,7 +64,7 @@
             [newDictionary setValue:object forKey:key];
         }
     }
-    return newDictionary;
+    return [newDictionary copy];
 }
 
 + (NSArray*)normalizeServerArray:(NSArray*)arrayOfObjects
@@ -90,7 +90,7 @@
             [newArray addObject:object];
         }
     }
-    return newArray;
+    return [newArray copy];
     
 }
 

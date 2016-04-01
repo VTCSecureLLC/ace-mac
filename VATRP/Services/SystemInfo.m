@@ -12,7 +12,7 @@
 #import "LinphoneManager.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
-
+#import "AccountsService.h"
 #import "SettingsHandler.h"
 
 @interface SystemInfo()
@@ -127,6 +127,7 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
     LinphoneProxyConfig *cfg = nil;
     //Get current proxy config
     NSString* sipSettings = @"Error retreiving account";
+    AccountModel* currentAccount = [[AccountsService sharedInstance] getDefaultAccount];
     if(lc){ cfg = linphone_core_get_default_proxy_config(lc); }
         if(cfg){
             const LinphoneAddress *addr = linphone_proxy_config_get_identity_address(cfg);
@@ -135,8 +136,8 @@ static inline NSString* NSStringFromBOOL(BOOL aBool) {
                                         linphone_address_get_username(addr),
                                         linphone_address_get_domain(addr),
                                         linphone_proxy_config_get_identity(cfg),
-                                        [settingsManager sipRegisterTransport],
-                                        [settingsManager sipRegisterPort]];
+                                        [currentAccount transport],
+                                        [currentAccount port]];
         }
         NSString *coreConfigInfo = [SystemInfo configSettingsAsString];
         NSString* result = [NSString stringWithFormat:@"Hardware: %@\nMac Version: %@\nACE version: %@, Build %@\nSIP settings:\n%@\n%@\n", hardware, [SystemInfo machineModel], appVersionString, buildNumber, sipSettings,coreConfigInfo];

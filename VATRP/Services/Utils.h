@@ -13,6 +13,8 @@
 
 + (int) intValueDict:(NSDictionary*)dict Key:(NSString*)key;
 + (NSString*) stringValueDict:(NSDictionary*)dict Key:(NSString*)key;
++ (NSDictionary*)normalizeServerDictionary:(NSDictionary*)jsonDictionary;
+
 + (NSString*) resourcePathForFile:(NSString*)fileName Type:(NSString*)type;
 + (void) setButtonTitleColor:(NSColor*)color Button:(NSButton*)button;
 + (void) setUIBorderColor:(NSColor*)color CornerRadius:(CGFloat)cornerRadius Width:(CGFloat)width Control:(NSControl*)control;

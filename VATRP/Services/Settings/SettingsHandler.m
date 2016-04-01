@@ -163,9 +163,9 @@
     {
         [self setUserSettingInt:DOWNLOAD_BANDWIDTH withValue:0];
     }
-    if ((force || settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:@"stun_preference"] == nil)
+    if ((force || settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:ENABLE_STUN] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"stun_preference"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:ENABLE_STUN];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:STUN_SERVER_DOMAIN] == nil)
     {
@@ -433,10 +433,23 @@
 {
     [self setUserSettingString:STUN_SERVER_DOMAIN withValue:stunServerDomain];
 }
--(NSString*)setStunServerDomain
+-(NSString*)getStunServerDomain
 {
     return [self getUserSettingString:STUN_SERVER_DOMAIN];
 }
+-(void)setEnableStun:(bool)enable
+{
+    [self setUserSettingBool:ENABLE_STUN withValue:enable];
+}
+-(void)setEnableICE:(bool)enable
+{
+    [self setUserSettingBool:ENABLE_ICE withValue:enable];
+}
+-(void)setEnableIPV6:(bool)enable
+{
+    [self setUserSettingBool:USE_IPV6 withValue:enable];
+}
+
 //==========================================================================================
 // Accessors
 #pragma mark settings accessors
@@ -566,10 +579,6 @@
 -(NSString*) getVideoPreset
 {
     return [self getAppSettingString:VIDEO_PRESET];
-}
--(NSString*) getStunServerDomain
-{
-    return [self getAppSettingString:STUN_SERVER_DOMAIN];
 }
 
 -(NSString*) getUITransportString

@@ -1291,9 +1291,9 @@ static BOOL libStarted = FALSE;
     {
         return; // we are trying to do this too early
     }
-    lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_xr_enabled", 0);
-    lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_xr_voip_metrics_enabled", 0);
-    lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_xr_stat_summary_enabled", 0);
+    lp_config_set_int(configDb,  "rtp", "rtcp_xr_enabled", 0);
+    lp_config_set_int(configDb,  "rtp", "rtcp_xr_voip_metrics_enabled", 0);
+    lp_config_set_int(configDb,  "rtp", "rtcp_xr_stat_summary_enabled", 0);
     
     NSString *rtcpFeedback = [[SettingsHandler settingsHandler] getRtcpFbMode];
     int rtcpFB;

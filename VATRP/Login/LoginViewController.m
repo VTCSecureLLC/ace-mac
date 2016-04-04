@@ -96,7 +96,7 @@
         self.textFieldDomain.stringValue = accountModel.domain;
         self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
         
-        self.textFieldDomain.stringValue = [[SettingsHandler settingsHandler] getUITransportString];
+        [self.comboBoxTransport selectItemWithObjectValue:[[SettingsHandler settingsHandler] getUITransportStringForString:loginAccount.transport]];
     }
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];
@@ -704,7 +704,7 @@
     [self.textFieldUsername setEnabled:!state];
     [self.textFieldUserID setEnabled:!state];
     [self.textFieldPassword setEnabled:!state];
-//    [self.textFieldDomain setEnabled:!state];
+    [self.textFieldDomain setEnabled:!state];
 }
 
 #pragma mark - CustomComboBox delegate methods

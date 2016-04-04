@@ -192,11 +192,12 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
 
 + (void) setStun:(BOOL)enable {
     LinphoneCore *lc = [LinphoneManager getLc];
-    NSString *stun_server = [[NSUserDefaults standardUserDefaults] objectForKey:STUN_SERVER_DOMAIN];
+    NSString *stun_server = [[SettingsHandler settingsHandler] getStunServerDomain];
     
     if ([stun_server length] > 0) {
         linphone_core_set_stun_server(lc, [stun_server UTF8String]);
-        BOOL ice_preference = [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_ICE];
+        BOOL ice_preference = [[SettingsHandler settingsHandler] getEnableICE];
+        
         if (ice_preference) {
             linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
         }
@@ -205,17 +206,24 @@ extern void linphone_iphone_log_handler(int lev, const char *fmt, va_list args);
         linphone_core_set_firewall_policy(lc, LinphonePolicyNoFirewall);
     }
     
-    [[NSUserDefaults standardUserDefaults] setBool:enable forKey:@"stun_preference"];
+    [[NSUserDefaults standardUserDefaults] setBool:enable forKey:ENABLE_STUN];
 }
 
 + (void) setICE:(BOOL)enable {
     LinphoneCore *lc = [LinphoneManager getLc];
-
-    if (enable) {
+    [[SettingsHandler settingsHandler] setEnableICE:enable];
+    if (enable)
+    {
         linphone_core_set_firewall_policy(lc, LinphonePolicyUseIce);
+        NSString *stun_server = [[SettingsHandler settingsHandler] getStunServerDomain];
+        
+        if ([stun_server length] > 0) {
+            linphone_core_set_stun_server(lc, [stun_server UTF8String]);
+        }
     } else {
+        linphone_core_set_stun_server(lc, NULL);
         linphone_core_set_firewall_policy(lc, LinphonePolicyNoFirewall);
-        [SettingsService setStun:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_ICE]];
+        [[SettingsHandler settingsHandler] setEnableStun:false];
     }
 }
 

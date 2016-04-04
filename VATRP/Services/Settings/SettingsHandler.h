@@ -134,6 +134,9 @@
 -(bool)getEnableIPV6;
 -(bool)getEnableICE;
 -(NSString*)setStunServerDomain;
+-(void)setEnableStun:(bool)enable;
+-(void)setEnableICE:(bool)enable;
+-(void)setEnableIPV6:(bool)enable;
 
 -(NSString*) getUITransportStringForString:(NSString*)stringToCompare;
 -(NSString*) getUITransportString;

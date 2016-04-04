@@ -340,7 +340,7 @@
     [checkboxStun setButtonType:NSSwitchButton];
     [checkboxStun setBezelStyle:0];
     [checkboxStun setTitle:@"Use STUN"];
-    [checkboxStun setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"stun_preference"]];
+    [checkboxStun setState:[[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_STUN]];
     [checkboxStun setAction:@selector(onCheckBoxHandler:)];
     [checkboxStun setTarget:self];
     [self.scrollView.documentView addSubview:checkboxStun];
@@ -664,9 +664,16 @@
 
     [[NSUserDefaults standardUserDefaults] setObject:textFieldSTUNURL.stringValue forKey:STUN_SERVER_DOMAIN];
 
-    [SettingsService setStun:checkboxStun.state];
-    [SettingsService setICE:checkboxEnableICE.state];
-    [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableICE.state forKey:ENABLE_ICE];
+    [[SettingsHandler settingsHandler] setEnableStun:checkboxStun.state];
+    [[SettingsHandler settingsHandler] setEnableICE:checkboxEnableICE.state];
+    if (checkboxEnableICE.state)
+    {
+        [SettingsService setICE:checkboxEnableICE.state];
+    }
+    else
+    {
+        [SettingsService setStun:checkboxStun.state];
+    }
 
     if (comboBoxMediaEncription.stringValue && [comboBoxMediaEncription.stringValue compare:@"Encrypted (SRTP)"] == NSOrderedSame)
         linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionSRTP);
@@ -677,6 +684,7 @@
     else
         linphone_core_set_media_encryption(lc, LinphoneMediaEncryptionNone);
 
+    [[SettingsHandler settingsHandler] setEnableIPV6:checkboxIPv6.state];
     linphone_core_enable_ipv6(lc, checkboxIPv6.state);
     
     // force the save to sync.

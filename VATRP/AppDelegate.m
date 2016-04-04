@@ -19,7 +19,7 @@
 #import "SettingsHandler.h"
 #import "LinphoneAPI.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <NSUserNotificationCenterDelegate>
 {
     NSWindow *window;
     VideoCallWindowController *videoCallWindowController;
@@ -302,6 +302,20 @@
 - (IBAction)onMenuItemMessages:(NSMenuItem *)sender
 {
     [[ChatService sharedInstance] openChatWindowWithUser:nil];
+    
+    [self showNotification:nil];
+}
+
+- (void)showNotification:(id)sender {
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = @"Hello, World!";
+    notification.subtitle = @"Sub title";
+    notification.informativeText = @"A notification";
+    notification.soundName = NSUserNotificationActivationTypeNone;
+    notification.hasReplyButton = YES;
+    notification.hasActionButton = YES;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
 -(void) SignOut
@@ -372,11 +386,18 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
 }
 
 #pragma mark - local notifications
-- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
-     shouldPresentNotification:(NSUserNotification *)notification
-{
-    return YES;
+- (void)userNotificationCenter:(NSUserNotificationCenter *)center didDeliverNotification:(NSUserNotification *)notification {
+    
 }
 
+- (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification {
+    NSString* userResponse = notification.response.string;
+    
+    NSLog(@"userResponse: %@", userResponse);
+}
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification {
+    return YES;
+}
 
 @end

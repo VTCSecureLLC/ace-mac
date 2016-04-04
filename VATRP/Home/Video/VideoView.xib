@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
@@ -30,25 +30,31 @@
             <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Aa-wV-oYP">
+                <customView id="8Aa-wV-oYP">
                     <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
-                <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Tb-De-0ze">
+                <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="8Tb-De-0ze">
                     <rect key="frame" x="216" y="314" width="288" height="72"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="hold" id="mAP-Cx-MWH"/>
                 </imageView>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmn-7M-X2j">
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bmn-7M-X2j">
                     <rect key="frame" x="27" y="61" width="54" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="call_quality_indicator_0" id="Xef-Dv-YpF"/>
                 </imageView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZE-id-6Bh">
+                <customView id="bZE-id-6Bh">
                     <rect key="frame" x="486" y="580" width="176" height="99"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPl-pp-4tN">
+                <customView id="JPl-pp-4tN">
                     <rect key="frame" x="6" y="510" width="186" height="184"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
-                <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="c3L-Xi-Vu9">
+                <button verticalHuggingPriority="750" tag="1" id="c3L-Xi-Vu9">
                     <rect key="frame" x="681" y="647" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <shadow key="shadow">
                         <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </shadow>
@@ -60,54 +66,63 @@
                         <action selector="onButtonFullScreen:" target="-2" id="P7y-NB-Qud"/>
                     </connections>
                 </button>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zEA-ge-YEn">
+                <customView id="zEA-ge-YEn">
                     <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wi4-MK-p4S" customClass="BackgroundedView">
+                <customView id="Wi4-MK-p4S" customClass="BackgroundedView">
                     <rect key="frame" x="0.0" y="0.0" width="720" height="700"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vod-Ov-ORD">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" id="Vod-Ov-ORD">
                             <rect key="frame" x="10" y="469" width="700" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Remote number" id="TH9-Ki-iHi">
                                 <font key="font" metaFont="system" size="36"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hm1-fj-1F7">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" id="hm1-fj-1F7">
                             <rect key="frame" x="10" y="424" width="700" height="27"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Call status" id="2rl-4Z-aB5">
                                 <font key="font" metaFont="system" size="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JN6-Id-y5q">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" id="JN6-Id-y5q">
                             <rect key="frame" x="10" y="286" width="700" height="130"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="1" id="xOp-ga-yiy">
                                 <font key="font" metaFont="system" size="120"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iRe-cd-Hjl">
+                        <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" id="iRe-cd-Hjl">
                             <rect key="frame" x="10" y="400" width="700" height="27"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="0:00:05" id="Oqj-bN-yeh">
                                 <font key="font" metaFont="system" size="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl8-FV-Ntx">
+                        <customView id="Gl8-FV-Ntx" customClass="BackgroundedView">
                             <rect key="frame" x="27" y="12" width="665" height="200"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         </customView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cbb-Ah-I7O">
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Cbb-Ah-I7O">
                             <rect key="frame" x="284" y="517" width="150" height="150"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="male" id="6nP-yP-jOe"/>
                         </imageView>
                     </subviews>
                 </customView>
             </subviews>
+            <point key="canvasLocation" x="235" y="364"/>
         </customView>
     </objects>
     <resources>

@@ -533,6 +533,7 @@
 
 -(void)setRtcpFbMode:(NSString*) rtcpFbMode{
     [self setUserSettingString:RTCP_FB_MODE withValue:rtcpFbMode];
+    [[LinphoneManager instance] updateRTCPFeedbackMode];
 }
 -(NSString*)getRtcpFbMode{
     return [self getUserSettingString:RTCP_FB_MODE];

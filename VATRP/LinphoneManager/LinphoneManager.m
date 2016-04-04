@@ -1280,6 +1280,20 @@ static BOOL libStarted = FALSE;
     //		//go directly to bg mode
     //		[self enterBackgroundMode];
     //	}
+    [self updateRTCPFeedbackMode];
+}
+
+// break out setting rtcp feedback into its own method so that everything is self contained.
+// This method will be called from the start Linphone Core, but also needs to be called if the rtcp feedback setting changes.
+- (void)updateRTCPFeedbackMode
+{
+    if (theLinphoneCore == nil)
+    {
+        return; // we are trying to do this too early
+    }
+    lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_xr_enabled", 0);
+    lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_xr_voip_metrics_enabled", 0);
+    lp_config_set_int([[LinphoneManager instance] configDb],  "rtp", "rtcp_xr_stat_summary_enabled", 0);
     
     NSString *rtcpFeedback = [[SettingsHandler settingsHandler] getRtcpFbMode];
     int rtcpFB;
@@ -1317,6 +1331,7 @@ static BOOL libStarted = FALSE;
         linphone_core_set_avpf_rr_interval(theLinphoneCore, 3);
         [[LinphoneManager instance] lpConfigSetInt:rtcpFB forKey:@"rtp" forSection:@"rtcp_fb_implicit_rtcp_fb"];
     }
+
 }
 
 - (void)createLinphoneCore {

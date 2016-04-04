@@ -110,8 +110,6 @@
         observersAdded = true;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalStateChangedNotificationHandler:) name:kLinphoneGlobalStateUpdate object:nil];
     }
-    
-    self.textFieldPassword.stringValue = @"topsecret";
 }
 
 -(void)viewWillDisappear:(BOOL)animated

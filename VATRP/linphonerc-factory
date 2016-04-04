@@ -55,3 +55,6 @@ rate=8000
 channels=1
 enabled=0
 
+sip_port=-1
+sip_tcp_port=-1
+sip_tls_port=-1

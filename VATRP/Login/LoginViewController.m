@@ -96,7 +96,7 @@
         self.textFieldDomain.stringValue = accountModel.domain;
         self.textFieldPort.stringValue = [NSString stringWithFormat:@"%d", accountModel.port];
         
-        self.textFieldDomain.stringValue = [[SettingsHandler settingsHandler] getUITransportString];
+        [self.comboBoxTransport selectItemWithObjectValue:[[SettingsHandler settingsHandler] getUITransportStringForString:loginAccount.transport]];
     }
     
     BOOL shouldAutoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_login"];

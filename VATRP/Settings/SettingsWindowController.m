@@ -90,7 +90,7 @@
     [avViewController initializeData];
     [themeMenuViewController initializeData];
     [textMenuViewController initializeData];
-    [summaryMenuViewController initializeData];
+//    [summaryMenuViewController initializeData]; // does not have data to initialize
     [accountsViewController initializeData];
     [preferencesViewController initializeData];
     [mediaViewController initializeData];

@@ -140,13 +140,50 @@
     [[SettingsHandler settingsHandler] setQoSEnable:stateQoS];
     if (stateQoS)
     {
-        int signalValue = self.textFieldSignaling.intValue;
-        int audioValue = self.textFieldAudio.intValue;
-        int videoValue = self.textFieldVideo.intValue;
+        NSCharacterSet* notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        int signalValue = 24;
+        if (self.textFieldSignaling.stringValue != nil)
+        {
+            // verify integer value, if not leave as default
+            if ([self.textFieldSignaling.stringValue rangeOfCharacterFromSet:notDigits].location == NSNotFound)
+            {
+                signalValue = self.textFieldSignaling.intValue;
+            }
+            else
+            {
+                self.textFieldSignaling.stringValue = [NSString stringWithFormat:@"%d",signalValue];
+            }
+        }
+        int audioValue = 46;
+        if (self.textFieldAudio.stringValue != nil)
+        {
+            // verify integer value, if not leave as default
+            if ([self.textFieldAudio.stringValue rangeOfCharacterFromSet:notDigits].location == NSNotFound)
+            {
+                audioValue = self.textFieldAudio.intValue;
+            }
+            else
+            {
+                self.textFieldAudio.stringValue = [NSString stringWithFormat:@"%d",audioValue];
+            }
+        }
+        int videoValue = 46;
+        if (self.textFieldVideo.stringValue != nil)
+        {
+            // verify integer value, if not leave as default
+            if ([self.textFieldVideo.stringValue rangeOfCharacterFromSet:notDigits].location == NSNotFound)
+            {
+                videoValue = self.textFieldVideo.intValue;
+            }
+            else
+            {
+                self.textFieldVideo.stringValue = [NSString stringWithFormat:@"%d",videoValue];
+            }
+        }
         [[SettingsHandler settingsHandler] setQoSSignalingValue:signalValue];
         [[SettingsHandler settingsHandler] setQoSAudioValue:audioValue];
         [[SettingsHandler settingsHandler] setQoSVideoValue:videoValue];
-        if (stateQoS)
+        if ([LinphoneManager getLc] != nil)
         {
             linphone_core_set_sip_dscp([LinphoneManager getLc], signalValue);
             linphone_core_set_audio_dscp([LinphoneManager getLc], audioValue);

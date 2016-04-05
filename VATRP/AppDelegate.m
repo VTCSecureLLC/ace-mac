@@ -282,7 +282,7 @@
         self.loginWindowController = [[LoginWindowController alloc]init];
     }
     
-    
+    [self.settingsWindowController showWindow:false];
     [self.loginWindowController showWindow:self];
     [self.menuItemSignOut setEnabled:false];
     [self.menuItemPreferences setEnabled:false];

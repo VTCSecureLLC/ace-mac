@@ -315,17 +315,21 @@
             // - there is an issue here. As of 2-9-2016 if we can enable mic when there is more than one call there is a crash -
             //    linphone is making the settings on each call without checking to see if the audio stream in null. So for now we need
             //    a notion of whether or not this is the first call on the line
-            if ([CallService callsCount] < 2)
+            int callCount = [CallService callsCount];
+            if (callCount == 1)
             {
-                SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
-                bool microphoneMuted = [settingsHandler isMicrophoneMuted];
-                linphone_core_enable_mic(lc, !microphoneMuted);
-                bool speakerMuted = [settingsHandler isSpeakerMuted];
-                [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
+                if ([[LinphoneAPI instance] callAppearsValid:aCall])
+                {
+                    SettingsHandler* settingsHandler = [SettingsHandler settingsHandler];
+                    bool microphoneMuted = [settingsHandler isMicrophoneMuted];
+                    linphone_core_enable_mic(lc, !microphoneMuted);
+                    bool speakerMuted = [settingsHandler isSpeakerMuted];
+                    [LinphoneManager.instance muteSpeakerInCall:speakerMuted];
 //                bool micIsEnabled = linphone_core_mic_enabled(lc);
-                linphone_core_set_play_level(lc, 100);
+                    linphone_core_set_play_level(lc, 100);
+                }
             }
-            else
+            else if (callCount > 1)
             {
                 if (callToSwapTo != nil)
                 {
@@ -341,21 +345,28 @@
                     currentCall = aCall;
                 }
             }
-            int playLevel = linphone_core_get_play_level(lc);
-            int playbackGain = linphone_core_get_playback_gain_db(lc);
-            NSLog([NSString stringWithFormat:@"   play level IS %d, playback gain is %d ********************************", playLevel, playbackGain ]);
-            const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
+            if ([[LinphoneAPI instance] callAppearsValid:aCall])
+            {
+                int playLevel = linphone_core_get_play_level(lc);
+                int playbackGain = linphone_core_get_playback_gain_db(lc);
+                NSLog([NSString stringWithFormat:@"   play level IS %d, playback gain is %d ********************************", playLevel, playbackGain ]);
+                const char *speakerString = linphone_core_get_playback_device([LinphoneManager getLc]);
 //            const char *microphoneString = linphone_core_get_playback_device([LinphoneManager getLc]);
 //            NSString *speaker = [[NSString alloc] initWithUTF8String:speakerString];
 //            NSLog([NSString stringWithFormat:@"SPEAKER IS %@", speaker ]);
-            bool speakerCanPlayback = linphone_core_sound_device_can_playback(lc, speakerString);
-            if (speakerCanPlayback)
-            {
-                NSLog(@"    speaker can playback");
+                bool speakerCanPlayback = linphone_core_sound_device_can_playback(lc, speakerString);
+                if (speakerCanPlayback)
+                {
+                    NSLog(@"    speaker can playback");
+                }
+                else
+                {
+                    NSLog(@"    speaker can NOT playback");
+                }
             }
             else
             {
-                NSLog(@"    speaker can NOT playback");
+                NSLog(@"CallService.callUpdate: Trying to update audio settings for streams running but call does not appear ot be valid.");
             }
             break;
         }

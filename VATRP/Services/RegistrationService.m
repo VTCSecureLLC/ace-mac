@@ -14,6 +14,7 @@
 #import "Utils.h"
 #import "DefaultSettingsManager.h"
 #import "CodecModel.h"
+#import "SettingsConstants.h";
 
 @implementation RegistrationService
 
@@ -272,17 +273,58 @@
     BOOL preview_preference = YES;//[self boolForKey:@"preview_preference"];
     lp_config_set_int(config, [LINPHONERC_APPLICATION_KEY UTF8String], "preview_preference", preview_preference);
 
-    NSString *first = [[NSUserDefaults standardUserDefaults] objectForKey:@"ACE_FIRST_OPEN"];
+//    NSString *first = [[NSUserDefaults standardUserDefaults] objectForKey:@"ACE_FIRST_OPEN"];
 
     // ToDo: Hardcoded on 2-2 per request - force cif
-    if (!first) {
-        MSVideoSize vsize;
+//    if (!first) {
+//        MSVideoSize vsize;
+//        MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
+    // we shuld always have a video size to use now. get the value from settings handler and use it.
+    MSVideoSize vsize;
+    //Initializing local bandwidth variable to max 1152 found from android this should be pulled from autoconfig
+    // Note: these settings d not match the ones provided for Windows. I am going to make them match, and also do two things:
+    //   1. make sure that any auto adjustment is shown in the UI and saved to the settings.
+    //   2. make sure that the bandwidth is not changed if the user has set a higher resolution than the
+    //      minimum that we want. If the user intentionally sets it lower, that is on themm but we should not force this if they
+    //      have it set higher.
+    int Bandwidth=3000;
+    NSString *video_resolution;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:PREFERRED_VIDEO_RESOLUTION] != nil)
+    {
+        video_resolution =[[NSUserDefaults standardUserDefaults] objectForKey:PREFERRED_VIDEO_RESOLUTION];
+    }
+    else
+    {
+        video_resolution = @"vga (640x480)"; // should not happen.
+    }
+    if ([video_resolution isEqualToString:@"1080p (1920x1080)"]) {
+        Bandwidth=3000;
+        MS_VIDEO_SIZE_ASSIGN(vsize, 1080P);
+    } else     if ([video_resolution isEqualToString:@"720p (1280x720)"]) {
+        Bandwidth=2000;
+        MS_VIDEO_SIZE_ASSIGN(vsize, 720P);
+    } else     if ([video_resolution isEqualToString:@"svga (800x600)"]) {
+        Bandwidth=2000;
+        MS_VIDEO_SIZE_ASSIGN(vsize, SVGA);
+    } else     if ([video_resolution isEqualToString:@"4cif (704x576)"]) {
+        Bandwidth=1500;
+        MS_VIDEO_SIZE_ASSIGN(vsize, 4CIF);
+    } else     if ([video_resolution isEqualToString:@"vga (640x480)"]) {
+        Bandwidth=1500;
+        MS_VIDEO_SIZE_ASSIGN(vsize, VGA);
+    } else     if ([video_resolution isEqualToString:@"cif (352x288)"]) {
+        Bandwidth=660;
         MS_VIDEO_SIZE_ASSIGN(vsize, CIF);
+    } else     if ([video_resolution isEqualToString:@"qcif (176x144)"]) {
+        Bandwidth=256;
+        MS_VIDEO_SIZE_ASSIGN(vsize, QCIF);
+    }
+
         linphone_core_set_preferred_video_size([LinphoneManager getLc], vsize);
 
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ACE_FIRST_OPEN"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+//        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ACE_FIRST_OPEN"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    }
 
     return TRUE;
 }

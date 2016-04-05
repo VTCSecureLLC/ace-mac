@@ -430,13 +430,11 @@
 			</dict>
 			<dict>
 				<key>controllerType</key>
-				<integer>0</integer>
+				<string>vga (640x480)</string>
 				<key>title</key>
 				<string>Preferred Size</string>
 				<key>defaultValue</key>
-				<true/>
-				<key>UserDefaultsKey</key>
-				<string>video_preferred_size_preference</string>
+				<string>1</string>
 			</dict>
 			<dict>
 				<key>controllerType</key>

@@ -154,6 +154,10 @@
 
 - (IBAction)onButtonLogin:(id)sender
 {
+    [self.prog_Signin setHidden:NO];
+    [self.prog_Signin startAnimation:self];
+    [self.loginButton setEnabled:NO];
+
     loginClicked = true;
     NSString* userName = [self.textFieldUsername.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString* password = [self.textFieldPassword.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -201,9 +205,6 @@
         [DefaultSettingsManager sharedInstance].delegate = self;
     }
     
-    [self.prog_Signin setHidden:NO];
-    [self.prog_Signin startAnimation:self];
-    [self.loginButton setEnabled:NO];
 }
 
 #pragma mark - connection
@@ -337,9 +338,6 @@
 {
     NSLog(@"Error loading config data");
     [self userLogin];
-    [self.prog_Signin setHidden:YES];
-    [self.prog_Signin stopAnimation:self];
-    [self.loginButton setEnabled:YES];
     [[SettingsHandler settingsHandler] initializeUserDefaults:false settingForNoConfig:true];
     // update the STUN server to match the provider domain
     [[SettingsHandler settingsHandler] setStunServerDomain:self.textFieldDomain.stringValue];
@@ -420,9 +418,9 @@
                                                             domain:loginAccount.domain
                                                          transport:loginAccount.transport
                                                               port:loginAccount.port];
-        [self.prog_Signin setHidden:YES];
-        [self.prog_Signin stopAnimation:self];
-        [self.loginButton setEnabled:NO];
+//        [self.prog_Signin setHidden:YES];
+//        [self.prog_Signin stopAnimation:self];
+//        [self.loginButton setEnabled:NO];
     }
 }
 
@@ -551,6 +549,9 @@
                                                                     Port:loginAccount.port
                                                                isDefault:YES];
             
+            [self.prog_Signin setHidden:YES];
+            [self.prog_Signin stopAnimation:self];
+            [self.loginButton setEnabled:YES];
                 [[AppDelegate sharedInstance] showTabWindow];
                 [[AppDelegate sharedInstance].loginWindowController close];
                 [AppDelegate sharedInstance].loginWindowController = nil;

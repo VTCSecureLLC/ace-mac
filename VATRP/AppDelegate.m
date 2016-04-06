@@ -372,11 +372,11 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
 }
 
 #pragma mark - local notifications
+
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
      shouldPresentNotification:(NSUserNotification *)notification
 {
     return YES;
 }
-
 
 @end

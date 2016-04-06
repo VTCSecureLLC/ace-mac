@@ -150,6 +150,7 @@ bool dialPadIsShown;
     self.videoView = [[VideoView alloc] init];
     self.videoView.view.wantsLayer = true;
     [self.callView addSubview:[self.videoView view]];
+    [self.callView setBackgroundColor:[NSColor blackColor]];
     [self.videoView createNumpadView];
 }
 
@@ -407,26 +408,47 @@ bool dialPadIsShown;
 - (void)windowWillEnterFullScreen:(NSNotification*)notif {
     NSLog(@"windowWillEnterFullScreen");
     
+    NSWindow *window = (NSWindow*)notif.object;
+    [window setBackgroundColor:[NSColor blackColor]];
+    
     [self.videoView windowWillEnterFullScreen];
     [(BackgroundedView*)self.view setBackgroundColor:[NSColor blackColor]];
+    [self.callView setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
 }
 
 - (void)windowDidEnterFullScreen:(NSNotification*)notif {
     NSLog(@"windowDidEnterFullScreen");
     
-    [self.videoView windowDidEnterFullScreen];
+    [self.view setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+    [self.callView setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+    [self.videoView.view setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+
     self.isAppFullScreen = YES;
+
+    [self.videoView windowDidEnterFullScreen];
+    
+    [self.view setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+    [self.callView setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
+    [self.videoView.view setFrame:NSMakeRect(0, 0, [NSScreen mainScreen].frame.size.width, [NSScreen mainScreen].frame.size.height)];
 }
 
 - (void)windowWillExitFullScreen:(NSNotification*)notif {
     [self.videoView windowWillExitFullScreen];
     [(BackgroundedView*)self.view setBackgroundColor:windowDefaultColor];
+
+    NSWindow *window = (NSWindow*)notif.object;
+    [window setBackgroundColor:windowDefaultColor];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification*)notif {
-    [self.videoView windowDidExitFullScreen];
+    [self.view setFrame:NSMakeRect(0, 0, 1030, 700)];
+    [self.callView setFrame:NSMakeRect(310, 0, 720, 700)];
 
     self.isAppFullScreen = NO;
+    
+    [self.videoView windowDidExitFullScreen];
+
+//    [[self.videoView.view animator] setFrame:NSMakeRect(0, 0, 720, 700)];    
 }
 
     /*

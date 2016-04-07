@@ -13,6 +13,8 @@
 #import "ResourcesWindowController.h"
 #import "LinphoneAPI.h"
 
+#define DOCKVIEW_BUTTONS_SELECTION_COLOR [NSColor colorWithRed:252.0/255.0 green:98.0/255.0 blue:32.0/255.0 alpha:1.0].CGColor
+
 @interface DockView () {
     NSButton *selectedDocViewItem;
     NSArray *dockViewButtons;
@@ -60,7 +62,7 @@
     
     selectedDocViewItem = self.buttonDialpad;
     [selectedDocViewItem setWantsLayer:YES];
-    [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+    [selectedDocViewItem.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
     dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, self.buttonResources, self.buttonSettings, nil];
     
     labelMessedCalls = [[NSTextField alloc] initWithFrame:NSMakeRect(41, 59, 20, 20)];
@@ -206,7 +208,7 @@
         [self.buttonSettings.layer setBackgroundColor:[NSColor clearColor].CGColor];
     } else {
         [self.buttonSettings setWantsLayer:YES];
-        [self.buttonSettings.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+        [self.buttonSettings.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
     }
 }
 
@@ -216,7 +218,7 @@
         [self.buttonResources.layer setBackgroundColor:[NSColor clearColor].CGColor];
     } else {
         [self.buttonResources setWantsLayer:YES];
-        [self.buttonResources.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+        [self.buttonResources.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
     }
 }
 
@@ -249,7 +251,7 @@
     }
 
     [selectedDocViewItem setWantsLayer:YES];
-    [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+    [selectedDocViewItem.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
 }
 
 #pragma mark - Event Functions

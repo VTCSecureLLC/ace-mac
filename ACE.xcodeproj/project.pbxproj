@@ -1050,6 +1050,13 @@
 			path = DockViewImages;
 			sourceTree = "<group>";
 		};
+		046F0C9D1CB68D0F009E89F0 /* MoreSection */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MoreSection;
+			sourceTree = "<group>";
+		};
 		047DB5201C8D709C008F44C5 /* ContactFavoriteManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1210,6 +1217,7 @@
 				4AB2A2CE1BF2258C006AC5C6 /* HomeViewController.m */,
 				A47695401C8F36CC00748DEF /* HomeViewController.xib */,
 				4AB2A2D01BF22721006AC5C6 /* Doc */,
+				046F0C9D1CB68D0F009E89F0 /* MoreSection */,
 				4AB2A2DA1BF241B3006AC5C6 /* DialPad */,
 				4AB2A2DE1BF32C55006AC5C6 /* Profile */,
 				4AB2A2F21BF4766B006AC5C6 /* Video */,

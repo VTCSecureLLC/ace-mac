@@ -233,4 +233,20 @@
     return resources;
 }
 
++ (NSString *)decodeTextMessage:(const char *)text {
+    if (text == nil)
+    {
+        return @"";
+    }
+    NSString *decoded = [NSString stringWithUTF8String:text];
+    if (decoded == nil) {
+        // couldn't decode the string as UTF8, do a lossy conversion
+        decoded = [NSString stringWithCString:text encoding:NSASCIIStringEncoding];
+        if (decoded == nil) {
+            decoded = @"(invalid string)";
+        }
+    }
+    return decoded;
+}
+
 @end

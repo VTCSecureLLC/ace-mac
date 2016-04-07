@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DockView">
@@ -23,7 +23,7 @@
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mbi-Ql-l0S">
                     <rect key="frame" x="0.0" y="11" width="62" height="69"/>
-                    <buttonCell key="cell" type="smallSquare" title="Call History" bezelStyle="smallSquare" image="recents" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="sWT-hl-o90">
+                    <buttonCell key="cell" type="smallSquare" title="History" bezelStyle="smallSquare" image="history_11" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="sWT-hl-o90">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
@@ -33,7 +33,7 @@
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-mx-wJH">
                     <rect key="frame" x="62" y="11" width="62" height="69"/>
-                    <buttonCell key="cell" type="smallSquare" title="Phone Book" bezelStyle="smallSquare" image="contacts" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="X77-nQ-fa2">
+                    <buttonCell key="cell" type="smallSquare" title="Contacts" bezelStyle="smallSquare" image="phonebook1" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="X77-nQ-fa2">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
@@ -43,7 +43,7 @@
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqd-8S-USV">
                     <rect key="frame" x="186" y="11" width="62" height="69"/>
-                    <buttonCell key="cell" type="smallSquare" title="Resources" bezelStyle="smallSquare" image="messages" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="K2x-So-4WP">
+                    <buttonCell key="cell" type="smallSquare" title="Chat" bezelStyle="smallSquare" image="chat1" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="K2x-So-4WP">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
@@ -53,7 +53,7 @@
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-zI-Y3V">
                     <rect key="frame" x="248" y="11" width="62" height="69"/>
-                    <buttonCell key="cell" type="smallSquare" title="Settings" bezelStyle="smallSquare" image="settings" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Obt-Pg-FPm">
+                    <buttonCell key="cell" type="smallSquare" title="More" bezelStyle="smallSquare" image="more1" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="Obt-Pg-FPm">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
@@ -63,7 +63,7 @@
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LOR-pB-lKg">
                     <rect key="frame" x="124" y="11" width="62" height="69"/>
-                    <buttonCell key="cell" type="smallSquare" title="Dialpad" bezelStyle="smallSquare" image="dialpad" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="ggI-Lc-1eL">
+                    <buttonCell key="cell" type="smallSquare" title="Dialpad" bezelStyle="smallSquare" image="dialpad1" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="ggI-Lc-1eL">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
@@ -76,10 +76,10 @@
         </customView>
     </objects>
     <resources>
-        <image name="contacts" width="24" height="40"/>
-        <image name="dialpad" width="26" height="40"/>
-        <image name="messages" width="32" height="40"/>
-        <image name="recents" width="25" height="40"/>
-        <image name="settings" width="25" height="40"/>
+        <image name="chat1" width="36" height="40"/>
+        <image name="dialpad1" width="25" height="40"/>
+        <image name="history_11" width="34" height="40"/>
+        <image name="more1" width="32" height="40"/>
+        <image name="phonebook1" width="32" height="40"/>
     </resources>
 </document>

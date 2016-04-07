@@ -8,6 +8,7 @@
 
 #import "ChatService.h"
 #import "ChatWindowController.h"
+#import "Utils.h"
 
 
 @interface ChatService () {
@@ -210,12 +211,40 @@
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
-    if (!chatWindowController || !chatWindowController.isShow) {
+    NSDictionary *dict = notif.userInfo;
+
+    LinphoneChatMessage *msg = [[dict objectForKey:@"message"] pointerValue];
+    
+    if (!chatWindowController || !chatWindowController.isShow || ![NSRunningApplication currentApplication].isActive) {
         unread_messages++;
         [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
                                                             object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
                                                           userInfo:nil];
+        
+        [self showNotification:msg];
     }
+}
+
+- (void)showNotification:(LinphoneChatMessage*)msg {
+    if (!msg) {
+        return;
+    }
+    
+    const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
+    const char *c_username                = linphone_address_get_username(remoteAddress);
+    
+    const char *text = linphone_chat_message_get_text(msg);
+    NSString *messageText = text ? [Utils decodeTextMessage:text] : @"";
+    
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = [NSString stringWithUTF8String:c_username];
+    //    notification.subtitle = @"Sub title";
+    notification.informativeText = messageText;
+    notification.soundName = NSUserNotificationActivationTypeNone;
+//    notification.hasReplyButton = YES;
+//    notification.hasActionButton = YES;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
 @end

@@ -3,7 +3,7 @@ set -xe
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
-if [ -e Makefile ] then
+if [ -e Makefile ]; then
 echo "Already cached"
 else
 if hash cmake 2>/dev/null; then

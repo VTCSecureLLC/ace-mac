@@ -24,6 +24,8 @@ cache:
   - $HOME/.ccache
   - $HOME/.homebrew
   - /Library/Caches/Homebrew
+  - OUTPUT
+  - WORK
 before_script:
 - ./Tools/dependencies.sh
 - ./Tools/git_version.sh

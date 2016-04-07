@@ -3,8 +3,6 @@ set -xe
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
-python prepare.py -C || true
-if [ -d build ]; then rm -fr build; fi
 
 if hash cmake 2>/dev/null; then
 

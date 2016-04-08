@@ -48,7 +48,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <customView hidden="YES" id="xdM-XA-DPz">
-                    <rect key="frame" x="110" y="80" width="200" height="230"/>
+                    <rect key="frame" x="121" y="83" width="190" height="230"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
             </subviews>

@@ -7,11 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "BackgroundedView.h"
 
 @interface MoreSectionTableViewCell : NSTableCellView
 
 @property (weak) IBOutlet NSImageView *moreSectionLeftImageView;
 @property (weak) IBOutlet NSImageView *moreSectionRightImageView;
 @property (weak) IBOutlet NSTextField *moreSectionTextField;
+@property (weak) IBOutlet BackgroundedView *backgroundView;
 
 @end

@@ -34,10 +34,10 @@
                                @"Resources",
                                @"Videomail",
                                @"Self-Preview"];
-    moreSectionsLeftImagesArray = @[@"male",
-                                    @"male",
-                                    @"male",
-                                    @"male"];
+    moreSectionsLeftImagesArray = @[@"setting",
+                                    @"resource",
+                                    @"videomail",
+                                    @"self-preview"];
     moreSectionsRightImagesArray = @[];
     _moreSectionViewTableView.delegate = self;
     _moreSectionViewTableView.dataSource = self;
@@ -56,8 +56,9 @@
 #endif
 
             MoreSectionTableViewCell *moreSectionCellView = [tableView makeViewWithIdentifier:@"MoreSectionTableViewCell" owner:self];
-            moreSectionCellView.moreSectionLeftImageView = [moreSectionsLeftImagesArray objectAtIndex:row];
+            [moreSectionCellView.moreSectionLeftImageView setImage:[NSImage imageNamed:[moreSectionsLeftImagesArray objectAtIndex:row]]];
             moreSectionCellView.moreSectionTextField.stringValue = [moreSectionsTextsArray objectAtIndex:row];
+            //[moreSectionCellView.backgroundView setBackgroundColor:[NSColor colorWithRed:64.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1]];
             //moreSectionCellView.moreSectionRightImageView = [moreSectionsRightImagesArray objectAtIndex:row];
             return moreSectionCellView;
 }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044445DD1CB7B6010018E8A7 /* resource.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445D91CB7B6010018E8A7 /* resource.png */; };
+		044445DF1CB7B6010018E8A7 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445DB1CB7B6010018E8A7 /* setting.png */; };
+		044445E01CB7B6010018E8A7 /* videomail.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445DC1CB7B6010018E8A7 /* videomail.png */; };
+		044445E21CB7CA8A0018E8A7 /* self-preview.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445E11CB7CA8A0018E8A7 /* self-preview.png */; };
 		04444CB71CA51B8500D2BEE2 /* hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 04444CB61CA51B8500D2BEE2 /* hold.png */; };
 		046F0C871CB658D4009E89F0 /* dialpad1.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C861CB658D4009E89F0 /* dialpad1.png */; };
 		046F0C8B1CB65ED1009E89F0 /* chat1.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C8A1CB65ED1009E89F0 /* chat1.png */; };
@@ -488,6 +492,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		044445D91CB7B6010018E8A7 /* resource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resource.png; sourceTree = "<group>"; };
+		044445DB1CB7B6010018E8A7 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
+		044445DC1CB7B6010018E8A7 /* videomail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videomail.png; sourceTree = "<group>"; };
+		044445E11CB7CA8A0018E8A7 /* self-preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "self-preview.png"; sourceTree = "<group>"; };
 		04444CB61CA51B8500D2BEE2 /* hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hold.png; sourceTree = "<group>"; };
 		046F0C861CB658D4009E89F0 /* dialpad1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dialpad1.png; path = ../../../../../../../../Desktop/dialpad1.png; sourceTree = "<group>"; };
 		046F0C8A1CB65ED1009E89F0 /* chat1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat1.png; sourceTree = "<group>"; };
@@ -1062,6 +1070,17 @@
 			path = MoreSection;
 			sourceTree = "<group>";
 		};
+		046F0CA71CB7A2EE009E89F0 /* MoresectionImages */ = {
+			isa = PBXGroup;
+			children = (
+				044445E11CB7CA8A0018E8A7 /* self-preview.png */,
+				044445D91CB7B6010018E8A7 /* resource.png */,
+				044445DB1CB7B6010018E8A7 /* setting.png */,
+				044445DC1CB7B6010018E8A7 /* videomail.png */,
+			);
+			path = MoresectionImages;
+			sourceTree = "<group>";
+		};
 		047DB5201C8D709C008F44C5 /* ContactFavoriteManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1410,6 +1429,7 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				046F0CA71CB7A2EE009E89F0 /* MoresectionImages */,
 				046F0C7B1CB65297009E89F0 /* DockViewImages */,
 				04444CB61CA51B8500D2BEE2 /* hold.png */,
 				04FD27911C68E350005659B0 /* camera_mute.png */,
@@ -2021,11 +2041,13 @@
 				A4EB900C1C85E0C50038E4FD /* MainMenu.xib in Resources */,
 				A4BDF2111C90B0A90039A59F /* SelfVideoViewController.xib in Resources */,
 				A47695501C8F655800748DEF /* RTTView.xib in Resources */,
+				044445E21CB7CA8A0018E8A7 /* self-preview.png in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
 				4A5DD1EB1BD904B3003BE9A2 /* messageIncomingBubbleTop.png in Resources */,
 				CEA6DE751C1088AA0013CB76 /* plus icon.png in Resources */,
 				69A025BA1BFB5C83005C62FA /* speaker_inactive.png in Resources */,
 				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
+				044445DD1CB7B6010018E8A7 /* resource.png in Resources */,
 				A4BDF2091C90A8390039A59F /* RecentsWindowController.xib in Resources */,
 				04C33DE71C58CB9600BF1432 /* import_button.png in Resources */,
 				A47695541C8F755700748DEF /* VideoView.xib in Resources */,
@@ -2100,6 +2122,7 @@
 				A45DFA7A1C8E3BA9003FD318 /* CallInfoViewController.xib in Resources */,
 				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
+				044445DF1CB7B6010018E8A7 /* setting.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				A47695581C8FADF000748DEF /* SecondIncomingCallView.xib in Resources */,
 				046F0C8F1CB66112009E89F0 /* history_11.png in Resources */,
@@ -2112,6 +2135,7 @@
 				A4BC0EB01C91FC2500DECCE0 /* DHResourcesView.xib in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
+				044445E01CB7B6010018E8A7 /* videomail.png in Resources */,
 				A4FAEEC81C8E2598005103E5 /* PreferencesViewController.xib in Resources */,
 				69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */,
 				CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */,

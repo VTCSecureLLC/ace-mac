@@ -31,6 +31,7 @@
 
 @property (nonatomic, assign) BOOL isAppFullScreen;
 @property (nonatomic) bool isMoreSectionHidden;
+@property (nonatomic) bool switchSelfViewOn;
 
 -(void) initializeData;
 -(void)refreshForNewLogin;

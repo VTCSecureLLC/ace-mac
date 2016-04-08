@@ -192,6 +192,24 @@
 //    }
 }
 
+- (void)openSettings {
+    AppDelegate *app = [AppDelegate sharedInstance];
+    if (!app.settingsWindowController) {
+        app.settingsWindowController = [[SettingsWindowController alloc] init];
+        [app.settingsWindowController  initializeData];
+        [app.settingsWindowController showWindow:self];
+    } else {
+        if (app.settingsWindowController.isShow) {
+            [app.settingsWindowController close];
+            app.settingsWindowController = nil;
+        } else {
+            [app.settingsWindowController showWindow:self];
+            [app.settingsWindowController  initializeData];
+            app.settingsWindowController.isShow = YES;
+        }
+    }
+}
+
 #pragma mark - Functions for buttons background color chnages
 - (void)clearDockViewButtonsBackgroundColorsExceptDialPadButton:(BOOL)clear {
     for (NSButton *bt in dockViewButtons) {

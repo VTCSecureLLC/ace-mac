@@ -68,7 +68,33 @@
 }
     
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
+    
+    if ([self.delegate respondsToSelector:@selector(didPressSection:)]) {
+        switch (row) {
+            case 0: {
+                [self.delegate didPressSection:eSettings];
+            }
+                break;
+            case 1: {
+                [self.delegate didPressSection:eResources];
+            }
+                break;
+            case 2: {
+                [self.delegate didPressSection:eVideomail];
+            }
+                break;
+            case 3: {
+                [self.delegate didPressSection:eSelfPreview];
+            }
+                break;
+            default: {
+                [self.delegate didPressSection:eSettings];
+            }
+                break;
+        }
         
+    }
+    
         return false;
 }
     

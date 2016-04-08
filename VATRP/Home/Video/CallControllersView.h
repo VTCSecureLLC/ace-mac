@@ -25,6 +25,7 @@
 - (void)performChatButtonClick;
 - (BOOL)bool_chat_window_open;
 - (void)set_bool_chat_window_open:(BOOL)open;
+- (NSButton*)getDeclineMessagesButton;
 @end
 
 @protocol CallControllersViewDelegate <NSObject>
@@ -33,6 +34,7 @@
 
 - (BOOL) didClickCallControllersViewVideo:(CallControllersView*)callControllersView_;
 - (void) didClickCallControllersViewNumpad:(CallControllersView*)callControllersView_;
+- (void) didClickCallControllersViewDeclineMessage:(CallControllersView*)callControllersView_ Opened:(BOOL)open;
 
 
 @end

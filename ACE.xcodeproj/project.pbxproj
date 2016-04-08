@@ -141,6 +141,10 @@
 		69557C761C0EE6E9004A40ED /* SecondCallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69557C751C0EE6E9004A40ED /* SecondCallView.m */; };
 		69557C781C0EE85A004A40ED /* call swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 69557C771C0EE85A004A40ED /* call swap.png */; };
 		69557C7D1C1191D1004A40ED /* NumpadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 697840821C087F33000ED450 /* NumpadView.m */; };
+		69576B7D1CB6A0A300EC989A /* arrow_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 69576B7C1CB6A0A300EC989A /* arrow_up.png */; };
+		69576B7F1CB6A0E000EC989A /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 69576B7E1CB6A0E000EC989A /* arrow_down.png */; };
+		69576B8B1CB6B0C600EC989A /* CallDeclineMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69576B891CB6B0C600EC989A /* CallDeclineMessagesView.m */; };
+		69576B8C1CB6B0C600EC989A /* CallDeclineMessagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69576B8A1CB6B0C600EC989A /* CallDeclineMessagesView.xib */; };
 		697321A91CA5886C00388872 /* call_quality_indicator_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A51CA5886C00388872 /* call_quality_indicator_0.png */; };
 		697321AA1CA5886C00388872 /* call_quality_indicator_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A61CA5886C00388872 /* call_quality_indicator_1.png */; };
 		697321AB1CA5886C00388872 /* call_quality_indicator_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A71CA5886C00388872 /* call_quality_indicator_2.png */; };
@@ -690,6 +694,11 @@
 		69557C741C0EE6E9004A40ED /* SecondCallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondCallView.h; sourceTree = "<group>"; };
 		69557C751C0EE6E9004A40ED /* SecondCallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondCallView.m; sourceTree = "<group>"; };
 		69557C771C0EE85A004A40ED /* call swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call swap.png"; sourceTree = "<group>"; };
+		69576B7C1CB6A0A300EC989A /* arrow_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_up.png; sourceTree = "<group>"; };
+		69576B7E1CB6A0E000EC989A /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
+		69576B881CB6B0C600EC989A /* CallDeclineMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallDeclineMessagesView.h; sourceTree = "<group>"; };
+		69576B891CB6B0C600EC989A /* CallDeclineMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallDeclineMessagesView.m; sourceTree = "<group>"; };
+		69576B8A1CB6B0C600EC989A /* CallDeclineMessagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallDeclineMessagesView.xib; sourceTree = "<group>"; };
 		697321A51CA5886C00388872 /* call_quality_indicator_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_0.png; sourceTree = "<group>"; };
 		697321A61CA5886C00388872 /* call_quality_indicator_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_1.png; sourceTree = "<group>"; };
 		697321A71CA5886C00388872 /* call_quality_indicator_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_2.png; sourceTree = "<group>"; };
@@ -1372,6 +1381,8 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				69576B7C1CB6A0A300EC989A /* arrow_up.png */,
+				69576B7E1CB6A0E000EC989A /* arrow_down.png */,
 				04444CB61CA51B8500D2BEE2 /* hold.png */,
 				04FD27911C68E350005659B0 /* camera_mute.png */,
 				04C33DE51C58CB9600BF1432 /* import_button.png */,
@@ -1484,6 +1495,9 @@
 				69557C741C0EE6E9004A40ED /* SecondCallView.h */,
 				69557C751C0EE6E9004A40ED /* SecondCallView.m */,
 				A47695551C8FA5A100748DEF /* SecondCallView.xib */,
+				69576B881CB6B0C600EC989A /* CallDeclineMessagesView.h */,
+				69576B891CB6B0C600EC989A /* CallDeclineMessagesView.m */,
+				69576B8A1CB6B0C600EC989A /* CallDeclineMessagesView.xib */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -2073,7 +2087,10 @@
 				CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */,
 				4A5DD1ED1BD904B3003BE9A2 /* messageOutgoingBubbleMiddle.png in Resources */,
 				A4BDF2151C90B5C40039A59F /* ChatWindowController.xib in Resources */,
+				69576B8C1CB6B0C600EC989A /* CallDeclineMessagesView.xib in Resources */,
+				69576B7F1CB6A0E000EC989A /* arrow_down.png in Resources */,
 				4A5DD1E91BD904B3003BE9A2 /* messageIncomingBubbleBottom.png in Resources */,
+				69576B7D1CB6A0A300EC989A /* arrow_up.png in Resources */,
 				69E42FAE1C5765A6003EF534 /* icon_fullscreen_close.png in Resources */,
 				69A025BD1BFB5C83005C62FA /* video_inactive.png in Resources */,
 				69A025B21BFB5C83005C62FA /* mute_active.png in Resources */,
@@ -2226,6 +2243,7 @@
 				D97D1FC51C5D1052008A7EAC /* CustomComboBoxCell.m in Sources */,
 				A4A6020D1C617CAE00812230 /* SettingsConstants.m in Sources */,
 				CE5C3F7D1C4CF7B2005E24A5 /* SRVResolver.m in Sources */,
+				69576B8B1CB6B0C600EC989A /* CallDeclineMessagesView.m in Sources */,
 				4A2BABAE1BC5236400640476 /* RegistrationService.m in Sources */,
 				CEC641071C0C86F500BA927F /* ProviderTableCellView.m in Sources */,
 				5EEC29321C0373DD00BA43FB /* ContactsService.m in Sources */,

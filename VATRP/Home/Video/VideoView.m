@@ -12,6 +12,7 @@
 #import "KeypadWindowController.h"
 #import "ChatWindowController.h"
 #import "CallControllersView.h"
+#import "CallDeclineMessagesView.h"
 #import "NumpadView.h"
 #import "SecondIncomingCallView.h"
 #import "SecondCallView.h"
@@ -35,6 +36,7 @@
     
     NSString *windowTitle, *address;
 
+    CallDeclineMessagesView *callDeclineMessagesView;
     NumpadView *numpadView;
     NSImageView *cameraStatusModeImageView;
     BackgroundedView *blackCurtain;
@@ -129,6 +131,9 @@
     self.callControllsConteinerView.wantsLayer = YES;
     [self.callControllsConteinerView setBackgroundColor:[NSColor clearColor]];
     
+    
+    callDeclineMessagesView = [[CallDeclineMessagesView alloc] initWithNibName:@"CallDeclineMessagesView" bundle:nil];
+    callDeclineMessagesView.delegate = self;
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonFullScreen];
     
     
@@ -340,6 +345,8 @@
             //    LinphoneCallError, /**<The call encountered an error*/
         case LinphoneCallError:
         {
+            [callDeclineMessagesView dismissController:self];
+            
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             [self displayCallError:acall message:@"Call Error"];
@@ -356,6 +363,8 @@
             //    LinphoneCallEnd, /**<The call ended normally*/
         case LinphoneCallEnd:
         {
+            [callDeclineMessagesView dismissController:self];
+
             if ((call != nil) && linphone_call_get_dir(call) == LinphoneCallOutgoing) {
                 [self displayCallError:call message:@"Call Error"];
             }
@@ -614,6 +623,37 @@
     numpadView.hidden = !numpadView.hidden;
 }
 
+- (void) didClickCallControllersViewDeclineMessage:(CallControllersView*)callControllersView_ Opened:(BOOL)open {
+    if (open) {
+        [self presentViewController:callDeclineMessagesView
+            asPopoverRelativeToRect:NSMakeRect(0,//[callControllersView_ getDeclineMessagesButton].frame.size.width,
+                                               0, 100, 100)
+                             ofView:[callControllersView_ getDeclineMessagesButton]
+#if defined __MAC_10_9 || defined __MAC_10_8
+                      preferredEdge:NSRectEdgeMinY
+#else
+                      preferredEdge:NSRectEdgeMinX
+#endif
+                           behavior:NSPopoverBehaviorApplicationDefined];
+
+        
+//        [self presentViewControllerAsModalWindow:callDeclineMessagesView];
+    } else {
+        
+    }
+}
+
+#pragma mark - CallDeclineMessagesView Delegate
+
+- (void) didClickCallDeclineMessagesViewItem:(CallDeclineMessagesView*)callDeclineMessagesView_ Message:(NSString*)message {
+    message = [@"!@$%#CALL_DECLINE_MESSAGE#" stringByAppendingString:message];
+
+    LinphoneChatRoom *room = linphone_call_get_chat_room(call);
+    LinphoneChatMessage *msg = linphone_chat_room_create_message(room, [message UTF8String]);
+    linphone_chat_room_send_message2(room, msg, nil, nil);
+    
+    [[CallService sharedInstance] decline:call];
+}
 
 #pragma mark - Property Functions
 

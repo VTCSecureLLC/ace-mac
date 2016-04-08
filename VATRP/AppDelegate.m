@@ -19,7 +19,7 @@
 #import "SettingsHandler.h"
 #import "LinphoneAPI.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <NSURLConnectionDelegate>
 {
     NSWindow *window;
     VideoCallWindowController *videoCallWindowController;
@@ -50,6 +50,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    // TODO: Uncomment the line below before going the AppStore
+    //[self checkUpdates];
+    
     // Insert code here to initialize your application
     // Initialize settings on launch if they have not been.
     [SettingsHandler.settingsHandler initializeUserDefaults:false settingForNoConfig:false];
@@ -376,6 +379,43 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
      shouldPresentNotification:(NSUserNotification *)notification
 {
     return YES;
+}
+
+-(void)checkUpdates {
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+}
+
+#pragma mark - NSURLConnection delegate methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    if ([lookup[@"resultCount"] integerValue] == 1){
+        NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+        if (currentVersion && appStoreVersion) {
+            if (![appStoreVersion isEqualToString:currentVersion]){
+                NSAlert *alert = [[NSAlert alloc] init];
+                [alert addButtonWithTitle:@"OK"];
+                [alert setMessageText:@"There is a newer version of this app available."];
+                [alert runModal];
+            }
+        }
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"Fail to check a new version existance");
 }
 
 

@@ -199,7 +199,6 @@
 		73048F6A1C46BE7600375345 /* libbelr.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73048F691C46BE7600375345 /* libbelr.1.dylib */; };
 		73048F6C1C46C00100375345 /* libbelr.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F6B1C46C00100375345 /* libbelr.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73048F6E1C46C01300375345 /* libbelcard.1.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73048F6D1C46C01300375345 /* libbelcard.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		731677EC1C76B724001C4DB9 /* libbctoolbox.0.0.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 731677E91C76B724001C4DB9 /* libbctoolbox.0.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		731677ED1C76B724001C4DB9 /* libbctoolbox.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 731677EA1C76B724001C4DB9 /* libbctoolbox.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		731677EE1C76B724001C4DB9 /* libbctoolbox.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 731677EB1C76B724001C4DB9 /* libbctoolbox.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7336F4EE1C9B4F0C007A160F /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 7336F4ED1C9B4F0C007A160F /* linphonerc-factory */; };
@@ -230,8 +229,6 @@
 		73EDA2491BFA9F2D00EC7039 /* libavutil.51.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2041BFA9F2C00EC7039 /* libavutil.51.dylib */; };
 		73EDA24A1BFA9F2D00EC7039 /* libavutil.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2051BFA9F2C00EC7039 /* libavutil.dylib */; };
 		73EDA24B1BFA9F2D00EC7039 /* libavutil.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2051BFA9F2C00EC7039 /* libavutil.dylib */; };
-		73EDA2501BFA9F2D00EC7039 /* libbellesip.0.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2081BFA9F2C00EC7039 /* libbellesip.0.0.0.dylib */; };
-		73EDA2511BFA9F2D00EC7039 /* libbellesip.0.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2081BFA9F2C00EC7039 /* libbellesip.0.0.0.dylib */; };
 		73EDA2521BFA9F2D00EC7039 /* libbellesip.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2091BFA9F2C00EC7039 /* libbellesip.0.dylib */; };
 		73EDA2531BFA9F2D00EC7039 /* libbellesip.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2091BFA9F2C00EC7039 /* libbellesip.0.dylib */; };
 		73EDA2541BFA9F2D00EC7039 /* libbellesip.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA20A1BFA9F2C00EC7039 /* libbellesip.dylib */; };
@@ -304,7 +301,6 @@
 		73EDA2F11BFA9F6D00EC7039 /* libavutil.51.35.100.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2031BFA9F2C00EC7039 /* libavutil.51.35.100.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2F21BFA9F6D00EC7039 /* libavutil.51.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2041BFA9F2C00EC7039 /* libavutil.51.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2F31BFA9F6D00EC7039 /* libavutil.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2051BFA9F2C00EC7039 /* libavutil.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73EDA2F61BFA9F6D00EC7039 /* libbellesip.0.0.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2081BFA9F2C00EC7039 /* libbellesip.0.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2F71BFA9F6D00EC7039 /* libbellesip.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2091BFA9F2C00EC7039 /* libbellesip.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2F81BFA9F6D00EC7039 /* libbellesip.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20A1BFA9F2C00EC7039 /* libbellesip.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73EDA2F91BFA9F6D00EC7039 /* libbzrtp.0.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA20B1BFA9F2C00EC7039 /* libbzrtp.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -448,7 +444,6 @@
 				73EDA2F11BFA9F6D00EC7039 /* libavutil.51.35.100.dylib in Copy Files */,
 				73EDA2F21BFA9F6D00EC7039 /* libavutil.51.dylib in Copy Files */,
 				73EDA2F31BFA9F6D00EC7039 /* libavutil.dylib in Copy Files */,
-				73EDA2F61BFA9F6D00EC7039 /* libbellesip.0.0.0.dylib in Copy Files */,
 				73EDA2F71BFA9F6D00EC7039 /* libbellesip.0.dylib in Copy Files */,
 				73EDA2F81BFA9F6D00EC7039 /* libbellesip.dylib in Copy Files */,
 				73EDA2F91BFA9F6D00EC7039 /* libbzrtp.0.dylib in Copy Files */,
@@ -458,7 +453,6 @@
 				73EDA3031BFA9F6D00EC7039 /* liblinphone.8.dylib in Copy Files */,
 				73EDA3041BFA9F6D00EC7039 /* liblinphone.dylib in Copy Files */,
 				73EDA30C1BFA9F6D00EC7039 /* libopenh264.dylib in Copy Files */,
-				731677EC1C76B724001C4DB9 /* libbctoolbox.0.0.0.dylib in Copy Files */,
 				731677ED1C76B724001C4DB9 /* libbctoolbox.0.dylib in Copy Files */,
 				731677EE1C76B724001C4DB9 /* libbctoolbox.dylib in Copy Files */,
 				73EDA30D1BFA9F6D00EC7039 /* libopus.5.dylib in Copy Files */,
@@ -947,7 +941,6 @@
 				73EDA2461BFA9F2C00EC7039 /* libavutil.51.35.100.dylib in Frameworks */,
 				73EDA2481BFA9F2D00EC7039 /* libavutil.51.dylib in Frameworks */,
 				73EDA24A1BFA9F2D00EC7039 /* libavutil.dylib in Frameworks */,
-				73EDA2501BFA9F2D00EC7039 /* libbellesip.0.0.0.dylib in Frameworks */,
 				73EDA2521BFA9F2D00EC7039 /* libbellesip.0.dylib in Frameworks */,
 				73EDA2541BFA9F2D00EC7039 /* libbellesip.dylib in Frameworks */,
 				73EDA2561BFA9F2D00EC7039 /* libbzrtp.0.dylib in Frameworks */,
@@ -1017,7 +1010,6 @@
 				73EDA23F1BFA9F2C00EC7039 /* libantlr3c.dylib in Frameworks */,
 				73EDA23D1BFA9F2C00EC7039 /* libantlr3c.1.dylib in Frameworks */,
 				73EDA2891BFA9F2D00EC7039 /* libpolarssl.8.dylib in Frameworks */,
-				73EDA2511BFA9F2D00EC7039 /* libbellesip.0.0.0.dylib in Frameworks */,
 				73EDA2971BFA9F2D00EC7039 /* libsqlite3.dylib in Frameworks */,
 				73EDA29D1BFA9F2D00EC7039 /* libswresample.0.6.100.dylib in Frameworks */,
 				73EDA26D1BFA9F2D00EC7039 /* liblinphone.dylib in Frameworks */,

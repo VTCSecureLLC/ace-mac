@@ -7,7 +7,11 @@
 //
 
 #import "ChatService.h"
+#import "CallService.h"
 #import "ChatWindowController.h"
+#import "HomeViewController.h"
+#import "AppDelegate.h"
+#import "Utils.h"
 
 
 @interface ChatService () {
@@ -210,11 +214,28 @@
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
-    if (!chatWindowController || !chatWindowController.isShow) {
-        unread_messages++;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
-                                                            object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
-                                                          userInfo:nil];
+    NSDictionary *dict = notif.userInfo;
+    
+    if (dict && [dict isKindOfClass:[NSDictionary class]]) {
+        LinphoneChatMessage *msg = [[notif.userInfo objectForKey:@"message"] pointerValue];
+
+        const char *text = linphone_chat_message_get_text(msg);
+        
+        NSString *messageText = text ? [Utils decodeTextMessage:text] : @"";
+
+        NSLog(@"text: %@", messageText);
+        
+        
+        if ([messageText hasPrefix:CALL_DECLINE_PREFIX]) {
+            [[CallService sharedInstance] setDeclineMessage:[messageText substringFromIndex:CALL_DECLINE_PREFIX.length]];
+        } else {
+            if (!chatWindowController || !chatWindowController.isShow) {
+                unread_messages++;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
+                                                                    object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
+                                                                  userInfo:nil];
+            }
+        }
     }
 }
 

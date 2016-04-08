@@ -25,5 +25,6 @@
 + (NSString*)makeAccountNumberFromSipURI:(NSString*)sipURI;
 + (NSString*)providerNameFromSipURI:(NSString*)fullSipURI;
 + (NSMutableArray*)cdnResources;
++ (NSString *)decodeTextMessage:(const char *)text;
 
 @end

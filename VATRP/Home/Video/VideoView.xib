@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
@@ -13,6 +13,7 @@
                 <outlet property="callerImageView" destination="Cbb-Ah-I7O" id="YZN-ki-oWo"/>
                 <outlet property="holdImageView" destination="8Tb-De-0ze" id="06c-Il-hyZ"/>
                 <outlet property="imageViewQuality" destination="bmn-7M-X2j" id="sLE-C0-MRy"/>
+                <outlet property="labelCallDeclineMessage" destination="pZf-g1-SeW" id="lRZ-1q-L9F"/>
                 <outlet property="labelCallDuration" destination="iRe-cd-Hjl" id="hwC-et-iPl"/>
                 <outlet property="labelCallState" destination="hm1-fj-1F7" id="CPG-4k-ujm"/>
                 <outlet property="labelDisplayName" destination="Vod-Ov-ORD" id="YnY-D2-Tha"/>
@@ -22,6 +23,7 @@
                 <outlet property="secondCallContainer" destination="JPl-pp-4tN" id="ulC-Rl-r2p"/>
                 <outlet property="secondIncomingCallContainer" destination="zEA-ge-YEn" id="V8a-Kd-ZCz"/>
                 <outlet property="view" destination="c22-O7-iKe" id="TCk-Ie-DV7"/>
+                <outlet property="viewCallDeclineMessage" destination="C59-NY-q1D" id="rBa-Hl-X1z"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -98,6 +100,27 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
+                        <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C59-NY-q1D">
+                            <rect key="frame" x="20" y="236" width="680" height="131"/>
+                            <subviews>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kl3-wU-8Re">
+                                    <rect key="frame" x="0.0" y="91" width="680" height="30"/>
+                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Call declined with message" id="fcS-oh-p7m">
+                                        <font key="font" metaFont="system" size="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pZf-g1-SeW">
+                                    <rect key="frame" x="0.0" y="14" width="680" height="62"/>
+                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Call Decline Message" id="vyg-ew-93w">
+                                        <font key="font" metaFont="system" size="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                        </customView>
                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl8-FV-Ntx">
                             <rect key="frame" x="27" y="12" width="665" height="200"/>
                         </customView>
@@ -108,6 +131,7 @@
                     </subviews>
                 </customView>
             </subviews>
+            <point key="canvasLocation" x="575" y="436"/>
         </customView>
     </objects>
     <resources>

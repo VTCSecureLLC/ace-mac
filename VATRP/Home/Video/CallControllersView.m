@@ -36,6 +36,7 @@
 
 @property (weak) IBOutlet NSButton *buttonAnswer;
 @property (weak) IBOutlet NSButton *buttonDecline;
+@property (weak) IBOutlet NSButton *buttonDeclineMessages;
 
 @property (weak) IBOutlet NSButton *buttonHold;
 @property (weak) IBOutlet NSButton *buttonVideo;
@@ -93,6 +94,7 @@ BOOL isRTTLocallyEnabled;
     self.buttonChat.wantsLayer = YES;
     self.buttonAnswer.wantsLayer = YES;
     self.buttonDecline.wantsLayer = YES;
+    self.buttonDeclineMessages.wantsLayer = YES;
     self.rttStatusButton.wantsLayer = YES;
     self.rttStatusButton.enabled = NO;
 
@@ -108,6 +110,7 @@ BOOL isRTTLocallyEnabled;
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonAnswer];
     [self.buttonDecline.layer setBackgroundColor:[NSColor redColor].CGColor];
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
+    [self.buttonDeclineMessages.layer setBackgroundColor:[NSColor redColor].CGColor];
     
     self.view.wantsLayer = YES;
 
@@ -398,6 +401,12 @@ BOOL isRTTLocallyEnabled;
     
 }
 
+- (IBAction)onButtonDeclineMessage:(id)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(didClickCallControllersViewDeclineMessage:Opened:)]) {
+        [_delegate didClickCallControllersViewDeclineMessage:self Opened:YES];
+    }
+}
+
 - (void)dismisCallInfoWindow {
     if (callInfoWindowController) {
         [callInfoWindowController close];
@@ -439,10 +448,11 @@ BOOL isRTTLocallyEnabled;
     [self callUpdate:call state:linphone_call_get_state(call)];
 
     self.buttonAnswer.hidden = NO;
-    self.buttonDecline.frame = CGRectMake(self.view.frame.size.width - self.buttonDecline.frame.size.width - 85,
-                                          self.buttonDecline.frame.origin.y,
-                                          self.buttonDecline.frame.size.width,
-                                          self.buttonDecline.frame.size.height);
+    
+    [self setDeclineButtonFrame:CGRectMake(self.view.frame.size.width - self.buttonDecline.frame.size.width - 85,
+                                           self.buttonDecline.frame.origin.y,
+                                           self.buttonDecline.frame.size.width,
+                                           self.buttonDecline.frame.size.height)];
     [self.buttonDecline setTitle:@"Decline"];
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
     [self enableDisableButtons:NO];
@@ -452,10 +462,11 @@ BOOL isRTTLocallyEnabled;
     call = acall;
     
     self.buttonAnswer.hidden = YES;
-    self.buttonDecline.frame = CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width)/2,
-                                          self.buttonDecline.frame.origin.y,
-                                          self.buttonDecline.frame.size.width,
-                                          self.buttonDecline.frame.size.height);
+    [self setDeclineButtonFrame:CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width)/2,
+                                           self.buttonDecline.frame.origin.y,
+                                           self.buttonDecline.frame.size.width,
+                                           self.buttonDecline.frame.size.height)];
+     
     [self.buttonDecline setTitle:@"Cancel"];
 //    [self.buttonDecline setHidden:false];
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
@@ -490,6 +501,8 @@ BOOL isRTTLocallyEnabled;
     [self.buttonAnswer setKeyEquivalent:@""];
     switch (astate) {
         case LinphoneCallIncomingReceived: {
+            self.buttonDeclineMessages.hidden = NO;
+
             [self setControllersToDefaultState];
             
             self.labelCallState.hidden = NO;
@@ -500,16 +513,18 @@ BOOL isRTTLocallyEnabled;
             break;
         }
         case LinphoneCallConnected: {
+            self.buttonDeclineMessages.hidden = YES;
+            
             self.buttonAnswer.hidden = YES;
             self.labelCallState.hidden = YES;
             self.labelCallState.stringValue = @"Connected";
 
             [self.buttonDecline setTitle:@"End Call"];
             [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonDecline];
-            self.buttonDecline.frame = CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width) / 2,
-                                                  self.buttonDecline.frame.origin.y,
-                                                  self.buttonDecline.frame.size.width,
-                                                  self.buttonDecline.frame.size.height);
+            [self setDeclineButtonFrame:CGRectMake((self.view.frame.size.width - self.buttonDecline.frame.size.width) / 2,
+                                                   self.buttonDecline.frame.origin.y,
+                                                   self.buttonDecline.frame.size.width,
+                                                   self.buttonDecline.frame.size.height)];
             
             if ([SettingsService getMicMute]) {
                 [self onButtonMute:self.buttonMute];
@@ -566,9 +581,11 @@ BOOL isRTTLocallyEnabled;
             break;
         }
         case LinphoneCallError: {
+            self.buttonDeclineMessages.hidden = YES;
             break;
         }
         case LinphoneCallEnd: {
+            self.buttonDeclineMessages.hidden = YES;
             self.labelCallState.stringValue = @"Call End";
             videoCurrentlyEnabled = YES;
             isSendingVideo = YES;
@@ -673,6 +690,15 @@ BOOL isRTTLocallyEnabled;
 
     [self.buttonSpeaker setImage:[NSImage imageNamed:@"speaker_active"]];
     [self.buttonSpeaker.layer setBackgroundColor:[NSColor colorWithRed:92.0/255.0 green:117.0/255.0 blue:132.0/255.0 alpha:0.8].CGColor];
+}
+
+- (void) setDeclineButtonFrame:(NSRect)frame {
+    self.buttonDecline.frame = frame;
+    self.buttonDeclineMessages.frame = NSMakeRect(frame.origin.x + frame.size.width + 2, frame.origin.y, self.buttonDeclineMessages.frame.size.width, frame.size.height);
+}
+
+- (NSButton*)getDeclineMessagesButton {
+    return self.buttonDeclineMessages;
 }
 
 #pragma mark settings handler selectors

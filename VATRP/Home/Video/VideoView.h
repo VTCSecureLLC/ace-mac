@@ -27,6 +27,7 @@
 - (void)windowDidEnterFullScreen;
 - (void)windowWillExitFullScreen;
 - (void)windowDidExitFullScreen;
+- (void)setDeclineMessage:(NSString*)declineMsg;
 
 //@property (weak) IBOutlet NSView *remoteVideoView;
 

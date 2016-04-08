@@ -60,8 +60,6 @@
                         <objectValues>
                             <string>Unencrypted</string>
                             <string>Encrypted (SRTP)</string>
-                            <string>Encrypted (ZRTP)</string>
-                            <string>Encrypted (DTLS)</string>
                         </objectValues>
                     </comboBoxCell>
                     <connections>

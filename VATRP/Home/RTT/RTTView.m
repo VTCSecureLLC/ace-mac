@@ -329,8 +329,10 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (void)textComposeEvent:(NSNotification *)notif {
     NSLog(@"*** --> RTT.textComposeEvent called");
-    LinphoneCall* currentCall = [[CallService sharedInstance] getCurrentCall];
-    if (currentCall == nil)
+    LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
+    LinphoneCall *call = linphone_chat_room_get_call(room);
+    
+    if (call == nil)
     {
         return; // this event is not for this controller - leave it for sip simple.
     }
@@ -348,14 +350,11 @@ static void chatTable_free_chatrooms(void *data) {
     }
     
     
-    LinphoneChatRoom *room = [[[notif userInfo] objectForKey:@"room"] pointerValue];
     if (room && room == [self getCurrentChatRoom]) {
         //        BOOL composing = linphone_chat_room_is_remote_composing(room);
         //        [self setComposingVisible:composing withDelay:0.3];
     }
-    
-    LinphoneCall *call = linphone_chat_room_get_call(room);
-    
+        
     if (call != NULL) {
         const LinphoneCallParams* current = linphone_call_get_current_params(call);
         

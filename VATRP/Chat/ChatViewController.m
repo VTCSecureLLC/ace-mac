@@ -395,7 +395,14 @@ static void chatTable_free_chatrooms(void *data) {
             
             if (last_message) {
                 const char *text = linphone_chat_message_get_text(last_message);
-                [cellView.textFieldLastMessage setStringValue:[NSString stringWithUTF8String:text]];
+                NSString *lastMessageStr = [NSString stringWithUTF8String:text];
+                
+                if ([lastMessageStr hasPrefix:CALL_DECLINE_PREFIX]) {
+                    lastMessageStr = [lastMessageStr substringFromIndex:CALL_DECLINE_PREFIX.length];
+                    lastMessageStr = [@"Call declined with message: %@" stringByAppendingString:lastMessageStr];
+                }
+
+                [cellView.textFieldLastMessage setStringValue:lastMessageStr];
                 
 //                time_t new = linphone_chat_message_get_time(last_message);
                 
@@ -673,7 +680,8 @@ static void chatTable_free_chatrooms(void *data) {
     LinphoneAddress *from = [[[notif userInfo] objectForKey:@"from_address"] pointerValue];
     LinphoneChatRoom *room = [[notif.userInfo objectForKey:@"room"] pointerValue];
     LinphoneChatMessage *chat = [[notif.userInfo objectForKey:@"message"] pointerValue];
-    
+    const char *text = linphone_chat_message_get_text(chat);
+
     if (from == NULL || chat == NULL) {
         return;
     }

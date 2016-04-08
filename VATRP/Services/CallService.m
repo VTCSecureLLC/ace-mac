@@ -21,6 +21,8 @@
     
     bool screenSaverIsRunning;
     bool screenIsLocked;
+    
+    NSString *declinedMessage;
 }
 
 + (int) callsCount;
@@ -45,6 +47,8 @@
     self = [super init];
     
     if (self) {
+        declinedMessage = nil;
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(callUpdate:)
                                                      name:kLinphoneCallUpdate
@@ -410,7 +414,8 @@
                 [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView hideSecondIncomingCallView];
             } else {
                 [[ChatService sharedInstance] closeChatWindow];
-                [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"fromEvents", nil];
+                [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:2.0];
             }
             
             [[ChatService sharedInstance] closeChatWindow];
@@ -425,7 +430,8 @@
             [[ChatService sharedInstance] closeChatWindow];
             currentCall = NULL;
 
-            [self performSelector:@selector(closeCallWindow) withObject:nil afterDelay:1.0];
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"fromEvents", nil];
+            [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:2.0];
 
             const MSList *call_list = linphone_core_get_calls(lc);
             if (call_list) {
@@ -642,21 +648,37 @@
     }
 }
 
-- (void) closeCallWindow {
+- (void) closeCallWindow:(NSDictionary*)dict {
     LinphoneCore *lc = [LinphoneManager getLc];
+    BOOL fromEvents = [[dict objectForKey:@"fromEvents"] boolValue];
 
     if (!linphone_core_get_calls(lc)) {
-        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-        
-        if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
-            [window toggleFullScreen:self];
-            [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+        if (!fromEvents) {
+            [self close];
+        } else {
+            if (declinedMessage) {
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], @"fromEvents", nil];
+                [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:3.0];
+            } else {
+                [self close];
+            }
         }
-        
-        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-                 display:YES
-                 animate:YES];
     }
+}
+
+- (void) close {
+    declinedMessage = nil;
+
+    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+    
+    if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+        [window toggleFullScreen:self];
+        [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+    }
+    
+    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+             display:YES
+             animate:YES];
 }
 
 + (int) callsCount {
@@ -664,6 +686,12 @@
     int call_count = ms_list_size(call_list);
     
     return call_count;
+}
+
+- (void)setDeclineMessage:(NSString*)declineMsg {
+    declinedMessage = declineMsg;
+
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setDeclineMessage:declineMsg];
 }
 
 @end

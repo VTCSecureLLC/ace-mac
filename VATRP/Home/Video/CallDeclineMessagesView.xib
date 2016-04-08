@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CallDeclineMessagesView">
+            <connections>
+                <outlet property="buttonCallMeLater" destination="7Jc-Xh-7yM" id="8m7-3G-dyo"/>
+                <outlet property="buttonInAMeeting" destination="kob-fI-Gfj" id="xA3-gM-bs3"/>
+                <outlet property="buttonWatsUp" destination="uir-8g-CIo" id="xas-oq-ie0"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY" customClass="BackgroundedView">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="179"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Jc-Xh-7yM">
+                    <rect key="frame" x="-2" y="120" width="404" height="59"/>
+                    <buttonCell key="cell" type="square" title="Can't talk now. Call me later?" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="4Bz-n4-QGt">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="23" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonMessage:" target="-2" id="9Rf-ur-Hsv"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uir-8g-CIo">
+                    <rect key="frame" x="-2" y="60" width="404" height="59"/>
+                    <buttonCell key="cell" type="square" title="Can't talk now. What's up?" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="TgY-kh-KOe">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="23" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonMessage:" target="-2" id="E0K-zX-Azn"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kob-fI-Gfj">
+                    <rect key="frame" x="-2" y="0.0" width="404" height="59"/>
+                    <buttonCell key="cell" type="square" title="I'm in a meeting." bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="DSm-Uq-21W">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="23" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonMessage:" target="-2" id="ZLN-1n-x0d"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="535" y="269.5"/>
+        </customView>
+    </objects>
+</document>

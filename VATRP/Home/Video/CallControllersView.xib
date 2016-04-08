@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CallControllersView">
@@ -10,6 +10,7 @@
                 <outlet property="buttonAnswer" destination="84g-5t-UrS" id="cKN-e9-UUC"/>
                 <outlet property="buttonChat" destination="6tj-nN-Q01" id="aSZ-F3-ILx"/>
                 <outlet property="buttonDecline" destination="G4x-NJ-vNN" id="iiH-aZ-n5R"/>
+                <outlet property="buttonDeclineMessages" destination="v10-1L-OFh" id="Uln-Kq-FMP"/>
                 <outlet property="buttonHold" destination="zbS-l1-9QQ" id="bap-Hp-kLC"/>
                 <outlet property="buttonKeypad" destination="azG-Cl-HFs" id="Kcb-hQ-Npc"/>
                 <outlet property="buttonMute" destination="GQ2-h1-DKF" id="KEx-S4-mLO"/>
@@ -96,16 +97,6 @@
                         <action selector="onButtonKeypad:" target="-2" id="s8D-x6-5hp"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G4x-NJ-vNN">
-                    <rect key="frame" x="370" y="40" width="200" height="68"/>
-                    <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="but-JO-vaV">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" size="38" name="HelveticaNeue"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="onButtonDecline:" target="-2" id="SlZ-C9-uzV"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCN-HA-4VQ">
                     <rect key="frame" x="0.0" y="122" width="110" height="76"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="video_active" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="d45-0V-BV0">
@@ -126,10 +117,31 @@
                         <action selector="onButtonCallInfo:" target="-2" id="2GJ-KU-52e"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G4x-NJ-vNN">
+                    <rect key="frame" x="370" y="40" width="200" height="68"/>
+                    <buttonCell key="cell" type="square" title="Decline" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="but-JO-vaV">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="38" name="HelveticaNeue"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonDecline:" target="-2" id="SlZ-C9-uzV"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v10-1L-OFh">
+                    <rect key="frame" x="569" y="40" width="35" height="68"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrow_down" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Wfc-UO-rDs">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonDeclineMessage:" target="-2" id="PP5-zc-Ce6"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
     </objects>
     <resources>
+        <image name="arrow_down" width="9.6000003814697266" height="5"/>
         <image name="call hold" width="30" height="40"/>
         <image name="chat_active" width="42" height="39"/>
         <image name="info-icon" width="48" height="48"/>

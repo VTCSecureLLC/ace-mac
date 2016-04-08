@@ -29,6 +29,7 @@ typedef enum : NSUInteger {
 - (void)clearDockViewButtonsBackgroundColorsExceptDialPadButton:(BOOL)clear;
 - (void)clearDockViewSettingsBackgroundColor:(BOOL)clear;
 - (void)clearDockViewMessagesBackgroundColor:(BOOL)clear;
+- (void)clearSettingsButtonBackgroundColor;
 @end
 
 @protocol DockViewDelegate <NSObject>

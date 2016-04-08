@@ -14,6 +14,9 @@
 		046F0C911CB6611E009E89F0 /* phonebook1.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C901CB6611E009E89F0 /* phonebook1.png */; };
 		046F0C991CB66497009E89F0 /* more_videoMail.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C981CB66497009E89F0 /* more_videoMail.png */; };
 		046F0C9B1CB6649C009E89F0 /* more1.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C9A1CB6649C009E89F0 /* more1.png */; };
+		046F0CA11CB690AF009E89F0 /* MoreSectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0C9F1CB690AF009E89F0 /* MoreSectionViewController.m */; };
+		046F0CA21CB690AF009E89F0 /* MoreSectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0CA01CB690AF009E89F0 /* MoreSectionViewController.xib */; };
+		046F0CA51CB69829009E89F0 /* MoreSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0CA41CB69829009E89F0 /* MoreSectionTableViewCell.m */; };
 		047DB5231C8D7112008F44C5 /* ContactFavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */; };
 		04B5DA531C6215A20049CD6B /* ContactPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA521C6215A20049CD6B /* ContactPictureManager.m */; };
 		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
@@ -498,6 +501,11 @@
 		046F0C901CB6611E009E89F0 /* phonebook1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phonebook1.png; sourceTree = "<group>"; };
 		046F0C981CB66497009E89F0 /* more_videoMail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more_videoMail.png; sourceTree = "<group>"; };
 		046F0C9A1CB6649C009E89F0 /* more1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more1.png; sourceTree = "<group>"; };
+		046F0C9E1CB690AF009E89F0 /* MoreSectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSectionViewController.h; sourceTree = "<group>"; };
+		046F0C9F1CB690AF009E89F0 /* MoreSectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSectionViewController.m; sourceTree = "<group>"; };
+		046F0CA01CB690AF009E89F0 /* MoreSectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreSectionViewController.xib; sourceTree = "<group>"; };
+		046F0CA31CB69829009E89F0 /* MoreSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSectionTableViewCell.h; sourceTree = "<group>"; };
+		046F0CA41CB69829009E89F0 /* MoreSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSectionTableViewCell.m; sourceTree = "<group>"; };
 		047DB5211C8D7112008F44C5 /* ContactFavoriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactFavoriteManager.h; sourceTree = "<group>"; };
 		047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactFavoriteManager.m; sourceTree = "<group>"; };
 		04B5DA511C6215A20049CD6B /* ContactPictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPictureManager.h; sourceTree = "<group>"; };
@@ -1053,6 +1061,11 @@
 		046F0C9D1CB68D0F009E89F0 /* MoreSection */ = {
 			isa = PBXGroup;
 			children = (
+				046F0C9E1CB690AF009E89F0 /* MoreSectionViewController.h */,
+				046F0C9F1CB690AF009E89F0 /* MoreSectionViewController.m */,
+				046F0CA01CB690AF009E89F0 /* MoreSectionViewController.xib */,
+				046F0CA31CB69829009E89F0 /* MoreSectionTableViewCell.h */,
+				046F0CA41CB69829009E89F0 /* MoreSectionTableViewCell.m */,
 			);
 			path = MoreSection;
 			sourceTree = "<group>";
@@ -2076,6 +2089,7 @@
 				69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */,
 				04C33DE81C58CB9600BF1432 /* export_button.png in Resources */,
 				A4ED74C71C8DFC480071211B /* GeneralViewController.xib in Resources */,
+				046F0CA21CB690AF009E89F0 /* MoreSectionViewController.xib in Resources */,
 				4AB2A2E31BF33F74006AC5C6 /* cameraview2.png in Resources */,
 				A4BDF20F1C90AD170039A59F /* VideoMailWindowController.xib in Resources */,
 				046F0C911CB6611E009E89F0 /* phonebook1.png in Resources */,
@@ -2210,6 +2224,7 @@
 				4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
 				CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */,
+				046F0CA11CB690AF009E89F0 /* MoreSectionViewController.m in Sources */,
 				6983EB281C43A169004CCD74 /* AVViewController.m in Sources */,
 				A4EC099D1C95040F0075002D /* AddContactWindowController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
@@ -2259,6 +2274,7 @@
 				6983EB2B1C43B265004CCD74 /* ThemeMenuViewController.m in Sources */,
 				4AB5564B1BDE765E003382B2 /* NewMessageCellView.m in Sources */,
 				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,
+				046F0CA51CB69829009E89F0 /* MoreSectionTableViewCell.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */,

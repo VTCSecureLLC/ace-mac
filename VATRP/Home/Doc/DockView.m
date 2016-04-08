@@ -12,6 +12,7 @@
 #import "ChatService.h"
 #import "ResourcesWindowController.h"
 #import "LinphoneAPI.h"
+#import "MoreSectionViewController.h"
 
 #define DOCKVIEW_BUTTONS_SELECTION_COLOR [NSColor colorWithRed:252.0/255.0 green:98.0/255.0 blue:32.0/255.0 alpha:1.0].CGColor
 
@@ -159,27 +160,31 @@
 }
 
 - (IBAction)onButtonSettings:(id)sender {
-    AppDelegate *app = [AppDelegate sharedInstance];
-    if (!app.settingsWindowController) {
-        app.settingsWindowController = [[SettingsWindowController alloc] init];
-        [app.settingsWindowController  initializeData];
-        [app.settingsWindowController showWindow:self];
-//        if (self.parent != nil) {
-//            [self.parent didClickDockViewSettings];
+    
+    [self.parent didClickDockViewSettings];
+    
+    
+//    AppDelegate *app = [AppDelegate sharedInstance];
+//    if (!app.settingsWindowController) {
+//        app.settingsWindowController = [[SettingsWindowController alloc] init];
+//        [app.settingsWindowController  initializeData];
+//        [app.settingsWindowController showWindow:self];
+////        if (self.parent != nil) {
+////            [self.parent didClickDockViewSettings];
+////        }
+//    } else {
+//        if (app.settingsWindowController.isShow) {
+//            [app.settingsWindowController close];
+//            app.settingsWindowController = nil;
+//        } else {
+//            [app.settingsWindowController showWindow:self];
+//            [app.settingsWindowController  initializeData];
+//            app.settingsWindowController.isShow = YES;
+////            if (self.parent != nil) {
+////                [self.parent didClickDockViewSettings];
+////            }
 //        }
-    } else {
-        if (app.settingsWindowController.isShow) {
-            [app.settingsWindowController close];
-            app.settingsWindowController = nil;
-        } else {
-            [app.settingsWindowController showWindow:self];
-            [app.settingsWindowController  initializeData];
-            app.settingsWindowController.isShow = YES;
-//            if (self.parent != nil) {
-//                [self.parent didClickDockViewSettings];
-//            }
-        }
-    }
+//    }
 
 
 //    if (self.parent != nil) {
@@ -198,6 +203,15 @@
                 [bt setWantsLayer:YES];
                 [bt.layer setBackgroundColor:[NSColor clearColor].CGColor];
             }
+        }
+    }
+}
+
+- (void)clearSettingsButtonBackgroundColor {
+    for (NSButton *bt in dockViewButtons) {
+        if ([bt.title isEqualToString:@"More"]) {
+            [bt setWantsLayer:YES];
+            [bt.layer setBackgroundColor:[NSColor clearColor].CGColor];
         }
     }
 }

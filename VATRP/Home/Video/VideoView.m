@@ -12,6 +12,7 @@
 #import "KeypadWindowController.h"
 #import "ChatWindowController.h"
 #import "CallControllersView.h"
+#import "CallDeclineMessagesView.h"
 #import "NumpadView.h"
 #import "SecondIncomingCallView.h"
 #import "SecondCallView.h"
@@ -27,7 +28,7 @@
 #import "SettingsHandler.h"
 #import "LinphoneAPI.h"
 
-@interface VideoView () <CallControllersViewDelegate> {
+@interface VideoView () <CallControllersViewDelegate, NSAnimationDelegate> {
     NSTimer *timerCallDuration;
     NSTimer *timerRingCount;
     
@@ -35,6 +36,7 @@
     
     NSString *windowTitle, *address;
 
+    CallDeclineMessagesView *callDeclineMessagesView;
     NumpadView *numpadView;
     NSImageView *cameraStatusModeImageView;
     BackgroundedView *blackCurtain;
@@ -42,11 +44,17 @@
     bool uiInitialized;
     bool observersAdded;
     bool displayErrorLock;
+    
+    NSViewAnimation *fadeOut;
+    NSViewAnimation *fadeIn;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
 @property (weak) IBOutlet NSTextField *labelCallState;
 @property (weak) IBOutlet NSTextField *labelCallDuration;
+@property (weak) IBOutlet NSTextField *labelCallDeclineMessage;
+@property (weak) IBOutlet NSView *viewCallDeclineMessage;
+
 
 @property (weak) IBOutlet BackgroundedView *callControllsConteinerView;
 
@@ -129,6 +137,9 @@
     self.callControllsConteinerView.wantsLayer = YES;
     [self.callControllsConteinerView setBackgroundColor:[NSColor clearColor]];
     
+    
+    callDeclineMessagesView = [[CallDeclineMessagesView alloc] initWithNibName:@"CallDeclineMessagesView" bundle:nil];
+    callDeclineMessagesView.delegate = self;
     [Utils setButtonTitleColor:[NSColor whiteColor] Button:self.buttonFullScreen];
     
     
@@ -224,6 +235,7 @@
     switch (astate) {
             //    LinphoneCallIncomingReceived, /**<This is a new incoming call */
         case LinphoneCallIncomingReceived: {
+            self.viewCallDeclineMessage.hidden = YES;
             self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimerWithTimeInterval:3.75];
             [self.labelRingCount setTextColor:[NSColor whiteColor]];
@@ -283,6 +295,7 @@
             break;
             //    LinphoneCallOutgoingInit, /**<An outgoing call is started */
         case LinphoneCallOutgoingInit: {
+            self.viewCallDeclineMessage.hidden = YES;
             self.labelCallState.stringValue = @"Calling 00:00";
             [self.callControllsConteinerView setHidden:NO];
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
@@ -340,6 +353,8 @@
             //    LinphoneCallError, /**<The call encountered an error*/
         case LinphoneCallError:
         {
+            [callDeclineMessagesView dismissController:self];
+            
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
             [self displayCallError:acall message:@"Call Error"];
@@ -356,6 +371,8 @@
             //    LinphoneCallEnd, /**<The call ended normally*/
         case LinphoneCallEnd:
         {
+            [callDeclineMessagesView dismissController:self];
+
             if ((call != nil) && linphone_call_get_dir(call) == LinphoneCallOutgoing) {
                 [self displayCallError:call message:@"Call Error"];
             }
@@ -614,6 +631,37 @@
     numpadView.hidden = !numpadView.hidden;
 }
 
+- (void) didClickCallControllersViewDeclineMessage:(CallControllersView*)callControllersView_ Opened:(BOOL)open {
+    if (open) {
+        [self presentViewController:callDeclineMessagesView
+            asPopoverRelativeToRect:NSMakeRect(0,//[callControllersView_ getDeclineMessagesButton].frame.size.width,
+                                               0, 100, 100)
+                             ofView:[callControllersView_ getDeclineMessagesButton]
+#if defined __MAC_10_9 || defined __MAC_10_8
+                      preferredEdge:NSRectEdgeMinY
+#else
+                      preferredEdge:NSRectEdgeMinX
+#endif
+                           behavior:NSPopoverBehaviorApplicationDefined];
+
+        
+//        [self presentViewControllerAsModalWindow:callDeclineMessagesView];
+    } else {
+        
+    }
+}
+
+#pragma mark - CallDeclineMessagesView Delegate
+
+- (void) didClickCallDeclineMessagesViewItem:(CallDeclineMessagesView*)callDeclineMessagesView_ Message:(NSString*)message {
+    message = [@"!@$%#CALL_DECLINE_MESSAGE#" stringByAppendingString:message];
+
+    LinphoneChatRoom *room = linphone_call_get_chat_room(call);
+    LinphoneChatMessage *msg = linphone_chat_room_create_message(room, [message UTF8String]);
+    linphone_chat_room_send_message2(room, msg, nil, nil);
+    
+    [[CallService sharedInstance] decline:call];
+}
 
 #pragma mark - Property Functions
 
@@ -781,6 +829,27 @@
     [layer removeAllAnimations];
 }
 
+- (void) startCallDeclineMessageAnimation {
+    
+    NSView *content = self.viewCallDeclineMessage;
+    CALayer *layer = [content layer];
+    
+    CABasicAnimation *anime = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+    anime.fromValue = (id)[layer backgroundColor];
+    anime.toValue = (id)CFBridgingRelease(CGColorCreateGenericRGB(1.0, 0.1, 0.1, 1.0));
+    anime.duration = 0.5f;
+    anime.autoreverses = YES;
+    anime.repeatCount = 10;
+    
+    [layer addAnimation:anime forKey:@"backgroundColor"];
+}
+
+- (void) stopDeclineMessageAnimation {
+    NSView *content = self.labelCallDeclineMessage;
+    CALayer *layer = [content layer];
+    [layer removeAllAnimations];
+}
+
 - (void)setMouseInCallWindow {
     if(!call) return;
     
@@ -806,7 +875,9 @@
 }
 
 - (void) hideAllCallControllers {
-    [self.callControllsConteinerView setHidden:YES];
+    if (self.viewCallDeclineMessage.hidden) {
+        [self.callControllsConteinerView setHidden:YES];
+    }
 }
 
 - (void)showVideoPreview {
@@ -917,7 +988,8 @@
     [[self.labelDisplayName animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelDisplayName.frame.size.width/2, callViewFrame.size.height - 101, self.labelDisplayName.frame.size.width, self.labelDisplayName.frame.size.height)];
     [[self.labelCallState animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallState.frame.size.width/2, callViewFrame.size.height - 146, self.labelCallState.frame.size.width, self.labelCallState.frame.size.height)];
     [[self.labelCallDuration animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallDuration.frame.size.width/2, callViewFrame.size.height - 170, self.labelCallDuration.frame.size.width, self.labelCallDuration.frame.size.height)];
-    [[self.labelRingCount animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelCallDuration.frame.size.width/2, callViewFrame.size.height/2 - self.labelCallDuration.frame.size.height/2, self.labelRingCount.frame.size.width, self.labelRingCount.frame.size.height)];
+    [[self.viewCallDeclineMessage animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.viewCallDeclineMessage.frame.size.width/2, callViewFrame.size.height/2 - self.viewCallDeclineMessage.frame.size.height/2 - 140, self.viewCallDeclineMessage.frame.size.width, self.viewCallDeclineMessage.frame.size.height)];
+    [[self.labelRingCount animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.labelRingCount.frame.size.width/2, callViewFrame.size.height/2 - self.labelRingCount.frame.size.height/2, self.labelRingCount.frame.size.width, self.labelRingCount.frame.size.height)];
     [[self.callControllersView.view animator] setFrame:NSMakeRect(callViewFrame.size.width/2 - self.callControllersView.view.frame.size.width/2, 12, self.callControllersView.view.frame.size.width, self.callControllersView.view.frame.size.height)];
     [[self.secondIncomingCallView.view animator] setFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
     [self.secondIncomingCallView reorderControllersForFrame:NSMakeRect(0, 0, callViewFrame.size.width, callViewFrame.size.height)];
@@ -939,6 +1011,7 @@
 }
 
 #pragma mark Settings delegates
+
 -(void)showSelfViewFromSettings:(bool)show
 {
     linphone_core_enable_self_view([LinphoneManager getLc], show);
@@ -948,6 +1021,15 @@
 // to cancel an out going call
 - (IBAction)onHangUp:(NSButton *)sender
 {
+}
+
+- (void)setDeclineMessage:(NSString*)declineMsg {
+    [self startCallDeclineMessageAnimation];
+    
+    [self.callControllsConteinerView setHidden:NO];
+    self.viewCallDeclineMessage.hidden = NO;
+    self.labelCallState.stringValue = @"Call declined";
+    self.labelCallDeclineMessage.stringValue = declineMsg;
 }
 
 @end

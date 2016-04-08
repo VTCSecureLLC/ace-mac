@@ -7,6 +7,7 @@
 //
 
 #import "ChatItemTableCellView.h"
+#import "ChatService.h"
 #import "NSImage+Merge.h"
 
 @interface ChatItemTableCellView () {
@@ -161,6 +162,12 @@ static NSFont *CELL_FONT = nil;
             decoded = @"(invalid string)";
         }
     }
+    
+//    if ([decoded hasPrefix:CALL_DECLINE_PREFIX]) {
+//        decoded = [decoded substringFromIndex:CALL_DECLINE_PREFIX.length];
+//        decoded = [@"Call declined with message \n" stringByAppendingString:decoded];
+//    }
+    
     return decoded;
 }
 
@@ -194,8 +201,6 @@ static NSFont *CELL_FONT = nil;
         if (text) {
             NSString *nstext = [ChatItemTableCellView decodeTextMessage:text];
             
-            /* We need to use an attributed string here so that data detector don't mess
-             * with the text style. See http://stackoverflow.com/a/20669356 */
             NSString *currentRttFontName = nil;
             if ([[NSUserDefaults standardUserDefaults] objectForKey:@"rttFontName"]) {
                 NSString *storedRttFontName = [[NSUserDefaults standardUserDefaults] stringForKey:@"rttFontName"];
@@ -203,10 +208,34 @@ static NSFont *CELL_FONT = nil;
             } else {
                 currentRttFontName = @"Helvetica";
             }
-            NSFont* font = [NSFont fontWithName:currentRttFontName size:17.0];
-            [labelChat setTextColor:[NSColor colorWithDeviceRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1.0]];
-            [labelChat setFont:font];
-            labelChat.string = nstext;;
+
+            
+            if ([nstext hasPrefix:CALL_DECLINE_PREFIX]) {
+                nstext = [nstext substringFromIndex:CALL_DECLINE_PREFIX.length];
+                
+                NSFont *smallFont = [NSFont fontWithName:currentRttFontName size:13.0];
+                NSDictionary *smallDict = [NSDictionary dictionaryWithObject:smallFont forKey:NSFontAttributeName];
+                NSMutableAttributedString *aAttrString = [[NSMutableAttributedString alloc] initWithString:@"Call declined with message \n" attributes:smallDict];
+                NSDictionary *textColor = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor darkGrayColor], NSForegroundColorAttributeName, nil];
+                [aAttrString addAttributes:textColor range:NSMakeRange(0, @"Call declined with message \n".length)];
+                
+                NSFont *bigFont = [NSFont fontWithName:currentRttFontName size:17.0];
+                NSDictionary *verdanaDict = [NSDictionary dictionaryWithObject:bigFont forKey:NSFontAttributeName];
+                NSMutableAttributedString *vAttrString = [[NSMutableAttributedString alloc] initWithString: nstext attributes:verdanaDict];
+                
+                [aAttrString appendAttributedString:vAttrString];
+                
+                [[labelChat textStorage] setAttributedString:aAttrString];
+                [labelChat insertText:aAttrString];
+            } else {
+            
+                /* We need to use an attributed string here so that data detector don't mess
+                 * with the text style. See http://stackoverflow.com/a/20669356 */
+                NSFont* font = [NSFont fontWithName:currentRttFontName size:17.0];
+                [labelChat setTextColor:[NSColor colorWithDeviceRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1.0]];
+                [labelChat setFont:font];
+                labelChat.string = nstext;
+            }
         } else {
             labelChat.string = @"";
         }
@@ -308,6 +337,11 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     const char *url = linphone_chat_message_get_external_body_url(chat);
     const char *text = linphone_chat_message_get_text(chat);
     NSString *messageText = text ? [ChatItemTableCellView decodeTextMessage:text] : @"";
+    
+    if (messageText && [messageText hasPrefix:CALL_DECLINE_PREFIX]) {
+        return CGSizeMake(220 + CELL_MESSAGE_X_MARGIN, 85);
+    }
+    
     if (url == nil && linphone_chat_message_get_file_transfer_information(chat) == NULL) {
         if (CELL_FONT == nil) {
             CELL_FONT = [NSFont systemFontOfSize:CELL_FONT_SIZE];

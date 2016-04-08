@@ -7,7 +7,11 @@
 //
 
 #import "ChatService.h"
+#import "CallService.h"
 #import "ChatWindowController.h"
+#import "HomeViewController.h"
+#import "AppDelegate.h"
+#import "Utils.h"
 
 
 @interface ChatService () {
@@ -210,12 +214,50 @@
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
-    if (!chatWindowController || !chatWindowController.isShow) {
-        unread_messages++;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
-                                                            object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
-                                                          userInfo:nil];
+    NSDictionary *dict = notif.userInfo;
+
+    if (dict && [dict isKindOfClass:[NSDictionary class]]) {
+        LinphoneChatMessage *msg = [[notif.userInfo objectForKey:@"message"] pointerValue];
+        
+        const char *text = linphone_chat_message_get_text(msg);
+        
+        NSString *messageText = text ? [Utils decodeTextMessage:text] : @"";
+        
+        if ([messageText hasPrefix:CALL_DECLINE_PREFIX]) {
+            [[CallService sharedInstance] setDeclineMessage:[messageText substringFromIndex:CALL_DECLINE_PREFIX.length]];
+        } else {
+            if (!chatWindowController || !chatWindowController.isShow) {
+                unread_messages++;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
+                                                                    object:@{@"unread_messages_count" : [NSNumber numberWithInt:unread_messages]}
+                                                                  userInfo:nil];
+                
+                [self showNotification:msg];
+            }
+        }
     }
+}
+
+- (void)showNotification:(LinphoneChatMessage*)msg {
+    if (!msg) {
+        return;
+    }
+    
+    const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
+    const char *c_username                = linphone_address_get_username(remoteAddress);
+    
+    const char *text = linphone_chat_message_get_text(msg);
+    NSString *messageText = text ? [Utils decodeTextMessage:text] : @"";
+    
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = [NSString stringWithUTF8String:c_username];
+    //    notification.subtitle = @"Sub title";
+    notification.informativeText = messageText;
+    notification.soundName = NSUserNotificationActivationTypeNone;
+//    notification.hasReplyButton = YES;
+//    notification.hasActionButton = YES;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
 @end

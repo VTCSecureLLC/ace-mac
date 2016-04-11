@@ -30,6 +30,7 @@
 @property (weak) IBOutlet NSButton *buttonDialpad;
 @property (weak) IBOutlet NSButton *buttonResources;
 @property (weak) IBOutlet NSButton *buttonSettings;
+@property (weak) IBOutlet NSTextField *badgeOnMessages;
 @property (strong) ResourcesWindowController *resourcesWindowController;
 @end
 
@@ -90,7 +91,13 @@
                                                  selector:@selector(callUpdateEvent:)
                                                      name:kLinphoneCallUpdate
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
     }
+    [self createBadgeLabel];
 }
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -146,6 +153,7 @@
 - (IBAction)onButtonResources:(id)sender {
    // BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
    // if (isOpenedChatWindow) {
+    [self.badgeOnMessages setHidden:YES];
         if (self.parent != nil)
         {
             [self.parent didClickDockViewResources];
@@ -190,6 +198,17 @@
 //    if (self.parent != nil) {
 //        [self.parent didClickDockViewSettings];
 //    }
+}
+
+- (void)createBadgeLabel {
+    [self.badgeOnMessages setHidden:YES];
+    [self.badgeOnMessages setWantsLayer:YES];
+    [self.badgeOnMessages.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
+    [self.badgeOnMessages.layer setCornerRadius:12];
+    [self.badgeOnMessages setTextColor:[NSColor whiteColor]];
+    [self.badgeOnMessages setAlignment:NSTextAlignmentCenter];
+    self.badgeOnMessages.stringValue = @"!";
+    [self.badgeOnMessages setBackgroundColor:[NSColor colorWithRed:252.0/255.0 green:98.0/255.0 blue:32.0/255.0 alpha:1.0]];
 }
 
 - (void)openSettings {
@@ -322,6 +341,12 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)textReceivedEvent:(NSNotification *)notif {
+    if (![[ChatService sharedInstance] isOpened]) {
+        [self.badgeOnMessages setHidden:NO];
     }
 }
 

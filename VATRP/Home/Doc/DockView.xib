@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DockView">
             <connections>
+                <outlet property="badgeOnMessages" destination="rvl-tD-DfS" id="fOF-lw-3VH"/>
                 <outlet property="buttonContacts" destination="vtR-mx-wJH" id="vpl-Z4-GoE"/>
                 <outlet property="buttonDialpad" destination="LOR-pB-lKg" id="2ab-oQ-bV6"/>
                 <outlet property="buttonRecents" destination="mbi-Ql-l0S" id="YNm-pZ-lbl"/>
@@ -71,8 +72,26 @@
                         <action selector="onButtonDialpad:" target="-2" id="hoy-eC-xE8"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rvl-tD-DfS">
+                    <rect key="frame" x="215" y="55" width="25" height="25"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="center" title="1" drawsBackground="YES" id="0US-y4-pEs">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SPk-aj-k6M">
+                    <rect key="frame" x="215" y="55" width="25" height="25"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" transparent="YES" imageScaling="proportionallyDown" inset="2" id="NUh-Iq-xXx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonResources:" target="-2" id="5AT-mU-4E3"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="485" y="312"/>
+            <point key="canvasLocation" x="337" y="307"/>
         </customView>
     </objects>
     <resources>

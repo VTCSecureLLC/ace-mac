@@ -2,7 +2,7 @@
 
 ## Accessible Communications for Everyone
 
-This is source tree for the ACE App for Mac.
+This is source tree for the ACE App for Mac. 
 
 ## Building
 

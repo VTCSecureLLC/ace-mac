@@ -7,7 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044445DD1CB7B6010018E8A7 /* resource.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445D91CB7B6010018E8A7 /* resource.png */; };
+		044445DF1CB7B6010018E8A7 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445DB1CB7B6010018E8A7 /* setting.png */; };
+		044445E01CB7B6010018E8A7 /* videomail.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445DC1CB7B6010018E8A7 /* videomail.png */; };
+		044445E21CB7CA8A0018E8A7 /* self-preview.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445E11CB7CA8A0018E8A7 /* self-preview.png */; };
+		044445E91CB826290018E8A7 /* dialpad1.png in Resources */ = {isa = PBXBuildFile; fileRef = 044445E81CB826290018E8A7 /* dialpad1.png */; };
 		04444CB71CA51B8500D2BEE2 /* hold.png in Resources */ = {isa = PBXBuildFile; fileRef = 04444CB61CA51B8500D2BEE2 /* hold.png */; };
+		046F0C8B1CB65ED1009E89F0 /* chat1.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C8A1CB65ED1009E89F0 /* chat1.png */; };
+		046F0C8F1CB66112009E89F0 /* history_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C8E1CB66112009E89F0 /* history_11.png */; };
+		046F0C911CB6611E009E89F0 /* phonebook1.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C901CB6611E009E89F0 /* phonebook1.png */; };
+		046F0C991CB66497009E89F0 /* more_videoMail.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C981CB66497009E89F0 /* more_videoMail.png */; };
+		046F0C9B1CB6649C009E89F0 /* more1.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F0C9A1CB6649C009E89F0 /* more1.png */; };
+		046F0CA11CB690AF009E89F0 /* MoreSectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0C9F1CB690AF009E89F0 /* MoreSectionViewController.m */; };
+		046F0CA21CB690AF009E89F0 /* MoreSectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0CA01CB690AF009E89F0 /* MoreSectionViewController.xib */; };
+		046F0CA51CB69829009E89F0 /* MoreSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0CA41CB69829009E89F0 /* MoreSectionTableViewCell.m */; };
 		047DB5231C8D7112008F44C5 /* ContactFavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */; };
 		04B5DA531C6215A20049CD6B /* ContactPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA521C6215A20049CD6B /* ContactPictureManager.m */; };
 		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
@@ -483,7 +496,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		044445D91CB7B6010018E8A7 /* resource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resource.png; sourceTree = "<group>"; };
+		044445DB1CB7B6010018E8A7 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
+		044445DC1CB7B6010018E8A7 /* videomail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videomail.png; sourceTree = "<group>"; };
+		044445E11CB7CA8A0018E8A7 /* self-preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "self-preview.png"; sourceTree = "<group>"; };
+		044445E81CB826290018E8A7 /* dialpad1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dialpad1.png; sourceTree = "<group>"; };
 		04444CB61CA51B8500D2BEE2 /* hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hold.png; sourceTree = "<group>"; };
+		046F0C8A1CB65ED1009E89F0 /* chat1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat1.png; sourceTree = "<group>"; };
+		046F0C8E1CB66112009E89F0 /* history_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history_11.png; sourceTree = "<group>"; };
+		046F0C901CB6611E009E89F0 /* phonebook1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phonebook1.png; sourceTree = "<group>"; };
+		046F0C981CB66497009E89F0 /* more_videoMail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more_videoMail.png; sourceTree = "<group>"; };
+		046F0C9A1CB6649C009E89F0 /* more1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more1.png; sourceTree = "<group>"; };
+		046F0C9E1CB690AF009E89F0 /* MoreSectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSectionViewController.h; sourceTree = "<group>"; };
+		046F0C9F1CB690AF009E89F0 /* MoreSectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSectionViewController.m; sourceTree = "<group>"; };
+		046F0CA01CB690AF009E89F0 /* MoreSectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreSectionViewController.xib; sourceTree = "<group>"; };
+		046F0CA31CB69829009E89F0 /* MoreSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSectionTableViewCell.h; sourceTree = "<group>"; };
+		046F0CA41CB69829009E89F0 /* MoreSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSectionTableViewCell.m; sourceTree = "<group>"; };
 		047DB5211C8D7112008F44C5 /* ContactFavoriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactFavoriteManager.h; sourceTree = "<group>"; };
 		047DB5221C8D7112008F44C5 /* ContactFavoriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactFavoriteManager.m; sourceTree = "<group>"; };
 		04B5DA511C6215A20049CD6B /* ContactPictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPictureManager.h; sourceTree = "<group>"; };
@@ -1026,6 +1054,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		046F0C7B1CB65297009E89F0 /* DockViewImages */ = {
+			isa = PBXGroup;
+			children = (
+				044445E81CB826290018E8A7 /* dialpad1.png */,
+				046F0C9A1CB6649C009E89F0 /* more1.png */,
+				046F0C981CB66497009E89F0 /* more_videoMail.png */,
+				046F0C901CB6611E009E89F0 /* phonebook1.png */,
+				046F0C8E1CB66112009E89F0 /* history_11.png */,
+				046F0C8A1CB65ED1009E89F0 /* chat1.png */,
+			);
+			path = DockViewImages;
+			sourceTree = "<group>";
+		};
+		046F0C9D1CB68D0F009E89F0 /* MoreSection */ = {
+			isa = PBXGroup;
+			children = (
+				046F0C9E1CB690AF009E89F0 /* MoreSectionViewController.h */,
+				046F0C9F1CB690AF009E89F0 /* MoreSectionViewController.m */,
+				046F0CA01CB690AF009E89F0 /* MoreSectionViewController.xib */,
+				046F0CA31CB69829009E89F0 /* MoreSectionTableViewCell.h */,
+				046F0CA41CB69829009E89F0 /* MoreSectionTableViewCell.m */,
+			);
+			path = MoreSection;
+			sourceTree = "<group>";
+		};
+		046F0CA71CB7A2EE009E89F0 /* MoresectionImages */ = {
+			isa = PBXGroup;
+			children = (
+				044445E11CB7CA8A0018E8A7 /* self-preview.png */,
+				044445D91CB7B6010018E8A7 /* resource.png */,
+				044445DB1CB7B6010018E8A7 /* setting.png */,
+				044445DC1CB7B6010018E8A7 /* videomail.png */,
+			);
+			path = MoresectionImages;
+			sourceTree = "<group>";
+		};
 		047DB5201C8D709C008F44C5 /* ContactFavoriteManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1186,6 +1250,7 @@
 				4AB2A2CE1BF2258C006AC5C6 /* HomeViewController.m */,
 				A47695401C8F36CC00748DEF /* HomeViewController.xib */,
 				4AB2A2D01BF22721006AC5C6 /* Doc */,
+				046F0C9D1CB68D0F009E89F0 /* MoreSection */,
 				4AB2A2DA1BF241B3006AC5C6 /* DialPad */,
 				4AB2A2DE1BF32C55006AC5C6 /* Profile */,
 				4AB2A2F21BF4766B006AC5C6 /* Video */,
@@ -1373,6 +1438,8 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				046F0CA71CB7A2EE009E89F0 /* MoresectionImages */,
+				046F0C7B1CB65297009E89F0 /* DockViewImages */,
 				69576B7C1CB6A0A300EC989A /* arrow_up.png */,
 				69576B7E1CB6A0E000EC989A /* arrow_down.png */,
 				04444CB61CA51B8500D2BEE2 /* hold.png */,
@@ -1988,11 +2055,13 @@
 				A4EB900C1C85E0C50038E4FD /* MainMenu.xib in Resources */,
 				A4BDF2111C90B0A90039A59F /* SelfVideoViewController.xib in Resources */,
 				A47695501C8F655800748DEF /* RTTView.xib in Resources */,
+				044445E21CB7CA8A0018E8A7 /* self-preview.png in Resources */,
 				4AB556561BE2406B003382B2 /* messages.png in Resources */,
 				4A5DD1EB1BD904B3003BE9A2 /* messageIncomingBubbleTop.png in Resources */,
 				CEA6DE751C1088AA0013CB76 /* plus icon.png in Resources */,
 				69A025BA1BFB5C83005C62FA /* speaker_inactive.png in Resources */,
 				4A902DF21BB96C6D00ECFD86 /* hold.wav in Resources */,
+				044445DD1CB7B6010018E8A7 /* resource.png in Resources */,
 				A4BDF2091C90A8390039A59F /* RecentsWindowController.xib in Resources */,
 				04C33DE71C58CB9600BF1432 /* import_button.png in Resources */,
 				A47695541C8F755700748DEF /* VideoView.xib in Resources */,
@@ -2042,12 +2111,15 @@
 				A4ED74CB1C8E0F960071211B /* TextMenuViewController.xib in Resources */,
 				A47695391C8F2B1400748DEF /* AddContactViewController.xib in Resources */,
 				4AC975F41BDA22F700AD35C8 /* chat_message_inprogress.png in Resources */,
+				046F0C9B1CB6649C009E89F0 /* more1.png in Resources */,
 				A4BDF2131C90B3410039A59F /* KeypadWindowController.xib in Resources */,
 				69A025AF1BFB5C83005C62FA /* chat_active.png in Resources */,
 				04C33DE81C58CB9600BF1432 /* export_button.png in Resources */,
 				A4ED74C71C8DFC480071211B /* GeneralViewController.xib in Resources */,
+				046F0CA21CB690AF009E89F0 /* MoreSectionViewController.xib in Resources */,
 				4AB2A2E31BF33F74006AC5C6 /* cameraview2.png in Resources */,
 				A4BDF20F1C90AD170039A59F /* VideoMailWindowController.xib in Resources */,
+				046F0C911CB6611E009E89F0 /* phonebook1.png in Resources */,
 				04C75BCD1C5A22F00089FEB6 /* sorenson.png in Resources */,
 				69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */,
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
@@ -2063,8 +2135,10 @@
 				A45DFA7A1C8E3BA9003FD318 /* CallInfoViewController.xib in Resources */,
 				697359241C17344400A24D09 /* SettingsUI.plist in Resources */,
 				697840851C089B55000ED450 /* call hold.png in Resources */,
+				044445DF1CB7B6010018E8A7 /* setting.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
 				A47695581C8FADF000748DEF /* SecondIncomingCallView.xib in Resources */,
+				046F0C8F1CB66112009E89F0 /* history_11.png in Resources */,
 				A4F34C501C8A403B001CDA96 /* SettingsWindow.xib in Resources */,
 				4A5DD1EA1BD904B3003BE9A2 /* messageIncomingBubbleMiddle.png in Resources */,
 				69A025B61BFB5C83005C62FA /* numpad_disabled.png in Resources */,
@@ -2074,6 +2148,7 @@
 				A4BC0EB01C91FC2500DECCE0 /* DHResourcesView.xib in Resources */,
 				4A6717051BCD05EE00139A6F /* keypad.png in Resources */,
 				69A025BB1BFB5C83005C62FA /* video_active.png in Resources */,
+				044445E01CB7B6010018E8A7 /* videomail.png in Resources */,
 				A4FAEEC81C8E2598005103E5 /* PreferencesViewController.xib in Resources */,
 				69A025BC1BFB5C83005C62FA /* video_disabled.png in Resources */,
 				CEF3B81A1C08BC9200F35757 /* whiteMale.png in Resources */,
@@ -2090,10 +2165,12 @@
 				CE6A7A841C1AFC46002AEB5D /* rtt_on_off.png in Resources */,
 				04C75BCC1C5A22F00089FEB6 /* purple.png in Resources */,
 				697321AB1CA5886C00388872 /* call_quality_indicator_2.png in Resources */,
+				046F0C8B1CB65ED1009E89F0 /* chat1.png in Resources */,
 				69A025B41BFB5C83005C62FA /* mute_inactive.png in Resources */,
 				A4BDF20D1C90ABFE0039A59F /* DialPadWindow.xib in Resources */,
 				4A902DF51BB96C6D00ECFD86 /* ringback.wav in Resources */,
 				69557C781C0EE85A004A40ED /* call swap.png in Resources */,
+				044445E91CB826290018E8A7 /* dialpad1.png in Resources */,
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				A476953F1C8F36BA00748DEF /* HomeWindowController.xib in Resources */,
@@ -2106,6 +2183,7 @@
 				A45DFA761C8E371C003FD318 /* AboutViewController.xib in Resources */,
 				4AB5566E1BE272D5003382B2 /* call_status_incoming.png in Resources */,
 				CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */,
+				046F0C991CB66497009E89F0 /* more_videoMail.png in Resources */,
 				A49CF7EE1C6CD04400493FC3 /* legal_release.rtf in Resources */,
 				04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */,
 				4A5DD1EE1BD904B3003BE9A2 /* messageOutgoingBubbleTop.png in Resources */,
@@ -2179,6 +2257,7 @@
 				4AB2A2FB1BF488EA006AC5C6 /* CallControllersView.m in Sources */,
 				2B463F0C1B984E49008E8333 /* VideoMailWindowController.m in Sources */,
 				CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */,
+				046F0CA11CB690AF009E89F0 /* MoreSectionViewController.m in Sources */,
 				6983EB281C43A169004CCD74 /* AVViewController.m in Sources */,
 				A4EC099D1C95040F0075002D /* AddContactWindowController.m in Sources */,
 				4AAFDC3E1BA9D78200C35A74 /* LinphoneManager.m in Sources */,
@@ -2228,6 +2307,7 @@
 				6983EB2B1C43B265004CCD74 /* ThemeMenuViewController.m in Sources */,
 				4AB5564B1BDE765E003382B2 /* NewMessageCellView.m in Sources */,
 				4A5DD1DA1BD8DADB003BE9A2 /* NSArray+Reversing.m in Sources */,
+				046F0CA51CB69829009E89F0 /* MoreSectionTableViewCell.m in Sources */,
 				2BA68DCF1B985EE300145575 /* BFNavigationController.m in Sources */,
 				4A6717031BCD05CC00139A6F /* KeypadWindowController.m in Sources */,
 				04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */,

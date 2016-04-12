@@ -20,8 +20,9 @@
 #import "Utils.h"
 #import "DockView.h"
 #import "SettingsConstants.h"
+#import "ChatService.h"
 
-@interface HomeViewController ()
+@interface HomeViewController () <MoreSectionViewControllerDelegate>
 {
     BackgroundedViewController *viewCurrent;
     NSColor *windowDefaultColor;
@@ -37,6 +38,7 @@
 @property (strong)  ContactsView *contactsView;
 @property (strong)  SettingsView *settingsView;
 @property (strong)  DHResourcesView *dhResourcesView;
+@property (strong,nonatomic) SettingsHandler* settingsHandler;
 
 @property bool hasProviderAlertBeenShown;
 @end
@@ -58,6 +60,8 @@ bool dialPadIsShown;
 -(void) awakeFromNib
 {
     [super awakeFromNib];
+    self.isMoreSectionHidden = YES;
+    self.switchSelfViewOn = YES;
 //    [self initializeData];
 }
 
@@ -91,6 +95,10 @@ bool dialPadIsShown;
     [self.profileViewContainer addSubview:[self.profileView view]];
     self.dialPadView = [[DialPadView alloc] init];
     [self.dialPadContainer addSubview:[self.dialPadView view]];
+    
+    self.moreSectionView = [[MoreSectionViewController alloc] init];
+    self.moreSectionView.delegate = self;
+    [self.moreSectionContainer addSubview:[self.moreSectionView view]];
 
     self.rttView = [[RTTView alloc] init];
     [self.rttViewContainer addSubview:[self.rttView view]];
@@ -110,11 +118,14 @@ bool dialPadIsShown;
     [ViewManager sharedInstance].profileView = self.profileView;
     [ViewManager sharedInstance].recentsView = self.recentsView;
     [ViewManager sharedInstance].callView = self.callView;
+    [ViewManager sharedInstance].moreSectionView = self.moreSectionView;
     
     viewCurrent = (BackgroundedViewController*)self.recentsView;
     [self.contactsView setBackgroundColor:[NSColor whiteColor]];
     
     [self.settingsView setBackgroundColor:[NSColor whiteColor]];
+    
+    self.settingsHandler = [SettingsHandler settingsHandler];
 
     [self setObservers]; // locked by uiInitialized
     NSImageView *imgView;
@@ -223,6 +234,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewRecents
 {
+    [self hideMoreSection];
     [[NSNotificationCenter defaultCenter] postNotificationName:DIALPAD_TEXT_CHANGED object:@""];
     [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
@@ -246,6 +258,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewContacts
 {
+    [self hideMoreSection];
     [self.dialPadView hideProvidersView:true];
     [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
     viewCurrent.hidden = YES;
@@ -267,6 +280,7 @@ bool dialPadIsShown;
 
 - (void) didClickDockViewDialpad
 {
+    [self hideMoreSection];
 //    NSRect rect = [self.dialPadView getFrame];
     bool dialPadIsHidden = [self.dialPadView isHidden];
     if (dialPadIsHidden)
@@ -306,52 +320,21 @@ bool dialPadIsShown;
     
 }
 
-- (void) didClickDockViewResources
-{
-    [self resourcesClicked];
-}
--(void)resourcesClicked
-{
+- (void) didClickDockViewResources {
     
-//    ResourcesViewController *resourceViewController = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"DHResources"];
-//
-    [self.dialPadView hideProvidersView:true];
-    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
-    viewCurrent.hidden = YES;
-    //viewCurrent = (BackgroundedViewController*)resourceViewController.view;
-    viewCurrent = (BackgroundedViewController*)self.dhResourcesView;
-    [viewCurrent setHidden:false];
-    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
-
-    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
+    [self hideMoreSection];
     [self.dockView selectItemWithDocViewItem:DockViewItemResources];
-    
-    [self.recentsView setHidden:true];
-//    [self.dhResourcesView setHidden:false];
-    [self.contactsView setHidden:true];
-    [self.settingsView setHidden:true];
-    
-    [self hideDialPad:true];
+    [[ChatService sharedInstance] openChatWindowWithUser:nil];
 }
 
-- (void) didClickDockViewSettings
-{
-    [self.dialPadView hideProvidersView:true];
-    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
-    viewCurrent.hidden = YES;
+- (void) didClickDockViewSettings {
     
-    viewCurrent = (BackgroundedViewController*)self.settingsView;
-    [viewCurrent setHidden:false];
-    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
-    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:YES];
+    self.moreSectionContainer.hidden = !self.isMoreSectionHidden;
+    self.isMoreSectionHidden = !self.isMoreSectionHidden;
     [self.dockView selectItemWithDocViewItem:DockViewItemSettings];
-    
-    [self.recentsView setHidden:true];
-    [self.dhResourcesView setHidden:true];
-    [self.contactsView setHidden:true];
-//    [self.settingsView setHidden:false];
-    
-    [self hideDialPad:true];
+    if (self.isMoreSectionHidden) {
+        [self.dockView clearSettingsButtonBackgroundColor];
+    }
 }
 
 -(void)hideDialPad:(bool)hide
@@ -361,6 +344,11 @@ bool dialPadIsShown;
     [self.dialPadView hideDialPad:hide];
 }
 
+- (void)hideMoreSection {
+    self.moreSectionContainer.hidden = YES;
+    self.isMoreSectionHidden = YES;
+    [self.dockView clearSettingsButtonBackgroundColor];
+}
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector {
     NSLog(@"- (BOOL)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector");
@@ -485,6 +473,67 @@ bool dialPadIsShown;
 -(void) reloadRecents
 {
     [self.recentsView reloadCallLogs];
+}
+
+#pragma mark - Helper functions
+
+- (void)openSettings {
+    [self.dockView openSettings];
+}
+
+- (void)showResources {
+    
+    [self.dialPadView hideProvidersView:true];
+    [self.viewContainer setFrame:NSMakeRect(0, 81, 310, 567)];
+    viewCurrent.hidden = YES;
+    viewCurrent = (BackgroundedViewController*)self.dhResourcesView;
+    [viewCurrent setHidden:false];
+    [viewCurrent setFrame:NSMakeRect(0, 0, self.viewContainer.frame.size.width, self.viewContainer.frame.size.height)];
+    [self.dockView clearDockViewButtonsBackgroundColorsExceptDialPadButton:NO];
+    [self.recentsView setHidden:true];
+    [self.contactsView setHidden:true];
+    [self.settingsView setHidden:true];
+    [self hideDialPad:true];
+}
+
+- (void)openVideomail {
+    // No functionaly yet.
+}
+
+- (void)switchSelfViewOn:(bool)onOff {
+    [self.settingsHandler setShowSelfView:onOff];
+    self.switchSelfViewOn = onOff;
+}
+
+#pragma mark - MoreSection delegate methods
+
+- (void)didPressSection:(SelectedSection)section {
+    
+    [self hideMoreSection];
+    switch (section) {
+            
+        case eSettings: {
+            [self openSettings];
+        }
+            break;
+        case eResources: {
+            [self showResources];
+        }
+            break;
+        case eVideomail: {
+            [self openVideomail];
+        }
+            break;
+        case eSelfPreview: {
+            [self switchSelfViewOn:!self.switchSelfViewOn];
+        }
+            break;
+            
+        default: {
+            [self openSettings];
+        }
+            break;
+    }
 }
 
 @end

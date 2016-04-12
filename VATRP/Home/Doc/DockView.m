@@ -12,6 +12,9 @@
 #import "ChatService.h"
 #import "ResourcesWindowController.h"
 #import "LinphoneAPI.h"
+#import "MoreSectionViewController.h"
+
+#define DOCKVIEW_BUTTONS_SELECTION_COLOR [NSColor colorWithRed:252.0/255.0 green:98.0/255.0 blue:32.0/255.0 alpha:1.0].CGColor
 
 @interface DockView () {
     NSButton *selectedDocViewItem;
@@ -27,6 +30,7 @@
 @property (weak) IBOutlet NSButton *buttonDialpad;
 @property (weak) IBOutlet NSButton *buttonResources;
 @property (weak) IBOutlet NSButton *buttonSettings;
+@property (weak) IBOutlet NSTextField *badgeOnMessages;
 @property (strong) ResourcesWindowController *resourcesWindowController;
 @end
 
@@ -60,7 +64,7 @@
     
     selectedDocViewItem = self.buttonDialpad;
     [selectedDocViewItem setWantsLayer:YES];
-    [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+    [selectedDocViewItem.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
     dockViewButtons = [NSArray arrayWithObjects:self.buttonRecents, self.buttonContacts, self.buttonDialpad, self.buttonResources, self.buttonSettings, nil];
     
     labelMessedCalls = [[NSTextField alloc] initWithFrame:NSMakeRect(41, 59, 20, 20)];
@@ -87,7 +91,13 @@
                                                  selector:@selector(callUpdateEvent:)
                                                      name:kLinphoneCallUpdate
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textReceivedEvent:)
+                                                     name:kLinphoneTextReceived
+                                                   object:nil];
     }
+    [self createBadgeLabel];
 }
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -143,6 +153,7 @@
 - (IBAction)onButtonResources:(id)sender {
    // BOOL isOpenedChatWindow = [[ChatService sharedInstance] openChatWindowWithUser:nil];
    // if (isOpenedChatWindow) {
+    [self.badgeOnMessages setHidden:YES];
         if (self.parent != nil)
         {
             [self.parent didClickDockViewResources];
@@ -157,14 +168,55 @@
 }
 
 - (IBAction)onButtonSettings:(id)sender {
+    
+    [self.parent didClickDockViewSettings];
+    
+    
+//    AppDelegate *app = [AppDelegate sharedInstance];
+//    if (!app.settingsWindowController) {
+//        app.settingsWindowController = [[SettingsWindowController alloc] init];
+//        [app.settingsWindowController  initializeData];
+//        [app.settingsWindowController showWindow:self];
+////        if (self.parent != nil) {
+////            [self.parent didClickDockViewSettings];
+////        }
+//    } else {
+//        if (app.settingsWindowController.isShow) {
+//            [app.settingsWindowController close];
+//            app.settingsWindowController = nil;
+//        } else {
+//            [app.settingsWindowController showWindow:self];
+//            [app.settingsWindowController  initializeData];
+//            app.settingsWindowController.isShow = YES;
+////            if (self.parent != nil) {
+////                [self.parent didClickDockViewSettings];
+////            }
+//        }
+//    }
+
+
+//    if (self.parent != nil) {
+//        [self.parent didClickDockViewSettings];
+//    }
+}
+
+- (void)createBadgeLabel {
+    [self.badgeOnMessages setHidden:YES];
+    [self.badgeOnMessages setWantsLayer:YES];
+    [self.badgeOnMessages.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
+    [self.badgeOnMessages.layer setCornerRadius:12];
+    [self.badgeOnMessages setTextColor:[NSColor whiteColor]];
+    [self.badgeOnMessages setAlignment:NSTextAlignmentCenter];
+    self.badgeOnMessages.stringValue = @"!";
+    [self.badgeOnMessages setBackgroundColor:[NSColor colorWithRed:252.0/255.0 green:98.0/255.0 blue:32.0/255.0 alpha:1.0]];
+}
+
+- (void)openSettings {
     AppDelegate *app = [AppDelegate sharedInstance];
     if (!app.settingsWindowController) {
         app.settingsWindowController = [[SettingsWindowController alloc] init];
         [app.settingsWindowController  initializeData];
         [app.settingsWindowController showWindow:self];
-//        if (self.parent != nil) {
-//            [self.parent didClickDockViewSettings];
-//        }
     } else {
         if (app.settingsWindowController.isShow) {
             [app.settingsWindowController close];
@@ -173,16 +225,8 @@
             [app.settingsWindowController showWindow:self];
             [app.settingsWindowController  initializeData];
             app.settingsWindowController.isShow = YES;
-//            if (self.parent != nil) {
-//                [self.parent didClickDockViewSettings];
-//            }
         }
     }
-
-
-//    if (self.parent != nil) {
-//        [self.parent didClickDockViewSettings];
-//    }
 }
 
 #pragma mark - Functions for buttons background color chnages
@@ -200,13 +244,22 @@
     }
 }
 
+- (void)clearSettingsButtonBackgroundColor {
+    for (NSButton *bt in dockViewButtons) {
+        if ([bt.title isEqualToString:@"More"]) {
+            [bt setWantsLayer:YES];
+            [bt.layer setBackgroundColor:[NSColor clearColor].CGColor];
+        }
+    }
+}
+
 - (void)clearDockViewSettingsBackgroundColor:(BOOL)clear {
     if (clear) {
         [self.buttonSettings setWantsLayer:YES];
         [self.buttonSettings.layer setBackgroundColor:[NSColor clearColor].CGColor];
     } else {
         [self.buttonSettings setWantsLayer:YES];
-        [self.buttonSettings.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+        [self.buttonSettings.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
     }
 }
 
@@ -216,7 +269,7 @@
         [self.buttonResources.layer setBackgroundColor:[NSColor clearColor].CGColor];
     } else {
         [self.buttonResources setWantsLayer:YES];
-        [self.buttonResources.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+        [self.buttonResources.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
     }
 }
 
@@ -249,7 +302,7 @@
     }
 
     [selectedDocViewItem setWantsLayer:YES];
-    [selectedDocViewItem.layer setBackgroundColor:[NSColor colorWithRed:90.0/255.0 green:115.0/255.0 blue:128.0/255.0 alpha:1.0].CGColor];
+    [selectedDocViewItem.layer setBackgroundColor:DOCKVIEW_BUTTONS_SELECTION_COLOR];
 }
 
 #pragma mark - Event Functions
@@ -288,6 +341,12 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)textReceivedEvent:(NSNotification *)notif {
+    if (![[ChatService sharedInstance] isOpened]) {
+        [self.badgeOnMessages setHidden:NO];
     }
 }
 

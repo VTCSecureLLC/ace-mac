@@ -399,11 +399,18 @@
 #pragma mark - ContactTableCellView delegate methods
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
-    [[ContactFavoriteManager sharedInstance] deleteContactFavoriteOptionWithName:[contactCellView.nameTextField stringValue] andAddress:[contactCellView.phoneTextField stringValue]];
-    [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
-    //NSString *provider  = [Utils providerNameFromSipURI:[contactCellView.phoneTextField stringValue]];
-    [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:[contactCellView.phoneTextField stringValue]];
-    [self refreshContactList];
+    
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the contact?"
+                                     defaultButton:@"Cancel" alternateButton:@"OK"
+                                       otherButton:nil informativeTextWithFormat:@""];
+    [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == 0) {
+            [[ContactFavoriteManager sharedInstance] deleteContactFavoriteOptionWithName:[contactCellView.nameTextField stringValue] andAddress:[contactCellView.phoneTextField stringValue]];
+            [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
+            [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:[contactCellView.phoneTextField stringValue]];
+            [self refreshContactList];
+        }
+    }];
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {

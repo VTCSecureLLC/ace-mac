@@ -24,5 +24,6 @@
 - (BOOL) sendEnter:(LinphoneChatMessage*)messagePtr ChatRoom:(LinphoneChatRoom*)chatroom_ptr;
 - (BOOL) sendBackward;
 - (BOOL) sendTab;
+- (BOOL) isOpened;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ChatViewController.h"
+#import "ContactPictureManager.h"
 #import "ChatContactTableCellView.h"
 #import "ChatItemTableCellView.h"
 #import "BackgroundedView.h"
@@ -101,6 +102,14 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMessage:)
                                                      name:kCHAT_RECEIVE_MESSAGE
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contactInfoFillDone:)
+                                                     name:@"contactInfoFilled"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contactEditDone:)
+                                                     name:@"contactInfoEditDone"
                                                    object:nil];
         observersAdded = true;
     }
@@ -373,13 +382,44 @@ static void chatTable_free_chatrooms(void *data) {
                 displayName = [NSString stringWithUTF8String:username ?: address];
                 ms_free(address);
             }
+
+            LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+            LinphoneFriend *linphoneFriend = linphone_friend_list_find_friend_by_address(friendList, linphoneAddress);
             
+            if (linphoneFriend) {
+                const char *name = linphone_friend_get_name(linphoneFriend);
+                displayName = [NSString stringWithUTF8String:name];
+                
+                const char *friendName = linphone_friend_get_name(linphoneFriend);
+                const char *addressString = linphone_address_as_string_uri_only(linphoneAddress);
+
+                NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:
+                                         [[ContactPictureManager sharedInstance] imagePathByName:[NSString stringWithUTF8String:friendName]
+                                                                                       andSipURI:[NSString stringWithUTF8String:addressString]]];
+                if (contactImage) {
+                    [cellView.imageView setImage:contactImage];
+                } else {
+                    [cellView.imageView setImage:[NSImage imageNamed:@"male"]];
+                }
+                
+                cellView.imageView.hidden = NO;
+                [cellView.imageView setWantsLayer:YES];
+                cellView.imageView.layer.cornerRadius = cellView.imageView.frame.size.height/2.0;
+                cellView.imageView.layer.masksToBounds = YES;
+
+                cellView.textFieldInitials.hidden = YES;
+            } else {
+                cellView.textFieldInitials.stringValue = [[displayName substringToIndex:1] uppercaseString];
+                cellView.textFieldInitials.layer.cornerRadius = cellView.textFieldInitials.frame.size.height/2;
+                [cellView.textFieldInitials setDrawsBackground:YES];
+                [cellView.textFieldInitials setBackgroundColor:[NSColor clearColor]];
+                [cellView.textFieldInitials wantsUpdateLayer];
+                
+                cellView.imageView.hidden = YES;
+                cellView.textFieldInitials.hidden = NO;
+            }
+
             cellView.textField.stringValue = displayName;
-            cellView.textFieldInitials.stringValue = [[displayName substringToIndex:1] uppercaseString];
-            cellView.textFieldInitials.layer.cornerRadius = cellView.textFieldInitials.frame.size.height/2;
-            [cellView.textFieldInitials setDrawsBackground:YES];
-            [cellView.textFieldInitials setBackgroundColor:[NSColor clearColor]];
-            [cellView.textFieldInitials wantsUpdateLayer];
             
             if (selectedChatRoom && selectedChatRoom == chatRoom) {
                 if (selectedContactCell) {
@@ -672,6 +712,14 @@ static void chatTable_free_chatrooms(void *data) {
             }
         }
     }
+}
+
+- (void)contactInfoFillDone:(NSNotification*)notif {
+    [self.tableViewContacts reloadData];
+}
+    
+- (void)contactEditDone:(NSNotification*)notif {
+    [self.tableViewContacts reloadData];
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {

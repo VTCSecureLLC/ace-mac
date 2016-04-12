@@ -87,6 +87,10 @@
     return NO;
 }
 
+- (BOOL)isOpened {
+    return chatWindowController.isShow;
+}
+
 - (void) closeChatWindow {
     [chatWindowController close];
 }

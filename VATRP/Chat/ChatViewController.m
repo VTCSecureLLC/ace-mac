@@ -338,6 +338,8 @@ static void chatTable_free_chatrooms(void *data) {
             ChatContactTableCellView *cellView = [tableView makeViewWithIdentifier:@"Contact" owner:self];
             
             if (stateNewMessage && row == 0) {
+                [cellView.textFieldUnredMessageCount setHidden:YES];
+                
                 cellView.textField.stringValue = @"New Message";
                 cellView.textFieldInitials.stringValue = @"N";
                 cellView.textFieldLastMessage.stringValue = @"";
@@ -707,6 +709,8 @@ static void chatTable_free_chatrooms(void *data) {
         }
         
         ms_free(cr_from_string);
+    } else {
+        [self loadData];
     }
     
     ms_free(fromStr);

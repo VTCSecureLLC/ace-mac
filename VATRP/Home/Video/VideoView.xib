@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
@@ -12,6 +12,7 @@
                 <outlet property="callControllsConteinerView" destination="Wi4-MK-p4S" id="brj-Uw-YuL"/>
                 <outlet property="callerImageView" destination="Cbb-Ah-I7O" id="YZN-ki-oWo"/>
                 <outlet property="holdImageView" destination="8Tb-De-0ze" id="06c-Il-hyZ"/>
+                <outlet property="imageViewEncription" destination="DIf-ME-Cqs" id="Yks-Xw-wVU"/>
                 <outlet property="imageViewQuality" destination="bmn-7M-X2j" id="sLE-C0-MRy"/>
                 <outlet property="labelCallDeclineMessage" destination="pZf-g1-SeW" id="lRZ-1q-L9F"/>
                 <outlet property="labelCallDuration" destination="iRe-cd-Hjl" id="hwC-et-iPl"/>
@@ -49,6 +50,10 @@
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPl-pp-4tN">
                     <rect key="frame" x="6" y="510" width="186" height="184"/>
                 </customView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIf-ME-Cqs">
+                    <rect key="frame" x="20" y="632" width="48" height="48"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="VtM-pW-IzS"/>
+                </imageView>
                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="c3L-Xi-Vu9">
                     <rect key="frame" x="681" y="647" width="32" height="32"/>
                     <shadow key="shadow">
@@ -122,7 +127,7 @@
                             </subviews>
                         </customView>
                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl8-FV-Ntx">
-                            <rect key="frame" x="27" y="12" width="665" height="200"/>
+                            <rect key="frame" x="27" y="12" width="645" height="200"/>
                         </customView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cbb-Ah-I7O">
                             <rect key="frame" x="284" y="517" width="150" height="150"/>

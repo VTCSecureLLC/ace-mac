@@ -81,6 +81,9 @@
 @property (strong, nonatomic)IBOutlet NSImageView *holdImageView;
 
 @property (weak) IBOutlet NSImageView *imageViewQuality;
+
+@property (weak) IBOutlet NSImageView *imageViewEncription;
+
 - (void) inCallTick:(NSTimer*)timer;
 
 @end
@@ -340,6 +343,7 @@
                 [self.callControllersView performChatButtonClick];
             }
 
+            [self setEncriptionStatusForCall:acall];
             break;
         }
             //    LinphoneCallError, /**<The call encountered an error*/
@@ -436,6 +440,34 @@
 //        case LinphoneCallEarlyUpdating :
 //            break;
         default:
+            break;
+    }
+}
+
+- (void)setEncriptionStatusForCall:(LinphoneCall*)acall {
+    const LinphoneCallParams* current = linphone_call_get_current_params(acall);
+    LinphoneMediaEncryption enc = linphone_call_params_get_media_encryption(current);
+    NSString *str = [self encryptionToString:enc];
+    if ([str isEqualToString:@"Encryption type None"]) {
+        self.imageViewEncription.image = [NSImage imageNamed:@"security_ko"];
+    } else {
+        self.imageViewEncription.image = [NSImage imageNamed:@"security_ok"];
+    }
+}
+
+- (NSString *)encryptionToString:(LinphoneMediaEncryption)state {
+    switch (state) {
+        case LinphoneMediaEncryptionNone:
+            return @"Encryption type None";
+            break;
+        case LinphoneMediaEncryptionDTLS:
+            return @"Encryption type DTLS";
+            break;
+        case LinphoneMediaEncryptionSRTP:
+            return @"Encryption type SRTP";
+            break;
+        case LinphoneMediaEncryptionZRTP:
+            return @"Encryption type ZRTP";
             break;
     }
 }
@@ -998,6 +1030,7 @@
         [blackCurtain addSubview:cameraStatusModeImageView];
         [self.view addSubview:blackCurtain];
         [self.view addSubview:self.callControllsConteinerView positioned:NSWindowAbove relativeTo:nil];
+        [self.view addSubview:self.imageViewEncription positioned:NSWindowAbove relativeTo:nil];
         if (!self.localVideo.hidden) {
             [self.view addSubview:self.localVideo positioned:NSWindowAbove relativeTo:nil];
         }

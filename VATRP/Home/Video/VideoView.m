@@ -1030,6 +1030,7 @@
         [blackCurtain addSubview:cameraStatusModeImageView];
         [self.view addSubview:blackCurtain];
         [self.view addSubview:self.callControllsConteinerView positioned:NSWindowAbove relativeTo:nil];
+        [self.view addSubview:self.imageViewEncription positioned:NSWindowAbove relativeTo:nil];
         if (!self.localVideo.hidden) {
             [self.view addSubview:self.localVideo positioned:NSWindowAbove relativeTo:nil];
         }

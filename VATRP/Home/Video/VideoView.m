@@ -263,15 +263,6 @@
             
             [[AppDelegate sharedInstance].viewController showVideoMailWindow];
             
-//            if ([[SettingsHandler settingsHandler] isShowSelfViewEnabled]) {
-//                self.localVideo.hidden = NO;
-//                linphone_core_use_preview_window(lc, YES);
-//                linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
-//                linphone_core_enable_self_view(lc, true);
-//            } else {
-                self.localVideo.hidden = YES;
-//            }
-            
             timerCallDuration = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                                  target:self
                                                                selector:@selector(inCallTick:)
@@ -291,6 +282,7 @@
             
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideAllCallControllers) object:nil];
             [self performSelector:@selector(hideAllCallControllers) withObject:nil afterDelay:3.0];
+            [self showVideoPreview];
         }
             break;
             //    LinphoneCallOutgoingInit, /**<An outgoing call is started */
@@ -881,7 +873,7 @@
 }
 
 - (void)showVideoPreview {
-    bool previewEnabled = [[SettingsHandler settingsHandler] isShowPreviewEnabled];
+    bool previewEnabled = [[SettingsHandler settingsHandler] isShowSelfViewEnabled];
     if (call == nil)
     {
         [[LinphoneAPI instance] linphoneShowSelfPreview:previewEnabled];
@@ -892,6 +884,7 @@
         linphone_core_set_video_device(lc, cam);
         linphone_core_enable_video_preview([LinphoneManager getLc], TRUE);
         linphone_core_use_preview_window(lc, YES);
+        self.localVideo.hidden = NO;
         linphone_core_set_native_preview_window_id(lc, (__bridge void *)(self.localVideo));
         linphone_core_enable_self_view([LinphoneManager getLc], TRUE);
      } else {
@@ -1004,6 +997,10 @@
         [cameraStatusModeImageView setImage:[NSImage imageNamed:@"camera_mute.png"]];
         [blackCurtain addSubview:cameraStatusModeImageView];
         [self.view addSubview:blackCurtain];
+        [self.view addSubview:self.callControllsConteinerView positioned:NSWindowAbove relativeTo:nil];
+        if (!self.localVideo.hidden) {
+            [self.view addSubview:self.localVideo positioned:NSWindowAbove relativeTo:nil];
+        }
     }
     if ([videoMode isEqualToString:@"isCameraMuted"] || [videoMode isEqualToString:@"camera_mute_on"]) {
         [blackCurtain removeFromSuperview];

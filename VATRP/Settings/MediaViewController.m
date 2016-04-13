@@ -48,6 +48,31 @@
     [self initializeData];
 }
 
+-(void)viewWillAppear
+{
+    if (self.timerRecordingLevelsUpdate == nil)
+    {
+        [self initializeRecorder];
+        [self initializeLevelTimer];
+    }
+    [self displaySelectedVideoDevice];
+}
+
+-(void)viewWillDisappear
+{
+    [self.timerRecordingLevelsUpdate invalidate];
+    self.timerRecordingLevelsUpdate = nil;
+    [self.recorder stop];
+    self.recorder = nil;
+
+    if (![[SettingsHandler settingsHandler] isShowPreviewEnabled])
+    {
+        linphone_core_enable_video_preview([LinphoneManager getLc], FALSE);
+        linphone_core_use_preview_window([LinphoneManager getLc], FALSE);
+        linphone_core_set_native_preview_window_id([LinphoneManager getLc], LINPHONE_VIDEO_DISPLAY_NONE);
+    }
+}
+
 char **camlist;
 char **soundlist;
 
@@ -124,12 +149,6 @@ char **soundlist;
     const char *speaker = linphone_core_get_playback_device([LinphoneManager getLc]);
     [self.comboBoxSpeaker selectItemWithObjectValue:[NSString stringWithCString:speaker encoding:NSUTF8StringEncoding]];
     
-    if (self.timerRecordingLevelsUpdate == nil)
-    {
-        [self initializeRecorder];
-        [self initializeLevelTimer];
-        [self displaySelectedVideoDevice];
-    }
     isChanged = NO;
 }
 

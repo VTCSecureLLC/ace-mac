@@ -142,7 +142,7 @@
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enable_adaptive_rate_control"] == nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:@"enable_adaptive_rate_control"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"false" forKey:@"enable_adaptive_rate_control"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"enabled_codecs"] == nil)
     {

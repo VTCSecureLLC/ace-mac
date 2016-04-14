@@ -441,7 +441,7 @@ static void chatTable_free_chatrooms(void *data) {
                 
                 if ([lastMessageStr hasPrefix:CALL_DECLINE_PREFIX]) {
                     lastMessageStr = [lastMessageStr substringFromIndex:CALL_DECLINE_PREFIX.length];
-                    lastMessageStr = [@"Call declined with message: %@" stringByAppendingString:lastMessageStr];
+                    lastMessageStr = [@"Call declined with message: " stringByAppendingString:lastMessageStr];
                 }
 
                 [cellView.textFieldLastMessage setStringValue:lastMessageStr];

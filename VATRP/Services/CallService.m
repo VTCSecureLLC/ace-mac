@@ -179,6 +179,7 @@
 }
     
 - (int) decline:(LinphoneCall *)aCall {
+    [self close];
     return linphone_core_terminate_call([LinphoneManager getLc], aCall);
 }
 
@@ -415,7 +416,7 @@
             } else {
                 [[ChatService sharedInstance] closeChatWindow];
                 NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"fromEvents", nil];
-                [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:2.0];
+                [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:5.0];
             }
             
             [[ChatService sharedInstance] closeChatWindow];
@@ -431,7 +432,7 @@
             currentCall = NULL;
 
             NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"fromEvents", nil];
-            [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:2.0];
+            [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:5.0];
 
             const MSList *call_list = linphone_core_get_calls(lc);
             if (call_list) {
@@ -658,7 +659,7 @@
         } else {
             if (declinedMessage) {
                 NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], @"fromEvents", nil];
-                [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:3.0];
+                [self performSelector:@selector(closeCallWindow:) withObject:dict afterDelay:1.0];
             } else {
                 [self close];
             }

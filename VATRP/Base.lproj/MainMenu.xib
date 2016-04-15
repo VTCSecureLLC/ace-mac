@@ -87,11 +87,11 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="View" id="H8h-7b-M4v">
+                <menuItem title="View" hidden="YES" id="H8h-7b-M4v">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" autoenablesItems="NO" id="HyV-fh-RgO">
                         <items>
-                            <menuItem title="Messages" enabled="NO" keyEquivalent="m" id="Ije-Ct-3YW">
+                            <menuItem title="Messages" hidden="YES" enabled="NO" keyEquivalent="m" id="Ije-Ct-3YW">
                                 <connections>
                                     <action selector="onMenuItemMessages:" target="Voe-Tx-rLC" id="7Mk-Ld-xrA"/>
                                 </connections>

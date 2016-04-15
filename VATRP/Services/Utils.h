@@ -27,6 +27,6 @@
 + (NSString*)providerNameFromSipURI:(NSString*)fullSipURI;
 + (NSMutableArray*)cdnResources;
 + (NSString *)decodeTextMessage:(const char *)text;
-+ (NSString *)failedMessageFromCall:(LinphoneCall*)aCall;
++ (NSString*)callStateStringByIndex:(NSNumber *)enumIndex;
 
 @end

@@ -249,96 +249,34 @@
     return decoded;
 }
 
-+ (NSString *)failedMessageFromCall:(LinphoneCall*)aCall {
-    NSString *failedMessage = @"";
-    switch (linphone_call_get_reason(aCall)) {
-        case LinphoneReasonNoResponse: {
-            failedMessage = NSLocalizedString(@"The called terminal was not reachable becaus of technical reasons (sip: 408).", nil);
-        }
-            break;
-        case LinphoneReasonAddressIncomplete: {
-            failedMessage = NSLocalizedString(@"The address was incomplete. Please try again (sip: 484).", nil);
-        }
-            break;
-        case LinphoneReasonForbidden: {
-            failedMessage = NSLocalizedString(@"The call did not go through because of access rights failure.", nil);
-        }
-            break;
-        case LinphoneReasonBadGateway: {
-            failedMessage = NSLocalizedString(@"Call failed because of error in the communication service (sip: 502).", nil);
-        }
-            break;
-        case LinphoneReasonBusy: {
-            failedMessage = NSLocalizedString(@"The number or address you are trying to reach is busy (sip: 486)", nil);
-        }
-            break;
-        case LinphoneReasonDeclined: {
-            failedMessage = NSLocalizedString(@"The call has been declined (sip: 603)", nil);
-        }
-            break;
-        case LinphoneReasonDoNotDisturb: {
-            failedMessage = NSLocalizedString(@"The call failed becuse of communication problems.", nil);
-        }
-            break;
-        case LinphoneReasonGone: {
-            failedMessage = NSLocalizedString(@"The number/address you are trying to reach is no longer available (sip: 604).", nil);
-        }
-            break;
-        case LinphoneReasonIOError: {
-            failedMessage = NSLocalizedString(@"Communication error: Bad network connection.", nil);
-        }
-            break;
-        case LinphoneReasonMovedPermanently: {
-            failedMessage = NSLocalizedString(@"The called person or organization has changed their number or call address (sip: 301).", nil);
-        }
-            break;
-        case LinphoneReasonNoMatch: {
-            failedMessage = NSLocalizedString(@"Call failed because called terminal detected and error (sip: 400).", nil);
-        }
-            break;
-        case LinphoneReasonNotAcceptable: {
-            failedMessage =NSLocalizedString( @"The call was not accepted of technical reasons by the called terminal (sip: 406).", nil);
-        }
-            break;
-        case LinphoneReasonNotAnswered: {
-            failedMessage = NSLocalizedString(@"No answer.", nil);
-        }
-            break;
-        case LinphoneReasonNotFound: {
-            failedMessage = NSLocalizedString(@"The number or address could not be found (sip: 404).", nil);
-        }
-            break;
-        case LinphoneReasonNotImplemented: {
-            failedMessage = NSLocalizedString(@"The call failed because of a service error (sip: 501).", nil);
-        }
-            break;
-        case LinphoneReasonServerTimeout: {
-            failedMessage = NSLocalizedString(@"The call failed because of a service timeout error (sip: 504).", nil);
-        }
-            break;
-        case LinphoneReasonTemporarilyUnavailable: {
-            failedMessage = NSLocalizedString(@"The person or organization you are trying to reach is not available at this time. Check the number or address or try again later (sip: 480).", nil);
-        }
-            break;
-        case LinphoneReasonUnauthorized: {
-            failedMessage = NSLocalizedString(@"The call failed because it requires authorization (sip: 494).", nil);
-        }
-            break;
-        case LinphoneReasonUnknown: {
-            failedMessage = NSLocalizedString(@"The call failed of an unknown error.", nil);
-        }
-            break;
-        case LinphoneReasonUnsupportedContent: {
-            failedMessage = NSLocalizedString(@"The called terminal has no media in common with yours (sip: 488)", nil);
-        }
-            break;
-        default: {
-            failedMessage = @"";
-        }
-            break;
-    }
++ (NSString*)callStateStringByIndex:(NSNumber *)enumIndex {
     
-    return failedMessage;
+    NSDictionary *stateStrings =
+    @{
+      @(LinphoneReasonNoResponse) : @"LinphoneReasonNoResponse",
+      @(LinphoneReasonAddressIncomplete) : @"LinphoneReasonAddressIncomplete",
+      @(LinphoneReasonForbidden) : @"LinphoneReasonForbidden",
+      @(LinphoneReasonBadGateway) : @"LinphoneReasonBadGateway",
+      @(LinphoneReasonBusy) : @"LinphoneReasonBusy",
+      @(LinphoneReasonDeclined) : @"LinphoneReasonDeclined",
+      @(LinphoneReasonDoNotDisturb) : @"LinphoneReasonDoNotDisturb",
+      @(LinphoneReasonGone) : @"LinphoneReasonGone",
+      @(LinphoneReasonIOError) : @"LinphoneReasonIOError",
+      @(LinphoneReasonMovedPermanently) : @"LinphoneReasonMovedPermanently",
+      @(LinphoneReasonNoMatch) : @"LinphoneReasonNoMatch",
+      @(LinphoneReasonNotAcceptable) : @"LinphoneReasonNotAcceptable",
+      @(LinphoneReasonNotAnswered) : @"LinphoneReasonNotAnswered",
+      @(LinphoneReasonNotFound) : @"LinphoneReasonNotFound",
+      @(LinphoneReasonNotImplemented) : @"LinphoneReasonNotImplemented",
+      @(LinphoneReasonServerTimeout) : @"LinphoneReasonServerTimeout",
+      @(LinphoneReasonTemporarilyUnavailable) : @"LinphoneReasonTemporarilyUnavailable",
+      @(LinphoneReasonUnauthorized) : @"LinphoneReasonUnauthorized",
+      @(LinphoneReasonUnknown) : @"LinphoneReasonUnknown",
+      @(LinphoneReasonUnsupportedContent) : @"LinphoneReasonUnsupportedContent",
+      };
+    
+    return [stateStrings objectForKey:enumIndex];
 }
+
 
 @end

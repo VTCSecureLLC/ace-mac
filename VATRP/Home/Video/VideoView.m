@@ -47,6 +47,7 @@
     
     NSViewAnimation *fadeOut;
     NSViewAnimation *fadeIn;
+    NSDictionary *callErrorStatuses;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -175,6 +176,10 @@
         [self addObservers];
          observersAdded = true;
     }
+    
+    NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ResasonErrors.plist"];
+    callErrorStatuses = [NSDictionary dictionaryWithContentsOfFile:FileDB];
+    
 }
 
 -(void) addObservers
@@ -478,11 +483,6 @@
 
 - (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message
 {
-    if (displayErrorLock)
-    {
-        return;
-    }
-    displayErrorLock = true;
     NSString *lMessage;
     NSString *lTitle;
     const LinphoneAddress *linphoneAddress;
@@ -508,22 +508,16 @@
                                      @"SIP account configuration in the settings.",
                                      nil);
     } else {
-        lMessage = [Utils failedMessageFromCall:call_];
-        if (![lMessage isEqualToString:@""]) {
-            self.labelCallState.stringValue = lMessage;
+        LinphoneReason reason = linphone_call_get_reason(call_);
+        NSDictionary *dict = [callErrorStatuses objectForKey:[Utils callStateStringByIndex:[NSNumber numberWithInt:reason]]];
+        
+        if (![[dict objectForKey:@"code"] isEqualToString:@""]) {
+            lMessage = [[[[dict objectForKey:@"message"] stringByAppendingString:@"(sip: "] stringByAppendingString:[dict objectForKey:@"code"]] stringByAppendingString:@")"];
+        } else {
+            lMessage = [dict objectForKey:@"message"];
         }
     }
-    
-//    lTitle = NSLocalizedString(@"Call failed", nil);
-    
-//    NSAlert *alert = [[NSAlert alloc] init];
-//    [alert addButtonWithTitle:@"OK"];
-//    [alert setMessageText:lTitle];
-//    [alert setInformativeText:lMessage];
-//    [alert setAlertStyle:NSWarningAlertStyle];
-//    
-//    [alert runModal];
-    displayErrorLock = false;
+    self.labelCallState.stringValue = lMessage;
 }
 
 - (void)dismiss {

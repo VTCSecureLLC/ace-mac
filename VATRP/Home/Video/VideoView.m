@@ -47,6 +47,7 @@
     
     NSViewAnimation *fadeOut;
     NSViewAnimation *fadeIn;
+    NSDictionary *callErrorStatuses;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -175,6 +176,10 @@
         [self addObservers];
          observersAdded = true;
     }
+    
+    NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ResasonErrors.plist"];
+    callErrorStatuses = [NSDictionary dictionaryWithContentsOfFile:FileDB];
+    
 }
 
 -(void) addObservers
@@ -238,6 +243,7 @@
     switch (astate) {
             //    LinphoneCallIncomingReceived, /**<This is a new incoming call */
         case LinphoneCallIncomingReceived: {
+            self.imageViewEncription.image = nil;
             self.viewCallDeclineMessage.hidden = YES;
             self.labelCallState.stringValue = @"Incoming Call 00:00";
             [self startRingCountTimerWithTimeInterval:3.75];
@@ -290,6 +296,7 @@
             break;
             //    LinphoneCallOutgoingInit, /**<An outgoing call is started */
         case LinphoneCallOutgoingInit: {
+            self.imageViewEncription.image = nil;
             self.viewCallDeclineMessage.hidden = YES;
             self.labelCallState.stringValue = @"Calling 00:00";
             [self.callControllsConteinerView setHidden:NO];
@@ -298,7 +305,7 @@
             break;
             //    LinphoneCallOutgoingRinging, /**<An outgoing call is ringing at remote end */
         case LinphoneCallOutgoingRinging: {
-            
+            self.imageViewEncription.image = nil;
             self.labelCallState.stringValue = @"Ringing 00:00";
             [self startRingCountTimerWithTimeInterval:3.6];
             [self.labelRingCount setTextColor:[NSColor redColor]];
@@ -306,6 +313,7 @@
             break;
             //    LinphoneCallPaused, /**< The call is paused, remote end has accepted the pause */
         case LinphoneCallPaused: {
+            self.imageViewEncription.image = nil;
             int call_Duration = linphone_call_get_duration(acall);
             NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
             self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@",string_time];
@@ -367,6 +375,7 @@
             //    LinphoneCallEnd, /**<The call ended normally*/
         case LinphoneCallEnd:
         {
+            self.imageViewEncription.image = nil;
             [callDeclineMessagesView dismissController:self];
 
             if ((call != nil) && linphone_call_get_dir(call) == LinphoneCallOutgoing) {
@@ -474,11 +483,6 @@
 
 - (void)displayCallError:(LinphoneCall *)call_ message:(NSString *)message
 {
-    if (displayErrorLock)
-    {
-        return;
-    }
-    displayErrorLock = true;
     NSString *lMessage;
     NSString *lTitle;
     const LinphoneAddress *linphoneAddress;
@@ -504,95 +508,16 @@
                                      @"SIP account configuration in the settings.",
                                      nil);
     } else {
-        lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
-    }
-    if (call_ != nil) {
+        LinphoneReason reason = linphone_call_get_reason(call_);
+        NSDictionary *dict = [callErrorStatuses objectForKey:[Utils callStateStringByIndex:[NSNumber numberWithInt:reason]]];
         
-        switch (linphone_call_get_reason(call_)) {
-            case LinphoneReasonNone:
-                // then there was no error - we are getting this on call ending - do not show an error
-                return;
-                break;
-            case LinphoneReasonNotFound:
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
-                break;
-            case LinphoneReasonBusy:
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
-                break;
-            case LinphoneReasonDeclined:
-                lMessage = NSLocalizedString(@"The user is not available", nil);
-                break;
-            case LinphoneReasonNoResponse: /**<No response received from remote*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"No response from client.", nil), lUserName];
-                break;
-            case LinphoneReasonForbidden: /**<Authentication failed due to bad credentials or resource forbidden*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Authentication failed.", nil), lUserName];
-                break;
-            case LinphoneReasonNotAnswered: /**<The call was not answered in time (request timeout)*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ timed out.", nil), lUserName];
-                break;
-            case LinphoneReasonUnsupportedContent: /**<Unsupported content */
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ call content is unsupported.", nil), lUserName];
-                break;
-            case LinphoneReasonIOError: /**<Transport error: connection failures, disconnections etc...*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"There was a transport error during call setup or connection.", nil), lUserName];
-                break;
-            case LinphoneReasonDoNotDisturb: /**<Do not disturb reason*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ asked not to be disturbed.", nil), lUserName];
-                break;
-            case LinphoneReasonUnauthorized: /**<Operation is unauthorized because missing credential*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Credntials were not provided.", nil), lUserName];
-                break;
-            case LinphoneReasonNotAcceptable: /**<Operation like call update rejected by peer*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Operation was rejected by peer.", nil), lUserName];
-                break;
-            case LinphoneReasonNoMatch: /**<Operation could not be executed by server or remote client because it didn't have any context for it*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"No match for operation.", nil), lUserName];
-                break;
-            case LinphoneReasonMovedPermanently: /**<Resource moved permanently*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ has moved permanently.", nil), lUserName];
-                break;
-            case LinphoneReasonGone: /**<Resource no longer exists*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ no longer exists.", nil), lUserName];
-                break;
-            case LinphoneReasonTemporarilyUnavailable: /**<Temporarily unavailable*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is temporarily unavailable.", nil), lUserName];
-                break;
-            case LinphoneReasonAddressIncomplete: /**<Address incomplete*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Call address is incomplete.", nil), lUserName];
-                break;
-            case LinphoneReasonNotImplemented: /**<Not implemented*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Request is not implemented.", nil), lUserName];
-                break;
-            case LinphoneReasonBadGateway: /**<Bad gateway*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad gateway.", nil), lUserName];
-                break;
-            case LinphoneReasonServerTimeout: /**<Server timeout*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Server timeout.", nil), lUserName];
-                break;
-            case LinphoneReasonUnknown: /**Unknown reason*/
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"Reason unknown.", nil), lUserName];
-                break;
-            default:
-                if (message != nil) {
-                    lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, self.callStatusMessage];
-                }
-                break;
+        if (![[dict objectForKey:@"code"] isEqualToString:@""]) {
+            lMessage = [[[[dict objectForKey:@"message"] stringByAppendingString:@"(sip: "] stringByAppendingString:[dict objectForKey:@"code"]] stringByAppendingString:@")"];
+        } else {
+            lMessage = [dict objectForKey:@"message"];
         }
-    } else {
-        lMessage = [NSString stringWithFormat:NSLocalizedString(@"Call information unavailable.", nil)];
     }
-    
-    lTitle = NSLocalizedString(@"Call failed", nil);
-    
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"OK"];
-    [alert setMessageText:lTitle];
-    [alert setInformativeText:lMessage];
-    [alert setAlertStyle:NSWarningAlertStyle];
-    
-    [alert runModal];
-    displayErrorLock = false;
+    self.labelCallState.stringValue = lMessage;
 }
 
 - (void)dismiss {

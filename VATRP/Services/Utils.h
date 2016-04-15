@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#include "linphone/linphonecore.h"
 
 @interface Utils : NSObject
 
@@ -26,5 +27,6 @@
 + (NSString*)providerNameFromSipURI:(NSString*)fullSipURI;
 + (NSMutableArray*)cdnResources;
 + (NSString *)decodeTextMessage:(const char *)text;
++ (NSString*)callStateStringByIndex:(NSNumber *)enumIndex;
 
 @end

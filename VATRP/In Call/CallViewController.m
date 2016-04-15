@@ -17,6 +17,7 @@
 #import "ChatService.h"
 #import "AppDelegate.h"
 #import "SettingsHandler.h"
+#import "Utils.h"
 
 @interface CallViewController () {
     NSTimer *timerCallDuration;
@@ -28,6 +29,7 @@
     
     NSString *windowTitle, *address;
     bool observersAdded;
+    NSDictionary *callErrorStatuses;
 }
 
 @property (weak) IBOutlet NSTextField *labelDisplayName;
@@ -86,6 +88,8 @@ dispatch_queue_t callAlertAnimationQueue;
     
     self.labelCallDuration.hidden = YES; //hiding this for now because of new remote view
     self.labelDisplayName.hidden = YES;
+    NSString *FileDB = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ResasonErrors.plist"];
+    callErrorStatuses = [NSDictionary dictionaryWithContentsOfFile:FileDB];
 }
 
 -(void)dealloc{
@@ -281,35 +285,17 @@ dispatch_queue_t callAlertAnimationQueue;
                                      @"SIP account configuration in the settings.",
                                      nil);
     } else {
-        lMessage = [NSString stringWithFormat:NSLocalizedString(@"Cannot call %@.", nil), lUserName];
+        LinphoneReason reason = linphone_call_get_reason(acall);
+        NSDictionary *dict = [callErrorStatuses objectForKey:[Utils callStateStringByIndex:[NSNumber numberWithInt:reason]]];
+        
+        if (![dict objectForKey:@"code"]) {
+            lMessage = [[[[dict objectForKey:message] stringByAppendingString:@"(sip: "] stringByAppendingString:[dict objectForKey:@"code"]] stringByAppendingString:@")"];
+        } else {
+            lMessage = [dict objectForKey:message];
+        }
+        
+        self.labelCallState.stringValue = lMessage;
     }
-
-    switch (linphone_call_get_reason(acall)) {
-        case LinphoneReasonNotFound:
-            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is not registered.", nil), lUserName];
-            break;
-        case LinphoneReasonBusy:
-            lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@ is busy.", nil), lUserName];
-            break;
-        case LinphoneReasonDeclined:
-            lMessage = NSLocalizedString(@"The user is not available", nil);
-            break;
-        default:
-            if (message != nil) {
-                lMessage = [NSString stringWithFormat:NSLocalizedString(@"%@\nReason was: %@", nil), lMessage, self.callStatusMessage];
-            }
-            break;
-    }
-    
-    lTitle = NSLocalizedString(@"Call failed", nil);
-
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"OK"];
-    [alert setMessageText:lTitle];
-    [alert setInformativeText:lMessage];
-    [alert setAlertStyle:NSWarningAlertStyle];
-
-    [alert runModal];
 }
 
 - (void)dismiss {

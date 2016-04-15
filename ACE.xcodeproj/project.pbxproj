@@ -26,6 +26,7 @@
 		04B5DA591C6224B70049CD6B /* NSImage+SaveInFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */; };
 		04BA24621CBE852900CF7280 /* security_ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BA24611CBE852900CF7280 /* security_ok.png */; };
 		04BA24641CBE853E00CF7280 /* security_ko.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BA24631CBE853E00CF7280 /* security_ko.png */; };
+		04BA24831CC0E11D00CF7280 /* ResasonErrors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04BA24821CC0E11D00CF7280 /* ResasonErrors.plist */; };
 		04C33DE71C58CB9600BF1432 /* import_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE51C58CB9600BF1432 /* import_button.png */; };
 		04C33DE81C58CB9600BF1432 /* export_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C33DE61C58CB9600BF1432 /* export_button.png */; };
 		04C75BBF1C5A22D70089FEB6 /* csdvrs.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C75BBE1C5A22D70089FEB6 /* csdvrs.png */; };
@@ -522,6 +523,7 @@
 		04B5DA581C6224B70049CD6B /* NSImage+SaveInFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+SaveInFile.m"; sourceTree = "<group>"; };
 		04BA24611CBE852900CF7280 /* security_ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = security_ok.png; sourceTree = "<group>"; };
 		04BA24631CBE853E00CF7280 /* security_ko.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = security_ko.png; sourceTree = "<group>"; };
+		04BA24821CC0E11D00CF7280 /* ResasonErrors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ResasonErrors.plist; sourceTree = "<group>"; };
 		04C33DE51C58CB9600BF1432 /* import_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import_button.png; sourceTree = "<group>"; };
 		04C33DE61C58CB9600BF1432 /* export_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = export_button.png; sourceTree = "<group>"; };
 		04C75BBE1C5A22D70089FEB6 /* csdvrs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = csdvrs.png; path = providersLogos/csdvrs.png; sourceTree = "<group>"; };
@@ -1678,6 +1680,7 @@
 				4AC389CD1B8E87530063298F /* main.m */,
 				697359231C17344400A24D09 /* SettingsUI.plist */,
 				69B315941C2414540091534B /* SettingsAdvancedUI.plist */,
+				04BA24821CC0E11D00CF7280 /* ResasonErrors.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2100,6 +2103,7 @@
 				CE34B2B51BD1014C0010A2B0 /* info-icon.png in Resources */,
 				697321A91CA5886C00388872 /* call_quality_indicator_0.png in Resources */,
 				04C75BC91C5A22F00089FEB6 /* convo.png in Resources */,
+				04BA24831CC0E11D00CF7280 /* ResasonErrors.plist in Resources */,
 				697321AC1CA5886C00388872 /* call_quality_indicator_3.png in Resources */,
 				4AB2A2F11BF399DD006AC5C6 /* dialpadDelete.png in Resources */,
 				A476954E1C8F5CF700748DEF /* DialPadView.xib in Resources */,

@@ -17,7 +17,7 @@
 - (void)closeCallWindowController;
 + (void) callTo:(NSString*)number;
 - (int) decline:(LinphoneCall*)aCall;
-- (void) accept:(LinphoneCall*)aCall;
+- (bool) accept:(LinphoneCall*)aCall;
 - (void) pause:(LinphoneCall*)aCall;
 - (void) resume:(LinphoneCall*)aCall;
 - (void) swapCallsToCall:(LinphoneCall*)aCall;

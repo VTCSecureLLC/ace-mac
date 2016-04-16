@@ -249,4 +249,34 @@
     return decoded;
 }
 
++ (NSString*)callStateStringByIndex:(NSNumber *)enumIndex {
+    
+    NSDictionary *stateStrings =
+    @{
+      @(LinphoneReasonNoResponse) : @"LinphoneReasonNoResponse",
+      @(LinphoneReasonAddressIncomplete) : @"LinphoneReasonAddressIncomplete",
+      @(LinphoneReasonForbidden) : @"LinphoneReasonForbidden",
+      @(LinphoneReasonBadGateway) : @"LinphoneReasonBadGateway",
+      @(LinphoneReasonBusy) : @"LinphoneReasonBusy",
+      @(LinphoneReasonDeclined) : @"LinphoneReasonDeclined",
+      @(LinphoneReasonDoNotDisturb) : @"LinphoneReasonDoNotDisturb",
+      @(LinphoneReasonGone) : @"LinphoneReasonGone",
+      @(LinphoneReasonIOError) : @"LinphoneReasonIOError",
+      @(LinphoneReasonMovedPermanently) : @"LinphoneReasonMovedPermanently",
+      @(LinphoneReasonNoMatch) : @"LinphoneReasonNoMatch",
+      @(LinphoneReasonNotAcceptable) : @"LinphoneReasonNotAcceptable",
+      @(LinphoneReasonNotAnswered) : @"LinphoneReasonNotAnswered",
+      @(LinphoneReasonNotFound) : @"LinphoneReasonNotFound",
+      @(LinphoneReasonNotImplemented) : @"LinphoneReasonNotImplemented",
+      @(LinphoneReasonServerTimeout) : @"LinphoneReasonServerTimeout",
+      @(LinphoneReasonTemporarilyUnavailable) : @"LinphoneReasonTemporarilyUnavailable",
+      @(LinphoneReasonUnauthorized) : @"LinphoneReasonUnauthorized",
+      @(LinphoneReasonUnknown) : @"LinphoneReasonUnknown",
+      @(LinphoneReasonUnsupportedContent) : @"LinphoneReasonUnsupportedContent",
+      };
+    
+    return [stateStrings objectForKey:enumIndex];
+}
+
+
 @end

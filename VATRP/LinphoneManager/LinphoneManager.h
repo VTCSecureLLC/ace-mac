@@ -148,7 +148,7 @@ typedef struct _LinphoneManagerSounds {
 - (void)addPushCallId:(NSString*) callid;
 - (void)configurePushTokenForProxyConfig: (LinphoneProxyConfig*)cfg;
 - (BOOL)popPushCallID:(NSString*) callId;
-- (void)acceptCallForCallId:(NSString*)callid;
+- (bool)acceptCallForCallId:(NSString*)callid;
 - (void)cancelLocalNotifTimerForCallId:(NSString*)callid;
 
 + (BOOL)langageDirectionIsRTL;
@@ -167,7 +167,7 @@ typedef struct _LinphoneManagerSounds {
 + (NSString*)documentFile:(NSString*)file;
 + (NSString*)cacheDirectory;
 
-- (void)acceptCall:(LinphoneCall *)call;
+- (bool)acceptCall:(LinphoneCall *)call;
 - (void)call:(NSString *)address displayName:(NSString*)displayName transfer:(BOOL)transfer;
 
 

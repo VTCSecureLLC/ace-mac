@@ -414,7 +414,7 @@
   
     
         [[RegistrationService sharedInstance] registerWithUsername:loginAccount.username
-                                                            UserID:@""//loginAccount.userID
+                                                            UserID:loginAccount.userID
                                                           password:loginAccount.password
                                                             domain:loginAccount.domain
                                                          transport:loginAccount.transport

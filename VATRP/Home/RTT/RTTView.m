@@ -369,6 +369,7 @@ static void chatTable_free_chatrooms(void *data) {
                 incomingChatMessage = nil;
                 incomingCellView = nil;
             } else {
+                BOOL removeMessage = NO;
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
                     
@@ -384,6 +385,10 @@ static void chatTable_free_chatrooms(void *data) {
                         }
                         
                         incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [str_msg UTF8String]);
+                        
+                        if (!str_msg || !str_msg.length) {
+                            removeMessage = YES;
+                        }
                     } else {
                         incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
                     }
@@ -391,7 +396,11 @@ static void chatTable_free_chatrooms(void *data) {
                     incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
                 }
                 
-                self->messageList = ms_list_append(self->messageList, incomingChatMessage);
+                if (removeMessage) {
+                    self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
+                } else {
+                    self->messageList = ms_list_append(self->messageList, incomingChatMessage);
+                }
                 
                 if (incomingCellView) {
                     CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:[self getFrame].size.width];

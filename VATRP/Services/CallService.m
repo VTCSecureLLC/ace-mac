@@ -183,9 +183,10 @@
     return linphone_core_terminate_call([LinphoneManager getLc], aCall);
 }
 
-- (void) accept:(LinphoneCall *)aCall {
+- (bool) accept:(LinphoneCall *)aCall {
     //linphone_core_enable_self_view([LinphoneManager getLc], [SettingsHandler.settingsHandler isShowSelfViewEnabled]);
-    [[LinphoneManager instance] acceptCall:aCall];
+    return [[LinphoneManager instance] acceptCall:aCall];
+    
 }
 
 - (void) pause:(LinphoneCall*)aCall {
@@ -617,7 +618,6 @@
     if (callIDFromPush && autoAnswer){
         // accept call automatically
         [lm acceptCall:call];
-        
     } else {
         [[ViewManager sharedInstance].rttView updateViewForDisplay];
         [self openCallWindow];

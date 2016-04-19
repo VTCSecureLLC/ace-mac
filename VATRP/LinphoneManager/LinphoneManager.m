@@ -42,6 +42,7 @@
 #import "SettingsHandler.h"
 #import "AppDelegate.h"
 #import "ContactFavoriteManager.h"
+#import "LinphoneAPI.h"
 
 //#import "LinphoneIOSVersion.h"
 
@@ -1499,14 +1500,14 @@ static int comp_call_id(const LinphoneCall* call , const char *callid) {
     }
 }
 
-- (void)acceptCallForCallId:(NSString*)callid {
+- (bool)acceptCallForCallId:(NSString*)callid {
     //first, make sure this callid is not already involved in a call
     MSList* calls = (MSList*)linphone_core_get_calls(theLinphoneCore);
     MSList* call = ms_list_find_custom(calls, (MSCompareFunc)comp_call_id, [callid UTF8String]);
     if (call != NULL) {
-        [self acceptCall:(LinphoneCall*)call->data];
-        return;
+        return [self acceptCall:(LinphoneCall*)call->data];
     };
+    return false;
 }
 
 - (void)addPushCallId:(NSString*) callid {
@@ -1838,9 +1839,18 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 
 #pragma mark - Call Functions
 
-- (void)acceptCall:(LinphoneCall *)call {
+- (bool)acceptCall:(LinphoneCall *)call {
+    if (![[LinphoneAPI instance] callAppearsValid:call])
+    {
+        NSLog(@"LinphoneManager.acceptCall: The call we are being asked to accept does not appear valid. return false without executing.");
+        return false;
+    }
     LinphoneCallParams *calleeParams = linphone_core_create_call_params(theLinphoneCore, call);
-    
+    if (calleeParams == nil)
+    {
+        NSLog(@"LinphoneManager.acceptCall: The callee parameters are null. Returning without executing method.");
+        return false;
+    }
     if([self lpConfigBoolForKey:@"edge_opt_preference"]) {
         bool low_bandwidth = self.network == network_2g;
         if(low_bandwidth) {
@@ -1852,7 +1862,7 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
 //    const LinphoneCallParams *callerParams = linphone_call_get_remote_params(call);
     linphone_call_params_enable_realtime_text(calleeParams, [SettingsService getRTTEnabled]);
     linphone_core_accept_call_with_params(theLinphoneCore, call, calleeParams);
-    
+    return true;
 }
 
 - (void)call:(NSString *)address displayName:(NSString*)displayName transfer:(BOOL)transfer {

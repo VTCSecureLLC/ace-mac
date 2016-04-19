@@ -335,6 +335,10 @@ static void chatTable_free_chatrooms(void *data) {
     [self.tableViewContacts scrollRowToVisible:0];
 }
 
+- (IBAction)onButtonSend:(id)sender {
+    [self eventENTER];
+}
+
 #if defined __MAC_10_9 || defined __MAC_10_8
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
 #else
@@ -605,17 +609,6 @@ static void chatTable_free_chatrooms(void *data) {
     //        [self.tableViewContacts reloadData];
     //        [self.tableViewContent reloadData];
     //    }
-}
-
-- (IBAction)onButtonSend:(id)sender {
-    if (selectedChatRoom != NULL) {
-//        LinphoneCore *lc = [LinphoneManager getLc];
-//        const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
-//        LinphoneCallParams *lcallParams = linphone_core_create_default_call_parameters(lc);
-//        linphone_call_params_enable_audio(lcallParams, false);
-//        linphone_call_params_enable_realtime_text(lcallParams, true);
-//        currentCall = linphone_core_invite_address_with_params(lc, addr, lcallParams);
-    }
 }
 
 #pragma mark - Event Functions

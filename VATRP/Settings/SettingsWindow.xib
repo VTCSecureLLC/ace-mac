@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SettingsWindowController">
@@ -20,7 +20,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="572" y="474" width="520" height="470"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="520" height="470"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -47,16 +47,6 @@
                             <action selector="onToolbarItemGeneral:" target="-2" id="dcO-Rx-PWh"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="79CA1116-EE0E-4E02-81A4-FE2782938E75" explicitItemIdentifier="audiovideo" label="Audio/Video" paletteLabel="Audio/Video" tag="-1" id="RK2-bw-FMX">
-                        <connections>
-                            <action selector="onToolbarItemAudioVideo:" target="-2" id="Qbv-Hi-Jdt"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="34A58538-5DC3-4448-878C-ACB22F36F212" explicitItemIdentifier="theme" label="Theme" paletteLabel="Theme" tag="-1" id="tMA-Zm-GiX">
-                        <connections>
-                            <action selector="onToolbarItemThemeMenu:" target="-2" id="90y-uU-fYY"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="865783C0-F2C4-49F6-A432-FD515E1C5565" explicitItemIdentifier="textmenu" label="Text" paletteLabel="Text" tag="-1" id="bDS-0Z-wkS">
                         <connections>
                             <action selector="onToolbarItemTextMenu:" target="-2" id="8vb-AU-2zy"/>
@@ -72,7 +62,7 @@
                             <action selector="onToolbarItemAccount:" target="-2" id="zuZ-qt-K7a"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="00623CA0-7636-4C50-AB85-B328D70A57C7" explicitItemIdentifier="preferences" label="Preferences" paletteLabel="Preferences" tag="-1" id="TbG-Ci-u4c">
+                    <toolbarItem implicitItemIdentifier="00623CA0-7636-4C50-AB85-B328D70A57C7" explicitItemIdentifier="preferences" label="Advanced" paletteLabel="Advanced" tag="-1" id="TbG-Ci-u4c">
                         <connections>
                             <action selector="onToolbarItemPreferences:" target="-2" id="Rs4-Pi-AAe"/>
                         </connections>
@@ -95,13 +85,10 @@
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="ggU-AV-iTA"/>
-                    <toolbarItem reference="RK2-bw-FMX"/>
-                    <toolbarItem reference="tMA-Zm-GiX"/>
                     <toolbarItem reference="bDS-0Z-wkS"/>
                     <toolbarItem reference="bFO-tA-hQf"/>
                     <toolbarItem reference="C9o-Wl-MuT"/>
                     <toolbarItem reference="HrM-Zw-n46"/>
-                    <toolbarItem reference="zhr-H7-Bem"/>
                 </defaultToolbarItems>
             </toolbar>
             <point key="canvasLocation" x="315" y="340"/>

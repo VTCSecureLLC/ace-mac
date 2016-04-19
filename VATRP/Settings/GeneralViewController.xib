@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="GeneralViewController">
             <connections>
+                <outlet property="buttonEchoCancel" destination="RPI-gC-OQp" id="hZ0-sb-tKd"/>
+                <outlet property="buttonForce508" destination="KDH-DQ-hGY" id="M1A-td-bdG"/>
+                <outlet property="buttonMicMute" destination="6cY-Sg-gnS" id="dRA-sy-RXu"/>
+                <outlet property="buttonShowSelfView" destination="BdQ-Cg-oOn" id="aVv-yD-NAi"/>
+                <outlet property="buttonSpeakerMute" destination="Yp1-fd-3Y6" id="NF7-5b-hQ8"/>
                 <outlet property="checkBoxAutoAnswerCall" destination="o9j-rH-4gs" id="D9f-L4-fTW"/>
                 <outlet property="checkBoxStartOnBoot" destination="Dja-9Z-iiH" id="sgO-mT-cEx"/>
                 <outlet property="view" destination="c22-O7-iKe" id="hoR-L5-Upn"/>
@@ -28,22 +33,8 @@
                         <action selector="onCheckBox:" target="-2" id="h3K-FZ-fE9"/>
                     </connections>
                 </button>
-                <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qOf-G1-hYX">
-                    <rect key="frame" x="165" y="273" width="156" height="18"/>
-                    <buttonCell key="cell" type="check" title="SIP Encryption" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="k8I-Kj-LDN">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2k-Nm-uhd">
-                    <rect key="frame" x="165" y="333" width="156" height="18"/>
-                    <buttonCell key="cell" type="check" title="Wifi Only" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="G7Y-JR-b7N">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o9j-rH-4gs">
-                    <rect key="frame" x="165" y="303" width="187" height="18"/>
+                    <rect key="frame" x="165" y="333" width="187" height="18"/>
                     <buttonCell key="cell" type="check" title="Auto answer call" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Rfp-cY-3HX">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -52,7 +43,58 @@
                         <action selector="onCheckBox:" target="-2" id="ie8-fW-4nc"/>
                     </connections>
                 </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yp1-fd-3Y6">
+                    <rect key="frame" x="165" y="302" width="304" height="28"/>
+                    <buttonCell key="cell" type="check" title="Speaker Mute" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="irf-hb-U6X">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBoxSpeakerMute:" target="-2" id="mqe-cm-jFz"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6cY-Sg-gnS">
+                    <rect key="frame" x="165" y="272" width="304" height="28"/>
+                    <buttonCell key="cell" type="check" title="Mic Mute" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tec-Q7-r4g">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBoxMicMute:" target="-2" id="AJn-Wd-8QC"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RPI-gC-OQp">
+                    <rect key="frame" x="165" y="242" width="304" height="28"/>
+                    <buttonCell key="cell" type="check" title="Echo Cancel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="daZ-fD-dGQ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBoxEchoCancel:" target="-2" id="hrh-ff-OpK"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BdQ-Cg-oOn">
+                    <rect key="frame" x="165" y="212" width="304" height="28"/>
+                    <buttonCell key="cell" type="check" title="Show Self-View" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ci9-Sy-GEd">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBoxShowSelfView:" target="-2" id="o6d-dW-AI3"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDH-DQ-hGY">
+                    <rect key="frame" x="165" y="181" width="159" height="28"/>
+                    <buttonCell key="cell" type="check" title="High Contrast" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6be-kt-atC">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onCheckBoxHighContrast:" target="-2" id="Mb4-PV-gHU"/>
+                    </connections>
+                </button>
             </subviews>
+            <point key="canvasLocation" x="-81" y="301"/>
         </customView>
     </objects>
 </document>

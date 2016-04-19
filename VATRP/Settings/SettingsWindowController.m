@@ -176,6 +176,7 @@
     if (![self isPreferencesInToolbar])
     {
         NSArray *visibleItems = self.toolbar.visibleItems;
+        [self.toolbar insertItemWithItemIdentifier:@"testing" atIndex:[self.toolbar visibleItems].count];
         [self.toolbar insertItemWithItemIdentifier:@"preferences" atIndex:[self.toolbar visibleItems].count];
         preferencesIndex = [self.toolbar visibleItems].count;
     }

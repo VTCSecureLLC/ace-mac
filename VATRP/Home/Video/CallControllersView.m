@@ -610,12 +610,13 @@ BOOL isRTTLocallyEnabled;
     
     if (call) {
         LinphoneCallAppData *callAppData = (__bridge LinphoneCallAppData *)linphone_call_get_user_pointer(call);
-        callAppData->videoRequested =
-        TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
+        callAppData->videoRequested = TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
         //linphone_call_enable_camera(call, TRUE);
-        LinphoneInfoMessage *linphoneInfoMessage = linphone_core_create_info_message(lc);
-        linphone_info_message_add_header(linphoneInfoMessage, "action", "camera_mute_on");
-        linphone_call_send_info_message(call, linphoneInfoMessage);
+        //linphone_core_set_video_device(lc,"StaticImage: Static picture");
+
+        //LinphoneInfoMessage *linphoneInfoMessage = linphone_core_create_info_message(lc);
+        //linphone_info_message_add_header(linphoneInfoMessage, "action", "camera_mute_on");
+        //linphone_call_send_info_message(call, linphoneInfoMessage);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
@@ -629,15 +630,17 @@ BOOL isRTTLocallyEnabled;
 //        return;
     
     if (call) {
-        // ToDo VATRP-842: Setting a static image, but until the static image is working in linphone we are currently seeing a black image.
+        // ToDo VATRP-: Setting a static image, but until the static image is working in linphone we are currently seeing a black image.
         //    The choice is this or a no webcam image. For testing, using no webcam image.
-//        NSString *pathToImageString = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"png"];
+        //        NSString *pathToImageString = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"png"];
 //        const char *pathToImage = [pathToImageString UTF8String];
 //        linphone_core_set_static_picture(lc, pathToImage);
+        linphone_core_set_video_device(lc,"StaticImage: Static picture");
+
         //linphone_call_enable_camera(call, FALSE);
-        LinphoneInfoMessage *linphoneInfoMessage = linphone_core_create_info_message(lc);
-        linphone_info_message_add_header(linphoneInfoMessage, "action", "camera_mute_off");
-        linphone_call_send_info_message(call, linphoneInfoMessage);
+//   LinphoneInfoMessage *linphoneInfoMessage = linphone_core_create_info_message(lc);
+  //      linphone_info_message_add_header(linphoneInfoMessage, "action", "camera_mute_off");
+    //    linphone_call_send_info_message(call, linphoneInfoMessage);
 //        linphone_core_enable_video(call, FALSE);
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];

@@ -615,16 +615,18 @@
 #pragma mark - Property Functions
 
 - (void)setCall:(LinphoneCall*)acall {
-    call = acall;
-    
-    if (call) {
-        [self update];
-        [self.callControllersView setCall:call];
-    }
-    if (call == nil)
-    {
-        // invalidate the timer if there is no current call
-        [self stopInCallTimer];
+    @synchronized (self) {
+        call = acall;
+        
+        if (call) {
+            [self update];
+            [self.callControllersView setCall:call];
+        }
+        if (call == nil)
+        {
+            // invalidate the timer if there is no current call
+            [self stopInCallTimer];
+        }
     }
 }
 
@@ -685,43 +687,45 @@
 }
 
 - (void) inCallTick:(NSTimer*)timer {
-    if (call) {
-        int call_Duration = linphone_call_get_duration(call);
-        NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
-        self.holdImageView.hidden = YES;
-        LinphoneCallState call_state = linphone_call_get_state(call);
-        
-        switch (call_state) {
-            case LinphoneCallConnected:
-            case LinphoneCallStreamsRunning:
-            {
-                self.labelCallState.stringValue = [NSString stringWithFormat:@"Connected %@", string_time];
+    @synchronized (self) {
+        if (call) {
+            int call_Duration = linphone_call_get_duration(call);
+            NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
+            self.holdImageView.hidden = YES;
+            LinphoneCallState call_state = linphone_call_get_state(call);
+            
+            switch (call_state) {
+                case LinphoneCallConnected:
+                case LinphoneCallStreamsRunning:
+                {
+                    self.labelCallState.stringValue = [NSString stringWithFormat:@"Connected %@", string_time];
+                }
+                    break;
+                case LinphoneCallPaused:
+                case LinphoneCallPausedByRemote:
+                {
+                    self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@", string_time];
+                    self.holdImageView.hidden = NO;
+                }
+                    break;
+                    
+                default:
+                    break;
             }
-                break;
-            case LinphoneCallPaused:
-            case LinphoneCallPausedByRemote:
-            {
-                self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@", string_time];
-                self.holdImageView.hidden = NO;
+            
+            int quality = (int)linphone_call_get_current_quality(call);
+            
+            switch (quality) {
+                case 0:
+                case 1:
+                case 2: {
+                    self.imageViewQuality.image = [NSImage imageNamed:[NSString stringWithFormat:@"call_quality_indicator_%d", quality]];
+                }
+                    break;
+                default:
+                    self.imageViewQuality.image = [NSImage imageNamed:@"call_quality_indicator_3"];
+                    break;
             }
-                break;
-                
-            default:
-                break;
-        }
-        
-        int quality = (int)linphone_call_get_current_quality(call);
-        
-        switch (quality) {
-            case 0:
-            case 1:
-            case 2: {
-                self.imageViewQuality.image = [NSImage imageNamed:[NSString stringWithFormat:@"call_quality_indicator_%d", quality]];
-            }
-                break;
-            default:
-                self.imageViewQuality.image = [NSImage imageNamed:@"call_quality_indicator_3"];
-                break;
         }
     }
 }
@@ -985,6 +989,18 @@
     self.viewCallDeclineMessage.hidden = NO;
     self.labelCallState.stringValue = @"Call declined";
     self.labelCallDeclineMessage.stringValue = declineMsg;
+}
+
+- (void)mouseDown:(NSEvent *)theEvent {
+    NSLog(@"mouseDown");
+    
+    if (!self.viewCallDeclineMessage.hidden) {
+        self.viewCallDeclineMessage.hidden = YES;
+    }
+    
+    if (!call) {
+        [[CallService sharedInstance] closeCallWindow];
+    }
 }
 
 @end

@@ -192,17 +192,17 @@
 //    [checkboxEnableVideo setTarget:self];
 //    [self.scrollView.documentView addSubview:checkboxEnableVideo];
     
-    originY -= 30;
-    checkboxEnableRTT = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)]; // YES
-    [checkboxEnableRTT setButtonType:NSSwitchButton];
-    [checkboxEnableRTT setBezelStyle:0];
-    [checkboxEnableRTT setTitle:@"Enable RTT"];
-    [checkboxEnableRTT setState:[SettingsService getRTTEnabled]];
-    [checkboxEnableRTT setAction:@selector(onCheckBoxHandler:)];
-    [checkboxEnableRTT setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxEnableRTT];
+//    originY -= 30;
+//    checkboxEnableRTT = [[NSButton alloc] initWithFrame:NSMakeRect(10, originY, 200, 20)]; // YES
+//    [checkboxEnableRTT setButtonType:NSSwitchButton];
+//    [checkboxEnableRTT setBezelStyle:0];
+//    [checkboxEnableRTT setTitle:@"Enable RTT"];
+//    [checkboxEnableRTT setState:[SettingsService getRTTEnabled]];
+//    [checkboxEnableRTT setAction:@selector(onCheckBoxHandler:)];
+//    [checkboxEnableRTT setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxEnableRTT];
     
-    originY -= 25;
+//    originY -= 25;
     NSTextField *labelTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(10, originY, 100, 20)];
     labelTitle.editable = NO;
     labelTitle.stringValue = @"Audio";
@@ -470,15 +470,15 @@
             break;
     }
     
-    originY -= 30;
-    checkboxPushNotifications = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
-    [checkboxPushNotifications setButtonType:NSSwitchButton];
-    [checkboxPushNotifications setBezelStyle:0];
-    [checkboxPushNotifications setTitle:@"Push Notifications"];
-    [checkboxPushNotifications setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PUSH_NOTIFICATIONS"]];
-    [checkboxPushNotifications setAction:@selector(onCheckBoxHandler:)];
-    [checkboxPushNotifications setTarget:self];
-    [self.scrollView.documentView addSubview:checkboxPushNotifications];
+//    originY -= 30;
+//    checkboxPushNotifications = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // NO
+//    [checkboxPushNotifications setButtonType:NSSwitchButton];
+//    [checkboxPushNotifications setBezelStyle:0];
+//    [checkboxPushNotifications setTitle:@"Push Notifications"];
+//    [checkboxPushNotifications setState:[[NSUserDefaults standardUserDefaults] boolForKey:@"ACE_PUSH_NOTIFICATIONS"]];
+//    [checkboxPushNotifications setAction:@selector(onCheckBoxHandler:)];
+//    [checkboxPushNotifications setTarget:self];
+//    [self.scrollView.documentView addSubview:checkboxPushNotifications];
     
     originY -= 30;
     checkboxIPv6 = [[NSButton alloc] initWithFrame:NSMakeRect(30, originY, 200, 20)]; // YES
@@ -632,7 +632,7 @@
 
     LinphoneCore *lc = [LinphoneManager getLc];
 
-    [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableRTT.state forKey:kREAL_TIME_TEXT_ENABLED];
+//    [[NSUserDefaults standardUserDefaults] setBool:checkboxEnableRTT.state forKey:kREAL_TIME_TEXT_ENABLED];
     
 
     bool enableVideo = true;

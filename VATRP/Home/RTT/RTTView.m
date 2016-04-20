@@ -369,13 +369,17 @@ static void chatTable_free_chatrooms(void *data) {
                 incomingChatMessage = nil;
                 incomingCellView = nil;
             } else {
+                if(rttCode == 8 && !incomingChatMessage) {
+                    return;
+                }
+                
                 BOOL removeMessage = NO;
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
+                    NSString *str_msg = [NSString stringWithUTF8String:text_char];
                     
                     if ((text_char != nil) && strlen(text_char)) {
                         self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
-                        NSString *str_msg = [NSString stringWithUTF8String:text_char];
                         if ([text isEqualToString:@"\b"]) {
                             if (str_msg && str_msg.length > 0) {
                                 str_msg = [str_msg substringToIndex:str_msg.length - 1];
@@ -390,6 +394,10 @@ static void chatTable_free_chatrooms(void *data) {
                             removeMessage = YES;
                         }
                     } else {
+                        if (str_msg && !str_msg.length) {
+                            removeMessage = YES;
+                        }
+
                         incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
                     }
                 } else {
@@ -412,6 +420,10 @@ static void chatTable_free_chatrooms(void *data) {
                     }
                 } else {
                     [self.tableViewContent reloadData];
+                }
+
+                if (removeMessage) {
+                    incomingChatMessage = nil;
                 }
                 
                 NSInteger count = ms_list_size(messageList);

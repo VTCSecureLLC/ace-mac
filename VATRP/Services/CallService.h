@@ -23,6 +23,7 @@
 - (void) swapCallsToCall:(LinphoneCall*)aCall;
 - (LinphoneCall*) getCurrentCall;
 - (void)setDeclineMessage:(NSString*)declineMsg;
+- (void) closeCallWindow;
 
 //-(void)tempDebugMethodForIncomingCall:(NSString*)message call:(LinphoneCall*)call
 

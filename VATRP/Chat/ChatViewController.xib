@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ChatViewController">
             <connections>
+                <outlet property="buttonCall" destination="m9l-uA-dbj" id="CPo-vT-9lp"/>
                 <outlet property="scrollViewContacts" destination="RDm-4F-Xx7" id="ZKH-d5-PI7"/>
                 <outlet property="scrollViewContent" destination="sfW-po-6Ft" id="6bs-Hz-Wg1"/>
                 <outlet property="scrollViewIncoming" destination="eLu-wW-nnN" id="P3q-fi-qoK"/>
@@ -290,7 +291,7 @@
                     </subviews>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oTF-IK-FJ7">
-                    <rect key="frame" x="289" y="460" width="394" height="17"/>
+                    <rect key="frame" x="289" y="460" width="293" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" placeholderString="Recipient:" id="lhk-P5-0Zq">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -298,7 +299,7 @@
                     </textFieldCell>
                 </textField>
                 <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IbB-OT-gKt">
-                    <rect key="frame" x="289" y="458" width="394" height="19"/>
+                    <rect key="frame" x="289" y="458" width="280" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" placeholderString="Enter recipient" drawsBackground="YES" id="329-Cf-Qao">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -313,6 +314,16 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </searchFieldCell>
                 </searchField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-uA-dbj">
+                    <rect key="frame" x="621" y="455" width="70" height="32"/>
+                    <buttonCell key="cell" type="push" title="Call" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kw5-Pz-y1b">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onButtonCall:" target="-2" id="55F-sw-7qj"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="-158" y="-76"/>
         </customView>

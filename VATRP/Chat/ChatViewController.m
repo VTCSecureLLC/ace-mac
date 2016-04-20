@@ -54,6 +54,7 @@
 @property (unsafe_unretained) IBOutlet NSTextView *textViewIncoming;
 @property (weak) IBOutlet NSScrollView *scrollViewOutgoing;
 @property (unsafe_unretained) IBOutlet NSTextView *textViewOutgoing;
+@property (weak) IBOutlet NSButton *buttonCall;
 
 
 - (IBAction)onButtonNewChat:(id)sender;
@@ -125,7 +126,7 @@
     BackgroundedView *backgroundedView = (BackgroundedView*)self.view;
     [backgroundedView setBackgroundColor:[NSColor colorWithRed:221.0/255.0 green:221.0/255.0 blue:221.0/255.0 alpha:1.0]];
     contacts = nil;
-    selectedChatRoom = nil;
+    [self setCharRoom:nil];
     selectedContactCell = nil;
     incomingChatMessage = nil;
     outgoingChatMessage = nil;
@@ -163,7 +164,7 @@
             [alert setMessageText:@"Invalid address. Please specify the entire SIP address for the chat"];
             [alert runModal];
         } else {
-            selectedChatRoom = linphone_core_get_chat_room(lc, addr);
+            [self setCharRoom:linphone_core_get_chat_room(lc, addr)];
         }
         
         if (selectedChatRoom) {
@@ -324,7 +325,7 @@ static void chatTable_free_chatrooms(void *data) {
     
     [self.tableViewContacts deselectAll:nil];
     if (selectedContactCell) [selectedContactCell.layer setBackgroundColor:[NSColor clearColor].CGColor];
-    selectedChatRoom = NULL;
+    [self setCharRoom:nil];
     [self updateContentData];
     
     [self selectNewMessage];
@@ -337,6 +338,37 @@ static void chatTable_free_chatrooms(void *data) {
 
 - (IBAction)onButtonSend:(id)sender {
     [self eventENTER];
+}
+
+- (IBAction)onButtonCall:(id)sender {
+    if (selectedChatRoom) {
+        const LinphoneAddress *addr = linphone_chat_room_get_peer_address(selectedChatRoom);
+        
+        NSString *address = nil;
+        if (addr != NULL) {
+            BOOL useLinphoneAddress = true;
+            // contact name
+            if (useLinphoneAddress) {
+                const char *lDisplayName = linphone_address_get_display_name(addr);
+                const char *lUserName = linphone_address_get_username(addr);
+                if (lDisplayName)
+                    address = [NSString stringWithUTF8String:lDisplayName];
+                else if (lUserName)
+                    address = [NSString stringWithUTF8String:lUserName];
+            }
+        }
+        
+        if (address != nil) {
+            // Go to dialer view
+            [CallService callTo:address];
+        }
+    }
+}
+
+- (void) setCharRoom:(LinphoneChatRoom*)room {
+    selectedChatRoom = room;
+    
+    self.buttonCall.enabled = selectedChatRoom ? YES :NO;
 }
 
 #if defined __MAC_10_9 || defined __MAC_10_8
@@ -530,7 +562,8 @@ static void chatTable_free_chatrooms(void *data) {
         [selectedCell.layer setBackgroundColor:[NSColor colorWithDeviceRed:43.0/255.0 green:146.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor];
         selectedContactCell = selectedCell;
         
-        selectedChatRoom = (LinphoneChatRoom *)ms_list_nth_data(contacts, (int)index);
+        [self setCharRoom:(LinphoneChatRoom *)ms_list_nth_data(contacts, (int)index)];
+
         if (selectedChatRoom != nil)
         {
             linphone_chat_room_mark_as_read(selectedChatRoom);
@@ -890,8 +923,8 @@ static void chatTable_free_chatrooms(void *data) {
                 [alert setMessageText:@"Invalid address. Please specify the entire SIP address for the chat"];
                 [alert runModal];
             } else {
-                selectedChatRoom = linphone_core_get_chat_room(lc, addr);
-                
+                [self setCharRoom:linphone_core_get_chat_room(lc, addr)];
+
                 if (!selectedChatRoom) {
                     NSAlert *alert = [[NSAlert alloc] init];
                     [alert addButtonWithTitle:@"OK"];
@@ -1001,7 +1034,7 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
 
 - (void) selectNewMessage {
     stateNewMessage = YES;
-    selectedChatRoom = NULL;
+    [self setCharRoom:nil];
     [self updateContentData];
     
     [self.textFieldNoRecipient setHidden:NO];

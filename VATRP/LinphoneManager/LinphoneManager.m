@@ -1166,8 +1166,8 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
     NSString* path = [LinphoneManager bundleFile:@"nowebcamCIF.jpg"];
     if (path) {
         const char* imagePath = [path cStringUsingEncoding:[NSString defaultCStringEncoding]];
-        NSLog(@"Using '%s' as source image for no webcam", imagePath);
-    linphone_core_set_static_picture(theLinphoneCore, imagePath);
+        //		LOGI(@"Using '%s' as source image for no webcam", imagePath);
+        linphone_core_set_static_picture(theLinphoneCore, imagePath);
     }
     
     NSString *urlString = [self lpConfigStringForKey:@"sharing_server_preference"];

@@ -215,7 +215,6 @@
 		7336F4EE1C9B4F0C007A160F /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 7336F4ED1C9B4F0C007A160F /* linphonerc-factory */; };
 		733FFCD21C85F22F00BA1B87 /* libmediastreamer_base.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 733FFCCE1C85F22F00BA1B87 /* libmediastreamer_base.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		733FFCD31C85F22F00BA1B87 /* libmediastreamer_voip.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 733FFCD01C85F22F00BA1B87 /* libmediastreamer_voip.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		737C77E71CC6742600729A35 /* nowebcamCIF.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 737C77E61CC6742600729A35 /* nowebcamCIF.jpg */; };
 		738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; };
 		73AEC38E1C6BE94500908DE0 /* libmediastreamer_base.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -794,7 +793,6 @@
 		733FFCCF1C85F22F00BA1B87 /* libmediastreamer_base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.dylib"; sourceTree = "<group>"; };
 		733FFCD01C85F22F00BA1B87 /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.7.dylib"; sourceTree = "<group>"; };
 		733FFCD11C85F22F00BA1B87 /* libmediastreamer_voip.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.dylib"; sourceTree = "<group>"; };
-		737C77E61CC6742600729A35 /* nowebcamCIF.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nowebcamCIF.jpg; sourceTree = "<group>"; };
 		73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.dylib"; sourceTree = "<group>"; };
 		73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.dylib"; sourceTree = "<group>"; };
 		73AEC3911C6BEA0100908DE0 /* libortp.11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.11.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libortp.11.dylib"; sourceTree = "<group>"; };
@@ -1434,7 +1432,6 @@
 		4AAF56171BB1615900241DC2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				737C77E61CC6742600729A35 /* nowebcamCIF.jpg */,
 				A4AEC6441C9B72E0005FA0A4 /* rootca.pem */,
 				4A2BAB961BC4FAE200640476 /* cafile.pem */,
 				4AAF56181BB1615900241DC2 /* Images */,
@@ -2058,7 +2055,6 @@
 				CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */,
 				7336F4EE1C9B4F0C007A160F /* linphonerc-factory in Resources */,
 				A4BDF20B1C90AB060039A59F /* VideoCallWindowController.xib in Resources */,
-				A4AEC6451C9B72E0005FA0A4 /* rootca.pem in Resources */,
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
 				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
 				A4FAEEC21C8E20C8005103E5 /* MediaViewController.xib in Resources */,
@@ -2089,6 +2085,7 @@
 				4AB556421BDE2454003382B2 /* app_icon.png in Resources */,
 				69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */,
 				A4FAEEC61C8E24B7005103E5 /* SummaryViewController.xib in Resources */,
+				A4AEC6451C9B72E0005FA0A4 /* rootca.pem in Resources */,
 				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
 				04C75BCA1C5A22F00089FEB6 /* csdvrs.png in Resources */,
 				04FD27921C68E350005659B0 /* camera_mute.png in Resources */,
@@ -2189,7 +2186,6 @@
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				A476953F1C8F36BA00748DEF /* HomeWindowController.xib in Resources */,
-				737C77E71CC6742600729A35 /* nowebcamCIF.jpg in Resources */,
 				A4EB90101C85EC370038E4FD /* LoginWindow.xib in Resources */,
 				A4EC099E1C95040F0075002D /* AddContactWindowController.xib in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,

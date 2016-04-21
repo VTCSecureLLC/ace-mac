@@ -161,6 +161,7 @@
 		69576B7F1CB6A0E000EC989A /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 69576B7E1CB6A0E000EC989A /* arrow_down.png */; };
 		69576B8B1CB6B0C600EC989A /* CallDeclineMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69576B891CB6B0C600EC989A /* CallDeclineMessagesView.m */; };
 		69576B8C1CB6B0C600EC989A /* CallDeclineMessagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69576B8A1CB6B0C600EC989A /* CallDeclineMessagesView.xib */; };
+		69582ECB1CC9345300E6EC4C /* Calll_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69582ECA1CC9345300E6EC4C /* Calll_icon.png */; };
 		697321A91CA5886C00388872 /* call_quality_indicator_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A51CA5886C00388872 /* call_quality_indicator_0.png */; };
 		697321AA1CA5886C00388872 /* call_quality_indicator_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A61CA5886C00388872 /* call_quality_indicator_1.png */; };
 		697321AB1CA5886C00388872 /* call_quality_indicator_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A71CA5886C00388872 /* call_quality_indicator_2.png */; };
@@ -728,6 +729,7 @@
 		69576B881CB6B0C600EC989A /* CallDeclineMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallDeclineMessagesView.h; sourceTree = "<group>"; };
 		69576B891CB6B0C600EC989A /* CallDeclineMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallDeclineMessagesView.m; sourceTree = "<group>"; };
 		69576B8A1CB6B0C600EC989A /* CallDeclineMessagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallDeclineMessagesView.xib; sourceTree = "<group>"; };
+		69582ECA1CC9345300E6EC4C /* Calll_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Calll_icon.png; sourceTree = "<group>"; };
 		697321A51CA5886C00388872 /* call_quality_indicator_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_0.png; sourceTree = "<group>"; };
 		697321A61CA5886C00388872 /* call_quality_indicator_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_1.png; sourceTree = "<group>"; };
 		697321A71CA5886C00388872 /* call_quality_indicator_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_2.png; sourceTree = "<group>"; };
@@ -1451,6 +1453,7 @@
 				046F0C7B1CB65297009E89F0 /* DockViewImages */,
 				69576B7C1CB6A0A300EC989A /* arrow_up.png */,
 				69576B7E1CB6A0E000EC989A /* arrow_down.png */,
+				69582ECA1CC9345300E6EC4C /* Calll_icon.png */,
 				04444CB61CA51B8500D2BEE2 /* hold.png */,
 				04FD27911C68E350005659B0 /* camera_mute.png */,
 				04C33DE51C58CB9600BF1432 /* import_button.png */,
@@ -2136,6 +2139,7 @@
 				046F0C911CB6611E009E89F0 /* phonebook1.png in Resources */,
 				04C75BCD1C5A22F00089FEB6 /* sorenson.png in Resources */,
 				69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */,
+				69582ECB1CC9345300E6EC4C /* Calll_icon.png in Resources */,
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
 				69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */,
 				5E1140251C4FDED800C9A6C5 /* video_mail.png in Resources */,

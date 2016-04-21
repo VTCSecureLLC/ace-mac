@@ -193,7 +193,7 @@ BOOL isRTTLocallyEnabled;
         } else {
             NSLog(@"Cannot toggle video button, because no current call");
         }
-
+        [self updateUIForEnableVideo:false];
     }else {
         
         LinphoneCore *lc = [LinphoneManager getLc];
@@ -204,7 +204,7 @@ BOOL isRTTLocallyEnabled;
             const char **cameras = linphone_core_get_video_devices([LinphoneManager getLc]);
             const char *newCamId = NULL;
             
-            newCamId=cameras[1];//Todo this should be set to whatever the last camera was before mute, write now its hardcoded to front facing camera
+            newCamId=cameras[0];//Todo this should be set to whatever the last camera was before mute, write now its hardcoded to front facing camera
             
             
             if (newCamId) {
@@ -219,6 +219,8 @@ BOOL isRTTLocallyEnabled;
         } else {
             NSLog(@"Cannot toggle video button, because no current call");
         }
+        [self updateUIForEnableVideo:true];
+
     }
 }
 

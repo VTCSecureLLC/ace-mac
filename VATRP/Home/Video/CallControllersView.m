@@ -173,9 +173,55 @@ BOOL isRTTLocallyEnabled;
 }
 
 - (IBAction)onButtonVideo:(id)sender {
-    isSendingVideo = !isSendingVideo;
-    videoCurrentlyEnabled = !videoCurrentlyEnabled;
-    [self updateUIForEnableVideo:videoCurrentlyEnabled];
+   
+    const char *currentCamId = (char *)linphone_core_get_video_device([LinphoneManager getLc]);
+    
+    if (strcmp(currentCamId, "StaticImage: Static picture") != 0) {
+        LinphoneCore *lc = [LinphoneManager getLc];
+        LinphoneCall *call = linphone_core_get_current_call(lc);
+        
+        if (call) {
+            const char *newCamId = NULL;
+            newCamId="StaticImage: Static picture";
+            linphone_core_set_video_device([LinphoneManager getLc], newCamId);
+            LinphoneCall *call = linphone_core_get_current_call([LinphoneManager getLc]);
+            if (call != NULL) {
+                // Liz E. - OK - this is currently the way to update for a device change.
+                linphone_core_update_call([LinphoneManager getLc], call, NULL);
+            }
+            
+        } else {
+            NSLog(@"Cannot toggle video button, because no current call");
+        }
+        [self updateUIForEnableVideo:false];
+    }else {
+        
+        LinphoneCore *lc = [LinphoneManager getLc];
+        LinphoneCall *call = linphone_core_get_current_call(lc);
+        
+        if (call) {
+            const char *currentCamId = (char *)linphone_core_get_video_device([LinphoneManager getLc]);
+            const char **cameras = linphone_core_get_video_devices([LinphoneManager getLc]);
+            const char *newCamId = NULL;
+            
+            newCamId=cameras[0];//Todo this should be set to whatever the last camera was before mute, write now its hardcoded to front facing camera
+            
+            
+            if (newCamId) {
+                NSLog(@"Switching from [%s] to [%s]", currentCamId, newCamId);
+                linphone_core_set_video_device([LinphoneManager getLc], newCamId);
+                LinphoneCall *call = linphone_core_get_current_call([LinphoneManager getLc]);
+                if (call != NULL) {
+                    // Liz E. - OK - this is currently the way to update for a device change.
+                    linphone_core_update_call([LinphoneManager getLc], call, NULL);
+                }
+            }
+        } else {
+            NSLog(@"Cannot toggle video button, because no current call");
+        }
+        [self updateUIForEnableVideo:true];
+
+    }
 }
 
 -(void)updateUIForEnableVideo:(bool)enable
@@ -605,7 +651,16 @@ BOOL isRTTLocallyEnabled;
 - (void)onVideoOn {
     LinphoneCore *lc = [LinphoneManager getLc];
     
-    if (!call) {
+//    if (!linphone_core_video_enabled(lc))
+//        return;
+    
+    if (call) {
+        LinphoneCallAppData *callAppData = (__bridge LinphoneCallAppData *)linphone_call_get_user_pointer(call);
+        callAppData->videoRequested =
+        TRUE; /* will be used later to notify user if video was not activated because of the linphone core*/
+        //linphone_call_enable_camera(call, TRUE);
+
+    } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);
     }
@@ -614,10 +669,11 @@ BOOL isRTTLocallyEnabled;
 - (void)onVideoOff {
     LinphoneCore *lc = [LinphoneManager getLc];
     
+//    if (!linphone_core_video_enabled(lc))
+//        return;
     
     if (call) {
-        linphone_core_set_video_device(lc,"StaticImage: Static picture");
-
+     
     } else {
         NSString* linphoneVersion = [NSString stringWithUTF8String:linphone_core_get_version()];
         NSLog(@"Cannot toggle video button, because no current call. LinphoneVersion: %@", linphoneVersion);

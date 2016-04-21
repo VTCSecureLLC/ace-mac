@@ -180,6 +180,7 @@
     
 - (int) decline:(LinphoneCall *)aCall {
     [self close];
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].videoView setCall:nil];
     return linphone_core_terminate_call([LinphoneManager getLc], aCall);
 }
 
@@ -680,6 +681,10 @@
     [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
              display:YES
              animate:YES];
+}
+
+- (void) closeCallWindow {
+    [self close];
 }
 
 + (int) callsCount {

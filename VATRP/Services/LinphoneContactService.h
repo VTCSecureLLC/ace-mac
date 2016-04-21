@@ -29,4 +29,6 @@
 
 - (NSString*)contactNameFromAddress:(LinphoneAddress*)address;
 
+- (void)syncACEContacts;
+
 @end

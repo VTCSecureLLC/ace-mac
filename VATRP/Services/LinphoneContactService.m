@@ -34,17 +34,26 @@
 
 - (BOOL)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
     
-    LinphoneFriend *friend = linphone_friend_new_with_addr([sipURI UTF8String]);
+    LinphoneFriend *friend = linphone_core_create_friend([LinphoneManager getLc]);
+    
     if (!friend) {
         return NO;
     }
-    linphone_friend_edit (friend);
+    
     int t = linphone_friend_set_name(friend, [name  UTF8String]);
+    
     if  (t == 0) {
         linphone_friend_enable_subscribes(friend,FALSE);
         linphone_friend_set_inc_subscribe_policy(friend,LinphoneSPAccept);
-        linphone_core_add_friend([LinphoneManager getLc],friend);
-        linphone_friend_done(friend);
+        
+        const LinphoneAddress *lAddr = linphone_address_new([sipURI UTF8String]);
+        linphone_friend_set_address(friend, lAddr);
+        
+        NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+        linphone_friend_set_ref_key(friend, [timestamp UTF8String]);
+        
+        LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+        linphone_friend_list_add_friend(friendList, friend);
     }
     return YES;
 }

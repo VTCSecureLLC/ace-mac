@@ -234,7 +234,6 @@
                                                     ,linphone_proxy_config_get_domain(proxyCfg));
     
     [self setDefaultSettings:proxyCfg];
-    
     [self clearProxyConfig];
     
     NSString *serverAddress = [NSString stringWithFormat:@"sip:%@:%d;transport=%@", domain, port, transport];
@@ -326,6 +325,7 @@
 //        [[NSUserDefaults standardUserDefaults] synchronize];
 //    }
 
+         linphone_proxy_config_set_expires(linphone_core_get_default_proxy_config([LinphoneManager getLc]), ([DefaultSettingsManager sharedInstance].exparitionTime)?[DefaultSettingsManager sharedInstance].exparitionTime:280);
     return TRUE;
 }
 

@@ -23,6 +23,7 @@
     bool screenIsLocked;
     
     NSString *declinedMessage;
+    NSString *lastCalledUsername;
 }
 
 + (int) callsCount;
@@ -205,6 +206,10 @@
 
 - (LinphoneCall*) getCurrentCall {
     return currentCall;
+}
+
+- (NSString*) getLastCalledUsername {
+    return lastCalledUsername;
 }
 
 - (void)callUpdate:(NSNotification*)notif {
@@ -431,6 +436,11 @@
             }
             
             [[ChatService sharedInstance] closeChatWindow];
+
+            const LinphoneAddress* call_addr = linphone_call_get_remote_address(currentCall);
+            const char *call_username = linphone_address_get_username(call_addr);
+            lastCalledUsername = [NSString stringWithUTF8String:call_username];
+            
             currentCall = NULL;
 
             NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"fromEvents", nil];

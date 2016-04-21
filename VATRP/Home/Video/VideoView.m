@@ -603,7 +603,7 @@
 #pragma mark - CallDeclineMessagesView Delegate
 
 - (void) didClickCallDeclineMessagesViewItem:(CallDeclineMessagesView*)callDeclineMessagesView_ Message:(NSString*)message {
-    message = [@"!@$%#CALL_DECLINE_MESSAGE#" stringByAppendingString:message];
+    message = [@"@@info@@ " stringByAppendingString:message];
 
     LinphoneChatRoom *room = linphone_call_get_chat_room(call);
     LinphoneChatMessage *msg = linphone_chat_room_create_message(room, [message UTF8String]);

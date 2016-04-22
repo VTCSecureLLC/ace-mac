@@ -29,6 +29,9 @@
 @property (weak) IBOutlet NSTextField *textFieldMailWaitingIndicatorURI;
 @property (weak) IBOutlet NSTextField *textFieldVideoMailUri;
 
+@property (weak) IBOutlet NSTextField *textCardDavServerPath;
+@property (weak) IBOutlet NSTextField *textCardDavRealmName;
+
 @end
 
 @implementation AccountsViewController
@@ -59,6 +62,8 @@
     self.textFieldPort.enabled = false;
     [self.textFieldMailWaitingIndicatorURI setDelegate:self];
     [self.textFieldVideoMailUri setDelegate:self];
+    [self.textCardDavServerPath setDelegate:self];
+    [self.textCardDavRealmName setDelegate:self];
     isChanged = NO;
     [self setFields];
 }
@@ -124,6 +129,20 @@
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:VIDEO_MAIL_URI]){
         self.textFieldVideoMailUri.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI];
     }
+    
+    if ([[SettingsHandler settingsHandler] getCardDavServerPath]) {
+        self.textCardDavServerPath.stringValue = [[SettingsHandler settingsHandler] getCardDavServerPath];
+    } else {
+        self.textCardDavServerPath.stringValue = @"";
+    }
+    
+    if ([[SettingsHandler settingsHandler] getCardDavRealmName]) {
+        self.textCardDavRealmName.stringValue = [[SettingsHandler settingsHandler] getCardDavRealmName];
+    } else {
+        self.textCardDavRealmName.stringValue = @"";
+    }
+    
+    
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {
@@ -159,7 +178,9 @@
         [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailUri.stringValue forKey:VIDEO_MAIL_URI];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-
+    
+    [[SettingsHandler settingsHandler] setCardDavServerPath:self.textCardDavServerPath.stringValue];
+    [[SettingsHandler settingsHandler] setCardDavRealmName:self.textCardDavRealmName.stringValue];
     
     NSString* currentTransportSetting = [[SettingsHandler settingsHandler] getUITransportStringForString:[accountModel transport]];
     if (![self.comboBoxTransport.stringValue isEqualToString:currentTransportSetting])
@@ -219,6 +240,16 @@
     }
     
     if ([self.textFieldPort.stringValue isEqual:@""] && !error) {
+        error = YES;
+        errorString = @"Port field is required";
+    }
+    
+    if ([self.textCardDavRealmName.stringValue isEqual:@""] && !error) {
+        error = YES;
+        errorString = @"Port field is required";
+    }
+    
+    if ([self.textCardDavServerPath.stringValue isEqual:@""] && !error) {
         error = YES;
         errorString = @"Port field is required";
     }

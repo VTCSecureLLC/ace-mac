@@ -58,5 +58,7 @@ NSString *const ENABLE_ICE = @"ice_preference";
 NSString *const ADAPTIVE_RATE_ALGORITHM = @"adaptive_rate_algorithm";
 NSString *const ADAPTIVE_RATE_CONTROL = @"enable_adaptive_rate_control";
 NSString *const VIDEO_PRESET = @"video_preset";
+NSString *const OUTBOUND_PROXY_SERVER = @"outbound_proxy_server";
+NSString *const OUTBOUND_PROXY_CHECKBOX = @"outbound_proxy_checkbox";
 
 #endif /* SettingsConstants_h */

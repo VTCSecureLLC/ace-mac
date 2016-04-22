@@ -278,5 +278,17 @@
     return [stateStrings objectForKey:enumIndex];
 }
 
++ (BOOL)checkIfContainsProxyPort:(NSString*)outboundProxy {
+    
+    NSArray *separateStringsByPort = [outboundProxy componentsSeparatedByString:@":"];
+    if (([[separateStringsByPort lastObject] length] > 0) && ([separateStringsByPort count] > 1)) {
+        return YES;
+    } else {
+        return NO;
+    }
+    
+    return NO;
+}
+
 
 @end

@@ -31,6 +31,7 @@
 @property (weak) IBOutlet NSTextField *textFieldPort;
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
 @property (weak) IBOutlet NSButton *loginButton;
+@property (weak) IBOutlet NSTextField *textFieldOutBoundProxy;
 
 @property (weak) IBOutlet NSButton *buttonToggleAutoLogin;
 @property (weak) IBOutlet NSComboBox *comboBoxProviderSelect;
@@ -158,7 +159,8 @@
     [self.prog_Signin setHidden:NO];
     [self.prog_Signin startAnimation:self];
     [self.loginButton setEnabled:NO];
-
+    [self setOutboundProxyServer];
+    
     loginClicked = true;
     NSString* userName = [self.textFieldUsername.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString* password = [self.textFieldPassword.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -206,6 +208,27 @@
         [DefaultSettingsManager sharedInstance].delegate = self;
     }
     
+}
+
+- (void)setOutboundProxyServer {
+    
+    if ([self.textFieldOutBoundProxy.stringValue isEqualToString:@""]) {
+        NSString *domainString = self.textFieldDomain.stringValue;
+        NSString *outboundProxy = [[domainString stringByAppendingString:@":"] stringByAppendingString:self.textFieldPort.stringValue];
+        self.textFieldOutBoundProxy.stringValue = outboundProxy;
+        [[SettingsHandler settingsHandler] setOutboundProxy:outboundProxy];
+        [[SettingsHandler settingsHandler] setOutboundProxyState:NO];
+    } else {
+        if ([Utils checkIfContainsProxyPort:self.textFieldOutBoundProxy.stringValue]) {
+            [[SettingsHandler settingsHandler] setOutboundProxy:self.textFieldOutBoundProxy.stringValue];
+        } else {
+            NSString *outboundProxy = [[self.textFieldOutBoundProxy.stringValue stringByAppendingString:@":"] stringByAppendingString:self.textFieldPort.stringValue];
+            [[SettingsHandler settingsHandler] setOutboundProxy:outboundProxy];
+        }
+        [[SettingsHandler settingsHandler] setOutboundProxyState:YES];
+    }
+    
+    [LinphoneManager configureOutboundProxyServer];
 }
 
 #pragma mark - connection

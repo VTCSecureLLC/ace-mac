@@ -450,6 +450,22 @@
     [self setUserSettingBool:USE_IPV6 withValue:enable];
 }
 
+- (void)setOutboundProxy:(NSString*)proxyServer {
+    [self setUserSettingString:OUTBOUND_PROXY_SERVER withValue:proxyServer];
+}
+
+- (NSString*)getOutpboundProxy {
+    return [self getUserSettingString:OUTBOUND_PROXY_SERVER];
+}
+
+- (void)setOutboundProxyState:(bool)setOn {
+    [self setUserSettingBool:OUTBOUND_PROXY_CHECKBOX withValue:setOn];
+}
+
+-(bool)getOutpboundProxyState {
+    return [self getUserSettingBool:OUTBOUND_PROXY_CHECKBOX];
+}
+
 //==========================================================================================
 // Accessors
 #pragma mark settings accessors
@@ -614,6 +630,7 @@
 -(void)setUserSettingBool:(NSString*)settingName withValue:(bool)value
 {
     [[NSUserDefaults standardUserDefaults]setBool:value forKey:settingName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(NSString*)getUserSettingString:(NSString*)settingName

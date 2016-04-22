@@ -28,5 +28,6 @@
 + (NSMutableArray*)cdnResources;
 + (NSString *)decodeTextMessage:(const char *)text;
 + (NSString*)callStateStringByIndex:(NSNumber *)enumIndex;
++ (BOOL)checkIfContainsProxyPort:(NSString*)outBoundProxy;
 
 @end

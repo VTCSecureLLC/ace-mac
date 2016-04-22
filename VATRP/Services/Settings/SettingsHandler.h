@@ -92,6 +92,8 @@
 
 -(void)storeEnabledCodecs;
 - (void)setStunServerDomain:(NSString*)stunServerDomain;
+- (void)setOutboundProxy:(NSString*)proxyServer;
+- (void)setOutboundProxyState:(bool)setOn;
 
 #pragma mark settings accessors
 // these settings are set when the UI calls one of the methods above.
@@ -137,6 +139,8 @@
 -(void)setEnableStun:(bool)enable;
 -(void)setEnableICE:(bool)enable;
 -(void)setEnableIPV6:(bool)enable;
+-(NSString*)getOutpboundProxy;
+-(bool)getOutpboundProxyState;
 
 -(NSString*) getUITransportStringForString:(NSString*)stringToCompare;
 -(NSString*) getUITransportString;

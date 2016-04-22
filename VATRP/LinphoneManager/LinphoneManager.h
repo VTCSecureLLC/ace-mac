@@ -196,6 +196,7 @@ typedef struct _LinphoneManagerSounds {
 - (BOOL)lpConfigBoolForKey:(NSString *)key forSection:(NSString *)section withDefault:(BOOL)value;
 
 - (float)lpConfigFloatForKey:(NSString*)key forSection:(NSString *)section;
++ (void)configureOutboundProxyServer;
 
 //- (void)silentPushFailed:(NSTimer*)timer;
 

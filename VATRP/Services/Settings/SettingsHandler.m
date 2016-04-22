@@ -171,10 +171,6 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:STUN_SERVER_DOMAIN];
     }
-    if ((force || settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:ENABLE_ICE] == nil)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:ENABLE_ICE];
-    }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"logging"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"info" forKey:@"logging"];

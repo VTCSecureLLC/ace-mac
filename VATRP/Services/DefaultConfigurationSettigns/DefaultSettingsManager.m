@@ -137,7 +137,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"stun_server"] != [NSNull null])?[dict objectForKey:@"stun_server"]:@"" forKey:STUN_SERVER_DOMAIN];
 
-    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_ice"] != [NSNull null])? [dict objectForKey:@"enable_ice"]:@"true" forKey:ENABLE_ICE];
+    [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"enable_ice"] != [NSNull null])? [dict objectForKey:@"enable_ice"]:@"false" forKey:ENABLE_ICE];
     
     [[NSUserDefaults standardUserDefaults] setObject:([dict objectForKey:@"logging"] != [NSNull null])? [dict objectForKey:@"logging"]:@"" forKey:@"logging"];
     
@@ -302,7 +302,7 @@ static DefaultSettingsManager *sharedInstance = nil;
     return [[NSUserDefaults standardUserDefaults] stringForKey:STUN_SERVER_DOMAIN];
 }
 
-- (BOOL)enableIce {
+- (BOOL)enableIce {    
     return [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_ICE];
 }
 

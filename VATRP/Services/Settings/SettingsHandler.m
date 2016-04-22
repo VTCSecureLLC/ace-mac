@@ -446,6 +446,26 @@
     [self setUserSettingBool:USE_IPV6 withValue:enable];
 }
 
+-(void)setCardDavServerPath:(NSString*)serverPath
+{
+    [self setUserSettingString:CARDDAV_SERVER_PATH withValue:serverPath];
+}
+
+-(NSString*)getCardDavServerPath
+{
+    return [self getUserSettingString:CARDDAV_SERVER_PATH];
+}
+
+-(void)setCardDavRealmName:(NSString*)realmName
+{
+    [self setUserSettingString:CARDDAV_REALM_NAME withValue:realmName];
+}
+
+-(NSString*)getCardDavRealmName
+{
+    return [self getUserSettingString:CARDDAV_REALM_NAME];
+}
+
 //==========================================================================================
 // Accessors
 #pragma mark settings accessors

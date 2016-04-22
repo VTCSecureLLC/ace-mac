@@ -161,6 +161,7 @@
 		69576B7F1CB6A0E000EC989A /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 69576B7E1CB6A0E000EC989A /* arrow_down.png */; };
 		69576B8B1CB6B0C600EC989A /* CallDeclineMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69576B891CB6B0C600EC989A /* CallDeclineMessagesView.m */; };
 		69576B8C1CB6B0C600EC989A /* CallDeclineMessagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69576B8A1CB6B0C600EC989A /* CallDeclineMessagesView.xib */; };
+		69582ECB1CC9345300E6EC4C /* Calll_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69582ECA1CC9345300E6EC4C /* Calll_icon.png */; };
 		697321A91CA5886C00388872 /* call_quality_indicator_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A51CA5886C00388872 /* call_quality_indicator_0.png */; };
 		697321AA1CA5886C00388872 /* call_quality_indicator_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A61CA5886C00388872 /* call_quality_indicator_1.png */; };
 		697321AB1CA5886C00388872 /* call_quality_indicator_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 697321A71CA5886C00388872 /* call_quality_indicator_2.png */; };
@@ -215,7 +216,6 @@
 		7336F4EE1C9B4F0C007A160F /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 7336F4ED1C9B4F0C007A160F /* linphonerc-factory */; };
 		733FFCD21C85F22F00BA1B87 /* libmediastreamer_base.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 733FFCCE1C85F22F00BA1B87 /* libmediastreamer_base.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		733FFCD31C85F22F00BA1B87 /* libmediastreamer_voip.7.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 733FFCD01C85F22F00BA1B87 /* libmediastreamer_voip.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		737C77E71CC6742600729A35 /* nowebcamCIF.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 737C77E61CC6742600729A35 /* nowebcamCIF.jpg */; };
 		738D5B901BFF687C000F2F76 /* libintl.8.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7391C8F91BFEB1C5006700F4 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EDA2131BFA9F2C00EC7039 /* libintl.8.dylib */; };
 		73AEC38E1C6BE94500908DE0 /* libmediastreamer_base.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -391,6 +391,7 @@
 		A4FAEEC81C8E2598005103E5 /* PreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4FAEEC71C8E2598005103E5 /* PreferencesViewController.xib */; };
 		A4FAEECA1C8E26EC005103E5 /* AVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4FAEEC91C8E26EC005103E5 /* AVViewController.xib */; };
 		A4FAEECC1C8E280A005103E5 /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4FAEECB1C8E280A005103E5 /* ThemeViewController.xib */; };
+		CD06EA331CC9269A00C4FE67 /* camera_disabled.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD06EA321CC9269A00C4FE67 /* camera_disabled.jpg */; };
 		CD6EDC8B1C56D948003CB599 /* logo_about_frg.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6EDC8A1C56D948003CB599 /* logo_about_frg.png */; };
 		CDF7C4C81C4EF22B00866A28 /* TextMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */; };
 		CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0D5D511C0D898200214C47 /* icon_call_dir_incoming.png */; };
@@ -728,6 +729,7 @@
 		69576B881CB6B0C600EC989A /* CallDeclineMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallDeclineMessagesView.h; sourceTree = "<group>"; };
 		69576B891CB6B0C600EC989A /* CallDeclineMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallDeclineMessagesView.m; sourceTree = "<group>"; };
 		69576B8A1CB6B0C600EC989A /* CallDeclineMessagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallDeclineMessagesView.xib; sourceTree = "<group>"; };
+		69582ECA1CC9345300E6EC4C /* Calll_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Calll_icon.png; sourceTree = "<group>"; };
 		697321A51CA5886C00388872 /* call_quality_indicator_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_0.png; sourceTree = "<group>"; };
 		697321A61CA5886C00388872 /* call_quality_indicator_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_1.png; sourceTree = "<group>"; };
 		697321A71CA5886C00388872 /* call_quality_indicator_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_quality_indicator_2.png; sourceTree = "<group>"; };
@@ -794,7 +796,6 @@
 		733FFCCF1C85F22F00BA1B87 /* libmediastreamer_base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.dylib"; sourceTree = "<group>"; };
 		733FFCD01C85F22F00BA1B87 /* libmediastreamer_voip.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.7.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.7.dylib"; sourceTree = "<group>"; };
 		733FFCD11C85F22F00BA1B87 /* libmediastreamer_voip.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.dylib"; sourceTree = "<group>"; };
-		737C77E61CC6742600729A35 /* nowebcamCIF.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nowebcamCIF.jpg; sourceTree = "<group>"; };
 		73AEC38D1C6BE94500908DE0 /* libmediastreamer_base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_base.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_base.dylib"; sourceTree = "<group>"; };
 		73AEC38F1C6BE99800908DE0 /* libmediastreamer_voip.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmediastreamer_voip.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libmediastreamer_voip.dylib"; sourceTree = "<group>"; };
 		73AEC3911C6BEA0100908DE0 /* libortp.11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libortp.11.dylib; path = "WORK/Build/linphone_package/linphone-sdk-tmp/lib/libortp.11.dylib"; sourceTree = "<group>"; };
@@ -901,6 +902,7 @@
 		A4FAEEC71C8E2598005103E5 /* PreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesViewController.xib; sourceTree = "<group>"; };
 		A4FAEEC91C8E26EC005103E5 /* AVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AVViewController.xib; sourceTree = "<group>"; };
 		A4FAEECB1C8E280A005103E5 /* ThemeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
+		CD06EA321CC9269A00C4FE67 /* camera_disabled.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = camera_disabled.jpg; sourceTree = "<group>"; };
 		CD6EDC8A1C56D948003CB599 /* logo_about_frg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_about_frg.png; sourceTree = "<group>"; };
 		CDF7C4C61C4EF22B00866A28 /* TextMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMenuViewController.h; sourceTree = "<group>"; };
 		CDF7C4C71C4EF22B00866A28 /* TextMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMenuViewController.m; sourceTree = "<group>"; };
@@ -1434,7 +1436,6 @@
 		4AAF56171BB1615900241DC2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				737C77E61CC6742600729A35 /* nowebcamCIF.jpg */,
 				A4AEC6441C9B72E0005FA0A4 /* rootca.pem */,
 				4A2BAB961BC4FAE200640476 /* cafile.pem */,
 				4AAF56181BB1615900241DC2 /* Images */,
@@ -1447,10 +1448,12 @@
 		4AAF56181BB1615900241DC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CD06EA321CC9269A00C4FE67 /* camera_disabled.jpg */,
 				046F0CA71CB7A2EE009E89F0 /* MoresectionImages */,
 				046F0C7B1CB65297009E89F0 /* DockViewImages */,
 				69576B7C1CB6A0A300EC989A /* arrow_up.png */,
 				69576B7E1CB6A0E000EC989A /* arrow_down.png */,
+				69582ECA1CC9345300E6EC4C /* Calll_icon.png */,
 				04444CB61CA51B8500D2BEE2 /* hold.png */,
 				04FD27911C68E350005659B0 /* camera_mute.png */,
 				04C33DE51C58CB9600BF1432 /* import_button.png */,
@@ -2058,7 +2061,6 @@
 				CE0D5D541C0D898200214C47 /* icon_call_dir_incoming.png in Resources */,
 				7336F4EE1C9B4F0C007A160F /* linphonerc-factory in Resources */,
 				A4BDF20B1C90AB060039A59F /* VideoCallWindowController.xib in Resources */,
-				A4AEC6451C9B72E0005FA0A4 /* rootca.pem in Resources */,
 				4A50F9C61BB1BDC900FCD070 /* recents.png in Resources */,
 				4A5DD1EC1BD904B3003BE9A2 /* messageOutgoingBubbleBottom.png in Resources */,
 				A4FAEEC21C8E20C8005103E5 /* MediaViewController.xib in Resources */,
@@ -2089,6 +2091,7 @@
 				4AB556421BDE2454003382B2 /* app_icon.png in Resources */,
 				69A025B81BFB5C83005C62FA /* speaker_active.png in Resources */,
 				A4FAEEC61C8E24B7005103E5 /* SummaryViewController.xib in Resources */,
+				A4AEC6451C9B72E0005FA0A4 /* rootca.pem in Resources */,
 				4A902DF31BB96C6D00ECFD86 /* msg.wav in Resources */,
 				04C75BCA1C5A22F00089FEB6 /* csdvrs.png in Resources */,
 				04FD27921C68E350005659B0 /* camera_mute.png in Resources */,
@@ -2136,6 +2139,7 @@
 				046F0C911CB6611E009E89F0 /* phonebook1.png in Resources */,
 				04C75BCD1C5A22F00089FEB6 /* sorenson.png in Resources */,
 				69A025B11BFB5C83005C62FA /* chat_inactive.png in Resources */,
+				69582ECB1CC9345300E6EC4C /* Calll_icon.png in Resources */,
 				4AC975F61BDA23B400AD35C8 /* chat_message_delivered.png in Resources */,
 				69A025B71BFB5C83005C62FA /* numpad_inactive.png in Resources */,
 				5E1140251C4FDED800C9A6C5 /* video_mail.png in Resources */,
@@ -2151,6 +2155,7 @@
 				697840851C089B55000ED450 /* call hold.png in Resources */,
 				044445DF1CB7B6010018E8A7 /* setting.png in Resources */,
 				4A2BAB971BC4FAE200640476 /* cafile.pem in Resources */,
+				CD06EA331CC9269A00C4FE67 /* camera_disabled.jpg in Resources */,
 				A47695581C8FADF000748DEF /* SecondIncomingCallView.xib in Resources */,
 				046F0C8F1CB66112009E89F0 /* history_11.png in Resources */,
 				A4F34C501C8A403B001CDA96 /* SettingsWindow.xib in Resources */,
@@ -2189,7 +2194,6 @@
 				4A50F9C31BB1BDC900FCD070 /* dialpad.png in Resources */,
 				4AA203C61BD4D2A000DD9A4D /* chat_icon.png in Resources */,
 				A476953F1C8F36BA00748DEF /* HomeWindowController.xib in Resources */,
-				737C77E71CC6742600729A35 /* nowebcamCIF.jpg in Resources */,
 				A4EB90101C85EC370038E4FD /* LoginWindow.xib in Resources */,
 				A4EC099E1C95040F0075002D /* AddContactWindowController.xib in Resources */,
 				4A50F9C81BB1BDC900FCD070 /* vatrp.ico in Resources */,

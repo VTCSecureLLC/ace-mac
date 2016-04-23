@@ -218,6 +218,8 @@
 
     LinphoneCore *lc = [LinphoneManager getLc];
     
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] closeSelfPreview];
+
     NSLog(@"****** callupdate");
     switch (state) {
         case LinphoneCallIdle:					/**<Initial call state */

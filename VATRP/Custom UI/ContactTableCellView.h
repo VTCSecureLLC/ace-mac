@@ -19,6 +19,7 @@
 @property (weak) IBOutlet NSButton *deleteButton;
 @property (weak) IBOutlet NSButton *editButton;
 @property (nonatomic, assign) id<ContactTableCellViewDelegate> delegate;
+@property (nonatomic, strong) NSString *refKey;
 
 @end
 

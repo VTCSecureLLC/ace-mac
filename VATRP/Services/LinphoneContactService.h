@@ -29,6 +29,8 @@
 
 - (NSString*)contactNameFromAddress:(LinphoneAddress*)address;
 
+- (BOOL)deleteContactWithRefKey:(NSString *)refKey;- (BOOL)editContactWithNewDisplayName:(NSString *)name andSipUri:(NSString *)sipURI andWithRefKey:(NSString*)refKey;
+
 - (void)syncACEContacts;
 
 @end

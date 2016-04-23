@@ -28,5 +28,7 @@
 + (NSMutableArray*)cdnResources;
 + (NSString *)decodeTextMessage:(const char *)text;
 + (NSString*)callStateStringByIndex:(NSNumber *)enumIndex;
++ (NSString*)cardDAVRealmName;
++ (NSString*)cardDAVServerPath;
 
 @end

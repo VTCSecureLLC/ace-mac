@@ -1163,12 +1163,13 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
     
     [self setupNetworkReachabilityCallback];
     
-    NSString* path = [LinphoneManager bundleFile:@"nowebcamCIF.jpg"];
+    NSString* path = [LinphoneManager bundleFile:@"camera_disabled.jpg"];
     if (path) {
         const char* imagePath = [path cStringUsingEncoding:[NSString defaultCStringEncoding]];
         NSLog(@"Using '%s' as source image for no webcam", imagePath);
-    linphone_core_set_static_picture(theLinphoneCore, imagePath);
+        linphone_core_set_static_picture(theLinphoneCore, imagePath);
     }
+    
     
     NSString *urlString = [self lpConfigStringForKey:@"sharing_server_preference"];
     if( urlString ){

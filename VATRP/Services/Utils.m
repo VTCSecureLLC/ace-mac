@@ -7,6 +7,7 @@
 //
 
 #import "Utils.h"
+#import "SettingsHandler.h"
 
 @implementation Utils
 
@@ -278,5 +279,23 @@
     return [stateStrings objectForKey:enumIndex];
 }
 
++ (NSString*)cardDAVRealmName {
+    return [[SettingsHandler settingsHandler] getCardDavRealmName];
+}
+
++ (NSString*)cardDAVServerPath {
+    
+    NSString *serverPath = [[SettingsHandler settingsHandler] getCardDavServerPath];
+    if ([serverPath length] <= 7) {
+        return @"";
+    } else {
+        NSString *withoutHTTP = [serverPath substringFromIndex:7];
+        NSArray* separatedStrings = [withoutHTTP componentsSeparatedByString:@"/"];
+        NSString *serverName = [separatedStrings objectAtIndex:0];
+        return serverName;
+    }
+    
+    return serverPath;
+}
 
 @end

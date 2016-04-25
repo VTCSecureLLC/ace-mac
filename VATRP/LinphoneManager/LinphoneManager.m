@@ -765,9 +765,11 @@ static void linphone_info_received (LinphoneCore *lc, LinphoneCall *call, const 
     LinphoneCall* currentCall = linphone_core_get_current_call(theLinphoneCore);
     if (call == currentCall) {
         const char* videoModeStatus = linphone_info_message_get_header(msg, "action");
-        NSDictionary *dict = @{@"videoModeStatus": [NSString stringWithUTF8String:videoModeStatus]
-                               };
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneVideModeUpdate object:self userInfo:dict];
+        if (videoModeStatus) {
+            NSDictionary *dict = @{@"videoModeStatus": [NSString stringWithUTF8String:videoModeStatus]
+                                   };
+            [[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneVideModeUpdate object:self userInfo:dict];
+        }
     }
 }
 
@@ -2323,21 +2325,27 @@ static int comp_call_state_paused  (const LinphoneCall* call, const void* param)
     return filter;
 }
 
-- (void)configureOutboundProxyServer {
++ (void)configureOutboundProxyServer {
     
     bool isOutboundProxy = [[SettingsHandler settingsHandler] getOutpboundProxyState];
     BOOL isEditing = FALSE;
     NSString *proxyAddress = [[SettingsHandler settingsHandler] getOutpboundProxy];
     const char *route = NULL;
     
-    char *proxy = ms_strdup(proxyAddress.UTF8String);
-    LinphoneAddress *proxy_addr = linphone_address_new(proxy);
-    
     if (![proxyAddress hasPrefix:@"sip:"] && ![proxyAddress hasPrefix:@"sips:"]) {
         proxyAddress = [NSString stringWithFormat:@"sip:%@", proxyAddress];
     }
     
+    char *proxy = ms_strdup(proxyAddress.UTF8String);
+    LinphoneAddress *proxy_addr = linphone_address_new(proxy);
+    
     if (proxy_addr) {
+        // Get SIP Transport
+        LinphoneTransportType transport = linphone_address_get_transport(proxy_addr);
+        
+        if (transport == LinphoneTransportUdp) {
+            linphone_address_set_transport(proxy_addr, LinphoneTransportTcp);
+        }
         proxy = linphone_address_as_string_uri_only(proxy_addr);
     }
     

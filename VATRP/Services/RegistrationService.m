@@ -242,6 +242,7 @@
     linphone_core_add_auth_info(lc, info);
     linphone_core_add_proxy_config(lc, proxyCfg);
     linphone_core_set_default_proxy_config(lc, proxyCfg);
+    linphone_core_set_inc_timeout([LinphoneManager getLc], 300);
     
     PayloadType *pt;
     const MSList *elem;

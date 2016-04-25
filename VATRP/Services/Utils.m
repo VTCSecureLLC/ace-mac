@@ -7,6 +7,7 @@
 //
 
 #import "Utils.h"
+#import "SettingsHandler.h"
 
 @implementation Utils
 
@@ -288,6 +289,25 @@
     }
     
     return NO;
+}
+
++ (NSString*)cardDAVRealmName {
+    return [[SettingsHandler settingsHandler] getCardDavRealmName];
+}
+
++ (NSString*)cardDAVServerDomain {
+    
+    NSString *serverPath = [[SettingsHandler settingsHandler] getCardDavServerPath];
+    if ([serverPath length] <= 7) {
+        return @"";
+    } else {
+        NSString *withoutHTTP = [serverPath substringFromIndex:7];
+        NSArray* separatedStrings = [withoutHTTP componentsSeparatedByString:@"/"];
+        NSString *serverDomainName = [separatedStrings objectAtIndex:0];
+        return serverDomainName;
+    }
+    
+    return serverPath;
 }
 
 

@@ -36,6 +36,7 @@
 -(void) initializeData;
 -(void)refreshForNewLogin;
 -(void)clearData;
+- (void) closeSelfPreview;
 
 - (ProfileView*) getProfileView;
 - (BOOL) isCurrentTabRecents;

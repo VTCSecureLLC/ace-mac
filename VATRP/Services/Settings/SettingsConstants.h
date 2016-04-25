@@ -12,7 +12,8 @@
 #import <Foundation/Foundation.h>
 // account
 FOUNDATION_EXPORT NSString *const VIDEO_MAIL_URI;
-
+FOUNDATION_EXPORT NSString *const CARDDAV_SERVER_PATH;
+FOUNDATION_EXPORT NSString *const CARDDAV_REALM_NAME;
 
 // AV Settings Items
 FOUNDATION_EXPORT NSString *const MUTE_SPEAKER;

@@ -171,10 +171,6 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:STUN_SERVER_DOMAIN];
     }
-    if ((force || settingForNoConfig) || [[NSUserDefaults standardUserDefaults]objectForKey:ENABLE_ICE] == nil)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:@"true" forKey:ENABLE_ICE];
-    }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:@"logging"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"info" forKey:@"logging"];
@@ -464,6 +460,26 @@
 
 -(bool)getOutpboundProxyState {
     return [self getUserSettingBool:OUTBOUND_PROXY_CHECKBOX];
+}
+
+-(void)setCardDavServerPath:(NSString*)serverPath
+{
+    [self setUserSettingString:CARDDAV_SERVER_PATH withValue:serverPath];
+}
+
+-(NSString*)getCardDavServerPath
+{
+    return [self getUserSettingString:CARDDAV_SERVER_PATH];
+}
+
+-(void)setCardDavRealmName:(NSString*)realmName
+{
+    [self setUserSettingString:CARDDAV_REALM_NAME withValue:realmName];
+}
+
+-(NSString*)getCardDavRealmName
+{
+    return [self getUserSettingString:CARDDAV_REALM_NAME];
 }
 
 //==========================================================================================

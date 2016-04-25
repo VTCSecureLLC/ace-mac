@@ -27,6 +27,8 @@
     BackgroundedViewController *viewCurrent;
     NSColor *windowDefaultColor;
     bool uiInitialized;
+
+    VideoMailWindowController *videoMailWindowController;
 }
 
 //@property (weak) IBOutlet NSImageView *imageViewVoiceMail;
@@ -162,6 +164,8 @@ bool dialPadIsShown;
     self.videoView.view.wantsLayer = true;
     [self.callView addSubview:[self.videoView view]];
     [self.videoView createNumpadView];
+
+    videoMailWindowController = nil;
 }
 
 
@@ -525,7 +529,20 @@ bool dialPadIsShown;
         }
             break;
         case eSelfPreview: {
-            [self switchSelfViewOn:!self.switchSelfViewOn];
+//            [self switchSelfViewOn:!self.switchSelfViewOn];
+
+            if ([[CallService sharedInstance] getCurrentCall]) {
+                break;
+            }
+            
+            if (videoMailWindowController) {
+                [videoMailWindowController close];
+            }
+            
+            videoMailWindowController = [[VideoMailWindowController alloc] init];
+            [videoMailWindowController.window setStyleMask:[videoMailWindowController.window styleMask] & ~NSResizableWindowMask];
+            [videoMailWindowController showWindow:self];
+            videoMailWindowController.isShow = YES;
         }
             break;
             
@@ -533,6 +550,12 @@ bool dialPadIsShown;
             [self openSettings];
         }
             break;
+    }
+}
+
+- (void) closeSelfPreview {
+    if (videoMailWindowController) {
+        [videoMailWindowController close];
     }
 }
 

@@ -31,6 +31,9 @@
 @property (weak) IBOutlet NSTextField *textFieldMailWaitingIndicatorURI;
 @property (weak) IBOutlet NSTextField *textFieldVideoMailUri;
 
+@property (weak) IBOutlet NSTextField *textCardDavServerPath;
+@property (weak) IBOutlet NSTextField *textCardDavRealmName;
+
 @end
 
 @implementation AccountsViewController
@@ -62,6 +65,8 @@
     [self.textFieldMailWaitingIndicatorURI setDelegate:self];
     [self.textFieldVideoMailUri setDelegate:self];
     [self.textFieldOutboundProxy setDelegate:self];
+    [self.textCardDavServerPath setDelegate:self];
+    [self.textCardDavRealmName setDelegate:self];
     isChanged = NO;
     [self setFields];
 }
@@ -128,6 +133,18 @@
         self.textFieldVideoMailUri.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI];
     }
     
+    if ([[SettingsHandler settingsHandler] getCardDavServerPath]) {
+        self.textCardDavServerPath.stringValue = [[SettingsHandler settingsHandler] getCardDavServerPath];
+    } else {
+        self.textCardDavServerPath.stringValue = @"";
+    }
+    
+    if ([[SettingsHandler settingsHandler] getCardDavRealmName]) {
+        self.textCardDavRealmName.stringValue = [[SettingsHandler settingsHandler] getCardDavRealmName];
+    } else {
+        self.textCardDavRealmName.stringValue = @"";
+    }
+    
     [self setOutboundProxy];
 }
 
@@ -174,7 +191,9 @@
         [[NSUserDefaults standardUserDefaults] setObject:self.textFieldVideoMailUri.stringValue forKey:VIDEO_MAIL_URI];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-
+    
+    [[SettingsHandler settingsHandler] setCardDavServerPath:self.textCardDavServerPath.stringValue];
+    [[SettingsHandler settingsHandler] setCardDavRealmName:self.textCardDavRealmName.stringValue];
     
     NSString* currentTransportSetting = [[SettingsHandler settingsHandler] getUITransportStringForString:[accountModel transport]];
     if (![self.comboBoxTransport.stringValue isEqualToString:currentTransportSetting])
@@ -237,15 +256,21 @@
     BOOL isEditing = FALSE;
     NSString *proxyAddress = [[SettingsHandler settingsHandler] getOutpboundProxy];
     const char *route = NULL;
-    
-    char *proxy = ms_strdup(proxyAddress.UTF8String);
-    LinphoneAddress *proxy_addr = linphone_address_new(proxy);
-    
+
     if (![proxyAddress hasPrefix:@"sip:"] && ![proxyAddress hasPrefix:@"sips:"]) {
         proxyAddress = [NSString stringWithFormat:@"sip:%@", proxyAddress];
     }
     
+    char *proxy = ms_strdup(proxyAddress.UTF8String);
+    LinphoneAddress *proxy_addr = linphone_address_new(proxy);
+    
     if (proxy_addr) {
+        // Get SIP Transport
+        LinphoneTransportType transport = linphone_address_get_transport(proxy_addr);
+        
+        if (transport == LinphoneTransportUdp) {
+            linphone_address_set_transport(proxy_addr, LinphoneTransportTcp);
+        }
         proxy = linphone_address_as_string_uri_only(proxy_addr);
     }
     

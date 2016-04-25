@@ -34,19 +34,30 @@
 
 - (BOOL)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
     
-    LinphoneFriend *friend = linphone_friend_new_with_addr([sipURI UTF8String]);
+    LinphoneFriend *friend = linphone_core_create_friend([LinphoneManager getLc]);
+    
     if (!friend) {
         return NO;
     }
-    linphone_friend_edit (friend);
-    int t = linphone_friend_set_name(friend, [name  UTF8String]);
-    if  (t == 0) {
-        linphone_friend_enable_subscribes(friend,FALSE);
-        linphone_friend_set_inc_subscribe_policy(friend,LinphoneSPAccept);
-        linphone_core_add_friend([LinphoneManager getLc],friend);
-        linphone_friend_done(friend);
+    
+    linphone_friend_set_name(friend, [name  UTF8String]);
+    
+    linphone_friend_enable_subscribes(friend,FALSE);
+    linphone_friend_set_inc_subscribe_policy(friend,LinphoneSPAccept);
+    
+    const LinphoneAddress *lAddr = linphone_core_create_address([LinphoneManager getLc],  [sipURI UTF8String]);
+    linphone_friend_set_address(friend, lAddr);
+    
+    NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+    linphone_friend_set_ref_key(friend, [timestamp UTF8String]);
+    
+    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+    
+    if (linphone_friend_list_add_friend(friendList, friend) == LinphoneFriendListOK) {
+        return YES;
     }
-    return YES;
+    
+    return NO;
 }
 
 - (LinphoneFriend*)createContactFromName:(NSString *)name andSipUri:(NSString *)sipURI {
@@ -69,6 +80,31 @@
     return contactExistsInCore;
 }
 
+- (BOOL) editContactWithNewDisplayName:(NSString *)name andSipUri:(NSString *)sipURI andWithRefKey:(NSString*)refKey {
+    
+    NSAssert(refKey, nil);
+    
+    LinphoneFriend * editableFriend = linphone_core_get_friend_by_ref_key([LinphoneManager getLc], [refKey UTF8String]);
+    
+    if (editableFriend) {
+        linphone_friend_edit(editableFriend);
+        
+        linphone_friend_set_name(editableFriend, [name  UTF8String]);
+        
+        const LinphoneAddress* address = linphone_core_create_address([LinphoneManager getLc], [sipURI UTF8String]);
+        
+        linphone_friend_set_address(editableFriend, address);
+        
+        linphone_friend_done(editableFriend);
+        
+    } else {
+        return NO;
+    }
+    
+
+    return YES;
+}
+
 - (NSMutableArray*)contactList {
     NSMutableArray *contacts = [NSMutableArray new];
     LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
@@ -79,9 +115,15 @@
         const char *addressString = linphone_address_as_string_uri_only(address);
         const char *providerName = linphone_address_get_domain(address);
         const char *name = linphone_friend_get_name(friend);
+        const char *refKey = linphone_friend_get_ref_key(friend);
+        NSString *refKeyString = @"";
+        if (refKey) {
+            refKeyString = [[NSString alloc] initWithUTF8String:refKey];
+        }
         [contacts addObject:@{@"name" : [[NSString alloc] initWithUTF8String:name],
                               @"phone" : [[NSString alloc] initWithUTF8String:addressString],
-                              @"provider" : [[NSString alloc] initWithUTF8String:providerName]}];
+                              @"provider" : [[NSString alloc] initWithUTF8String:providerName],
+                              @"refKey" : refKeyString}];
         proxies = ms_list_next(proxies);
     }
     
@@ -153,6 +195,22 @@
 - (void)deleteContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
     const LinphoneFriend* friend = [self createContactFromName:name andSipUri:sipURI];
     [self deleteContact:friend];
+}
+
+- (BOOL)deleteContactWithRefKey:(NSString *)refKey {
+    
+    LinphoneFriend * deletedFriend = linphone_core_get_friend_by_ref_key([LinphoneManager getLc], [refKey UTF8String]);
+    
+    if (deletedFriend) {
+        
+        LinphoneFriendList *defaultFriendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+        if (linphone_friend_list_remove_friend(defaultFriendList, deletedFriend) == LinphoneFriendListOK) {
+            return YES;
+        }
+        
+    }
+
+    return NO;
 }
 
 - (void)deleteContactList {

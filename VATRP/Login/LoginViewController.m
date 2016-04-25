@@ -159,7 +159,6 @@
     [self.prog_Signin setHidden:NO];
     [self.prog_Signin startAnimation:self];
     [self.loginButton setEnabled:NO];
-    [self setOutboundProxyServer];
     
     loginClicked = true;
     NSString* userName = [self.textFieldUsername.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -207,6 +206,8 @@
                                                                 andPassword:password];
         [DefaultSettingsManager sharedInstance].delegate = self;
     }
+    
+     [self setOutboundProxyServer];
     
 }
 

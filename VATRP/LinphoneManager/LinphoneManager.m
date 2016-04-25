@@ -765,9 +765,11 @@ static void linphone_info_received (LinphoneCore *lc, LinphoneCall *call, const 
     LinphoneCall* currentCall = linphone_core_get_current_call(theLinphoneCore);
     if (call == currentCall) {
         const char* videoModeStatus = linphone_info_message_get_header(msg, "action");
-        NSDictionary *dict = @{@"videoModeStatus": [NSString stringWithUTF8String:videoModeStatus]
-                               };
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneVideModeUpdate object:self userInfo:dict];
+        if (videoModeStatus) {
+            NSDictionary *dict = @{@"videoModeStatus": [NSString stringWithUTF8String:videoModeStatus]
+                                   };
+            [[NSNotificationCenter defaultCenter] postNotificationName:kLinphoneVideModeUpdate object:self userInfo:dict];
+        }
     }
 }
 

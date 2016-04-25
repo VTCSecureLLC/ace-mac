@@ -578,8 +578,6 @@
     {
         NSString* address;
         const LinphoneAddress* addr = linphone_call_get_remote_address(call);
-        char * remoteAddress = linphone_call_get_remote_address_as_string(call);
-        NSString  *sipURI = [NSString stringWithUTF8String:remoteAddress];
         if (addr != NULL) {
             BOOL useLinphoneAddress = true;
             // contact name

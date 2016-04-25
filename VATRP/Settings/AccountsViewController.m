@@ -144,7 +144,7 @@
     } else {
         self.textCardDavRealmName.stringValue = @"";
     }
-    
+
     [self setOutboundProxy];
 }
 
@@ -323,6 +323,16 @@
     }
     
     if ([self.textFieldPort.stringValue isEqual:@""] && !error) {
+        error = YES;
+        errorString = @"Port field is required";
+    }
+    
+    if ([self.textCardDavRealmName.stringValue isEqual:@""] && !error) {
+        error = YES;
+        errorString = @"Port field is required";
+    }
+    
+    if ([self.textCardDavServerPath.stringValue isEqual:@""] && !error) {
         error = YES;
         errorString = @"Port field is required";
     }

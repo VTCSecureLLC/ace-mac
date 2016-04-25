@@ -33,7 +33,6 @@ typedef struct _LinphoneCardDAVStats {
     VideoCallWindowController *videoCallWindowController;
     AboutWindowController *aboutWindowController;
     LinphoneCardDAVStats _cardDavStats;
-    AccountModel *accountModel;
 }
 
 @end
@@ -435,8 +434,8 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
 }
 
 - (void)syncContacts {
-    
-    accountModel = [[AccountsService sharedInstance] getDefaultAccount];
+
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
     const char *cardDavUser = "";
     const char *cardDavPass = "";

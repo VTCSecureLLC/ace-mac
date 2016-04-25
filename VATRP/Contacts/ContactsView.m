@@ -37,6 +37,7 @@
 @property IBOutlet NSButton *allContactsButton;
 @property IBOutlet NSButton *favoriteContactsButton;
 @property (strong, nonatomic) NSMutableArray *contactInfos;
+@property (strong, nonatomic) NSString *selectedFriendRefKey;
 
 @end
 
@@ -156,12 +157,17 @@
         return;
     }
     [self refreshContactList];
-    if ([[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI]) {
+    
+    if ([[LinphoneContactService sharedInstance] editContactWithNewDisplayName:newDisplayName andSipUri:newSipURI andWithRefKey:_selectedFriendRefKey]) {
+        
         int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
         [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
-        NSString *oldDisplayName = [contactInfo objectForKey:@"oldName"];
-        NSString *oldSipURI = [contactInfo objectForKey:@"oldPhone"];
-        [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:oldDisplayName andSipUri:oldSipURI];
+        
+//        NSString *oldDisplayName = [contactInfo objectForKey:@"oldName"];
+//        NSString *oldSipURI = [contactInfo objectForKey:@"oldPhone"];
+//        [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:oldDisplayName andSipUri:oldSipURI];
+//        
+        
         [self refreshContactList];
     } else {
         NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect number format"
@@ -378,6 +384,7 @@
     [cellView.nameTextField setStringValue:[dict objectForKey:@"name"]];
     [cellView.phoneTextField setStringValue:[dict objectForKey:@"phone"]];
     cellView.providerName = [dict objectForKey:@"provider"];
+    cellView.refKey = [dict objectForKey:@"refKey"];
     NSImage *contactImage = [[NSImage alloc]initWithContentsOfFile:[[ContactPictureManager sharedInstance] imagePathByName:[dict objectForKey:@"name"] andSipURI:[dict objectForKey:@"phone"]]];
     if (contactImage) {
         [cellView.imgView setImage:contactImage];
@@ -405,15 +412,19 @@
                                        otherButton:nil informativeTextWithFormat:@""];
     [alert beginSheetModalForWindow:[self.clearListButton window] completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == 0) {
-            [[ContactFavoriteManager sharedInstance] deleteContactFavoriteOptionWithName:[contactCellView.nameTextField stringValue] andAddress:[contactCellView.phoneTextField stringValue]];
-            [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:[contactCellView.nameTextField stringValue] andSipUri:[contactCellView.phoneTextField stringValue]];
-            [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:[contactCellView.phoneTextField stringValue]];
-            [self refreshContactList];
+            if ([[LinphoneContactService sharedInstance] deleteContactWithRefKey:contactCellView.refKey]) {
+                [[ContactFavoriteManager sharedInstance] deleteContactFavoriteOptionWithName:[contactCellView.nameTextField stringValue] andAddress:[contactCellView.phoneTextField stringValue]];
+                [[ContactPictureManager sharedInstance] deleteImageWithName:[contactCellView.nameTextField stringValue] andSipURI:[contactCellView.phoneTextField stringValue]];
+                [self refreshContactList];
+            }
         }
     }];
 }
 
 - (void)didClickEditButton:(ContactTableCellView *)contactCellView {
+    
+    _selectedFriendRefKey = contactCellView.refKey;
+    
     AppDelegate *app = [AppDelegate sharedInstance];
     if (!app.addContactWindowController)
     {

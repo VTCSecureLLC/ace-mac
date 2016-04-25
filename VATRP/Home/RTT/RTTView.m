@@ -207,7 +207,7 @@ const NSInteger SIP_SIMPLE=1;
     if (![self getCurrentChatRoom])
         return;
     
-//    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 1);
+    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 0);
 }
 
 - (void)clearMessageList {
@@ -622,6 +622,9 @@ long msgSize; //message length buffer
             LinphoneChatRoom* chatRoom = [self getCurrentChatRoom];
             [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:chatRoom];
 
+            // we must ref & unref message because in case of error, it will be destroy otherwise
+            linphone_chat_room_send_chat_message(chatRoom, linphone_chat_message_ref(outgoingChatMessage));
+
             self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
             
             [self.tableViewContent reloadData];
@@ -664,8 +667,8 @@ long msgSize; //message length buffer
     if (externalUrl) {
         linphone_chat_message_set_external_body_url(msg, [[externalUrl absoluteString] UTF8String]);
     }
-    
-    linphone_chat_room_send_message2(room, msg, message_status, (__bridge void *)(self));
+
+    linphone_chat_room_send_chat_message(room, msg);
     
     if (internalUrl) {
         // internal url is saved in the appdata for display and later save

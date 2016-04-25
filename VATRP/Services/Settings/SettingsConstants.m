@@ -13,6 +13,8 @@
 
 // account
 NSString *const VIDEO_MAIL_URI = @"sip_videomail_uri";
+NSString *const CARDDAV_SERVER_PATH = @"carddav_server_path";
+NSString *const CARDDAV_REALM_NAME = @"carddav_reaml_name";
 
 // AV Settings
 NSString *const MUTE_SPEAKER = @"SPEAKER_MUTE";

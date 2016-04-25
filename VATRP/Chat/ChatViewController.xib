@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ChatViewController">
             <connections>
-                <outlet property="buttonCall" destination="m9l-uA-dbj" id="CPo-vT-9lp"/>
+                <outlet property="buttonCall" destination="qQV-09-x42" id="gkc-Gg-HGs"/>
                 <outlet property="scrollViewContacts" destination="RDm-4F-Xx7" id="ZKH-d5-PI7"/>
                 <outlet property="scrollViewContent" destination="sfW-po-6Ft" id="6bs-Hz-Wg1"/>
                 <outlet property="scrollViewIncoming" destination="eLu-wW-nnN" id="P3q-fi-qoK"/>
@@ -314,14 +314,14 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </searchFieldCell>
                 </searchField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-uA-dbj">
-                    <rect key="frame" x="621" y="455" width="70" height="32"/>
-                    <buttonCell key="cell" type="push" title="Call" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kw5-Pz-y1b">
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qQV-09-x42">
+                    <rect key="frame" x="610" y="449" width="84" height="51"/>
+                    <buttonCell key="cell" type="square" title="Call" bezelStyle="shadowlessSquare" image="Calll_icon" imagePosition="left" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="z37-Ec-1dh">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onButtonCall:" target="-2" id="55F-sw-7qj"/>
+                        <action selector="onButtonCall:" target="-2" id="Rxx-f3-vZF"/>
                     </connections>
                 </button>
             </subviews>
@@ -329,6 +329,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="Calll_icon" width="256" height="256"/>
         <image name="NSActionTemplate" width="14" height="14"/>
     </resources>
 </document>

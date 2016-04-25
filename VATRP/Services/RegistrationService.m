@@ -234,7 +234,6 @@
                                                     ,linphone_proxy_config_get_domain(proxyCfg));
     
     [self setDefaultSettings:proxyCfg];
-    
     [self clearProxyConfig];
     
     NSString *serverAddress = [NSString stringWithFormat:@"sip:%@:%d;transport=%@", domain, port, transport];
@@ -243,6 +242,7 @@
     linphone_core_add_auth_info(lc, info);
     linphone_core_add_proxy_config(lc, proxyCfg);
     linphone_core_set_default_proxy_config(lc, proxyCfg);
+    linphone_core_set_inc_timeout([LinphoneManager getLc], 300);
     
     PayloadType *pt;
     const MSList *elem;
@@ -326,6 +326,7 @@
 //        [[NSUserDefaults standardUserDefaults] synchronize];
 //    }
 
+         linphone_proxy_config_set_expires(linphone_core_get_default_proxy_config([LinphoneManager getLc]), ([DefaultSettingsManager sharedInstance].exparitionTime)?[DefaultSettingsManager sharedInstance].exparitionTime:280);
     return TRUE;
 }
 

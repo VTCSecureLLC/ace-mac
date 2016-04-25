@@ -580,6 +580,7 @@ BOOL isRTTLocallyEnabled;
         case LinphoneCallOutgoingInit: {
             [self setControllersToDefaultState];
 
+            self.buttonDeclineMessages.hidden = YES;
             self.labelCallState.hidden = NO;
             self.labelCallState.stringValue = @"Calling...";
         }

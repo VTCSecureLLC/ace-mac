@@ -31,6 +31,7 @@
 @property (weak) IBOutlet NSMenuItem *menuItemSelfPreview;
 @property (weak) IBOutlet NSMenuItem *menuItemGoToSupport;
 @property (weak) IBOutlet NSMenuItem *menuItemWelcomeTour;
+@property (weak) IBOutlet NSMenuItem *menuItemSyncContacts;
 
 //@property (weak) IBOutlet NSMenuItem *menuItemFEDVRS;
 //@property (weak) IBOutlet NSMenuItem *menuItemZVRS;

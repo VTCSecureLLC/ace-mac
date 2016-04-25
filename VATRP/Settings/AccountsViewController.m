@@ -247,6 +247,12 @@
     
     [self configureOutboundProxyServer];
     
+    if (![self.textCardDavRealmName.stringValue isEqualToString:@""]) {
+        [[AppDelegate sharedInstance].menuItemSyncContacts setEnabled:YES];
+    } else {
+        [[AppDelegate sharedInstance].menuItemSyncContacts setEnabled:NO];
+    }
+    
     return YES;
 }
 
@@ -327,14 +333,10 @@
         errorString = @"Port field is required";
     }
     
-    if ([self.textCardDavRealmName.stringValue isEqual:@""] && !error) {
+    NSString *cardDavSettingsValidness = [self checkCardDavConfigSettings];
+    if (![cardDavSettingsValidness isEqualToString:@""]) {
         error = YES;
-        errorString = @"Port field is required";
-    }
-    
-    if ([self.textCardDavServerPath.stringValue isEqual:@""] && !error) {
-        error = YES;
-        errorString = @"Port field is required";
+        errorString = cardDavSettingsValidness;
     }
     
     if (error) {
@@ -345,6 +347,19 @@
     }
     
     return error;
+}
+
+- (NSString*)checkCardDavConfigSettings {
+    
+    if ([self.textCardDavRealmName.stringValue isEqualToString:@""] && ![self.textCardDavServerPath.stringValue isEqualToString:@""]) {
+        return @"The CardDav Realm can't be an empty";
+    }
+    
+    if (![self.textCardDavRealmName.stringValue isEqualToString:@""] && [self.textCardDavServerPath.stringValue isEqualToString:@""]) {
+        return @"The CardDav URL can't be an empty";
+    }
+    
+    return @"";
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {

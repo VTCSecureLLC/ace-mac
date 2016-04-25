@@ -487,6 +487,8 @@ static void carddav_contact_created(LinphoneFriendList *list, LinphoneFriend *lf
         // create contact
         // add contact to default friend list
         LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
+        NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+        linphone_friend_set_ref_key(lf, [timestamp UTF8String]);
         LinphoneFriendListStatus status = linphone_friend_list_add_friend(friendList, lf);
         if (status == LinphoneFriendListInvalidFriend) {
             NSLog(@"SYNC ERROR: Invalid friend");

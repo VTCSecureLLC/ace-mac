@@ -204,7 +204,7 @@
         [self setUserSettingFloat:PREFERRED_FPS withValue:30.0f];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:RTCP_FB_MODE] == nil){
-        [self setUserSettingString:RTCP_FB_MODE withValue:@"Explicit"];
+        [self setUserSettingString:RTCP_FB_MODE withValue:@"Implicit"];
     }
     if (force || [[NSUserDefaults standardUserDefaults]objectForKey:VIDEO_SHOW_SELF_VIEW] == nil)
     {

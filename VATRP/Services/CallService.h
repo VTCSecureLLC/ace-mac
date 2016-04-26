@@ -17,12 +17,14 @@
 - (void)closeCallWindowController;
 + (void) callTo:(NSString*)number;
 - (int) decline:(LinphoneCall*)aCall;
-- (void) accept:(LinphoneCall*)aCall;
+- (bool) accept:(LinphoneCall*)aCall;
 - (void) pause:(LinphoneCall*)aCall;
 - (void) resume:(LinphoneCall*)aCall;
 - (void) swapCallsToCall:(LinphoneCall*)aCall;
 - (LinphoneCall*) getCurrentCall;
+- (NSString*) getLastCalledUsername;
 - (void)setDeclineMessage:(NSString*)declineMsg;
+- (void) closeCallWindow;
 
 //-(void)tempDebugMethodForIncomingCall:(NSString*)message call:(LinphoneCall*)call
 

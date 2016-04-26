@@ -207,7 +207,7 @@ const NSInteger SIP_SIMPLE=1;
     if (![self getCurrentChatRoom])
         return;
     
-//    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 1);
+    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 0);
 }
 
 - (void)clearMessageList {
@@ -369,12 +369,17 @@ static void chatTable_free_chatrooms(void *data) {
                 incomingChatMessage = nil;
                 incomingCellView = nil;
             } else {
+                if(rttCode == 8 && !incomingChatMessage) {
+                    return;
+                }
+                
+                BOOL removeMessage = NO;
                 if (incomingChatMessage) {
                     const char *text_char = linphone_chat_message_get_text(incomingChatMessage);
+                    NSString *str_msg = [NSString stringWithUTF8String:text_char];
                     
                     if ((text_char != nil) && strlen(text_char)) {
                         self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
-                        NSString *str_msg = [NSString stringWithUTF8String:text_char];
                         if ([text isEqualToString:@"\b"]) {
                             if (str_msg && str_msg.length > 0) {
                                 str_msg = [str_msg substringToIndex:str_msg.length - 1];
@@ -384,14 +389,26 @@ static void chatTable_free_chatrooms(void *data) {
                         }
                         
                         incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [str_msg UTF8String]);
+                        
+                        if (!str_msg || !str_msg.length) {
+                            removeMessage = YES;
+                        }
                     } else {
+                        if (str_msg && !str_msg.length) {
+                            removeMessage = YES;
+                        }
+
                         incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
                     }
                 } else {
                     incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
                 }
                 
-                self->messageList = ms_list_append(self->messageList, incomingChatMessage);
+                if (removeMessage) {
+                    self->messageList = ms_list_remove(self->messageList, incomingChatMessage);
+                } else {
+                    self->messageList = ms_list_append(self->messageList, incomingChatMessage);
+                }
                 
                 if (incomingCellView) {
                     CGFloat lineCount = [ChatItemTableCellView height:incomingChatMessage width:[self getFrame].size.width];
@@ -403,6 +420,10 @@ static void chatTable_free_chatrooms(void *data) {
                     }
                 } else {
                     [self.tableViewContent reloadData];
+                }
+
+                if (removeMessage) {
+                    incomingChatMessage = nil;
                 }
                 
                 NSInteger count = ms_list_size(messageList);
@@ -601,6 +622,9 @@ long msgSize; //message length buffer
             LinphoneChatRoom* chatRoom = [self getCurrentChatRoom];
             [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:chatRoom];
 
+            // we must ref & unref message because in case of error, it will be destroy otherwise
+            linphone_chat_room_send_chat_message(chatRoom, linphone_chat_message_ref(outgoingChatMessage));
+
             self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
             
             [self.tableViewContent reloadData];
@@ -643,8 +667,8 @@ long msgSize; //message length buffer
     if (externalUrl) {
         linphone_chat_message_set_external_body_url(msg, [[externalUrl absoluteString] UTF8String]);
     }
-    
-    linphone_chat_room_send_message2(room, msg, message_status, (__bridge void *)(self));
+
+    linphone_chat_room_send_chat_message(room, msg);
     
     if (internalUrl) {
         // internal url is saved in the appdata for display and later save

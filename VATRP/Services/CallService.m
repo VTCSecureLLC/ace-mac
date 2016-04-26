@@ -681,16 +681,18 @@
 - (void) close {
     declinedMessage = nil;
 
-    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    
-    if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
-        [window toggleFullScreen:self];
-        [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+    if (![CallService callsCount]) {
+        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+        
+        if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+            [window toggleFullScreen:self];
+            [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+        }
+        
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+                 display:YES
+                 animate:YES];
     }
-    
-    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-             display:YES
-             animate:YES];
 }
 
 - (void) closeCallWindow {

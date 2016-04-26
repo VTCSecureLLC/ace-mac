@@ -517,7 +517,10 @@
             lMessage = [dict objectForKey:@"message"];
         }
     }
-    self.labelCallState.stringValue = lMessage;
+    
+    if (lMessage) {
+        self.labelCallState.stringValue = lMessage;
+    }
 }
 
 - (void)dismiss {

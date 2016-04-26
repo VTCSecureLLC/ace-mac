@@ -345,6 +345,23 @@
 }
 
 - (void)textReceivedEvent:(NSNotification *)notif {
+    NSDictionary *dict = notif.userInfo;
+    const LinphoneAddress* from_addr = NULL;
+    if (dict && [dict isKindOfClass:[NSDictionary class]]) {
+        LinphoneChatMessage *msg = [[notif.userInfo objectForKey:@"message"] pointerValue];
+         from_addr = linphone_chat_message_get_from_address(msg);
+    }
+    const MSList *calls = linphone_core_get_calls([LinphoneManager getLc]);
+    LinphoneCall *call;
+    if(calls && ms_list_size(calls) > 0){
+        for(int i = 0; i < ms_list_size(calls); i++){
+            call = ms_list_nth_data(calls, i);
+            if(strcmp(linphone_call_get_remote_address_as_string(call), linphone_address_as_string( from_addr)) == 0 && linphone_call_get_state(call) == LinphoneCallStreamsRunning){
+                return;
+            }
+        }
+    }
+
     if (![[ChatService sharedInstance] isOpened]) {
         [self.badgeOnMessages setHidden:NO];
     }

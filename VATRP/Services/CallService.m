@@ -101,6 +101,10 @@
 + (void) callTo:(NSString*)number {
     LinphoneCore *lc = [LinphoneManager getLc];
 
+    [NSApp activateIgnoringOtherApps:YES];
+    [[AppDelegate sharedInstance].homeWindowController.window makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:false];
+
     if (![number stringByReplacingOccurrencesOfString:@" " withString:@""].length) {
         NSAlert *alert = [[NSAlert alloc]init];
         [alert addButtonWithTitle:NSLocalizedString(@"OK",nil)];

@@ -248,6 +248,16 @@
                 [[CallService sharedInstance] setDeclineMessage:[messageText substringFromIndex:CALL_DECLINE_PREFIX.length]];
             }
         } else {
+            const MSList *calls = linphone_core_get_calls([LinphoneManager getLc]);
+            LinphoneCall *call;
+            if(calls && ms_list_size(calls) > 0){
+                for(int i = 0; i < ms_list_size(calls); i++){
+                    call = ms_list_nth_data(calls, i);
+                    if(strcmp(linphone_call_get_remote_address_as_string(call), linphone_address_as_string(from_addr)) == 0 && linphone_call_get_state(call) == LinphoneCallStreamsRunning){
+                        return;
+                    }
+                }
+            }
             if (!chatWindowController || !chatWindowController.isShow) {
                 unread_messages++;
                 [[NSNotificationCenter defaultCenter] postNotificationName:kCHAT_UNREAD_MESSAGE
@@ -264,7 +274,7 @@
     if (!msg) {
         return;
     }
-    
+       
     const LinphoneAddress* remoteAddress = linphone_chat_message_get_from_address(msg);
     const char *c_username                = linphone_address_get_username(remoteAddress);
     

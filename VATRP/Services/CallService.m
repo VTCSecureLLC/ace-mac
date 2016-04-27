@@ -101,6 +101,10 @@
 + (void) callTo:(NSString*)number {
     LinphoneCore *lc = [LinphoneManager getLc];
 
+    [NSApp activateIgnoringOtherApps:YES];
+    [[AppDelegate sharedInstance].homeWindowController.window makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:false];
+
     if (![number stringByReplacingOccurrencesOfString:@" " withString:@""].length) {
         NSAlert *alert = [[NSAlert alloc]init];
         [alert addButtonWithTitle:NSLocalizedString(@"OK",nil)];
@@ -681,16 +685,18 @@
 - (void) close {
     declinedMessage = nil;
 
-    NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
-    
-    if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
-        [window toggleFullScreen:self];
-        [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+    if (![CallService callsCount]) {
+        NSWindow *window = [AppDelegate sharedInstance].homeWindowController.window;
+        
+        if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].isAppFullScreen) {
+            [window toggleFullScreen:self];
+            [window setStyleMask:[window styleMask] & ~NSResizableWindowMask]; // non-resizable
+        }
+        
+        [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
+                 display:YES
+                 animate:YES];
     }
-    
-    [window setFrame:NSMakeRect(window.frame.origin.x, window.frame.origin.y, 310, window.frame.size.height)
-             display:YES
-             animate:YES];
 }
 
 - (void) closeCallWindow {

@@ -361,6 +361,10 @@
             
             [self stopRingCountTimer];
             [self stopCallFlashingAnimation];
+            // Disable self preview and set off the Mac camera.
+            linphone_core_enable_video_preview(lc, FALSE);
+            linphone_core_use_preview_window(lc, FALSE);
+            linphone_core_enable_self_view([LinphoneManager getLc], FALSE);
             [self displayCallError:acall message:@"Call Error"];
             numpadView.hidden = YES;
             self.call = nil;
@@ -991,7 +995,7 @@
     [self startCallDeclineMessageAnimation];
     
     [self.callControllsConteinerView setHidden:NO];
-    self.viewCallDeclineMessage.hidden = NO;
+    self.viewCallDeclineMessage.hidden = YES;
     self.labelCallState.stringValue = @"Call declined";
     self.labelCallDeclineMessage.stringValue = declineMsg;
 }

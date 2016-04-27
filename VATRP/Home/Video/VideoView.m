@@ -511,11 +511,13 @@
         LinphoneReason reason = linphone_call_get_reason(call_);
         NSDictionary *dict = [callErrorStatuses objectForKey:[Utils callStateStringByIndex:[NSNumber numberWithInt:reason]]];
         
-        if (![[dict objectForKey:@"code"] isEqualToString:@""]) {
-            lMessage = [[[[dict objectForKey:@"message"] stringByAppendingString:@"(sip: "] stringByAppendingString:[dict objectForKey:@"code"]] stringByAppendingString:@")"];
-        } else {
-            lMessage = [dict objectForKey:@"message"];
-        }
+//        if (![[dict objectForKey:@"code"] isEqualToString:@""]) {
+//            lMessage = [[[[dict objectForKey:@"message"] stringByAppendingString:@"(sip: "] stringByAppendingString:[dict objectForKey:@"code"]] stringByAppendingString:@")"];
+//        } else {
+//            lMessage = [dict objectForKey:@"message"];
+//        }
+        
+        lMessage = [dict objectForKey:@"message"];
     }
     
     if (lMessage) {

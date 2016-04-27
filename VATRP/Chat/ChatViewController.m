@@ -473,15 +473,16 @@ static void chatTable_free_chatrooms(void *data) {
             
             if (last_message) {
                 const char *text = linphone_chat_message_get_text(last_message);
-                NSString *lastMessageStr = [NSString stringWithUTF8String:text];
-                
-                if ([lastMessageStr hasPrefix:CALL_DECLINE_PREFIX]) {
-                    lastMessageStr = [lastMessageStr substringFromIndex:CALL_DECLINE_PREFIX.length];
-                    lastMessageStr = [@"Call declined with message: " stringByAppendingString:lastMessageStr];
-                }
+                if (text) {
+                    NSString *lastMessageStr = [NSString stringWithUTF8String:text];
+                    
+                    if ([lastMessageStr hasPrefix:CALL_DECLINE_PREFIX]) {
+                        lastMessageStr = [lastMessageStr substringFromIndex:CALL_DECLINE_PREFIX.length];
+                        lastMessageStr = [@"Call declined with message: " stringByAppendingString:lastMessageStr];
+                    }
 
-                [cellView.textFieldLastMessage setStringValue:lastMessageStr];
-                
+                    [cellView.textFieldLastMessage setStringValue:lastMessageStr];
+                }
 //                time_t new = linphone_chat_message_get_time(last_message);
                 
                 

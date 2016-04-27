@@ -482,10 +482,9 @@ static void chatTable_free_chatrooms(void *data) {
                     }
 
                     [cellView.textFieldLastMessage setStringValue:lastMessageStr];
+                } else {
+                    [cellView.textFieldLastMessage setStringValue:@""];
                 }
-//                time_t new = linphone_chat_message_get_time(last_message);
-                
-                
             }
             
             int unreadMessageCount = linphone_chat_room_get_unread_messages_count(chatRoom);

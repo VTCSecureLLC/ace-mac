@@ -989,7 +989,7 @@
     [self startCallDeclineMessageAnimation];
     
     [self.callControllsConteinerView setHidden:NO];
-    self.viewCallDeclineMessage.hidden = NO;
+    self.viewCallDeclineMessage.hidden = YES;
     self.labelCallState.stringValue = @"Call declined";
     self.labelCallDeclineMessage.stringValue = declineMsg;
 }

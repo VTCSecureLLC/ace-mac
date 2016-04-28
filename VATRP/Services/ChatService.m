@@ -227,28 +227,7 @@
         const char *text = linphone_chat_message_get_text(msg);
         
         NSString *messageText = text ? [Utils decodeTextMessage:text] : @"";
-        
-        if ([messageText hasPrefix:CALL_DECLINE_PREFIX]) {
-            LinphoneCall *call = [[CallService sharedInstance] getCurrentCall];
-            
-            NSString *callerUsername = nil;
-            
-            if (!call) {
-                callerUsername = [[CallService sharedInstance] getLastCalledUsername];
-            } else {
-                const LinphoneAddress* call_addr = linphone_call_get_remote_address(call);
-                const char *call_username = linphone_address_get_username(call_addr);
-                callerUsername = [NSString stringWithUTF8String:call_username];
-            }
-            
-
-            const char *msg_username = linphone_address_get_username(from_addr);
-            
-            if ([callerUsername isEqualToString:[NSString stringWithUTF8String:msg_username]]) {
-                [[CallService sharedInstance] setDeclineMessage:[messageText substringFromIndex:CALL_DECLINE_PREFIX.length]];
-            }
-        } else {
-            const MSList *calls = linphone_core_get_calls([LinphoneManager getLc]);
+                   const MSList *calls = linphone_core_get_calls([LinphoneManager getLc]);
             LinphoneCall *call;
             if(calls && ms_list_size(calls) > 0){
                 for(int i = 0; i < ms_list_size(calls); i++){
@@ -265,7 +244,6 @@
                                                                   userInfo:nil];
                 
                 [self showNotification:msg];
-            }
         }
     }
 }

@@ -388,7 +388,7 @@ static void chatTable_free_chatrooms(void *data) {
                             str_msg = [str_msg stringByAppendingString:text];
                         }
                         
-                        incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [str_msg UTF8String]);
+                        incomingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [str_msg UTF8String], NULL, LinphoneChatMessageStateDelivered, time(NULL), YES, YES);
                         
                         if (!str_msg || !str_msg.length) {
                             removeMessage = YES;
@@ -398,10 +398,10 @@ static void chatTable_free_chatrooms(void *data) {
                             removeMessage = YES;
                         }
 
-                        incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
+                        incomingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [str_msg UTF8String], NULL, LinphoneChatMessageStateDelivered, time(NULL), YES, YES);
                     }
                 } else {
-                    incomingChatMessage = linphone_chat_room_create_message([self getCurrentChatRoom], [text UTF8String]);
+                        incomingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [text UTF8String], NULL, LinphoneChatMessageStateDelivered, time(NULL), YES, YES);
                 }
                 
                 if (removeMessage) {
@@ -508,7 +508,7 @@ long msgSize; //message length buffer
     
         if (chat_room) {
                 const char* character = [pastedMsg UTF8String];
-                LinphoneChatMessage* rtt_message = linphone_chat_room_create_message(chat_room, character);
+                LinphoneChatMessage* rtt_message = linphone_chat_room_create_message_2(chat_room, character, NULL, LinphoneChatMessageStateDelivered, time(NULL), YES, NO);
                 //RTT limited to 30 cps
                 for (int i = 0; i < strlen(character); i++) {
                             if(i % 14 == 0 && i != 0){
@@ -618,7 +618,7 @@ long msgSize; //message length buffer
             [self sendMessage:self.textFieldMessage.stringValue withExterlBodyUrl:nil withInternalURL:nil LinphoneChatRoom:[self getCurrentChatRoom]];
         } else {
         
-            outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
+            outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, time(NULL), YES, NO);
             LinphoneChatRoom* chatRoom = [self getCurrentChatRoom];
             [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:chatRoom];
 

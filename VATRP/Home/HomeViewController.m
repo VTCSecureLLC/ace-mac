@@ -21,7 +21,7 @@
 #import "DockView.h"
 #import "SettingsConstants.h"
 #import "ChatService.h"
-
+#import "AccountsService.h"
 @interface HomeViewController () <MoreSectionViewControllerDelegate>
 {
     BackgroundedViewController *viewCurrent;
@@ -501,7 +501,17 @@ bool dialPadIsShown;
 }
 
 - (void)openVideomail {
-    // No functionaly yet.
+    NSString* videoMailUri;
+    if([[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI] != nil)
+    {
+        videoMailUri = [[NSUserDefaults standardUserDefaults] objectForKey:VIDEO_MAIL_URI];
+    }
+    if ((videoMailUri == nil) || ([videoMailUri length] == 0))
+    {
+        AccountModel* myAccount = [[AccountsService sharedInstance] getDefaultAccount];
+        videoMailUri = [NSString stringWithFormat:@"sip:%@@%@;user=phone", [myAccount username], [myAccount domain]];// my sip address
+    }
+    [[LinphoneManager instance] call:videoMailUri displayName:@"Videomail" transfer:NO];
 }
 
 - (void)switchSelfViewOn:(bool)onOff {

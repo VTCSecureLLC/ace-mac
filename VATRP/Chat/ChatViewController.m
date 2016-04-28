@@ -473,7 +473,6 @@ static void chatTable_free_chatrooms(void *data) {
             
             if (last_message) {
                 const char *text = linphone_chat_message_get_text(last_message);
-                
                 if (text) {
                     NSString *lastMessageStr = [NSString stringWithUTF8String:text];
                     

@@ -13,6 +13,7 @@
 
 @interface AddContactWindowController : NSWindowController
 -(void)setIsEditing:(bool)isEditing;
+-(void)initializeDataWith:(bool)isEditing oldName:(NSString*)oldName oldPhone:(NSString*)oldPhone oldProviderName:(NSString*)oldProviderName refKey:(NSString*)refKey;
 -(void)initializeDataWith:(bool)isEditing oldName:(NSString*)oldName oldPhone:(NSString*)oldPhone oldProviderName:(NSString*)oldProviderName;
 
 @end

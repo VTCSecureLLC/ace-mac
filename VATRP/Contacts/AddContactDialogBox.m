@@ -115,7 +115,7 @@
 }
 
 - (void)setFavoriteState {
-    int isFavorite = [[ContactFavoriteManager sharedInstance] isContactFavoriteWithName:self.oldName andAddress:self.oldPhone];
+    int isFavorite = [[ContactFavoriteManager sharedInstance] isContactFavoriteWithRefKey:self.refKey];
     [self.favoritesCheckBox setState:isFavorite];
 }
 

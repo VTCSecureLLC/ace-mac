@@ -17,7 +17,10 @@
 
 - (void)createFavoriteTablesInFriendListByPath;
 - (void)updateContactFavoriteOptionByName:(NSString*)name contactAddress:(NSString*)sipURI andFavoriteOptoin:(int)isFavorite;
+- (void)updateContactFavoriteOptionByRefKey:(NSString*)refKey andFavoriteOptoin:(int)isFavorite;
+- (int)findContactIDWithRefKey:(NSString*)refKey;
 - (BOOL)isContactFavoriteWithName:(NSString*)name andAddress:(NSString*)sipURI;
+- (BOOL)isContactFavoriteWithRefKey:(NSString*)refKey;
 - (void)deleteContactFavoriteOptionWithName:(NSString*)name andAddress:(NSString*)sipURI;
 
 @end

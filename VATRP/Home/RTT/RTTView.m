@@ -207,7 +207,7 @@ const NSInteger SIP_SIMPLE=1;
     if (![self getCurrentChatRoom])
         return;
     
-    messageList = linphone_chat_room_get_history([self getCurrentChatRoom], 0);
+    messageList = [self sortChatMessagesByCallDuration]; //linphone_chat_room_get_history([self getCurrentChatRoom], 0);
 }
 
 - (void)clearMessageList {
@@ -216,6 +216,32 @@ const NSInteger SIP_SIMPLE=1;
         messageList = nil;
     }
 }
+-(MSList *)sortChatMessagesByCallDuration {
+        MSList *messages =  linphone_chat_room_get_history([self getCurrentChatRoom], 0);
+        const MSList *iter = ms_list_copy(messages);
+        LinphoneCall *call = linphone_core_get_current_call([LinphoneManager getLc]);
+        if(!call) return 0;
+
+        while (iter != NULL) {
+            if(iter->data != NULL){
+                LinphoneChatMessage *msg = iter->data;
+                long timeElapsedSinceCallStart = linphone_call_log_get_start_date(linphone_call_get_call_log(call));
+                long timeStamp = linphone_chat_message_get_time(msg);
+
+                NSLog(@"%d", linphone_call_get_duration(call));
+                NSLog(@"timeElapsedSinceCallStart = %ld", timeElapsedSinceCallStart);
+                NSLog(@"Message timeStamp = %ld", timeStamp);
+                if(timeStamp < timeElapsedSinceCallStart ){
+                        NSLog(@"Removing message from previous call");
+                        messages = ms_list_remove(messages, msg);
+                }
+            }
+            iter = iter->next;
+        }
+
+        return messages;
+    }
+
 
 #pragma mark -
 
@@ -314,12 +340,11 @@ static void chatTable_free_chatrooms(void *data) {
 - (void)callUpdate:(LinphoneCall *)acall state:(LinphoneCallState)astate {
     switch (astate) {
         case LinphoneCallConnected:{
-            [self clearMessageList];
-            [self.tableViewContent reloadData];
         }
         break;
         case LinphoneCallStreamsRunning: {
-            //            [self updateContentData];
+            [self clearMessageList];
+            [self.tableViewContent reloadData];
         }
             break;
         default:

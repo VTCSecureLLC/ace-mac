@@ -225,7 +225,7 @@ const NSInteger SIP_SIMPLE=1;
         while (iter != NULL) {
             if(iter->data != NULL){
                 LinphoneChatMessage *msg = iter->data;
-                long timeElapsedSinceCallStart = time(NULL) - linphone_call_get_duration(call);
+                long timeElapsedSinceCallStart = linphone_call_log_get_start_date(linphone_call_get_call_log(call));
                 long timeStamp = linphone_chat_message_get_time(msg);
 
                 NSLog(@"%d", linphone_call_get_duration(call));

@@ -243,17 +243,17 @@
         error = YES;
         errorString = @"Port field is required";
     }
-    
+   /*
     if ([self.textCardDavRealmName.stringValue isEqual:@""] && !error) {
         error = YES;
-        errorString = @"Port field is required";
+        errorString = @"CardDAV RealmName field is required";
     }
     
     if ([self.textCardDavServerPath.stringValue isEqual:@""] && !error) {
         error = YES;
-        errorString = @"Port field is required";
+        errorString = @"CardDAV ServerPath field is required";
     }
-    
+    */
     if (error) {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"OK"];

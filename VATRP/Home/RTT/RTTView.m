@@ -623,7 +623,7 @@ long msgSize; //message length buffer
             [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:chatRoom];
 
             // we must ref & unref message because in case of error, it will be destroy otherwise
-            linphone_chat_room_send_chat_message(chatRoom, linphone_chat_message_ref(outgoingChatMessage));
+//            linphone_chat_room_send_chat_message(chatRoom, linphone_chat_message_ref(outgoingChatMessage));
 
             self->messageList = ms_list_append(self->messageList, outgoingChatMessage);
             

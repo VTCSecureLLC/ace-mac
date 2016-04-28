@@ -236,6 +236,7 @@ static NSFont *CELL_FONT = nil;
                 [labelChat setFont:font];
                 labelChat.string = nstext;
             }
+            [labelChat scrollRangeToVisible: NSMakeRange(labelChat.string.length, 0)];
         } else {
             labelChat.string = @"";
         }
@@ -338,8 +339,10 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     const char *text = linphone_chat_message_get_text(chat);
     NSString *messageText = text ? [ChatItemTableCellView decodeTextMessage:text] : @"";
     
+    BOOL hasDeclinePrefix = NO;
     if (messageText && [messageText hasPrefix:CALL_DECLINE_PREFIX]) {
-        return CGSizeMake(220 + CELL_MESSAGE_X_MARGIN, 85);
+        messageText = [messageText substringFromIndex:CALL_DECLINE_PREFIX.length];
+        hasDeclinePrefix = YES;
     }
     
     if (url == nil && linphone_chat_message_get_file_transfer_information(chat) == NULL) {
@@ -368,6 +371,11 @@ static void message_status(LinphoneChatMessage *msg, LinphoneChatMessageState st
     messageSize.width += CELL_MESSAGE_X_MARGIN;
     if (messageSize.width < CELL_MIN_WIDTH)
         messageSize.width = CELL_MIN_WIDTH;
+    
+    if (messageText && hasDeclinePrefix) {
+        return CGSizeMake(messageSize.width, messageSize.height + 40);
+    }
+    
     return messageSize;
 }
 

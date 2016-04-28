@@ -94,6 +94,8 @@
 
 -(void)storeEnabledCodecs;
 - (void)setStunServerDomain:(NSString*)stunServerDomain;
+- (void)setOutboundProxy:(NSString*)proxyServer;
+- (void)setOutboundProxyState:(bool)setOn;
 -(void)setCardDavServerPath:(NSString*)serverPath;
 -(void)setCardDavRealmName:(NSString*)realmName;
 
@@ -141,6 +143,8 @@
 -(void)setEnableStun:(bool)enable;
 -(void)setEnableICE:(bool)enable;
 -(void)setEnableIPV6:(bool)enable;
+-(NSString*)getOutpboundProxy;
+-(bool)getOutpboundProxyState;
 
 -(NSString*) getUITransportStringForString:(NSString*)stringToCompare;
 -(NSString*) getUITransportString;

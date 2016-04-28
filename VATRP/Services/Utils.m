@@ -279,11 +279,23 @@
     return [stateStrings objectForKey:enumIndex];
 }
 
++ (BOOL)checkIfContainsProxyPort:(NSString*)outboundProxy {
+    
+    NSArray *separateStringsByPort = [outboundProxy componentsSeparatedByString:@":"];
+    if (([[separateStringsByPort lastObject] length] > 0) && ([separateStringsByPort count] > 1)) {
+        return YES;
+    } else {
+        return NO;
+    }
+    
+    return NO;
+}
+
 + (NSString*)cardDAVRealmName {
     return [[SettingsHandler settingsHandler] getCardDavRealmName];
 }
 
-+ (NSString*)cardDAVServerPath {
++ (NSString*)cardDAVServerDomain {
     
     NSString *serverPath = [[SettingsHandler settingsHandler] getCardDavServerPath];
     if ([serverPath length] <= 7) {
@@ -291,8 +303,8 @@
     } else {
         NSString *withoutHTTP = [serverPath substringFromIndex:7];
         NSArray* separatedStrings = [withoutHTTP componentsSeparatedByString:@"/"];
-        NSString *serverName = [separatedStrings objectAtIndex:0];
-        return serverName;
+        NSString *serverDomainName = [separatedStrings objectAtIndex:0];
+        return serverDomainName;
     }
     
     return serverPath;

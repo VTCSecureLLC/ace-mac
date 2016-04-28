@@ -23,6 +23,8 @@
 @property (weak) IBOutlet NSTextField *textFieldUserID;
 @property (weak) IBOutlet NSSecureTextField *secureTextFieldPassword;
 @property (weak) IBOutlet NSTextField *textFieldDomain;
+@property (weak) IBOutlet NSButton *comboBoxOutboundProxy;
+@property (weak) IBOutlet NSTextField *textFieldOutboundProxy;
 @property (weak) IBOutlet NSTextField *textFieldPort;
 @property (weak) IBOutlet NSComboBox *comboBoxTransport;
 @property (weak) IBOutlet NSTextField *settingsFeedbackText;
@@ -62,6 +64,7 @@
     self.textFieldPort.enabled = false;
     [self.textFieldMailWaitingIndicatorURI setDelegate:self];
     [self.textFieldVideoMailUri setDelegate:self];
+    [self.textFieldOutboundProxy setDelegate:self];
     [self.textCardDavServerPath setDelegate:self];
     [self.textCardDavRealmName setDelegate:self];
     isChanged = NO;
@@ -141,11 +144,21 @@
     } else {
         self.textCardDavRealmName.stringValue = @"";
     }
-    
-    
+
+    [self setOutboundProxy];
+}
+
+- (void)setOutboundProxy {
+    self.textFieldOutboundProxy.stringValue = [[SettingsHandler settingsHandler] getOutpboundProxy];
+    bool setOutboundProxyState = [[SettingsHandler settingsHandler] getOutpboundProxyState];
+    self.comboBoxOutboundProxy.state = setOutboundProxyState;
 }
 
 - (IBAction)onButtonAutoAnswer:(id)sender {
+}
+
+- (IBAction)onCheckBoxForOutboundProxy:(id)sender {
+    isChanged = YES;
 }
 
 - (BOOL) save {
@@ -216,7 +229,83 @@
             [[RegistrationService sharedInstance] registerWithAccountModel:accountModel_];
         }
     }
+    
+    if ([self.textFieldOutboundProxy.stringValue isEqualToString:@""]) {
+        self.comboBoxOutboundProxy.state = false;
+        [[SettingsHandler settingsHandler] setOutboundProxy:self.textFieldOutboundProxy.stringValue];
+    } else {
+        if ([Utils checkIfContainsProxyPort:self.textFieldOutboundProxy.stringValue]) {
+            [[SettingsHandler settingsHandler] setOutboundProxy:self.textFieldOutboundProxy.stringValue];
+        } else {
+            NSString *outboundProxy = [[self.textFieldOutboundProxy.stringValue stringByAppendingString:@":"] stringByAppendingString:self.textFieldPort.stringValue];
+            [[SettingsHandler settingsHandler] setOutboundProxy:outboundProxy];
+        }
+    }
+    
+    bool outboundProxyState = self.comboBoxOutboundProxy.state;
+    [[SettingsHandler settingsHandler] setOutboundProxyState:outboundProxyState];
+    
+    [self configureOutboundProxyServer];
+    
+    if (![self.textCardDavRealmName.stringValue isEqualToString:@""]) {
+        [[AppDelegate sharedInstance].menuItemSyncContacts setEnabled:YES];
+    } else {
+        [[AppDelegate sharedInstance].menuItemSyncContacts setEnabled:NO];
+    }
+    
     return YES;
+}
+
+- (void)configureOutboundProxyServer {
+    
+    bool isOutboundProxy = [[SettingsHandler settingsHandler] getOutpboundProxyState];
+    BOOL isEditing = FALSE;
+    NSString *proxyAddress = [[SettingsHandler settingsHandler] getOutpboundProxy];
+    const char *route = NULL;
+
+    if (![proxyAddress hasPrefix:@"sip:"] && ![proxyAddress hasPrefix:@"sips:"]) {
+        proxyAddress = [NSString stringWithFormat:@"sip:%@", proxyAddress];
+    }
+    
+    char *proxy = ms_strdup(proxyAddress.UTF8String);
+    LinphoneAddress *proxy_addr = linphone_address_new(proxy);
+    
+    if (proxy_addr) {
+        // Get SIP Transport
+        LinphoneTransportType transport = linphone_address_get_transport(proxy_addr);
+        
+        if (transport == LinphoneTransportUdp) {
+            linphone_address_set_transport(proxy_addr, LinphoneTransportTcp);
+        }
+        proxy = linphone_address_as_string_uri_only(proxy_addr);
+    }
+    
+    LinphoneProxyConfig * proxyCfg = linphone_core_get_default_proxy_config([LinphoneManager getLc]);
+    
+    if (proxyCfg == NULL) {
+        proxyCfg = linphone_core_create_proxy_config([LinphoneManager getLc]);
+    } else {
+        isEditing = TRUE;
+        linphone_proxy_config_edit(proxyCfg);
+    }
+    
+    route = isOutboundProxy ? proxy : NULL;
+    if (linphone_proxy_config_set_server_addr(proxyCfg, proxy) == -1) {
+        NSLog(@"Invalid proxy address", nil);
+    }
+    if (linphone_proxy_config_set_route(proxyCfg, route) == -1) {
+        NSLog(@"Invalid route", nil);
+    }
+    
+    // setup new proxycfg
+    if (isEditing) {
+        linphone_proxy_config_done(proxyCfg);
+    } else {
+        // was a new proxy config, add it
+        linphone_core_add_proxy_config([LinphoneManager getLc], proxyCfg);
+        linphone_core_set_default_proxy_config([LinphoneManager getLc], proxyCfg);
+    }
+
 }
 
 - (BOOL)checkFieldsValidness {
@@ -244,14 +333,10 @@
         errorString = @"Port field is required";
     }
     
-    if ([self.textCardDavRealmName.stringValue isEqual:@""] && !error) {
+    NSString *cardDavSettingsValidness = [self checkCardDavConfigSettings];
+    if (![cardDavSettingsValidness isEqualToString:@""]) {
         error = YES;
-        errorString = @"Port field is required";
-    }
-    
-    if ([self.textCardDavServerPath.stringValue isEqual:@""] && !error) {
-        error = YES;
-        errorString = @"Port field is required";
+        errorString = cardDavSettingsValidness;
     }
     
     if (error) {
@@ -262,6 +347,19 @@
     }
     
     return error;
+}
+
+- (NSString*)checkCardDavConfigSettings {
+    
+    if ([self.textCardDavRealmName.stringValue isEqualToString:@""] && ![self.textCardDavServerPath.stringValue isEqualToString:@""]) {
+        return @"The CardDav Realm can't be an empty";
+    }
+    
+    if (![self.textCardDavRealmName.stringValue isEqualToString:@""] && [self.textCardDavServerPath.stringValue isEqualToString:@""]) {
+        return @"The CardDav URL can't be an empty";
+    }
+    
+    return @"";
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {

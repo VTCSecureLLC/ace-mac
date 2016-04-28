@@ -28,7 +28,8 @@
 + (NSMutableArray*)cdnResources;
 + (NSString *)decodeTextMessage:(const char *)text;
 + (NSString*)callStateStringByIndex:(NSNumber *)enumIndex;
++ (BOOL)checkIfContainsProxyPort:(NSString*)outBoundProxy;
 + (NSString*)cardDAVRealmName;
-+ (NSString*)cardDAVServerPath;
++ (NSString*)cardDAVServerDomain;
 
 @end

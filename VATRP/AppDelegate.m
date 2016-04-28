@@ -18,6 +18,7 @@
 #import "LinphoneLocationManager.h"
 #import "SettingsHandler.h"
 #import "LinphoneAPI.h"
+#import "Utils.h"
 
 typedef struct _LinphoneCardDAVStats {
     int sync_done_count;
@@ -433,33 +434,24 @@ void linphone_iphone_log_handler(const char *domain, OrtpLogLevel lev, const cha
 }
 
 - (void)syncContacts {
+
+    AccountModel *accountModel = [[AccountsService sharedInstance] getDefaultAccount];
     
-    const char *cardDavUser = "vtcsecure";
-    const char *cardDavPass = "top-secret";
-    const char *cardDavRealm = "BaikalDAV";
-    const char *cardDavServer = "http://dav.linphone.org/card.php/addressbooks/vtcsecure/default";
-    const char *cardDavDomain = "dav.linphone.org";
+    const char *cardDavUser = "";
+    const char *cardDavPass = "";
+    const char *cardDavRealm = "";
+    const char *cardDavServer = "";
+    const char *cardDavDomain = "";
     
+    if (![[[SettingsHandler settingsHandler] getCardDavServerPath] isEqualToString:@""]) {
+        cardDavUser = [accountModel.username  UTF8String];
+        cardDavPass = [accountModel.password  UTF8String];
+        cardDavRealm = [[[SettingsHandler settingsHandler] getCardDavRealmName] UTF8String];
+        cardDavServer = [[[SettingsHandler settingsHandler] getCardDavServerPath] UTF8String];
+        cardDavDomain = [[Utils cardDAVServerDomain] UTF8String];
+    }
     
-    //LinphoneFriend *newFriend = linphone_core_create_friend_with_address([LinphoneManager getLc], "sip:example@example.com");
-    
-    //    LinphoneFriend *newFriend = linphone_friend_new();
-    //
-    //    const LinphoneAddress *lAddr = linphone_address_new("sip:example@example.com");
-    //
-    //    linphone_friend_set_address(newFriend, lAddr);
-    //    linphone_friend_add_address(newFriend, lAddr);
-    //
-    //    linphone_friend_set_name(newFriend, "John");
-    //    linphone_friend_set_ref_key(newFriend, "123456");
-    //
-    //    LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
-    //    linphone_friend_list_add_friend(friendList, newFriend);
-    //
     LinphoneFriendList * cardDAVFriends = linphone_core_get_default_friend_list([LinphoneManager getLc]);
-    
-    const MSList* proxies = linphone_friend_list_get_friends(cardDAVFriends);
-    NSLog(@"contacts_Count = %d", ms_list_size(proxies));
     
     const LinphoneAuthInfo * carddavAuth = linphone_auth_info_new(cardDavUser, nil, cardDavPass, nil, cardDavRealm, cardDavDomain);
     linphone_core_add_auth_info([LinphoneManager getLc], carddavAuth);

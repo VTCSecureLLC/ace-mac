@@ -52,12 +52,13 @@
             addContactDialogBox.oldName = @"";
             addContactDialogBox.oldPhone = @"";
             addContactDialogBox.oldProviderName = @"";
+            addContactDialogBox.refKey = @"";
             [addContactDialogBox initializeData];
         }
     }
 }
 
--(void)initializeDataWith:(bool)isEditing oldName:(NSString*)oldName oldPhone:(NSString*)oldPhone oldProviderName:(NSString*)oldProviderName
+-(void)initializeDataWith:(bool)isEditing oldName:(NSString*)oldName oldPhone:(NSString*)oldPhone oldProviderName:(NSString*)oldProviderName refKey:(NSString*)refKey
 {
     if (addContactDialogBox != nil)
     {
@@ -65,6 +66,7 @@
         addContactDialogBox.oldName = oldName;
         addContactDialogBox.oldPhone = oldPhone;
         addContactDialogBox.oldProviderName = oldProviderName;
+        addContactDialogBox.refKey = refKey;
         [addContactDialogBox initializeData];
     }
 }

@@ -137,6 +137,8 @@
             //            }
         }
     }
+    
+    [[[AppDelegate sharedInstance].homeWindowController getHomeViewController].moreSectionView refreshVideomailCount];
 }
 
 - (BOOL) verificationWithUsername:(NSString*)username UserID:(NSString*)userID password:(NSString*)password domain:(NSString*)domain withTransport:(NSString*)transport {
@@ -242,6 +244,7 @@
     linphone_core_add_auth_info(lc, info);
     linphone_core_add_proxy_config(lc, proxyCfg);
     linphone_core_set_default_proxy_config(lc, proxyCfg);
+    lp_config_set_int(linphone_core_get_config([LinphoneManager getLc]), "app", "voice_mail_messages_count", 0);
     linphone_core_set_inc_timeout([LinphoneManager getLc], 300);
     
     PayloadType *pt;

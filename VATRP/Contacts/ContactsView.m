@@ -133,9 +133,6 @@
     if (![newContactRefKey isEqualToString:@""]) {
         
         int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
-        
-        //[[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
-        
         [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByRefKey:newContactRefKey andFavoriteOptoin:isFavorite];
         
         [self refreshContactList];
@@ -155,6 +152,13 @@
     selectedProviderName = [contactInfo objectForKey:@"provider"];
     NSString *newDisplayName = [contactInfo objectForKey:@"name"];
     NSString *newSipURI = [contactInfo objectForKey:@"phone"];
+    if ([[ContactFavoriteManager sharedInstance] findContactIDWithSIPURI:newSipURI] == -1) {
+        int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
+        NSString *newContactRefKey = [[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI];
+        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByRefKey:newContactRefKey andFavoriteOptoin:isFavorite];
+        [self refreshContactList];
+        return;
+    }    
     if (![self isChnagedContactFields:contactInfo]) {
         int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
         [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByRefKey:_selectedFriendRefKey andFavoriteOptoin:isFavorite];
@@ -406,7 +410,7 @@
 #pragma mark - ContactTableCellView delegate methods
 
 - (void)didClickDeleteButton:(ContactTableCellView *)contactCellView {
-    
+    [self refreshContactList];
     NSAlert *alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the contact?"
                                      defaultButton:@"Cancel" alternateButton:@"OK"
                                        otherButton:nil informativeTextWithFormat:@""];

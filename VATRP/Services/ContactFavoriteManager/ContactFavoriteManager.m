@@ -82,6 +82,32 @@
     return -1;
 }
 
+- (int)findContactIDWithSIPURI:(NSString*)sipAddress {
+    
+    sqlite3_stmt    *statement;
+    sqlite3* contactDB;
+    const char *dbpath = [self.databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK) {
+        
+        NSString *querySQL = [NSString stringWithFormat: @"SELECT id FROM friends WHERE sip_uri='%@'", sipAddress];
+        const char *insert_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            
+            if (sqlite3_step(statement) == SQLITE_ROW) {
+                int contactID = sqlite3_column_int(statement, 0);
+                sqlite3_finalize(statement);
+                sqlite3_close(contactDB);
+                return contactID;
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(contactDB);
+    }
+    return -1;
+}
+
 - (int)findContactIDWithRefKey:(NSString*)refKey {
     
     sqlite3_stmt    *statement;

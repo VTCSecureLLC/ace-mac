@@ -15,6 +15,7 @@
 #import "AccountsService.h"
 #import "AppDelegate.h"
 #import "Utils.h"
+#import "ContactFavoriteManager.h"
 
 
 @interface RecentsView () <HistoryTableCellViewViewDelegate> {
@@ -174,13 +175,15 @@
 
 -(void) handleAddContact:(NSDictionary*)info
 {
-    AppDelegate *app = [AppDelegate sharedInstance];
-    if (!app.addContactWindowController)
-    {
-        app.addContactWindowController = [[AddContactWindowController alloc] init];
+    // Check if the contact exist in friend list.
+    if ([[ContactFavoriteManager sharedInstance] findContactIDWithSIPURI:[info objectForKey:@"sipUri"]] == -1) {
+        AppDelegate *app = [AppDelegate sharedInstance];
+        if (!app.addContactWindowController) {
+            app.addContactWindowController = [[AddContactWindowController alloc] init];
+        }
+        [app.addContactWindowController showWindow:self];
+        [app.addContactWindowController initializeDataWith:true oldName:[info objectForKey:@"name"] oldPhone:[info objectForKey:@"sipUri"] oldProviderName:[Utils providerNameFromSipURI:[info objectForKey:@"sipUri"]] refKey:nil];
     }
-    [app.addContactWindowController showWindow:self];
-    [app.addContactWindowController initializeDataWith:true oldName:[info objectForKey:@"name"] oldPhone:[info objectForKey:@"sipUri"] oldProviderName:[Utils providerNameFromSipURI:[info objectForKey:@"sipUri"]] ];
 }
 
 - (void)contactEditDone:(NSNotification*)notif {

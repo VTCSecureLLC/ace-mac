@@ -241,7 +241,7 @@
     if (!selectedChatRoom)
         return;
     
-    messageList = linphone_chat_room_get_history(selectedChatRoom, 0);
+    messageList = linphone_chat_room_get_history(selectedChatRoom, 100);
     
 //    int count = ms_list_size(messageList);
     //    // also append transient upload messages because they are not in history yet!

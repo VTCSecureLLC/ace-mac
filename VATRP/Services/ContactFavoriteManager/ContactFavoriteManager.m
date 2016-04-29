@@ -47,6 +47,14 @@
     }
 }
 
+- (void)updateContactFavoriteOptionByRefKey:(NSString*)refKey andFavoriteOptoin:(int)isFavorite {
+    
+    int contactID = [self findContactIDWithRefKey:refKey];
+    if (contactID >= 0) {
+        [self updateContactFavoriteOptionByID:contactID andOption:isFavorite];
+    }
+}
+
 - (int)findContactIDWithName:(NSString*)name andSipAddress:(NSString*)sipAddress {
     
     sqlite3_stmt    *statement;
@@ -57,6 +65,32 @@
         
         NSString *address = [NSString stringWithFormat:@"\"%@\" <%@>", name, sipAddress];
         NSString *querySQL = [NSString stringWithFormat: @"SELECT id FROM friends WHERE sip_uri='%@'", address];
+        const char *insert_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            
+            if (sqlite3_step(statement) == SQLITE_ROW) {
+                int contactID = sqlite3_column_int(statement, 0);
+                sqlite3_finalize(statement);
+                sqlite3_close(contactDB);
+                return contactID;
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(contactDB);
+    }
+    return -1;
+}
+
+- (int)findContactIDWithRefKey:(NSString*)refKey {
+    
+    sqlite3_stmt    *statement;
+    sqlite3* contactDB;
+    const char *dbpath = [self.databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK) {
+        
+        NSString *querySQL = [NSString stringWithFormat: @"SELECT id FROM friends WHERE ref_key='%@'", refKey];
         const char *insert_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -136,6 +170,17 @@
     
     int isFavorite = 0;
     int contactID = [self findContactIDWithName:name andSipAddress:sipURI];
+    if (contactID >= 0) {
+        isFavorite = [self favoriteOptionWithID:contactID];
+    }
+    
+    return isFavorite;
+}
+
+- (BOOL)isContactFavoriteWithRefKey:(NSString*)refKey {
+    
+    int isFavorite = 0;
+    int contactID = [self findContactIDWithRefKey:refKey];
     if (contactID >= 0) {
         isFavorite = [self favoriteOptionWithID:contactID];
     }

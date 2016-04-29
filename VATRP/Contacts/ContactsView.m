@@ -128,10 +128,15 @@
     NSString *newDisplayName = [contactInfo objectForKey:@"name"];
     NSString *newSipURI = [contactInfo objectForKey:@"phone"];
     
-    if ([[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI]) {
+    NSString *newContactRefKey = [[LinphoneContactService sharedInstance] addContactWithDisplayName:newDisplayName andSipUri:newSipURI];
+    
+    if (![newContactRefKey isEqualToString:@""]) {
         
         int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
-        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
+        
+        //[[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
+        
+        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByRefKey:newContactRefKey andFavoriteOptoin:isFavorite];
         
         [self refreshContactList];
     } else {
@@ -152,7 +157,7 @@
     NSString *newSipURI = [contactInfo objectForKey:@"phone"];
     if (![self isChnagedContactFields:contactInfo]) {
         int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
-        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
+        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByRefKey:_selectedFriendRefKey andFavoriteOptoin:isFavorite];
         [self refreshContactList];
         return;
     }
@@ -161,13 +166,8 @@
     if ([[LinphoneContactService sharedInstance] editContactWithNewDisplayName:newDisplayName andSipUri:newSipURI andWithRefKey:_selectedFriendRefKey]) {
         
         int isFavorite = [[contactInfo objectForKey:@"isFavorite"] intValue];
-        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByName:newDisplayName contactAddress:newSipURI andFavoriteOptoin:isFavorite];
-        
-//        NSString *oldDisplayName = [contactInfo objectForKey:@"oldName"];
-//        NSString *oldSipURI = [contactInfo objectForKey:@"oldPhone"];
-//        [[LinphoneContactService sharedInstance] deleteContactWithDisplayName:oldDisplayName andSipUri:oldSipURI];
-//        
-        
+        [[ContactFavoriteManager sharedInstance] updateContactFavoriteOptionByRefKey:_selectedFriendRefKey andFavoriteOptoin:isFavorite];
+
         [self refreshContactList];
     } else {
         NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect number format"
@@ -431,7 +431,7 @@
         app.addContactWindowController = [[AddContactWindowController alloc] init];
     }
     [app.addContactWindowController showWindow:self];
-    [app.addContactWindowController initializeDataWith:true oldName:[contactCellView.nameTextField stringValue] oldPhone:[contactCellView.phoneTextField stringValue] oldProviderName:contactCellView.providerName ];
+    [app.addContactWindowController initializeDataWith:true oldName:[contactCellView.nameTextField stringValue] oldPhone:[contactCellView.phoneTextField stringValue] oldProviderName:contactCellView.providerName refKey:_selectedFriendRefKey];
 }
 
 #pragma mark - Functions related to the call

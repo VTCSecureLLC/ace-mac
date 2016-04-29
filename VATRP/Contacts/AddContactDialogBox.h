@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString *oldName;
 @property (strong, nonatomic) NSString *oldPhone;
 @property (strong, nonatomic) NSString *oldProviderName;
+@property (strong, nonatomic) NSString *refKey;
 @property BOOL isEditing;
 
 -(void) initializeData;

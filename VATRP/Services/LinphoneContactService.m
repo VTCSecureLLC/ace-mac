@@ -32,7 +32,7 @@
     return self;
 }
 
-- (BOOL)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
+- (NSString*)addContactWithDisplayName:(NSString *)name andSipUri:(NSString *)sipURI {
     
     LinphoneFriend *friend = linphone_core_create_friend([LinphoneManager getLc]);
     
@@ -54,10 +54,10 @@
     LinphoneFriendList *friendList = linphone_core_get_default_friend_list([LinphoneManager getLc]);
     
     if (linphone_friend_list_add_friend(friendList, friend) == LinphoneFriendListOK) {
-        return YES;
+        return timestamp;
     }
     
-    return NO;
+    return @"";
 }
 
 - (LinphoneFriend*)createContactFromName:(NSString *)name andSipUri:(NSString *)sipURI {
@@ -119,6 +119,9 @@
         NSString *refKeyString = @"";
         if (refKey) {
             refKeyString = [[NSString alloc] initWithUTF8String:refKey];
+        } else {
+            refKeyString = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+            linphone_friend_set_ref_key(friend, [refKeyString UTF8String]);
         }
         [contacts addObject:@{@"name" : [[NSString alloc] initWithUTF8String:name],
                               @"phone" : [[NSString alloc] initWithUTF8String:addressString],
@@ -140,10 +143,19 @@
         const char *addressString = linphone_address_as_string_uri_only(address);
         const char *providerName = linphone_address_get_domain(address);
         const char *name = linphone_friend_get_name(friend);
-        if ([[ContactFavoriteManager sharedInstance] isContactFavoriteWithName:[[NSString alloc] initWithUTF8String:name] andAddress:[[NSString alloc] initWithUTF8String:addressString]] ) {
-        [contacts addObject:@{@"name" : [[NSString alloc] initWithUTF8String:name],
-                              @"phone" : [[NSString alloc] initWithUTF8String:addressString],
-                              @"provider" : [[NSString alloc] initWithUTF8String:providerName]}];
+        const char *refKey = linphone_friend_get_ref_key(friend);
+        NSString *refKeyString = @"";
+        if (refKey) {
+            refKeyString = [[NSString alloc] initWithUTF8String:refKey];
+        } else {
+            refKeyString = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+            linphone_friend_set_ref_key(friend, [refKeyString UTF8String]);
+        }
+        if ([[ContactFavoriteManager sharedInstance] isContactFavoriteWithRefKey:refKeyString]) {
+            [contacts addObject:@{@"name" : [[NSString alloc] initWithUTF8String:name],
+                                  @"phone" : [[NSString alloc] initWithUTF8String:addressString],
+                                  @"provider" : [[NSString alloc] initWithUTF8String:providerName],
+                                  @"refKey" : refKeyString}];
         }
         proxies = ms_list_next(proxies);
     }

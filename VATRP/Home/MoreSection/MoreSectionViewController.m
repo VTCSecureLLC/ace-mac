@@ -8,12 +8,15 @@
 
 #import "MoreSectionViewController.h"
 #import "MoreSectionTableViewCell.h"
+#import "LinphoneManager.h"
 
 @interface MoreSectionViewController () <NSTableViewDelegate, NSTableViewDataSource>
 {
     NSArray *moreSectionsTextsArray;
     NSArray *moreSectionsLeftImagesArray;
     NSArray *moreSectionsRightImagesArray;
+    
+    int messagesUnreadCount;
 }
 
 @property (weak) IBOutlet NSView *moreSectionView;
@@ -41,6 +44,8 @@
     moreSectionsRightImagesArray = @[];
     _moreSectionViewTableView.delegate = self;
     _moreSectionViewTableView.dataSource = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifyReceived:) name:kLinphoneNotifyReceived object:nil];
 }
 
 #pragma mark - TableView delegate methods
@@ -55,12 +60,20 @@
     - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row {
 #endif
 
-            MoreSectionTableViewCell *moreSectionCellView = [tableView makeViewWithIdentifier:@"MoreSectionTableViewCell" owner:self];
-            [moreSectionCellView.moreSectionLeftImageView setImage:[NSImage imageNamed:[moreSectionsLeftImagesArray objectAtIndex:row]]];
-            moreSectionCellView.moreSectionTextField.stringValue = [moreSectionsTextsArray objectAtIndex:row];
-            //[moreSectionCellView.backgroundView setBackgroundColor:[NSColor colorWithRed:64.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1]];
-            //moreSectionCellView.moreSectionRightImageView = [moreSectionsRightImagesArray objectAtIndex:row];
-            return moreSectionCellView;
+        MoreSectionTableViewCell *moreSectionCellView = [tableView makeViewWithIdentifier:@"MoreSectionTableViewCell" owner:self];
+        [moreSectionCellView.moreSectionLeftImageView setImage:[NSImage imageNamed:[moreSectionsLeftImagesArray objectAtIndex:row]]];
+        
+        NSString *title = [moreSectionsTextsArray objectAtIndex:row];
+        
+        if ([title isEqualToString:@"Videomail"]) {
+            messagesUnreadCount = lp_config_get_int(linphone_core_get_config([LinphoneManager getLc]), "app", "voice_mail_messages_count", 0);
+            
+            moreSectionCellView.moreSectionTextField.stringValue = [NSString stringWithFormat:@"Videomail (%d)", messagesUnreadCount];
+        } else {
+            moreSectionCellView.moreSectionTextField.stringValue = title;
+        }
+        
+        return moreSectionCellView;
 }
     
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
@@ -98,5 +111,32 @@
         return false;
 }
     
+- (void)notifyReceived:(NSNotification *)notif {
+    const LinphoneContent * content = [[notif.userInfo objectForKey: @"content"] pointerValue];
+    
+    if ((content == NULL)
+        || (strcmp("application", linphone_content_get_type(content)) != 0)
+        || (strcmp("simple-message-summary", linphone_content_get_subtype(content)) != 0)
+        || (linphone_content_get_buffer(content) == NULL)) {
+        return;
+    }
+    const char* body = linphone_content_get_buffer(content);
+    if ((body = strstr(body, "Voicemail: ")) == NULL) {
+        NSLog(@"Received new NOTIFY from voice mail but could not find 'voice-message' in BODY. Ignoring it.");
+        
+        return;
+    }
+    
+    sscanf(body, "Voicemail: %d", &messagesUnreadCount);
+    
+    // save in lpconfig for future
+    lp_config_set_int(linphone_core_get_config([LinphoneManager getLc]), "app", "voice_mail_messages_count", messagesUnreadCount);
+    
+    [self.moreSectionViewTableView reloadData];
+}
 
+- (void) refreshVideomailCount {
+    [self.moreSectionViewTableView reloadData];
+}
+    
 @end

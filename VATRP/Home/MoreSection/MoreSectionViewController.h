@@ -27,4 +27,6 @@ typedef NS_ENUM (NSUInteger, SelectedSection)
 
 @property (weak, nonatomic) id <MoreSectionViewControllerDelegate> delegate;
 
+- (void) refreshVideomailCount;
+
 @end

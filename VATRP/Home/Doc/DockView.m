@@ -96,6 +96,7 @@
                                                  selector:@selector(textReceivedEvent:)
                                                      name:kLinphoneTextReceived
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifyReceived:) name:kLinphoneNotifyReceived object:nil];
     }
     [self createBadgeLabel];
 }
@@ -168,6 +169,7 @@
 }
 
 - (IBAction)onButtonSettings:(id)sender {
+    [self.buttonSettings setImage:[NSImage imageNamed:@"more1"]];
     
     [self.parent didClickDockViewSettings];
     
@@ -364,6 +366,46 @@
 
     if (![[ChatService sharedInstance] isOpened]) {
         [self.badgeOnMessages setHidden:NO];
+    }
+}
+
+- (void)notifyReceived:(NSNotification *)notif {
+    const LinphoneContent * content = [[notif.userInfo objectForKey: @"content"] pointerValue];
+    
+    if ((content == NULL)
+        || (strcmp("application", linphone_content_get_type(content)) != 0)
+        || (strcmp("simple-message-summary", linphone_content_get_subtype(content)) != 0)
+        || (linphone_content_get_buffer(content) == NULL)) {
+        return;
+    }
+    const char* body = linphone_content_get_buffer(content);
+    if ((body = strstr(body, "Voicemail: ")) == NULL) {
+        NSLog(@"Received new NOTIFY from voice mail but could not find 'voice-message' in BODY. Ignoring it.");
+        
+        return;
+    }
+    
+    const char *messages = linphone_content_get_string_buffer(content);
+    
+    if (!messages) {
+        return;
+    }
+    
+    char char_messages_waiting[3];
+    sscanf(messages, "Messages-Waiting:  %3[^;]", char_messages_waiting);
+
+    if (!strlen(char_messages_waiting)) {
+        return;
+    }
+
+    NSString *messages_waiting = [[NSString stringWithUTF8String:char_messages_waiting] lowercaseString];
+    
+    if ([messages_waiting isEqualToString:@"yes"]) {
+        if ([[AppDelegate sharedInstance].homeWindowController getHomeViewController].moreSectionContainer.hidden) {
+            [self.buttonSettings setImage:[NSImage imageNamed:@"more_videoMail"]];
+        }
+    } else {
+        [self.buttonSettings setImage:[NSImage imageNamed:@"more1"]];
     }
 }
 

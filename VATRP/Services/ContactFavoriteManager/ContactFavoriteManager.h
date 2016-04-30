@@ -22,5 +22,6 @@
 - (BOOL)isContactFavoriteWithName:(NSString*)name andAddress:(NSString*)sipURI;
 - (BOOL)isContactFavoriteWithRefKey:(NSString*)refKey;
 - (void)deleteContactFavoriteOptionWithName:(NSString*)name andAddress:(NSString*)sipURI;
+- (int)findContactIDWithSIPURI:(NSString*)sipAddress;
 
 @end

@@ -180,7 +180,6 @@ bool dialPadIsShown;
                                              selector:@selector(didClosedMessagesWindow:)
                                                  name:@"didClosedMessagesWindow"
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifyReceived:) name:kLinphoneNotifyReceived object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidEnterFullScreen:) name:NSWindowDidEnterFullScreenNotification object:nil];
@@ -207,31 +206,6 @@ bool dialPadIsShown;
 
 - (void)didClosedSettingsWindow:(NSNotification*)not {
     [self.dockView clearDockViewSettingsBackgroundColor:YES];
-}
-
-- (void)notifyReceived:(NSNotification *)notif {
-    const LinphoneContent *content = [[notif.userInfo objectForKey:@"content"] pointerValue];
-    if ((content == NULL) || (strcmp("application", linphone_content_get_type(content)) != 0) ||
-        (strcmp("simple-message-summary", linphone_content_get_subtype(content)) != 0) ||
-        (linphone_content_get_buffer(content) == NULL)) {
-        return;
-    }
-    
-    NSInteger mwiCount;
-    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"sip_mwi_count"]){
-        mwiCount = 0;
-    }
-    else{
-        mwiCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"sip_mwi_count"];
-    }
-    mwiCount++;
-    [[NSUserDefaults standardUserDefaults] setInteger:mwiCount forKey:@"sip_mwi_count"];
-    //self.textFieldVoiceMailCount.stringValue = [NSString stringWithFormat:@"( %ld )", mwiCount];
-    [self.profileView updateVoiceMailIndicator:mwiCount];
-    const char *body = linphone_content_get_buffer(content);
-    if ((body = strstr(body, "voice-message: ")) == NULL) {
-        return;
-    }
 }
 
 #pragma mark DocView Delegate

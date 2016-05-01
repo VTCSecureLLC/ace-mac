@@ -135,7 +135,8 @@ typedef struct _LinphoneManagerSounds {
 //+ (NSString *)getPreferenceForCodec: (const char*) name withRate: (int) rate;
 + (BOOL)isCodecSupported: (const char*)codecName;
 //+ (NSSet *)unsupportedCodecs;
-+ (NSString *)getUserAgent;
++ (NSString *)getUserAgentName;
++ (NSString *)getUserAgentVersion;
 + (int)unreadMessageCount;
 
 - (void)playMessageSound;

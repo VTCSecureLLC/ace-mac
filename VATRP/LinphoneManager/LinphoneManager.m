@@ -171,14 +171,34 @@ bool iterateLock;
     return result;
 }
 
-+ (NSString *)getUserAgent {
-    return @"VATRP";
-    
-    //    return [NSString stringWithFormat:@"LinphoneIphone/%@ (Linphone/%s; Apple %@/%@)",
-    //			[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey],
-    //			linphone_core_get_version(),
-    //			[UIDevice currentDevice].systemName,
-    //			[UIDevice currentDevice].systemVersion];
++ (NSString *)getUserAgentName
+{
+    return @"ACE-APP";
+}
+
++ (NSString *)getUserAgentVersion
+{
+    NSString *systemVersion;
+
+    // The only compatible way to check OS/X versions back to 10.1
+    if(floor(kCFCoreFoundationVersionNumber) < kCFCoreFoundationVersionNumber10_8) {
+        systemVersion = @"<=10.7";
+    }
+    if(floor(kCFCoreFoundationVersionNumber) == kCFCoreFoundationVersionNumber10_8) {
+        systemVersion = @"10.8";
+    }
+    if(floor(kCFCoreFoundationVersionNumber) == kCFCoreFoundationVersionNumber10_9) {
+        systemVersion = @"10.9";
+    }
+    // Mac 10.10 and later officially have NSProcessInfo operatingSystemVersion.
+    if(floor(kCFCoreFoundationVersionNumber) >= kCFCoreFoundationVersionNumber10_10) {
+        NSOperatingSystemVersion version = [[NSProcessInfo processInfo] operatingSystemVersion];
+        systemVersion = [NSString stringWithFormat:@"%d.%d.%d", (int)version.majorVersion, (int)version.minorVersion, (int)version.patchVersion];
+    }
+
+    return [NSString stringWithFormat:@"%@ (Linphone/%s; Apple Mac Darwin/%@)",
+        [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey],
+        linphone_core_get_version(), systemVersion];
 }
 
 + (LinphoneManager*)instance {
@@ -1101,9 +1121,16 @@ static LinphoneCoreVTable linphonec_vtable = {.show = NULL,
     NSString *chatDBFileName      = [LinphoneManager documentFile:[NSString stringWithFormat:@"%@_linphone_chats.db", self.account]];
     NSString *caFilePath = [[NSBundle mainBundle] pathForResource:@"cafile" ofType:@"pem"];
     const char* lRootCa = [caFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]];
-
     
     //	linphone_core_set_user_agent(theLinphoneCore, [[[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] stringByAppendingString:@"Iphone"] UTF8String], LINPHONE_IOS_VERSION);
+    linphone_core_set_user_agent(theLinphoneCore, [LinphoneManager getUserAgentName].UTF8String, [LinphoneManager getUserAgentVersion].UTF8String );
+
+    /*NSString *device = [NSString
+                        stringWithFormat:@"%@_%@_iOS%@", [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleDisplayName"],
+                        [LinphoneUtils deviceName], UIDevice.currentDevice.systemVersion];
+    NSString *ua = [NSString stringWithFormat:@"%@, (liblinphone/%s),", (NSString*)@LINPHONE_IOS_VERSION, linphone_core_get_version()];
+    
+    linphone_core_set_user_agent(theLinphoneCore, device.UTF8String, [ua cStringUsingEncoding:NSUTF8StringEncoding]);*/
     
     _contactSipField = [self lpConfigStringForKey:@"contact_im_type_value" withDefault:@"SIP"];
     

@@ -6,6 +6,8 @@ cd $DIR/..
 HOCKEYAPP_TEAM_IDS=${HOCKEYAPP_TEAM_IDS:-47813}
 HOCKEYAPP_APP_ID=${HOCKEYAPP_APP_ID:-b7b28171bab92ce345aac7d54f435020}
 
+major_minor_patch=$(bundle exec semver format '%M.%m.%p')
+
 # Only deploy master branch builds
 
 if [ -z "$TRAVIS_BRANCH" ] ; then
@@ -178,6 +180,8 @@ else
     echo ' -F "notes='"$(git log -1 --pretty=format:%B)"'" \'
     echo ' -F "notes_type=1" \'
     echo ' -F "mandatory=0" \'
+    echo ' -F "bundle_short_version=${major_minor_patch}" \'
+    echo ' -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \'
     echo ' -F "teams=${HOCKEYAPP_TEAM_IDS}" \'
     echo ' -F "ipa=@'"$APP_DMG_FILE"'" \'
     echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
@@ -194,6 +198,8 @@ else
       -F "notes=$(git log -1 --pretty=format:%B)" \
       -F "notes_type=1" \
       -F "mandatory=0" \
+      -F "bundle_short_version=${major_minor_patch}" \
+      -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
       -F "teams=${HOCKEYAPP_TEAM_IDS}" \
       -F "ipa=@$APP_DMG_FILE" \
       -F "dsym=@$DSYM_ZIP_FILE" \

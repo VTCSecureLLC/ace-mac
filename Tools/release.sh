@@ -138,15 +138,15 @@ if [ -d "$XCARCHIVE" ]; then
 
   echo "Packaging and uploading"
 
-  # Create an application zip file from the archive build
+  # Create an application dmg file from the archive build
 
-  APP_DIR="${PKG_FILE}".app
-  APP_ZIP_FILE=/tmp/ACE.app.zip
-  if [ -f $APP_ZIP_FILE ]; then
-    rm -f $APP_ZIP_FILE
+  APP_DMG_FILE=/tmp/ACE.dmg
+  if [ -f $APP_DMG_FILE ]; then
+    rm -f $APP_DMG_FILE
   fi
-  (cd $(dirname $APP_DIR) ; zip -r --symlinks $APP_ZIP_FILE $(basename $APP_DIR))
 
+  ./Tools/build_dmg.sh
+  cd $DIR/..
   # Create a dSYM zip file from the archive build
 
   DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
@@ -179,7 +179,7 @@ else
     echo ' -F "notes_type=1" \'
     echo ' -F "mandatory=0" \'
     echo ' -F "teams=${HOCKEYAPP_TEAM_IDS}" \'
-    echo ' -F "ipa=@'"$APP_ZIP_FILE"'" \'
+    echo ' -F "ipa=@'"$APP_DMG_FILE"'" \'
     echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
     echo ' -H "X-HockeyAppToken: REDACTED" \'
     echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
@@ -195,7 +195,7 @@ else
       -F "notes_type=1" \
       -F "mandatory=0" \
       -F "teams=${HOCKEYAPP_TEAM_IDS}" \
-      -F "ipa=@$APP_ZIP_FILE" \
+      -F "ipa=@$APP_DMG_FILE" \
       -F "dsym=@$DSYM_ZIP_FILE" \
       -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
       https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/upload || true
@@ -265,15 +265,15 @@ else
     rm -fr ACE/
   done
 
-  find . -name '*.dmg' -print | while read dmg; do
-    echo "Uploading $dmg github release $tag : $(ls -la $dmg)"
-    /tmp/github-release upload \
-        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
-        --repo ${GITHUB_REPO[1]:-ace-mac} \
-        --tag $tag \
-        --name $(basename "$dmg") \
-        --file "$dmg"
-  done
+#  find . -name '*.dmg' -print | while read dmg; do
+#   echo "Uploading $dmg github release $tag : $(ls -la $dmg)"
+#   /tmp/github-release upload \
+#        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
+#        --repo ${GITHUB_REPO[1]:-ace-mac} \
+#        --tag $tag \
+#        --name $(basename "$dmg") \
+#        --file "$dmg"
+#  done
 
   if [ -f $PKG_FILE ]; then
     echo "Uploading $PKG_FILE github release $tag : $(ls -la $PKG_FILE)"
@@ -285,15 +285,15 @@ else
         --file "$PKG_FILE"
   fi
 
-  if [ -f $APP_ZIP_FILE ]; then
-    TARGET=ACE-HockeyApp-$tag.zip
-    echo "Uploading $APP_ZIP_FILE as $TARGET to github release $tag : $(ls -la $APP_ZIP_FILE)"
+  if [ -f $APP_DMG_FILE ]; then
+    TARGET=ACE-HockeyApp-$tag.dmg
+    echo "Uploading $APP_DMG_FILE as $TARGET to github release $tag : $(ls -la $APP_DMG_FILE)"
     /tmp/github-release upload \
         --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
         --repo ${GITHUB_REPO[1]:-ace-mac} \
         --tag $tag \
         --name $TARGET \
-        --file "$APP_ZIP_FILE"
+        --file "$APP_DMG_FILE"
   fi
 
   if [ -f $DSYM_ZIP_FILE ]; then

@@ -38,7 +38,7 @@
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IfJ-YA-Up2">
                     <rect key="frame" x="44" y="324" width="187" height="28"/>
-                    <buttonCell key="cell" type="check" title="Send DTMFs as SIP info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DE7-nf-5vK">
+                    <buttonCell key="cell" type="check" title="Send DTMFs as SIP info" bezelStyle="regularSquare" imagePosition="left" inset="2" id="DE7-nf-5vK">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>

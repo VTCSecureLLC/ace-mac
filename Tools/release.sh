@@ -7,6 +7,11 @@ HOCKEYAPP_TEAM_IDS=${HOCKEYAPP_TEAM_IDS:-47813}
 HOCKEYAPP_APP_ID=${HOCKEYAPP_APP_ID:-b7b28171bab92ce345aac7d54f435020}
 
 major_minor_patch=$(bundle exec semver format '%M.%m.%p')
+## from https://gist.github.com/cjus/1047794
+function jsonval {
+temp=`echo $json | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w $prop`
+echo ${temp##*|}
+}
 
 # Only deploy master branch builds
 
@@ -89,6 +94,7 @@ tag="$(bundle exec semver)-${TRAVIS_BUILD_NUMBER:-1}"-${SHA1}
 # Prepare other variables
 
 IFS=/ GITHUB_REPO=($TRAVIS_REPO_SLUG); IFS=""
+
 
 PKG_FILE=/tmp/ACE
 
@@ -188,7 +194,27 @@ else
     echo ' -H "X-HockeyAppToken: REDACTED" \'
     echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
 
+   json=curl \
+     -F "status=2" \
+     -F "notify=1" \
+     -F "commit_sha=${SHA1}" \
+     -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+     -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
+     -F "release_type=2" \
+     -F "notes=$(git log -1 --pretty=format:%B)" \
+     -F "notes_type=1" \
+     -F "mandatory=0" \
+     -F "bundle_short_version=$major_minor_patch" \
+     -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
+     -F "teams=${HOCKEYAPP_TEAM_IDS}" \
+     -F "ipa=@$APP_DMG_FILE" \
+     -F "dsym=@$DSYM_ZIP_FILE" \
+     -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
+     https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new || true
+    prop='id'
+    id='jsonval'
     curl \
+      -X PUT
       -F "status=2" \
       -F "notify=1" \
       -F "commit_sha=${SHA1}" \
@@ -204,7 +230,7 @@ else
       -F "ipa=@$APP_DMG_FILE" \
       -F "dsym=@$DSYM_ZIP_FILE" \
       -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
-      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/upload || true
+      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/versions/$id || true
 
     #if [ -x /usr/local/bin/puck ]; then
     #

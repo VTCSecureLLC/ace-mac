@@ -195,6 +195,7 @@ else
     echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
 
    curl \
+     https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new \
      -F "status=2" \
      -F "notify=1" \
      -F "commit_sha=${SHA1}" \
@@ -210,7 +211,7 @@ else
      -F "ipa=@$APP_DMG_FILE" \
      -F "dsym=@$DSYM_ZIP_FILE" \
      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
-     https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new  > json.txt
+     > json.txt
     json='cat json.txt'
     prop='id'
     id='jsonval'

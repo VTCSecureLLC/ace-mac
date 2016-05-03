@@ -211,7 +211,7 @@ else
      -F "dsym=@$DSYM_ZIP_FILE" \
      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new  > json.txt
-    json=$(echo json.txt)
+    json='cat json.txt'
     prop='id'
     id='jsonval'
     echo $id

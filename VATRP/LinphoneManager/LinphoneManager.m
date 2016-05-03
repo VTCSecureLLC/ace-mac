@@ -1443,6 +1443,7 @@ static BOOL libStarted = FALSE;
     ms_factory_load_plugins(f, [s cStringUsingEncoding:[NSString defaultCStringEncoding]]);
     linphone_core_reload_ms_plugins(theLinphoneCore, NULL);
     configH264HardwareAcell(false, false);
+    linphone_core_set_use_rfc2833_for_dtmf(theLinphoneCore, true);
 }
 
 - (void)destroyLinphoneCore

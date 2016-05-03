@@ -1,18 +1,19 @@
 # make sure we are in the correct dir when we double-click a .command file
-dir=${0%/*}
-if [ -d "$dir" ]; then
-  cd "$dir"
-fi
-
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd /tmp
 # set up your app name, version number, and background image file name
 APP_NAME="ACE"
-VERSION="1.0.0"
 DMG_BACKGROUND_IMG="Background.png"
+#copy to temp  dir
+
+cp ${DIR}/${DMG_BACKGROUND_IMG} ./
+
+
 
 # you should not need to change these
 APP_EXE="${APP_NAME}.app/Contents/MacOS/${APP_NAME}"
 
-VOL_NAME="${APP_NAME} ${VERSION}"   # volume name will be "AppName Version"
+VOL_NAME="${APP_NAME}"   # volume name will be "AppName"
 DMG_TMP="${VOL_NAME}-temp.dmg"
 DMG_FINAL="${VOL_NAME}.dmg"         # final DMG name will be "Appname Version.dmg"
 STAGING_DIR="./Install"             # we copy all our stuff into this dir
@@ -43,8 +44,8 @@ cp -rpf "${APP_NAME}.app" "${STAGING_DIR}"
 pushd "${STAGING_DIR}"
 
 # strip the executable
-echo "Stripping ${APP_EXE}..."
-strip -u -r "${APP_EXE}"
+#echo "Stripping ${APP_EXE}..."
+#strip -u -r "${APP_EXE}"
 
 # compress the executable if we have upx in PATH
 #  UPX: http://upx.sourceforge.net/
@@ -98,13 +99,13 @@ echo '
            set current view of container window to icon view
            set toolbar visible of container window to false
            set statusbar visible of container window to false
-           set the bounds of container window to {400, 100, 920, 440}
+           set the bounds of container window to {400, 100, 822, 465}
            set viewOptions to the icon view options of container window
            set arrangement of viewOptions to not arranged
            set icon size of viewOptions to 72
            set background picture of viewOptions to file ".background:'${DMG_BACKGROUND_IMG}'"
-           set position of item "'${APP_NAME}'.app" of container window to {160, 250}
-           set position of item "Applications" of container window to {360, 250}
+           set position of item "'${APP_NAME}'.app" of container window to {50,280}
+           set position of item "Applications" of container window to {370, 280}
            close
            open
            update without registering applications

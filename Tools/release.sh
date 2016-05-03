@@ -227,7 +227,7 @@ else
 #      -F "dsym=@$DSYM_ZIP_FILE" \
 #      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
 #      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/versions/$id || true
-    ./Tools/uploadToHockeyApp.sh $HOCKEYAPP_TOKEN $HOCKEYAPP_APP_ID $major_minor_patch ${TRAVIS_BUILD_NUMBER:-1} $APP_DMG_FILE $DSYM_ZIP_FILE
+    ./Tools/uploadDMGToHockeyApp.sh $HOCKEYAPP_TOKEN $HOCKEYAPP_APP_ID $major_minor_patch ${TRAVIS_BUILD_NUMBER:-1} $APP_DMG_FILE $DSYM_ZIP_FILE
     #if [ -x /usr/local/bin/puck ]; then
     #
     #  /usr/local/bin/puck \

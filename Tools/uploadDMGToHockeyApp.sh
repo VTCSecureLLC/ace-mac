@@ -4,7 +4,7 @@
 VALID_NUMBER_OF_ARGS=6
 if [ $# -ne $VALID_NUMBER_OF_ARGS ]
 then
-	echo 'Usage: ./uploadToHockeyApp.sh <API_TOKEN> <APP_ID> <VERSIONSHORT> <VERSION_NUMBER> <DMG_LOCATION> <DSYM_ZIP_FILE>'
+	echo 'Usage: ./uploadDMGToHockeyApp.sh <API_TOKEN> <APP_ID> <VERSIONSHORT> <VERSION_NUMBER> <DMG_LOCATION> <DSYM_ZIP_FILE>'
 	exit 128
 fi
 

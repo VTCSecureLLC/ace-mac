@@ -1,20 +1,20 @@
 #!/bin/bash
 
 # check to see that the number of arguments are valid
-VALID_NUMBER_OF_ARGS=5
+VALID_NUMBER_OF_ARGS=6
 if [ $# -ne $VALID_NUMBER_OF_ARGS ]
 then
-	echo 'Usage: ./uploadToHockeyApp.sh <API_TOKEN> <APP_ID> <BRANCH_NAME> <VERSION_NUMBER> <DMG_LOCATION>'
+	echo 'Usage: ./uploadToHockeyApp.sh <API_TOKEN> <APP_ID> <VERSIONSHORT> <VERSION_NUMBER> <DMG_LOCATION> <DSYM_ZIP_FILE>'
 	exit 128
 fi
 
 # store off the arguments
 API_TOKEN="$1"
 APP_ID="$2"
-BRANCH_NAME="$3"
+VERSIONSHORT="$3"
 VERSION_NUMBER="$4"
 DMG_LOCATION="$5"
-
+DSYM_ZIP_FILE="$6"
 # check to make sure the dmg location provided exists
 if [ ! -f "$DMG_LOCATION" ]
 then
@@ -34,10 +34,14 @@ echo $RELEASE_NOTES
 
 echo 'Creating a new version for the app on HockeyApp...'
 RETRIEVED_ID=`curl \
-  -F "bundle_short_version=$BRANCH_NAME" \
+  -F "bundle_short_version=$VERSIONSHORT" \
   -F "bundle_version=$VERSION_NUMBER" \
   -F "notes=$RELEASE_NOTES" \
-  -F "status=2" \
+  -F "notes_type=1" \
+  -F "mandatory=0" \
+  -F "commit_sha=$(git rev-parse --short HEAD)" \
+  -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+  -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
   -H "X-HockeyAppToken: "$API_TOKEN \
   https://rink.hockeyapp.net/api/2/apps/$APP_ID/app_versions/new | python -c "import sys, json; print(json.load(sys.stdin)['id'])"`
 
@@ -51,6 +55,7 @@ curl \
   -F "status=2" \
   -F "notify=1" \
   -F "ipa=@$DMG_LOCATION" \
+  -F "dsym=@$DSYM_ZIP_FILE" \
   -H "X-HockeyAppToken: "$API_TOKEN \
   https://rink.hockeyapp.net/api/2/apps/$APP_ID/app_versions/$RETRIEVED_ID
 

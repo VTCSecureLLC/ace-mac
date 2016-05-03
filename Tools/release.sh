@@ -7,11 +7,6 @@ HOCKEYAPP_TEAM_IDS=${HOCKEYAPP_TEAM_IDS:-47813}
 HOCKEYAPP_APP_ID=${HOCKEYAPP_APP_ID:-b7b28171bab92ce345aac7d54f435020}
 
 major_minor_patch=$(bundle exec semver format '%M.%m.%p')
-## from https://gist.github.com/cjus/1047794
-function jsonval {
-temp=`echo $json | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w $prop`
-echo ${temp##*|}
-}
 
 # Only deploy master branch builds
 
@@ -170,75 +165,69 @@ fi
 if [ -z "$HOCKEYAPP_TOKEN" ]; then
   echo HOCKEYAPP_TOKEN is not defined. Neither creating installer pkg, nor deploying it to HockeyApp.
 else
-
-  if [ -d "$XCARCHIVE" ]; then
-
-    # Distribute via HockeyApp
-
-    echo "Uploading to HockeyApp"
-    echo 'curl \'
-    echo ' -F "status=2" \'
-    echo ' -F "notify=1" \'
-    echo ' -F "commit_sha='"${SHA1}"'" \'
-    echo ' -F "build_server_url=https://travis-ci.org/'"${TRAVIS_REPO_SLUG}"'/builds/'"${TRAVIS_BUILD_ID}"'" \'
-    echo ' -F "repository_url=http://github.com/'"${TRAVIS_REPO_SLUG}"'" \'
-    echo ' -F "release_type=2" \'
-    echo ' -F "notes='"$(git log -1 --pretty=format:%B)"'" \'
-    echo ' -F "notes_type=1" \'
-    echo ' -F "mandatory=0" \'
-    echo ' -F "bundle_short_version='"$major_minor_patch"'" \'
-    echo ' -F "bundle_version='"${TRAVIS_BUILD_NUMBER:-1}"'" \'
-    echo ' -F "teams=${HOCKEYAPP_TEAM_IDS}" \'
-    echo ' -F "ipa=@'"$APP_DMG_FILE"'" \'
-    echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
-    echo ' -H "X-HockeyAppToken: REDACTED" \'
-    echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
-
-   curl  \
-     -X GET \
-     -H "Content-type: application/json" \
-     -H "Accept: application/json"  \
-     -F "status=2" \
-     -F "notify=1" \
-     -F "commit_sha=${SHA1}" \
-     -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
-     -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
-     -F "release_type=2" \
-     -F "notes=$(git log -1 --pretty=format:%B)" \
-     -F "notes_type=1" \
-     -F "mandatory=0" \
-     -F "bundle_short_version=$major_minor_patch" \
-     -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
-     -F "teams=${HOCKEYAPP_TEAM_IDS}" \
-     -F "ipa=@$APP_DMG_FILE" \
-     -F "dsym=@$DSYM_ZIP_FILE" \
-     -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
-     https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new \
-     > json.txt
-    json='cat json.txt'
-    prop='id'
-    id='jsonval'
-    echo $id
-    echo $json
-    curl \
-      -X PUT \
-      -F "status=2" \
-      -F "notify=1" \
-      -F "commit_sha=${SHA1}" \
-      -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
-      -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
-      -F "release_type=2" \
-      -F "notes=$(git log -1 --pretty=format:%B)" \
-      -F "notes_type=1" \
-      -F "mandatory=0" \
-      -F "bundle_short_version=$major_minor_patch" \
-      -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
-      -F "teams=${HOCKEYAPP_TEAM_IDS}" \
-      -F "ipa=@$APP_DMG_FILE" \
-      -F "dsym=@$DSYM_ZIP_FILE" \
-      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
-      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/versions/$id || true
-
+#
+#  if [ -d "$XCARCHIVE" ]; then
+#
+#    # Distribute via HockeyApp
+#
+#    echo "Uploading to HockeyApp"
+#    echo 'curl \'
+#    echo ' -F "status=2" \'
+#    echo ' -F "notify=1" \'
+#    echo ' -F "commit_sha='"${SHA1}"'" \'
+#    echo ' -F "build_server_url=https://travis-ci.org/'"${TRAVIS_REPO_SLUG}"'/builds/'"${TRAVIS_BUILD_ID}"'" \'
+#    echo ' -F "repository_url=http://github.com/'"${TRAVIS_REPO_SLUG}"'" \'
+#    echo ' -F "release_type=2" \'
+#    echo ' -F "notes='"$(git log -1 --pretty=format:%B)"'" \'
+#    echo ' -F "notes_type=1" \'
+#    echo ' -F "mandatory=0" \'
+#    echo ' -F "bundle_short_version='"$major_minor_patch"'" \'
+#    echo ' -F "bundle_version='"${TRAVIS_BUILD_NUMBER:-1}"'" \'
+#    echo ' -F "teams=${HOCKEYAPP_TEAM_IDS}" \'
+#    echo ' -F "ipa=@'"$APP_DMG_FILE"'" \'
+#    echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
+#    echo ' -H "X-HockeyAppToken: REDACTED" \'
+#    echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
+#
+#   curl  \
+#     -X GET \
+#     -H "Content-type: application/json" \
+#     -H "Accept: application/json"  \
+#     -F "status=2" \
+#     -F "notify=1" \
+#     -F "commit_sha=${SHA1}" \
+#     -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+#     -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
+#     -F "release_type=2" \
+#     -F "notes=$(git log -1 --pretty=format:%B)" \
+#     -F "notes_type=1" \
+#     -F "mandatory=0" \
+#     -F "bundle_short_version=$major_minor_patch" \
+#     -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
+#     -F "teams=${HOCKEYAPP_TEAM_IDS}" \
+#     -F "ipa=@$APP_DMG_FILE" \
+#     -F "dsym=@$DSYM_ZIP_FILE" \
+#     -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
+#     https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new \
+#     > json.txt
+#   curl \
+#      -X PUT \
+#      -F "status=2" \
+#      -F "notify=1" \
+#      -F "commit_sha=${SHA1}" \
+#
+#      -F "release_type=2" \
+#      -F "notes=$(git log -1 --pretty=format:%B)" \
+#      -F "notes_type=1" \
+#      -F "mandatory=0" \
+#      -F "bundle_short_version=$major_minor_patch" \
+#      -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
+#      -F "teams=${HOCKEYAPP_TEAM_IDS}" \
+#      -F "ipa=@$APP_DMG_FILE" \
+#      -F "dsym=@$DSYM_ZIP_FILE" \
+#      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
+#      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/versions/$id || true
+    ./Tools/uploadToHockeyApp.sh $HOCKEYAPP_TOKEN $HOCKEYAPP_APP_ID $major_minor_patch ${TRAVIS_BUILD_NUMBER:-1} $APP_DMG_FILE $DSYM_ZIP_FILE
     #if [ -x /usr/local/bin/puck ]; then
     #
     #  /usr/local/bin/puck \

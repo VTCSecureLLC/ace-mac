@@ -165,8 +165,8 @@ fi
 if [ -z "$HOCKEYAPP_TOKEN" ]; then
   echo HOCKEYAPP_TOKEN is not defined. Neither creating installer pkg, nor deploying it to HockeyApp.
 else
-#
-#  if [ -d "$XCARCHIVE" ]; then
+
+  if [ -d "$XCARCHIVE" ]; then
 #
 #    # Distribute via HockeyApp
 #

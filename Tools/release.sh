@@ -213,6 +213,8 @@ else
      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new || true
     prop='id'
     id='jsonval'
+    echo '$id'
+    echo '$json'
     curl \
       -X PUT
       -F "status=2" \

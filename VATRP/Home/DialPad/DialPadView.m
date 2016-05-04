@@ -357,8 +357,10 @@
     return 53;
 }
     
-- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row
-{
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row{
+
+    if([self.providersView isHidden]) return false;
+    
     if (row >= 0 && row < providersArray.count)
     {
         NSDictionary *dict = [providersArray objectAtIndex:row];
@@ -370,7 +372,7 @@
         currentText = [currentText stringByReplacingOccurrencesOfString:@"sip:" withString:@""];
         currentText = [currentText componentsSeparatedByString:@"@"][0];
         [self setDialerText:[NSString stringWithFormat:@"sip:%@@%@", currentText, [dict objectForKey:@"domain"]]];
-            
+        
         [self.providersView setHidden:true];
         return true;
     }

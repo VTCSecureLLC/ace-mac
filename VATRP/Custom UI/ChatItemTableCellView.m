@@ -65,7 +65,8 @@ static NSFont *CELL_FONT = nil;
             linphone_chat_message_cbs_set_msg_state_changed(linphone_chat_message_get_callbacks(self->chat), NULL);
         }
         
-        self->chat = message;
+        //self->chat = message;
+        self->chat = linphone_chat_message_ref(message);
         
         BOOL outgoing = linphone_chat_message_is_outgoing(chat);
 
@@ -139,7 +140,7 @@ static NSFont *CELL_FONT = nil;
         [imageViewBubble setImage:image];
         
         if (self->chat) {
-            linphone_chat_message_ref(self->chat);
+            //linphone_chat_message_ref(self->chat);
             linphone_chat_message_set_user_data(self->chat, (void *)CFBridgingRetain(self));
             linphone_chat_message_cbs_set_msg_state_changed(linphone_chat_message_get_callbacks(self->chat),
                                                             message_status);

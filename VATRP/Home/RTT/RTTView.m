@@ -576,13 +576,13 @@ long msgSize; //message length buffer
                                                                                                more than one character,
                                                                                                so now parse the pasted string **/
             
-                    lastSymbolIndex = msgSize;
-                    NSString *pastedMsg = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
-                    
-                    pastedMsg = [pastedMsg stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-                    [self performSelectorInBackground:@selector(pasteText:) withObject:pastedMsg];
-                    
-            
+            lastSymbolIndex = msgSize;
+            if(self.textFieldMessage.stringValue.length > lastSymbolIndex){
+                NSString *pastedMsg = [self.textFieldMessage.stringValue substringFromIndex:lastSymbolIndex];
+                
+                pastedMsg = [pastedMsg stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                [self performSelectorInBackground:@selector(pasteText:) withObject:pastedMsg];
+            }
         }
         else{
             if (!rttDisabledMessageHasBeenShown && ![[ChatService sharedInstance] sendMessagt:lastSymbol])

@@ -39,6 +39,7 @@ RETRIEVED_ID=`curl \
   -F "notes=$RELEASE_NOTES" \
   -F "notes_type=1" \
   -F "mandatory=0" \
+  -F "status=1" \
   -F "commit_sha=$(git rev-parse --short HEAD)" \
   -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
   -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \

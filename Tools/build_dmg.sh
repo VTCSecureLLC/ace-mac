@@ -44,8 +44,8 @@ cp -rpf "${APP_NAME}.app" "${STAGING_DIR}"
 pushd "${STAGING_DIR}"
 
 # strip the executable
-echo "Stripping ${APP_EXE}..."
-strip -u -r "${APP_EXE}"
+#echo "Stripping ${APP_EXE}..."
+#strip -u -r "${APP_EXE}"
 
 # compress the executable if we have upx in PATH
 #  UPX: http://upx.sourceforge.net/
@@ -99,13 +99,13 @@ echo '
            set current view of container window to icon view
            set toolbar visible of container window to false
            set statusbar visible of container window to false
-           set the bounds of container window to {400, 100, 820, 440}
+           set the bounds of container window to {400, 100, 822, 465}
            set viewOptions to the icon view options of container window
            set arrangement of viewOptions to not arranged
            set icon size of viewOptions to 72
            set background picture of viewOptions to file ".background:'${DMG_BACKGROUND_IMG}'"
-           set position of item "'${APP_NAME}'.app" of container window to {50, 250}
-           set position of item "Applications" of container window to {360, 250}
+           set position of item "'${APP_NAME}'.app" of container window to {50,280}
+           set position of item "Applications" of container window to {370, 280}
            close
            open
            update without registering applications

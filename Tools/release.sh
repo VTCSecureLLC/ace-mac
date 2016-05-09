@@ -6,6 +6,8 @@ cd $DIR/..
 HOCKEYAPP_TEAM_IDS=${HOCKEYAPP_TEAM_IDS:-47813}
 HOCKEYAPP_APP_ID=${HOCKEYAPP_APP_ID:-b7b28171bab92ce345aac7d54f435020}
 
+major_minor_patch=$(bundle exec semver format '%M.%m.%p')
+
 # Only deploy master branch builds
 
 if [ -z "$TRAVIS_BRANCH" ] ; then
@@ -88,6 +90,7 @@ tag="$(bundle exec semver)-${TRAVIS_BUILD_NUMBER:-1}"-${SHA1}
 
 IFS=/ GITHUB_REPO=($TRAVIS_REPO_SLUG); IFS=""
 
+
 PKG_FILE=/tmp/ACE
 
 if [ -e "${PKG_FILE}".app ]; then
@@ -138,15 +141,15 @@ if [ -d "$XCARCHIVE" ]; then
 
   echo "Packaging and uploading"
 
-  # Create an application zip file from the archive build
+  # Create an application dmg file from the archive build
 
-  APP_DIR="${PKG_FILE}".app
-  APP_ZIP_FILE=/tmp/ACE.app.zip
-  if [ -f $APP_ZIP_FILE ]; then
-    rm -f $APP_ZIP_FILE
+  APP_DMG_FILE=/tmp/ACE.dmg
+  if [ -f $APP_DMG_FILE ]; then
+    rm -f $APP_DMG_FILE
   fi
-  (cd $(dirname $APP_DIR) ; zip -r --symlinks $APP_ZIP_FILE $(basename $APP_DIR))
 
+  ./Tools/build_dmg.sh
+  cd $DIR/..
   # Create a dSYM zip file from the archive build
 
   DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
@@ -164,42 +167,67 @@ if [ -z "$HOCKEYAPP_TOKEN" ]; then
 else
 
   if [ -d "$XCARCHIVE" ]; then
-
-    # Distribute via HockeyApp
-
-    echo "Uploading to HockeyApp"
-    echo 'curl \'
-    echo ' -F "status=2" \'
-    echo ' -F "notify=1" \'
-    echo ' -F "commit_sha='"${SHA1}"'" \'
-    echo ' -F "build_server_url=https://travis-ci.org/'"${TRAVIS_REPO_SLUG}"'/builds/'"${TRAVIS_BUILD_ID}"'" \'
-    echo ' -F "repository_url=http://github.com/'"${TRAVIS_REPO_SLUG}"'" \'
-    echo ' -F "release_type=2" \'
-    echo ' -F "notes='"$(git log -1 --pretty=format:%B)"'" \'
-    echo ' -F "notes_type=1" \'
-    echo ' -F "mandatory=0" \'
-    echo ' -F "teams=${HOCKEYAPP_TEAM_IDS}" \'
-    echo ' -F "ipa=@'"$APP_ZIP_FILE"'" \'
-    echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
-    echo ' -H "X-HockeyAppToken: REDACTED" \'
-    echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
-
-    curl \
-      -F "status=2" \
-      -F "notify=1" \
-      -F "commit_sha=${SHA1}" \
-      -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
-      -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
-      -F "release_type=2" \
-      -F "notes=$(git log -1 --pretty=format:%B)" \
-      -F "notes_type=1" \
-      -F "mandatory=0" \
-      -F "teams=${HOCKEYAPP_TEAM_IDS}" \
-      -F "ipa=@$APP_ZIP_FILE" \
-      -F "dsym=@$DSYM_ZIP_FILE" \
-      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
-      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/upload || true
-
+#
+#    # Distribute via HockeyApp
+#
+#    echo "Uploading to HockeyApp"
+#    echo 'curl \'
+#    echo ' -F "status=2" \'
+#    echo ' -F "notify=1" \'
+#    echo ' -F "commit_sha='"${SHA1}"'" \'
+#    echo ' -F "build_server_url=https://travis-ci.org/'"${TRAVIS_REPO_SLUG}"'/builds/'"${TRAVIS_BUILD_ID}"'" \'
+#    echo ' -F "repository_url=http://github.com/'"${TRAVIS_REPO_SLUG}"'" \'
+#    echo ' -F "release_type=2" \'
+#    echo ' -F "notes='"$(git log -1 --pretty=format:%B)"'" \'
+#    echo ' -F "notes_type=1" \'
+#    echo ' -F "mandatory=0" \'
+#    echo ' -F "bundle_short_version='"$major_minor_patch"'" \'
+#    echo ' -F "bundle_version='"${TRAVIS_BUILD_NUMBER:-1}"'" \'
+#    echo ' -F "teams=${HOCKEYAPP_TEAM_IDS}" \'
+#    echo ' -F "ipa=@'"$APP_DMG_FILE"'" \'
+#    echo ' -F "dsym=@'"$DSYM_ZIP_FILE"'" \'
+#    echo ' -H "X-HockeyAppToken: REDACTED" \'
+#    echo ' https://rink.hockeyapp.net/api/2/apps/'"${HOCKEYAPP_APP_ID}"'/app_versions/upload'
+#
+#   curl  \
+#     -X GET \
+#     -H "Content-type: application/json" \
+#     -H "Accept: application/json"  \
+#     -F "status=2" \
+#     -F "notify=1" \
+#     -F "commit_sha=${SHA1}" \
+#     -F "build_server_url=https://travis-ci.org/${TRAVIS_REPO_SLUG}/builds/${TRAVIS_BUILD_ID}" \
+#     -F "repository_url=http://github.com/${TRAVIS_REPO_SLUG}" \
+#     -F "release_type=2" \
+#     -F "notes=$(git log -1 --pretty=format:%B)" \
+#     -F "notes_type=1" \
+#     -F "mandatory=0" \
+#     -F "bundle_short_version=$major_minor_patch" \
+#     -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
+#     -F "teams=${HOCKEYAPP_TEAM_IDS}" \
+#     -F "ipa=@$APP_DMG_FILE" \
+#     -F "dsym=@$DSYM_ZIP_FILE" \
+#     -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
+#     https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/new \
+#     > json.txt
+#   curl \
+#      -X PUT \
+#      -F "status=2" \
+#      -F "notify=1" \
+#      -F "commit_sha=${SHA1}" \
+#
+#      -F "release_type=2" \
+#      -F "notes=$(git log -1 --pretty=format:%B)" \
+#      -F "notes_type=1" \
+#      -F "mandatory=0" \
+#      -F "bundle_short_version=$major_minor_patch" \
+#      -F "bundle_version=${TRAVIS_BUILD_NUMBER:-1}" \
+#      -F "teams=${HOCKEYAPP_TEAM_IDS}" \
+#      -F "ipa=@$APP_DMG_FILE" \
+#      -F "dsym=@$DSYM_ZIP_FILE" \
+#      -H "X-HockeyAppToken: ${HOCKEYAPP_TOKEN}" \
+#      https://rink.hockeyapp.net/api/2/apps/${HOCKEYAPP_APP_ID}/app_versions/versions/$id || true
+    ./Tools/uploadDMGToHockeyApp.sh $HOCKEYAPP_TOKEN $HOCKEYAPP_APP_ID $major_minor_patch ${TRAVIS_BUILD_NUMBER:-1} $APP_DMG_FILE $DSYM_ZIP_FILE
     #if [ -x /usr/local/bin/puck ]; then
     #
     #  /usr/local/bin/puck \
@@ -265,15 +293,15 @@ else
     rm -fr ACE/
   done
 
-  find . -name '*.dmg' -print | while read dmg; do
-    echo "Uploading $dmg github release $tag : $(ls -la $dmg)"
-    /tmp/github-release upload \
-        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
-        --repo ${GITHUB_REPO[1]:-ace-mac} \
-        --tag $tag \
-        --name $(basename "$dmg") \
-        --file "$dmg"
-  done
+#  find . -name '*.dmg' -print | while read dmg; do
+#   echo "Uploading $dmg github release $tag : $(ls -la $dmg)"
+#   /tmp/github-release upload \
+#        --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
+#        --repo ${GITHUB_REPO[1]:-ace-mac} \
+#        --tag $tag \
+#        --name $(basename "$dmg") \
+#        --file "$dmg"
+#  done
 
   if [ -f $PKG_FILE ]; then
     echo "Uploading $PKG_FILE github release $tag : $(ls -la $PKG_FILE)"
@@ -285,15 +313,15 @@ else
         --file "$PKG_FILE"
   fi
 
-  if [ -f $APP_ZIP_FILE ]; then
-    TARGET=ACE-HockeyApp-$tag.zip
-    echo "Uploading $APP_ZIP_FILE as $TARGET to github release $tag : $(ls -la $APP_ZIP_FILE)"
+  if [ -f $APP_DMG_FILE ]; then
+    TARGET=ACE-HockeyApp-$tag.dmg
+    echo "Uploading $APP_DMG_FILE as $TARGET to github release $tag : $(ls -la $APP_DMG_FILE)"
     /tmp/github-release upload \
         --user ${GITHUB_REPO[0]:-VTCSecureLLC} \
         --repo ${GITHUB_REPO[1]:-ace-mac} \
         --tag $tag \
         --name $TARGET \
-        --file "$APP_ZIP_FILE"
+        --file "$APP_DMG_FILE"
   fi
 
   if [ -f $DSYM_ZIP_FILE ]; then

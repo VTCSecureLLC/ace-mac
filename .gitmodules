@@ -49,5 +49,6 @@
 [submodule "submodules/externals/bv16-floatingpoint"]
 	path = submodules/externals/bv16-floatingpoint
 	url = git://git.linphone.org/bv16-floatingpoint.git
-
-
+[submodule "submodules/externals/openh264"]
+	path = submodules/externals/openh264
+	url = git://github.com/VTCSecureLLC/openh264.git

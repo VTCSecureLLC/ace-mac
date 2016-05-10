@@ -245,7 +245,7 @@
         case LinphoneCallIncomingReceived: {
             self.imageViewEncription.image = nil;
             self.viewCallDeclineMessage.hidden = YES;
-            self.labelCallState.stringValue = @"Incoming Call 00:00";
+            [self setLabelCallStateText:@"Incoming Call 00:00"];
             [self startRingCountTimerWithTimeInterval:3.75];
             [self.labelRingCount setTextColor:[NSColor whiteColor]];
             [self startCallFlashingAnimation];
@@ -278,7 +278,7 @@
                                                                userInfo:nil
                                                                 repeats:YES];
             
-            self.labelCallState.stringValue = @"Connected 00:00";
+            [self setLabelCallStateText:@"Connected 00:00"];
             
 //            [self.localVideo setFrame:NSMakeRect(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
             
@@ -298,7 +298,7 @@
         case LinphoneCallOutgoingInit: {
             self.imageViewEncription.image = nil;
             self.viewCallDeclineMessage.hidden = YES;
-            self.labelCallState.stringValue = @"Calling 00:00";
+            [self setLabelCallStateText:@"Calling 00:00"];
             [self.callControllsConteinerView setHidden:NO];
             [[[AppDelegate sharedInstance].homeWindowController getHomeViewController] reloadRecents];
         }
@@ -306,7 +306,7 @@
             //    LinphoneCallOutgoingRinging, /**<An outgoing call is ringing at remote end */
         case LinphoneCallOutgoingRinging: {
             self.imageViewEncription.image = nil;
-            self.labelCallState.stringValue = @"Ringing 00:00";
+            [self setLabelCallStateText:@"Ringing 00:00"];
             [self startRingCountTimerWithTimeInterval:3.6];
             [self.labelRingCount setTextColor:[NSColor redColor]];
         }
@@ -316,7 +316,7 @@
             self.imageViewEncription.image = nil;
             int call_Duration = linphone_call_get_duration(acall);
             NSString *string_time = [Utils getTimeStringFromSeconds:call_Duration];
-            self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@",string_time];
+            [self setLabelCallStateText:[NSString stringWithFormat:@"On Hold %@",string_time]];
             self.holdImageView.hidden = NO;
         }
             break;
@@ -525,7 +525,7 @@
     }
     
     if (lMessage) {
-        self.labelCallState.stringValue = lMessage;
+        [self setLabelCallStateText:lMessage];
     }
 }
 
@@ -578,7 +578,17 @@
         [self.callerImageView setImage:[NSImage imageNamed:@"male"]];
     }
     
-    self.labelDisplayName.stringValue = address;
+    
+    NSDictionary *attributes = @{ NSStrokeColorAttributeName : [NSColor blackColor],
+                                  NSForegroundColorAttributeName : [NSColor whiteColor],
+                                  NSStrokeWidthAttributeName : [NSNumber numberWithInt:-3.0]};
+    self.labelDisplayName.attributedStringValue = [[NSAttributedString alloc] initWithString:address attributes:attributes];
+    [self.labelDisplayName sizeToFit];
+    [self.labelDisplayName setFrame:NSMakeRect((self.view.frame.size.width - self.labelDisplayName.frame.size.width)/2,
+                                               self.labelDisplayName.frame.origin.y,
+                                               self.labelDisplayName.frame.size.width,
+                                               self.labelDisplayName.frame.size.height)];
+    
     //update caller address in window title
     [[[CallService sharedInstance] getCallWindowController].window setTitle:[NSString stringWithFormat:windowTitle, address, [Utils getTimeStringFromSeconds:0]]];
 }
@@ -707,13 +717,13 @@
                 case LinphoneCallConnected:
                 case LinphoneCallStreamsRunning:
                 {
-                    self.labelCallState.stringValue = [NSString stringWithFormat:@"Connected %@", string_time];
+                    [self setLabelCallStateText:[NSString stringWithFormat:@"Connected %@", string_time]];
                 }
                     break;
                 case LinphoneCallPaused:
                 case LinphoneCallPausedByRemote:
                 {
-                    self.labelCallState.stringValue = [NSString stringWithFormat:@"On Hold %@", string_time];
+                    [self setLabelCallStateText:[NSString stringWithFormat:@"On Hold %@", string_time]];
                     self.holdImageView.hidden = NO;
                 }
                     break;
@@ -996,7 +1006,7 @@
     
     [self.callControllsConteinerView setHidden:NO];
     self.viewCallDeclineMessage.hidden = YES;
-    self.labelCallState.stringValue = @"Call declined";
+    [self setLabelCallStateText:@"Call declined"];
     self.labelCallDeclineMessage.stringValue = declineMsg;
 }
 
@@ -1010,6 +1020,18 @@
     if (!call) {
         [[CallService sharedInstance] closeCallWindow];
     }
+}
+
+- (void) setLabelCallStateText:(NSString*)text {
+    NSDictionary *attributes = @{ NSStrokeColorAttributeName : [NSColor blackColor],
+                                  NSForegroundColorAttributeName : [NSColor whiteColor],
+                                  NSStrokeWidthAttributeName : [NSNumber numberWithInt:-3.0]};
+    self.labelCallState.attributedStringValue = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    [self.labelCallState sizeToFit];
+    [self.labelCallState setFrame:NSMakeRect((self.view.frame.size.width - self.labelCallState.frame.size.width)/2,
+                                               self.labelCallState.frame.origin.y,
+                                               self.labelCallState.frame.size.width,
+                                               self.labelCallState.frame.size.height)];
 }
 
 @end

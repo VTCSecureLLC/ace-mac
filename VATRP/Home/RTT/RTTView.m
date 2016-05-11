@@ -194,6 +194,7 @@ const NSInteger SIP_SIMPLE=1;
 
 - (void) updateViewForDisplay
 {
+    [[self.textFieldMessage window] makeFirstResponder:self.textFieldMessage];
     [self updateContentData];
     [self.tableViewContent reloadData];
     int count = ms_list_size(messageList);

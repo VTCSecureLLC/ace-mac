@@ -3,7 +3,7 @@
 //  VATRP
 //
 //  Created by Norayr Harutyunyan on 10/26/15.
-//  Copyright (c) 2015 VTCSecure. All rights reserved.
+//  Developed pursuant to contract FCC15C0008 as open source software under GNU General Public License version 2.. All rights reserved.
 //
 
 #import "AboutViewController.h"

@@ -31,9 +31,6 @@ const NSInteger SIP_SIMPLE=1;
     MSList *messageList;
     
     BOOL stateNewMessage;
-    
-    LinphoneChatMessage *incomingChatMessage;
-    ChatItemTableCellView *incomingCellView;
     LinphoneChatMessage *outgoingChatMessage;
     CGFloat incomingTextLinesCount;
     bool observersAdded;
@@ -54,7 +51,8 @@ const NSInteger SIP_SIMPLE=1;
 
 
 @implementation RTTView
-
+static LinphoneChatMessage *incomingChatMessage;
+static ChatItemTableCellView *incomingCellView;
 -(id) init
 {
     self = [super initWithNibName:@"RTTView" bundle:nil];
@@ -114,7 +112,6 @@ const NSInteger SIP_SIMPLE=1;
     {
         selectedChatRoom = nil;
         [self clearMessageList];
-//        [self updateContentData];
         [self.tableViewContent reloadData];
         [self updateViewForDisplay];
     }
@@ -146,9 +143,8 @@ const NSInteger SIP_SIMPLE=1;
     
     contacts = nil;
     selectedChatRoom = nil;
-    incomingChatMessage = nil;
+
     outgoingChatMessage = nil;
-    incomingCellView = nil;
     incomingTextLinesCount = 1;
     stateNewMessage = NO;
 
@@ -208,7 +204,12 @@ const NSInteger SIP_SIMPLE=1;
     if (![self getCurrentChatRoom])
         return;
     
-    messageList = [self sortChatMessagesByCallDuration]; //linphone_chat_room_get_history([self getCurrentChatRoom], 0);
+    messageList = [self sortChatMessagesByCallDuration];
+    if(incomingChatMessage){
+        if(ms_list_find(messageList, incomingChatMessage) == NULL){
+            self->messageList = ms_list_append(self->messageList, incomingChatMessage);
+        }
+    }
 }
 
 - (void)clearMessageList {
@@ -344,6 +345,8 @@ static void chatTable_free_chatrooms(void *data) {
         }
         break;
         case LinphoneCallStreamsRunning: {
+            incomingChatMessage = nil;
+            incomingCellView = nil;
             [self clearMessageList];
             [self.tableViewContent reloadData];
         }
@@ -390,11 +393,7 @@ static void chatTable_free_chatrooms(void *data) {
             
             if (rttCode == 0)
                 return;
-            
-            if(rttCode == 8232) {
-                incomingChatMessage = nil;
-                incomingCellView = nil;
-            } else {
+             else {
                 if(rttCode == 8 && !incomingChatMessage) {
                     return;
                 }
@@ -480,11 +479,12 @@ static void chatTable_free_chatrooms(void *data) {
             if (strcasecmp(cr_from_string, fromStr) == 0) {
                 linphone_chat_room_mark_as_read(room);
                 
-//                [self updateContentData];
-                [self.tableViewContent reloadData];
+                incomingChatMessage = nil;
+                incomingCellView = nil;
+                [self updateViewForDisplay];
                 
-                NSInteger count = ms_list_size(messageList);
-                [self.tableViewContent scrollRowToVisible:count-1];
+//                NSInteger count = ms_list_size(messageList);
+//                [self.tableViewContent scrollRowToVisible:-1];
             }
         }
         
@@ -646,8 +646,6 @@ long msgSize; //message length buffer
         
             outgoingChatMessage = linphone_chat_room_create_message_2([self getCurrentChatRoom], [self.textFieldMessage.stringValue UTF8String], NULL, LinphoneChatMessageStateDelivered, 0, YES, NO);
             LinphoneChatRoom* chatRoom = [self getCurrentChatRoom];
-            [[ChatService sharedInstance] sendEnter:outgoingChatMessage ChatRoom:chatRoom];
-
             // we must ref & unref message because in case of error, it will be destroy otherwise
             linphone_chat_room_send_chat_message(chatRoom, linphone_chat_message_ref(outgoingChatMessage));
 

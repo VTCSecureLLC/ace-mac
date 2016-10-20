@@ -154,7 +154,10 @@ if [ -d "$XCARCHIVE" ]; then
 
   DSYM_DIR=$(find build/derived -name '*.dSYM' | head -1)
   DSYM_ZIP_FILE=${PKG_FILE}.dsym.zip
-  if [ -f $DSYM_ZIP_FILE ]; then
+  echo 'dsym dir "$DSYM_DIR" \'
+  echo 'dsym zip "$DSYM_DIR" \'
+
+if [ -f $DSYM_ZIP_FILE ]; then
     rm -f $DSYM_ZIP_FILE
   fi
   (cd $(dirname $DSYM_DIR) ; zip -r --symlinks $DSYM_ZIP_FILE $(basename $DSYM_DIR) )

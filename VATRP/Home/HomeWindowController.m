@@ -37,7 +37,7 @@
     NSPoint pos;
     
 
-    pos.x = [[NSScreen mainScreen] frame].origin.x + [[NSScreen mainScreen] frame].size.width / 2 - [self.window frame].size.width /2;
+    pos.x =  [[NSScreen mainScreen] frame].origin.x + [[NSScreen mainScreen] frame].size.width / 2 - [self.window frame].size.width /2;
     pos.y = [[NSScreen mainScreen] frame].origin.y + ([[NSScreen mainScreen] frame].size.height / 2) + ([self.window frame].size.height * 2);
     [self setWindowPos: pos];
 
